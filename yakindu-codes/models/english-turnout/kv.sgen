@@ -1,0 +1,16 @@
+GeneratorModel for yakindu::java {
+
+	statechart kv {
+
+		feature Outlet {
+			targetProject = "kv"
+			targetFolder = "src-gen"
+		}
+
+		feature GeneralFeatures {
+			InterfaceObserverSupport = true
+			//RuntimeService = true
+			TimerService = true
+		}
+	}
+}

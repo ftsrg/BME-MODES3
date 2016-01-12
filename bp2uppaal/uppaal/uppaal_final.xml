@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_1.dtd'>
+<nta>
+	<declaration>//Global declarations
+const int N = 3;
+
+//Channel declarations
+broadcast chan sectionFree[N];
+broadcast chan sectionOccupied[N];
+broadcast chan sectionLocked[N];
+broadcast chan sectionLockedWithReply[N];
+broadcast chan initializedFree[N];
+broadcast chan initializedOccupied[N];
+broadcast chan initializedDivergent[N];
+broadcast chan initializedStraight[N]; 
+broadcast chan sectionAllowed[N];
+broadcast chan revokeLock[N];
+broadcast chan sectionLockFromDiv;
+broadcast chan sectionLockFromStr;
+broadcast chan sectionLockFromTop;
+broadcast chan passingDeniedFromTop;
+broadcast chan passingAllowedFromTop;
+chan switchedStraight; 
+
+chan switchedDivergent; 
+
+broadcast chan passingDeniedFromStr;
+broadcast chan passingDeniedFromDiv;
+broadcast chan passingAllowedFromStr;
+broadcast chan passingAllowedFromDiv;
+broadcast chan sectionLock[N];
+broadcast chan passingDenied[N];
+broadcast chan passingAllowed[N];
+broadcast chan triggerUnlock[N];
+broadcast chan turnoutStraight[N];
+broadcast chan turnoutDivergent[N];
+broadcast chan disableSection[N];
+broadcast chan enableSection[N];
+broadcast chan receiveOccupancy[N];
+broadcast chan initRealized;</declaration>
+	<template>
+		<name>OCCUPIEDSECTION</name>
+		<parameter> int id </parameter>
+		<location id="id0" x="331" y="263">
+			<name x="321" y="233">Init</name>
+			<committed/>
+		</location>
+		<location id="id1" x="144" y="552">
+			<name x="42" y="527">BecomesFree</name>
+			<committed/>
+		</location>
+		<location id="id2" x="382" y="76">
+			<name x="340" y="42">BecomesLocked</name>
+			<committed/>
+		</location>
+		<location id="id3" x="382" y="552">
+			<name x="331" y="561">BecomesUnlocked</name>
+		</location>
+		<location id="id4" x="144" y="263">
+			<name x="134" y="233">Start</name>
+		</location>
+		<location id="id5" x="646" y="263">
+			<name x="654" y="238">dedicated2</name>
+		</location>
+		<location id="id6" x="144" y="442">
+			<name x="134" y="412">dedicated3</name>
+			<committed/>
+		</location>
+		<location id="id7" x="144" y="365">
+			<name x="134" y="335">dedicated4</name>
+			<committed/>
+		</location>
+		<location id="id8" x="552" y="552">
+			<name x="560" y="518">dummy7</name>
+			<committed/>
+		</location>
+		<location id="id9" x="59" y="204">
+			<name x="-25" y="178">dedicated10</name>
+		</location>
+		<location id="id10" x="433" y="195">
+			<name x="423" y="165">dummy11</name>
+			<committed/>
+		</location>
+		<location id="id11" x="646" y="76">
+			<name x="620" y="42">dummy13</name>
+			<committed/>
+		</location>
+		<location id="id12" x="59" y="76">
+			<name x="34" y="42">dummy15</name>
+			<committed/>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="518" y="263">sectionLock[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="178" y="212">revokeLock[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="153" y="178">sectionAllowed[id]?</label>
+			<nail x="331" y="204"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="238" y="331">revokeLock[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="170" y="263">initializedOccupied[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="153" y="391">passingAllowed[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="153" y="297">initializedFree[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id6"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="212" y="527">sectionFree[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-17" y="348">sectionFree[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="340" y="586">sectionFree[id]?</label>
+			<nail x="646" y="603"/>
+			<nail x="144" y="603"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="501" y="323">sectionAllowed[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="416" y="527">enableSection[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="85" y="127">disableSection[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="391" y="391">sectionLockedWithReply[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="391" y="136">passingDenied[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="552" y="110">sectionLockedWithReply[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="484" y="51">passingDenied[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="-68" y="102">sectionLockedWithReply[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="161" y="51">passingDenied[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="518" y="153">sectionLocked[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="297" y="170">sectionLocked[id]?</label>
+		</transition>
+	</template>
+	<template>
+		<name>DIVERGENTTURNOUT</name>
+		<parameter> int id </parameter>
+		<declaration>
+int STR=1;
+
+int TOP=2;
+
+int DIV=0;
+</declaration>
+		<location id="id13" x="340" y="136">
+			<name x="314" y="102">Init</name>
+			<committed/>
+		</location>
+		<location id="id14" x="340" y="561">
+			<name x="297" y="578">SwitchedStraight</name>
+			<committed/>
+		</location>
+		<location id="id15" x="-68" y="561">
+			<name x="-119" y="578">RequestFromTop</name>
+		</location>
+		<location id="id16" x="756" y="561">
+			<name x="688" y="569">RequestFromDivergent</name>
+		</location>
+		<location id="id17" x="340" y="76">
+			<name x="323" y="42">Start</name>
+		</location>
+		<location id="id18" x="340" y="314">
+			<name x="330" y="284">dedicated19</name>
+		</location>
+		<location id="id19" x="-68" y="136">
+			<name x="-78" y="106">dummy20</name>
+			<committed/>
+		</location>
+		<location id="id20" x="85" y="187">
+			<name x="75" y="157">dummy22</name>
+			<committed/>
+		</location>
+		<location id="id21" x="756" y="136">
+			<name x="746" y="106">dummy24</name>
+			<committed/>
+		</location>
+		<location id="id22" x="578" y="187">
+			<name x="568" y="157">dummy26</name>
+			<committed/>
+		</location>
+		<location id="id23" x="-144" y="76">
+			<name x="-154" y="46">dedicated29</name>
+			<committed/>
+		</location>
+		<location id="id24" x="280" y="476">
+			<name x="270" y="446">dummy32</name>
+			<committed/>
+		</location>
+		<location id="id25" x="42" y="476">
+			<name x="32" y="446">dummy33</name>
+			<committed/>
+		</location>
+		<location id="id26" x="408" y="476">
+			<name x="398" y="446">dummy36</name>
+			<committed/>
+		</location>
+		<location id="id27" x="637" y="476">
+			<name x="627" y="446">dummy37</name>
+			<committed/>
+		</location>
+		<init ref="id17"/>
+		<transition>
+			<source ref="id13"/>
+			<target ref="id18"/>
+			<label kind="synchronisation" x="348" y="289">sectionLocked[STR]!</label>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="144" y="246">sectionLock[STR]?</label>
+			<nail x="263" y="255"/>
+		</transition>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id19"/>
+			<label kind="synchronisation" x="-127" y="229">passingAllowed[DIV]?</label>
+		</transition>
+		<transition>
+			<source ref="id19"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="59" y="119">sectionAllowed[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id20"/>
+			<label kind="synchronisation" x="-17" y="323">passingDenied[DIV]?</label>
+		</transition>
+		<transition>
+			<source ref="id20"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="136" y="178">sectionLocked[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id21"/>
+			<label kind="synchronisation" x="697" y="221">passingDenied[TOP]?</label>
+		</transition>
+		<transition>
+			<source ref="id21"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="518" y="119">sectionLocked[DIV]!</label>
+		</transition>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id22"/>
+			<label kind="synchronisation" x="578" y="340">passingAllowed[TOP]?</label>
+		</transition>
+		<transition>
+			<source ref="id22"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="391" y="178">sectionAllowed[DIV]!</label>
+		</transition>
+		<transition>
+			<source ref="id17"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="340" y="93">initializedDivergent[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id14"/>
+			<target ref="id23"/>
+			<label kind="synchronisation" x="-221" y="170">sectionAllowed[STR]!</label>
+			<nail x="340" y="620"/>
+			<nail x="-144" y="620"/>
+		</transition>
+		<transition>
+			<source ref="id23"/>
+			<target ref="id17"/>
+			<label kind="synchronisation" x="25" y="51">initializedStraight[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id15"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="93" y="561">switchedStraight?</label>
+		</transition>
+		<transition>
+			<source ref="id16"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="510" y="561">switchedStraight?</label>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="289" y="484">switchedStraight?</label>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id24"/>
+			<label kind="synchronisation" x="170" y="399">sectionLock[TOP]?</label>
+		</transition>
+		<transition>
+			<source ref="id24"/>
+			<target ref="id25"/>
+			<label kind="synchronisation" x="76" y="476">sectionLockedWithReply[DIV]!</label>
+			<nail x="85" y="476"/>
+		</transition>
+		<transition>
+			<source ref="id25"/>
+			<target ref="id15"/>
+			<label kind="synchronisation" x="0" y="510">sectionLocked[STR]!</label>
+		</transition>
+		<transition>
+			<source ref="id18"/>
+			<target ref="id26"/>
+			<label kind="synchronisation" x="374" y="399">sectionLock[DIV]?</label>
+		</transition>
+		<transition>
+			<source ref="id26"/>
+			<target ref="id27"/>
+			<label kind="synchronisation" x="425" y="476">sectionLockedWithReply[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id27"/>
+			<target ref="id16"/>
+			<label kind="synchronisation" x="578" y="518">sectionLocked[STR]!</label>
+		</transition>
+	</template>
+	<template>
+		<name>FREESECTION</name>
+		<parameter> int id </parameter>
+		<location id="id28" x="187" y="76">
+			<name x="177" y="46">Init</name>
+		</location>
+		<location id="id29" x="187" y="238">
+			<name x="195" y="204">BecomesOccupied</name>
+			<committed/>
+		</location>
+		<location id="id30" x="-263" y="76">
+			<name x="-273" y="46">Start</name>
+		</location>
+		<location id="id31" x="187" y="-25">
+			<name x="177" y="-55">dummy41</name>
+			<committed/>
+		</location>
+		<location id="id32" x="-25" y="76">
+			<name x="-35" y="46">dummy43</name>
+			<committed/>
+		</location>
+		<location id="id33" x="-263" y="238">
+			<name x="-246" y="213">dedicated46</name>
+			<committed/>
+		</location>
+		<init ref="id30"/>
+		<transition>
+			<source ref="id28"/>
+			<target ref="id31"/>
+			<label kind="synchronisation" x="0" y="8">sectionLockedWithReply[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id31"/>
+			<target ref="id28"/>
+			<label kind="synchronisation" x="255" y="8">passingAllowed[id]!</label>
+			<nail x="246" y="-25"/>
+			<nail x="246" y="76"/>
+		</transition>
+		<transition>
+			<source ref="id30"/>
+			<target ref="id32"/>
+			<label kind="synchronisation" x="-229" y="85">initializedFree[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id32"/>
+			<target ref="id28"/>
+			<label kind="synchronisation" x="-76" y="85">enableSection[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id29"/>
+			<target ref="id33"/>
+			<label kind="synchronisation" x="-76" y="246">passingDenied[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id33"/>
+			<target ref="id30"/>
+			<label kind="synchronisation" x="-255" y="144">initializedOccupied[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id28"/>
+			<target ref="id29"/>
+			<label kind="synchronisation" x="51" y="144">sectionOccupied[id]?</label>
+		</transition>
+	</template>
+	<template>
+		<name>STRAIGHTTURNOUT</name>
+		<parameter> int id </parameter>
+		<declaration>
+int STR=1;
+
+int TOP=2;
+
+int DIV=0;
+</declaration>
+		<location id="id34" x="93" y="76">
+			<name x="83" y="46">Init</name>
+			<committed/>
+		</location>
+		<location id="id35" x="93" y="493">
+			<name x="102" y="459">SwitchedDivergent</name>
+			<committed/>
+		</location>
+		<location id="id36" x="493" y="493">
+			<name x="501" y="459">RequestFromStraight</name>
+		</location>
+		<location id="id37" x="-314" y="493">
+			<name x="-324" y="463">RequestFromTop</name>
+		</location>
+		<location id="id38" x="93" y="-17">
+			<name x="83" y="-47">Start</name>
+		</location>
+		<location id="id39" x="93" y="238">
+			<name x="83" y="208">dedicated50</name>
+		</location>
+		<location id="id40" x="399" y="221">
+			<name x="389" y="191">dummy51</name>
+			<committed/>
+		</location>
+		<location id="id41" x="493" y="187">
+			<name x="483" y="157">dummy53</name>
+			<committed/>
+		</location>
+		<location id="id42" x="-229" y="229">
+			<name x="-239" y="199">dummy55</name>
+			<committed/>
+		</location>
+		<location id="id43" x="-314" y="187">
+			<name x="-324" y="157">dummy57</name>
+			<committed/>
+		</location>
+		<location id="id44" x="-382" y="-17">
+			<name x="-392" y="-47">dedicated60</name>
+			<committed/>
+		</location>
+		<location id="id45" x="170" y="399">
+			<name x="160" y="369">dummy63</name>
+			<committed/>
+		</location>
+		<location id="id46" x="340" y="399">
+			<name x="330" y="369">dummy64</name>
+			<committed/>
+		</location>
+		<location id="id47" x="0" y="399">
+			<name x="-10" y="369">dummy67</name>
+			<committed/>
+		</location>
+		<location id="id48" x="-178" y="399">
+			<name x="-188" y="369">dummy68</name>
+			<committed/>
+		</location>
+		<init ref="id38"/>
+		<transition>
+			<source ref="id34"/>
+			<target ref="id39"/>
+			<label kind="synchronisation" x="102" y="187">sectionLocked[DIV]!</label>
+		</transition>
+		<transition>
+			<source ref="id39"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="-85" y="195">sectionLock[DIV]?</label>
+			<nail x="17" y="170"/>
+		</transition>
+		<transition>
+			<source ref="id36"/>
+			<target ref="id40"/>
+			<label kind="synchronisation" x="238" y="255">passingAllowed[TOP]?</label>
+		</transition>
+		<transition>
+			<source ref="id40"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="229" y="153">sectionAllowed[STR]!</label>
+		</transition>
+		<transition>
+			<source ref="id36"/>
+			<target ref="id41"/>
+			<label kind="synchronisation" x="501" y="255">passingDenied[TOP]?</label>
+		</transition>
+		<transition>
+			<source ref="id41"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="331" y="119">sectionLocked[STR]!</label>
+		</transition>
+		<transition>
+			<source ref="id37"/>
+			<target ref="id42"/>
+			<label kind="synchronisation" x="-289" y="314">passingAllowed[STR]?</label>
+		</transition>
+		<transition>
+			<source ref="id42"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="-229" y="153">sectionAllowed[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id37"/>
+			<target ref="id43"/>
+			<label kind="synchronisation" x="-374" y="280">passingDenied[STR]?</label>
+		</transition>
+		<transition>
+			<source ref="id43"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="-357" y="127">sectionLocked[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id38"/>
+			<target ref="id34"/>
+			<label kind="synchronisation" x="102" y="0">initializedStraight[id]?</label>
+		</transition>
+		<transition>
+			<source ref="id35"/>
+			<target ref="id44"/>
+			<label kind="synchronisation" x="-510" y="119">sectionAllowed[STR]!</label>
+			<nail x="93" y="552"/>
+			<nail x="-382" y="552"/>
+		</transition>
+		<transition>
+			<source ref="id44"/>
+			<target ref="id38"/>
+			<label kind="synchronisation" x="-170" y="-59">initializedDivergent[id]!</label>
+		</transition>
+		<transition>
+			<source ref="id36"/>
+			<target ref="id35"/>
+			<label kind="synchronisation" x="204" y="501">switchedDivergent?</label>
+		</transition>
+		<transition>
+			<source ref="id37"/>
+			<target ref="id35"/>
+			<label kind="synchronisation" x="-170" y="493">switchedDivergent?</label>
+		</transition>
+		<transition>
+			<source ref="id39"/>
+			<target ref="id35"/>
+			<label kind="synchronisation" x="34" y="433">switchedDivergent?</label>
+		</transition>
+		<transition>
+			<source ref="id39"/>
+			<target ref="id45"/>
+			<label kind="synchronisation" x="127" y="297">sectionLock[STR]?</label>
+		</transition>
+		<transition>
+			<source ref="id45"/>
+			<target ref="id46"/>
+			<label kind="synchronisation" x="178" y="357">sectionLockedWithReply[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id46"/>
+			<target ref="id36"/>
+			<label kind="synchronisation" x="365" y="399">sectionLocked[DIV]!</label>
+		</transition>
+		<transition>
+			<source ref="id39"/>
+			<target ref="id47"/>
+			<label kind="synchronisation" x="-85" y="297">sectionLock[TOP]?</label>
+		</transition>
+		<transition>
+			<source ref="id47"/>
+			<target ref="id48"/>
+			<label kind="synchronisation" x="-187" y="357">sectionLockedWithReply[STR]!</label>
+			<nail x="-119" y="400"/>
+		</transition>
+		<transition>
+			<source ref="id48"/>
+			<target ref="id37"/>
+			<label kind="synchronisation" x="-246" y="433">sectionLocked[DIV]!</label>
+		</transition>
+	</template>
+	<template>
+		<name x="5" y="5">INIT</name>
+		<declaration>// Place local declarations here.
+int DIV = 0;
+int STR = 1;
+int TOP = 2;</declaration>
+		<location id="id49" x="-782" y="-51">
+			<name x="-773" y="-85">InitTopSection</name>
+		</location>
+		<location id="id50" x="-782" y="-323">
+			<name x="-765" y="-348">InitStraightTurnout</name>
+		</location>
+		<location id="id51" x="-782" y="-391">
+			<name x="-841" y="-425">InitDivergentTurnout</name>
+		</location>
+		<location id="id52" x="-544" y="-391">
+			<name x="-569" y="-425">Finished</name>
+		</location>
+		<location id="id53" x="-544" y="-255">
+			<name x="-646" y="-246">TopOccupied</name>
+		</location>
+		<location id="id54" x="-544" y="-153">
+			<name x="-663" y="-144">StraightOccupied</name>
+		</location>
+		<location id="id55" x="-544" y="-51">
+			<name x="-629" y="-85">DivOccupied</name>
+		</location>
+		<location id="id56" x="-782" y="-153">
+			<name x="-773" y="-187">InitStraightSection</name>
+		</location>
+		<location id="id57" x="-782" y="-255">
+			<name x="-765" y="-280">InitDivergentSection</name>
+		</location>
+		<init ref="id51"/>
+		<transition>
+			<source ref="id56"/>
+			<target ref="id49"/>
+			<label kind="synchronisation" x="-918" y="-119">initializedFree[STR]!</label>
+		</transition>
+		<transition>
+			<source ref="id50"/>
+			<target ref="id57"/>
+			<label kind="synchronisation" x="-943" y="-306">initializedStraight[STR]!</label>
+		</transition>
+		<transition>
+			<source ref="id51"/>
+			<target ref="id50"/>
+			<label kind="synchronisation" x="-943" y="-374">initializedDivergent[DIV]!</label>
+		</transition>
+		<transition>
+			<source ref="id53"/>
+			<target ref="id52"/>
+			<label kind="synchronisation" x="-535" y="-314">sectionOccupied[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id54"/>
+			<target ref="id53"/>
+			<label kind="synchronisation" x="-535" y="-204">sectionOccupied[STR]!</label>
+		</transition>
+		<transition>
+			<source ref="id55"/>
+			<target ref="id54"/>
+			<label kind="synchronisation" x="-544" y="-119">sectionOccupied[DIV]!</label>
+		</transition>
+		<transition>
+			<source ref="id49"/>
+			<target ref="id55"/>
+			<label kind="synchronisation" x="-748" y="-51">initializedFree[TOP]!</label>
+		</transition>
+		<transition>
+			<source ref="id57"/>
+			<target ref="id56"/>
+			<label kind="synchronisation" x="-909" y="-221">initializedFree[DIV]!</label>
+		</transition>
+	</template>
+	<system>//Template instantiations
+FreeDiv = FREESECTION(0);
+FreeStr = FREESECTION(1);
+FreeTop = FREESECTION(2);
+
+OccupiedDiv = OCCUPIEDSECTION(0);
+OccupiedStr = OCCUPIEDSECTION(1);
+OccupiedTop = OCCUPIEDSECTION(2);
+
+DivTurnout = DIVERGENTTURNOUT(0);  
+StrTurnout = STRAIGHTTURNOUT(1);
+
+Test = INIT();
+
+//System composed of the following processes
+//Use case 1: DIV,TOP Section with DIV Turnout
+//system FreeDiv,FreeTop,OccupiedDiv,OccupiedTop,DivTurnout,Test;
+
+//Use case 2: STR,TOP Section with STR Turnout
+//system FreeStr,FreeTop,OccupiedStr,OccupiedTop,StrTurnout,Test;
+
+//Use case 3: DIV Section with STR Turnout
+//system FreeDiv,FreeTop,OccupiedTop,OccupiedDiv,StrTurnout,DivTurnout,Test;
+
+//Use case 4: TOP Section with STR Turnout
+//system FreeTop,OccupiedTop,StrTurnout,Test;
+
+//Use case 5: DIV,TOP,STR Section with DIV Turnout, STR Turnout
+system FreeDiv,FreeStr,FreeTop,OccupiedDiv,OccupiedStr,OccupiedTop,StrTurnout,DivTurnout,Test;
+</system>
+</nta>
