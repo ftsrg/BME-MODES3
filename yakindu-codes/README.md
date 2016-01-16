@@ -4,7 +4,7 @@ The development of this module started in August 2015, because severe bugs in th
 
 So state machines created with BridgePoints have been transformed to Yakindu statecharts. Besides, source codes have been generated from statecharts. This repository contains (1) the statecharts, (2) the generated source code from the statecharts, (3) additional codes which are neccessary to communicate with the model railway track.
 
-Statecharts which belong to the respective turnouts can be run separately, see [Use](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes#use) section below 
+Statecharts which belong to the respective turnouts can be run separately, see [Use](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes#use) section below.
 
 ## Use
 
