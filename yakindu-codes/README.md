@@ -2,7 +2,7 @@
 
 The development of this module started in August 2015, because severe bugs in the Verifier module of [BridgePoint](http://xtuml.org) (v5.1.0) that resulted in malfunction of the distributed system. Thus we switched to [Yakindu Statecharts](https://www.itemis.com/en/yakindu/statechart-tools/) that is a more reliable statechart designer and code-generator framework.
 
-So state machines created with BridgePoints have been transformed to Yakindu statecharts. Besides, source codes have been generated from statecharts. This repository contains (1) the statecharts, (2) the generated source code from the statecharts, (3) additional codes which are neccessary to communicate with the model railway track.
+So state machines created with BridgePoints have been transformed to Yakindu statecharts. Besides, source codes have been generated from statecharts. This repository contains (1) the statecharts, (2) the generated source code from the statecharts, (3) additional codes which are necessary to communicate with the model railway track.
 
 Statecharts which belong to the respective turnouts can be run separately, see [Use](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes#use) section below.
 
@@ -51,7 +51,7 @@ All the parameters are optional.
 
 ## Implementation Notes
 
-For the normal turnouts a general statechart (model) has been designed, that is in the `models/normal-turnout` folder. It contains the "safety logic" that prevents trains collision in case of normal turnouts. This statechart has been designed quite generally. So it is enough to parameterize the .jar that contains the (1) source code generated from the statechart, and (2) the Java code snippet that is neccessary to communicate with other modules (e.g. KVControl, KVControl-BPExtension). 
+For the normal turnouts a general statechart (model) has been designed, that is in the `models/normal-turnout` folder. It contains the "safety logic" that prevents trains collision in case of normal turnouts. This statechart has been designed quite generally. So it is enough to parameterize the .jar that contains the (1) source code generated from the statechart, and (2) the Java code snippet that is necessary to communicate with other modules (e.g. KVControl, KVControl-BPExtension). 
 
 For the english turnout a separate statechart has been designed, that is in the `models/english-turnout` folder. It contains the "safety logic" that prevents trains collision in case of english turnout. Because the turnout consists of two parts itself, it is reflected the Java code level: double instantiation of the same "english turnout" statchart, and the interconnection of the cross-calls (events) from one part of the english turnout to the other. From every other perspective, the normal turnout and the english turnout are the same.
 

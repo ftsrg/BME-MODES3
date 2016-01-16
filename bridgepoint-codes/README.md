@@ -1,6 +1,6 @@
 # BridgePoint-Codes
 
-Source codes implemented in addition to state machines designed in [BridgePoint](http://xtuml.org). These codes are neccessary to communicate with the model railway track's embedded controllers. Moreover, the state machines can communicate with each other with its help.
+Source codes implemented in addition to state machines designed in [BridgePoint](http://xtuml.org). These codes are necessary to communicate with the model railway track's embedded controllers. Moreover, the state machines can communicate with each other with its help.
 
 This module has been deprecated since August 2015. Because in the Verifier module of the BridgePoint (v5.1.0) there were severe runtime errors that resulted in malfunction of the distributed system. Thus we switched to [Yakindu Statecharts](https://www.itemis.com/en/yakindu/statechart-tools/) that is a more reliable statechart designer and code-generator framework.
 
