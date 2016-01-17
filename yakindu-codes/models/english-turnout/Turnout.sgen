@@ -1,0 +1,17 @@
+GeneratorModel for yakindu::java {
+
+	statechart Turnout {
+
+		feature Outlet {
+			targetProject = "aaa"
+			targetFolder = "src-gen"
+			libraryTargetFolder = "src"
+		}
+		
+		feature GeneralFeatures {
+			InterfaceObserverSupport = true
+			RuntimeService = true
+			TimerService = true
+		}
+	}
+}
