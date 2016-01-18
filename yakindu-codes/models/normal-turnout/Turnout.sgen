@@ -1,15 +1,15 @@
 GeneratorModel for yakindu::java {
 
-	statechart kv {
+	statechart Turnout {
 
 		feature Outlet {
-			targetProject = "kv"
+			targetProject = "normal-turnout"
 			targetFolder = "src-gen"
 		}
-
+		
 		feature GeneralFeatures {
 			InterfaceObserverSupport = true
-			//RuntimeService = true
+			RuntimeService = true
 			TimerService = true
 		}
 	}
