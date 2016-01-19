@@ -3,14 +3,30 @@ GeneratorModel for yakindu::java {
 	statechart Section {
 
 		feature Outlet {
-			targetProject = "aaa"
+			targetProject = "english-turnout"
 			targetFolder = "src-gen"
 		}
 		
 		feature GeneralFeatures {
 			InterfaceObserverSupport = true
 			RuntimeService = true
-			TimerService = true
+		}
+
+		feature FunctionInlining {
+			inlineChoices = true
+			inlineEnterRegion = true
+			inlineEnterSequences = true
+			inlineEntries = true
+			inlineEntryActions = true
+			inlineExitActions = true
+			inlineExitRegion = true
+			inlineExitSequences = true
+			inlineReactions = true
+		}
+
+		feature RunnableWrapper {
+			namePrefix=""
+			nameSuffix = "Wrapper"
 		}
 	}
 }
