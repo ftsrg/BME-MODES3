@@ -1,16 +1,26 @@
 package hu.bme.mit.inf.kv.yakindu.control.controller;
 
-import hu.bme.mit.inf.kv.yakindu.control.sm.ITraceableStatemachine;
+import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.kv.yakindu.control.sm.RemoteTurnout;
-import hu.bme.mit.inf.kv.yakindu.control.sm.handler.RemoteSectionEventListener;
+import hu.bme.mit.inf.kv.yakindu.control.sm.Section;
+import hu.bme.mit.inf.kv.yakindu.control.sm.handler.SectionEventListener;
+import hu.bme.mit.inf.kv.yakindu.control.sm.handler.TurnoutEventListener;
 
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
+import static hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction.DIVERGENT;
+import static hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction.STRAIGHT;
+import static hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction.TOP;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import org.yakindu.scr.section.ISectionStatemachine;
 
-import org.yakindu.scr.kv.IKvStatemachine;
+import org.yakindu.scr.section.SectionWrapperWithListeners;
+import org.yakindu.scr.turnout.ITurnoutStatemachine;
+import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 /**
  *
@@ -18,120 +28,271 @@ import org.yakindu.scr.kv.IKvStatemachine;
  */
 public class StatemachineInitializer {
 
-    private static final StatemachineInitializer instance = new StatemachineInitializer();
+    public static YakinduSMConfiguration initialize0x81() {
+        YakinduSMConfiguration conf = new YakinduSMConfiguration();
+        int turnoutID = 0x81;
 
-    public static StatemachineInitializer getInstance() {
-        return instance;
+        TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
+                "turnout" + String.valueOf(turnoutID));
+
+        turnoutStatemachine.init();
+        turnoutStatemachine.getSCITurnout().setId(turnoutID);
+
+        conf.setTurnoutSectionId(0x01);
+        conf.setTurnoutStatemachine(turnoutStatemachine);
+
+        int divSectionID = 0x0D;
+        int strSectionID = 0x09;
+
+        SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
+                divSectionID, turnoutStatemachine);
+        SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
+                strSectionID, turnoutStatemachine);
+
+        Section divSection = new Section(divSectionID, divSectionSM);
+        Section strSection = new Section(strSectionID, strSectionSM);
+
+        Set<Section> managedSections = new HashSet<>(Arrays.asList(divSection,
+                strSection));
+        conf.setManagedSections(managedSections);
+
+        Map<Direction, ISectionStatemachine> localSections = new HashMap<>();
+        localSections.put(DIVERGENT, divSectionSM);
+        localSections.put(STRAIGHT, strSectionSM);
+
+        Map<Direction, RemoteTurnout> remoteTurnouts = new HashMap<>();
+        remoteTurnouts.put(TOP, new RemoteTurnout(TOP, DIVERGENT, 0x87));
+        remoteTurnouts.put(DIVERGENT, new RemoteTurnout(DIVERGENT, TOP, 0x83));
+
+        TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
+                remoteTurnouts, localSections);
+        turnoutStatemachine.addSectionsListener(outgoingEventListener);
+        turnoutStatemachine.addTurnoutListener(outgoingEventListener);
+
+        turnoutStatemachine.getSCITurnout().setRemTopIsPrior(true);
+        turnoutStatemachine.getSCITurnout().setRemDivergentIsPrior(false);
+        turnoutStatemachine.getSCITurnout().setRemStraightIsPrior(true);
+
+        return conf;
     }
 
-    public void initialize0x81(ITraceableStatemachine sm) {
-        sm.init();
-        sm.getSCITurnout().setTurnoutId(0x81);
-        sm.getSCITurnout().setTurnoutSectionId(0x01);
+    public static YakinduSMConfiguration initialize0x82() {
+        YakinduSMConfiguration conf = new YakinduSMConfiguration();
+        int turnoutID = 0x82;
 
-        this.setSections(sm, -1, 0x0D, 0x09);
+        TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
+                "turnout" + String.valueOf(turnoutID));
 
-        Set<RemoteTurnout> remoteTurnouts = new HashSet<>(Arrays.asList(
-                new RemoteTurnout(Direction.TOP, Direction.DIVERGENT, 0x87),
-                new RemoteTurnout(Direction.DIVERGENT, Direction.TOP, 0x83)));
+        turnoutStatemachine.init();
+        turnoutStatemachine.getSCITurnout().setId(turnoutID);
 
-        sm.getSCITurnout().setRemTopIsPrior(true);
-        sm.getSCITurnout().setRemDivergentIsPrior(false);
-        sm.getSCITurnout().setRemStraightIsPrior(true);
+        conf.setTurnoutSectionId(0x02);
+        conf.setTurnoutStatemachine(turnoutStatemachine);
 
-        sm.getSCISections().getListeners().add(new RemoteSectionEventListener(
-                remoteTurnouts));
+        int topSectionID = 0x0C;
+        int divSectionID = 0x0F;
+
+        SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
+                divSectionID, turnoutStatemachine);
+        SectionWrapperWithListeners topSectionSM = createSectionStatemachine(
+                topSectionID, turnoutStatemachine);
+
+        Section divSection = new Section(divSectionID, divSectionSM);
+        Section topSection = new Section(topSectionID, topSectionSM);
+
+        Set<Section> managedSections = new HashSet<>(Arrays.asList(divSection,
+                topSection));
+        conf.setManagedSections(managedSections);
+
+        Map<Direction, ISectionStatemachine> localSections = new HashMap<>();
+        localSections.put(DIVERGENT, divSectionSM);
+        localSections.put(TOP, topSectionSM);
+
+        Map<Direction, RemoteTurnout> remoteTurnouts = new HashMap<>();
+        remoteTurnouts.put(TOP, new RemoteTurnout(TOP, STRAIGHT, 0x84));
+        remoteTurnouts.put(DIVERGENT, new RemoteTurnout(DIVERGENT, DIVERGENT,
+                0x84));
+        remoteTurnouts.put(STRAIGHT, new RemoteTurnout(STRAIGHT, STRAIGHT, 0x87));
+
+        TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
+                remoteTurnouts, localSections);
+        turnoutStatemachine.addSectionsListener(outgoingEventListener);
+        turnoutStatemachine.addTurnoutListener(outgoingEventListener);
+
+        turnoutStatemachine.getSCITurnout().setRemTopIsPrior(false);
+        turnoutStatemachine.getSCITurnout().setRemDivergentIsPrior(false);
+        turnoutStatemachine.getSCITurnout().setRemStraightIsPrior(true);
+
+        return conf;
     }
 
-    public void initialize0x82(ITraceableStatemachine sm) {
-        sm.init();
-        sm.getSCITurnout().setTurnoutId(0x82);
-        sm.getSCITurnout().setTurnoutSectionId(0x02);
+    public static YakinduSMConfiguration initialize0x83() {
+        YakinduSMConfiguration conf = new YakinduSMConfiguration();
+        int turnoutID = 0x83;
 
-        this.setSections(sm, 0x0C, 0x0F, -1);
+        TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
+                "turnout" + String.valueOf(turnoutID));
 
-        Set<RemoteTurnout> remoteTurnouts = new HashSet<>(Arrays.asList(
-                new RemoteTurnout(Direction.TOP, Direction.STRAIGHT, 0x84),
-                new RemoteTurnout(Direction.DIVERGENT, Direction.DIVERGENT, 0x84),
-                new RemoteTurnout(Direction.STRAIGHT, Direction.STRAIGHT, 0x87)));
+        turnoutStatemachine.init();
+        turnoutStatemachine.getSCITurnout().setId(turnoutID);
 
-        sm.getSCITurnout().setRemTopIsPrior(false);
-        sm.getSCITurnout().setRemDivergentIsPrior(false);
-        sm.getSCITurnout().setRemStraightIsPrior(true);
+        conf.setTurnoutSectionId(0x03);
+        conf.setTurnoutStatemachine(turnoutStatemachine);
 
-        sm.getSCISections().getListeners().add(new RemoteSectionEventListener(
-                remoteTurnouts));
+        int topSectionID = 0x08;
+        int divSectionID = 0x17;
+        int strSectionID = 0x0B;
+
+        SectionWrapperWithListeners topSectionSM = createSectionStatemachine(
+                topSectionID, turnoutStatemachine);
+        SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
+                divSectionID, turnoutStatemachine);
+        SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
+                strSectionID, turnoutStatemachine);
+
+        Section topSection = new Section(topSectionID, topSectionSM);
+        Section divSection = new Section(divSectionID, divSectionSM);
+        Section strSection = new Section(strSectionID, strSectionSM);
+
+        Set<Section> managedSections = new HashSet<>(Arrays.asList(topSection,
+                divSection, strSection));
+        conf.setManagedSections(managedSections);
+
+        Map<Direction, ISectionStatemachine> localSections = new HashMap<>();
+        localSections.put(TOP, topSectionSM);
+        localSections.put(DIVERGENT, divSectionSM);
+        localSections.put(STRAIGHT, strSectionSM);
+
+        Map<Direction, RemoteTurnout> remoteTurnouts = new HashMap<>();
+        remoteTurnouts.put(TOP, new RemoteTurnout(TOP, DIVERGENT, 0x81));
+        remoteTurnouts.put(DIVERGENT, new RemoteTurnout(DIVERGENT, DIVERGENT,
+                0x85));
+        remoteTurnouts.put(STRAIGHT, new RemoteTurnout(STRAIGHT, STRAIGHT, 0x85));
+
+        TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
+                remoteTurnouts, localSections);
+        turnoutStatemachine.addSectionsListener(outgoingEventListener);
+        turnoutStatemachine.addTurnoutListener(outgoingEventListener);
+
+        turnoutStatemachine.getSCITurnout().setRemTopIsPrior(true);
+        turnoutStatemachine.getSCITurnout().setRemDivergentIsPrior(true);
+        turnoutStatemachine.getSCITurnout().setRemStraightIsPrior(true);
+
+        return conf;
     }
 
-    public void initialize0x83(ITraceableStatemachine sm) {
-        sm.init();
-        sm.getSCITurnout().setTurnoutId(0x83);
-        sm.getSCITurnout().setTurnoutSectionId(0x03);
+    public static YakinduSMConfiguration initialize0x84() {
+        YakinduSMConfiguration conf = new YakinduSMConfiguration();
+        int turnoutID = 0x84;
 
-        this.setSections(sm, 0x08, 0x17, 0x0B);
+        TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
+                "turnout" + String.valueOf(turnoutID));
 
-        Set<RemoteTurnout> remoteTurnouts = new HashSet<>(Arrays.asList(
-                new RemoteTurnout(Direction.TOP, Direction.DIVERGENT, 0x81),
-                new RemoteTurnout(Direction.DIVERGENT, Direction.DIVERGENT, 0x85),
-                new RemoteTurnout(Direction.STRAIGHT, Direction.STRAIGHT, 0x85)));
+        turnoutStatemachine.init();
+        turnoutStatemachine.getSCITurnout().setId(turnoutID);
 
-        sm.getSCITurnout().setRemTopIsPrior(true);
-        sm.getSCITurnout().setRemDivergentIsPrior(true);
-        sm.getSCITurnout().setRemStraightIsPrior(true);
+        conf.setTurnoutSectionId(0x05);
+        conf.setTurnoutStatemachine(turnoutStatemachine);
 
-        sm.getSCISections().getListeners().add(new RemoteSectionEventListener(
-                remoteTurnouts));
+        int divSectionID = 0x11;
+        int strSectionID = 0x0A;
+
+        SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
+                divSectionID, turnoutStatemachine);
+        SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
+                strSectionID, turnoutStatemachine);
+
+        Section divSection = new Section(divSectionID, divSectionSM);
+        Section strSection = new Section(strSectionID, strSectionSM);
+
+        Set<Section> managedSections = new HashSet<>(Arrays.asList(divSection,
+                strSection));
+        conf.setManagedSections(managedSections);
+
+        Map<Direction, ISectionStatemachine> localSections = new HashMap<>();
+        localSections.put(DIVERGENT, divSectionSM);
+        localSections.put(STRAIGHT, strSectionSM);
+
+        Map<Direction, RemoteTurnout> remoteTurnouts = new HashMap<>();
+        remoteTurnouts.put(TOP, new RemoteTurnout(TOP, DIVERGENT, 0x86));
+        remoteTurnouts.put(DIVERGENT, new RemoteTurnout(DIVERGENT, DIVERGENT,
+                0x82));
+        remoteTurnouts.put(STRAIGHT, new RemoteTurnout(STRAIGHT, TOP, 0x82));
+
+        TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
+                remoteTurnouts, localSections);
+        turnoutStatemachine.addSectionsListener(outgoingEventListener);
+        turnoutStatemachine.addTurnoutListener(outgoingEventListener);
+
+        turnoutStatemachine.getSCITurnout().setRemTopIsPrior(true);
+        turnoutStatemachine.getSCITurnout().setRemDivergentIsPrior(true);
+        turnoutStatemachine.getSCITurnout().setRemStraightIsPrior(true);
+
+        return conf;
     }
 
-    public void initialize0x84(ITraceableStatemachine sm) {
-        sm.init();
-        sm.getSCITurnout().setTurnoutId(0x84);
-        sm.getSCITurnout().setTurnoutSectionId(0x05);
+    public static YakinduSMConfiguration initialize0x85() {
+        YakinduSMConfiguration conf = new YakinduSMConfiguration();
+        int turnoutID = 0x85;
 
-        this.setSections(sm, -1, 0x11, 0x0A);
+        TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
+                "turnout" + String.valueOf(turnoutID));
 
-        Set<RemoteTurnout> remoteTurnouts = new HashSet<>(Arrays.asList(
-                new RemoteTurnout(Direction.TOP, Direction.DIVERGENT, 0x86),
-                new RemoteTurnout(Direction.DIVERGENT, Direction.DIVERGENT, 0x82),
-                new RemoteTurnout(Direction.STRAIGHT, Direction.TOP, 0x82)));
+        turnoutStatemachine.init();
+        turnoutStatemachine.getSCITurnout().setId(turnoutID);
 
-        sm.getSCITurnout().setRemTopIsPrior(true);
-        sm.getSCITurnout().setRemDivergentIsPrior(true);
-        sm.getSCITurnout().setRemStraightIsPrior(true);
+        conf.setTurnoutSectionId(0x06);
+        conf.setTurnoutStatemachine(turnoutStatemachine);
 
-        sm.getSCISections().getListeners().add(new RemoteSectionEventListener(
-                remoteTurnouts));
+        int divSectionID = 0x14;
+        int strSectionID = 0x13;
+
+        SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
+                strSectionID, turnoutStatemachine);
+        SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
+                divSectionID, turnoutStatemachine);
+
+        Section strSection = new Section(strSectionID, strSectionSM);
+        Section divSection = new Section(divSectionID, divSectionSM);
+
+        Set<Section> managedSections = new HashSet<>(Arrays.asList(strSection,
+                divSection));
+        conf.setManagedSections(managedSections);
+
+        Map<Direction, ISectionStatemachine> localSections = new HashMap<>();
+        localSections.put(STRAIGHT, strSectionSM);
+        localSections.put(DIVERGENT, divSectionSM);
+
+        Map<Direction, RemoteTurnout> remoteTurnouts = new HashMap<>();
+        remoteTurnouts.put(TOP, new RemoteTurnout(TOP, STRAIGHT, 0x86));
+        remoteTurnouts.put(DIVERGENT, new RemoteTurnout(DIVERGENT, DIVERGENT,
+                0x83));
+        remoteTurnouts.put(STRAIGHT, new RemoteTurnout(STRAIGHT, STRAIGHT, 0x83));
+
+        TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
+                remoteTurnouts, localSections);
+        turnoutStatemachine.addSectionsListener(outgoingEventListener);
+        turnoutStatemachine.addTurnoutListener(outgoingEventListener);
+
+        turnoutStatemachine.getSCITurnout().setRemTopIsPrior(true);
+        turnoutStatemachine.getSCITurnout().setRemDivergentIsPrior(false);
+        turnoutStatemachine.getSCITurnout().setRemStraightIsPrior(false);
+
+        return conf;
     }
 
-    public void initialize0x85(ITraceableStatemachine sm) {
-        sm.init();
-        sm.getSCITurnout().setTurnoutId(0x85);
-        sm.getSCITurnout().setTurnoutSectionId(0x06);
+    private static SectionWrapperWithListeners createSectionStatemachine(
+            int sectionID,
+            ITurnoutStatemachine turnoutStatemachine) {
+        SectionWrapperWithListeners sectionStatemachine = new SectionWrapperWithListeners(
+                "section" + String.valueOf(sectionID));
+        sectionStatemachine.init();
 
-        this.setSections(sm, -1, 0x14, 0x13);
+        SectionEventListener outgoingEventListener = new SectionEventListener(
+                turnoutStatemachine);
+        sectionStatemachine.addListener(outgoingEventListener);
 
-        Set<RemoteTurnout> remoteTurnouts = new HashSet<>(Arrays.asList(
-                new RemoteTurnout(Direction.TOP, Direction.STRAIGHT, 0x86),
-                new RemoteTurnout(Direction.DIVERGENT, Direction.DIVERGENT, 0x83),
-                new RemoteTurnout(Direction.STRAIGHT, Direction.STRAIGHT, 0x83)));
-
-        sm.getSCITurnout().setRemTopIsPrior(true);
-        sm.getSCITurnout().setRemDivergentIsPrior(false);
-        sm.getSCITurnout().setRemStraightIsPrior(false);
-
-        sm.getSCISections().getListeners().add(new RemoteSectionEventListener(
-                remoteTurnouts));
-    }
-
-    private void setSections(IKvStatemachine sm, int topId, int divergentId,
-            int straightId) {
-        sm.getSCISectionTop().setSectionId(topId);
-        sm.getSCISectionDivergent().setSectionId(divergentId);
-        sm.getSCISectionStraight().setSectionId(straightId);
-    }
-
-    private StatemachineInitializer() {
-
+        return sectionStatemachine;
     }
 
 }

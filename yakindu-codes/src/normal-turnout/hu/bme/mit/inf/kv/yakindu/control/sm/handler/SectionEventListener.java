@@ -32,18 +32,18 @@ public class SectionEventListener implements SCISectionListener {
     }
 
     @Override
-    public void onPassingAllowedFromRaised(long value) {
-        localTurnout.getSCITurnout().raisePassingAllowedFrom(value);
+    public void onPassingAllowedFromRaised(long directionValue) {
+        localTurnout.getSCITurnout().raisePassingAllowedFrom(directionValue);
     }
 
     @Override
-    public void onPassingDeniedFromRaised(long value) {
-        localTurnout.getSCITurnout().raisePassingDeniedFrom(value);
+    public void onPassingDeniedFromRaised(long directionValue) {
+        localTurnout.getSCITurnout().raisePassingDeniedFrom(directionValue);
     }
 
     @Override
-    public void onSectionLockFromRaised(long value) {
-        localTurnout.getSCITurnout().raiseSectionLockFrom(value);
+    public void onSectionLockFromRaised(long directionValue) {
+        localTurnout.getSCITurnout().raiseSectionLockFrom(directionValue);
     }
 
 }

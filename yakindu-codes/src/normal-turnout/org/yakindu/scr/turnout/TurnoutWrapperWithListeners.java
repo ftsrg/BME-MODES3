@@ -11,10 +11,15 @@ import org.yakindu.scr.turnout.TurnoutStatemachine.State;
  */
 public class TurnoutWrapperWithListeners extends TurnoutWrapper {
 
+    private static boolean TRACE_LOG_ENABLED = false;
     private final StatemachineTraceBuilder<State> traceBuilder;
 
     public TurnoutWrapperWithListeners(String statemachineName) {
         traceBuilder = new StatemachineTraceBuilder<>(statemachineName);
+    }
+
+    public static void setTraceLogEnabled(boolean traceLogEnabled) {
+        TRACE_LOG_ENABLED = traceLogEnabled;
     }
 
     @Override
@@ -23,14 +28,14 @@ public class TurnoutWrapperWithListeners extends TurnoutWrapper {
         boolean terminate = false;
 
         while (!(terminate || Thread.currentThread().isInterrupted())) {
-
             try {
-
                 Runnable eventProcessor = eventQueue.take();
                 eventProcessor.run();
 
-                synchronized (statemachine) {
-                    updateLogTrace();
+                if (TRACE_LOG_ENABLED) {
+                    synchronized (statemachine) {
+                        updateLogTrace();
+                    }
                 }
 
             } catch (InterruptedException e) {
@@ -45,21 +50,9 @@ public class TurnoutWrapperWithListeners extends TurnoutWrapper {
         }
     }
 
-    public void removeSectionsListener(SCISectionsListener listener) {
-        synchronized (statemachine) {
-            getSCISections().getListeners().remove(listener);
-        }
-    }
-
     public void addTurnoutListener(SCITurnoutListener listener) {
         synchronized (statemachine) {
             getSCITurnout().getListeners().add(listener);
-        }
-    }
-
-    public void removeTurnoutListener(SCITurnoutListener listener) {
-        synchronized (statemachine) {
-            getSCITurnout().getListeners().remove(listener);
         }
     }
 

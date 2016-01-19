@@ -11,10 +11,15 @@ import org.yakindu.scr.section.SectionStatemachine.State;
  */
 public class SectionWrapperWithListeners extends SectionWrapper {
 
+    private static boolean TRACE_LOG_ENABLED = false;
     private final StatemachineTraceBuilder<State> traceBuilder;
 
     public SectionWrapperWithListeners(String statemachineName) {
         traceBuilder = new StatemachineTraceBuilder<>(statemachineName);
+    }
+
+    public static void setTraceLogEnabled(boolean traceLogEnabled) {
+        TRACE_LOG_ENABLED = traceLogEnabled;
     }
 
     @Override
@@ -23,14 +28,14 @@ public class SectionWrapperWithListeners extends SectionWrapper {
         boolean terminate = false;
 
         while (!(terminate || Thread.currentThread().isInterrupted())) {
-
             try {
-
                 Runnable eventProcessor = eventQueue.take();
                 eventProcessor.run();
 
-                synchronized (statemachine) {
-                    updateLogTrace();
+                if (TRACE_LOG_ENABLED) {
+                    synchronized (statemachine) {
+                        updateLogTrace();
+                    }
                 }
 
             } catch (InterruptedException e) {
@@ -42,12 +47,6 @@ public class SectionWrapperWithListeners extends SectionWrapper {
     public void addListener(SCISectionListener listener) {
         synchronized (statemachine) {
             getSCISection().getListeners().add(listener);
-        }
-    }
-
-    public void removeListener(SCISectionListener listener) {
-        synchronized (statemachine) {
-            getSCISection().getListeners().remove(listener);
         }
     }
 

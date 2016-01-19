@@ -8,6 +8,10 @@ import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
  */
 public class DirectionConverterHelper {
 
+    private static final int STRAIGHT = 0;
+    private static final int DIVERGENT = 1;
+    private static final int TOP = 2;
+
     /**
      * @see TurnoutStatemachine.java -> init() method
      * @see SectionStatemachine.java -> init() method
@@ -19,14 +23,27 @@ public class DirectionConverterHelper {
     public static Direction getDirectionFromValue(long value) {
         int intValue = (int) value;
         switch (intValue) {
-            case 0:
+            case STRAIGHT:
                 return Direction.STRAIGHT;
-            case 1:
+            case DIVERGENT:
                 return Direction.DIVERGENT;
-            case 2:
+            case TOP:
                 return Direction.TOP;
             default:
                 return null;
+        }
+    }
+
+    public static long getValueFromDirection(Direction direction) {
+        switch (direction) {
+            case STRAIGHT:
+                return DirectionConverterHelper.STRAIGHT;
+            case DIVERGENT:
+                return DirectionConverterHelper.DIVERGENT;
+            case TOP:
+                return DirectionConverterHelper.TOP;
+            default:
+                return -1;
         }
     }
 

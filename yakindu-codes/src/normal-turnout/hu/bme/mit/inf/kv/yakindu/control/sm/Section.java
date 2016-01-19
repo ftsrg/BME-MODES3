@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.kv.yakindu.control.sm;
 
-import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
+import org.yakindu.scr.section.ISectionStatemachine.SCISection;
+import org.yakindu.scr.section.SectionWrapper;
 
 /**
  *
@@ -8,19 +9,32 @@ import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
  */
 public class Section {
 
-    private final Direction direction;
     private final int sectionId;
+    private final SectionWrapper statemachine;
 
-    public Section(Direction direction, int sectionId) {
-        this.direction = direction;
+    public Section(int sectionId, SectionWrapper sm) {
         this.sectionId = sectionId;
-    }
-
-    public Direction getDirection() {
-        return this.direction;
+        this.statemachine = sm;
     }
 
     public int getSectionId() {
         return this.sectionId;
     }
+
+    public SCISection getSCISection() {
+        return statemachine.getSCISection();
+    }
+
+    public void runCycle() {
+        statemachine.runCycle();
+    }
+
+    public void enter() {
+        statemachine.enter();
+    }
+
+    public void start() {
+        new Thread(statemachine).start();
+    }
+
 }

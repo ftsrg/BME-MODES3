@@ -32,49 +32,52 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
     }
 
     @Override
-    public void onSectionAllowedToRaised(long value) {
-        getLocalSectionByDirectionValue(value).raiseSectionAllowedTo(value);
+    public void onSectionAllowedToRaised(long directionValue) {
+        getLocalSectionByDirectionValue(directionValue).raiseSectionAllowedTo(
+                directionValue);
     }
 
     @Override
-    public void onSectionLockedToRaised(long value) {
-        getLocalSectionByDirectionValue(value).raiseSectionLockedTo(value);
+    public void onSectionLockedToRaised(long directionValue) {
+        getLocalSectionByDirectionValue(directionValue).raiseSectionLockedTo(
+                directionValue);
     }
 
     @Override
-    public void onSectionLockedWithReplyToRaised(long value) {
-        getLocalSectionByDirectionValue(value).raiseSectionLockedWithReplyTo(
-                value);
+    public void onSectionLockedWithReplyToRaised(long directionValue) {
+        getLocalSectionByDirectionValue(directionValue).raiseSectionLockedWithReplyTo(
+                directionValue);
     }
 
     @Override
-    public void onLockRequestToRaised(long value) {
-        getLocalSectionByDirectionValue(value).raiseLockRequestTo(value);
+    public void onLockRequestToRaised(long directionValue) {
+        getLocalSectionByDirectionValue(directionValue).raiseLockRequestTo(
+                directionValue);
     }
 
-    private SCISection getLocalSectionByDirectionValue(long value) {
-        Direction direction = getDirectionFromValue(value);
+    private SCISection getLocalSectionByDirectionValue(long directionValue) {
+        Direction direction = getDirectionFromValue(directionValue);
         return localSections.get(direction).getSCISection();
     }
 
     @Override
-    public void onRemShortPassageRequestToRaised(long value) {
-        sendShortPassageRequest(value);
+    public void onRemShortPassageRequestToRaised(long directionValue) {
+        sendShortPassageRequest(directionValue);
     }
 
     @Override
-    public void onRemPassageAllowedToRaised(long value) {
-        sendPassageAllowed(value);
+    public void onRemPassageAllowedToRaised(long directionValue) {
+        sendPassageAllowed(directionValue);
     }
 
     @Override
-    public void onRemPassageDeniedToRaised(long value) {
-        sendPassageDeniedTo(value);
+    public void onRemPassageDeniedToRaised(long directionValue) {
+        sendPassageDeniedTo(directionValue);
     }
 
     @Override
-    public void onRemPassageRequestToRaised(long value) {
-        sendPassageRequest(value);
+    public void onRemPassageRequestToRaised(long directionValue) {
+        sendPassageRequest(directionValue);
     }
 
     @Override
@@ -84,8 +87,9 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
         }
     }
 
-    private void sendShortPassageRequest(long value) {
-        RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(value);
+    private void sendShortPassageRequest(long directionValue) {
+        RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(
+                directionValue);
 
         new ShortPassageRequestSender().sendShortPassageRequest(
                 remoteTurnout.getLocalDirection(),
@@ -95,8 +99,9 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 "short passage request sent to " + remoteTurnout.getTurnoutId());
     }
 
-    private void sendPassageRequest(long value) {
-        RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(value);
+    private void sendPassageRequest(long directionValue) {
+        RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(
+                directionValue);
 
         new PassageRequestSender().sendPassageRequest(
                 remoteTurnout.getLocalDirection(), remoteTurnout.getTurnoutId(),
@@ -106,8 +111,9 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 "passage request sent to " + remoteTurnout.getTurnoutId());
     }
 
-    private void sendPassageAllowed(long value) {
-        RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(value);
+    private void sendPassageAllowed(long directionValue) {
+        RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(
+                directionValue);
 
         new PassageResponseSender().sendPassageResponse(
                 remoteTurnout.getLocalDirection(), Allowance.ALLOWED,
@@ -117,8 +123,8 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 "passage allowed sent to " + remoteTurnout.getTurnoutId());
     }
 
-    private void sendPassageDeniedTo(long value) {
-        Direction direction = getDirectionFromValue(value);
+    private void sendPassageDeniedTo(long directionValue) {
+        Direction direction = getDirectionFromValue(directionValue);
         sendPassageDenied(direction);
     }
 
@@ -133,8 +139,8 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 "passage denied sent to " + remoteTurnout.getTurnoutId());
     }
 
-    private RemoteTurnout getRemoteTurnoutByDirectionValue(long value) {
-        Direction direction = getDirectionFromValue(value);
+    private RemoteTurnout getRemoteTurnoutByDirectionValue(long directionValue) {
+        Direction direction = getDirectionFromValue(directionValue);
         RemoteTurnout remoteTurnout = remoteSections.get(direction);
         return remoteTurnout;
     }

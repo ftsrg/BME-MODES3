@@ -1,15 +1,15 @@
 package hu.bme.mit.inf.kv.yakindu.control.controller;
 
 import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
-import hu.bme.mit.inf.kv.yakindu.control.sm.TraceableStatemachine;
+import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder;
 import hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration;
 import java.io.IOException;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-
-import org.yakindu.scr.kv.KvStatemachine;
+import org.yakindu.scr.section.SectionWrapperWithListeners;
+import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 /**
  *
@@ -136,43 +136,36 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> traceLogArg,
             Integer turnoutId, OptionSet parsed) {
 
-        KvStatemachine sm = new KvStatemachine();
-        TraceableStatemachine statemachine = new TraceableStatemachine(sm);
+        YakinduSMConfiguration conf = null;
 
         switch (turnoutId) {
             case 0x81:
-                StatemachineInitializer.getInstance().initialize0x81(
-                        statemachine);
+                conf = StatemachineInitializer.initialize0x81();
                 break;
             case 0x82:
-                StatemachineInitializer.getInstance().initialize0x82(
-                        statemachine);
+                conf = StatemachineInitializer.initialize0x82();
                 break;
             case 0x83:
-                StatemachineInitializer.getInstance().initialize0x83(
-                        statemachine);
+                conf = StatemachineInitializer.initialize0x83();
                 break;
             case 0x84:
-                StatemachineInitializer.getInstance().initialize0x84(
-                        statemachine);
+                conf = StatemachineInitializer.initialize0x84();
                 break;
             case 0x85:
-                StatemachineInitializer.getInstance().initialize0x85(
-                        statemachine);
+                conf = StatemachineInitializer.initialize0x85();
                 break;
             default:
                 break;
         }
 
         if (parsed.has(traceLogArg)) {
-            YakinduKVController.setTraceLogEnabled(true);
+            SectionWrapperWithListeners.setTraceLogEnabled(true);
+            TurnoutWrapperWithListeners.setTraceLogEnabled(true);
             StatemachineTraceBuilder.setDefaultSavePath(
                     parsed.valueOf(traceLogArg));
         }
 
-        YakinduKVController yakinduController = new YakinduKVController(
-                statemachine);
-
+        YakinduSMRunner yakinduController = new YakinduSMRunner(conf);
         yakinduController.start();
     }
 }

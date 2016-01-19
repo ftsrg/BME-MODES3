@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.kv.yakindu.control.transmitter;
 
-import hu.bme.mit.inf.kv.yakindu.control.controller.IYakinduKVController;
 import hu.bme.mit.inf.kv.yakindu.control.helper.Commands;
 import hu.bme.mit.inf.kv.yakindu.control.helper.LoggingThread;
 
@@ -10,6 +9,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
+import static hu.bme.mit.inf.kv.yakindu.control.sm.handler.DirectionConverterHelper.getValueFromDirection;
+import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
 /**
  *
@@ -18,11 +19,12 @@ import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
 public class DistributedMessageTransmitter extends LoggingThread {
 
     private final BlockingQueue<byte[]> distributedPackets = new LinkedBlockingQueue<>();
-    private final IYakinduKVController controller;
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
 
-    public DistributedMessageTransmitter(IYakinduKVController yakinduController) {
-        controller = yakinduController;
+    private final ITurnoutStatemachine statemachine;
+
+    public DistributedMessageTransmitter(ITurnoutStatemachine sm) {
+        statemachine = sm;
     }
 
     public void addPacket(byte[] packet) {
@@ -76,36 +78,37 @@ public class DistributedMessageTransmitter extends LoggingThread {
     }
 
     private void remSectionLock(final Direction from) {
+        final long directionValue = getValueFromDirection(from);
+
         threadPool.execute(new Runnable() {
             @Override
             public void run() {
-                controller.remSectionLock(from);
+                statemachine.getSCITurnout().raiseRemSectionLockFrom(
+                        directionValue);
                 logMessage("received remSectionLock " + from);
             }
         });
     }
 
     private void remShortSectionLock(final Direction from) {
-        threadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                controller.remShortSectionLock(from);
-                logMessage("received short remSectionLock " + from);
-            }
-        });
+
     }
 
     private void remPassageResponse(final byte isAllowedByte,
             final Direction from) {
+        final long directionValue = getValueFromDirection(from);
+
         threadPool.execute(new Runnable() {
             @Override
             public void run() {
                 boolean isAllowed = (isAllowedByte == Commands.DISTRIBUTED_PASSAGE_ALLOWED);
                 if (isAllowed) {
-                    controller.remPassageAllowed(from);
+                    statemachine.getSCITurnout().raiseRemPassageAllowedFrom(
+                            directionValue);
                     logMessage("received passage allowed " + from);
                 } else {
-                    controller.remPassageDenied(from);
+                    statemachine.getSCITurnout().raiseRemPassageDeniedFrom(
+                            directionValue);
                     logMessage("received passage denied " + from);
                 }
             }
