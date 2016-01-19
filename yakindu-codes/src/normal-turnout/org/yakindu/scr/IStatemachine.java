@@ -21,6 +21,21 @@ public interface IStatemachine {
     public void exit();
 
     /**
+     * Checks if the statemachine is active. A statemachine is active if it was
+     * entered. It is inactive if it has not been entered at all or if it was
+     * exited.
+     * @return 
+     */
+    public boolean isActive();
+
+    /**
+     * Checks if all active states are final. If there are no active states then
+     * the statemachine is considered as incative and this method returns false.
+     * @return 
+     */
+    public boolean isFinal();
+
+    /**
      * Start a run-to-completion cycle.
      */
     public void runCycle();
