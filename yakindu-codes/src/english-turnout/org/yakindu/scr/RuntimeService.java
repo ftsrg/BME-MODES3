@@ -19,25 +19,28 @@ public class RuntimeService {
 
     private Timer timer = null;
 
-    private Map<Long, StatemachineTimerTask> timerTasks = new HashMap<Long, StatemachineTimerTask>();
+    private final Map<Long, StatemachineTimerTask> timerTasks = new HashMap<>();
 
     private class StatemachineTimerTask extends TimerTask {
 
-        private List<IStatemachine> statemachineList = new LinkedList<IStatemachine>();
+        private final List<IStatemachine> statemachineList = new LinkedList<>();
 
-        private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+        private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
         private boolean isPaused = false;
 
         @Override
         public void run() {
             lock.readLock().lock();
-            if (!isPaused) {
-                for (IStatemachine statemachine : statemachineList) {
-                    statemachine.runCycle();
+            try {
+                if (!isPaused) {
+                    for (IStatemachine statemachine : statemachineList) {
+                        statemachine.runCycle();
+                    }
                 }
+            } finally {
+                lock.readLock().unlock();
             }
-            lock.readLock().unlock();
         }
 
         /**
@@ -48,8 +51,12 @@ public class RuntimeService {
          */
         public boolean addStatemachine(IStatemachine statemachine) {
             lock.writeLock().lock();
-            boolean ret = statemachineList.add(statemachine);
-            lock.writeLock().unlock();
+            boolean ret = false;
+            try {
+                ret = statemachineList.add(statemachine);
+            } finally {
+                lock.writeLock().unlock();
+            }
             return ret;
         }
 
@@ -61,8 +68,12 @@ public class RuntimeService {
          */
         public boolean removeStatemachine(IStatemachine statemachine) {
             lock.writeLock().lock();
-            boolean ret = statemachineList.remove(statemachine);
-            lock.writeLock().unlock();
+            boolean ret = false;
+            try {
+                ret = statemachineList.remove(statemachine);
+            } finally {
+                lock.writeLock().unlock();
+            }
             return ret;
         }
 
@@ -109,7 +120,7 @@ public class RuntimeService {
             StatemachineTimerTask timerTask = new StatemachineTimerTask();
             timerTasks.put(cyclePeriod, timerTask);
             boolean ret = timerTask.addStatemachine(statemachine);
-			// Create a new Timer instance if runtime service was cancelled
+            // Create a new Timer instance if runtime service was cancelled
             // before
             if (timer == null) {
                 timer = new Timer();
