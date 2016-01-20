@@ -1,8 +1,9 @@
 package org.yakindu.scr.section;
 
-import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import java.util.List;
 
 /**
  * Runnable wrapper of SectionStatemachine. This wrapper provides a thread safe,

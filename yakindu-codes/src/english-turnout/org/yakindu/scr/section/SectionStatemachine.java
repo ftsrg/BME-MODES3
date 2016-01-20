@@ -319,7 +319,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 
     public enum State {
 
-        main_region_FreeSection, main_region_FreeSection_r1_EnableSection, main_region_OccupiedSection, main_region_OccupiedSection_r1_SendSectionLock, main_region_OccupiedSection_r1_EnableSection, main_region_OccupiedSection_r1_BecomesLocked, $NullState$
+        main_region_OccupiedSection, main_region_OccupiedSection_r1_SendSectionLock, main_region_OccupiedSection_r1_EnableSection, main_region_OccupiedSection_r1_BecomesLocked, main_region_FreeSection, $NullState$
     };
 
     private final State[] stateVector = new State[1];
@@ -360,17 +360,12 @@ public class SectionStatemachine implements ISectionStatemachine {
         }
 
         nextStateIndex = 0;
-        stateVector[0] = State.main_region_FreeSection_r1_EnableSection;
+        stateVector[0] = State.main_region_FreeSection;
     }
 
     @Override
     public void exit() {
         switch (stateVector[0]) {
-            case main_region_FreeSection_r1_EnableSection:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
             case main_region_OccupiedSection_r1_SendSectionLock:
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
@@ -382,6 +377,11 @@ public class SectionStatemachine implements ISectionStatemachine {
                 break;
 
             case main_region_OccupiedSection_r1_BecomesLocked:
+                nextStateIndex = 0;
+                stateVector[0] = State.$NullState$;
+                break;
+
+            case main_region_FreeSection:
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
                 break;
@@ -430,11 +430,6 @@ public class SectionStatemachine implements ISectionStatemachine {
      */
     public boolean isStateActive(State state) {
         switch (state) {
-            case main_region_FreeSection:
-                return stateVector[0].ordinal() >= State.main_region_FreeSection.ordinal()
-                        && stateVector[0].ordinal() <= State.main_region_FreeSection_r1_EnableSection.ordinal();
-            case main_region_FreeSection_r1_EnableSection:
-                return stateVector[0] == State.main_region_FreeSection_r1_EnableSection;
             case main_region_OccupiedSection:
                 return stateVector[0].ordinal() >= State.main_region_OccupiedSection.ordinal()
                         && stateVector[0].ordinal() <= State.main_region_OccupiedSection_r1_BecomesLocked.ordinal();
@@ -444,6 +439,8 @@ public class SectionStatemachine implements ISectionStatemachine {
                 return stateVector[0] == State.main_region_OccupiedSection_r1_EnableSection;
             case main_region_OccupiedSection_r1_BecomesLocked:
                 return stateVector[0] == State.main_region_OccupiedSection_r1_BecomesLocked;
+            case main_region_FreeSection:
+                return stateVector[0] == State.main_region_FreeSection;
             default:
                 return false;
         }
@@ -452,34 +449,6 @@ public class SectionStatemachine implements ISectionStatemachine {
     @Override
     public SCISection getSCISection() {
         return sCISection;
-    }
-
-    /* The reactions of state EnableSection. */
-    private void react_main_region_FreeSection_r1_EnableSection() {
-        if (sCISection.sectionOccupied) {
-            switch (stateVector[0]) {
-                case main_region_FreeSection_r1_EnableSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCISection.raisePassingDeniedFrom(sCISection.direction);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_OccupiedSection_r1_SendSectionLock;
-        } else {
-            if (sCISection.getSectionLockedWithReplyToValue() == sCISection.direction) {
-                sCISection.raisePassingAllowedFrom(sCISection.direction);
-            }
-
-            if (sCISection.getLockRequestToValue() == sCISection.direction) {
-                sCISection.raisePassingAllowedFrom(sCISection.direction);
-            }
-        }
     }
 
     /* The reactions of state SendSectionLock. */
@@ -507,8 +476,10 @@ public class SectionStatemachine implements ISectionStatemachine {
 
             sCISection.raisePassingAllowedFrom(sCISection.direction);
 
+            sCISection.raiseEnableSection(sCISection.id);
+
             nextStateIndex = 0;
-            stateVector[0] = State.main_region_FreeSection_r1_EnableSection;
+            stateVector[0] = State.main_region_FreeSection;
         } else {
             if (sCISection.getSectionLockedToValue() == sCISection.direction) {
                 nextStateIndex = 0;
@@ -578,8 +549,10 @@ public class SectionStatemachine implements ISectionStatemachine {
 
             sCISection.raisePassingAllowedFrom(sCISection.direction);
 
+            sCISection.raiseEnableSection(sCISection.id);
+
             nextStateIndex = 0;
-            stateVector[0] = State.main_region_FreeSection_r1_EnableSection;
+            stateVector[0] = State.main_region_FreeSection;
         } else {
             if (sCISection.revokeLock) {
                 nextStateIndex = 0;
@@ -645,8 +618,10 @@ public class SectionStatemachine implements ISectionStatemachine {
 
             sCISection.raisePassingAllowedFrom(sCISection.direction);
 
+            sCISection.raiseEnableSection(sCISection.id);
+
             nextStateIndex = 0;
-            stateVector[0] = State.main_region_FreeSection_r1_EnableSection;
+            stateVector[0] = State.main_region_FreeSection;
         } else {
             if (sCISection.revokeLock) {
                 nextStateIndex = 0;
@@ -682,6 +657,27 @@ public class SectionStatemachine implements ISectionStatemachine {
         }
     }
 
+    /* The reactions of state FreeSection. */
+    private void react_main_region_FreeSection() {
+        if (sCISection.sectionOccupied) {
+            nextStateIndex = 0;
+            stateVector[0] = State.$NullState$;
+
+            sCISection.raisePassingDeniedFrom(sCISection.direction);
+
+            nextStateIndex = 0;
+            stateVector[0] = State.main_region_OccupiedSection_r1_SendSectionLock;
+        } else {
+            if (sCISection.getSectionLockedWithReplyToValue() == sCISection.direction) {
+                sCISection.raisePassingAllowedFrom(sCISection.direction);
+            }
+
+            if (sCISection.getLockRequestToValue() == sCISection.direction) {
+                sCISection.raisePassingAllowedFrom(sCISection.direction);
+            }
+        }
+    }
+
     @Override
     public void runCycle() {
         if (!initialized) {
@@ -694,9 +690,6 @@ public class SectionStatemachine implements ISectionStatemachine {
         for (nextStateIndex = 0; nextStateIndex < stateVector.length; nextStateIndex++) {
 
             switch (stateVector[nextStateIndex]) {
-                case main_region_FreeSection_r1_EnableSection:
-                    react_main_region_FreeSection_r1_EnableSection();
-                    break;
                 case main_region_OccupiedSection_r1_SendSectionLock:
                     react_main_region_OccupiedSection_r1_SendSectionLock();
                     break;
@@ -705,6 +698,9 @@ public class SectionStatemachine implements ISectionStatemachine {
                     break;
                 case main_region_OccupiedSection_r1_BecomesLocked:
                     react_main_region_OccupiedSection_r1_BecomesLocked();
+                    break;
+                case main_region_FreeSection:
+                    react_main_region_FreeSection();
                     break;
                 default:
                 // $NullState$
