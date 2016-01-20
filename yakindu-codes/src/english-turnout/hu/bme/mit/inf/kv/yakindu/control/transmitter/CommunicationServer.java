@@ -16,6 +16,8 @@ public class CommunicationServer extends LoggingThread {
     private static final int CSERVER_ARDUINO_PORT = 3300;
     private static final int PACKET_SIZE = 64;
 
+    private static boolean CLOUD_INTEGRATION_ENABLED = false;
+
     private final DistributedMessageTransmitter messageTransmitter;
     private final int port;
 
@@ -23,6 +25,10 @@ public class CommunicationServer extends LoggingThread {
             DistributedMessageTransmitter messageTransmitter) {
         port = CSERVER_ARDUINO_PORT + offset;
         this.messageTransmitter = messageTransmitter;
+    }
+
+    public static void setCloudIntegrationEnabled(boolean isEnabled) {
+        CLOUD_INTEGRATION_ENABLED = isEnabled;
     }
 
     @Override
@@ -39,7 +45,9 @@ public class CommunicationServer extends LoggingThread {
                         if (connectedChannel.read(byteBuffer) > 0) {
                             byteBuffer.flip();
                             byte[] buffer = byteBuffer.array();
-                            //buffer = transformByteArrayToByteArray(buffer); // uncomment this row in cloud deployment with Node-RED
+                            if (CLOUD_INTEGRATION_ENABLED) {
+                                buffer = transformByteArrayToByteArray(buffer);
+                            }
                             messageTransmitter.addPacket(buffer);
                         }
                     } catch (Exception ex) {
@@ -54,7 +62,7 @@ public class CommunicationServer extends LoggingThread {
     }
 
     /**
-     * Required for cloud deployment, to integrate with Node-RED. The byte
+     * Required for cloud deployment, to integrate with Node-RED. The byte[]
      * received through the SocketChannel should be transformed with this
      * function.
      */

@@ -5,10 +5,14 @@ import java.io.IOException;
 import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
 import hu.bme.mit.inf.kv.yakindu.control.sm.TraceableStatemachine;
 import hu.bme.mit.inf.kv.yakindu.control.sm.handler.TurnoutEventListener;
-import hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlAddress;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionAddress;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionPort;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlPort;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationServer.setCloudIntegrationEnabled;
 
 import org.yakindu.scr.kv.KvStatemachine;
 
@@ -22,6 +26,8 @@ public class Simulator {
         try {
             OptionParser parser = new OptionParser();
             parser.accepts("sl", "enable status log [optional]");
+            parser.accepts("ci",
+                    "enable cloud integration with Node-RED [optional]");
 
             ArgumentAcceptingOptionSpec<String> traceLogFirstTurnoutArg = parser
                     .accepts("tp1", "trace log save path for 0x87 [optional]")
@@ -51,32 +57,18 @@ public class Simulator {
 
             OptionSet parsed = parser.parse(args);
 
-            Integer kvControlPort = null;
-            Integer kvControlBPExtensionPort = null;
-
-            if (parsed.has(kvControlPortArg)) {
-                try {
-                    kvControlPort = parsed.valueOf(kvControlPortArg);
-                } catch (joptsimple.OptionException ex) {
-                    throw new IOException(
-                            "Please use a number for the -p parameter.");
-                }
-            }
-            if (parsed.has(kvControlBPExtensionPortArg)) {
-                try {
-                    kvControlBPExtensionPort = parsed.valueOf(
-                            kvControlBPExtensionPortArg);
-                } catch (joptsimple.OptionException ex) {
-                    throw new IOException(
-                            "Please use a number for the -bpp parameter.");
-                }
-            }
+            Integer kvControlPort = getParameterIntegerValue(parsed,
+                    kvControlPortArg, "-p");
+            Integer kvControlBPExtensionPort = getParameterIntegerValue(parsed,
+                    kvControlBPExtensionPortArg, "-bpp");
 
             boolean enableStatusLog = parsed.has("sl");
+            boolean enableCloudIntegration = parsed.has("ci");
 
             setPreferences(kvControlAddressArg, kvControlPortArg,
                     kvControlBPExtensionAddressArg,
                     kvControlBPExtensionPortArg, parsed, enableStatusLog,
+                    enableCloudIntegration,
                     kvControlPort, kvControlBPExtensionPort);
 
             initializeAndStartStatemachines(traceLogFirstTurnoutArg,
@@ -88,32 +80,48 @@ public class Simulator {
         }
     }
 
+    private static Integer getParameterIntegerValue(OptionSet parsed,
+            ArgumentAcceptingOptionSpec<Integer> parameter,
+            String parameterFieldName) throws IOException {
+        if (parsed.has(parameter)) {
+            try {
+                return parsed.valueOf(parameter);
+            } catch (joptsimple.OptionException ex) {
+                throw new IOException(
+                        "Please use a number for the " + parameterFieldName + " parameter.");
+            }
+        }
+        return null;
+    }
+
     private static void setPreferences(
             ArgumentAcceptingOptionSpec<String> kvControlAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlPortArg,
             ArgumentAcceptingOptionSpec<String> kvControlBPExtensionAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlBPExtensionPortArg,
             OptionSet parsed,
-            boolean enableStatusLog, Integer kvControlPort,
+            boolean enableStatusLog, boolean enableCloudIntegration,
+            Integer kvControlPort,
             Integer kvControlBPExtensionPort) {
 
         if (enableStatusLog) {
             SimpleLogger.setStatusLogEnabled(true);
         }
+        if (enableCloudIntegration) {
+            setCloudIntegrationEnabled(true);
+        }
         if (parsed.has(kvControlAddressArg)) {
-            CommunicationConfiguration.setKvControlAddress(parsed.valueOf(
-                    kvControlAddressArg));
+            setKvControlAddress(parsed.valueOf(kvControlAddressArg));
         }
         if (parsed.has(kvControlPortArg)) {
-            CommunicationConfiguration.setKvControlPort(kvControlPort);
+            setKvControlPort(kvControlPort);
         }
         if (parsed.has(kvControlBPExtensionAddressArg)) {
-            CommunicationConfiguration.setKvControlBpExtensionAddress(parsed
+            setKvControlBpExtensionAddress(parsed
                     .valueOf(kvControlBPExtensionAddressArg));
         }
         if (parsed.has(kvControlBPExtensionPortArg)) {
-            CommunicationConfiguration.setKvControlBpExtensionPort(
-                    kvControlBPExtensionPort);
+            setKvControlBpExtensionPort(kvControlBPExtensionPort);
         }
     }
 
