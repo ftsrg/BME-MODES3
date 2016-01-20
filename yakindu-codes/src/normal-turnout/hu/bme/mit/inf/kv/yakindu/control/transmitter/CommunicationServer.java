@@ -62,7 +62,7 @@ public class CommunicationServer extends LoggingThread {
     }
 
     /**
-     * Required for cloud deployment, to integrate with Node-RED. The byte
+     * Required for cloud deployment, to integrate with Node-RED. The byte[]
      * received through the SocketChannel should be transformed with this
      * function.
      */
