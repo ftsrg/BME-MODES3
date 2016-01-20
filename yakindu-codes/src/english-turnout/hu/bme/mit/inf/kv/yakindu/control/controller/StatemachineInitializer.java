@@ -3,6 +3,7 @@ package hu.bme.mit.inf.kv.yakindu.control.controller;
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.kv.yakindu.control.sm.RemoteTurnout;
 import hu.bme.mit.inf.kv.yakindu.control.sm.Section;
+import static hu.bme.mit.inf.kv.yakindu.control.sm.handler.DirectionConverterHelper.getValueFromDirection;
 import hu.bme.mit.inf.kv.yakindu.control.sm.handler.SectionEventListener;
 import hu.bme.mit.inf.kv.yakindu.control.sm.handler.TurnoutEventListener;
 
@@ -28,6 +29,9 @@ import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
  */
 public class StatemachineInitializer {
 
+    private static final long DIVERGENT_VALUE = getValueFromDirection(DIVERGENT);
+    private static final long STRAIGHT_VALUE = getValueFromDirection(STRAIGHT);
+
     public static YakinduSMConfiguration initialize0x86() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x86;
@@ -45,9 +49,9 @@ public class StatemachineInitializer {
         int strSectionID = 0x15;
 
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                divSectionID, turnoutStatemachine);
+                divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-                strSectionID, turnoutStatemachine);
+                strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
 
         Section divSection = new Section(divSectionID, divSectionSM);
         Section strSection = new Section(strSectionID, strSectionSM);
@@ -90,9 +94,9 @@ public class StatemachineInitializer {
         int strSectionID = 0x16;
 
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                divSectionID, turnoutStatemachine);
+                divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-                strSectionID, turnoutStatemachine);
+                strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
 
         Section divSection = new Section(divSectionID, divSectionSM);
         Section strSection = new Section(strSectionID, strSectionSM);
@@ -119,11 +123,12 @@ public class StatemachineInitializer {
     }
 
     private static SectionWrapperWithListeners createSectionStatemachine(
-            int sectionID,
-            ITurnoutStatemachine turnoutStatemachine) {
+            int sectionID, ITurnoutStatemachine turnoutStatemachine,
+            long directionValue) {
         SectionWrapperWithListeners sectionStatemachine = new SectionWrapperWithListeners(
                 "section" + String.valueOf(sectionID));
         sectionStatemachine.init();
+        sectionStatemachine.getSCISection().setDirection(directionValue);
 
         SectionEventListener outgoingEventListener = new SectionEventListener(
                 turnoutStatemachine);
