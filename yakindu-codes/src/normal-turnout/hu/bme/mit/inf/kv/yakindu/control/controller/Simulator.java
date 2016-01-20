@@ -1,5 +1,10 @@
 package hu.bme.mit.inf.kv.yakindu.control.controller;
 
+import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x81;
+import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x82;
+import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x83;
+import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x84;
+import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x85;
 import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.printErrorMessage;
 import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.setStatusLogEnabled;
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
@@ -76,11 +81,12 @@ public class Simulator {
 
             setPreferences(kvControlAddressArg, kvControlPortArg,
                     kvControlBPExtensionAddressArg,
-                    kvControlBPExtensionPortArg, parsed, enableStatusLog,
+                    kvControlBPExtensionPortArg, traceLogArg, parsed,
+                    enableStatusLog,
                     enableCloudIntegration,
                     kvControlPort, kvControlBPExtensionPort);
 
-            initializeAndStartStateMachine(traceLogArg, turnoutId, parsed);
+            initializeAndStartStateMachine(turnoutId);
 
         } catch (IOException ex) {
             printErrorMessage(Simulator.class.getName(), ex.getMessage());
@@ -106,6 +112,7 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<Integer> kvControlPortArg,
             ArgumentAcceptingOptionSpec<String> kvControlBPExtensionAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlBPExtensionPortArg,
+            ArgumentAcceptingOptionSpec<String> traceLogArg,
             OptionSet parsed,
             boolean enableStatusLog, boolean enableCloudIntegration,
             Integer kvControlPort,
@@ -130,38 +137,34 @@ public class Simulator {
         if (parsed.has(kvControlBPExtensionPortArg)) {
             setKvControlBpExtensionPort(kvControlBPExtensionPort);
         }
-    }
-
-    private static void initializeAndStartStateMachine(
-            ArgumentAcceptingOptionSpec<String> traceLogArg,
-            Integer turnoutId, OptionSet parsed) {
-
-        YakinduSMConfiguration conf = null;
-
-        switch (turnoutId) {
-            case 0x81:
-                conf = StatemachineInitializer.initialize0x81();
-                break;
-            case 0x82:
-                conf = StatemachineInitializer.initialize0x82();
-                break;
-            case 0x83:
-                conf = StatemachineInitializer.initialize0x83();
-                break;
-            case 0x84:
-                conf = StatemachineInitializer.initialize0x84();
-                break;
-            case 0x85:
-                conf = StatemachineInitializer.initialize0x85();
-                break;
-            default:
-                break;
-        }
-
         if (parsed.has(traceLogArg)) {
             SectionWrapperWithListeners.setTraceLogEnabled(true);
             TurnoutWrapperWithListeners.setTraceLogEnabled(true);
             setDefaultSavePath(parsed.valueOf(traceLogArg));
+        }
+    }
+
+    private static void initializeAndStartStateMachine(Integer turnoutId) {
+        YakinduSMConfiguration conf = null;
+
+        switch (turnoutId) {
+            case 0x81:
+                conf = initialize0x81();
+                break;
+            case 0x82:
+                conf = initialize0x82();
+                break;
+            case 0x83:
+                conf = initialize0x83();
+                break;
+            case 0x84:
+                conf = initialize0x84();
+                break;
+            case 0x85:
+                conf = initialize0x85();
+                break;
+            default:
+                break;
         }
 
         YakinduSMRunner yakinduController = new YakinduSMRunner(conf);
