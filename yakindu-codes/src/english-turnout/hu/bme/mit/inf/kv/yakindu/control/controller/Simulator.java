@@ -1,10 +1,13 @@
 package hu.bme.mit.inf.kv.yakindu.control.controller;
 
+import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x86;
+import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x87;
 import java.io.IOException;
 
-import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
-import hu.bme.mit.inf.kv.yakindu.control.sm.TraceableStatemachine;
-import hu.bme.mit.inf.kv.yakindu.control.sm.handler.TurnoutEventListener;
+import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.printErrorMessage;
+import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.setStatusLogEnabled;
+import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
+import static hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlAddress;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionAddress;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionPort;
@@ -13,8 +16,8 @@ import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationServer.setCloudIntegrationEnabled;
-
-import org.yakindu.scr.kv.KvStatemachine;
+import org.yakindu.scr.section.SectionWrapperWithListeners;
+import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 /**
  *
@@ -29,12 +32,8 @@ public class Simulator {
             parser.accepts("ci",
                     "enable cloud integration with Node-RED [optional]");
 
-            ArgumentAcceptingOptionSpec<String> traceLogFirstTurnoutArg = parser
-                    .accepts("tp1", "trace log save path for 0x87 [optional]")
-                    .withRequiredArg().ofType(String.class);
-
-            ArgumentAcceptingOptionSpec<String> traceLogSecondTurnoutArg = parser
-                    .accepts("tp2", "trace log save path for 0x86 [optional]")
+            ArgumentAcceptingOptionSpec<String> traceLogArg = parser
+                    .accepts("tp", "trace log save path [optional]")
                     .withRequiredArg().ofType(String.class);
 
             ArgumentAcceptingOptionSpec<String> kvControlAddressArg = parser
@@ -67,16 +66,15 @@ public class Simulator {
 
             setPreferences(kvControlAddressArg, kvControlPortArg,
                     kvControlBPExtensionAddressArg,
-                    kvControlBPExtensionPortArg, parsed, enableStatusLog,
+                    kvControlBPExtensionPortArg, traceLogArg, parsed,
+                    enableStatusLog,
                     enableCloudIntegration,
                     kvControlPort, kvControlBPExtensionPort);
 
-            initializeAndStartStatemachines(traceLogFirstTurnoutArg,
-                    traceLogSecondTurnoutArg, parsed);
+            initializeAndStartStatemachines();
 
         } catch (IOException ex) {
-            SimpleLogger.printErrorMessage(Simulator.class.getName(),
-                    ex.getMessage());
+            printErrorMessage(Simulator.class.getName(), ex.getMessage());
         }
     }
 
@@ -99,13 +97,14 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<Integer> kvControlPortArg,
             ArgumentAcceptingOptionSpec<String> kvControlBPExtensionAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlBPExtensionPortArg,
+            ArgumentAcceptingOptionSpec<String> traceLogArg,
             OptionSet parsed,
             boolean enableStatusLog, boolean enableCloudIntegration,
             Integer kvControlPort,
             Integer kvControlBPExtensionPort) {
 
         if (enableStatusLog) {
-            SimpleLogger.setStatusLogEnabled(true);
+            setStatusLogEnabled(true);
         }
         if (enableCloudIntegration) {
             setCloudIntegrationEnabled(true);
@@ -123,58 +122,37 @@ public class Simulator {
         if (parsed.has(kvControlBPExtensionPortArg)) {
             setKvControlBpExtensionPort(kvControlBPExtensionPort);
         }
+        if (parsed.has(traceLogArg)) {
+            SectionWrapperWithListeners.setTraceLogEnabled(true);
+            TurnoutWrapperWithListeners.setTraceLogEnabled(true);
+            setDefaultSavePath(parsed.valueOf(traceLogArg));
+        }
     }
 
-    private static void initializeAndStartStatemachines(
-            ArgumentAcceptingOptionSpec<String> traceLogFirstTurnoutArg,
-            ArgumentAcceptingOptionSpec<String> traceLogSecondTurnoutArg,
-            OptionSet parsed) {
+    private static void initializeAndStartStatemachines() {
+        YakinduSMConfiguration sm0x86ConfigurationObj = initialize0x86();
+        YakinduSMConfiguration sm0x87ConfigurationObj = initialize0x87();
 
-        KvStatemachine smTurnout135 = new KvStatemachine();
-        TraceableStatemachine tsmTurnout135 = new TraceableStatemachine(
-                smTurnout135);
-        StatemachineInitializer.getInstance().initialize0x87(tsmTurnout135);
+        // connect turnouts to each other
+        sm0x86ConfigurationObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
+                sm0x87ConfigurationObj.getTurnoutStatemachine());
+        sm0x87ConfigurationObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
+                sm0x86ConfigurationObj.getTurnoutStatemachine());
 
-        KvStatemachine smTurnout134 = new KvStatemachine();
-        TraceableStatemachine tsmTurnout134 = new TraceableStatemachine(
-                smTurnout134);
-        StatemachineInitializer.getInstance().initialize0x86(tsmTurnout134);
-
-        YakinduKVController turnout135Controller = new YakinduKVController(
-                tsmTurnout135,
-                parsed.valueOf(traceLogFirstTurnoutArg));
-        YakinduKVController turnout134Controller = new YakinduKVController(
-                tsmTurnout134,
-                parsed.valueOf(traceLogSecondTurnoutArg));
-
-        turnout135Controller.addTurnoutEventListener(new TurnoutEventListener(
-                turnout134Controller));
-        turnout134Controller.addTurnoutEventListener(new TurnoutEventListener(
-                turnout135Controller));
+        YakinduSMRunner turnout135Controller = new YakinduSMRunner(
+                sm0x87ConfigurationObj);
+        YakinduSMRunner turnout134Controller = new YakinduSMRunner(
+                sm0x86ConfigurationObj);
 
         startStateMachines(turnout135Controller, turnout134Controller);
     }
 
     private static void startStateMachines(
-            final YakinduKVController turnout135Controller,
-            final YakinduKVController turnout134Controller) {
-        Thread turnout135 = new Thread() {
-            @Override
-            public void run() {
-                turnout135Controller.start();
-            }
-        };
-
-        Thread turnout134 = new Thread() {
-            @Override
-            public void run() {
-                turnout134Controller.start();
-            }
-        };
-
-        turnout135.start();
-        if (turnout135.isAlive()) {
-            turnout134.start();
+            final YakinduSMRunner turnout135Controller,
+            final YakinduSMRunner turnout134Controller) {
+        turnout135Controller.start();
+        if (turnout135Controller.isAlive()) {
+            turnout134Controller.start();
         }
     }
 }
