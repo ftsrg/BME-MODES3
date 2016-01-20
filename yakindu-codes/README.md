@@ -19,6 +19,7 @@ Parameters:
 * `sl`: if it is set, status information will be logged at the standard output and error output.
 * `tp`: if it is set and a path is given as a parameter, then the trace log will be saved to an XML file within the respective folder. This way transitions can be logged for the statechart.
 * `ti`: ID (as a decimal number) of the respective turnout, whose statechart will be started. Possible values: 129 (0x81), 130 (0x82), 131 (0x83), 132 (0x84), 133 (0x85).
+* 'ci': enable cloud integration with Node-RED. Add this parameter if you run the cloud integration based on Node-RED.
 * `a`: IP address of the computer which runs `KVControl`.
 * `p`: port number of the computer whicch runs `KVControl`.
 * `bpa`: IP address of the computer which runs `KVControl-BPExtension`.

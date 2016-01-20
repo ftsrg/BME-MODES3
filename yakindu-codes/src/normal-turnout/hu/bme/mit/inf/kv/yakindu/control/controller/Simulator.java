@@ -1,9 +1,14 @@
 package hu.bme.mit.inf.kv.yakindu.control.controller;
 
-import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
+import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.printErrorMessage;
+import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.setStatusLogEnabled;
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
-import hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder;
-import hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration;
+import static hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlAddress;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionAddress;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionPort;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlPort;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationServer.setCloudIntegrationEnabled;
 import java.io.IOException;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
@@ -22,6 +27,8 @@ public class Simulator {
         try {
             OptionParser parser = new OptionParser();
             parser.accepts("sl", "enable status log [optional]");
+            parser.accepts("ci",
+                    "enable cloud integration with Node-RED [optional]");
 
             ArgumentAcceptingOptionSpec<String> traceLogArg = parser
                     .accepts("tp", "trace log save path [optional]")
@@ -53,54 +60,45 @@ public class Simulator {
             parser.printHelpOn(System.out);
 
             OptionSet parsed = parser.parse(args);
-
             if (!parsed.has(turnoutIdArg)) {
                 return;
             }
 
-            Integer turnoutId = null;
-            Integer kvControlPort = null;
-            Integer kvControlBPExtensionPort = null;
-
-            if (parsed.has(turnoutIdArg)) {
-                try {
-                    turnoutId = parsed.valueOf(turnoutIdArg);
-                } catch (joptsimple.OptionException ex) {
-                    throw new IOException(
-                            "Please use a number for the -ti parameter.");
-                }
-            }
-            if (parsed.has(kvControlPortArg)) {
-                try {
-                    kvControlPort = parsed.valueOf(kvControlPortArg);
-                } catch (joptsimple.OptionException ex) {
-                    throw new IOException(
-                            "Please use a number for the -p parameter.");
-                }
-            }
-            if (parsed.has(kvControlBPExtensionPortArg)) {
-                try {
-                    kvControlBPExtensionPort = parsed.valueOf(
-                            kvControlBPExtensionPortArg);
-                } catch (joptsimple.OptionException ex) {
-                    throw new IOException(
-                            "Please use a number for the -bpp parameter.");
-                }
-            }
+            Integer turnoutId = getParameterIntegerValue(parsed, turnoutIdArg,
+                    "-ti");
+            Integer kvControlPort = getParameterIntegerValue(parsed,
+                    kvControlPortArg, "-p");
+            Integer kvControlBPExtensionPort = getParameterIntegerValue(parsed,
+                    kvControlBPExtensionPortArg, "-bpp");
 
             boolean enableStatusLog = parsed.has("sl");
+            boolean enableCloudIntegration = parsed.has("ci");
 
             setPreferences(kvControlAddressArg, kvControlPortArg,
                     kvControlBPExtensionAddressArg,
                     kvControlBPExtensionPortArg, parsed, enableStatusLog,
+                    enableCloudIntegration,
                     kvControlPort, kvControlBPExtensionPort);
 
             initializeAndStartStateMachine(traceLogArg, turnoutId, parsed);
 
         } catch (IOException ex) {
-            SimpleLogger.printErrorMessage(Simulator.class.getName(),
-                    ex.getMessage());
+            printErrorMessage(Simulator.class.getName(), ex.getMessage());
         }
+    }
+
+    private static Integer getParameterIntegerValue(OptionSet parsed,
+            ArgumentAcceptingOptionSpec<Integer> parameter,
+            String parameterFieldName) throws IOException {
+        if (parsed.has(parameter)) {
+            try {
+                return parsed.valueOf(parameter);
+            } catch (joptsimple.OptionException ex) {
+                throw new IOException(
+                        "Please use a number for the " + parameterFieldName + " parameter.");
+            }
+        }
+        return null;
     }
 
     private static void setPreferences(
@@ -109,26 +107,28 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> kvControlBPExtensionAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlBPExtensionPortArg,
             OptionSet parsed,
-            boolean enableStatusLog, Integer kvControlPort,
+            boolean enableStatusLog, boolean enableCloudIntegration,
+            Integer kvControlPort,
             Integer kvControlBPExtensionPort) {
 
         if (enableStatusLog) {
-            SimpleLogger.setStatusLogEnabled(true);
+            setStatusLogEnabled(true);
+        }
+        if (enableCloudIntegration) {
+            setCloudIntegrationEnabled(enableStatusLog);
         }
         if (parsed.has(kvControlAddressArg)) {
-            CommunicationConfiguration.setKvControlAddress(parsed.valueOf(
-                    kvControlAddressArg));
+            setKvControlAddress(parsed.valueOf(kvControlAddressArg));
         }
         if (parsed.has(kvControlPortArg)) {
-            CommunicationConfiguration.setKvControlPort(kvControlPort);
+            setKvControlPort(kvControlPort);
         }
         if (parsed.has(kvControlBPExtensionAddressArg)) {
-            CommunicationConfiguration.setKvControlBpExtensionAddress(parsed
-                    .valueOf(kvControlBPExtensionAddressArg));
+            setKvControlBpExtensionAddress(parsed.valueOf(
+                    kvControlBPExtensionAddressArg));
         }
         if (parsed.has(kvControlBPExtensionPortArg)) {
-            CommunicationConfiguration.setKvControlBpExtensionPort(
-                    kvControlBPExtensionPort);
+            setKvControlBpExtensionPort(kvControlBPExtensionPort);
         }
     }
 
@@ -161,8 +161,7 @@ public class Simulator {
         if (parsed.has(traceLogArg)) {
             SectionWrapperWithListeners.setTraceLogEnabled(true);
             TurnoutWrapperWithListeners.setTraceLogEnabled(true);
-            StatemachineTraceBuilder.setDefaultSavePath(
-                    parsed.valueOf(traceLogArg));
+            setDefaultSavePath(parsed.valueOf(traceLogArg));
         }
 
         YakinduSMRunner yakinduController = new YakinduSMRunner(conf);
