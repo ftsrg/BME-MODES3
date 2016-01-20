@@ -73,7 +73,7 @@ public class GeneralTransmitter extends LoggingThread {
     }
 
     private void updateOccupancies() {
-        updateTurnoutDirection();
+        updateTurnoutOccupancy();
         updateSectionsOccupancy();
         try {
             sleep(OCCUPANCY_TRIGGER_SLEEP);
