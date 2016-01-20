@@ -36,14 +36,19 @@ public class StatemachineInitializer {
     public static YakinduSMConfiguration initialize0x81() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x81;
+        int turnoutSectionID = 0x01;
 
         TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
                 "turnout" + String.valueOf(turnoutID));
 
         turnoutStatemachine.init();
         turnoutStatemachine.getSCITurnout().setId(turnoutID);
+        turnoutStatemachine.getSCITurnout().setIsOccupied(false);
 
-        conf.setTurnoutSectionId(0x01);
+        turnoutStatemachine.getSCITurnout().setDivergentExists(true);
+        turnoutStatemachine.getSCITurnout().setStraightExists(true);
+
+        conf.setTurnoutSectionId(turnoutSectionID);
         conf.setTurnoutStatemachine(turnoutStatemachine);
 
         int divSectionID = 0x0D;
@@ -84,14 +89,19 @@ public class StatemachineInitializer {
     public static YakinduSMConfiguration initialize0x82() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x82;
+        int turnoutSectionID = 0x02;
 
         TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
                 "turnout" + String.valueOf(turnoutID));
 
         turnoutStatemachine.init();
         turnoutStatemachine.getSCITurnout().setId(turnoutID);
+        turnoutStatemachine.getSCITurnout().setIsOccupied(false);
 
-        conf.setTurnoutSectionId(0x02);
+        turnoutStatemachine.getSCITurnout().setDivergentExists(true);
+        turnoutStatemachine.getSCITurnout().setTopExists(true);
+
+        conf.setTurnoutSectionId(turnoutSectionID);
         conf.setTurnoutStatemachine(turnoutStatemachine);
 
         int topSectionID = 0x0C;
@@ -134,14 +144,20 @@ public class StatemachineInitializer {
     public static YakinduSMConfiguration initialize0x83() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x83;
+        int turnoutSectionID = 0x03;
 
         TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
                 "turnout" + String.valueOf(turnoutID));
 
         turnoutStatemachine.init();
         turnoutStatemachine.getSCITurnout().setId(turnoutID);
+        turnoutStatemachine.getSCITurnout().setIsOccupied(false);
 
-        conf.setTurnoutSectionId(0x03);
+        turnoutStatemachine.getSCITurnout().setTopExists(true);
+        turnoutStatemachine.getSCITurnout().setDivergentExists(true);
+        turnoutStatemachine.getSCITurnout().setStraightExists(true);
+
+        conf.setTurnoutSectionId(turnoutSectionID);
         conf.setTurnoutStatemachine(turnoutStatemachine);
 
         int topSectionID = 0x08;
@@ -189,14 +205,19 @@ public class StatemachineInitializer {
     public static YakinduSMConfiguration initialize0x84() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x84;
+        int turnoutSectionID = 0x05;
 
         TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
                 "turnout" + String.valueOf(turnoutID));
 
         turnoutStatemachine.init();
         turnoutStatemachine.getSCITurnout().setId(turnoutID);
+        turnoutStatemachine.getSCITurnout().setIsOccupied(false);
 
-        conf.setTurnoutSectionId(0x05);
+        turnoutStatemachine.getSCITurnout().setDivergentExists(true);
+        turnoutStatemachine.getSCITurnout().setStraightExists(true);
+
+        conf.setTurnoutSectionId(turnoutSectionID);
         conf.setTurnoutStatemachine(turnoutStatemachine);
 
         int divSectionID = 0x11;
@@ -239,14 +260,19 @@ public class StatemachineInitializer {
     public static YakinduSMConfiguration initialize0x85() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x85;
+        int turnoutSectionID = 0x06;
 
         TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
                 "turnout" + String.valueOf(turnoutID));
 
         turnoutStatemachine.init();
         turnoutStatemachine.getSCITurnout().setId(turnoutID);
+        turnoutStatemachine.getSCITurnout().setIsOccupied(false);
 
-        conf.setTurnoutSectionId(0x06);
+        turnoutStatemachine.getSCITurnout().setDivergentExists(true);
+        turnoutStatemachine.getSCITurnout().setStraightExists(true);
+
+        conf.setTurnoutSectionId(turnoutSectionID);
         conf.setTurnoutStatemachine(turnoutStatemachine);
 
         int divSectionID = 0x14;

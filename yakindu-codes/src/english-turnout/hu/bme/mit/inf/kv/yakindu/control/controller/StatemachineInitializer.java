@@ -35,14 +35,16 @@ public class StatemachineInitializer {
     public static YakinduSMConfiguration initialize0x86() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x86;
+        int turnoutSectionID = 0x04;
 
         TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
                 "turnout" + String.valueOf(turnoutID));
 
         turnoutStatemachine.init();
         turnoutStatemachine.getSCITurnout().setId(turnoutID);
+        turnoutStatemachine.getSCITurnout().setIsOccupied(false);
 
-        conf.setTurnoutSectionId(0x04);
+        conf.setTurnoutSectionId(turnoutSectionID);
         conf.setTurnoutStatemachine(turnoutStatemachine);
 
         int divSectionID = 0x10;
@@ -80,14 +82,16 @@ public class StatemachineInitializer {
     public static YakinduSMConfiguration initialize0x87() {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x87;
+        int turnoutSectionID = 0x04;
 
         TurnoutWrapperWithListeners turnoutStatemachine = new TurnoutWrapperWithListeners(
                 "turnout" + String.valueOf(turnoutID));
 
         turnoutStatemachine.init();
         turnoutStatemachine.getSCITurnout().setId(turnoutID);
+        turnoutStatemachine.getSCITurnout().setIsOccupied(false);
 
-        conf.setTurnoutSectionId(0x04);
+        conf.setTurnoutSectionId(turnoutSectionID);
         conf.setTurnoutStatemachine(turnoutStatemachine);
 
         int divSectionID = 0x0E;
