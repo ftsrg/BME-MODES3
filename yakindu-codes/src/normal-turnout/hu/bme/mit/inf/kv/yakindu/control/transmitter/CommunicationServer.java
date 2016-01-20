@@ -39,7 +39,7 @@ public class CommunicationServer extends LoggingThread {
                         if (connectedChannel.read(byteBuffer) > 0) {
                             byteBuffer.flip();
                             byte[] buffer = byteBuffer.array();
-                            buffer = transformByteArrayToByteArray(buffer);
+                            //buffer = transformByteArrayToByteArray(buffer); // uncomment this row in cloud deployment with Node-RED
                             messageTransmitter.addPacket(buffer);
                         }
                     } catch (Exception ex) {
@@ -53,6 +53,11 @@ public class CommunicationServer extends LoggingThread {
         logErrorMessage("STOPPED");
     }
 
+    /**
+     * Required for cloud deployment, to integrate with Node-RED. The byte
+     * received through the SocketChannel should be transformed with this
+     * function.
+     */
     private byte[] transformByteArrayToByteArray(byte[] start) {
         byte[] buffer = start;
         String message = new String(buffer); //create a string and separate by ','. this way the byte[] will be represented correctly
