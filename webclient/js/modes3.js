@@ -64,16 +64,16 @@ function MQTT_Connect() {
 }
 
 function MQTT_Connecting() {
-    $('#connectionStatus').attr('class', 'mrp-connecting')
+    $('#connectionStatus').attr('class', 'modes3-connecting')
     $('#connectionStatusText').text('Connecting')
 }
 
 function MQTT_Connected_asController() {
     mqttClient.connected = true
     mqttClient.subscribe("modes3/cv")
-    //mqttClient.subscribe("/mrp/control")
+    //mqttClient.subscribe("/modes3/control")
 
-    $('#connectionStatus').attr('class', 'mrp-connected__controller')
+    $('#connectionStatus').attr('class', 'modes3-connected__controller')
     $('#connectionStatusText').text('Connected as Controller')
 
     MoDeS3_Board_Initialize()
@@ -83,7 +83,7 @@ function MQTT_Connected_asGuest() {
     mqttClient.connected = true
     mqttClient.subscribe("modes3/cv")
 
-    $('#connectionStatus').attr('class', 'mrp-connected')
+    $('#connectionStatus').attr('class', 'modes3-connected')
     $('#connectionStatusText').text('Connected')
 
     MoDeS3_Board_Initialize()
@@ -101,7 +101,7 @@ function MQTT_Disconnected(event) {
 		//MoDeS3_Log_Error('Connection failure to MQTT broker!')
 	}
     mqttClient.connected = false
-    $('#connectionStatus').attr('class', 'mrp-disconnected')
+    $('#connectionStatus').attr('class', 'modes3-disconnected')
     $('#connectionStatusText').text('Disconnected')
 }
 
@@ -121,20 +121,20 @@ function MQTT_Message(message) {
 // -----------------------------------------------------------------------------
 
 function MoDeS3_Board_Initialize() {
-	var sections = $('#mrp-board-svg #sections path').attr('class', 'mrp-section--active')
-	var turnouts = $('#mrp-board-svg #turnouts polygon').attr('class', 'mrp-turnout--active')
+	var sections = $('#modes3-board-svg #sections path').attr('class', 'modes3-section--active')
+	var turnouts = $('#modes3-board-svg #turnouts polygon').attr('class', 'modes3-turnout--active')
 
 	MoDeS3_HandleCV('kek')
 }
 
 function MoDeS3_Log_Error(message) {
-	$('#mrp-log-container').append(
+	$('#modes3-log-container').append(
 		`<div class="alert alert-danger fade in"><strong>Error!</strong> ${message}</div>`
 	)
 }
 
 function MoDeS3_HandleCV(message) {
-	var trainGroup = Snap('#mrp-board-svg #trains')
+	var trainGroup = Snap('#modes3-board-svg #trains')
 
 	for(i in message.trains) {
 		var train = message.trains[i]

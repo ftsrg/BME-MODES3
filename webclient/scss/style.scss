@@ -1,44 +1,77 @@
-// compileExpanded: ../css/$1.min.css
-.content {
-	margin: 0;
-	padding: 0;
+// compileExpanded: ../css/$1.css
 
-    #mrp-board-container {
+.content {
+    margin: 0;
+    padding: 0;
+
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    #modes3-board-container {
         height: 100vh;
         padding-top: 50px;
         display: flex;
         align-items: center;
-        #mrp-board-svg {
+
+        #modes3-board-svg {
             width: 100%;
             height: 100%;
             max-width: 100%;
             max-height: 100%;
         }
     }
-    #mrp-trains-container {
+
+    #modes3-trains-container {
         height: 80vh;
-        padding-top: 50px;
-        display: flex;
-        align-items: center;
+        padding-top: 60px;
+
+        .modes3-train {
+            width: 100%;
+            box-sizing: border-box;
+
+            &-image-container {
+                p {
+                    font-size: 13pt;
+                    font-variant: small-caps;
+                }
+            }
+
+			&-speed-container {
+				margin-top: 5px;
+
+				p {
+					display: inline-block;
+				}
+			}
+
+            img {
+                display: block;
+                max-width: 100%;
+                margin: auto;
+            }
+        }
+
+        #modes3-train--r {
+            border-left: 10px solid red;
+        }
+
+        #modes3-train--g {
+            border-left: 10px solid green;
+        }
+
+        #modes3-train--b {
+            border-left: 10px solid blue;
+        }
+    }
+
+    #modes3-log-container {
+        height: 20vh;
         background-color: #DDDDDD;
     }
-	#mrp-log-container {
-		height: 20vh;
-		display: flex;
-        align-items: flex-end;
-		flex-wrap: wrap;
-        background-color: #DDDDDD;
-
-		.alert {
-			margin: 5px;
-			margin-top: 0;
-			width: 100%;
-			&:first-child {
-				margin-top: 5px;
-			}
-		}
-	}
 }
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -47,66 +80,80 @@
     height: 60px;
     background-color: #f5f5f5;
 }
+
 #connectionStatus {
-    &.mrp-disconnected {
+    &.modes3-disconnected {
         background-color: #3E0B00;
+
         &:hover {
             background-color: #810B00;
         }
     }
-    &.mrp-connecting {
+
+    &.modes3-connecting {
         background-color: #FF8300;
+
         &:hover {
             background-color: #FF8300;
         }
     }
-    &.mrp-connected {
+
+    &.modes3-connected {
         background-color: #063B09;
+
         &:hover {
             background-color: #0A6910;
         }
     }
-    &.mrp-connected__controller {
+
+    &.modes3-connected__controller {
         background-color: #0A4C69;
+
         &:hover {
             background-color: #10729C;
         }
     }
 }
 
-#mrp-board-svg {
-	path, polygon {
-		fill: none;
-		stroke-miterlimit: 10;
-		stroke-linecap: round;
-		stroke-linejoin: round;
-	}
-	path {
-		stroke-width: 3px;
-	}
-	polygon {
-		stroke-width: 1.2px;
-		fill: #CCCEC0;
-	}
-	.mrp-section {
-		&--inactive {
-	        stroke: #BCBEC0;
-		}
-	    &--active {
-	        stroke: #10729C;
-	    }
-	}
+#modes3-board-svg {
+    path,
+    polygon {
+        fill: none;
+        stroke-miterlimit: 10;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
 
-	.mrp-turnout {
-		&--inactive {
-	        stroke: #BCBEC0;
-		}
-	    &--active {
-	        stroke: #10729C;
-	    }
-	}
+    path {
+        stroke-width: 3px;
+    }
 
-	.modes3-train {
-		filter: url(#shadow);
-	}
+    polygon {
+        stroke-width: 1.2px;
+        fill: #CCCEC0;
+    }
+
+    .modes3-section {
+        &--inactive {
+            stroke: #BCBEC0;
+        }
+
+        &--active {
+            stroke: #10729C;
+        }
+    }
+
+    .modes3-turnout {
+        &--inactive {
+            stroke: #BCBEC0;
+        }
+
+        &--active {
+            stroke: #10729C;
+        }
+    }
+
+    .modes3-train {
+        filter:url(#shadow);
+    }
 }
