@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.kv.yakindu.control.controller;
 
-import hu.bme.mit.inf.kv.yakindu.control.helper.LoggingThread;
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.kv.yakindu.control.sm.Section;
 import hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationServer;
@@ -14,11 +13,7 @@ import org.yakindu.scr.turnout.TurnoutWrapper;
  *
  * @author benedekh
  */
-public class YakinduSMRunner extends LoggingThread {
-
-    private static final int RUNCYCLE_INITIAL_ITERATION_LOOPS = 3;
-    private static final int RUNCYCLE_ITERATION_LOOPS = 20;
-    private static final int SLEEP_BETWEEN_RUNCYCLES = 10;
+public class YakinduSMRunner {
 
     private final TurnoutWrapper managedStatemachine;
     private final Set<Section> managedSections;
@@ -50,34 +45,15 @@ public class YakinduSMRunner extends LoggingThread {
         communicationServer.setName(CommunicationServer.class.getName());
     }
 
-    @Override
-    public void run() {
+    public void start() {
         initializeSM();
         startSM();
-
-        while (!isInterrupted()) {
-            simulateSM();
-
-            try {
-                Thread.sleep(SLEEP_BETWEEN_RUNCYCLES);
-            } catch (InterruptedException e) {
-                logErrorMessage(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
-        }
     }
 
     private void initializeSM() {
         managedStatemachine.enter();
         for (Section sections : managedSections) {
             sections.enter();
-        }
-
-        for (int i = 0; i < RUNCYCLE_INITIAL_ITERATION_LOOPS; ++i) {
-            managedStatemachine.runCycle();
-            for (Section sections : managedSections) {
-                sections.runCycle();
-            }
         }
     }
 
@@ -90,15 +66,6 @@ public class YakinduSMRunner extends LoggingThread {
         generalTransmitter.start();
         distributedTransmitter.start();
         communicationServer.start();
-    }
-
-    private void simulateSM() {
-        for (int i = 0; i < RUNCYCLE_ITERATION_LOOPS; ++i) {
-            managedStatemachine.runCycle();
-            for (Section section : managedSections) {
-                section.runCycle();
-            }
-        }
     }
 
 }

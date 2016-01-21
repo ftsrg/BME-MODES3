@@ -130,29 +130,19 @@ public class Simulator {
     }
 
     private static void initializeAndStartStatemachines() {
-        YakinduSMConfiguration sm0x86ConfigurationObj = initialize0x86();
-        YakinduSMConfiguration sm0x87ConfigurationObj = initialize0x87();
+        YakinduSMConfiguration sm134ConfObj = initialize0x86();
+        YakinduSMConfiguration sm135ConfObj = initialize0x87();
 
         // connect turnouts to each other
-        sm0x86ConfigurationObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
-                sm0x87ConfigurationObj.getTurnoutStatemachine());
-        sm0x87ConfigurationObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
-                sm0x86ConfigurationObj.getTurnoutStatemachine());
+        sm134ConfObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
+                sm135ConfObj.getTurnoutStatemachine());
+        sm135ConfObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
+                sm134ConfObj.getTurnoutStatemachine());
 
-        YakinduSMRunner turnout135Controller = new YakinduSMRunner(
-                sm0x87ConfigurationObj);
-        YakinduSMRunner turnout134Controller = new YakinduSMRunner(
-                sm0x86ConfigurationObj);
+        YakinduSMRunner turnout135Runner = new YakinduSMRunner(sm135ConfObj);
+        YakinduSMRunner turnout134Runner = new YakinduSMRunner(sm134ConfObj);
 
-        startStateMachines(turnout135Controller, turnout134Controller);
-    }
-
-    private static void startStateMachines(
-            final YakinduSMRunner turnout135Controller,
-            final YakinduSMRunner turnout134Controller) {
-        turnout135Controller.start();
-        if (turnout135Controller.isAlive()) {
-            turnout134Controller.start();
-        }
+        turnout135Runner.start();
+        turnout134Runner.start();
     }
 }
