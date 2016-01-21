@@ -51,7 +51,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 
         protected long getSectionLockedWithReplyToValue() {
             if (!sectionLockedWithReplyTo) {
-                // throw new IllegalStateException("Illegal event value acces. Event SectionLockedWithReplyTo is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event LockRequestTo is not raised!");
                 return -1;
             }
             return sectionLockedWithReplyToValue;
@@ -69,7 +69,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 
         protected long getSectionLockedToValue() {
             if (!sectionLockedTo) {
-                //throw new IllegalStateException("Illegal event value acces. Event SectionLockedTo is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event LockRequestTo is not raised!");
                 return -1;
             }
             return sectionLockedToValue;
@@ -87,7 +87,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 
         protected long getSectionAllowedToValue() {
             if (!sectionAllowedTo) {
-                //throw new IllegalStateException("Illegal event value acces. Event SectionAllowedTo is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event LockRequestTo is not raised!");
                 return -1;
             }
             return sectionAllowedToValue;
@@ -231,8 +231,8 @@ public class SectionStatemachine implements ISectionStatemachine {
         @Override
         public long getSectionLockFromValue() {
             if (!sectionLockFrom) {
-                //throw new IllegalStateException("Illegal event value acces. Event SectionLockFrom is not raised!");
-                return -1;
+                throw new IllegalStateException(
+                        "Illegal event value acces. Event SectionLockFrom is not raised!");
             }
             return sectionLockFromValue;
         }
@@ -485,7 +485,7 @@ public class SectionStatemachine implements ISectionStatemachine {
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
 
-                sCISection.raiseDisableSection(sCISection.direction);
+                sCISection.raiseDisableSection(sCISection.id);
 
                 nextStateIndex = 0;
                 stateVector[0] = State.main_region_OccupiedSection_r1_BecomesLocked;
@@ -496,7 +496,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 
                     sCISection.raisePassingDeniedFrom(sCISection.direction);
 
-                    sCISection.raiseDisableSection(sCISection.direction);
+                    sCISection.raiseDisableSection(sCISection.id);
 
                     nextStateIndex = 0;
                     stateVector[0] = State.main_region_OccupiedSection_r1_BecomesLocked;
@@ -569,7 +569,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 
                     sCISection.raisePassingDeniedFrom(sCISection.direction);
 
-                    sCISection.raiseDisableSection(sCISection.direction);
+                    sCISection.raiseDisableSection(sCISection.id);
 
                     nextStateIndex = 0;
                     stateVector[0] = State.main_region_OccupiedSection_r1_BecomesLocked;
@@ -578,7 +578,7 @@ public class SectionStatemachine implements ISectionStatemachine {
                         nextStateIndex = 0;
                         stateVector[0] = State.$NullState$;
 
-                        sCISection.raiseDisableSection(sCISection.direction);
+                        sCISection.raiseDisableSection(sCISection.id);
 
                         nextStateIndex = 0;
                         stateVector[0] = State.main_region_OccupiedSection_r1_BecomesLocked;

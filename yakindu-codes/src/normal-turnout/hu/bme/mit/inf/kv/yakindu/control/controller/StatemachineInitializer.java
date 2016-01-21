@@ -318,6 +318,7 @@ public class StatemachineInitializer {
         SectionWrapperWithListeners sectionStatemachine = new SectionWrapperWithListeners(
                 "section" + String.valueOf(sectionID));
         sectionStatemachine.init();
+        sectionStatemachine.getSCISection().setId(sectionID);
         sectionStatemachine.getSCISection().setDirection(directionValue);
 
         SectionEventListener outgoingEventListener = new SectionEventListener(
