@@ -39,8 +39,8 @@ public class Application {
 
     public static final Insets buttonInsets = new Insets(6, 12, 6, 12);
     
-    public static final String SettingsWindow_playButton = "/piclient/ui/ic_action_play_white.png";
-    public static final String SettingsWindow_pauseButton = "/piclient/ui/ic_action_pause_white.png";
+    public static final String SettingsWindow_playButton = "/hu/bme/mit/inf/piclient/ui/ic_action_play_white.png";
+    public static final String SettingsWindow_pauseButton = "/hu/bme/mit/inf/piclient/ui/ic_action_pause_white.png";
     
     public static final Pattern findStrokePattern = Pattern.compile("stroke:#(?<sectionColor>[0-9A-Fa-f]{6});");
     public static final Pattern findFillPattern = Pattern.compile("fill:#(?<sectionColor>[0-9A-Fa-f]{6});");

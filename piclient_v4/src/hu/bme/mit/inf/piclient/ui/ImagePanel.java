@@ -22,7 +22,7 @@ public class ImagePanel extends JPanel {
 
     public ImagePanel() {
        try {                
-          image = ImageIO.read(ImagePanel.class.getResource("/piclient/ui/main-logo_orig.png"));
+          image = ImageIO.read(ImagePanel.class.getResource("/hu/bme/mit/inf/piclient/ui/main-logo_orig.png"));
        } catch (IOException ex) {
             // handle exception...
        }
