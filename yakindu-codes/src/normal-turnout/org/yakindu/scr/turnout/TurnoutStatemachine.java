@@ -106,8 +106,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
         protected long getPassingAllowedFromValue() {
             if (!passingAllowedFrom) {
-                throw new IllegalStateException(
-                        "Illegal event value acces. Event PassingAllowedFrom is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event PassingAllowedFrom is not raised!");
+                return -1;
             }
             return passingAllowedFromValue;
         }
@@ -124,8 +124,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
         protected long getPassingDeniedFromValue() {
             if (!passingDeniedFrom) {
-                throw new IllegalStateException(
-                        "Illegal event value acces. Event PassingDeniedFrom is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event PassingDeniedFrom is not raised!");
+                return -1;
             }
             return passingDeniedFromValue;
         }
@@ -142,8 +142,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
         protected long getRemPassageAllowedFromValue() {
             if (!remPassageAllowedFrom) {
-                throw new IllegalStateException(
-                        "Illegal event value acces. Event RemPassageAllowedFrom is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event RemPassageAllowedFrom is not raised!");
+                return -1;
             }
             return remPassageAllowedFromValue;
         }
@@ -160,8 +160,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
         protected long getRemPassageDeniedFromValue() {
             if (!remPassageDeniedFrom) {
-                throw new IllegalStateException(
-                        "Illegal event value acces. Event RemPassageDeniedFrom is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event RemPassageDeniedFrom is not raised!");
+                return -1;
             }
             return remPassageDeniedFromValue;
         }
@@ -178,8 +178,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
         protected long getSectionLockFromValue() {
             if (!sectionLockFrom) {
-                throw new IllegalStateException(
-                        "Illegal event value acces. Event SectionLockFrom is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event SectionLockFrom is not raised!");
+                return -1;
             }
             return sectionLockFromValue;
         }
@@ -196,8 +196,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
         protected long getRemSectionLockFromValue() {
             if (!remSectionLockFrom) {
-                throw new IllegalStateException(
-                        "Illegal event value acces. Event RemSectionLockFrom is not raised!");
+                //throw new IllegalStateException("Illegal event value acces. Event RemSectionLockFrom is not raised!");
+                return -1;
             }
             return remSectionLockFromValue;
         }
