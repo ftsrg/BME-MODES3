@@ -2,6 +2,7 @@ package org.yakindu.scr.turnout;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.yakindu.scr.IStatemachine;
 
 public class TurnoutStatemachine implements ITurnoutStatemachine {
 
@@ -535,10 +536,10 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
     public enum State {
 
-        main_region_StraightTurnout, main_region_StraightTurnout_r1_ProtocolStraight, main_region_StraightTurnout_r1_ProtocolStraight_r1_Init, main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr, main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived, main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop, main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd, main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent, main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop, main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection, main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection, main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort, main_region_StraightTurnout_r2_HandlerStraight, main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock, main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock, main_region_DivergentTurnout, main_region_DivergentTurnout_r1_ProtocolDivergent, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection, main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection, main_region_DivergentTurnout_r2_HandlerDivergent, main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock, main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock, $NullState$
+        main_region_StraightTurnout, main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock, main_region_StraightTurnout_HandlerStraight_WithReceivedLock, main_region_StraightTurnout_SectionLockFromStraight_Init, main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop, main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr, main_region_StraightTurnout_SectionLockFromStraight_SendBackShort, main_region_StraightTurnout_SectionLockFromStraight_RespFromTop, main_region_StraightTurnout_SectionLockFromTop_Init, main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr, main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop, main_region_StraightTurnout_SectionLockFromTop_RespFromStr, main_region_StraightTurnout_RemSectionLockFromStraight_Init, main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight, main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop, main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection, main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop, main_region_StraightTurnout_RemSectionLockFromTop_Init, main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection, main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection, main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight, main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight, main_region_DivergentTurnout, main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock, main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock, main_region_DivergentTurnout_SectionLockFromDivergent_Init, main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop, main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv, main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop, main_region_DivergentTurnout_SectionLockFromTop_Init, main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent, main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop, main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent, main_region_DivergentTurnout_RemSectionLockFromDivergent_Init, main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent, main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop, main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop, main_region_DivergentTurnout_RemSectionLockFromTop_Init, main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection, main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection, main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent, $NullState$
     };
 
-    private final State[] stateVector = new State[2];
+    private final State[] stateVector = new State[5];
 
     private int nextStateIndex;
 
@@ -551,7 +552,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
     @Override
     public void init() {
         this.initialized = true;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             stateVector[i] = State.$NullState$;
         }
 
@@ -589,106 +590,40 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         }
 
         nextStateIndex = 0;
-        stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+        stateVector[0] = State.main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock;
 
         nextStateIndex = 1;
-        stateVector[1] = State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock;
+        stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
+
+        nextStateIndex = 2;
+        stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_Init;
+
+        nextStateIndex = 3;
+        stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
+
+        nextStateIndex = 4;
+        stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
     }
 
     @Override
     public void exit() {
         switch (stateVector[0]) {
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
+            case main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock:
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
                 break;
 
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
+            case main_region_StraightTurnout_HandlerStraight_WithReceivedLock:
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
                 break;
 
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
+            case main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock:
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
                 break;
 
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-                break;
-
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
+            case main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock:
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
                 break;
@@ -698,24 +633,194 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         }
 
         switch (stateVector[1]) {
-            case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
+            case main_region_StraightTurnout_SectionLockFromStraight_Init:
                 nextStateIndex = 1;
                 stateVector[1] = State.$NullState$;
                 break;
 
-            case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
+            case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop:
                 nextStateIndex = 1;
                 stateVector[1] = State.$NullState$;
                 break;
 
-            case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
+            case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr:
                 nextStateIndex = 1;
                 stateVector[1] = State.$NullState$;
                 break;
 
-            case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
+            case main_region_StraightTurnout_SectionLockFromStraight_SendBackShort:
                 nextStateIndex = 1;
                 stateVector[1] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_SectionLockFromStraight_RespFromTop:
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromDivergent_Init:
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop:
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv:
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop:
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+                break;
+
+            default:
+                break;
+        }
+
+        switch (stateVector[2]) {
+            case main_region_StraightTurnout_SectionLockFromTop_Init:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_SectionLockFromTop_RespFromStr:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromTop_Init:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent:
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+                break;
+
+            default:
+                break;
+        }
+
+        switch (stateVector[3]) {
+            case main_region_StraightTurnout_RemSectionLockFromStraight_Init:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_Init:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop:
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+                break;
+
+            default:
+                break;
+        }
+
+        switch (stateVector[4]) {
+            case main_region_StraightTurnout_RemSectionLockFromTop_Init:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromTop_Init:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+                break;
+
+            case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent:
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
                 break;
 
             default:
@@ -729,7 +834,9 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
     @Override
     public boolean isActive() {
 
-        return stateVector[0] != State.$NullState$ || stateVector[1] != State.$NullState$;
+        return stateVector[0] != State.$NullState$ || stateVector[1] != State.$NullState$
+                || stateVector[2] != State.$NullState$ || stateVector[3] != State.$NullState$
+                || stateVector[4] != State.$NullState$;
     }
 
     /**
@@ -766,78 +873,89 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         switch (state) {
             case main_region_StraightTurnout:
                 return stateVector[0].ordinal() >= State.main_region_StraightTurnout.ordinal() && stateVector[0]
-                        .ordinal() <= State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock
+                        .ordinal() <= State.main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight
                         .ordinal();
-            case main_region_StraightTurnout_r1_ProtocolStraight:
-                return stateVector[0].ordinal() >= State.main_region_StraightTurnout_r1_ProtocolStraight.ordinal()
-                        && stateVector[0]
-                        .ordinal() <= State.main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort
-                        .ordinal();
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection;
-            case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                return stateVector[0] == State.main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort;
-            case main_region_StraightTurnout_r2_HandlerStraight:
-                return stateVector[1].ordinal() >= State.main_region_StraightTurnout_r2_HandlerStraight.ordinal()
-                        && stateVector[1]
-                        .ordinal() <= State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock
-                        .ordinal();
-            case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                return stateVector[1] == State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock;
-            case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                return stateVector[1] == State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock;
+            case main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock:
+                return stateVector[0] == State.main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock;
+            case main_region_StraightTurnout_HandlerStraight_WithReceivedLock:
+                return stateVector[0] == State.main_region_StraightTurnout_HandlerStraight_WithReceivedLock;
+            case main_region_StraightTurnout_SectionLockFromStraight_Init:
+                return stateVector[1] == State.main_region_StraightTurnout_SectionLockFromStraight_Init;
+            case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop:
+                return stateVector[1] == State.main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop;
+            case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr:
+                return stateVector[1] == State.main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr;
+            case main_region_StraightTurnout_SectionLockFromStraight_SendBackShort:
+                return stateVector[1] == State.main_region_StraightTurnout_SectionLockFromStraight_SendBackShort;
+            case main_region_StraightTurnout_SectionLockFromStraight_RespFromTop:
+                return stateVector[1] == State.main_region_StraightTurnout_SectionLockFromStraight_RespFromTop;
+            case main_region_StraightTurnout_SectionLockFromTop_Init:
+                return stateVector[2] == State.main_region_StraightTurnout_SectionLockFromTop_Init;
+            case main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr:
+                return stateVector[2] == State.main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr;
+            case main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop:
+                return stateVector[2] == State.main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop;
+            case main_region_StraightTurnout_SectionLockFromTop_RespFromStr:
+                return stateVector[2] == State.main_region_StraightTurnout_SectionLockFromTop_RespFromStr;
+            case main_region_StraightTurnout_RemSectionLockFromStraight_Init:
+                return stateVector[3] == State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight:
+                return stateVector[3] == State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight;
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop:
+                return stateVector[3] == State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop;
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection:
+                return stateVector[3] == State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection;
+            case main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop:
+                return stateVector[3] == State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop;
+            case main_region_StraightTurnout_RemSectionLockFromTop_Init:
+                return stateVector[4] == State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection:
+                return stateVector[4] == State.main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection;
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection:
+                return stateVector[4] == State.main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection;
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight:
+                return stateVector[4] == State.main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight;
+            case main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight:
+                return stateVector[4] == State.main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight;
             case main_region_DivergentTurnout:
                 return stateVector[0].ordinal() >= State.main_region_DivergentTurnout.ordinal() && stateVector[0]
-                        .ordinal() <= State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock
-                        .ordinal();
-            case main_region_DivergentTurnout_r1_ProtocolDivergent:
-                return stateVector[0].ordinal() >= State.main_region_DivergentTurnout_r1_ProtocolDivergent.ordinal()
-                        && stateVector[0]
-                        .ordinal() <= State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection
-                        .ordinal();
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection;
-            case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                return stateVector[0] == State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection;
-            case main_region_DivergentTurnout_r2_HandlerDivergent:
-                return stateVector[1].ordinal() >= State.main_region_DivergentTurnout_r2_HandlerDivergent.ordinal()
-                        && stateVector[1]
-                        .ordinal() <= State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock
-                        .ordinal();
-            case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                return stateVector[1] == State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock;
-            case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                return stateVector[1] == State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock;
+                        .ordinal() <= State.main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent.ordinal();
+            case main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock:
+                return stateVector[0] == State.main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock;
+            case main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock:
+                return stateVector[0] == State.main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock;
+            case main_region_DivergentTurnout_SectionLockFromDivergent_Init:
+                return stateVector[1] == State.main_region_DivergentTurnout_SectionLockFromDivergent_Init;
+            case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop:
+                return stateVector[1] == State.main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop;
+            case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv:
+                return stateVector[1] == State.main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv;
+            case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop:
+                return stateVector[1] == State.main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop;
+            case main_region_DivergentTurnout_SectionLockFromTop_Init:
+                return stateVector[2] == State.main_region_DivergentTurnout_SectionLockFromTop_Init;
+            case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent:
+                return stateVector[2] == State.main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent;
+            case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop:
+                return stateVector[2] == State.main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop;
+            case main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent:
+                return stateVector[2] == State.main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent;
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_Init:
+                return stateVector[3] == State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent:
+                return stateVector[3] == State.main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent;
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop:
+                return stateVector[3] == State.main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop;
+            case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop:
+                return stateVector[3] == State.main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop;
+            case main_region_DivergentTurnout_RemSectionLockFromTop_Init:
+                return stateVector[4] == State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
+            case main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection:
+                return stateVector[4] == State.main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection;
+            case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection:
+                return stateVector[4] == State.main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection;
+            case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent:
+                return stateVector[4] == State.main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent;
             default:
                 return false;
         }
@@ -853,1372 +971,168 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         return sCITurnout;
     }
 
-    /* The reactions of state Init. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_Init() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_0();
-            } else {
-                if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_1();
-                } else {
-                    if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_2();
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_6();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state RespFromTopAndStr. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if ((sCITurnout.getPassingAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived;
-            } else {
-                if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-                } else {
-                    if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP
-                            || sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr;
-                            } else {
-                                if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseRemPassageDeniedTo(
-                                            sCISections.sTRAIGHT);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state OnePassageAllowedReceived. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if ((sCITurnout.getPassingAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseSectionAllowedTo(sCISections.sTRAIGHT);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if ((sCITurnout.getPassingDeniedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT)) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.sTRAIGHT);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state RespFromStrAndTop. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if ((sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT)
-                        || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT)) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd;
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.sTRAIGHT);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop;
-                            } else {
-                                if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP
-                                        || sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseSectionLockedTo(
-                                            sCISections.tOP);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state OnePassAllowedRecvd. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if ((sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseSectionAllowedTo(sCISections.tOP);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if ((sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT)) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.sTRAIGHT);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state CheckDivergent. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT)
-                    || (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_3();
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent;
-                        } else {
-                            if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent;
-                            } else {
-                                if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_4();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state CheckTop. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if (sCITurnout.isOccupied || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_4();
-                } else {
-                    if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_5();
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop;
-                            } else {
-                                if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseSectionLockedTo(
-                                            sCISections.tOP);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state CheckTopSection. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_7();
-                } else {
-                    if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_8();
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection;
-                        } else {
-                            if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection;
-                            } else {
-                                if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseRemPassageDeniedTo(
-                                            sCISections.sTRAIGHT);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection;
-                                } else {
-                                    if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
-                                        nextStateIndex = 0;
-                                        stateVector[0] = State.$NullState$;
-
-                                        sCITurnout.raiseSectionLockedTo(
-                                                sCISections.sTRAIGHT);
-
-                                        sCITurnout.raiseRemPassageDeniedTo(
-                                                sCISections.tOP);
-
-                                        nextStateIndex = 0;
-                                        stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state CheckStraightSection. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if (sCITurnout.isOccupied || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if ((sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT)
-                        || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT)) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_8();
-                } else {
-                    if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_9();
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection;
-                        } else {
-                            if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection;
-                            } else {
-                                if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseRemPassageDeniedTo(
-                                            sCISections.sTRAIGHT);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state SendBackShort. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort() {
-        if (sCITurnout.turnoutDivergent) {
-            switch (stateVector[0]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_0();
-        } else {
-            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
-
-                sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-            } else {
-                if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    sCITurnout.raiseSectionAllowedTo(sCISections.sTRAIGHT);
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-                }
-            }
-        }
-    }
-
     /* The reactions of state WithoutReceivedLock. */
-    private void react_main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock() {
-        if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-            nextStateIndex = 1;
-            stateVector[1] = State.$NullState$;
+    private void react_main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock() {
+        if (sCITurnout.turnoutDivergent) {
+            switch (stateVector[0]) {
+                case main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock:
+                    nextStateIndex = 0;
+                    stateVector[0] = State.$NullState$;
+                    break;
 
-            sCITurnout.raiseSectionLockedWithReplyTo(sCISections.dIVERGENT);
+                case main_region_StraightTurnout_HandlerStraight_WithReceivedLock:
+                    nextStateIndex = 0;
+                    stateVector[0] = State.$NullState$;
+                    break;
 
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock;
-        } else {
-            if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
-                sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+                default:
+                    break;
             }
-        }
-    }
 
-    /* The reactions of state WithReceivedLock. */
-    private void react_main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock() {
-        if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
+            switch (stateVector[1]) {
+                case main_region_StraightTurnout_SectionLockFromStraight_Init:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromStraight_SendBackShort:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromTop:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[2]) {
+                case main_region_StraightTurnout_SectionLockFromTop_Init:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromStr:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[3]) {
+                case main_region_StraightTurnout_RemSectionLockFromStraight_Init:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[4]) {
+                case main_region_StraightTurnout_RemSectionLockFromTop_Init:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
+
+            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
+
+            sCISections.raiseRemPassageDeniedToAll();
+
+            nextStateIndex = 0;
+            stateVector[0] = State.main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock;
+
             nextStateIndex = 1;
-            stateVector[1] = State.$NullState$;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_Init;
 
-            sCITurnout.raiseRemPassageAllowedTo(sCISections.dIVERGENT);
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_Init;
 
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
+
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
         } else {
-            if (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT) {
-                nextStateIndex = 1;
-                stateVector[1] = State.$NullState$;
+            if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
+                nextStateIndex = 0;
+                stateVector[0] = State.$NullState$;
 
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
+                sCITurnout.raiseSectionLockedWithReplyTo(sCISections.dIVERGENT);
 
-                nextStateIndex = 1;
-                stateVector[1] = State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock;
+                nextStateIndex = 0;
+                stateVector[0] = State.main_region_StraightTurnout_HandlerStraight_WithReceivedLock;
             } else {
                 if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
                     sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
@@ -2227,51 +1141,16 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         }
     }
 
-    /* The reactions of state Init. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init() {
-        if (sCITurnout.turnoutStraight) {
+    /* The reactions of state WithReceivedLock. */
+    private void react_main_region_StraightTurnout_HandlerStraight_WithReceivedLock() {
+        if (sCITurnout.turnoutDivergent) {
             switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
+                case main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock:
                     nextStateIndex = 0;
                     stateVector[0] = State.$NullState$;
                     break;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
+                case main_region_StraightTurnout_HandlerStraight_WithReceivedLock:
                     nextStateIndex = 0;
                     stateVector[0] = State.$NullState$;
                     break;
@@ -2281,12 +1160,27 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             }
 
             switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
+                case main_region_StraightTurnout_SectionLockFromStraight_Init:
                     nextStateIndex = 1;
                     stateVector[1] = State.$NullState$;
                     break;
 
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromStraight_SendBackShort:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromTop:
                     nextStateIndex = 1;
                     stateVector[1] = State.$NullState$;
                     break;
@@ -2295,1136 +1189,669 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
                     break;
             }
 
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+            switch (stateVector[2]) {
+                case main_region_StraightTurnout_SectionLockFromTop_Init:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromStr:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[3]) {
+                case main_region_StraightTurnout_RemSectionLockFromStraight_Init:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[4]) {
+                case main_region_StraightTurnout_RemSectionLockFromTop_Init:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
+
+            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
 
             sCISections.raiseRemPassageDeniedToAll();
 
-            react_main_region__choice_1();
+            nextStateIndex = 0;
+            stateVector[0] = State.main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock;
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_Init;
+
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_Init;
+
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
+
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
         } else {
-            if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
                 nextStateIndex = 0;
                 stateVector[0] = State.$NullState$;
 
-                react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_0();
-            } else {
-                if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_1();
-                } else {
-                    if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_2();
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_6();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /* The reactions of state RespFromTopAndDiv. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
-        } else {
-            if ((sCITurnout.getPassingAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.dIVERGENT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+                sCITurnout.raiseRemPassageAllowedTo(sCISections.dIVERGENT);
 
                 nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived;
+                stateVector[0] = State.main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock;
             } else {
-                if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
+                if (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT) {
                     nextStateIndex = 0;
                     stateVector[0] = State.$NullState$;
 
-                    sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+                    sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
 
                     nextStateIndex = 0;
-                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+                    stateVector[0] = State.main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock;
                 } else {
-                    if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP
-                            || sCITurnout.getRemPassageDeniedFromValue() == sCISections.dIVERGENT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
+                    if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
                         sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv;
-                            } else {
-                                if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseRemPassageDeniedTo(
-                                            sCISections.dIVERGENT);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv;
-                                }
-                            }
-                        }
                     }
                 }
             }
         }
     }
 
-    /* The reactions of state OnePassageAllowedReceived. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    /* The reactions of state Init. */
+    private void react_main_region_StraightTurnout_SectionLockFromStraight_Init() {
+        if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            react_main_region_StraightTurnout_SectionLockFromStraight__choice_0();
+        }
+    }
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    /* The reactions of state RespFromRemTop. */
+    private void react_main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            sCITurnout.raiseRemPassageRequestTo(sCISections.sTRAIGHT);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr;
         } else {
-            if ((sCITurnout.getPassingAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.dIVERGENT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP) {
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
 
-                sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
+                sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-            } else {
-                if ((sCITurnout.getPassingDeniedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.dIVERGENT)) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.dIVERGENT);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived;
-                            }
-                        }
-                    }
-                }
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
             }
         }
     }
 
-    /* The reactions of state RespFromDivAndTop. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    /* The reactions of state RespFromRemStr. */
+    private void react_main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            sCITurnout.raiseSectionAllowedTo(sCISections.sTRAIGHT);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
         } else {
-            if (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+
+                sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
+
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
+            }
+        }
+    }
+
+    /* The reactions of state SendBackShort. */
+    private void react_main_region_StraightTurnout_SectionLockFromStraight_SendBackShort() {
+        if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
+
+            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
+        } else {
+            if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+
+                sCITurnout.raiseSectionAllowedTo(sCISections.sTRAIGHT);
+
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
+            }
+        }
+    }
+
+    /* The reactions of state RespFromTop. */
+    private void react_main_region_StraightTurnout_SectionLockFromStraight_RespFromTop() {
+        if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
+
+            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+
+                sCITurnout.raiseRemPassageRequestTo(sCISections.sTRAIGHT);
+
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr;
+            }
+        }
+    }
+
+    /* The reactions of state Init. */
+    private void react_main_region_StraightTurnout_SectionLockFromTop_Init() {
+        if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
+
+            react_main_region_StraightTurnout_SectionLockFromTop__choice_0();
+        }
+    }
+
+    /* The reactions of state RespFromRemStr. */
+    private void react_main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
+
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop;
+        } else {
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
 
                 sCITurnout.raiseSectionLockedTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-            } else {
-                if ((sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT)
-                        || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.dIVERGENT)) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd;
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.dIVERGENT);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop;
-                            } else {
-                                if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP
-                                        || sCITurnout.getRemPassageDeniedFromValue() == sCISections.dIVERGENT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseSectionLockedTo(
-                                            sCISections.tOP);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-                                }
-                            }
-                        }
-                    }
-                }
+                nextStateIndex = 2;
+                stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_Init;
             }
         }
     }
 
-    /* The reactions of state OnePassAllowedRecvd. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    /* The reactions of state RespFromRemTop. */
+    private void react_main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            sCITurnout.raiseSectionAllowedTo(sCISections.tOP);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_Init;
         } else {
-            if ((sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getRemPassageAllowedFromValue() == sCISections.dIVERGENT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP) {
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
 
-                sCITurnout.raiseSectionAllowedTo(sCISections.tOP);
+                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-            } else {
-                if ((sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)
-                        || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.dIVERGENT)) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.dIVERGENT);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd;
-                            }
-                        }
-                    }
-                }
+                nextStateIndex = 2;
+                stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_Init;
             }
         }
     }
 
-    /* The reactions of state CheckDivergent. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    /* The reactions of state RespFromStr. */
+    private void react_main_region_StraightTurnout_SectionLockFromTop_RespFromStr() {
+        if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            sCITurnout.raiseSectionLockedTo(sCISections.tOP);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_Init;
         } else {
-            if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
 
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
+                sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-            } else {
-                if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
+                nextStateIndex = 2;
+                stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop;
+            }
+        }
+    }
 
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_3();
-                } else {
-                    if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
+    /* The reactions of state Init. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight_Init() {
+        if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
 
-                        sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+            react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_0();
+        }
+    }
 
-                        nextStateIndex = 0;
-                        stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent;
-                    } else {
-                        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
+    /* The reactions of state CheckStraight. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight() {
+        if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT)) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
 
-                            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
 
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent;
-                        } else {
-                            if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
 
-                                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent;
-                            }
-                        }
-                    }
-                }
+                react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_1();
             }
         }
     }
 
     /* The reactions of state CheckTop. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop() {
+        if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
+            react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_3();
         } else {
-            if (sCITurnout.isOccupied || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
 
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+                react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_2();
             } else {
-                if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
+                if (sCITurnout.isOccupied) {
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
 
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_4();
-                } else {
-                    if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
+                    sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
 
-                        react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_5();
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(
-                                    sCISections.dIVERGENT);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop;
-                        } else {
-                            if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseRemPassageDeniedTo(
-                                        sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop;
-                            } else {
-                                if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseSectionLockedTo(
-                                            sCISections.tOP);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop;
-                                }
-                            }
-                        }
-                    }
+                    nextStateIndex = 3;
+                    stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
                 }
             }
         }
     }
 
     /* The reactions of state CheckTopSection. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection() {
+        if (sCITurnout.isOccupied || sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
         } else {
-            if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP)
-                    || (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
 
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
+                react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_2();
+            }
+        }
+    }
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+    /* The reactions of state CheckRemTop. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
+
+            react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_2();
+        } else {
+            if (sCITurnout.isOccupied || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)) {
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+
+                sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
+
+                nextStateIndex = 3;
+                stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
+            }
+        }
+    }
+
+    /* The reactions of state Init. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop_Init() {
+        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
+
+            react_main_region_StraightTurnout_RemSectionLockFromTop__choice_0();
+        }
+    }
+
+    /* The reactions of state CheckTopSection. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection() {
+        if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP)) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
+
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+
+                react_main_region_StraightTurnout_RemSectionLockFromTop__choice_1();
+            }
+        }
+    }
+
+    /* The reactions of state CheckStraightSection. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection() {
+        if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
+
+            react_main_region_StraightTurnout_RemSectionLockFromTop__choice_2();
+        } else {
+            if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+
+                react_main_region_StraightTurnout_RemSectionLockFromTop__choice_3();
             } else {
-                if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
+                if (sCITurnout.isOccupied) {
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
 
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_7();
-                } else {
-                    if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
+                    sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-                        react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_8();
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(
-                                    sCISections.dIVERGENT);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection;
-                        } else {
-                            if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection;
-                            } else {
-                                if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseRemPassageDeniedTo(
-                                            sCISections.dIVERGENT);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection;
-                                }
-                            }
-                        }
-                    }
+                    nextStateIndex = 4;
+                    stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
                 }
             }
         }
     }
 
-    /* The reactions of state CheckDivergentSection. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection() {
-        if (sCITurnout.turnoutStraight) {
-            switch (stateVector[0]) {
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+    /* The reactions of state CheckStraight. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight() {
+        if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+                react_main_region_StraightTurnout_RemSectionLockFromTop__choice_2();
+            } else {
+                if (sCITurnout.isOccupied) {
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
+                    sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
+                    nextStateIndex = 4;
+                    stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
+                }
             }
+        }
+    }
 
-            switch (stateVector[1]) {
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
+    /* The reactions of state CheckRemStraight. */
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
 
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    nextStateIndex = 1;
-                    stateVector[1] = State.$NullState$;
-                    break;
-
-                default:
-                    break;
-            }
-
-            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
-
-            sCISections.raiseRemPassageDeniedToAll();
-
-            react_main_region__choice_1();
+            react_main_region_StraightTurnout_RemSectionLockFromTop__choice_2();
         } else {
             if (sCITurnout.isOccupied || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.sTRAIGHT)) {
-                nextStateIndex = 0;
-                stateVector[0] = State.$NullState$;
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
 
                 sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-            } else {
-                if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
-                    nextStateIndex = 0;
-                    stateVector[0] = State.$NullState$;
-
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_8();
-                } else {
-                    if (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT) {
-                        nextStateIndex = 0;
-                        stateVector[0] = State.$NullState$;
-
-                        react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_9();
-                    } else {
-                        if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
-                            nextStateIndex = 0;
-                            stateVector[0] = State.$NullState$;
-
-                            sCITurnout.raiseSectionLockedTo(
-                                    sCISections.dIVERGENT);
-
-                            nextStateIndex = 0;
-                            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection;
-                        } else {
-                            if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
-                                nextStateIndex = 0;
-                                stateVector[0] = State.$NullState$;
-
-                                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-                                nextStateIndex = 0;
-                                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection;
-                            } else {
-                                if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.$NullState$;
-
-                                    sCITurnout.raiseRemPassageDeniedTo(
-                                            sCISections.dIVERGENT);
-
-                                    nextStateIndex = 0;
-                                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection;
-                                }
-                            }
-                        }
-                    }
-                }
+                nextStateIndex = 4;
+                stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
             }
         }
     }
 
     /* The reactions of state WithoutReceivedLock. */
-    private void react_main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock() {
-        if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
-            nextStateIndex = 1;
-            stateVector[1] = State.$NullState$;
+    private void react_main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock() {
+        if (sCITurnout.turnoutStraight) {
+            switch (stateVector[0]) {
+                case main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock:
+                    nextStateIndex = 0;
+                    stateVector[0] = State.$NullState$;
+                    break;
 
-            react_main_region_DivergentTurnout_r2_HandlerDivergent_r1__choice_0();
-        } else {
-            if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
-                sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
+                case main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock:
+                    nextStateIndex = 0;
+                    stateVector[0] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
             }
-        }
-    }
 
-    /* The reactions of state WithReceivedLock. */
-    private void react_main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock() {
-        if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
+            switch (stateVector[1]) {
+                case main_region_DivergentTurnout_SectionLockFromDivergent_Init:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[2]) {
+                case main_region_DivergentTurnout_SectionLockFromTop_Init:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[3]) {
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_Init:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[4]) {
+                case main_region_DivergentTurnout_RemSectionLockFromTop_Init:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            sCITurnout.raiseSectionAllowedTo(sCISections.sTRAIGHT);
+
+            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+
+            sCISections.raiseRemPassageDeniedToAll();
+
+            nextStateIndex = 0;
+            stateVector[0] = State.main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock;
+
             nextStateIndex = 1;
-            stateVector[1] = State.$NullState$;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
 
-            sCITurnout.raiseRemPassageAllowedTo(sCISections.sTRAIGHT);
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_Init;
 
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
+
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
         } else {
-            if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
-                nextStateIndex = 1;
-                stateVector[1] = State.$NullState$;
+            if (sCITurnout.getRemSectionLockFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 0;
+                stateVector[0] = State.$NullState$;
 
-                sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
-
-                nextStateIndex = 1;
-                stateVector[1] = State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock;
+                react_main_region_DivergentTurnout_HandlerDivergent__choice_0();
             } else {
                 if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
                     sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
@@ -3433,458 +1860,875 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         }
     }
 
+    /* The reactions of state WithReceivedLock. */
+    private void react_main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock() {
+        if (sCITurnout.turnoutStraight) {
+            switch (stateVector[0]) {
+                case main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock:
+                    nextStateIndex = 0;
+                    stateVector[0] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock:
+                    nextStateIndex = 0;
+                    stateVector[0] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[1]) {
+                case main_region_DivergentTurnout_SectionLockFromDivergent_Init:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop:
+                    nextStateIndex = 1;
+                    stateVector[1] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[2]) {
+                case main_region_DivergentTurnout_SectionLockFromTop_Init:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent:
+                    nextStateIndex = 2;
+                    stateVector[2] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[3]) {
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_Init:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop:
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (stateVector[4]) {
+                case main_region_DivergentTurnout_RemSectionLockFromTop_Init:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent:
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+                    break;
+
+                default:
+                    break;
+            }
+
+            sCITurnout.raiseSectionAllowedTo(sCISections.sTRAIGHT);
+
+            sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+
+            sCISections.raiseRemPassageDeniedToAll();
+
+            nextStateIndex = 0;
+            stateVector[0] = State.main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock;
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_Init;
+
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_Init;
+
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
+
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.sTRAIGHT) {
+                nextStateIndex = 0;
+                stateVector[0] = State.$NullState$;
+
+                sCITurnout.raiseRemPassageAllowedTo(sCISections.sTRAIGHT);
+
+                nextStateIndex = 0;
+                stateVector[0] = State.main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock;
+            } else {
+                if (sCITurnout.getPassingDeniedFromValue() == sCISections.sTRAIGHT) {
+                    nextStateIndex = 0;
+                    stateVector[0] = State.$NullState$;
+
+                    sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
+
+                    nextStateIndex = 0;
+                    stateVector[0] = State.main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock;
+                } else {
+                    if (sCITurnout.getSectionLockFromValue() == sCISections.sTRAIGHT) {
+                        sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
+                    }
+                }
+            }
+        }
+    }
+
+    /* The reactions of state Init. */
+    private void react_main_region_DivergentTurnout_SectionLockFromDivergent_Init() {
+        if (sCITurnout.getSectionLockFromValue() == sCISections.dIVERGENT) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
+
+            react_main_region_DivergentTurnout_SectionLockFromDivergent__choice_0();
+        }
+    }
+
+    /* The reactions of state RespFromRemTop. */
+    private void react_main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageRequestTo(sCISections.dIVERGENT);
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv;
+        } else {
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP) {
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+
+                sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_Init;
+            }
+        }
+    }
+
+    /* The reactions of state RespFromRemDiv. */
+    private void react_main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.dIVERGENT) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
+
+            sCITurnout.raiseSectionAllowedTo(sCISections.dIVERGENT);
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_Init;
+        } else {
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.dIVERGENT) {
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+
+                sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_Init;
+            }
+        }
+    }
+
+    /* The reactions of state RespFromTop. */
+    private void react_main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop() {
+        if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
+            nextStateIndex = 1;
+            stateVector[1] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageRequestTo(sCISections.dIVERGENT);
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv;
+        } else {
+            if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
+                nextStateIndex = 1;
+                stateVector[1] = State.$NullState$;
+
+                sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_Init;
+            }
+        }
+    }
+
+    /* The reactions of state Init. */
+    private void react_main_region_DivergentTurnout_SectionLockFromTop_Init() {
+        if (sCITurnout.getSectionLockFromValue() == sCISections.tOP) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
+
+            react_main_region_DivergentTurnout_SectionLockFromTop__choice_0();
+        }
+    }
+
+    /* The reactions of state RespFromRemDivergent. */
+    private void react_main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.dIVERGENT) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
+
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop;
+        } else {
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.dIVERGENT) {
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+
+                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
+
+                nextStateIndex = 2;
+                stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_Init;
+            }
+        }
+    }
+
+    /* The reactions of state RespFromRemTop. */
+    private void react_main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop() {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
+
+            sCITurnout.raiseSectionAllowedTo(sCISections.tOP);
+
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_Init;
+        } else {
+            if (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP) {
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+
+                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
+
+                nextStateIndex = 2;
+                stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_Init;
+            }
+        }
+    }
+
+    /* The reactions of state RespFromDivergent. */
+    private void react_main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent() {
+        if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
+            nextStateIndex = 2;
+            stateVector[2] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
+
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop;
+        } else {
+            if (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT) {
+                nextStateIndex = 2;
+                stateVector[2] = State.$NullState$;
+
+                sCITurnout.raiseSectionLockedTo(sCISections.tOP);
+
+                nextStateIndex = 2;
+                stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_Init;
+            }
+        }
+    }
+
+    /* The reactions of state Init. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent_Init() {
+        if (sCITurnout.getRemSectionLockFromValue() == sCISections.dIVERGENT) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
+
+            react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_0();
+        }
+    }
+
+    /* The reactions of state CheckDivergent. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent() {
+        if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT)) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
+
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+
+                react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_1();
+            }
+        }
+    }
+
+    /* The reactions of state CheckTop. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop() {
+        if (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
+
+            react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_3();
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+
+                react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_2();
+            } else {
+                if (sCITurnout.isOccupied) {
+                    nextStateIndex = 3;
+                    stateVector[3] = State.$NullState$;
+
+                    sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
+
+                    nextStateIndex = 3;
+                    stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
+                }
+            }
+        }
+    }
+
+    /* The reactions of state CheckRemTop. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop() {
+        if (sCITurnout.isOccupied || (sCITurnout.getRemPassageDeniedFromValue() == sCISections.tOP)) {
+            nextStateIndex = 3;
+            stateVector[3] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
+
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
+        } else {
+            if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 3;
+                stateVector[3] = State.$NullState$;
+
+                react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_2();
+            }
+        }
+    }
+
+    /* The reactions of state Init. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop_Init() {
+        if (sCITurnout.getRemSectionLockFromValue() == sCISections.tOP) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
+
+            react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_0();
+        }
+    }
+
+    /* The reactions of state CheckTopSection. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection() {
+        if (sCITurnout.isOccupied || (sCITurnout.getPassingDeniedFromValue() == sCISections.tOP)) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
+
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.tOP) {
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+
+                react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_1();
+            }
+        }
+    }
+
+    /* The reactions of state CheckDivergenSection. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection() {
+        if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
+
+            react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_2();
+        } else {
+            if (sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT) {
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+
+                react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_3();
+            } else {
+                if (sCITurnout.isOccupied) {
+                    nextStateIndex = 4;
+                    stateVector[4] = State.$NullState$;
+
+                    sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
+
+                    nextStateIndex = 4;
+                    stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
+                }
+            }
+        }
+    }
+
+    /* The reactions of state CheckDivergent. */
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent() {
+        if (sCITurnout.isOccupied || sCITurnout.getPassingDeniedFromValue() == sCISections.dIVERGENT) {
+            nextStateIndex = 4;
+            stateVector[4] = State.$NullState$;
+
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
+
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
+        } else {
+            if (sCITurnout.getPassingAllowedFromValue() == sCISections.dIVERGENT) {
+                nextStateIndex = 4;
+                stateVector[4] = State.$NullState$;
+
+                react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_2();
+            }
+        }
+    }
+
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_0() {
+    private void react_main_region_StraightTurnout_SectionLockFromStraight__choice_0() {
         if (sCITurnout.id != 129 && sCITurnout.topExists) {
             sCITurnout.raiseSectionLockedWithReplyTo(sCISections.tOP);
 
-            sCITurnout.raiseRemPassageRequestTo(sCISections.sTRAIGHT);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr;
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_RespFromTop;
         } else {
             if (sCITurnout.id != 129 && !sCITurnout.topExists) {
                 sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
 
-                sCITurnout.raiseRemPassageRequestTo(sCISections.sTRAIGHT);
-
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr;
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop;
             } else {
-                if (sCITurnout.id == 129) {
-                    sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
+                sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
 
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort;
-                }
+                nextStateIndex = 1;
+                stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_SendBackShort;
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_1() {
+    private void react_main_region_StraightTurnout_SectionLockFromTop__choice_0() {
         if (sCITurnout.straightExists) {
             sCITurnout.raiseSectionLockedWithReplyTo(sCISections.sTRAIGHT);
 
-            sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop;
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_RespFromStr;
         } else {
             sCITurnout.raiseRemPassageRequestTo(sCISections.sTRAIGHT);
 
-            sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop;
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_2() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_0() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
         } else {
             if (!sCITurnout.isOccupied && sCITurnout.straightExists) {
                 sCITurnout.raiseSectionLockedWithReplyTo(sCISections.sTRAIGHT);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent;
+                nextStateIndex = 3;
+                stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight;
             } else {
                 if (!sCITurnout.isOccupied && !sCITurnout.straightExists) {
                     sCITurnout.raiseSectionLockedWithReplyTo(sCISections.tOP);
 
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent;
+                    nextStateIndex = 3;
+                    stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection;
                 }
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_3() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_1() {
         if (!sCITurnout.isOccupied && sCITurnout.topExists) {
             sCITurnout.raiseLockRequestTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop;
         } else {
             if (!sCITurnout.isOccupied && !sCITurnout.topExists) {
                 sCITurnout.raiseRemShortPassageRequestTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop;
+                nextStateIndex = 3;
+                stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop;
             } else {
                 if (sCITurnout.isOccupied) {
                     sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
 
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+                    nextStateIndex = 3;
+                    stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
                 }
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_4() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_2() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
         } else {
             sCITurnout.raiseRemPassageAllowedTo(sCISections.sTRAIGHT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_5() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromStraight__choice_3() {
         if (!(!sCITurnout.remStraightIsPrior || sCITurnout.isOccupied)) {
             sCITurnout.raiseRemPassageAllowedTo(sCISections.sTRAIGHT);
 
             sCITurnout.raiseSectionLockedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
         } else {
             if (!sCITurnout.remStraightIsPrior || sCITurnout.isOccupied) {
                 sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+                nextStateIndex = 3;
+                stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_6() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop__choice_0() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
         } else {
             if (!sCITurnout.isOccupied && sCITurnout.topExists) {
                 sCITurnout.raiseSectionLockedWithReplyTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection;
+                nextStateIndex = 4;
+                stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection;
             } else {
                 if (!sCITurnout.isOccupied && !sCITurnout.topExists) {
                     sCITurnout.raiseSectionLockedWithReplyTo(
                             sCISections.sTRAIGHT);
 
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection;
+                    nextStateIndex = 4;
+                    stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight;
                 }
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_7() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop__choice_1() {
         if (!sCITurnout.isOccupied && sCITurnout.straightExists) {
             sCITurnout.raiseLockRequestTo(sCISections.sTRAIGHT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection;
         } else {
             if (sCITurnout.isOccupied) {
                 sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+                nextStateIndex = 4;
+                stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
             } else {
                 if (!sCITurnout.isOccupied && !sCITurnout.straightExists) {
                     sCITurnout.raiseRemShortPassageRequestTo(
                             sCISections.sTRAIGHT);
 
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection;
+                    nextStateIndex = 4;
+                    stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight;
                 }
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_8() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop__choice_2() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
         } else {
             sCITurnout.raiseRemPassageAllowedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_r1_ProtocolStraight_r1__choice_9() {
+    private void react_main_region_StraightTurnout_RemSectionLockFromTop__choice_3() {
         if (!sCITurnout.remTopIsPrior || sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
         } else {
             if (!(!sCITurnout.remTopIsPrior || sCITurnout.isOccupied)) {
                 sCITurnout.raiseRemPassageAllowedTo(sCISections.tOP);
 
                 sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
+                nextStateIndex = 4;
+                stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromTop_Init;
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_0() {
+    private void react_main_region_DivergentTurnout_HandlerDivergent__choice_0() {
+        if (sCITurnout.id == 130) {
+            sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
+
+            nextStateIndex = 0;
+            stateVector[0] = State.main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock;
+        } else {
+            sCITurnout.raiseSectionLockedWithReplyTo(sCISections.sTRAIGHT);
+
+            nextStateIndex = 0;
+            stateVector[0] = State.main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock;
+        }
+    }
+
+    /* The reactions of state null. */
+    private void react_main_region_DivergentTurnout_SectionLockFromDivergent__choice_0() {
         if (sCITurnout.topExists) {
             sCITurnout.raiseSectionLockedWithReplyTo(sCISections.tOP);
 
-            sCITurnout.raiseRemPassageRequestTo(sCISections.dIVERGENT);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv;
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop;
         } else {
             sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
 
-            sCITurnout.raiseRemPassageRequestTo(sCISections.dIVERGENT);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv;
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_1() {
+    private void react_main_region_DivergentTurnout_SectionLockFromTop__choice_0() {
         if (sCITurnout.divergentExists) {
             sCITurnout.raiseSectionLockedWithReplyTo(sCISections.dIVERGENT);
 
-            sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop;
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent;
         } else {
             sCITurnout.raiseRemPassageRequestTo(sCISections.dIVERGENT);
 
-            sCITurnout.raiseRemPassageRequestTo(sCISections.tOP);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop;
+            nextStateIndex = 2;
+            stateVector[2] = State.main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_2() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_0() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
         } else {
             sCITurnout.raiseSectionLockedWithReplyTo(sCISections.dIVERGENT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_3() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_1() {
         if (!sCITurnout.isOccupied && sCITurnout.topExists) {
             sCITurnout.raiseLockRequestTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop;
         } else {
             if (!sCITurnout.isOccupied && !sCITurnout.topExists) {
                 sCITurnout.raiseRemShortPassageRequestTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop;
+                nextStateIndex = 3;
+                stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop;
             } else {
                 if (sCITurnout.isOccupied) {
                     sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
 
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+                    nextStateIndex = 3;
+                    stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
                 }
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_4() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_2() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
         } else {
             sCITurnout.raiseRemPassageAllowedTo(sCISections.dIVERGENT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_5() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent__choice_3() {
         if (!(!sCITurnout.remDivergentIsPrior || sCITurnout.isOccupied)) {
             sCITurnout.raiseRemPassageAllowedTo(sCISections.dIVERGENT);
 
             sCITurnout.raiseSectionLockedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 3;
+            stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
         } else {
             if (!sCITurnout.remDivergentIsPrior || sCITurnout.isOccupied) {
                 sCITurnout.raiseRemPassageDeniedTo(sCISections.dIVERGENT);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+                nextStateIndex = 3;
+                stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_6() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_0() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
         } else {
             if (!sCITurnout.isOccupied && sCITurnout.topExists) {
                 sCITurnout.raiseSectionLockedWithReplyTo(sCISections.tOP);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection;
+                nextStateIndex = 4;
+                stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection;
             } else {
                 if (!sCITurnout.isOccupied && !sCITurnout.topExists) {
                     sCITurnout.raiseSectionLockedWithReplyTo(
                             sCISections.dIVERGENT);
 
-                    nextStateIndex = 0;
-                    stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection;
+                    nextStateIndex = 4;
+                    stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent;
                 }
             }
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_7() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_1() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
         } else {
             sCITurnout.raiseLockRequestTo(sCISections.dIVERGENT);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_8() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_2() {
         if (sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
         } else {
             sCITurnout.raiseRemPassageAllowedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
         }
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1__choice_9() {
+    private void react_main_region_DivergentTurnout_RemSectionLockFromTop__choice_3() {
         if (!sCITurnout.remTopIsPrior || sCITurnout.isOccupied) {
             sCITurnout.raiseRemPassageDeniedTo(sCISections.tOP);
 
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+            nextStateIndex = 4;
+            stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
         } else {
             if (!(!sCITurnout.remTopIsPrior || sCITurnout.isOccupied)) {
                 sCITurnout.raiseRemPassageAllowedTo(sCISections.tOP);
 
-                sCITurnout.raiseSectionLockedTo(sCISections.dIVERGENT);
+                sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
 
-                nextStateIndex = 0;
-                stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
+                nextStateIndex = 4;
+                stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromTop_Init;
             }
-        }
-    }
-
-    /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_r2_HandlerDivergent_r1__choice_0() {
-        if (sCITurnout.id == 130) {
-            sCITurnout.raiseRemPassageDeniedTo(sCISections.sTRAIGHT);
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock;
-        } else {
-            sCITurnout.raiseSectionLockedWithReplyTo(sCISections.sTRAIGHT);
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock;
-        }
-    }
-
-    /* The reactions of state null. */
-    private void react_main_region__choice_0() {
-        if (sCITurnout.id == 130) {
-            sCITurnout.raiseSectionLockedTo(sCISections.tOP);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock;
-        } else {
-            sCITurnout.raiseSectionLockedTo(sCISections.sTRAIGHT);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init;
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock;
-        }
-    }
-
-    /* The reactions of state null. */
-    private void react_main_region__choice_1() {
-        if (sCITurnout.id == 130) {
-            sCITurnout.raiseSectionAllowedTo(sCISections.tOP);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock;
-        } else {
-            sCITurnout.raiseSectionAllowedTo(sCISections.sTRAIGHT);
-
-            nextStateIndex = 0;
-            stateVector[0] = State.main_region_StraightTurnout_r1_ProtocolStraight_r1_Init;
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock;
         }
     }
 
@@ -3900,74 +2744,122 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         for (nextStateIndex = 0; nextStateIndex < stateVector.length; nextStateIndex++) {
 
             switch (stateVector[nextStateIndex]) {
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_Init:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_Init();
+                case main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock:
+                    react_main_region_StraightTurnout_HandlerStraight_WithoutReceivedLock();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromTopAndStr();
+                case main_region_StraightTurnout_HandlerStraight_WithReceivedLock:
+                    react_main_region_StraightTurnout_HandlerStraight_WithReceivedLock();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassageAllowedReceived();
+                case main_region_StraightTurnout_SectionLockFromStraight_Init:
+                    react_main_region_StraightTurnout_SectionLockFromStraight_Init();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_RespFromStrAndTop();
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop:
+                    react_main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_OnePassAllowedRecvd();
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr:
+                    react_main_region_StraightTurnout_SectionLockFromStraight_RespFromRemStr();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckDivergent();
+                case main_region_StraightTurnout_SectionLockFromStraight_SendBackShort:
+                    react_main_region_StraightTurnout_SectionLockFromStraight_SendBackShort();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTop();
+                case main_region_StraightTurnout_SectionLockFromStraight_RespFromTop:
+                    react_main_region_StraightTurnout_SectionLockFromStraight_RespFromTop();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckTopSection();
+                case main_region_StraightTurnout_SectionLockFromTop_Init:
+                    react_main_region_StraightTurnout_SectionLockFromTop_Init();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_CheckStraightSection();
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr:
+                    react_main_region_StraightTurnout_SectionLockFromTop_RespFromRemStr();
                     break;
-                case main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort:
-                    react_main_region_StraightTurnout_r1_ProtocolStraight_r1_SendBackShort();
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop:
+                    react_main_region_StraightTurnout_SectionLockFromTop_RespFromRemTop();
                     break;
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock:
-                    react_main_region_StraightTurnout_r2_HandlerStraight_r1_WithoutReceivedLock();
+                case main_region_StraightTurnout_SectionLockFromTop_RespFromStr:
+                    react_main_region_StraightTurnout_SectionLockFromTop_RespFromStr();
                     break;
-                case main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock:
-                    react_main_region_StraightTurnout_r2_HandlerStraight_r1_WithReceivedLock();
+                case main_region_StraightTurnout_RemSectionLockFromStraight_Init:
+                    react_main_region_StraightTurnout_RemSectionLockFromStraight_Init();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_Init();
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight:
+                    react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckStraight();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromTopAndDiv();
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop:
+                    react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassageAllowedReceived();
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection:
+                    react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckTopSection();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_RespFromDivAndTop();
+                case main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop:
+                    react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckRemTop();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_OnePassAllowedRecvd();
+                case main_region_StraightTurnout_RemSectionLockFromTop_Init:
+                    react_main_region_StraightTurnout_RemSectionLockFromTop_Init();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergent();
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection:
+                    react_main_region_StraightTurnout_RemSectionLockFromTop_CheckTopSection();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTop();
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection:
+                    react_main_region_StraightTurnout_RemSectionLockFromTop_CheckStraightSection();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckTopSection();
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight:
+                    react_main_region_StraightTurnout_RemSectionLockFromTop_CheckStraight();
                     break;
-                case main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection:
-                    react_main_region_DivergentTurnout_r1_ProtocolDivergent_r1_CheckDivergentSection();
+                case main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight:
+                    react_main_region_StraightTurnout_RemSectionLockFromTop_CheckRemStraight();
                     break;
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock:
-                    react_main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithoutReceivedLock();
+                case main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock:
+                    react_main_region_DivergentTurnout_HandlerDivergent_WithoutReceivedLock();
                     break;
-                case main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock:
-                    react_main_region_DivergentTurnout_r2_HandlerDivergent_r1_WithReceivedLock();
+                case main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock:
+                    react_main_region_DivergentTurnout_HandlerDivergent_WithReceivedLock();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromDivergent_Init:
+                    react_main_region_DivergentTurnout_SectionLockFromDivergent_Init();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop:
+                    react_main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemTop();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv:
+                    react_main_region_DivergentTurnout_SectionLockFromDivergent_RespFromRemDiv();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop:
+                    react_main_region_DivergentTurnout_SectionLockFromDivergent_RespFromTop();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromTop_Init:
+                    react_main_region_DivergentTurnout_SectionLockFromTop_Init();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent:
+                    react_main_region_DivergentTurnout_SectionLockFromTop_RespFromRemDivergent();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop:
+                    react_main_region_DivergentTurnout_SectionLockFromTop_RespFromRemTop();
+                    break;
+                case main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent:
+                    react_main_region_DivergentTurnout_SectionLockFromTop_RespFromDivergent();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_Init:
+                    react_main_region_DivergentTurnout_RemSectionLockFromDivergent_Init();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent:
+                    react_main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckDivergent();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop:
+                    react_main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop:
+                    react_main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckRemTop();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromTop_Init:
+                    react_main_region_DivergentTurnout_RemSectionLockFromTop_Init();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection:
+                    react_main_region_DivergentTurnout_RemSectionLockFromTop_CheckTopSection();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection:
+                    react_main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergenSection();
+                    break;
+                case main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent:
+                    react_main_region_DivergentTurnout_RemSectionLockFromTop_CheckDivergent();
                     break;
                 default:
                 // $NullState$

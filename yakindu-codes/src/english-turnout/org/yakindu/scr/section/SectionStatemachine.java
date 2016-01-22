@@ -2,6 +2,7 @@ package org.yakindu.scr.section;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.yakindu.scr.IStatemachine;
 
 public class SectionStatemachine implements ISectionStatemachine {
 
