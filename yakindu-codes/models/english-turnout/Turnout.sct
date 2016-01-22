@@ -34,7 +34,7 @@
             <outgoingTransitions xmi:id="_Tjzq4MDvEeWH0JVC4FYZqg" specification="[valueof(Turnout.passingDeniedFrom) == Sections.STRAIGHT] / &#xD;&#xA;raise Turnout.remPassageDeniedTo: Sections.STRAIGHT" target="_TjzD58DvEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_Tj2uEMDvEeWH0JVC4FYZqg" name="sectionLockFromDivergent">
+        <regions xmi:id="_Tj2uEMDvEeWH0JVC4FYZqg" name="SectionLockFromDivergent">
           <vertices xsi:type="sgraph:Entry" xmi:id="_Tj2uEcDvEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_Tj2uEsDvEeWH0JVC4FYZqg" specification="" target="_Tj2uE8DvEeWH0JVC4FYZqg"/>
           </vertices>
@@ -54,7 +54,7 @@
             <outgoingTransitions xmi:id="_Tj3VXcDvEeWH0JVC4FYZqg" specification="Turnout.passingDeniedFromOtherHalfIN / raise Turnout.sectionLockedTo: Sections.DIVERGENT" target="_Tj2uE8DvEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_Tj6YcMDvEeWH0JVC4FYZqg" name="sectionLockFromOtherHalf">
+        <regions xmi:id="_Tj6YcMDvEeWH0JVC4FYZqg" name="SectionLockFromOtherHalf">
           <vertices xsi:type="sgraph:Entry" xmi:id="_Tj6YccDvEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_Tj6YcsDvEeWH0JVC4FYZqg" target="_Tj6Yc8DvEeWH0JVC4FYZqg"/>
           </vertices>
@@ -73,7 +73,7 @@
             <outgoingTransitions xmi:id="_Tj6_r8DvEeWH0JVC4FYZqg" specification="[(valueof(Turnout.remPassageAllowedFrom) == Sections.DIVERGENT) || (valueof(Turnout.remPassageDeniedFrom) == Sections.DIVERGENT)]  / raise Turnout.passingAllowedFromOtherHalfOUT" target="_Tj6Yc8DvEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_Tj-C0MDvEeWH0JVC4FYZqg" name="remSectionLockFromDivergent">
+        <regions xmi:id="_Tj-C0MDvEeWH0JVC4FYZqg" name="RemSectionLockFromDivergent">
           <vertices xsi:type="sgraph:Entry" xmi:id="_Tj-C0cDvEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_Tj-C0sDvEeWH0JVC4FYZqg" target="_Tj-C08DvEeWH0JVC4FYZqg"/>
           </vertices>
@@ -102,7 +102,7 @@
             <outgoingTransitions xmi:id="_Tj-qR8DvEeWH0JVC4FYZqg" specification="[Turnout.isOccupied] / raise Turnout.remPassageDeniedTo: Sections.DIVERGENT" target="_Tj-C08DvEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_TkCUQMDvEeWH0JVC4FYZqg" name="remSectionLockFromOtherHalf">
+        <regions xmi:id="_TkCUQMDvEeWH0JVC4FYZqg" name="RemSectionLockFromOtherHalf">
           <vertices xsi:type="sgraph:Entry" xmi:id="_TkCUQcDvEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_TkCUQsDvEeWH0JVC4FYZqg" target="_TkCUQ8DvEeWH0JVC4FYZqg"/>
           </vertices>
@@ -122,7 +122,7 @@
             <outgoingTransitions xmi:id="_TkC7jMDvEeWH0JVC4FYZqg" specification="else / raise Turnout.passingAllowedFromOtherHalfOUT" target="_TkCUQ8DvEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_TkHMwMDvEeWH0JVC4FYZqg" name="remShortSectionLockFromDivergent">
+        <regions xmi:id="_TkHMwMDvEeWH0JVC4FYZqg" name="RemShortSectionLockFromDivergent">
           <vertices xsi:type="sgraph:Entry" xmi:id="_TkHMwcDvEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_TkHMwsDvEeWH0JVC4FYZqg" target="_TkHMw8DvEeWH0JVC4FYZqg"/>
           </vertices>
@@ -158,7 +158,7 @@
             <outgoingTransitions xmi:id="_D22psMDvEeWH0JVC4FYZqg" specification="[valueof(Turnout.passingDeniedFrom) == Sections.DIVERGENT] / &#xD;&#xA;raise Turnout.remPassageDeniedTo: Sections.DIVERGENT" target="_D2rqkMDvEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_Fb91EMDpEeWH0JVC4FYZqg" name="sectionLockFromStraight">
+        <regions xmi:id="_Fb91EMDpEeWH0JVC4FYZqg" name="SectionLockFromStraight">
           <vertices xsi:type="sgraph:Entry" xmi:id="_jYrgcMDpEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_5b0AcMDpEeWH0JVC4FYZqg" specification="" target="_ognqoMDpEeWH0JVC4FYZqg"/>
           </vertices>
@@ -178,7 +178,7 @@
             <outgoingTransitions xmi:id="_ogxbpMDpEeWH0JVC4FYZqg" specification="Turnout.passingDeniedFromOtherHalfIN / raise Turnout.sectionLockedTo: Sections.STRAIGHT" target="_ognqoMDpEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_Q205YMDqEeWH0JVC4FYZqg" name="sectionLockFromOtherHalf">
+        <regions xmi:id="_Q205YMDqEeWH0JVC4FYZqg" name="SectionLockFromOtherHalf">
           <vertices xsi:type="sgraph:Entry" xmi:id="_TWXd8MDqEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_TWXd8cDqEeWH0JVC4FYZqg" target="_TWXd8sDqEeWH0JVC4FYZqg"/>
           </vertices>
@@ -197,7 +197,7 @@
             <outgoingTransitions xmi:id="_I2UxMsDrEeWH0JVC4FYZqg" specification="[(valueof(Turnout.remPassageAllowedFrom) == Sections.STRAIGHT) || (valueof(Turnout.remPassageDeniedFrom) == Sections.STRAIGHT)]  / raise Turnout.passingAllowedFromOtherHalfOUT" target="_TWXd8sDqEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_fpdKwMDrEeWH0JVC4FYZqg" name="remSectionLockFromStraight">
+        <regions xmi:id="_fpdKwMDrEeWH0JVC4FYZqg" name="RemSectionLockFromStraight">
           <vertices xsi:type="sgraph:Entry" xmi:id="_sewpQMDrEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_sewpQcDrEeWH0JVC4FYZqg" target="_sewpQsDrEeWH0JVC4FYZqg"/>
           </vertices>
@@ -226,7 +226,7 @@
             <outgoingTransitions xmi:id="_sfELScDrEeWH0JVC4FYZqg" specification="[Turnout.isOccupied] / raise Turnout.remPassageDeniedTo: Sections.STRAIGHT" target="_sewpQsDrEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_KDp1EMDtEeWH0JVC4FYZqg" name="remSectionLockFromOtherHalf">
+        <regions xmi:id="_KDp1EMDtEeWH0JVC4FYZqg" name="RemSectionLockFromOtherHalf">
           <vertices xsi:type="sgraph:Entry" xmi:id="_Ox2CgsDtEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_Ox2Cg8DtEeWH0JVC4FYZqg" target="_Ox2ChMDtEeWH0JVC4FYZqg"/>
           </vertices>
@@ -246,7 +246,7 @@
             <outgoingTransitions xmi:id="_OyPEEMDtEeWH0JVC4FYZqg" specification="else / raise Turnout.passingAllowedFromOtherHalfOUT" target="_Ox2ChMDtEeWH0JVC4FYZqg"/>
           </vertices>
         </regions>
-        <regions xmi:id="_J86ecMDuEeWH0JVC4FYZqg" name="remShortSectionLockFromStraight">
+        <regions xmi:id="_J86ecMDuEeWH0JVC4FYZqg" name="RemShortSectionLockFromStraight">
           <vertices xsi:type="sgraph:Entry" xmi:id="_MYPRYsDuEeWH0JVC4FYZqg">
             <outgoingTransitions xmi:id="_MYPRY8DuEeWH0JVC4FYZqg" target="_MYPRZMDuEeWH0JVC4FYZqg"/>
           </vertices>
