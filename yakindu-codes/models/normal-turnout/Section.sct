@@ -9,8 +9,8 @@
         <outgoingTransitions xmi:id="_fmM3ML-SEeWo0OVNqrnfVQ" specification="Section.sectionFree /&#xD;&#xA;raise Section.passingAllowedFrom: Section.direction;&#xD;&#xA;raise Section.enableSection: Section.id" target="_hIuZ4L-SEeWo0OVNqrnfVQ"/>
         <regions xmi:id="_0NzBkL0GEeW-VcIUyGtpIA" name="r1">
           <vertices xsi:type="sgraph:State" xmi:id="_9ML5Jb0GEeW-VcIUyGtpIA" specification="[valueof(Section.lockRequestTo) == Section.direction] / raise Section.passingDeniedFrom: Section.direction&#xD;&#xA;Section.revokeLock / raise Section.sectionLockFrom: Section.direction" name="SendSectionLock" incomingTransitions="_9Mez470GEeW-VcIUyGtpIA _wDrVEL0HEeW-VcIUyGtpIA _9Mok770GEeW-VcIUyGtpIA _n-0T4L1hEeWoKpHcyNCduA">
-            <outgoingTransitions xmi:id="_9ML5Sr0GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedTo) == Section.direction] / &#xD;&#xA;raise Section.disableSection: Section.direction" target="_9Mok0L0GEeW-VcIUyGtpIA"/>
-            <outgoingTransitions xmi:id="_9ML5Tr0GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedWithReplyTo) == Section.direction] / &#xD;&#xA;raise Section.passingDeniedFrom: Section.direction; &#xD;&#xA;raise Section.disableSection: Section.direction" target="_9Mok0L0GEeW-VcIUyGtpIA"/>
+            <outgoingTransitions xmi:id="_9ML5Sr0GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedTo) == Section.direction] / &#xD;&#xA;raise Section.disableSection: Section.id" target="_9Mok0L0GEeW-VcIUyGtpIA"/>
+            <outgoingTransitions xmi:id="_9ML5Tr0GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedWithReplyTo) == Section.direction] / &#xD;&#xA;raise Section.passingDeniedFrom: Section.direction; &#xD;&#xA;raise Section.disableSection: Section.id" target="_9Mok0L0GEeW-VcIUyGtpIA"/>
             <outgoingTransitions xmi:id="_9ML5Vb0GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionAllowedTo) == Section.direction] / &#xD;&#xA; raise Section.enableSection: Section.id" target="_9Mez0r0GEeW-VcIUyGtpIA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_9Mez0L0GEeW-VcIUyGtpIA">
@@ -18,8 +18,8 @@
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_9Mez0r0GEeW-VcIUyGtpIA" specification="[valueof(Section.lockRequestTo) == Section.direction] / raise Section.passingDeniedFrom: Section.direction" name="EnableSection" incomingTransitions="_9ML5Vb0GEeW-VcIUyGtpIA">
             <outgoingTransitions xmi:id="_9Mez470GEeW-VcIUyGtpIA" specification="Section.revokeLock / raise Section.sectionLockFrom: Section.direction" target="_9ML5Jb0GEeW-VcIUyGtpIA"/>
-            <outgoingTransitions xmi:id="_9Mez6L0GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedWithReplyTo) == Section.direction] / &#xD;&#xA;raise Section.passingDeniedFrom: Section.direction; &#xD;&#xA;raise Section.disableSection: Section.direction " target="_9Mok0L0GEeW-VcIUyGtpIA"/>
-            <outgoingTransitions xmi:id="_9Mez770GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedTo) == Section.direction] / raise Section.disableSection: Section.direction" target="_9Mok0L0GEeW-VcIUyGtpIA"/>
+            <outgoingTransitions xmi:id="_9Mez6L0GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedWithReplyTo) == Section.direction] / &#xD;&#xA;raise Section.passingDeniedFrom: Section.direction; &#xD;&#xA;raise Section.disableSection: Section.id" target="_9Mok0L0GEeW-VcIUyGtpIA"/>
+            <outgoingTransitions xmi:id="_9Mez770GEeW-VcIUyGtpIA" specification="[valueof(Section.sectionLockedTo) == Section.direction] / raise Section.disableSection: Section.id" target="_9Mok0L0GEeW-VcIUyGtpIA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_9Mok0L0GEeW-VcIUyGtpIA" specification="[valueof(Section.lockRequestTo) == Section.direction] / raise Section.passingDeniedFrom: Section.direction; raise Section.disableSection: Section.id&#xD;&#xA;[valueof(Section.sectionLockedWithReplyTo) == Section.direction] / raise Section.passingDeniedFrom: Section.direction; raise Section.disableSection: Section.id" name="BecomesLocked" incomingTransitions="_9ML5Tr0GEeW-VcIUyGtpIA _9ML5Sr0GEeW-VcIUyGtpIA _9Mez770GEeW-VcIUyGtpIA _9Mez6L0GEeW-VcIUyGtpIA">
             <outgoingTransitions xmi:id="_9Mok770GEeW-VcIUyGtpIA" specification="Section.revokeLock / &#xD;&#xA;raise Section.sectionLockFrom: Section.direction" target="_9ML5Jb0GEeW-VcIUyGtpIA"/>
@@ -253,7 +253,7 @@
     <edges xmi:id="_9M7f770GEeW-VcIUyGtpIA" type="Transition" element="_9Mez770GEeW-VcIUyGtpIA" source="_9ML49b0GEeW-VcIUyGtpIA" target="_9ML5Ab0GEeW-VcIUyGtpIA">
       <children xsi:type="notation:DecorationNode" xmi:id="_9M7f8L0GEeW-VcIUyGtpIA" type="TransitionExpression">
         <styles xsi:type="notation:ShapeStyle" xmi:id="_9M7f8b0GEeW-VcIUyGtpIA"/>
-        <layoutConstraint xsi:type="notation:Location" xmi:id="_9M7f8r0GEeW-VcIUyGtpIA" x="67" y="-25"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_9M7f8r0GEeW-VcIUyGtpIA" x="78" y="-25"/>
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_9M7f870GEeW-VcIUyGtpIA" routing="Rectilinear" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_9M7f9L0GEeW-VcIUyGtpIA" fontName="Verdana"/>
