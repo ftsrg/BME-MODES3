@@ -22,17 +22,15 @@ template class Filter<Mat, Mat>;
 
 Mat distCoeffs, cameraMatrix;
 
-void sendData(DataSerializer& serializer) {
-	//TODOMQTTYEAH
-}
-
 int main(int argc, char** argv)
 {
-	MqttClient client;
-	if (!client.Connect("localhost")) {
-		std::cout << "Error while connectiong to MQTT broker, aborting";
-		return -10;
-	}
+	//MqttClient client;
+	//if (!client.Connect("localhost")) {
+	//	std::cout << "Error while connectiong to MQTT broker, aborting";
+	//	return -10;
+	//}
+	
+	cv::namedWindow("Test");
 	
 	cv::FileStorage fs("camera_data.xml", FileStorage::READ);
 	fs["Distortion_Coefficients"] >> distCoeffs;
@@ -59,12 +57,12 @@ int main(int argc, char** argv)
 		static Mat output;
 		cv::swap(detFilter.getData<0>(), output);
 		detFilter.clearToProcess();
-		imshow("TopKek", output);
-		waitKey(1);
+		//imshow("DetectionOut", output);
+		//waitKey(1);
 		
 		static DataSerializer data;
 		data = detFilter.getData<1>();
-		client.SendTrainData(data);
+		//client.SendTrainData(data);
 		
 		// FPS CALCULUS ===========
 		
