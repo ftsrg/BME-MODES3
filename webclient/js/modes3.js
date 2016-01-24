@@ -1,9 +1,11 @@
 $(document).ready(function() {
-	boardOffset = {x: -8, y: -8}
-	trainColor = [
-		'#FF0000',
-		'#00FF00',
-		'#0000FF'
+    boardOffset = {
+        x: -8,
+        y: -8
+    }
+
+	trainSpeeds = [
+		0.0, 0.0, 0.0
 	]
 
     $('#settingsModal').on('show.bs.modal', function(event) {
@@ -13,8 +15,8 @@ $(document).ready(function() {
                 if (typeof settings[key] === "string") {
                     $(`#settingsForm input[name="${key}"]`).val(settings[key])
                 } else {
-					$(`#settingsForm input[name="${key}"]`).attr('checked', settings[key])
-				}
+                    $(`#settingsForm input[name="${key}"]`).attr('checked', settings[key])
+                }
             }
         }
     });
@@ -36,7 +38,7 @@ $(document).ready(function() {
     $('#connectionStatus').click(function() {
         MQTT_Connect()
     });
-})
+});
 
 // -----------------------------------------------------------------------------
 // MQTT functions
@@ -44,7 +46,7 @@ $(document).ready(function() {
 
 
 function MQTT_Connect() {
-	var settings = JSON.parse(localStorage['settings'])
+    var settings = JSON.parse(localStorage['settings'])
     if (typeof mqttClient === 'undefined') {
         mqttClient = new Paho.MQTT.Client(settings['server'], 9001, "clientId")
         mqttClient.onConnectionLost = MQTT_Disconnected
@@ -71,10 +73,12 @@ function MQTT_Connecting() {
 function MQTT_Connected_asController() {
     mqttClient.connected = true
     mqttClient.subscribe("modes3/cv")
-    //mqttClient.subscribe("/modes3/control")
+    mqttClient.subscribe("modes3/dcc")
 
-    $('#connectionStatus').attr('class', 'modes3-connected__controller')
+    $('#connectionStatus').attr('class', 'modes3-connected--controller')
     $('#connectionStatusText').text('Connected as Controller')
+
+    $('.modes3-train .modes3-train-speed-container input').on('change mousemove', MoDeS3_HandleSpeed)
 
     MoDeS3_Board_Initialize()
 }
@@ -97,23 +101,23 @@ function MQTT_AuthFailure(event) {
 }
 
 function MQTT_Disconnected(event) {
-	if (event.errorCode != 0) {
-		//MoDeS3_Log_Error('Connection failure to MQTT broker!')
-	}
+    if (event.errorCode != 0) {
+        //MoDeS3_Log_Error('Connection failure to MQTT broker!')
+    }
     mqttClient.connected = false
     $('#connectionStatus').attr('class', 'modes3-disconnected')
     $('#connectionStatusText').text('Disconnected')
 }
 
 function MQTT_Message(message) {
-	console.log('Message arrived');
-	var object = JSON.parse(message.payloadString);
-	switch (message.destinationName) {
-		case 'modes3/cv':
-			MoDeS3_HandleCV(object)
-			break;
-		default:
-	}
+    console.log('Message arrived');
+    var object = JSON.parse(message.payloadString);
+    switch (message.destinationName) {
+        case 'modes3/cv':
+            MoDeS3_HandleCV(object)
+            break;
+        default:
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,38 +125,57 @@ function MQTT_Message(message) {
 // -----------------------------------------------------------------------------
 
 function MoDeS3_Board_Initialize() {
-	var sections = $('#modes3-board-svg #sections path').attr('class', 'modes3-section--active')
-	var turnouts = $('#modes3-board-svg #turnouts polygon').attr('class', 'modes3-turnout--active')
-
-	MoDeS3_HandleCV('kek')
+    var sections = $('#modes3-board-svg #sections path').attr('class', 'modes3-section--active')
+    var turnouts = $('#modes3-board-svg #turnouts polygon').attr('class', 'modes3-turnout--active')
 }
 
 function MoDeS3_Log_Error(message) {
-	$('#modes3-log-container').append(
-		`<div class="alert alert-danger fade in"><strong>Error!</strong> ${message}</div>`
-	)
+    $('#modes3-log-container').append(
+        `<div class="alert alert-danger fade in"><strong>Error!</strong> ${message}</div>`
+    )
 }
 
 function MoDeS3_HandleCV(message) {
-	var trainGroup = Snap('#modes3-board-svg #trains')
+    var trainGroup = Snap('#modes3-board-svg #trains')
 
-	for(i in message.trains) {
-		var train = message.trains[i]
-		var trainCircle = $(`#trains #${train.id}`)
-		if (trainCircle.length == 0) {
-			var trainCircle = trainGroup.circle(train.x - boardOffset.x, train.y - boardOffset.y, 3);
-			trainCircle.attr({
-				id: train.id,
-				class: 'modes3-train',
-			    fill: trainColor[train.id],
-			    stroke: '#000000',
-			    strokeWidth: 1
-			});
-		} else {
-			trainCircle.attr({
-				cx: train.x - boardOffset.x,
-				cy: train.y - boardOffset.y
-			})
-		}
+    for (i in message.trains) {
+        var train = message.trains[i]
+        var trainCircle = $(`#trains #${train.id}`)
+        if (trainCircle.length == 0) {
+            var trainCircle = trainGroup.circle(train.x - boardOffset.x, train.y - boardOffset.y, 3);
+            trainCircle.attr({
+                id: train.id,
+                class: 'modes3-train',
+                fill: trainColor[train.id],
+                stroke: '#000000',
+                strokeWidth: 1
+            });
+        } else {
+            trainCircle.attr({
+                cx: train.x - boardOffset.x,
+                cy: train.y - boardOffset.y
+            })
+        }
+    }
+}
+
+function MoDeS3_HandleSpeed(input) {
+	var id = input.target.parentElement.parentElement.dataset['modes3Id']
+	var speed = input.target.value
+
+	if (trainSpeeds[id] == speed) {
+		return
 	}
+
+    var message = JSON.stringify({
+        train: {
+			id: id,
+			speed: speed
+        }
+    })
+    var messageWrapper = new Paho.MQTT.Message(message)
+    messageWrapper.destinationName = 'modes3/dcc'
+    mqttClient.send(messageWrapper)
+
+    console.log(message)
 }

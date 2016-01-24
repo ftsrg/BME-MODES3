@@ -8,73 +8,64 @@
 	margin-right: 0;
 }
 
-.content #modes3-board-container {
+#modes3-board-container {
 	height: 100vh;
 	padding-top: 50px;
 	display: flex;
 	align-items: center;
 }
 
-.content #modes3-board-container #modes3-board-svg {
+#modes3-board-container #modes3-board-svg {
 	width: 100%;
 	height: 100%;
 	max-width: 100%;
 	max-height: 100%;
 }
 
-.content #modes3-trains-container {
+#modes3-trains-container {
 	height: 80vh;
 	padding-top: 60px;
 }
 
-.content #modes3-trains-container .modes3-train {
+#modes3-trains-container .modes3-train {
 	width: 100%;
 	box-sizing: border-box;
 }
 
-.content #modes3-trains-container .modes3-train-image-container p {
+#modes3-trains-container .modes3-train[data-modes3-id='1'] {
+	border-left: 10px solid red;
+}
+
+#modes3-trains-container .modes3-train[data-modes3-id='2'] {
+	border-left: 10px solid green;
+}
+
+#modes3-trains-container .modes3-train[data-modes3-id='3'] {
+	border-left: 10px solid blue;
+}
+
+#modes3-trains-container .modes3-train-image-container p {
 	font-size: 13pt;
 	font-variant: small-caps;
 }
 
-.content #modes3-trains-container .modes3-train-speed-container {
-	margin-top: 5px;
+#modes3-trains-container .modes3-train-speed-container {
+	margin-top: 10px;
 }
 
-.content #modes3-trains-container .modes3-train-speed-container p {
+#modes3-trains-container .modes3-train-speed-container p {
 	display: inline-block;
 }
 
-.content #modes3-trains-container .modes3-train img {
+#modes3-trains-container .modes3-train img {
 	display: block;
 	max-width: 100%;
 	margin: auto;
 }
 
-.content #modes3-trains-container #modes3-train--r {
-	border-left: 10px solid red;
-}
-
-.content #modes3-trains-container #modes3-train--g {
-	border-left: 10px solid green;
-}
-
-.content #modes3-trains-container #modes3-train--b {
-	border-left: 10px solid blue;
-}
-
-.content #modes3-log-container {
+#modes3-log-container {
 	height: 20vh;
 	background-color: #DDDDDD;
-}
-
-.footer {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	/* Set the fixed height of the footer here */
-	height: 60px;
-	background-color: #f5f5f5;
 }
 
 #connectionStatus.modes3-disconnected {
@@ -101,11 +92,11 @@
 	background-color: #0A6910;
 }
 
-#connectionStatus.modes3-connected__controller {
+#connectionStatus.modes3-connected--controller {
 	background-color: #0A4C69;
 }
 
-#connectionStatus.modes3-connected__controller:hover {
+#connectionStatus.modes3-connected--controller:hover {
 	background-color: #10729C;
 }
 
