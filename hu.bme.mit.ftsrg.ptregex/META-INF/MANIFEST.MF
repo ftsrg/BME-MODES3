@@ -1,0 +1,37 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: hu.bme.mit.ftsrg.ptregex
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: hu.bme.mit.ftsrg.ptregex; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;visibility:=reexport,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types,
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.eclipse.ui,
+ org.junit,
+ org.eclipse.xtend,
+ org.eclipse.xtend.core
+Import-Package: hu.bme.mit.ftsrg.qea,
+ hu.bme.mit.ftsrg.qea.model,
+ org.apache.log4j,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: hu.bme.mit.ftsrg.ptregex,
+ hu.bme.mit.ftsrg.ptregex.services,
+ hu.bme.mit.ftsrg.ptregex.regularExpression,
+ hu.bme.mit.ftsrg.ptregex.regularExpression.impl,
+ hu.bme.mit.ftsrg.ptregex.regularExpression.util,
+ hu.bme.mit.ftsrg.ptregex.serializer,
+ hu.bme.mit.ftsrg.ptregex.parser.antlr,
+ hu.bme.mit.ftsrg.ptregex.parser.antlr.internal,
+ hu.bme.mit.ftsrg.ptregex.validation,
+ hu.bme.mit.ftsrg.ptregex.scoping,
+ hu.bme.mit.ftsrg.ptregex.generator,
+ hu.bme.mit.ftsrg.ptregex.formatting

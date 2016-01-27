@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/hu.bme.mit.ftsrg.qea.model/src" modelPluginID="hu.bme.mit.ftsrg.qea.model"
+    modelName="Model" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>model.ecore</foreignModel>
+  <genPackages prefix="Model" basePackage="hu.bme.mit.ftsrg.qea" disposableProviderFactory="true"
+      ecorePackage="model.ecore#/">
+    <genClasses ecoreClass="model.ecore#//Automaton">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Automaton/states"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference model.ecore#//Automaton/tokens"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Automaton/initialState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Automaton/symbolicTokenParameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Automaton/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Automaton/timers"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Automaton/trapState"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//State">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//State/outgoingTransitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//State/incomingTransitions"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//State/tokens"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//State/acceptor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//State/id"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//AbstractTransition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//AbstractTransition/from"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//AbstractTransition/to"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//AbstractTransition/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Transition/eventguard"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Event">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Event/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Event/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Parameter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Parameter/type"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Token">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Token/on"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Token/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//FixParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//FixParameter/value"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//FreeParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//FreeParameter/excludedValues"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ComplexEventProcessor">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//ComplexEventProcessor/automata"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//ComplexEventProcessor/symbolicEvents"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SymbolicEvent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//SymbolicEvent/symbolicParameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SymbolicInputEvent/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SymbolicParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SymbolicParameter/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//EventGuard">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//EventGuard/bindings"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//EventGuard/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//AbstractTransition/actions"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Binding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Binding/binds"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ConstantBinding">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//ConstantBinding/boundTo"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//TokenParameterBinding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//TokenParameterBinding/boundTo"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//EpsilonTransition"/>
+    <genClasses ecoreClass="model.ecore#//Action"/>
+    <genClasses ecoreClass="model.ecore#//TimerAction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//TimerAction/timer"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SetTimerAction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SetTimerAction/toValue"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ResetTimerAction"/>
+    <genClasses ecoreClass="model.ecore#//SymbolicTimer">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//SymbolicTimer/timeoutEvent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SymbolicTimer/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Transition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Transition/eventguard"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SymbolicTokenParameter"/>
+    <genClasses ecoreClass="model.ecore#//SymbolicEventParameter"/>
+    <genClasses ecoreClass="model.ecore#//SymbolicInputEvent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//SymbolicInputEvent/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//SymbolicTimeoutEvent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//SymbolicTimeoutEvent/timer"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
