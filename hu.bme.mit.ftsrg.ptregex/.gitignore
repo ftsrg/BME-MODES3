@@ -12,6 +12,7 @@ Thumbs.db
 ###############
 *.xcodeproj
 
+
 # Generated sources and binaries #
 ##################################
 /bin/
