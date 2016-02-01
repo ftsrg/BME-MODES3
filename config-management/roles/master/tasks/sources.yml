@@ -1,0 +1,24 @@
+---
+  - name: Adding ftp.bme.hu jessie repository
+    apt_repository: repo='deb http://ftp.bme.hu/debian/ jessie main contrib non-free' state=present update_cache=no
+    sudo: yes
+
+  - name: Adding ftp.bme.hu jessie-backports repository
+    apt_repository: repo='deb http://ftp.bme.hu/debian/ jessie-backports main contrib non-free' state=present update_cache=no
+    sudo: yes
+
+  - name: Adding ftp.bme.hu update repository
+    apt_repository: repo='deb http://ftp.bme.hu/debian/ jessie-updates main contrib non-free' state=present update_cache=no
+    sudo: yes
+
+  - name: Adding security repository
+    apt_repository: repo='deb http://security.debian.org/ jessie/updates main contrib non-free' state=present update_cache=no
+    sudo: yes
+
+  - name: Adding BBB repository
+    apt_repository: repo='deb [arch=armhf] http://repos.rcn-ee.com/debian/ jessie main' state=present update_cache=no
+    sudo: yes
+
+  - name: Updating repositories
+    apt: update_cache=yes
+    sudo: yes

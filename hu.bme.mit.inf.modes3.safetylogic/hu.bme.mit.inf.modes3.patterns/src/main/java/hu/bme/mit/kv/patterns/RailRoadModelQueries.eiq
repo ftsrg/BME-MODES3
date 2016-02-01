@@ -1,0 +1,150 @@
+package hu.bme.mit.kv.patterns
+
+import "http://hu.bme.mit.kv.railroadmodel"
+
+pattern turnout(turnout : Turnout) {
+	Turnout(turnout);
+}
+
+pattern sectionNeighbor(s1 : Section, s2 : Section){
+	neg find turnout(s1);
+	neg find turnout(s2);
+	Section.clockwise(s1,s2);
+} or {
+	neg find turnout(s1);
+	neg find turnout(s2);
+	Section.counterClockwise(s1,s2);
+}
+
+pattern inSameRailroadPart(section : Section, someSection : Section){
+	find sectionNeighbor+(section, someSection);
+} or {
+	find soloSection(section);
+	find soloSection(someSection);
+	section == someSection;
+}
+
+pattern soloSection(section: Section){ 
+	Section.clockwise(section, turnout1); // It has two neighbors, which are both turnouts
+	Section.counterClockwise(section, turnout2);
+	Turnout(turnout1);
+	Turnout(turnout2);
+} or {
+	find soloBlindTrack(section);
+}
+
+pattern blindTrack(blindTrack : BlindTrack){
+	BlindTrack(blindTrack);
+}
+
+pattern soloBlindTrack(section : Section){
+	find soloClockwiseBlindTrack(section);
+} or {
+	find soloCounterClockwiseBlindTrack(section);
+}
+
+pattern soloClockwiseBlindTrack(section : Section){
+	BlindTrack(section);
+	Section.clockwise(section,turnout);
+	Turnout(turnout);
+}
+
+pattern soloCounterClockwiseBlindTrack(section : Section){
+	BlindTrack(section);
+	Section.counterClockwise(section,turnout);
+	Turnout(turnout);
+}
+
+pattern trainsNextTurnout(train : Train, turnout : Turnout){ // FIXME somehow this doesnt work on section 9
+	Train.goingClockwise(train,true);
+	Train.currentlyOn(train, trainSection);
+	Section.clockwise(sectionNextToTurnout, turnout);
+	find inSameRailroadPart(trainSection, sectionNextToTurnout);
+} or {
+	Train.goingClockwise(train,false);
+	Train.currentlyOn(train, trainSection);
+	Section.counterClockwise(sectionNextToTurnout, turnout);
+	find inSameRailroadPart(trainSection, sectionNextToTurnout);
+} or {
+	Train.currentlyOn(train, turnout);
+}
+
+pattern sectionsInSameRailroadPartAsTrain(train : Train, section : Section){
+	Train.currentlyOn(train, trainSection);
+	find inSameRailroadPart(trainSection, section);
+}
+
+pattern trainGoingToCutTheTurnout(train : Train, turnout : Turnout){
+	find trainsNextTurnout(train, turnout);
+	Train.goingClockwise(train,true);
+	Section.clockwise(sectionNearTheTurnout, turnout);
+	Turnout.notConnectedSection(turnout, sectionNearTheTurnout);
+	Train.currentlyOn(train, trainSection);
+	find inSameRailroadPart(trainSection, sectionNearTheTurnout);
+} or {
+	find trainsNextTurnout(train, turnout);
+	Train.goingClockwise(train,false);
+	Section.counterClockwise(sectionNearTheTurnout, turnout);
+	Turnout.notConnectedSection(turnout, sectionNearTheTurnout);
+	Train.currentlyOn(train, trainSection);
+	find inSameRailroadPart(trainSection, sectionNearTheTurnout);
+} or {
+	EnglishTurnout(turnout); // the english turnout only behaves badly from ccw direction 
+	find trainsNextTurnout(train, turnout);
+	Train.goingClockwise(train,false);
+	Section.counterClockwise(sectionNearTheTurnout, turnout);
+	EnglishTurnout.notConnectedClockwiseSection(turnout, sectionNearTheTurnout);
+	Train.currentlyOn(train, trainSection);
+	find inSameRailroadPart(trainSection, sectionNearTheTurnout);
+}
+
+pattern twoTrainsInSameSection(t1 : Train, t2 : Train){
+	t1 != t2;
+	Train.currentlyOn(t1, section);
+	Train.currentlyOn(t2, section);
+}
+
+pattern trainIsGoingToHitNextAfterNext(t1: Train, t2 : Train){
+	t1 != t2;
+	Train.goingClockwise(t1, true);
+//XXX	Train.currentlyOn.clockwise.clockwise(t1,nextSection);
+	Train.currentlyOn(t1, trainSection);
+	Section.clockwise(trainSection, nearTrainSection);
+	Section.clockwise(nearTrainSection, notSoNearTheFuckinTrainSection);
+	Train.currentlyOn(t2, notSoNearTheFuckinTrainSection);
+} or {
+	t1 != t2;
+	Train.goingClockwise(t1, false);
+//XXX	Train.currentlyOn.counterClockwise.counterClockwise(t1,nextSection);
+	Train.currentlyOn(t1, trainSection);
+	Section.counterClockwise(trainSection, nearTrainSection);
+	Section.counterClockwise(nearTrainSection, notSoNearTheFuckinTrainSection);
+	Train.currentlyOn(t2, notSoNearTheFuckinTrainSection);
+}
+
+pattern trainIsGoingToHitNext(t1: Train, t2 : Train){
+	Train.goingClockwise(t1, true);
+	Train.currentlyOn.clockwise(t1,nextSection);
+	Train.currentlyOn(t2, nextSection);
+} or {
+	Train.goingClockwise(t1, false);
+	Train.currentlyOn.counterClockwise(t1,nextSection);
+	Train.currentlyOn(t2, nextSection);
+}
+
+pattern trainIsGoingToHit(t1 : Train, t2 : Train){
+	find trainIsGoingToHitNextAfterNext(t1,t2);
+} or {
+	find trainIsGoingToHitNext(t1,t2);
+} or {
+	find twoTrainsInSameSection(t1,t2);
+}
+
+pattern nextSectionFromSectionInClockwise(section : Section, nextSection : Section){
+	Section.clockwise(section, nextSection); // if the next is not a turnout, we return it.
+	neg find turnout(nextSection);
+} or {
+	Section.clockwise(section, nextNonSection); //if the next is a turnout, we recurse.
+	Turnout(nextNonSection); //TODO generalize
+	find nextSectionFromSectionInClockwise(nextNonSection, nextSection);
+}
