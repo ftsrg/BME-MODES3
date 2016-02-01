@@ -1,0 +1,26 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: masters
+  remote_user: debian
+
+  tasks:
+    - replace: dest=/etc/network/interfaces regexp='    netmask 255\.255\.255\.000' replace='    netmask 255.255.255.0'
+      sudo: yes
+
+    - replace: dest=/etc/network/interfaces regexp='    address 192\.168\.000\.010' replace='    address 192.168.1.10'
+      sudo: yes
+
+    - replace: dest=/etc/network/interfaces regexp='    address 192\.168\.000\.011' replace='    address 192.168.1.11'
+      sudo: yes
+
+    - replace: dest=/etc/network/interfaces regexp='    address 192\.168\.000\.012' replace='    address 192.168.1.12'
+      sudo: yes
+
+    - replace: dest=/etc/network/interfaces regexp='    address 192\.168\.000\.013' replace='    address 192.168.1.13'
+      sudo: yes
+
+    - replace: dest=/etc/network/interfaces regexp='    address 192\.168\.000\.014' replace='    address 192.168.1.14'
+      sudo: yes
+
+    - replace: dest=/etc/network/interfaces regexp='    address 192\.168\.000\.015' replace='    address 192.168.1.15'
+      sudo: yes

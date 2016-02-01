@@ -1,0 +1,26 @@
+---
+  - name: Deleting capemanger folder
+    file: path=/tmp/bb.org-overlays state=absent
+
+  - name: Cloning capemanager
+    git: repo=https://github.com/beagleboard/bb.org-overlays dest=/tmp/bb.org-overlays/
+
+  - name: Building capemanager
+    command: ./dtc-overlay.sh chdir=/tmp/bb.org-overlays/
+
+  - name: Installing capemanager
+    command: ./install.sh chdir=/tmp/bb.org-overlays/
+
+  - name: Disable HDMI cape
+    lineinfile: dest=/boot/uEnv.txt line='dtb=am335x-boneblack-emmc-overlay.dtb'
+    sudo: yes
+
+  - name: Restarting masters
+    shell: sleep 2 && shutdown -r now "Ansible updates triggered"
+    async: 1
+    poll: 0
+    sudo: yes
+    ignore_errors: true
+
+  - name: Waiting for masters to boot up
+    local_action: wait_for host={{ inventory_hostname }} port=22 state=started delay=15 timeout=60

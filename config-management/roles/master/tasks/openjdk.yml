@@ -1,0 +1,4 @@
+---
+- name: Installing openjdk-8
+  apt: name=openjdk-8-jdk state=present
+  sudo: yes
