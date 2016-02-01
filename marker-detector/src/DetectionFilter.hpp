@@ -4,6 +4,12 @@
 #include <opencv2/opencv.hpp>
 using namespace cv;
 
+#ifdef ENABLE_GPU
+// OpenCV - CUDA
+#include <opencv2/core/cuda.hpp>
+using namespace cv::cuda;
+#endif
+
 // User
 #include "Constants.hpp"
 #include "Position.hpp"
@@ -20,7 +26,12 @@ class DetectionFilter : public Filter<cv::Mat, DataSerializer> {
 	ConvolutionFilter& convFilter;
 	Mat cameraMatrix, distCoeffs;
 	Board board;
+	
+	#ifdef ENABLE_GPU
+	GpuMat circleSpectrum;
+	#else
 	Mat circleSpectrum;
+	#endif
 	
 	Train trains[3] {
 		Train(MARKER_R),

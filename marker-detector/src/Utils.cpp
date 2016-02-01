@@ -6,6 +6,63 @@ void drawMarkerToMat(Mat& marker, int x, int y, int outer, int ring, int inner) 
 	circle(marker, Point(x, y), inner, Scalar(1.0), -1);
 }
 
+#ifdef ENABLE_GPU
+GpuMat createCirclePattern(Size vidsize, int outer, int ring, int inner) {
+	Mat circle = Mat::zeros(Size_<int>(vidsize), CV_32F);
+	drawMarkerToMat(circle, 0, 0, outer, ring, inner);
+	drawMarkerToMat(circle, 0, vidsize.height, outer, ring, inner);
+	drawMarkerToMat(circle, vidsize.width, 0, outer, ring, inner);
+	drawMarkerToMat(circle, vidsize.width, vidsize.height, outer, ring, inner);
+	
+	cv::GaussianBlur(circle, circle, Size(3, 3), 2);
+	
+	GpuMat circleSpectrum;
+	circleSpectrum.upload(circle);
+	
+	cuda::dft(circle, circleSpectrum, circle.size());
+	return circleSpectrum;
+}
+
+Mat convolve(Mat raw, GpuMat circleSpectrum, float thresold) {
+	static Mat gray;
+	cv::cvtColor(raw, gray, CV_BGR2GRAY);
+	
+	Rect2i srcRoi(Point(0, 28), Size(1920, 1024));
+	Rect2i dstRoi(Point(64, 0), Size(1920, 1024));
+	
+	static HostMem grayPaddedMem(1024, 2048, CV_32F);
+	static Mat grayPadded = ([&]() {
+		Mat material = grayPaddedMem.createMatHeader();
+		material.setTo(Scalar(0));
+		return material;
+	})();
+	
+	gray(srcRoi).convertTo(grayPadded(dstRoi), CV_32F, 1/255.0);
+	
+	static cuda::Stream stream;
+	
+	static GpuMat spectrum = createContinuous(Size(1025, 1024), CV_32FC2);
+	spectrum.upload(grayPadded, stream);
+	
+	cuda::dft(spectrum, spectrum, grayPadded.size(), 0, stream);
+	cuda::mulSpectrums(spectrum, circleSpectrum, spectrum, 0, stream);
+	
+	static GpuMat convoluted = createContinuous(Size(2048, 1024), CV_32FC2);
+	cuda::dft(spectrum, convoluted, grayPadded.size(), DFT_INVERSE | DFT_REAL_OUTPUT, stream);
+	
+	cuda::normalize(convoluted, convoluted, 0, 1, NORM_MINMAX, CV_32F, noArray(), stream);
+	cuda::threshold(convoluted, convoluted, thresold, 1, CV_THRESH_BINARY, stream);
+	
+	static GpuMat spectrumByte;
+	convoluted.convertTo(spectrumByte, CV_8U, 255);
+	
+	static Mat contour = Mat::zeros(1080, 1920, CV_8U);
+	spectrumByte(dstRoi).download(contour(srcRoi), stream);
+	
+	stream.waitForCompletion();
+	return contour;
+}
+#else
 Mat createCirclePattern(Size vidsize, int outer, int ring, int inner) {
 	Mat circle = Mat::zeros(Size_<int>(vidsize), CV_32F);
 	drawMarkerToMat(circle, 0, 0, outer, ring, inner);
@@ -15,9 +72,9 @@ Mat createCirclePattern(Size vidsize, int outer, int ring, int inner) {
 	
 	cv::GaussianBlur(circle, circle, Size(3, 3), 2);
 	
-	Mat spectrum;
-	cv::dft(circle, spectrum);
-	return spectrum;
+	Mat circleSpectrum;
+	cv:dft(circle, circleSpectrum);
+	return circleSpectrum;
 }
 
 Mat convolve(Mat raw, Mat circleSpectrum, float thresold) {
@@ -49,6 +106,7 @@ Mat convolve(Mat raw, Mat circleSpectrum, float thresold) {
 	
 	return contour;
 }
+#endif
 
 bool findMarker(Point2f a, Point2f b, double min, double max) {
 	double distance = cv::norm(a - b);
@@ -98,7 +156,6 @@ int identifyMarker(Point2f markerCenter, Mat img) {
 }
 
 std::vector<Point2f> calculateMassCenters(Mat contour) {
-	
 	std::vector<std::vector<Point>> contours;
 	std::vector<Vec4i> hierarchy;
 	findContours(contour, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );

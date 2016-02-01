@@ -12,7 +12,7 @@ void DataSerializer::addTrain(Train& train) {
 	trainChunks.push_back(ss.str());
 }
 
-void DataSerializer::setTimestamp(std::chrono::high_resolution_clock::time_point t) {
+void DataSerializer::setTimestamp(std::chrono::steady_clock::time_point t) {
 	timestamp = t;
 }
 

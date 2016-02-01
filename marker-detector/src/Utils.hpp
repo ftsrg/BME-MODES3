@@ -4,11 +4,13 @@
 #include <opencv2/opencv.hpp>
 using namespace cv;
 
+#ifdef ENABLED_GPU
 // OpenCV - CUDA
 #include <opencv2/core/cuda.hpp>
 #include <opencv2/cudaarithm.hpp>
 #include <opencv2/cudawarping.hpp>
 using namespace cv::cuda;
+#endif
 
 #include "Position.hpp"
 #include "Board.hpp"
@@ -17,9 +19,13 @@ using namespace cv::cuda;
 
 void drawMarkerToMat(Mat& marker, int x, int y, int outer, int ring, int inner);
 
-GpuMat createCirclePattern(Size vidsize, int outer, int ring, int inner);
-
+#ifdef ENABLE_GPU
 Mat convolve(Mat raw, GpuMat circleSpectrum, float thresold);
+GpuMat createCirclePattern(Size vidsize, int outer, int ring, int inner);
+#else
+Mat convolve(Mat raw, Mat circleSpectrum, float thresold);
+Mat createCirclePattern(Size vidsize, int outer, int ring, int inner);
+#endif
 
 bool findMarker(Point2f a, Point2f b, double min, double max);
 

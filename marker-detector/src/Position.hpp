@@ -11,7 +11,7 @@ using namespace cv;
 #include "Constants.hpp"
 
 struct Position {
-    std::chrono::time_point<std::chrono::high_resolution_clock> time;
+    std::chrono::time_point<std::chrono::steady_clock> time;
     Point2f coordinate;
     
 	float getSpeed(const Position& newPos);

@@ -19,6 +19,8 @@ void DetectionFilter::process() {
 	DataSerializer serializer;
 	serializer.setTimestamp(timestamp);
 	
+	#ifndef ENABLED_BENCHMARK
+	
 	std::tuple<int, Point2f, Point2f, Point2f> markers[MARKER_COUNT];
 	for (int i = 0; i < MARKER_COUNT; ++i) {
 		markers[i] = std::make_tuple(0, Point2f(), Point2f(), Point2f());
@@ -86,6 +88,7 @@ void DetectionFilter::process() {
 			trains[id].setDetected(false);
 		}
 	}
+	#endif
 	
 	std::cout << "----------------" << std::endl;
 	

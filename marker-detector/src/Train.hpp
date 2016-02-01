@@ -4,11 +4,13 @@
 #include <opencv2/opencv.hpp>
 using namespace cv;
 
+#ifdef ENABLE_GPU
 // OpenCV - CUDA
 #include <opencv2/core/cuda.hpp>
 #include <opencv2/cudaarithm.hpp>
 using namespace cv;
 using namespace cv::cuda;
+#endif
 
 // User
 #include "Constants.hpp"
