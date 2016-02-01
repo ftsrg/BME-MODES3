@@ -106,7 +106,7 @@ public class TurnoutController extends AbstractController implements
                     try {
                         byte[] message = {Commands.COMMAND_GET_TURNOUT_STATUS,
                             (byte) turnout.getID()};
-                        sendTCPPacket(turnout.getResponsibleControllerID(),
+                        sendTCPPacket(turnout.getPhysicalAddress(),
                                 message);
                         Thread.sleep(10);
                     } catch (java.net.NoRouteToHostException | java.nio.channels.NotYetConnectedException | java.nio.channels.ClosedChannelException e) {

@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.kvcontrol.entities;
 
+import hu.bme.mit.inf.kvcontrol.data.AddressTranslator;
+
 /**
  * Section Entity class
  * <p>
@@ -13,10 +15,10 @@ public class Section {
     private final int ID;
 
     /**
-     * The controller's ID which is responsible for every communication with the
-     * section.
+     * The controller's address which is responsible for every communication
+     * with the section.
      */
-    private final int responsibleControllerID;
+    private final AddressTranslator responsibleControllerAddress;
 
     /**
      * Indicates, whether the section is occupied.
@@ -28,9 +30,10 @@ public class Section {
      */
     private boolean isEnabled;
 
-    public Section(int ID, int responsibleControllerID) {
+    public Section(int ID, int logicalAddress, int physicalAddress) {
         this.ID = ID;
-        this.responsibleControllerID = responsibleControllerID;
+        this.responsibleControllerAddress = new AddressTranslator(logicalAddress,
+                physicalAddress);
         this.isOccupied = false;
         this.isEnabled = true;
     }
@@ -61,8 +64,8 @@ public class Section {
     /**
      * @return the responsibleControllerID
      */
-    public int getResponsibleControllerID() {
-        return responsibleControllerID;
+    public int getPhysicalAddress() {
+        return this.responsibleControllerAddress.getPhysicalAddress();
     }
 
     /**

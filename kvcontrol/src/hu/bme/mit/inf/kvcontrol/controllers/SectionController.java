@@ -91,7 +91,7 @@ public class SectionController extends AbstractController implements
      */
     private void sendSectionCommand(Section section, byte command) {
         try {
-            int controllerID = section.getResponsibleControllerID();
+            int controllerID = section.getPhysicalAddress();
             byte[] message = new byte[]{command, (byte) section.getID()};
             sendTCPPacket(controllerID, message);
         } catch (java.net.NoRouteToHostException | java.nio.channels.NotYetConnectedException | java.nio.channels.ClosedChannelException e) {

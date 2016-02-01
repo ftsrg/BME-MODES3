@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.kvcontrol.entities;
 
+import hu.bme.mit.inf.kvcontrol.data.AddressTranslator;
+
 /**
  * Turnout Entity class
  * <p>
@@ -13,10 +15,10 @@ public class Turnout {
     private final int ID;
 
     /**
-     * The controller's ID which is responsible for every communication with the
-     * turnout.
+     * The controller's address which is responsible for every communication
+     * with the turnout.
      */
-    private final int responsibleControllerID;
+    private final AddressTranslator responsibleControllerAddress;
 
     /**
      * measured value on the divergent branch
@@ -31,12 +33,13 @@ public class Turnout {
     /**
      *
      * @param ID turnout's ID
-     * @param responsibleControllerID controller's ID which is responsible for
-     * the turnout's
+     * @param logicalAddress the turnout's logical address
+     * @param physicalAddress the last octet of the turnout's physical address
      */
-    public Turnout(int ID, int responsibleControllerID) {
+    public Turnout(int ID, int logicalAddress, int physicalAddress) {
         this.ID = ID;
-        this.responsibleControllerID = responsibleControllerID;
+        this.responsibleControllerAddress = new AddressTranslator(logicalAddress,
+                physicalAddress);
     }
 
     /**
@@ -74,10 +77,10 @@ public class Turnout {
     }
 
     /**
-     * @return the responsibleControllerID
+     * @return the physical address of the responsible turnout
      */
-    public int getResponsibleControllerID() {
-        return responsibleControllerID;
+    public int getPhysicalAddress() {
+        return this.responsibleControllerAddress.getPhysicalAddress();
     }
 
 }

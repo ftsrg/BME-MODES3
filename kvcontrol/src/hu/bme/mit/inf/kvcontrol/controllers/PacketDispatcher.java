@@ -54,11 +54,11 @@ public class PacketDispatcher implements Runnable {
 
             // fill the socketContainer with new SocketChannels
             for (Map.Entry<String, Section> sectionEntry : Relations.getSections().entrySet()) {
-                int responsibleControllerID = sectionEntry.getValue().getResponsibleControllerID();
+                int responsibleControllerID = sectionEntry.getValue().getPhysicalAddress();
                 createSocketChannelToSocketContainer(responsibleControllerID);
             }
             for (Map.Entry<String, Turnout> turnoutEntry : Relations.getTurnouts().entrySet()) {
-                int responsibleControllerID = turnoutEntry.getValue().getResponsibleControllerID();
+                int responsibleControllerID = turnoutEntry.getValue().getPhysicalAddress();
                 createSocketChannelToSocketContainer(responsibleControllerID);
             }
 
