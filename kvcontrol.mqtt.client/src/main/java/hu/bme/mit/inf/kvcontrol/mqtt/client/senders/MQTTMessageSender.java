@@ -1,25 +1,25 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
-import com.google.gson.Gson;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.logging.LogManager.logInfoMessage;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.logging.LogManager.logException;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 
 /**
  *
  * @author benedekh
  */
-public class MQTTMessageSender {
+public class MQTTMessageSender implements ISender {
 
     private MqttAsyncClient client;
     private String topic;
     private int qos;
 
     public MQTTMessageSender(String topic, int qos, String broker,
-            String clientId) {
+            String clientId, MqttCallback callbackHandler) {
         try {
             this.qos = qos;
             this.topic = topic;
@@ -28,8 +28,8 @@ public class MQTTMessageSender {
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
 
-            // TODO client.setCallback to handle replies!!
             this.client = new MqttAsyncClient(broker, clientId, persistence);
+            this.client.setCallback(callbackHandler);
             logInfoMessage(getClassName(), "Connecting to broker: " + broker);
             this.client.connect(connOpts);
             logInfoMessage(getClassName(), "Connected");
@@ -41,7 +41,8 @@ public class MQTTMessageSender {
         }
     }
 
-    public void publish(byte[] payload) {
+    @Override
+    public void send(byte[] payload) {
         try {
             client.publish(topic, payload, qos, false);
         } catch (MqttException ex) {
