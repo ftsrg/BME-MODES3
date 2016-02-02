@@ -4,14 +4,13 @@ import java.util.HashMap;
 
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
-import jmri.Throttle;
 import jmri.ThrottleListener;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottleManager;
 import jmri.jmrix.lenz.XNetTurnoutManager;
+import jmri.jmrix.lenz.li100.LI100Adapter;
 import jmri.jmrix.lenz.li100.LI100XNetPacketizer;
-import jmri.jmrix.lenz.li100f.LI100Adapter;
 
 public class Controller implements ThrottleListener {
 	HashMap<Train, DccThrottle> trainThrottles = new HashMap<Train, DccThrottle>();
@@ -43,7 +42,7 @@ public class Controller implements ThrottleListener {
 	}
 
 	public void setSpeed(Train train, float speed) {
-		Throttle throttle = trainThrottles.get(train);
+		DccThrottle throttle = trainThrottles.get(train);
 
 		if (speed > 0.0) {
 			throttle.setIsForward(true);
