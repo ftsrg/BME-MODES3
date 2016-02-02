@@ -41,7 +41,7 @@ public class SectionStateRequestSender implements MqttCallback {
             sectionStatuses.put(sectionId, new CompletableFuture<>());
         }
 
-        String payload = new Section(sectionId, null).toJson();
+        String payload = new Section(sectionId).toJson();
         sendCommandWithPayload(GET_SECTION_STATUS, payload, sender);
 
         SectionStatus status = null;

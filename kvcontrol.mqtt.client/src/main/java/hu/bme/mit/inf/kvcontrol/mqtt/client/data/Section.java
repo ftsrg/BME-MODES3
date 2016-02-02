@@ -12,6 +12,12 @@ public class Section {
     private final SectionStatus status;
     private final SectionOccupancyStatus occupancyStatus;
 
+    public Section(int id) {
+        this.id = id;
+        this.status = null;
+        this.occupancyStatus = null;
+    }
+
     public Section(int id, SectionStatus status) {
         this.id = id;
         this.status = status;
