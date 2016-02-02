@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.master.mqttclient;
+package hu.bme.mit.inf.master.mqtt.client;
 
 import java.util.List;
 import java.util.Map;

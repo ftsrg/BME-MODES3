@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>hu.bme.mit.inf.master.hal</groupId>
-	<artifactId>hu.bme.mit.inf.master.hal</artifactId>
+	<groupId>hu.bme.mit.inf.master.mqtt.client</groupId>
+	<artifactId>hu.bme.mit.inf.master.mqtt.client</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
 	<build>
@@ -16,7 +16,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>hu.bme.mit.inf.master.hal.Main</mainClass>
+							<mainClass>hu.bme.mit.inf.master.mqtt.client.Main</mainClass>
 							<useUniqueVersions>false</useUniqueVersions>
 						</manifest>
 					</archive>
@@ -45,11 +45,29 @@
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>Eclipse Paho Repo</id>
+			<url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
-			<groupId>io.silverspoon</groupId>
-			<artifactId>bulldog-board-beagleboneblack</artifactId>
-			<version>0.2.1</version>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>hu.bme.mit.inf.json.prototypes</groupId>
+			<artifactId>hu.bme.mit.inf.json.prototypes</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
 </project>

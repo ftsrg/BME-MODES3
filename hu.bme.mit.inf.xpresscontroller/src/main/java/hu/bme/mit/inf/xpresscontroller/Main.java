@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.xpresscontroller;
 
-import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -27,8 +26,6 @@ public class Main implements MqttCallback {
 	}
 
 	public Main() throws InterruptedException, MqttException {
-		PropertyConfigurator.configure("log4j.properties");
-
 		controller = new Controller();
 		//c.init();
 

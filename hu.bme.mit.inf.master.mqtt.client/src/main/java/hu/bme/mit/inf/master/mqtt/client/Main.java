@@ -1,6 +1,4 @@
-package hu.bme.mit.inf.master.mqttclient;
-
-import java.util.logging.Logger;
+package hu.bme.mit.inf.master.mqtt.client;
 
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
