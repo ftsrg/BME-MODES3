@@ -11,6 +11,10 @@ public class Turnout {
     private final int id;
     private final TurnoutStatus status;
 
+    public Turnout(int id) {
+        this(id, null);
+    }
+
     public Turnout(int id, TurnoutStatus status) {
         this.id = id;
         this.status = status;

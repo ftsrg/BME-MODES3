@@ -9,25 +9,21 @@ import com.google.gson.Gson;
 public class Section {
 
     private final int id;
-    private final SectionStatus status;
-    private final SectionOccupancyStatus occupancyStatus;
+    private SectionStatus status = null;
+    private SectionOccupancyStatus occupancyStatus = null;
 
     public Section(int id) {
         this.id = id;
-        this.status = null;
-        this.occupancyStatus = null;
     }
 
     public Section(int id, SectionStatus status) {
         this.id = id;
         this.status = status;
-        this.occupancyStatus = null;
     }
 
     public Section(int id, SectionOccupancyStatus occupancyStatus) {
         this.id = id;
         this.occupancyStatus = occupancyStatus;
-        this.status = null;
     }
 
     public int getId() {

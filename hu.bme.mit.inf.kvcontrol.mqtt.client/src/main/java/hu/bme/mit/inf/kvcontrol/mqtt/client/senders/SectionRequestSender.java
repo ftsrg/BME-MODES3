@@ -23,14 +23,14 @@ import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.getPayload
  *
  * @author benedekh
  */
-public class SectionStateRequestSender implements MqttCallback {
+public class SectionRequestSender implements MqttCallback {
 
     private final ISender sender;
     private final String subscribedTopic;
 
     private final Map<Integer, CompletableFuture<SectionStatus>> sectionStatuses = new ConcurrentHashMap<>();
 
-    public SectionStateRequestSender(String topic, int qos, String address) {
+    public SectionRequestSender(String topic, int qos, String address) {
         this.sender = new MQTTMessageSender(topic, qos, address,
                 generateId(getClass().getSimpleName()), this);
         this.subscribedTopic = topic;

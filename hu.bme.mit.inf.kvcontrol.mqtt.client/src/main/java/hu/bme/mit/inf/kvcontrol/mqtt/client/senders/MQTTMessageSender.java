@@ -34,7 +34,7 @@ public class MQTTMessageSender implements ISender {
             logInfoMessage(getClassName(), "Connecting to broker: " + broker);
             this.client.connect(connOpts);
             logInfoMessage(getClassName(), "Connected");
-            Thread.sleep(100);
+            Thread.sleep(500);
             this.client.subscribe(topic, qos);
             logInfoMessage(getClassName(), "Subscribed");
         } catch (MqttException | InterruptedException ex) {

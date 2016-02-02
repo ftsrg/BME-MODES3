@@ -2,7 +2,7 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import com.google.gson.Gson;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command.LINE_DISABLE;
+import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command.GET_TURNOUT_STATUS;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Turnout;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
@@ -41,8 +41,8 @@ public class TurnoutRequestSender implements MqttCallback {
             turnoutStatuses.put(turnoutId, new CompletableFuture<>());
         }
 
-        String payloadContent = new Turnout(turnoutId, null).toJson();
-        sendCommandWithPayload(LINE_DISABLE, payloadContent, sender);
+        String payloadContent = new Turnout(turnoutId).toJson();
+        sendCommandWithPayload(GET_TURNOUT_STATUS, payloadContent, sender);
 
         TurnoutStatus status = null;
         try {
