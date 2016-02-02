@@ -1,13 +1,15 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.data;
 
+import com.google.gson.Gson;
+
 /**
  *
  * @author benedekh
  */
 public class Turnout {
 
-    private int id;
-    private TurnoutStatus status;
+    private final int id;
+    private final TurnoutStatus status;
 
     public Turnout(int id, TurnoutStatus status) {
         this.id = id;
@@ -20,6 +22,10 @@ public class Turnout {
 
     public TurnoutStatus getStatus() {
         return this.status;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 
 }
