@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.kvcontrol.mqtt.client.logging;
+package hu.bme.mit.inf.kvcontrol.mqtt.client.util;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

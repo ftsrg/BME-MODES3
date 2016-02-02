@@ -6,5 +6,5 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
  */
 public interface ISender {
 
-    public void send(byte[] message);
+    public void send(Object object);
 }

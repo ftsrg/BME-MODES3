@@ -1,11 +1,12 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
+import com.google.gson.Gson;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.logging.LogManager.logInfoMessage;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.logging.LogManager.logException;
+import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.LogManager.logInfoMessage;
+import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.LogManager.logException;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 
 /**
@@ -42,8 +43,9 @@ public class MQTTMessageSender implements ISender {
     }
 
     @Override
-    public void send(byte[] payload) {
+    public void send(Object object) {
         try {
+            byte[] payload = new Gson().toJson(object).getBytes();
             client.publish(topic, payload, qos, false);
         } catch (MqttException ex) {
             logException(getClassName(), ex);

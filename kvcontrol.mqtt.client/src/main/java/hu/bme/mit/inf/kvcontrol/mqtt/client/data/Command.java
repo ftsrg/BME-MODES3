@@ -8,15 +8,15 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.data;
  */
 public enum Command {
 
-    COMMAND_IDENTIFY((byte) 0xC0),
-    COMMAND_LINE_DISABLE((byte) 0xC1),
-    COMMAND_LINE_ENABLE((byte) 0xC2),
-    COMMAND_GET_SECTION_STATUS((byte) 0xC3),
-    COMMAND_SEND_SECTION_STATUS((byte) 0xC4),
-    COMMAND_GET_OCCUPANCY((byte) 0xC8),
-    COMMAND_SEND_OCCUPANCY((byte) 0xC9),
-    COMMAND_GET_TURNOUT_STATUS((byte) 0xCA),
-    COMMAND_SEND_TURNOUT_STATUS((byte) 0xCB);
+    IDENTIFY((byte) 0xC0),
+    LINE_DISABLE((byte) 0xC1),
+    LINE_ENABLE((byte) 0xC2),
+    GET_SECTION_STATUS((byte) 0xC3),
+    SEND_SECTION_STATUS((byte) 0xC4),
+    GET_OCCUPANCY((byte) 0xC8),
+    SEND_OCCUPANCY((byte) 0xC9),
+    GET_TURNOUT_STATUS((byte) 0xCA),
+    SEND_TURNOUT_STATUS((byte) 0xCB);
 
     private final byte value;
 
