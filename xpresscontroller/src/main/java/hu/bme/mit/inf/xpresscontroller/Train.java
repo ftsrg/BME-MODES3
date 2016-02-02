@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.xpresscontroller;
+package hu.bme.mit.inf.xpresscontroller;
 
 public enum Train {
 	TAURUS(9), SNCF(10), DBAG(8);

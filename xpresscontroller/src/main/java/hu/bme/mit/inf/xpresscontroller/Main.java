@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.xpresscontroller;
+package hu.bme.mit.inf.xpresscontroller;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
