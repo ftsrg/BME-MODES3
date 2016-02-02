@@ -1,5 +1,7 @@
 # BME-MODES3
 
+*This repository extensively uses Git-LFS, hence install it (https://git-lfs.github.com/) and upgrade your Git to at least v2.7.0 for full compatibility.*
+
 Source code repository of the **Mo**del-based **De**monstrator for **S**mart and **S**afe **S**ystems (MoDeS3).
 
 Modules stored in the repository:
