@@ -18,3 +18,4 @@ Thumbs.db
 /xtend-gen/
 /src-gen/
 /kvcontrol.mqtt.client/target/
+/hu.bme.mit.inf.kvcontrol.mqtt.client/target/
