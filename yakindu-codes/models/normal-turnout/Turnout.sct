@@ -29,7 +29,7 @@
             <outgoingTransitions xmi:id="_DuhnkMEEEeWH0JVC4FYZqg" specification="else /&#xD;&#xA;raise Turnout.remPassageRequestTo: Sections.TOP" target="_Duub4MEEEeWH0JVC4FYZqg"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_DulR8MEEEeWH0JVC4FYZqg" name="RespFromRemTop" incomingTransitions="_DuhAl8EEEeWH0JVC4FYZqg">
-            <outgoingTransitions xmi:id="_DulR88EEEeWH0JVC4FYZqg" specification="[valueof(Turnout.remPassageAllowedFrom) == Sections.STRAIGHT] / raise Turnout.remPassageRequestTo: Sections.STRAIGHT" target="_DuqKcMEEEeWH0JVC4FYZqg"/>
+            <outgoingTransitions xmi:id="_DulR88EEEeWH0JVC4FYZqg" specification="[valueof(Turnout.remPassageAllowedFrom) == Sections.TOP] / raise Turnout.remPassageRequestTo: Sections.STRAIGHT" target="_DuqKcMEEEeWH0JVC4FYZqg"/>
             <outgoingTransitions xmi:id="_Dul5CMEEEeWH0JVC4FYZqg" specification="[valueof(Turnout.remPassageDeniedFrom) == Sections.TOP] / raise Turnout.sectionLockedTo: Sections.STRAIGHT&#xD;&#xA;" target="_DudWUsEEEeWH0JVC4FYZqg"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_DuqKcMEEEeWH0JVC4FYZqg" name="RespFromRemStr" incomingTransitions="_DulR88EEEeWH0JVC4FYZqg _035VEMEEEeWH0JVC4FYZqg">
