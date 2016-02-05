@@ -2,7 +2,6 @@ package org.yakindu.scr.turnout;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.yakindu.scr.IStatemachine;
 
 public class TurnoutStatemachine implements ITurnoutStatemachine {
 
@@ -179,6 +178,20 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
         @Override
         public void raisePassingDeniedFromOtherHalfIN() {
             passingDeniedFromOtherHalfIN = true;
+        }
+
+        private boolean remPassingAllowedFromOtherHalfIN;
+
+        @Override
+        public void raiseRemPassingAllowedFromOtherHalfIN() {
+            remPassingAllowedFromOtherHalfIN = true;
+        }
+
+        private boolean remPassingDeniedFromOtherHalfIN;
+
+        @Override
+        public void raiseRemPassingDeniedFromOtherHalfIN() {
+            remPassingDeniedFromOtherHalfIN = true;
         }
 
         private boolean sectionLockFrom;
@@ -487,6 +500,34 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             }
         }
 
+        private boolean remPassingAllowedFromOtherHalfOUT;
+
+        @Override
+        public boolean isRaisedRemPassingAllowedFromOtherHalfOUT() {
+            return remPassingAllowedFromOtherHalfOUT;
+        }
+
+        protected void raiseRemPassingAllowedFromOtherHalfOUT() {
+            remPassingAllowedFromOtherHalfOUT = true;
+            for (SCITurnoutListener listener : listeners) {
+                listener.onRemPassingAllowedFromOtherHalfOUTRaised();
+            }
+        }
+
+        private boolean remPassingDeniedFromOtherHalfOUT;
+
+        @Override
+        public boolean isRaisedRemPassingDeniedFromOtherHalfOUT() {
+            return remPassingDeniedFromOtherHalfOUT;
+        }
+
+        protected void raiseRemPassingDeniedFromOtherHalfOUT() {
+            remPassingDeniedFromOtherHalfOUT = true;
+            for (SCITurnoutListener listener : listeners) {
+                listener.onRemPassingDeniedFromOtherHalfOUTRaised();
+            }
+        }
+
         private long id;
 
         @Override
@@ -520,6 +561,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             remPassageDeniedFrom = false;
             passingAllowedFromOtherHalfIN = false;
             passingDeniedFromOtherHalfIN = false;
+            remPassingAllowedFromOtherHalfIN = false;
+            remPassingDeniedFromOtherHalfIN = false;
             sectionLockFrom = false;
             remSectionLockFrom = false;
             remShortSectionLockFrom = false;
@@ -539,6 +582,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             remSectionLockFromOtherHalfOUT = false;
             passingAllowedFromOtherHalfOUT = false;
             passingDeniedFromOtherHalfOUT = false;
+            remPassingAllowedFromOtherHalfOUT = false;
+            remPassingDeniedFromOtherHalfOUT = false;
         }
     }
 
@@ -953,6 +998,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
             sCITurnout.raisePassingAllowedFromOtherHalfOUT();
 
+            sCITurnout.raiseRemPassingAllowedFromOtherHalfOUT();
+
             nextStateIndex = 0;
             stateVector[0] = State.main_region_BecomesDivergent;
         } else {
@@ -961,6 +1008,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
                 stateVector[0] = State.$NullState$;
 
                 sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+
+                sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
                 nextStateIndex = 0;
                 stateVector[0] = State.main_region_BecomesDivergent;
@@ -1006,6 +1055,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
             sCITurnout.raisePassingAllowedFromOtherHalfOUT();
 
+            sCITurnout.raiseRemPassingAllowedFromOtherHalfOUT();
+
             nextStateIndex = 0;
             stateVector[0] = State.main_region_BecomesStraight;
         } else {
@@ -1014,6 +1065,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
                 stateVector[0] = State.$NullState$;
 
                 sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+
+                sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
                 nextStateIndex = 0;
                 stateVector[0] = State.main_region_BecomesStraight;
@@ -1469,7 +1522,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
     /* The reactions of state CheckTop. */
     private void react_main_region_DivergentTurnout_RemSectionLockFromDivergent_CheckTop() {
-        if (sCITurnout.passingDeniedFromOtherHalfIN) {
+        if (sCITurnout.remPassingDeniedFromOtherHalfIN) {
             nextStateIndex = 3;
             stateVector[3] = State.$NullState$;
 
@@ -1487,7 +1540,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
                 nextStateIndex = 3;
                 stateVector[3] = State.main_region_DivergentTurnout_RemSectionLockFromDivergent_Init;
             } else {
-                if (sCITurnout.passingAllowedFromOtherHalfIN) {
+                if (sCITurnout.remPassingAllowedFromOtherHalfIN) {
                     nextStateIndex = 3;
                     stateVector[3] = State.$NullState$;
 
@@ -1513,7 +1566,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             nextStateIndex = 4;
             stateVector[4] = State.$NullState$;
 
-            sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromOtherHalf_Init;
@@ -1975,7 +2028,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
     /* The reactions of state CheckTop. */
     private void react_main_region_StraightTurnout_RemSectionLockFromStraight_CheckTop() {
-        if (sCITurnout.passingDeniedFromOtherHalfIN) {
+        if (sCITurnout.remPassingDeniedFromOtherHalfIN) {
             nextStateIndex = 3;
             stateVector[3] = State.$NullState$;
 
@@ -1993,7 +2046,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
                 nextStateIndex = 3;
                 stateVector[3] = State.main_region_StraightTurnout_RemSectionLockFromStraight_Init;
             } else {
-                if (sCITurnout.passingAllowedFromOtherHalfIN) {
+                if (sCITurnout.remPassingAllowedFromOtherHalfIN) {
                     nextStateIndex = 3;
                     stateVector[3] = State.$NullState$;
 
@@ -2019,7 +2072,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             nextStateIndex = 4;
             stateVector[4] = State.$NullState$;
 
-            sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromOtherHalf_Init;
@@ -2141,7 +2194,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
     /* The reactions of state null. */
     private void react_main_region_DivergentTurnout_RemSectionLockFromOtherHalf__choice_0() {
         if (sCITurnout.isOccupied) {
-            sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromOtherHalf_Init;
@@ -2156,12 +2209,12 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
     /* The reactions of state null. */
     private void react_main_region_DivergentTurnout_RemSectionLockFromOtherHalf__choice_1() {
         if (sCITurnout.isOccupied) {
-            sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromOtherHalf_Init;
         } else {
-            sCITurnout.raisePassingAllowedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingAllowedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_DivergentTurnout_RemSectionLockFromOtherHalf_Init;
@@ -2276,7 +2329,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
     /* The reactions of state null. */
     private void react_main_region_StraightTurnout_RemSectionLockFromOtherHalf__choice_0() {
         if (sCITurnout.isOccupied) {
-            sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromOtherHalf_Init;
@@ -2291,12 +2344,12 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
     /* The reactions of state null. */
     private void react_main_region_StraightTurnout_RemSectionLockFromOtherHalf__choice_1() {
         if (sCITurnout.isOccupied) {
-            sCITurnout.raisePassingDeniedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingDeniedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromOtherHalf_Init;
         } else {
-            sCITurnout.raisePassingAllowedFromOtherHalfOUT();
+            sCITurnout.raiseRemPassingAllowedFromOtherHalfOUT();
 
             nextStateIndex = 4;
             stateVector[4] = State.main_region_StraightTurnout_RemSectionLockFromOtherHalf_Init;

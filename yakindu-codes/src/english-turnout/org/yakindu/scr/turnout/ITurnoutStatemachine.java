@@ -44,6 +44,10 @@ public interface ITurnoutStatemachine extends IStatemachine {
 
         public void raisePassingDeniedFromOtherHalfIN();
 
+        public void raiseRemPassingAllowedFromOtherHalfIN();
+
+        public void raiseRemPassingDeniedFromOtherHalfIN();
+
         public void raiseSectionLockFrom(long value);
 
         public void raiseRemSectionLockFrom(long value);
@@ -90,6 +94,10 @@ public interface ITurnoutStatemachine extends IStatemachine {
 
         public boolean isRaisedPassingDeniedFromOtherHalfOUT();
 
+        public boolean isRaisedRemPassingAllowedFromOtherHalfOUT();
+
+        public boolean isRaisedRemPassingDeniedFromOtherHalfOUT();
+
         public long getId();
 
         public void setId(long value);
@@ -125,6 +133,10 @@ public interface ITurnoutStatemachine extends IStatemachine {
         public void onPassingAllowedFromOtherHalfOUTRaised();
 
         public void onPassingDeniedFromOtherHalfOUTRaised();
+
+        public void onRemPassingAllowedFromOtherHalfOUTRaised();
+
+        public void onRemPassingDeniedFromOtherHalfOUTRaised();
     }
 
     public SCITurnout getSCITurnout();

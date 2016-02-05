@@ -101,6 +101,16 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
     }
 
     @Override
+    public void onRemPassingAllowedFromOtherHalfOUTRaised() {
+        otherHalfOfTurnout.getSCITurnout().raiseRemPassingAllowedFromOtherHalfIN();
+    }
+
+    @Override
+    public void onRemPassingDeniedFromOtherHalfOUTRaised() {
+        otherHalfOfTurnout.getSCITurnout().raiseRemPassingDeniedFromOtherHalfIN();
+    }
+
+    @Override
     public void onRemPassageDeniedToAllRaised() {
         for (Direction direction : remoteSections.keySet()) {
             sendPassageDenied(direction);
