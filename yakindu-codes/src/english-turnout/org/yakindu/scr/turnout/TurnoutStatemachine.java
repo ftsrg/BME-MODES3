@@ -1393,7 +1393,10 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             nextStateIndex = 1;
             stateVector[1] = State.$NullState$;
 
-            react_main_region_DivergentTurnout_SectionLockFromDivergent__choice_0();
+            sCITurnout.raiseRemPassageRequestTo(sCISections.dIVERGENT);
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_CheckNeighbourTurnout;
         }
     }
 
@@ -1899,7 +1902,10 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
             nextStateIndex = 1;
             stateVector[1] = State.$NullState$;
 
-            react_main_region_StraightTurnout_SectionLockFromStraight__choice_0();
+            sCITurnout.raiseRemPassageRequestTo(sCISections.sTRAIGHT);
+
+            nextStateIndex = 1;
+            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_CheckNeighbourTurnout;
         }
     }
 
@@ -2117,21 +2123,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
     }
 
     /* The reactions of state null. */
-    private void react_main_region_DivergentTurnout_SectionLockFromDivergent__choice_0() {
-        if (sCITurnout.id == 135) {
-            sCITurnout.raiseSectionLockFromOtherHalfOUT();
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_CheckOtherSide;
-        } else {
-            sCITurnout.raiseRemPassageRequestTo(sCISections.dIVERGENT);
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_DivergentTurnout_SectionLockFromDivergent_CheckNeighbourTurnout;
-        }
-    }
-
-    /* The reactions of state null. */
     private void react_main_region_DivergentTurnout_SectionLockFromOtherHalf__choice_0() {
         if (sCITurnout.id == 135) {
             sCITurnout.raisePassingAllowedFromOtherHalfOUT();
@@ -2248,21 +2239,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
             nextStateIndex = 5;
             stateVector[5] = State.main_region_DivergentTurnout_RemShortSectionLockFromDivergent_Init;
-        }
-    }
-
-    /* The reactions of state null. */
-    private void react_main_region_StraightTurnout_SectionLockFromStraight__choice_0() {
-        if (sCITurnout.id == 134) {
-            sCITurnout.raiseSectionLockFromOtherHalfOUT();
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_CheckOtherSide;
-        } else {
-            sCITurnout.raiseRemPassageRequestTo(sCISections.sTRAIGHT);
-
-            nextStateIndex = 1;
-            stateVector[1] = State.main_region_StraightTurnout_SectionLockFromStraight_CheckNeighbourTurnout;
         }
     }
 
