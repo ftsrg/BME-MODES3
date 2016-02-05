@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.kv.yakindu.control.sm.handler;
 
+import static hu.bme.mit.inf.kv.yakindu.control.helper.NullSection.NULL_SECTION;
 import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
 import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.STATUS_LOGGER;
 import hu.bme.mit.inf.kv.yakindu.control.sm.RemoteTurnout;
@@ -57,7 +58,13 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
 
     private SCISection getLocalSectionByDirectionValue(long directionValue) {
         Direction direction = getDirectionFromValue(directionValue);
-        return localSections.get(direction).getSCISection();
+        SCISection section;
+        try {
+            section = localSections.get(direction).getSCISection();
+        } catch (NullPointerException ex) {
+            section = NULL_SECTION;
+        }
+        return section;
     }
 
     @Override
