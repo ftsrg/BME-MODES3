@@ -5,12 +5,13 @@ import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Section;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionStatus;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionStatus.*;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command.*;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
+import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,10 +31,11 @@ public class SectionRequestSender implements MqttCallback {
 
     private final Map<Integer, CompletableFuture<SectionStatus>> sectionStatuses = new ConcurrentHashMap<>();
 
-    public SectionRequestSender(String topic, int qos, String address) {
-        this.sender = new MQTTMessageSender(topic, qos, address,
-                generateId(getClass().getSimpleName()), this);
-        this.subscribedTopic = topic;
+    public SectionRequestSender(MQTTConfiguration config) {
+        config.setClientID(generateId(getClass().getSimpleName()));
+
+        this.sender = new MQTTMessageSender(config, this);
+        this.subscribedTopic = config.getTopic();
     }
 
     public boolean isSectionEnabled(int sectionId) {

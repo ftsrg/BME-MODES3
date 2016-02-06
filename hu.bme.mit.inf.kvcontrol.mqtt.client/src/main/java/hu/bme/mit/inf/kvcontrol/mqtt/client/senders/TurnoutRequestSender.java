@@ -3,9 +3,9 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 import com.google.gson.Gson;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command.GET_TURNOUT_STATUS;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Turnout;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +14,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.TurnoutStatus;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.TurnoutStatus.DIVERGENT;
+import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.LogManager.logException;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.getPayloadFromMessage;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.sendCommandWithPayload;
@@ -30,10 +31,11 @@ public class TurnoutRequestSender implements MqttCallback {
 
     private final Map<Integer, CompletableFuture<TurnoutStatus>> turnoutStatuses = new ConcurrentHashMap<>();
 
-    public TurnoutRequestSender(String topic, int qos, String address) {
-        this.sender = new MQTTMessageSender(topic, qos, address,
-                generateId(getClass().getSimpleName()), this);
-        this.subscribedTopic = topic;
+    public TurnoutRequestSender(MQTTConfiguration config) {
+        config.setClientID(generateId(getClass().getSimpleName()));
+
+        this.sender = new MQTTMessageSender(config, this);
+        this.subscribedTopic = config.getTopic();
     }
 
     public boolean isTurnoutDivergent(int turnoutId) {

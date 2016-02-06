@@ -2,6 +2,7 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import com.google.gson.Gson;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Section;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionArray;
@@ -28,10 +29,11 @@ public class OccupancyRequestSender implements MqttCallback {
 
     private final Map<Integer, SectionOccupancyStatus> sectionsOccupied = new ConcurrentHashMap<>();
 
-    public OccupancyRequestSender(String topic, int qos, String address) {
-        this.sender = new MQTTMessageSender(topic, qos, address,
-                generateId(getClass().getSimpleName()), this);
-        this.subscribedTopic = topic;
+    public OccupancyRequestSender(MQTTConfiguration config) {
+        config.setClientID(generateId(getClass().getSimpleName()));
+
+        this.sender = new MQTTMessageSender(config, this);
+        this.subscribedTopic = config.getTopic();
     }
 
     public boolean isSectionOccupied(int sectionId) {
