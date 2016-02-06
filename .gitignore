@@ -19,3 +19,4 @@ Thumbs.db
 /src-gen/
 /kvcontrol.mqtt.client/target/
 /hu.bme.mit.inf.kvcontrol.mqtt.client/target/
+/hu.bme.mit.inf.yakindu.mqtt.client/target/

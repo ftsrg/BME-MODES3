@@ -12,6 +12,7 @@
         <module>hu.bme.mit.inf.master.mqtt.client</module>
         <module>hu.bme.mit.inf.master.hal</module>
 		<module>hu.bme.mit.inf.xpresscontroller</module>
+        <module>hu.bme.mit.inf.yakindu.mqtt.client</module>
     </modules>
 
 </project>
