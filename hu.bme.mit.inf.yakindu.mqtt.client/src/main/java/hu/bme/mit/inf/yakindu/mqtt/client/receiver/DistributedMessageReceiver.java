@@ -29,14 +29,16 @@ public class DistributedMessageReceiver implements MqttCallback {
     private final int recipientID;
 
     // the target who shall get the received message
-    private IDistributedMessageTransmitter target;
+    private final IDistributedMessageTransmitter target;
 
-    public DistributedMessageReceiver(MQTTConfiguration config, int recipientID) {
+    public DistributedMessageReceiver(MQTTConfiguration config,
+            IDistributedMessageTransmitter target, int recipientID) {
         config.setClientID(generateId(getClass().getSimpleName()));
 
         this.receiver = new MQTTMessageReceiver(config, this);
         this.subscribedTopic = config.getTopic();
         this.recipientID = recipientID;
+        this.target = target;
     }
 
     @Override
