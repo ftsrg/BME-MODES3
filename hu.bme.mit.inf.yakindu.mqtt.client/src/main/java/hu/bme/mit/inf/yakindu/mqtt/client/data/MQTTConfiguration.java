@@ -6,24 +6,32 @@ package hu.bme.mit.inf.yakindu.mqtt.client.data;
  */
 public class MQTTConfiguration {
 
-    private final String address;
-    private final int qos;
-    private final String topic;
-    private String clientId;
+    private String protocol = "tcp";
+    private String address = "localhost";
+    private int port = 1883;
 
-    public MQTTConfiguration(String address, int qos, String topic) {
-        this.address = address;
-        this.qos = qos;
+    private int qos = 1;
+    private final String topic;
+    private String clientId = new String();
+
+    public MQTTConfiguration(String topic) {
         this.topic = topic;
-        this.clientId = new String();
     }
 
-    public MQTTConfiguration(String address, int qos, String topic,
-            String clientId) {
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
+
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void setQOS(int qos) {
         this.qos = qos;
-        this.topic = topic;
-        this.clientId = clientId;
     }
 
     public void setClientID(String clientId) {
@@ -34,8 +42,8 @@ public class MQTTConfiguration {
         return this.clientId;
     }
 
-    public String getAddress() {
-        return this.address;
+    public String getFullAddress() {
+        return protocol + "://" + address + ":" + port;
     }
 
     public int getQOS() {

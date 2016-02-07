@@ -22,7 +22,7 @@ public class MQTTMessageReceiver {
     public MQTTMessageReceiver(MQTTConfiguration config,
             MqttCallback callbackHandler) {
         try {
-            String address = config.getAddress();
+            String address = config.getFullAddress();
             String clientId = config.getClientID();
 
             this.qos = config.getQOS();

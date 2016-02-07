@@ -21,7 +21,7 @@ public class MQTTMessageSender implements ISender {
 
     public MQTTMessageSender(MQTTConfiguration config) {
         try {
-            String address = config.getAddress();
+            String address = config.getFullAddress();
             String clientId = config.getClientID();
 
             this.qos = config.getQOS();
