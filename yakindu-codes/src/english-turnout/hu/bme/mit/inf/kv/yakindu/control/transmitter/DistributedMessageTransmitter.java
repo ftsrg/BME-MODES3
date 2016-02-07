@@ -9,14 +9,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
+import hu.bme.mit.inf.yakindu.mqtt.client.receiver.IDistributedMessageTransmitter;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
 /**
  *
  * @author benedekh
  */
-public class DistributedMessageTransmitter extends LoggingThread {
+public class DistributedMessageTransmitter extends LoggingThread implements IDistributedMessageTransmitter {
 
     private final BlockingQueue<byte[]> distributedPackets = new LinkedBlockingQueue<>();
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -27,6 +28,7 @@ public class DistributedMessageTransmitter extends LoggingThread {
         statemachine = sm;
     }
 
+    @Override
     public void addPacket(byte[] packet) {
         distributedPackets.add(packet);
     }

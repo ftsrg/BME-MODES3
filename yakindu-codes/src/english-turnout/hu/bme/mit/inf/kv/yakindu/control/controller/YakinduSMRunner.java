@@ -2,9 +2,10 @@ package hu.bme.mit.inf.kv.yakindu.control.controller;
 
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.kv.yakindu.control.sm.Section;
-import hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationServer;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.getStateMachineMQTTConfiguration;
 import hu.bme.mit.inf.kv.yakindu.control.transmitter.DistributedMessageTransmitter;
 import hu.bme.mit.inf.kv.yakindu.control.transmitter.GeneralTransmitter;
+import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 import java.util.Set;
 
 import org.yakindu.scr.turnout.TurnoutWrapper;
@@ -20,7 +21,8 @@ public class YakinduSMRunner {
 
     private final GeneralTransmitter generalTransmitter;
     private final DistributedMessageTransmitter distributedTransmitter;
-    private final CommunicationServer communicationServer;
+
+    private final DistributedMessageReceiver messageReceiver;
 
     public YakinduSMRunner(YakinduSMConfiguration conf) {
         TurnoutWrapper statemachine = conf.getTurnoutStatemachine();
@@ -36,13 +38,13 @@ public class YakinduSMRunner {
         generalTransmitter = new GeneralTransmitter(managedTurnoutId,
                 managedTurnoutSectionId, localSections, statemachine);
         distributedTransmitter = new DistributedMessageTransmitter(statemachine);
-        communicationServer = new CommunicationServer(managedTurnoutId,
-                distributedTransmitter);
+        this.messageReceiver = new DistributedMessageReceiver(
+                getStateMachineMQTTConfiguration(), distributedTransmitter,
+                managedTurnoutId);
 
         generalTransmitter.setName(GeneralTransmitter.class.getName());
         distributedTransmitter.setName(
                 DistributedMessageTransmitter.class.getName());
-        communicationServer.setName(CommunicationServer.class.getName());
     }
 
     public void start() {
@@ -65,7 +67,6 @@ public class YakinduSMRunner {
 
         generalTransmitter.start();
         distributedTransmitter.start();
-        communicationServer.start();
     }
 
 }

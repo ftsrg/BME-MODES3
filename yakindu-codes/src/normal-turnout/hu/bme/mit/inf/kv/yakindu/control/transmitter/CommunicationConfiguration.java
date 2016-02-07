@@ -1,12 +1,15 @@
 package hu.bme.mit.inf.kv.yakindu.control.transmitter;
 
 import hu.bme.mit.inf.kvcontrol.requests.AbstractRequest;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
 
 /**
  *
  * @author benedekh
  */
 public class CommunicationConfiguration {
+
+    private static MQTTConfiguration statemachineMQTTConf;
 
     public static void setKvControlAddress(String address) {
         AbstractRequest.setDefultAddress("http://" + address);
@@ -16,13 +19,11 @@ public class CommunicationConfiguration {
         AbstractRequest.setDefaultPort(port);
     }
 
-    public static void setKvControlBpExtensionAddress(String address) {
-        hu.bme.mit.inf.kvcontrol.bpextension.requests.AbstractRequest.setDefultAddress(
-                "http://" + address);
+    public static void setStateMachineMQTTConfiguration(MQTTConfiguration conf) {
+        statemachineMQTTConf = conf;
     }
 
-    public static void setKvControlBpExtensionPort(int port) {
-        hu.bme.mit.inf.kvcontrol.bpextension.requests.AbstractRequest.setDefaultPort(port);
+    public static MQTTConfiguration getStateMachineMQTTConfiguration() {
+        return statemachineMQTTConf;
     }
-
 }
