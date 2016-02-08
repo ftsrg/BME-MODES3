@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.kv.yakindu.control.transmitter;
 
 import hu.bme.mit.inf.kv.yakindu.control.helper.Commands;
-import hu.bme.mit.inf.kv.yakindu.control.helper.LoggingThread;
 import static hu.bme.mit.inf.kv.yakindu.control.sm.handler.DirectionConverterHelper.getValueFromDirection;
 
 import java.util.concurrent.BlockingQueue;
@@ -11,13 +10,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.IDistributedMessageTransmitter;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logInfoMessage;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
 /**
  *
  * @author benedekh
  */
-public class DistributedMessageTransmitter extends LoggingThread implements IDistributedMessageTransmitter {
+public class DistributedMessageTransmitter extends Thread implements IDistributedMessageTransmitter {
 
     private final BlockingQueue<byte[]> distributedPackets = new LinkedBlockingQueue<>();
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -35,7 +36,7 @@ public class DistributedMessageTransmitter extends LoggingThread implements IDis
 
     @Override
     public void run() {
-        logMessage("STARTED");
+        logInfoMessage(getClass().getName(), "STARTED");
         while (!isInterrupted()) {
             try {
                 byte[] receivedPacket = distributedPackets.take();
@@ -72,11 +73,11 @@ public class DistributedMessageTransmitter extends LoggingThread implements IDis
                         break;
                 }
             } catch (InterruptedException e) {
-                logErrorMessage(e.getMessage());
+                logException(getClass().getName(), e);
                 Thread.currentThread().interrupt();
             }
         }
-        logErrorMessage("INTERRUPTED");
+        logInfoMessage(getClass().getName(), "INTERRUPTED");
     }
 
     private void remSectionLock(final Direction from) {
@@ -87,7 +88,8 @@ public class DistributedMessageTransmitter extends LoggingThread implements IDis
             public void run() {
                 statemachine.getSCITurnout().raiseRemSectionLockFrom(
                         directionValue);
-                logMessage("received remSectionLock " + from);
+                logInfoMessage(getClass().getName(),
+                        "received remSectionLock from " + from);
             }
         });
     }
@@ -100,7 +102,8 @@ public class DistributedMessageTransmitter extends LoggingThread implements IDis
             public void run() {
                 statemachine.getSCITurnout().raiseRemShortSectionLockFrom(
                         directionValue);
-                logMessage("received short remSectionLock " + from);
+                logInfoMessage(getClass().getName(),
+                        "received remShortSectionLock from " + from);
             }
         });
     }
@@ -116,11 +119,13 @@ public class DistributedMessageTransmitter extends LoggingThread implements IDis
                 if (isAllowed) {
                     statemachine.getSCITurnout().raiseRemPassageAllowedFrom(
                             directionValue);
-                    logMessage("received passage allowed " + from);
+                    logInfoMessage(getClass().getName(),
+                            "received passage allowed from " + from);
                 } else {
                     statemachine.getSCITurnout().raiseRemPassageDeniedFrom(
                             directionValue);
-                    logMessage("received passage denied " + from);
+                    logInfoMessage(getClass().getName(),
+                            "received passage denied from " + from);
                 }
             }
         });

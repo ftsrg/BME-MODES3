@@ -4,8 +4,6 @@ import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializ
 import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x87;
 import java.io.IOException;
 
-import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.printErrorMessage;
-import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.setStatusLogEnabled;
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlAddress;
@@ -15,6 +13,8 @@ import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.setStatusLogEnabled;
 import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
@@ -88,7 +88,7 @@ public class Simulator {
             initializeAndStartStatemachines();
 
         } catch (IOException ex) {
-            printErrorMessage(Simulator.class.getName(), ex.getMessage());
+            logException(Simulator.class.getName(), ex);
         }
     }
 
@@ -110,10 +110,10 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> kvControlAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlPortArg,
             ArgumentAcceptingOptionSpec<String> traceLogArg,
-            OptionSet parsed, boolean enableStatusLog, Integer kvControlPort) {
-        if (enableStatusLog) {
-            setStatusLogEnabled(true);
-        }
+            OptionSet parsed, boolean isStatusLogEnabled, Integer kvControlPort) {
+
+        setStatusLogEnabled(isStatusLogEnabled);
+
         if (parsed.has(kvControlAddressArg)) {
             setKvControlAddress(parsed.valueOf(kvControlAddressArg));
         }

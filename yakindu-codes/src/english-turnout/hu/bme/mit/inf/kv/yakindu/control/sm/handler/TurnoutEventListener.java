@@ -1,12 +1,9 @@
 package hu.bme.mit.inf.kv.yakindu.control.sm.handler;
 
 import static hu.bme.mit.inf.kv.yakindu.control.helper.NullSection.NULL_SECTION;
-import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
-import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.STATUS_LOGGER;
 import hu.bme.mit.inf.kv.yakindu.control.sm.RemoteTurnout;
 import static hu.bme.mit.inf.kv.yakindu.control.sm.handler.DirectionConverterHelper.getDirectionFromValue;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.getStateMachineMQTTConfiguration;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.DENIED;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
@@ -14,6 +11,7 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
 import hu.bme.mit.inf.yakindu.mqtt.client.senders.PassageRequestSender;
 import hu.bme.mit.inf.yakindu.mqtt.client.senders.PassageResponseSender;
 import hu.bme.mit.inf.yakindu.mqtt.client.senders.ShortPassageRequestSender;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logInfoMessage;
 import java.util.Map;
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.section.ISectionStatemachine.SCISection;
@@ -146,7 +144,7 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
         passageRequest.sendPassageRequest(remoteTurnout.getLocalDirection(),
                 remoteTurnout.getTurnoutId());
 
-        SimpleLogger.printLogMessage(TurnoutEventListener.class.getName(),
+        logInfoMessage(getClass().getName(),
                 "passage request sent to " + remoteTurnout.getTurnoutId());
     }
 
@@ -157,7 +155,7 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
         passageResponse.sendPassageResponse(remoteTurnout.getLocalDirection(),
                 ALLOWED, remoteTurnout.getTurnoutId());
 
-        SimpleLogger.printLogMessage(TurnoutEventListener.class.getName(),
+        logInfoMessage(getClass().getName(),
                 "passage allowed sent to " + remoteTurnout.getTurnoutId());
     }
 
@@ -172,7 +170,7 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
         passageResponse.sendPassageResponse(remoteTurnout.getLocalDirection(),
                 DENIED, remoteTurnout.getTurnoutId());
 
-        SimpleLogger.printLogMessage(TurnoutEventListener.class.getName(),
+        logInfoMessage(getClass().getName(),
                 "passage denied sent to " + remoteTurnout.getTurnoutId());
     }
 

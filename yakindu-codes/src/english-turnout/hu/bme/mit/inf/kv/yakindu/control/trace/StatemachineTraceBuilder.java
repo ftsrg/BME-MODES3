@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.kv.yakindu.control.trace;
 
-import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,8 +80,7 @@ public class StatemachineTraceBuilder<T extends Enum<T>> {
             transformer.transform(source, result);
 
         } catch (SAXException | IOException | TransformerException | ParserConfigurationException e) {
-            SimpleLogger.printErrorMessage(
-                    StatemachineTraceBuilder.class.getName(), e.getMessage());
+            logException(getClass().getName(), e);
         }
     }
 

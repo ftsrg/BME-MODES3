@@ -5,14 +5,14 @@ import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializ
 import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x83;
 import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x84;
 import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x85;
-import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.printErrorMessage;
-import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.setStatusLogEnabled;
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlAddress;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlPort;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setStateMachineMQTTConfiguration;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.setStatusLogEnabled;
 import java.io.IOException;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
@@ -101,7 +101,7 @@ public class Simulator {
             initializeAndStartStateMachine(turnoutId);
 
         } catch (IOException ex) {
-            printErrorMessage(Simulator.class.getName(), ex.getMessage());
+            logException(Simulator.class.getName(), ex);
         }
     }
 
@@ -123,11 +123,10 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> kvControlAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlPortArg,
             ArgumentAcceptingOptionSpec<String> traceLogArg,
-            OptionSet parsed, boolean enableStatusLog, Integer kvControlPort) {
+            OptionSet parsed, boolean isStatusLogEnabled, Integer kvControlPort) {
 
-        if (enableStatusLog) {
-            setStatusLogEnabled(true);
-        }
+        setStatusLogEnabled(isStatusLogEnabled);
+
         if (parsed.has(kvControlAddressArg)) {
             setKvControlAddress(parsed.valueOf(kvControlAddressArg));
         }
