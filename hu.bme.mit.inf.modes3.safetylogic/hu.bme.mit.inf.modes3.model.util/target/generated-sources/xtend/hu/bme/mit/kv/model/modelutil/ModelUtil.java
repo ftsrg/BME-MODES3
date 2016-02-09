@@ -14,6 +14,7 @@ public class ModelUtil {
       + "\nThe method or field ModelPackage is undefined"
       + "\nThe method or field ModelPackage is undefined"
       + "\nThe method or field Resource is undefined"
+      + "\nXMIResourceFactoryImpl cannot be resolved."
       + "\nResourceSetImpl cannot be resolved."
       + "\nThe method or field URI is undefined"
       + "\nRegistry cannot be resolved"

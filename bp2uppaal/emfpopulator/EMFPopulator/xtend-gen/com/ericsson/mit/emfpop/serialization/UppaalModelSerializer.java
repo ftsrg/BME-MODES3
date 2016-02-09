@@ -1,30 +1,12 @@
 package com.ericsson.mit.emfpop.serialization;
 
-import com.ericsson.mit.emfpop.core.UppaalModelBuilder;
 import com.ericsson.mit.emfpop.util.Util;
-import com.google.common.base.Objects;
-import de.uni_paderborn.uppaal.NTA;
-import de.uni_paderborn.uppaal.declarations.Declaration;
-import de.uni_paderborn.uppaal.declarations.GlobalDeclarations;
-import de.uni_paderborn.uppaal.declarations.LocalDeclarations;
-import de.uni_paderborn.uppaal.declarations.Parameter;
-import de.uni_paderborn.uppaal.declarations.VariableDeclaration;
-import de.uni_paderborn.uppaal.expressions.Expression;
-import de.uni_paderborn.uppaal.expressions.IdentifierExpression;
-import de.uni_paderborn.uppaal.templates.Edge;
-import de.uni_paderborn.uppaal.templates.Location;
-import de.uni_paderborn.uppaal.templates.LocationKind;
-import de.uni_paderborn.uppaal.templates.Selection;
-import de.uni_paderborn.uppaal.templates.Synchronization;
-import de.uni_paderborn.uppaal.templates.Template;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 /**
@@ -131,39 +113,16 @@ public class UppaalModelSerializer {
     _builder.newLine();
     _builder.append("//Channel declarations");
     _builder.newLine();
-    {
-      UppaalModelBuilder _instance = UppaalModelBuilder.getInstance();
-      NTA _nTA = _instance.getNTA();
-      GlobalDeclarations _globalDeclarations = _nTA.getGlobalDeclarations();
-      EList<Declaration> _declaration = _globalDeclarations.getDeclaration();
-      boolean _hasElements = false;
-      for(final Declaration declaration : _declaration) {
-        if (!_hasElements) {
-          _hasElements = true;
-        } else {
-          _builder.appendImmediate("\n", "");
-        }
-        {
-          String _exp = declaration.getExp();
-          boolean _startsWith = _exp.startsWith("TRUE");
-          if (_startsWith) {
-            _builder.append("broadcast chan ");
-            String _exp_1 = declaration.getExp();
-            String _substring = _exp_1.substring(4);
-            _builder.append(_substring, "");
-            _builder.append(";");
-          } else {
-            _builder.newLineIfNotEmpty();
-            _builder.append("chan ");
-            String _exp_2 = declaration.getExp();
-            String _substring_1 = _exp_2.substring(5);
-            _builder.append(_substring_1, "");
-            _builder.append(";");
-          }
-        }
-        _builder.newLineIfNotEmpty();
-      }
-    }
+    _builder.append("ï¿½FOR declaration : UppaalModelBuilder.instance.NTA.globalDeclarations.declaration SEPARATOR \"\\n\"ï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½IF declaration.exp.startsWith(\"TRUE\")ï¿½broadcast chan ï¿½declaration.exp.substring(4)ï¿½;ï¿½ELSEï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("chan ï¿½declaration.exp.substring(5)ï¿½;ï¿½ENDIFï¿½");
+    _builder.newLine();
+    _builder.append("ï¿½ENDFORï¿½");
+    _builder.newLine();
     _builder.append("</declaration>");
     _builder.newLine();
     return _builder;
@@ -178,203 +137,90 @@ public class UppaalModelSerializer {
    */
   public static CharSequence createTemplate() {
     StringConcatenation _builder = new StringConcatenation();
-    {
-      UppaalModelBuilder _instance = UppaalModelBuilder.getInstance();
-      NTA _nTA = _instance.getNTA();
-      EList<Template> _template = _nTA.getTemplate();
-      for(final Template template : _template) {
-        _builder.append("<template>");
-        _builder.newLine();
-        _builder.append("<name>");
-        String _name = template.getName();
-        _builder.append(_name, "");
-        _builder.append("</name>");
-        _builder.newLineIfNotEmpty();
-        _builder.append("<parameter>");
-        {
-          EList<Parameter> _parameter = template.getParameter();
-          boolean _hasElements = false;
-          for(final Parameter parameter : _parameter) {
-            if (!_hasElements) {
-              _hasElements = true;
-            } else {
-              _builder.appendImmediate("\n", "");
-            }
-            _builder.newLineIfNotEmpty();
-            _builder.append("int ");
-            VariableDeclaration _variableDeclaration = parameter.getVariableDeclaration();
-            String _exp = _variableDeclaration.getExp();
-            _builder.append(_exp, "");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-        _builder.append("</parameter>");
-        _builder.newLineIfNotEmpty();
-        _builder.append("<declaration>");
-        {
-          LocalDeclarations _declarations = template.getDeclarations();
-          EList<Declaration> _declaration = _declarations.getDeclaration();
-          boolean _hasElements_1 = false;
-          for(final Declaration declaration : _declaration) {
-            if (!_hasElements_1) {
-              _hasElements_1 = true;
-            } else {
-              _builder.appendImmediate("\n", "");
-            }
-            _builder.newLineIfNotEmpty();
-            _builder.append("int ");
-            String _exp_1 = declaration.getExp();
-            _builder.append(_exp_1, "");
-            _builder.append(";");
-            _builder.newLineIfNotEmpty();
-          }
-        }
-        _builder.append("</declaration>");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-        {
-          EList<Location> _location = template.getLocation();
-          boolean _hasElements_2 = false;
-          for(final Location location : _location) {
-            if (!_hasElements_2) {
-              _hasElements_2 = true;
-            } else {
-              _builder.appendImmediate("\n", "");
-            }
-            _builder.append("<location id=\"");
-            String _name_1 = location.getName();
-            _builder.append(_name_1, "");
-            _builder.append("\">");
-            _builder.newLineIfNotEmpty();
-            _builder.append("<name>");
-            String _name_2 = location.getName();
-            _builder.append(_name_2, "");
-            _builder.append("</name>");
-            _builder.newLineIfNotEmpty();
-            {
-              LocationKind _locationTimeKind = location.getLocationTimeKind();
-              String _string = _locationTimeKind.toString();
-              boolean _contentEquals = _string.contentEquals("COMMITED");
-              if (_contentEquals) {
-                _builder.append("<committed/>");
-              }
-            }
-            _builder.newLineIfNotEmpty();
-            _builder.append("</location>");
-            _builder.newLine();
-          }
-        }
-        _builder.append("<init ref=\"");
-        Location _init = null;
-        if (template!=null) {
-          _init=template.getInit();
-        }
-        String _name_3 = null;
-        if (_init!=null) {
-          _name_3=_init.getName();
-        }
-        _builder.append(_name_3, "");
-        _builder.append("\"/>");
-        _builder.newLineIfNotEmpty();
-        {
-          EList<Edge> _edge = template.getEdge();
-          boolean _hasElements_3 = false;
-          for(final Edge transition : _edge) {
-            if (!_hasElements_3) {
-              _hasElements_3 = true;
-            } else {
-              _builder.appendImmediate("\n", "");
-            }
-            _builder.append("<transition>");
-            _builder.newLine();
-            _builder.append("<source ref=\"");
-            Location _source = null;
-            if (transition!=null) {
-              _source=transition.getSource();
-            }
-            String _name_4 = null;
-            if (_source!=null) {
-              _name_4=_source.getName();
-            }
-            _builder.append(_name_4, "");
-            _builder.append("\"/>");
-            _builder.newLineIfNotEmpty();
-            _builder.append("<target ref=\"");
-            Location _target = null;
-            if (transition!=null) {
-              _target=transition.getTarget();
-            }
-            String _name_5 = null;
-            if (_target!=null) {
-              _name_5=_target.getName();
-            }
-            _builder.append(_name_5, "");
-            _builder.append("\"/>");
-            _builder.newLineIfNotEmpty();
-            {
-              EList<Selection> _selection = transition.getSelection();
-              int _length = ((Object[])Conversions.unwrapArray(_selection, Object.class)).length;
-              boolean _equals = (_length == 1);
-              if (_equals) {
-                _builder.append("<label kind=\"select\">");
-                EList<Selection> _selection_1 = transition.getSelection();
-                Selection _get = _selection_1.get(0);
-                String _selectStatement = _get.getSelectStatement();
-                _builder.append(_selectStatement, "");
-                _builder.append("</label>");
-              }
-            }
-            _builder.newLineIfNotEmpty();
-            {
-              Expression _guard = transition.getGuard();
-              boolean _equals_1 = Objects.equal(_guard, null);
-              boolean _not = (!_equals_1);
-              if (_not) {
-                _builder.append("<label kind=\"guard\">");
-                Expression _guard_1 = transition.getGuard();
-                String _exp_2 = _guard_1.getExp();
-                _builder.append(_exp_2, "");
-                _builder.append("</label>");
-              }
-            }
-            _builder.newLineIfNotEmpty();
-            {
-              Synchronization _synchronization = transition.getSynchronization();
-              boolean _equals_2 = Objects.equal(_synchronization, null);
-              boolean _not_1 = (!_equals_2);
-              if (_not_1) {
-                _builder.append("<label kind=\"synchronisation\">");
-                Synchronization _synchronization_1 = transition.getSynchronization();
-                IdentifierExpression _channelExpression = _synchronization_1.getChannelExpression();
-                String _exp_3 = _channelExpression.getExp();
-                _builder.append(_exp_3, "");
-                _builder.append("</label>");
-              }
-            }
-            _builder.newLineIfNotEmpty();
-            {
-              EList<Expression> _update = transition.getUpdate();
-              int _length_1 = ((Object[])Conversions.unwrapArray(_update, Object.class)).length;
-              boolean _equals_3 = (_length_1 == 1);
-              if (_equals_3) {
-                _builder.append("<label kind=\"assignment\">");
-                EList<Expression> _update_1 = transition.getUpdate();
-                Expression _get_1 = _update_1.get(0);
-                String _exp_4 = _get_1.getExp();
-                _builder.append(_exp_4, "");
-                _builder.append("</label>");
-              }
-            }
-            _builder.newLineIfNotEmpty();
-            _builder.append("</transition>");
-            _builder.newLine();
-          }
-        }
-        _builder.append("</template>");
-        _builder.newLine();
-      }
-    }
+    _builder.append("ï¿½FOR template : UppaalModelBuilder.instance.NTA.templateï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<template>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<name>ï¿½template.nameï¿½</name>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<parameter>ï¿½FOR parameter: template.parameter SEPARATOR \"\\n\"ï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("int ï¿½parameter.variableDeclaration.expï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½ENDFORï¿½</parameter>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<declaration>ï¿½FOR declaration : template.declarations.declaration SEPARATOR \"\\n\"ï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("int ï¿½declaration.expï¿½;");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½ENDFORï¿½</declaration>");
+    _builder.newLine();
+    _builder.append("\t\t");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½FOR location : template.location SEPARATOR \"\\n\"ï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<location id=\"ï¿½location.nameï¿½\">");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<name>ï¿½location.nameï¿½</name>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½IF (location.locationTimeKind.toString.contentEquals(\"COMMITED\"))ï¿½<committed/>ï¿½ENDIFï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("</location>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½ENDFORï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<init ref=\"ï¿½template?.init?.nameï¿½\"/>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½FOR transition : template.edge SEPARATOR \"\\n\"ï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<transition>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<source ref=\"ï¿½transition?.source?.nameï¿½\"/>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("<target ref=\"ï¿½transition?.target?.nameï¿½\"/>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½IF (transition.selection.length == 1)ï¿½<label kind=\"select\">ï¿½transition.selection.get(0).selectStatementï¿½</label>ï¿½ENDIFï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½IF !(transition.guard == null)ï¿½<label kind=\"guard\">ï¿½transition.guard.expï¿½</label>ï¿½ENDIFï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½IF !(transition.synchronization == null)ï¿½<label kind=\"synchronisation\">ï¿½transition.synchronization.channelExpression.expï¿½</label>ï¿½ENDIFï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½IF (transition.update.length == 1)ï¿½<label kind=\"assignment\">ï¿½transition.update.get(0).expï¿½</label>ï¿½ENDIFï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("</transition>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("ï¿½ENDFORï¿½");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("</template>");
+    _builder.newLine();
+    _builder.append("ï¿½ENDFORï¿½");
+    _builder.newLine();
     return _builder;
   }
   
@@ -387,11 +233,11 @@ public class UppaalModelSerializer {
    * 
    * def static createFooter() '''
    * <system>//Template instantiations
-   * «FOR template : UppaalModelBuilder.instance.NTA.template»«template.name.toLowerCase»_inst = «template.name»(1);
-   * «ENDFOR»
+   * ï¿½FOR template : UppaalModelBuilder.instance.NTA.templateï¿½ï¿½template.name.toLowerCaseï¿½_inst = ï¿½template.nameï¿½(1);
+   * ï¿½ENDFORï¿½
    * 
    * //System composed of the following processes
-   * system «FOR template : UppaalModelBuilder.instance.NTA.template SEPARATOR ","»«template.name.toLowerCase»_inst«ENDFOR»;
+   * system ï¿½FOR template : UppaalModelBuilder.instance.NTA.template SEPARATOR ","ï¿½ï¿½template.name.toLowerCaseï¿½_instï¿½ENDFORï¿½;
    * </system>
    * </nta>
    * '''
