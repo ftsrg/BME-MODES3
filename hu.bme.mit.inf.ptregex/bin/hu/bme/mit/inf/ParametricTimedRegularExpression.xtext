@@ -1,0 +1,72 @@
+grammar hu.bme.mit.inf.ParametricTimedRegularExpression with org.eclipse.xtext.common.Terminals
+
+generate parametricTimedRegularExpression "http://www.bme.hu/mit/inf/ParametricTimedRegularExpression"
+
+RegexModel:
+	alphabet=Alphabet?
+	(declarations+=ExpressionDeclaration)+;
+
+Alphabet:
+	{Alphabet} 'alphabet' '=' '{' (functors+=Functor (',' functors+=Functor)*)? '}';
+
+Functor:
+	name=ID ('/' arity=INT)?;
+
+ExpressionDeclaration:
+	'expression' name=ID ('[' vars+=Var (',' vars+=Var)* ']')? '=' body=Expression;
+
+//-----------------------------------------------------------------------------------
+Expression:
+    And; // ezt modositottam choicerol
+ 
+And returns Expression:
+    Choice ({And.elements+=current} ('&' elements+=Choice)+)?; // es ezt adtam hozza
+//------------------------------------------------------------------------------------
+
+Choice returns Expression:
+	Sequence ({Choice.elements+=current} ('|' elements+=Sequence)+)?;
+
+Sequence returns Expression:
+	MultExpression ({Sequence.elements+=current} elements+=MultExpression+)?;
+
+MultExpression returns Expression:
+	ParenExpression ({Star.body=current} '*' | {Plus.body=current} '+' | {Cardinality.body=current} '{' n=INT '}')?;
+
+ParenExpression returns Expression:
+	'(' Expression ')' | Any | Inverse | TimedExpression | Event;
+
+Any:
+	{Any} 'S';
+
+Inverse:
+	'(' 'S' '\\' excludes+=Event (',' excludes+=Event)* ')';
+
+TimedExpression:
+	'<' body=Expression '>' '[' timeout=INT ']';
+
+Event:
+	functor=[Functor] ('[' parameters+=Parameter (',' parameters+=Parameter)* ']')?;
+
+Parameter:
+	VarParameter | SingletonParameter | FixParameter;
+
+FixParameter:
+	FixIntParameter | FixStringParameter;
+
+FixIntParameter:
+	body=INT;
+
+FixStringParameter:
+	body=STRING;
+
+VarParameter:
+	var=[Var];
+
+SingletonParameter:
+	{SingletonParameter} '_';
+
+Var:
+	name=ID;
+
+terminal ID:
+	'^'? ('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;

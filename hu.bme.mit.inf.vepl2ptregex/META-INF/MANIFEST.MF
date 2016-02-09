@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Vepl2ptregex
+Bundle-SymbolicName: hu.bme.mit.inf.vepl2ptregex
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: hu.bme.mit.inf.vepl2ptregex.Activator
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
