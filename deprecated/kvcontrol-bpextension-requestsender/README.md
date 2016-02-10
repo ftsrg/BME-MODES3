@@ -1,5 +1,7 @@
 # KVControl-BPExtension-RequestSender
 
+*This module is deprecated, use [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client) instead.*
+
 This component is responsible for the communication of the state machines designed in [Yakindu Statecharts](https://www.itemis.com/en/yakindu/statechart-tools/) (formerly we used [BridgePoint](http://xtuml.org) instead of Yakindu). It provides a simple API in Java for [KVControl-BPExtension](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol-bpextension).
 
 ## Configuration
