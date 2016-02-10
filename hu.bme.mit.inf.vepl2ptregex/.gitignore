@@ -14,7 +14,7 @@ Thumbs.db
 
 # Generated sources and binaries #
 ##################################
-/bin/
-/xtend-gen/
-/src-gen/
-/target/
+bin/
+xtend-gen/
+src-gen/
+target/
