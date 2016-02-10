@@ -21,7 +21,7 @@ import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
 public class RegexPrinter {
-  public static String printRegex(final RegexModel input) {
+  public static String regexToString(final RegexModel input) {
     StringConcatenation _builder = new StringConcatenation();
     {
       Alphabet _alphabet = input.getAlphabet();

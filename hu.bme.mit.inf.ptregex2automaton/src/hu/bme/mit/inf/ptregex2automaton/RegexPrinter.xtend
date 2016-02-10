@@ -13,7 +13,7 @@ import hu.bme.mit.inf.parametricTimedRegularExpression.Expression
 import hu.bme.mit.inf.parametricTimedRegularExpression.And
 
 class RegexPrinter {
-	def static public String printRegex(RegexModel input) {
+	def static public String regexToString(RegexModel input) {
 		'''
 			«FOR letter : input.alphabet.functors BEFORE 'alphabet = {' SEPARATOR ', ' AFTER '}'»«letter.name»«ENDFOR»
 			«FOR expression : input.declarations BEFORE 'expression' SEPARATOR '\n'»«printExpression(expression)»«ENDFOR»
