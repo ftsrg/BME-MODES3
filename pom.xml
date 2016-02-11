@@ -11,7 +11,7 @@
 		<module>hu.bme.mit.inf.json.prototypes</module>
         <module>hu.bme.mit.inf.master.mqtt.client</module>
         <module>hu.bme.mit.inf.master.hal</module>
-		<module>hu.bme.mit.inf.xpresscontroller</module>
+		<!--<module>hu.bme.mit.inf.xpresscontroller</module>-->
     </modules>
 
 </project>
