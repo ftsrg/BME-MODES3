@@ -18,9 +18,9 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine;
  */
 public class GeneralTransmitter extends Thread {
 
-    private static final int OCCUPANCY_TRIGGER_SLEEP = 200;
-    private static final int TURNOUT_TRIGGER_SLEEP = 200;
-    private static final int UNLOCK_TRIGGER_SLEEP = 200;
+    private static final int OCCUPANCY_TRIGGER_SLEEP = 150;
+    private static final int TURNOUT_TRIGGER_SLEEP = 150;
+    private static final int UNLOCK_TRIGGER_SLEEP = 150;
 
     private final ITurnoutStatemachine statemachine;
 
