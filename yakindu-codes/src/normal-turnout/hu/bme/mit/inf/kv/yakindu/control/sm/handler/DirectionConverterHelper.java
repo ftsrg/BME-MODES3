@@ -1,6 +1,10 @@
 package hu.bme.mit.inf.kv.yakindu.control.sm.handler;
 
-import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
+import org.yakindu.scr.section.SectionStatemachine;
+import org.yakindu.scr.turnout.TurnoutStatemachine;
+
+
 
 /**
  *

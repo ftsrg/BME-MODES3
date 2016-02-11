@@ -4,18 +4,17 @@ import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializ
 import static hu.bme.mit.inf.kv.yakindu.control.controller.StatemachineInitializer.initialize0x87;
 import java.io.IOException;
 
-import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.printErrorMessage;
-import static hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger.setStatusLogEnabled;
 import hu.bme.mit.inf.kv.yakindu.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlAddress;
-import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionAddress;
-import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlBpExtensionPort;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlPort;
+import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setStateMachineMQTTConfiguration;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationServer.setCloudIntegrationEnabled;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.setStatusLogEnabled;
 import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
@@ -29,8 +28,6 @@ public class Simulator {
         try {
             OptionParser parser = new OptionParser();
             parser.accepts("sl", "enable status log [optional]");
-            parser.accepts("ci",
-                    "enable cloud integration with Node-RED [optional]");
 
             ArgumentAcceptingOptionSpec<String> traceLogArg = parser
                     .accepts("tp", "trace log save path [optional]")
@@ -44,13 +41,30 @@ public class Simulator {
                     "p", "kvControlPort [optional]")
                     .withRequiredArg().ofType(Integer.class);
 
-            ArgumentAcceptingOptionSpec<String> kvControlBPExtensionAddressArg = parser
-                    .accepts("bpa", "kvControlBPExntensionAddress [optional]").withRequiredArg().ofType(
-                            String.class);
+            ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg
+                    = parser.accepts("smbpp",
+                            "StateMachine MQTT Broker Protocol [optional, default = tcp]")
+                    .withRequiredArg().ofType(String.class);
 
-            ArgumentAcceptingOptionSpec<Integer> kvControlBPExtensionPortArg = parser
-                    .accepts("bpp", "kvControlBPExtensionPort [optional]").withRequiredArg().ofType(
-                            Integer.class);
+            ArgumentAcceptingOptionSpec<String> smMQTTAddressArg
+                    = parser.accepts("smba",
+                            "StateMachine MQTT Broker Address [optional, default = localhost]")
+                    .withRequiredArg().ofType(String.class);
+
+            ArgumentAcceptingOptionSpec<Integer> smMQTTPortArg
+                    = parser.accepts("smbp",
+                            "StateMachine MQTT Broker Port [optional, default = 1883]")
+                    .withRequiredArg().ofType(Integer.class);
+
+            ArgumentAcceptingOptionSpec<Integer> smMQTTQOSArg
+                    = parser.accepts("smbq",
+                            "StateMachine MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
+                    .withRequiredArg().ofType(Integer.class);
+
+            ArgumentAcceptingOptionSpec<String> smMQTTTopicArg
+                    = parser.accepts("smbt",
+                            "StateMachine MQTT Broker Topic [optional, default = modes3/yakindu]")
+                    .withRequiredArg().ofType(String.class);
 
             parser.printHelpOn(System.out);
 
@@ -58,23 +72,23 @@ public class Simulator {
 
             Integer kvControlPort = getParameterIntegerValue(parsed,
                     kvControlPortArg, "-p");
-            Integer kvControlBPExtensionPort = getParameterIntegerValue(parsed,
-                    kvControlBPExtensionPortArg, "-bpp");
+            Integer smMQTTPort = getParameterIntegerValue(parsed,
+                    smMQTTPortArg, "-smbp");
+            Integer smMQTTQOS = getParameterIntegerValue(parsed,
+                    smMQTTQOSArg, "-smbq");
 
             boolean enableStatusLog = parsed.has("sl");
-            boolean enableCloudIntegration = parsed.has("ci");
 
-            setPreferences(kvControlAddressArg, kvControlPortArg,
-                    kvControlBPExtensionAddressArg,
-                    kvControlBPExtensionPortArg, traceLogArg, parsed,
-                    enableStatusLog,
-                    enableCloudIntegration,
-                    kvControlPort, kvControlBPExtensionPort);
+            setPreferences(kvControlAddressArg, kvControlPortArg, traceLogArg,
+                    parsed, enableStatusLog, kvControlPort);
+
+            setSMMQTTPreferences(parsed, smMQTTProtocolArg, smMQTTAddressArg,
+                    smMQTTTopicArg, smMQTTPort, smMQTTQOS);
 
             initializeAndStartStatemachines();
 
         } catch (IOException ex) {
-            printErrorMessage(Simulator.class.getName(), ex.getMessage());
+            logException(Simulator.class.getName(), ex);
         }
     }
 
@@ -95,38 +109,51 @@ public class Simulator {
     private static void setPreferences(
             ArgumentAcceptingOptionSpec<String> kvControlAddressArg,
             ArgumentAcceptingOptionSpec<Integer> kvControlPortArg,
-            ArgumentAcceptingOptionSpec<String> kvControlBPExtensionAddressArg,
-            ArgumentAcceptingOptionSpec<Integer> kvControlBPExtensionPortArg,
             ArgumentAcceptingOptionSpec<String> traceLogArg,
-            OptionSet parsed,
-            boolean enableStatusLog, boolean enableCloudIntegration,
-            Integer kvControlPort,
-            Integer kvControlBPExtensionPort) {
+            OptionSet parsed, boolean isStatusLogEnabled, Integer kvControlPort) {
 
-        if (enableStatusLog) {
-            setStatusLogEnabled(true);
-        }
-        if (enableCloudIntegration) {
-            setCloudIntegrationEnabled(true);
-        }
+        setStatusLogEnabled(isStatusLogEnabled);
+
         if (parsed.has(kvControlAddressArg)) {
             setKvControlAddress(parsed.valueOf(kvControlAddressArg));
         }
         if (parsed.has(kvControlPortArg)) {
             setKvControlPort(kvControlPort);
         }
-        if (parsed.has(kvControlBPExtensionAddressArg)) {
-            setKvControlBpExtensionAddress(parsed
-                    .valueOf(kvControlBPExtensionAddressArg));
-        }
-        if (parsed.has(kvControlBPExtensionPortArg)) {
-            setKvControlBpExtensionPort(kvControlBPExtensionPort);
-        }
         if (parsed.has(traceLogArg)) {
             SectionWrapperWithListeners.setTraceLogEnabled(true);
             TurnoutWrapperWithListeners.setTraceLogEnabled(true);
             setDefaultSavePath(parsed.valueOf(traceLogArg));
         }
+    }
+
+    private static void setSMMQTTPreferences(
+            OptionSet parsed,
+            ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg,
+            ArgumentAcceptingOptionSpec<String> smMQTTAddressArg,
+            ArgumentAcceptingOptionSpec<String> smMQTTTopicArg,
+            Integer smMQTTPort, Integer smMQTTQOS) {
+
+        MQTTConfiguration conf = new MQTTConfiguration(
+                "modes3/yakindu");
+
+        if (parsed.has(smMQTTProtocolArg)) {
+            conf.setProtocol(parsed.valueOf(smMQTTProtocolArg));
+        }
+        if (parsed.has(smMQTTAddressArg)) {
+            conf.setProtocol(parsed.valueOf(smMQTTAddressArg));
+        }
+        if (parsed.has(smMQTTTopicArg)) {
+            conf.setProtocol(parsed.valueOf(smMQTTTopicArg));
+        }
+        if (smMQTTPort != null) {
+            conf.setPort(smMQTTPort);
+        }
+        if (smMQTTQOS != null) {
+            conf.setQOS(smMQTTQOS);
+        }
+
+        setStateMachineMQTTConfiguration(conf);
     }
 
     private static void initializeAndStartStatemachines() {

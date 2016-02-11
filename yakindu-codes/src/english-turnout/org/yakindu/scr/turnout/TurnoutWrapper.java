@@ -198,6 +198,34 @@ public class TurnoutWrapper implements ITurnoutStatemachine, Runnable {
         }
 
         @Override
+        public void raiseRemPassingAllowedFromOtherHalfIN() {
+            eventQueue.add(new Runnable() {
+
+                @Override
+                public void run() {
+                    synchronized (statemachine) {
+                        statemachine.getSCITurnout().raiseRemPassingAllowedFromOtherHalfIN();
+                        statemachine.runCycle();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void raiseRemPassingDeniedFromOtherHalfIN() {
+            eventQueue.add(new Runnable() {
+
+                @Override
+                public void run() {
+                    synchronized (statemachine) {
+                        statemachine.getSCITurnout().raiseRemPassingDeniedFromOtherHalfIN();
+                        statemachine.runCycle();
+                    }
+                }
+            });
+        }
+
+        @Override
         public void raiseSectionLockFrom(final long value) {
 
             eventQueue.add(new Runnable() {
@@ -395,6 +423,20 @@ public class TurnoutWrapper implements ITurnoutStatemachine, Runnable {
         public boolean isRaisedPassingDeniedFromOtherHalfOUT() {
             synchronized (statemachine) {
                 return statemachine.getSCITurnout().isRaisedPassingDeniedFromOtherHalfOUT();
+            }
+        }
+
+        @Override
+        public boolean isRaisedRemPassingAllowedFromOtherHalfOUT() {
+            synchronized (statemachine) {
+                return statemachine.getSCITurnout().isRaisedRemPassingAllowedFromOtherHalfOUT();
+            }
+        }
+
+        @Override
+        public boolean isRaisedRemPassingDeniedFromOtherHalfOUT() {
+            synchronized (statemachine) {
+                return statemachine.getSCITurnout().isRaisedRemPassingDeniedFromOtherHalfOUT();
             }
         }
 

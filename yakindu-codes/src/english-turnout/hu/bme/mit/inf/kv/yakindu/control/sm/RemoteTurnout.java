@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.kv.yakindu.control.sm;
 
-import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
 
 /**
  *

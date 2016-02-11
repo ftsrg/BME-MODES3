@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Ui
+Bundle-SymbolicName: hu.bme.mit.inf.ptregex2automaton.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: hu.bme.mit.inf.ptregex2automaton.ui.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.core.resources;bundle-version="3.10.1",
+ org.eclipse.emf.ecore,
+ hu.bme.mit.inf.ptregex,
+ hu.bme.mit.inf.qea.model,
+ hu.bme.mit.inf.ptregex2automaton,
+ hu.bme.mit.inf.qea
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy

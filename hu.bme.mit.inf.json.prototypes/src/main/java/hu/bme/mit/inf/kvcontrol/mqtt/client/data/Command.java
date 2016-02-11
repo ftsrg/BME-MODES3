@@ -24,7 +24,7 @@ public enum Command {
         this.value = value;
     }
 
-    public int getValue() {
+    public byte getValue() {
         return value;
     }
 

@@ -10,10 +10,10 @@ import hu.bme.mit.inf.kv.yakindu.control.sm.handler.TurnoutEventListener;
 import java.util.Arrays;
 import java.util.Set;
 
-import hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction;
-import static hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction.DIVERGENT;
-import static hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction.STRAIGHT;
-import static hu.bme.mit.inf.kvcontrol.bpextension.requests.enums.Direction.TOP;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.DIVERGENT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.STRAIGHT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

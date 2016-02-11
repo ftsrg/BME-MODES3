@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.kv.yakindu.control.sm.handler;
 
-import hu.bme.mit.inf.kv.yakindu.control.helper.SimpleLogger;
 import hu.bme.mit.inf.kvcontrol.senders.SectionStateRequestSender;
+import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logInfoMessage;
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
@@ -20,15 +20,13 @@ public class SectionEventListener implements SCISectionListener {
     @Override
     public void onEnableSectionRaised(long sectionId) {
         new SectionStateRequestSender().enableSection((int) sectionId);
-        SimpleLogger.printLogMessage(SectionEventListener.class.getName(),
-                "Section ENABLED " + sectionId);
+        logInfoMessage(getClass().getName(), "Section ENABLED " + sectionId);
     }
 
     @Override
     public void onDisableSectionRaised(long sectionId) {
         new SectionStateRequestSender().disableSection((int) sectionId);
-        SimpleLogger.printLogMessage(SectionEventListener.class.getName(),
-                "Section DISABLED " + sectionId);
+        logInfoMessage(getClass().getName(), "Section DISABLED " + sectionId);
     }
 
     @Override

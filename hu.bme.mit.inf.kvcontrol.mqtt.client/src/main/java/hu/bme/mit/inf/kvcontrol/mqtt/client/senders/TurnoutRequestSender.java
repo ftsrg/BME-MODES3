@@ -3,9 +3,9 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 import com.google.gson.Gson;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command.GET_TURNOUT_STATUS;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Turnout;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +14,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.data.TurnoutStatus;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.TurnoutStatus.DIVERGENT;
+import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.LogManager.logException;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.getPayloadFromMessage;
 import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.sendCommandWithPayload;
@@ -30,10 +31,11 @@ public class TurnoutRequestSender implements MqttCallback {
 
     private final Map<Integer, CompletableFuture<TurnoutStatus>> turnoutStatuses = new ConcurrentHashMap<>();
 
-    public TurnoutRequestSender(String topic, int qos, String address) {
-        this.sender = new MQTTMessageSender(topic, qos, address,
-                generateId(getClass().getSimpleName()), this);
-        this.subscribedTopic = topic;
+    public TurnoutRequestSender(MQTTConfiguration config) {
+        config.setClientID(generateId(getClass().getSimpleName()));
+
+        this.sender = new MQTTMessageSender(config, this);
+        this.subscribedTopic = config.getTopic();
     }
 
     public boolean isTurnoutDivergent(int turnoutId) {
@@ -60,33 +62,38 @@ public class TurnoutRequestSender implements MqttCallback {
     }
 
     @Override
-    public void connectionLost(Throwable cause) {
-        logException(getClass().getName(), new Exception(cause));
+    public void messageArrived(String topic, MqttMessage message) {
+        try {
+            if (!subscribedTopic.equals(topic)) {
+                return;
+            }
+
+            Payload payloadObj = getPayloadFromMessage(message);
+            Command command = payloadObj.getCommand();
+
+            switch (command) {
+                case SEND_TURNOUT_STATUS:
+                    Turnout turnout = new Gson().fromJson(
+                            payloadObj.getContent(),
+                            Turnout.class);
+                    CompletableFuture<TurnoutStatus> future = turnoutStatuses.get(
+                            turnout.getId());
+
+                    if (future != null) {
+                        future.complete(turnout.getStatus());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        } catch (Exception ex) {
+            logException(getClass().getName(), new Exception(ex));
+        }
     }
 
     @Override
-    public void messageArrived(String topic, MqttMessage message) throws Exception {
-        if (!subscribedTopic.equals(topic)) {
-            return;
-        }
-
-        Payload payloadObj = getPayloadFromMessage(message);
-        Command command = payloadObj.getCommand();
-
-        switch (command) {
-            case SEND_TURNOUT_STATUS:
-                Turnout turnout = new Gson().fromJson(payloadObj.getContent(),
-                        Turnout.class);
-                CompletableFuture<TurnoutStatus> future = turnoutStatuses.get(
-                        turnout.getId());
-
-                if (future != null) {
-                    future.complete(turnout.getStatus());
-                }
-                break;
-            default:
-                break;
-        }
+    public void connectionLost(Throwable cause) {
+        logException(getClass().getName(), new Exception(cause));
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.yakindu.scr.turnout;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.yakindu.scr.IStatemachine;
 
 public class TurnoutStatemachine implements ITurnoutStatemachine {
 
@@ -1333,7 +1332,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 
     /* The reactions of state RespFromRemTop. */
     private void react_main_region_StraightTurnout_SectionLockFromStraight_RespFromRemTop() {
-        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.sTRAIGHT) {
+        if (sCITurnout.getRemPassageAllowedFromValue() == sCISections.tOP) {
             nextStateIndex = 1;
             stateVector[1] = State.$NullState$;
 

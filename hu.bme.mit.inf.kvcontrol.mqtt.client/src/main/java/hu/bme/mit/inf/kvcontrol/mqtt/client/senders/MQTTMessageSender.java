@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import com.google.gson.Gson;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -19,19 +20,22 @@ public class MQTTMessageSender implements ISender {
     private String topic;
     private int qos;
 
-    public MQTTMessageSender(String topic, int qos, String broker,
-            String clientId, MqttCallback callbackHandler) {
+    public MQTTMessageSender(MQTTConfiguration config,
+            MqttCallback callbackHandler) {
         try {
-            this.qos = qos;
-            this.topic = topic;
+            String address = config.getFullAddress();
+            String clientId = config.getClientID();
+
+            this.qos = config.getQOS();
+            this.topic = config.getTopic();
 
             MemoryPersistence persistence = new MemoryPersistence();
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
 
-            this.client = new MqttAsyncClient(broker, clientId, persistence);
+            this.client = new MqttAsyncClient(address, clientId, persistence);
             this.client.setCallback(callbackHandler);
-            logInfoMessage(getClassName(), "Connecting to broker: " + broker);
+            logInfoMessage(getClassName(), "Connecting to broker: " + address);
             this.client.connect(connOpts);
             logInfoMessage(getClassName(), "Connected");
             Thread.sleep(500);
