@@ -39,12 +39,12 @@
   </build>
   <repositories>
     <repository>
-      <id>Eclipse Paho Repo</id>
-      <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
-    </repository>
-    <repository>
       <id>MoDeS3 Local Repo</id>
       <url>file:${project.basedir}/../mvn-repository</url>
+    </repository>
+    <repository>
+      <id>Eclipse Paho Repo</id>
+      <url>https://repo.eclipse.org/content/repositories/paho-releases/</url>
     </repository>
   </repositories>
 </project>

@@ -1,33 +1,34 @@
 package hu.bme.mit.inf.xpresscontroller;
 
+import org.apache.log4j.Logger;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-public class Main implements MqttCallback {
+import hu.bme.mit.inf.xpresscontroller.jsontypes.Root;
 
-	static Logger log = LoggerFactory.getLogger(Main.class.getName());
+public class Receiver implements MqttCallback {
+	static Logger logger = Logger.getLogger(Receiver.class.getName());
 	
 	Controller controller;
 	
 	public static void main(String[] args) throws InterruptedException, MqttException  {
-		Main main = new Main();
+		Receiver main = new Receiver();
 		while(true) {
 			Thread.sleep(5000);
 		}
 	}
 
-	public Main() throws InterruptedException, MqttException {
+	public Receiver() throws InterruptedException, MqttException {
+		
 		controller = new Controller();
-		//c.init();
+		controller.init();
 
 		MqttClient mqttClient = new MqttClient("tcp://localhost:1883", "dccControl");
 		mqttClient.setCallback(this);
@@ -38,40 +39,29 @@ public class Main implements MqttCallback {
 		connOpts.setPassword("password".toCharArray());
 		mqttClient.connect(connOpts);
 		
-		log.info("MQTT connected");
+		logger.info("MQTT connected");
 
 		mqttClient.subscribe("modes3/dcc");
 	}
 
 	public void connectionLost(Throwable cause) {
-		log.info("MQTT connection lost");
+		logger.info("MQTT connection lost");
 	}
 
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		log.info("MQTT message arrived");
+		logger.info("MQTT message arrived");
 		String jsonRaw = new String(message.getPayload());
 		
 		Gson gson = new Gson();
-		JsonObject jsonObject = gson.fromJson(jsonRaw, JsonObject.class);
-		if (jsonObject.has("train")) {
-			JsonObject trainObject = jsonObject.get("train").getAsJsonObject();
-			int id = trainObject.get("id").getAsInt();
-			float speed = (float)trainObject.get("speed").getAsDouble();
+		Root root = gson.fromJson(new String(message.getPayload()), Root.class);
+		
+		if (root.getTrain() != null) {
+			int id = root.getTrain().getId();
+			double speed = root.getTrain().getSpeed();
 			
 			for (Train t : Train.values()) {
 				if (t.getAddress() == id) {
 					controller.setSpeed(t, speed);
-				}
-			}
-		}
-		if (jsonObject.has("turnout")) {
-			JsonObject trainObject = jsonObject.get("train").getAsJsonObject();
-			String id = "T00" + trainObject.get("ID").getAsInt();
-			boolean straight = trainObject.get("Straight").getAsBoolean();
-			
-			for (Turnout t : Turnout.values()) {
-				if (t.getAddress() == id) {
-					controller.setTurnout(id, straight);
 				}
 			}
 		}
