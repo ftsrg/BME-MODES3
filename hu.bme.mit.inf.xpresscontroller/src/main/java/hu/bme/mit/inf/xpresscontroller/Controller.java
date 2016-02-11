@@ -41,7 +41,7 @@ public class Controller implements ThrottleListener {
 		}
 	}
 
-	public void setSpeed(Train train, float speed) {
+	public void setSpeed(Train train, double speed) {
 		DccThrottle throttle = trainThrottles.get(train);
 
 		if (speed > 0.0) {
@@ -49,14 +49,14 @@ public class Controller implements ThrottleListener {
 		} else {
 			throttle.setIsForward(false);
 		}
-		throttle.setSpeedSetting(speed);
+		throttle.setSpeedSetting(Math.abs((float)speed));
 	}
 	
-	public void setTurnout(String id, boolean straight) {
-		jmri.Turnout turnout = turnoutCommander.get(id);
+	public void setTurnout(Turnout turnout, boolean straight) {
+		jmri.Turnout xpressturnout = turnoutCommander.get(turnout);
 		
 		int command = straight ? jmri.Turnout.CLOSED : jmri.Turnout.THROWN;
-		turnout.setCommandedState(command);
+		xpressturnout.setCommandedState(command);
 	}
 
 	public void notifyThrottleFound(DccThrottle throttle) {

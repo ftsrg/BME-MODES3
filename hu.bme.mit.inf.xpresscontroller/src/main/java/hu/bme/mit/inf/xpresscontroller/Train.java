@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.xpresscontroller;
 
 public enum Train {
-	TAURUS(9), SNCF(10), DBAG(8);
+	DBAG(8), TAURUS(9), SNCF(10);
 	
 	private final int address;
 	
