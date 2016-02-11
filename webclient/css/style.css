@@ -32,15 +32,15 @@
 	box-sizing: border-box;
 }
 
-#modes3-trains-container .modes3-train[data-modes3-id='1'] {
+#modes3-trains-container .modes3-train[data-modes3-id='8'] {
 	border-left: 10px solid red;
 }
 
-#modes3-trains-container .modes3-train[data-modes3-id='2'] {
+#modes3-trains-container .modes3-train[data-modes3-id='9'] {
 	border-left: 10px solid green;
 }
 
-#modes3-trains-container .modes3-train[data-modes3-id='3'] {
+#modes3-trains-container .modes3-train[data-modes3-id='10'] {
 	border-left: 10px solid blue;
 }
 
@@ -53,8 +53,11 @@
 	margin-top: 10px;
 }
 
-#modes3-trains-container .modes3-train-speed-container p {
-	display: inline-block;
+#modes3-trains-container .modes3-train-speed-container object {
+	width: 100%;
+	display: block;
+	padding-left: 7px;
+	padding-right: 7px;
 }
 
 #modes3-trains-container .modes3-train img {
