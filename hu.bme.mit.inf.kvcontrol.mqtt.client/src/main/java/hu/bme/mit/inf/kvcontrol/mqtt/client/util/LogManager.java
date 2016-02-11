@@ -15,7 +15,7 @@ public class LogManager {
     
     /**
      * # Root logger option 
-     * log4j.rootLogger=DEBUG, stdout
+     * log4j.rootLogger=INFO, stdout
      *
      * # Direct log messages to stdout
      * log4j.appender.stdout=org.apache.log4j.ConsoleAppender
@@ -26,7 +26,7 @@ public class LogManager {
     static {
         Properties prop = new Properties();
 
-        prop.put("log4j.rootLogger", "DEBUG, stdout");
+        prop.put("log4j.rootLogger", "INFO, stdout");
         prop.put("log4j.appender.stdout", "org.apache.log4j.ConsoleAppender");
         prop.put("log4j.appender.stdout.Target", "System.out");
         prop.put("log4j.appender.stdout.layout",
@@ -41,7 +41,7 @@ public class LogManager {
      * Set the PropertyConfiguration with the new properties. E.g.:
      *
      * Properties properties = new Properties();
-     * properties.put("log4j.rootLogger", "DEBUG, stdout");
+     * properties.put("log4j.rootLogger", "INFO, stdout");
      * properties.put("log4j.appender.stdout","org.apache.log4j.ConsoleAppender");
      * properties.put("log4j.appender.stdout.Target","System.out");
      * properties.put("log4j.appender.stdout.layout","org.apache.log4j.PatternLayout");
