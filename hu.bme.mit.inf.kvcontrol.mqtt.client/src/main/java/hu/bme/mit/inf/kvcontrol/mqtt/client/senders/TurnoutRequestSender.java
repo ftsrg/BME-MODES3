@@ -72,7 +72,7 @@ public class TurnoutRequestSender implements MqttCallback {
             }
 
             Payload payloadObj = getPayloadFromMessage(message);
-            Command command = (Command) payloadObj.getCommand();
+            Command command = payloadObj.getCommand();
 
             switch (command) {
                 case SEND_TURNOUT_STATUS:

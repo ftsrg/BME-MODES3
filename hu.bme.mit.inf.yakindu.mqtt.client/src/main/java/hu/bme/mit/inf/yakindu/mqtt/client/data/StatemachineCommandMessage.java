@@ -6,16 +6,16 @@ import com.google.gson.Gson;
  *
  * @author benedekh
  */
-public class StatemachineCommandPayload {
+public class StatemachineCommandMessage {
 
     private final int recipientID;
     private Allowance allowance = null;
 
-    public StatemachineCommandPayload(int recipientID) {
+    public StatemachineCommandMessage(int recipientID) {
         this.recipientID = recipientID;
     }
 
-    public StatemachineCommandPayload(int recipientID, Allowance allowance) {
+    public StatemachineCommandMessage(int recipientID, Allowance allowance) {
         this.recipientID = recipientID;
         this.allowance = allowance;
     }

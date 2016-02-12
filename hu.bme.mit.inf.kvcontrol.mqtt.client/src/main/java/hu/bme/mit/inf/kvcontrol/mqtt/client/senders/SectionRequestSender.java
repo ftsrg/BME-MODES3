@@ -81,7 +81,7 @@ public class SectionRequestSender implements MqttCallback {
             }
 
             Payload payloadObj = getPayloadFromMessage(message);
-            Command command = (Command) payloadObj.getCommand();
+            Command command = payloadObj.getCommand();
 
             switch (command) {
                 case SEND_SECTION_STATUS:

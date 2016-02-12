@@ -1,5 +1,9 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.senders;
 
+import hu.bme.mit.inf.mqtt.common.data.Command;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_DIVERGENT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_STRAIGHT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_TOP;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithPayload;
@@ -8,11 +12,7 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.DIVERGENT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.STRAIGHT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_DIVERGENT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_STRAIGHT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_TOP;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandPayload;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
 
 /**
  *
@@ -29,7 +29,7 @@ public class PassageRequestSender {
     }
 
     public void sendPassageRequest(Direction direction, int recipientID) {
-        StatemachineCommand command;
+        Command command;
 
         switch (direction) {
             case TOP:
@@ -45,7 +45,7 @@ public class PassageRequestSender {
                 return;
         }
 
-        String content = new StatemachineCommandPayload(recipientID).toJson();
+        String content = new StatemachineCommandMessage(recipientID).toJson();
         sendCommandWithPayload(command, content, sender);
     }
 
