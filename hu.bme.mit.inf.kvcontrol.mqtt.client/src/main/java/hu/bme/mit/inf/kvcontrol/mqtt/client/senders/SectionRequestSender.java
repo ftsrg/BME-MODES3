@@ -1,24 +1,29 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import com.google.gson.Gson;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Section;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionStatus;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionStatus.*;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command.*;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
+import hu.bme.mit.inf.mqtt.common.data.Command;
+import static hu.bme.mit.inf.mqtt.common.data.Command.GET_SECTION_STATUS;
+import static hu.bme.mit.inf.mqtt.common.data.Command.LINE_DISABLE;
+import static hu.bme.mit.inf.mqtt.common.data.Command.LINE_ENABLE;
+import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_SECTION_STATUS;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
+import hu.bme.mit.inf.mqtt.common.data.Section;
+import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
+import static hu.bme.mit.inf.mqtt.common.data.SectionStatus.DISABLED;
+import static hu.bme.mit.inf.mqtt.common.data.SectionStatus.ENABLED;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithPayload;
+import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.LogManager.logException;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.sendCommandWithPayload;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.getPayloadFromMessage;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
@@ -26,7 +31,7 @@ import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.getPayload
  */
 public class SectionRequestSender implements MqttCallback {
 
-    private final ISender sender;
+    private final MQTTPublisherSubscriber sender;
     private final String subscribedTopic;
 
     private final Map<Integer, CompletableFuture<SectionStatus>> sectionStatuses = new ConcurrentHashMap<>();
@@ -34,7 +39,8 @@ public class SectionRequestSender implements MqttCallback {
     public SectionRequestSender(MQTTConfiguration config) {
         config.setClientID(generateId(getClass().getSimpleName()));
 
-        this.sender = new MQTTMessageSender(config, this);
+        this.sender = new MQTTPublisherSubscriber(config);
+        this.sender.subscribe(this);
         this.subscribedTopic = config.getTopic();
     }
 
@@ -75,7 +81,7 @@ public class SectionRequestSender implements MqttCallback {
             }
 
             Payload payloadObj = getPayloadFromMessage(message);
-            Command command = payloadObj.getCommand();
+            Command command = (Command) payloadObj.getCommand();
 
             switch (command) {
                 case SEND_SECTION_STATUS:

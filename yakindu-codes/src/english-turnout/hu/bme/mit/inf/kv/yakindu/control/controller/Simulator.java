@@ -9,12 +9,12 @@ import static hu.bme.mit.inf.kv.yakindu.control.trace.StatemachineTraceBuilder.s
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlAddress;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setKvControlPort;
 import static hu.bme.mit.inf.kv.yakindu.control.transmitter.CommunicationConfiguration.setStateMachineMQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.setStatusLogEnabled;
 import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 

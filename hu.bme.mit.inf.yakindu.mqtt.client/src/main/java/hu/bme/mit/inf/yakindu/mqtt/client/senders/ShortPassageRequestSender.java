@@ -1,16 +1,18 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.senders;
 
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithPayload;
+import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.DIVERGENT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.STRAIGHT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_DIVERGENT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_STRAIGHT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_TOP;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandPayload;
-import hu.bme.mit.inf.yakindu.mqtt.client.network.ISender;
-import hu.bme.mit.inf.yakindu.mqtt.client.network.MQTTMessageSender;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.ClientIdGenerator.generateId;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.PayloadHelper.sendCommandWithPayload;
 
 /**
  *
@@ -18,12 +20,12 @@ import static hu.bme.mit.inf.yakindu.mqtt.client.util.PayloadHelper.sendCommandW
  */
 public class ShortPassageRequestSender {
 
-    private final ISender sender;
+    private final MQTTPublisherSubscriber sender;
 
     public ShortPassageRequestSender(MQTTConfiguration config) {
         config.setClientID(generateId(getClass().getSimpleName()));
 
-        this.sender = new MQTTMessageSender(config);
+        this.sender = new MQTTPublisherSubscriber(config);
     }
 
     public void sendShortPassageRequest(Direction direction, int recipientID) {

@@ -8,10 +8,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
-		<module>hu.bme.mit.inf.json.prototypes</module>
+		
 		<module>hu.bme.mit.inf.master.mqtt.client</module>
 		<module>hu.bme.mit.inf.yakindu.mqtt.client</module>
 		<module>hu.bme.mit.inf.kvcontrol.mqtt.client</module>
 		<!--<module>hu.bme.mit.inf.xpresscontroller</module>-->
+        <module>hu.bme.mit.inf.mqtt.common</module>
     </modules>
 </project>

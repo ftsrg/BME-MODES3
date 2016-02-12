@@ -1,24 +1,26 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import com.google.gson.Gson;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command.GET_TURNOUT_STATUS;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Turnout;
+import hu.bme.mit.inf.mqtt.common.data.Command;
+import static hu.bme.mit.inf.mqtt.common.data.Command.GET_TURNOUT_STATUS;
+import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_TURNOUT_STATUS;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
+import hu.bme.mit.inf.mqtt.common.data.Turnout;
+import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
+import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.DIVERGENT;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithPayload;
+import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.TurnoutStatus;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.TurnoutStatus.DIVERGENT;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.LogManager.logException;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.getPayloadFromMessage;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.sendCommandWithPayload;
-import java.util.concurrent.ExecutionException;
 
 /**
  *
@@ -26,7 +28,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class TurnoutRequestSender implements MqttCallback {
 
-    private final ISender sender;
+    private final MQTTPublisherSubscriber sender;
     private final String subscribedTopic;
 
     private final Map<Integer, CompletableFuture<TurnoutStatus>> turnoutStatuses = new ConcurrentHashMap<>();
@@ -34,7 +36,8 @@ public class TurnoutRequestSender implements MqttCallback {
     public TurnoutRequestSender(MQTTConfiguration config) {
         config.setClientID(generateId(getClass().getSimpleName()));
 
-        this.sender = new MQTTMessageSender(config, this);
+        this.sender = new MQTTPublisherSubscriber(config);
+        this.sender.subscribe(this);
         this.subscribedTopic = config.getTopic();
     }
 
@@ -69,7 +72,7 @@ public class TurnoutRequestSender implements MqttCallback {
             }
 
             Payload payloadObj = getPayloadFromMessage(message);
-            Command command = payloadObj.getCommand();
+            Command command = (Command) payloadObj.getCommand();
 
             switch (command) {
                 case SEND_TURNOUT_STATUS:

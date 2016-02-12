@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.kv.yakindu.control.transmitter;
 
 import hu.bme.mit.inf.kvcontrol.requests.AbstractRequest;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 
 /**
  *

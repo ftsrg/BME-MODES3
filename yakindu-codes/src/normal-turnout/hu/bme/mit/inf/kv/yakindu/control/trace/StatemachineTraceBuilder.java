@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.kv.yakindu.control.trace;
 
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

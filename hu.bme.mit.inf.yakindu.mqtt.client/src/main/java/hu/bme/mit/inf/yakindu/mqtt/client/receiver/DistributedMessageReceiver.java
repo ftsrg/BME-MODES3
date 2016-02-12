@@ -1,16 +1,28 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.receiver;
 
 import com.google.gson.Gson;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
+import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandPayload;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.DENIED;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.*;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.MQTTConfiguration;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.Payload;
-import hu.bme.mit.inf.yakindu.mqtt.client.network.MQTTMessageReceiver;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.ClientIdGenerator.generateId;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.PayloadHelper.getPayloadFromMessage;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_ALLOWED;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_DENIED;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_DIVERGENT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_STRAIGHT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_TOP;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_RESPONSE_DIVERGENT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_RESPONSE_STRAIGHT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_RESPONSE_TOP;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_DIVERGENT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_STRAIGHT;
+import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_TOP;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandPayload;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -22,7 +34,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class DistributedMessageReceiver implements MqttCallback {
 
     // the object subscribes as a callback for this receiver in the constuctor
-    private MQTTMessageReceiver receiver;
+    private MQTTPublisherSubscriber receiver;
     private final String subscribedTopic;
 
     // the recipient of the messages is this handler
@@ -35,7 +47,8 @@ public class DistributedMessageReceiver implements MqttCallback {
             IDistributedMessageTransmitter target, int recipientID) {
         config.setClientID(generateId(getClass().getSimpleName()));
 
-        this.receiver = new MQTTMessageReceiver(config, this);
+        this.receiver = new MQTTPublisherSubscriber(config);
+        this.receiver.subscribe(this);
         this.subscribedTopic = config.getTopic();
         this.recipientID = recipientID;
         this.target = target;
@@ -55,7 +68,7 @@ public class DistributedMessageReceiver implements MqttCallback {
                 return;
             }
 
-            StatemachineCommand command = payloadObj.getCommand();
+            StatemachineCommand command = (StatemachineCommand) payloadObj.getCommand();
             byte[] packet = new byte[2];
 
             switch (command) {

@@ -4,14 +4,17 @@
 
 Source code repository of the **Mo**del-based **De**monstrator for **S**mart and **S**afe **S**ystems (MoDeS3).
 
+This repository uses [Maven](https://maven.apache.org/download.cgi) for some projects. It has a top-level pom.xml that should be cleaned and installed, so type `mvn clean install` in the command-line in this folder.
+
 Modules stored in the repository:
 
 * [BP-TO-UPPAAL](https://github.com/FTSRG/BME-MODES3/tree/master/bp2uppaal)
 * [JSON](https://github.com/FTSRG/BME-MODES3/tree/master/json)
 * [KVControl](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol)
-* [KVControl-MQTT-Client](hu.bme.mit.inf.kvcontrol.mqtt.client)
+* [KVControl-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.kvcontrol.mqtt.client)
 * [KVControl-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol-requestsender)
 * [Masters](https://github.com/FTSRG/BME-MODES3/tree/master/masters)
+* [MQTT-Common](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.mqtt.common)
 * [PiClient](https://github.com/FTSRG/BME-MODES3/tree/master/piclient_v4)
 * [SerialMonitor](https://github.com/FTSRG/BME-MODES3/tree/master/serialmonitor)
 * [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes)

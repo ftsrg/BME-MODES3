@@ -56,9 +56,7 @@ Now start the Mosquitto Service at Windows Control Panel -> Administrative Tools
 ## Dependencies
 
 * [Maven](https://maven.apache.org/download.cgi): to build the project.
-* [Paho](http://www.eclipse.org/paho/): the MQTT client. *See pom.xml*
-* [GSON](https://github.com/google/gson): we use Gson instead of JSON, because it is more convenient. *See pom.xml*
-* [log4j](http://logging.apache.org/log4j/1.2/): for logging. *See pom.xml*
+* [MQTT-Common](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.mqtt.common): common classes used for MQTT communication and configuration.
 
 ## Target Platform
 JRE 1.8

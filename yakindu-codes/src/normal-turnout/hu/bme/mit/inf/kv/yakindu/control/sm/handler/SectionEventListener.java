@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.kv.yakindu.control.sm.handler;
 
 import hu.bme.mit.inf.kvcontrol.senders.SectionStateRequestSender;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logInfoMessage;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 

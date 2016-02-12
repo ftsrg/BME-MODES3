@@ -8,10 +8,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static hu.bme.mit.inf.kv.yakindu.control.sm.handler.DirectionConverterHelper.getValueFromDirection;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.IDistributedMessageTransmitter;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logInfoMessage;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
 /**

@@ -1,21 +1,23 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import com.google.gson.Gson;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Command;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.MQTTConfiguration;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Payload;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.Section;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionArray;
-import hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionOccupancyStatus;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.data.SectionOccupancyStatus.OCCUPIED;
+import hu.bme.mit.inf.mqtt.common.data.Command;
+import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_OCCUPANCY;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
+import hu.bme.mit.inf.mqtt.common.data.Section;
+import hu.bme.mit.inf.mqtt.common.data.SectionArray;
+import hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus;
+import static hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus.OCCUPIED;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
+import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.ClientIdGenerator.generateId;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.LogManager.logException;
-import static hu.bme.mit.inf.kvcontrol.mqtt.client.util.PayloadHelper.getPayloadFromMessage;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -24,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class OccupancyRequestSender implements MqttCallback {
 
     // the object subscribes as a callback for this sender in the constuctor
-    private final ISender sender;
+    private final MQTTPublisherSubscriber sender;
     private final String subscribedTopic;
 
     private final Map<Integer, SectionOccupancyStatus> sectionsOccupied = new ConcurrentHashMap<>();
@@ -32,7 +34,8 @@ public class OccupancyRequestSender implements MqttCallback {
     public OccupancyRequestSender(MQTTConfiguration config) {
         config.setClientID(generateId(getClass().getSimpleName()));
 
-        this.sender = new MQTTMessageSender(config, this);
+        this.sender = new MQTTPublisherSubscriber(config);
+        this.sender.subscribe(this);
         this.subscribedTopic = config.getTopic();
     }
 
@@ -49,7 +52,7 @@ public class OccupancyRequestSender implements MqttCallback {
             }
 
             Payload payloadObj = getPayloadFromMessage(message);
-            Command command = payloadObj.getCommand();
+            Command command = (Command) payloadObj.getCommand();
 
             switch (command) {
                 case SEND_OCCUPANCY:

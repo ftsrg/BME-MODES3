@@ -7,8 +7,8 @@ import java.util.Set;
 
 import hu.bme.mit.inf.kvcontrol.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.kvcontrol.senders.TurnoutDirectionRequestSender;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logException;
-import static hu.bme.mit.inf.yakindu.mqtt.client.util.LogManager.logInfoMessage;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 import static java.lang.Thread.sleep;
 import java.util.HashMap;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
