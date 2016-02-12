@@ -32,6 +32,7 @@ import java.util.List
 import java.util.Set
 import java.util.Stack
 import org.eclipse.emf.ecore.util.EcoreUtil
+import com.google.common.collect.ArrayListMultimap
 
 class RegexCompiler {
 	static extension var EventAutomatonModelFactory factory = EventAutomatonModelFactory.eINSTANCE;
@@ -55,7 +56,7 @@ class RegexCompiler {
 		val retvalue = createComplexEventProcessor
 		symbolicEventsFromAlphabet(input.alphabet) // we must set this before the compilation starts, the 		
 //		input.declarations.map[determinizeNFA((recursiveCompile(it).toAutomaton))].forEach[retvalue.automata.add(it)] // TODO this is the point where we should determinize (after the recursive compile)
-		input.declarations.map[(recursiveCompile(it).toAutomaton)].forEach[retvalue.automata.add(it)]
+		input.declarations.map[recursiveCompile(it)].forEach[retvalue.automata.add(it)]
 
 		symbolicEvents.forEach[retvalue.symbolicEvents.add(it)]
 
@@ -108,36 +109,37 @@ class RegexCompiler {
 		}
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(ExpressionDeclaration declaration) {
+	protected def dispatch Automaton recursiveCompile(ExpressionDeclaration declaration) {
 		println("compiling " + declaration.name)
 		var compiled = recursiveCompile(declaration.body)
-		compiled.a.name = declaration.name
+		compiled.name = declaration.name
 		println(declaration.name + ' compiled')
 		compiled
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(TimedExpression expression) {
+	protected def dispatch Automaton recursiveCompile(TimedExpression expression) {
 //		println('<<<regex compiler compiling timed expression>>>')
 		val compiled = recursiveCompile(expression.body)
 		val timer = createSymbolicTimer
 		timer.name = "t" + (timerCnt++)
 		val timeoutEvent = createSymbolicTimeoutEvent
 		timer.timeoutEvent = timeoutEvent
-		compiled.first.outgoingTransitions.forEach [
+		compiled.initialState.outgoingTransitions.forEach [
 			var newAction = createSetTimerAction;
 			newAction.timer = timer
 			newAction.toValue = expression.timeout
 			it.actions.add(newAction)
 		]
-		compiled.last.incomingTransitions.forEach [
+		compiled.states.filter[it.acceptor].forEach[it.incomingTransitions.forEach [
 			var newAction = createResetTimerAction
 			newAction.timer = timer
 			it.actions.add(newAction)
-		]
-		compiled.a.states.filter[it != compiled.first && it != compiled.last].forEach [
+		]]
+		
+		compiled.states.filter[it != compiled.initialState && !it.acceptor].forEach [
 			val newTrans = createTransition
 			newTrans.from = it
-			newTrans.to = compiled.first
+			newTrans.to = compiled.initialState
 
 			transitionsToTrapState.add(newTrans)
 
@@ -148,31 +150,33 @@ class RegexCompiler {
 		compiled
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(Any expression) {
-		var retvalue = new PartialAutomaton();
-		retvalue.first = createState
-		retvalue.last = createState
-		retvalue.a.states.add(retvalue.first)
-		retvalue.a.states.add(retvalue.last)
+	protected def dispatch Automaton recursiveCompile(Any expression) {
+		var retvalue = createAutomaton;
+		retvalue.initialState = createState
+		var last = createState
+		last.acceptor = true
+		retvalue.states.add(retvalue.initialState)
+		retvalue.states.add(last)
 
 		for (symbol : symbolicEvents) {
 			var newTransition = createTransition
 			newTransition.eventguard = createEventGuard
 			newTransition.eventguard.type = symbol
-			newTransition.from = retvalue.first
-			newTransition.to = retvalue.last
+			newTransition.from = retvalue.initialState
+			newTransition.to = last
 		// TODO add parameters
 		}
 
 		retvalue
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(Inverse expression) {
-		var retvalue = new PartialAutomaton();
-		retvalue.first = createState
-		retvalue.last = createState
-		retvalue.a.states.add(retvalue.first)
-		retvalue.a.states.add(retvalue.last)
+	protected def dispatch Automaton recursiveCompile(Inverse expression) {
+		var retvalue = createAutomaton
+		retvalue.initialState = createState
+		var last = createState
+		last.acceptor = true
+		retvalue.states.add(retvalue.initialState)
+		retvalue.states.add(last)
 
 		val excludedLetters = expression.excludes.map[it.functor]
 		var includedLetters = new ArrayList<Functor>
@@ -189,24 +193,25 @@ class RegexCompiler {
 			var newTransition = createTransition
 			newTransition.eventguard = createEventGuard
 			newTransition.eventguard.type = symbol
-			newTransition.from = retvalue.first
-			newTransition.to = retvalue.last
+			newTransition.from = retvalue.initialState
+			newTransition.to = last
 		// TODO add parameters
 		}
 
 		retvalue
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(Event expression) {
-		var retvalue = new PartialAutomaton();
-		retvalue.first = createState
-		retvalue.last = createState
-		retvalue.a.states.add(retvalue.first)
-		retvalue.a.states.add(retvalue.last)
+	protected def dispatch Automaton recursiveCompile(Event expression) {
+		var retvalue = createAutomaton
+		retvalue.initialState = createState
+		var last = createState
+		last.acceptor = true
+		retvalue.states.add(retvalue.initialState)
+		retvalue.states.add(last)
 
 		var transition = createTransition
-		transition.from = retvalue.first
-		transition.to = retvalue.last
+		transition.from = retvalue.initialState
+		transition.to = last
 
 		transition.eventguard = createEventGuard
 		transition.eventguard.type = symbolicEventMapping.get(expression.functor)
@@ -214,129 +219,155 @@ class RegexCompiler {
 		retvalue
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(Sequence expression) {
+	protected def dispatch Automaton recursiveCompile(Sequence expression) {
 		var compiledExpressions = expression.elements.map[recursiveCompile(it)]
 		compiledExpressions.tail.fold(compiledExpressions.head, [i, j|merge(i, j)])
 	}
 
-	protected def merge(PartialAutomaton firstAutomaton, PartialAutomaton secondAutomaton) {
-		var List<AbstractTransition> outgoingFirst = secondAutomaton.first.outgoingTransitions.clone()
-		var List<AbstractTransition> incomingFirst = secondAutomaton.first.incomingTransitions.clone()
-		var List<State> secondStates = secondAutomaton.a.states.clone()
+	protected def merge(Automaton firstAutomaton, Automaton secondAutomaton) {
 
-		for (state : secondStates) {
-			firstAutomaton.a.states.add(state)
-			secondAutomaton.a.states.remove(state)
+		val intermediateNode = createState
+		firstAutomaton.states.filter[it.acceptor].clone().forEach[
+			it.acceptor = false
+			var epsilonTrans = createEpsilonTransition
+			epsilonTrans.from = it
+			epsilonTrans.to = intermediateNode
+		]
+		
+		var epsilonToSecond = createEpsilonTransition
+		epsilonToSecond.from = intermediateNode
+		epsilonToSecond.to = secondAutomaton.initialState
+		
+		for(state : secondAutomaton.states.clone()){ //The clone is needed, as the list changes when items are removed
+			firstAutomaton.states.add(state)
+			secondAutomaton.states.remove(state) //Not sure tho
 		}
-
-		for (transition : outgoingFirst) {
-			firstAutomaton.last.outgoingTransitions.add(transition)
-		}
-
-		for (transition : incomingFirst) {
-			firstAutomaton.last.incomingTransitions.add(transition)
-		}
-
-		firstAutomaton.a.states.remove(secondAutomaton.first)
-
-		firstAutomaton.last = secondAutomaton.last
 
 		return firstAutomaton
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(Choice expression) {
-		var first = recursiveCompile(expression.elements.head)
+	protected def dispatch Automaton recursiveCompile(Choice expression) {
+//		var first = recursiveCompile(expression.elements.head)
 
-		var newFirst = createState
-		var newLast = createState
-		first.a.states.add(newFirst)
-		first.a.states.add(newLast)
-		var newTransBegin = createEpsilonTransition
-		var newTransEnd = createEpsilonTransition
-
-		newTransBegin.from = newFirst
-		newTransBegin.to = first.first
-		newTransEnd.from = first.last
-		newTransEnd.to = newLast
-
-		first.first = newFirst
-		first.last = newLast
-
-		for (expr : expression.elements.tail) {
-			var compiled = recursiveCompile(expr)
-			var beginTrans = createEpsilonTransition
-			var endTrans = createEpsilonTransition
-
-			var states = compiled.a.states.clone()
-
-			for (state : states) {
-				first.a.states.add(state)
-				compiled.a.states.remove(state)
-			}
-			beginTrans.from = first.first
-			beginTrans.to = compiled.first
-			endTrans.from = compiled.last
-			endTrans.to = first.last
+//		var newFirst = createState
+//		var newLast = createState
+//		first.states.add(newFirst)
+//		first.states.add(newLast)
+//		var newTransBegin = createEpsilonTransition
+//		var newTransEnd = createEpsilonTransition
+//
+//		newTransBegin.from = newFirst
+//		newTransBegin.to = first.initialState
+//		newTransEnd.from = first.last
+//		newTransEnd.to = newLast
+//
+//		first.initialState = newFirst
+//		first.last = newLast
+//
+//		for (expr : expression.elements.tail) {
+//			var compiled = recursiveCompile(expr)
+//			var beginTrans = createEpsilonTransition
+//			var endTrans = createEpsilonTransition
+//
+//			var states = compiled.a.states.clone()
+//
+//			for (state : states) {
+//				first.a.states.add(state)
+//				compiled.a.states.remove(state)
+//			}
+//			beginTrans.from = first.first
+//			beginTrans.to = compiled.first
+//			endTrans.from = compiled.last
+//			endTrans.to = first.last
+//		}
+		val retvalue = createAutomaton
+		val newFirst = createState
+		val newLast = createState
+		
+		retvalue.initialState = newFirst
+		newLast.acceptor = true
+		
+		for(expr : expression.elements){
+			val compiled = expr.recursiveCompile
+			val epsilonFromInitial = createEpsilonTransition
+			epsilonFromInitial.from = newFirst
+			epsilonFromInitial.to = compiled.initialState
+			
+			compiled.states.filter[it.acceptor].clone.forEach[
+				it.acceptor = false
+				var epsilonToLast = createEpsilonTransition
+				epsilonToLast.from = it
+				epsilonToLast.to = newLast
+			]
+			
+			 compiled.states.clone().forEach[
+			 	compiled.states.remove(it)
+			 	retvalue.states.add(it)
+			 ]
 		}
 
-		return first
+		return retvalue
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(Star expression) {
-		var compiledAutomaton = recursiveCompile(expression.body)
-		var first = createState
-		var last = createState
-		compiledAutomaton.a.states.add(first)
-		compiledAutomaton.a.states.add(last)
+	protected def dispatch Automaton recursiveCompile(Star expression) {
+		val compiledAutomaton = recursiveCompile(expression.body)
+		val first = createState
+		val last = createState
+		compiledAutomaton.states.add(first)
+		compiledAutomaton.states.add(last)
 
-		var beginEpsilon = createEpsilonTransition
-		var endEpsilon = createEpsilonTransition
-		var returnEpsilon = createEpsilonTransition
-		var skipEpsilon = createEpsilonTransition
+		val beginEpsilon = createEpsilonTransition
+
+		val skipEpsilon = createEpsilonTransition
 
 		beginEpsilon.from = first
-		beginEpsilon.to = compiledAutomaton.first
+		beginEpsilon.to = compiledAutomaton.initialState
 
-		returnEpsilon.from = compiledAutomaton.last
-		returnEpsilon.to = compiledAutomaton.first
-
-		endEpsilon.from = compiledAutomaton.last
-		endEpsilon.to = last
+		compiledAutomaton.states.filter[it.acceptor].clone.forEach[
+			var endEpsilon = createEpsilonTransition
+			var returnEpsilon = createEpsilonTransition
+			
+			returnEpsilon.from = it
+			returnEpsilon.to = compiledAutomaton.initialState
+			
+			endEpsilon.from = it
+			endEpsilon.to = last
+		]
 
 		skipEpsilon.from = first
 		skipEpsilon.to = last
 
-		compiledAutomaton.first = first
-		compiledAutomaton.last = last
+		compiledAutomaton.initialState = first
+		last.acceptor = true
 
 		compiledAutomaton
 	}
 
-	protected def dispatch PartialAutomaton recursiveCompile(And expression) {
+	protected def dispatch Automaton recursiveCompile(And expression) {
 		var compiledExpressions = expression.elements.map[recursiveCompile(it)]
 		compiledExpressions.tail.fold(compiledExpressions.head, [i, j|product(i, j)])
 	}
 
-	protected def PartialAutomaton product(PartialAutomaton left, PartialAutomaton right) {
-		val retvalue = new PartialAutomaton()
+	protected def Automaton product(Automaton left, Automaton right) {
+		val retvalue = createAutomaton
 
 		val leftTrace = new HashMap<State, HashSet<State>> // for each state of the left operand, there are a row of states in the new matrix of states
 		val rightTrace = new HashMap<State, HashSet<State>> // for each state of the right operand, there are a column of states in the new matrix of states 
 		// constructing the new matrix of states for the product.
-		for (leftState : left.a.states) {
-			for (rightState : right.a.states) {
+		for (leftState : left.states) {
+			for (rightState : right.states) {
 				var newState = createState
 
 				if(!leftTrace.containsKey(leftState)) leftTrace.put(leftState, new HashSet)
 				if(!rightTrace.containsKey(rightState)) rightTrace.put(rightState, new HashSet)
 
-				retvalue.a.states.add(newState)
+				retvalue.states.add(newState)
 
 				leftTrace.get(leftState).add(newState)
 				rightTrace.get(rightState).add(newState)
 			}
 		}
-		for (state : retvalue.a.states) {
+		for (state : retvalue.states) {
 			val leftOriginal = leftTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
 			val rightOriginal = rightTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
 			rightOriginal.outgoingTransitions.forEach [ transition |
@@ -350,14 +381,13 @@ class RegexCompiler {
 				cloneTransition.from = state
 				cloneTransition.to = rightTrace.get(rightOriginal).filter[leftTrace.get(transition.to).contains(it)].head
 			]
+			if(leftOriginal.acceptor && rightOriginal.acceptor) state.acceptor = true
 		}
 
-		retvalue.first = retvalue.a.states.filter [
-			leftTrace.get(left.first).contains(it) && rightTrace.get(right.first).contains(it)
+		retvalue.initialState = retvalue.states.filter [
+			leftTrace.get(left.initialState).contains(it) && rightTrace.get(right.initialState).contains(it)
 		].head
-		retvalue.last = retvalue.a.states.filter [
-			leftTrace.get(left.last).contains(it) && rightTrace.get(right.last).contains(it)
-		].head
+
 
 		return retvalue
 	}
@@ -495,19 +525,18 @@ class RegexCompiler {
 
 }
 
-class PartialAutomaton {
-	public State first;
-	public State last;
-	public Automaton a;
-
-	new() {
-		this.a = EventAutomatonModelFactory.eINSTANCE.createAutomaton
-	}
-
-	def toAutomaton() {
-		a.initialState = first
-		last.acceptor = true
-		a
-	}
-
-}
+//class PartialAutomaton {
+//	public State first;
+//	public State last;
+//	public Automaton a;
+//
+//	new() {
+//		this.a = EventAutomatonModelFactory.eINSTANCE.createAutomaton
+//	}
+//
+//	def toAutomaton() {
+//		a.initialState = first
+//		last.acceptor = true
+//		a
+//	}
+//}

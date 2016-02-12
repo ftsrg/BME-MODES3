@@ -15,22 +15,25 @@ Functor:
 ExpressionDeclaration:
 	'expression' name=ID ('[' vars+=Var (',' vars+=Var)* ']')? '=' body=Expression;
 
-//-----------------------------------------------------------------------------------
 Expression:
-    And; // ezt modositottam choicerol
- 
-And returns Expression:
-    Choice ({And.elements+=current} ('&' elements+=Choice)+)?; // es ezt adtam hozza
-//------------------------------------------------------------------------------------
-
+	Choice; // ezt modositottam choicerol
 Choice returns Expression:
-	Sequence ({Choice.elements+=current} ('|' elements+=Sequence)+)?;
+	And ({Choice.elements+=current} ('|' elements+=And)+)?;
+
+And returns Expression:
+	Sequence ({And.elements+=current} ('&' elements+=Sequence)+)?;
 
 Sequence returns Expression:
 	MultExpression ({Sequence.elements+=current} elements+=MultExpression+)?;
 
 MultExpression returns Expression:
-	ParenExpression ({Star.body=current} '*' | {Plus.body=current} '+' | {Cardinality.body=current} '{' n=INT '}')?;
+	PonNegExpression ({Star.body=current} '*' | {Plus.body=current} '+' | {Cardinality.body=current} '{' n=INT '}')?;
+
+PonNegExpression returns Expression:
+	NegExpression | ParenExpression;
+
+NegExpression returns Expression:
+	"!" body=ParenExpression;
 
 ParenExpression returns Expression:
 	'(' Expression ')' | Any | Inverse | TimedExpression | Event;
