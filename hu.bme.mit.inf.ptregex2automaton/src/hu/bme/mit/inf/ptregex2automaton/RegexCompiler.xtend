@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.ptregex2automaton
 
-import EventAutomatonModel.AbstractTransition
 import EventAutomatonModel.Automaton
 import EventAutomatonModel.EpsilonTransition
 import EventAutomatonModel.EventAutomatonModelFactory
@@ -32,7 +31,7 @@ import java.util.List
 import java.util.Set
 import java.util.Stack
 import org.eclipse.emf.ecore.util.EcoreUtil
-import com.google.common.collect.ArrayListMultimap
+import hu.bme.mit.inf.parametricTimedRegularExpression.NegExpression
 
 class RegexCompiler {
 	static extension var EventAutomatonModelFactory factory = EventAutomatonModelFactory.eINSTANCE;
@@ -115,6 +114,12 @@ class RegexCompiler {
 		compiled.name = declaration.name
 		println(declaration.name + ' compiled')
 		compiled
+	}
+	
+	protected def dispatch Automaton recursiveCompile(NegExpression expression){
+		val compiled = expression.recursiveCompile
+		compiled.states.forEach[it.acceptor = !it.acceptor]
+		return compiled;
 	}
 
 	protected def dispatch Automaton recursiveCompile(TimedExpression expression) {
@@ -247,39 +252,6 @@ class RegexCompiler {
 	}
 
 	protected def dispatch Automaton recursiveCompile(Choice expression) {
-//		var first = recursiveCompile(expression.elements.head)
-
-//		var newFirst = createState
-//		var newLast = createState
-//		first.states.add(newFirst)
-//		first.states.add(newLast)
-//		var newTransBegin = createEpsilonTransition
-//		var newTransEnd = createEpsilonTransition
-//
-//		newTransBegin.from = newFirst
-//		newTransBegin.to = first.initialState
-//		newTransEnd.from = first.last
-//		newTransEnd.to = newLast
-//
-//		first.initialState = newFirst
-//		first.last = newLast
-//
-//		for (expr : expression.elements.tail) {
-//			var compiled = recursiveCompile(expr)
-//			var beginTrans = createEpsilonTransition
-//			var endTrans = createEpsilonTransition
-//
-//			var states = compiled.a.states.clone()
-//
-//			for (state : states) {
-//				first.a.states.add(state)
-//				compiled.a.states.remove(state)
-//			}
-//			beginTrans.from = first.first
-//			beginTrans.to = compiled.first
-//			endTrans.from = compiled.last
-//			endTrans.to = first.last
-//		}
 		val retvalue = createAutomaton
 		val newFirst = createState
 		val newLast = createState
