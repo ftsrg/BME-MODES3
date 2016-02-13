@@ -1,6 +1,18 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.receiver;
 
 import com.google.gson.Gson;
+import hu.bme.mit.inf.mqtt.common.data.Command;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_ALLOWED;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_DENIED;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_DIVERGENT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_STRAIGHT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_TOP;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_DIVERGENT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_STRAIGHT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_TOP;
+import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_DIVERGENT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_STRAIGHT;
+import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_TOP;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
@@ -10,19 +22,7 @@ import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.DENIED;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_ALLOWED;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_DENIED;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_DIVERGENT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_STRAIGHT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_REQUEST_TOP;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_RESPONSE_DIVERGENT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_RESPONSE_STRAIGHT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.PASSAGE_RESPONSE_TOP;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_DIVERGENT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_STRAIGHT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommand.SHORT_PASSAGE_REQUEST_TOP;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandPayload;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -61,14 +61,13 @@ public class DistributedMessageReceiver implements MqttCallback {
                 return;
             }
             Payload payloadObj = getPayloadFromMessage(message);
-            StatemachineCommandPayload commandPayload = new Gson().fromJson(
-                    payloadObj.getContent(), StatemachineCommandPayload.class);
+            StatemachineCommandMessage commandPayload = new Gson().fromJson(payloadObj.getContent(), StatemachineCommandMessage.class);
 
             if (this.recipientID != commandPayload.getRecipientID()) {
                 return;
             }
 
-            StatemachineCommand command = (StatemachineCommand) payloadObj.getCommand();
+            Command command = payloadObj.getCommand();
             byte[] packet = new byte[2];
 
             switch (command) {

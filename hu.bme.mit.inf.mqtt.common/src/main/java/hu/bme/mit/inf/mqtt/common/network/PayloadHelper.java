@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.mqtt.common.network;
 
 import com.google.gson.Gson;
+import hu.bme.mit.inf.mqtt.common.data.Command;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -10,7 +11,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class PayloadHelper {
 
-    public static void sendCommandWithPayload(Enum<?> command,
+    public static void sendCommandWithPayload(Command command,
             String payloadContent, MQTTPublisherSubscriber publisher) {
         Payload payload = new Payload(command, payloadContent);
         publisher.publish(payload);

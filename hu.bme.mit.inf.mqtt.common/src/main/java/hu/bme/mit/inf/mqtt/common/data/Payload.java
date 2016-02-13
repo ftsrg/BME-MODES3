@@ -8,15 +8,15 @@ import com.google.gson.Gson;
  */
 public class Payload {
 
-    private final Enum<?> command;
+    private final Command command;
     private final String content;
 
-    public Payload(Enum<?> command, String content) {
+    public Payload(Command command, String content) {
         this.command = command;
         this.content = content;
     }
 
-    public Enum<?> getCommand() {
+    public Command getCommand() {
         return command;
     }
 
