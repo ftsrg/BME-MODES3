@@ -16,7 +16,8 @@ ExpressionDeclaration:
 	'expression' name=ID ('[' vars+=Var (',' vars+=Var)* ']')? '=' body=Expression;
 
 Expression:
-	Choice; // ezt modositottam choicerol
+	Choice;
+	
 Choice returns Expression:
 	And ({Choice.elements+=current} ('|' elements+=And)+)?;
 
@@ -33,7 +34,7 @@ PonNegExpression returns Expression:
 	NegExpression | ParenExpression;
 
 NegExpression returns Expression:
-	"!" body=ParenExpression;
+	{NegExpression} "!" body=ParenExpression;
 
 ParenExpression returns Expression:
 	'(' Expression ')' | Any | Inverse | TimedExpression | Event;
