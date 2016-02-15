@@ -56,6 +56,10 @@ public class MQTTPublisherSubscriber {
         }
     }
 
+    public String getSubscribedTopic() {
+        return topic;
+    }
+
     private static String getClassName() {
         return MQTTPublisherSubscriber.class.getName();
     }

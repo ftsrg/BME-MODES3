@@ -35,7 +35,6 @@ public class DistributedMessageReceiver implements MqttCallback {
 
     // the object subscribes as a callback for this receiver in the constuctor
     private MQTTPublisherSubscriber receiver;
-    private final String subscribedTopic;
 
     // the recipient of the messages is this handler
     private final int recipientID;
@@ -49,7 +48,6 @@ public class DistributedMessageReceiver implements MqttCallback {
 
         this.receiver = new MQTTPublisherSubscriber(config);
         this.receiver.subscribe(this);
-        this.subscribedTopic = config.getTopic();
         this.recipientID = recipientID;
         this.target = target;
     }
@@ -57,11 +55,12 @@ public class DistributedMessageReceiver implements MqttCallback {
     @Override
     public void messageArrived(String topic, MqttMessage message) {
         try {
-            if (!subscribedTopic.equals(topic)) {
+            if (!receiver.getSubscribedTopic().equals(topic)) {
                 return;
             }
             Payload payloadObj = getPayloadFromMessage(message);
-            StatemachineCommandMessage commandPayload = new Gson().fromJson(payloadObj.getContent(), StatemachineCommandMessage.class);
+            StatemachineCommandMessage commandPayload = new Gson().fromJson(
+                    payloadObj.getContent(), StatemachineCommandMessage.class);
 
             if (this.recipientID != commandPayload.getRecipientID()) {
                 return;

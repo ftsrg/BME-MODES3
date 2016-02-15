@@ -29,7 +29,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class TurnoutRequestSender implements MqttCallback {
 
     private final MQTTPublisherSubscriber sender;
-    private final String subscribedTopic;
 
     private final Map<Integer, CompletableFuture<TurnoutStatus>> turnoutStatuses = new ConcurrentHashMap<>();
 
@@ -38,7 +37,6 @@ public class TurnoutRequestSender implements MqttCallback {
 
         this.sender = new MQTTPublisherSubscriber(config);
         this.sender.subscribe(this);
-        this.subscribedTopic = config.getTopic();
     }
 
     public boolean isTurnoutDivergent(int turnoutId) {
@@ -67,7 +65,7 @@ public class TurnoutRequestSender implements MqttCallback {
     @Override
     public void messageArrived(String topic, MqttMessage message) {
         try {
-            if (!subscribedTopic.equals(topic)) {
+            if (!sender.getSubscribedTopic().equals(topic)) {
                 return;
             }
 
@@ -101,7 +99,7 @@ public class TurnoutRequestSender implements MqttCallback {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-
+        // deliberately left empty
     }
 
 }

@@ -27,7 +27,6 @@ public class OccupancyRequestSender implements MqttCallback {
 
     // the object subscribes as a callback for this sender in the constuctor
     private final MQTTPublisherSubscriber sender;
-    private final String subscribedTopic;
 
     private final Map<Integer, SectionOccupancyStatus> sectionsOccupied = new ConcurrentHashMap<>();
 
@@ -36,7 +35,6 @@ public class OccupancyRequestSender implements MqttCallback {
 
         this.sender = new MQTTPublisherSubscriber(config);
         this.sender.subscribe(this);
-        this.subscribedTopic = config.getTopic();
     }
 
     public boolean isSectionOccupied(int sectionId) {
@@ -47,7 +45,7 @@ public class OccupancyRequestSender implements MqttCallback {
     @Override
     public void messageArrived(String topic, MqttMessage message) {
         try {
-            if (!subscribedTopic.equals(topic)) {
+            if (!sender.getSubscribedTopic().equals(topic)) {
                 return;
             }
 
@@ -80,7 +78,7 @@ public class OccupancyRequestSender implements MqttCallback {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-
+        // deliberately left empty
     }
 
 }

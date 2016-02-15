@@ -32,7 +32,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 public class SectionRequestSender implements MqttCallback {
 
     private final MQTTPublisherSubscriber sender;
-    private final String subscribedTopic;
 
     private final Map<Integer, CompletableFuture<SectionStatus>> sectionStatuses = new ConcurrentHashMap<>();
 
@@ -41,7 +40,6 @@ public class SectionRequestSender implements MqttCallback {
 
         this.sender = new MQTTPublisherSubscriber(config);
         this.sender.subscribe(this);
-        this.subscribedTopic = config.getTopic();
     }
 
     public boolean isSectionEnabled(int sectionId) {
@@ -76,7 +74,7 @@ public class SectionRequestSender implements MqttCallback {
     @Override
     public void messageArrived(String topic, MqttMessage message) {
         try {
-            if (!subscribedTopic.equals(topic)) {
+            if (!sender.getSubscribedTopic().equals(topic)) {
                 return;
             }
 
@@ -110,6 +108,6 @@ public class SectionRequestSender implements MqttCallback {
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-
+        // deliberately left empty
     }
 }
