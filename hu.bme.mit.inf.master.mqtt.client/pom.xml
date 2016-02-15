@@ -35,6 +35,11 @@
             <artifactId>hu.bme.mit.inf.mqtt.common</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jopt-simple</groupId>
+            <artifactId>jopt-simple</artifactId>
+            <version>5.0-beta-1</version>
+        </dependency>
     </dependencies>    
 
     <build>
