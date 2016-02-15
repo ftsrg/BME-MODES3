@@ -50,11 +50,11 @@
     <genClasses ecoreClass="ParametricTimedRegularExpression.ecore#//Var">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ParametricTimedRegularExpression.ecore#//Var/name"/>
     </genClasses>
-    <genClasses ecoreClass="ParametricTimedRegularExpression.ecore#//And">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ParametricTimedRegularExpression.ecore#//And/elements"/>
-    </genClasses>
     <genClasses ecoreClass="ParametricTimedRegularExpression.ecore#//Choice">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ParametricTimedRegularExpression.ecore#//Choice/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="ParametricTimedRegularExpression.ecore#//And">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ParametricTimedRegularExpression.ecore#//And/elements"/>
     </genClasses>
     <genClasses ecoreClass="ParametricTimedRegularExpression.ecore#//Sequence">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ParametricTimedRegularExpression.ecore#//Sequence/elements"/>
@@ -68,6 +68,9 @@
     <genClasses ecoreClass="ParametricTimedRegularExpression.ecore#//Cardinality">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ParametricTimedRegularExpression.ecore#//Cardinality/body"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ParametricTimedRegularExpression.ecore#//Cardinality/n"/>
+    </genClasses>
+    <genClasses ecoreClass="ParametricTimedRegularExpression.ecore#//NegExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ParametricTimedRegularExpression.ecore#//NegExpression/body"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
