@@ -1,6 +1,8 @@
-package hu.bme.mit.inf.master.mqtt.client.conf;
+package hu.bme.mit.inf.master.bbb.conf;
 
+import hu.bme.mit.inf.mqtt.common.data.Identity;
 import hu.bme.mit.inf.mqtt.common.data.Section;
+import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,22 +12,33 @@ import java.util.Map;
  *
  * @author benedekh
  */
-public class TurnoutConfiguration {
+public class ControllerConfiguration {
 
     private final Turnout managedTurnout;
     private final List<Section> managedSections;
 
-    public TurnoutConfiguration() {
+    public ControllerConfiguration() {
         this.managedTurnout = createTurnout();
         this.managedSections = createSections();
     }
 
-    public Turnout getManagedTurnout() {
-        return managedTurnout;
+    public Identity createIdentity() {
+        SectionArray sections = new SectionArray(
+                (Section[]) managedSections.toArray());
+        return new Identity(managedTurnout, sections);
     }
 
-    public List<Section> getManagedSections() {
-        return managedSections;
+    public boolean controllerManagesTurnout(Turnout turnout) {
+        return managedTurnout.getId() == turnout.getId();
+    }
+
+    public boolean controllerManagesSection(Section section) {
+        for (Section managedSection : managedSections) {
+            if (managedSection.getId() == section.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Turnout createTurnout() {
