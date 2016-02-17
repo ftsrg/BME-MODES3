@@ -32,6 +32,9 @@ import java.util.Set
 import java.util.Stack
 import org.eclipse.emf.ecore.util.EcoreUtil
 import hu.bme.mit.inf.parametricTimedRegularExpression.NegExpression
+import hu.bme.mit.inf.parametricTimedRegularExpression.Plus
+import hu.bme.mit.inf.parametricTimedRegularExpression.Cardinality
+import hu.bme.mit.inf.parametricTimedRegularExpression.ParametricTimedRegularExpressionFactory
 
 class RegexCompiler {
 	static extension var EventAutomatonModelFactory factory = EventAutomatonModelFactory.eINSTANCE;
@@ -41,20 +44,10 @@ class RegexCompiler {
 	val Set<Transition> transitionsToTrapState = new HashSet<Transition>
 	var timerCnt = 0
 
-//TODO regex string stuff
-//	def ComplexEventProcessor expressionToTGF(String input) {
-//		var Injector injector = new RegularExpressionStandaloneSetup().createInjectorAndDoEMFRegistration();
-//		val resourceSet = injector.getInstance(XtextResourceSet)
-//		val resource = resourceSet.createResource(URI.createURI("dummy:/temp.ptreg"))
-//		resource.load(new StringInputStream(input), #{})
-//		compile(resource.contents.get(0) as RegexModel)
-//	}
-
 	def compile(RegexModel input) {
 		println("Compilation starts")
 		val retvalue = createComplexEventProcessor
 		symbolicEventsFromAlphabet(input.alphabet) // we must set this before the compilation starts, the 		
-//		input.declarations.map[determinizeNFA((recursiveCompile(it).toAutomaton))].forEach[retvalue.automata.add(it)] // TODO this is the point where we should determinize (after the recursive compile)
 		input.declarations.map[recursiveCompile(it)].forEach[retvalue.automata.add(it)]
 
 		symbolicEvents.forEach[retvalue.symbolicEvents.add(it)]
@@ -259,6 +252,9 @@ class RegexCompiler {
 		retvalue.initialState = newFirst
 		newLast.acceptor = true
 		
+		retvalue.states.add(newFirst)
+		retvalue.states.add(newLast)
+		
 		for(expr : expression.elements){
 			val compiled = expr.recursiveCompile
 			val epsilonFromInitial = createEpsilonTransition
@@ -279,6 +275,23 @@ class RegexCompiler {
 		}
 
 		return retvalue
+	}
+	
+	protected def dispatch Automaton recursiveCompile(Plus expression){
+		var sequence = ParametricTimedRegularExpressionFactory.eINSTANCE.createSequence
+		var star = ParametricTimedRegularExpressionFactory.eINSTANCE.createStar
+		star.body = EcoreUtil.copy(expression)
+		sequence.elements.add(star)
+		sequence.elements.add(EcoreUtil.copy(expression))
+		return recursiveCompile(sequence);
+	}
+	
+	protected def dispatch Automaton recursiveCompile(Cardinality expression){
+		var sequence = ParametricTimedRegularExpressionFactory.eINSTANCE.createSequence
+		for(var i = 0; i!= expression.n; i++){
+			sequence.elements.add(EcoreUtil.copy(expression))
+		}
+		return recursiveCompile(sequence)
 	}
 
 	protected def dispatch Automaton recursiveCompile(Star expression) {
@@ -496,19 +509,3 @@ class RegexCompiler {
 	}
 
 }
-
-//class PartialAutomaton {
-//	public State first;
-//	public State last;
-//	public Automaton a;
-//
-//	new() {
-//		this.a = EventAutomatonModelFactory.eINSTANCE.createAutomaton
-//	}
-//
-//	def toAutomaton() {
-//		a.initialState = first
-//		last.acceptor = true
-//		a
-//	}
-//}
