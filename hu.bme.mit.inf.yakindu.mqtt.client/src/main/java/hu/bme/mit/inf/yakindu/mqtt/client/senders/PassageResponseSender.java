@@ -6,7 +6,7 @@ import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_STRAIGHT;
 import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_TOP;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
-import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithPayload;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
@@ -48,8 +48,9 @@ public class PassageResponseSender {
                 return;
         }
 
-        String content = new StatemachineCommandMessage(recipientID, allowance).toJson();
-        sendCommandWithPayload(command, content, sender);
+        StatemachineCommandMessage content = new StatemachineCommandMessage(
+                recipientID, allowance);
+        sendCommandWithContent(command, content, sender);
     }
 
 }

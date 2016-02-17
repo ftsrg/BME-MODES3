@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
-import com.google.gson.Gson;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.GET_TURNOUT_STATUS;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_TURNOUT_STATUS;
@@ -11,7 +10,7 @@ import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.DIVERGENT;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
-import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithPayload;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
@@ -44,8 +43,8 @@ public class TurnoutRequestSender implements MqttCallback {
             turnoutStatuses.put(turnoutId, new CompletableFuture<>());
         }
 
-        String payloadContent = new Turnout(turnoutId).toJson();
-        sendCommandWithPayload(GET_TURNOUT_STATUS, payloadContent, sender);
+        Turnout turnout = new Turnout(turnoutId);
+        sendCommandWithContent(GET_TURNOUT_STATUS, turnout, sender);
 
         TurnoutStatus status = null;
         try {
@@ -69,14 +68,12 @@ public class TurnoutRequestSender implements MqttCallback {
                 return;
             }
 
-            Payload payloadObj = getPayloadFromMessage(message);
-            Command command = payloadObj.getCommand();
+            Payload payload = getPayloadFromMessage(message);
+            Command command = payload.getCommand();
 
             switch (command) {
                 case SEND_TURNOUT_STATUS:
-                    Turnout turnout = new Gson().fromJson(
-                            payloadObj.getContent(),
-                            Turnout.class);
+                    Turnout turnout = payload.getContentAs(Turnout.class);
                     CompletableFuture<TurnoutStatus> future = turnoutStatuses.get(
                             turnout.getId());
 

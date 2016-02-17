@@ -6,7 +6,7 @@ import com.google.gson.Gson;
  *
  * @author benedekh
  */
-public class Payload {
+public class Payload implements JsonConvertible {
 
     private final Command command;
     private final String content;
@@ -20,10 +20,11 @@ public class Payload {
         return command;
     }
 
-    public String getContent() {
-        return content;
+    public <T> T getContentAs(Class<T> cls) {
+        return new Gson().fromJson(content, cls);
     }
 
+    @Override
     public String toJson() {
         return new Gson().toJson(this);
     }

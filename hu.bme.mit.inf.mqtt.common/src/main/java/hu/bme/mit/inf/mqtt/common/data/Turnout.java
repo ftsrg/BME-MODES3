@@ -6,10 +6,10 @@ import com.google.gson.Gson;
  *
  * @author benedekh
  */
-public class Turnout {
+public class Turnout implements JsonConvertible {
 
     private final int id;
-    private final TurnoutStatus status;
+    private TurnoutStatus status;
 
     public Turnout(int id) {
         this(id, null);
@@ -28,6 +28,11 @@ public class Turnout {
         return this.status;
     }
 
+    public void setStatus(TurnoutStatus status) {
+        this.status = status;
+    }
+
+    @Override
     public String toJson() {
         return new Gson().toJson(this);
     }

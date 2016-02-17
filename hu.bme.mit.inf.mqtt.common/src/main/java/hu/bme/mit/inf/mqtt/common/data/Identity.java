@@ -6,7 +6,7 @@ import com.google.gson.Gson;
  *
  * @author benedekh
  */
-public class Identity {
+public class Identity implements JsonConvertible {
 
     private final Turnout turnout;
     private final SectionArray sections;
@@ -24,6 +24,7 @@ public class Identity {
         return this.sections;
     }
 
+    @Override
     public String toJson() {
         return new Gson().toJson(this);
     }

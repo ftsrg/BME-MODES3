@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
-import com.google.gson.Gson;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.GET_SECTION_STATUS;
 import static hu.bme.mit.inf.mqtt.common.data.Command.LINE_DISABLE;
@@ -14,7 +13,7 @@ import static hu.bme.mit.inf.mqtt.common.data.SectionStatus.ENABLED;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
-import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithPayload;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
@@ -47,8 +46,8 @@ public class SectionRequestSender implements MqttCallback {
             sectionStatuses.put(sectionId, new CompletableFuture<>());
         }
 
-        String payload = new Section(sectionId).toJson();
-        sendCommandWithPayload(GET_SECTION_STATUS, payload, sender);
+        Section section = new Section(sectionId);
+        sendCommandWithContent(GET_SECTION_STATUS, section, sender);
 
         SectionStatus status = null;
         try {
@@ -62,13 +61,13 @@ public class SectionRequestSender implements MqttCallback {
     }
 
     public void enableSection(int sectionId) {
-        String payload = new Section(sectionId, ENABLED).toJson();
-        sendCommandWithPayload(LINE_ENABLE, payload, sender);
+        Section section = new Section(sectionId, ENABLED);
+        sendCommandWithContent(LINE_ENABLE, section, sender);
     }
 
     public void disableSection(int sectionId) {
-        String payload = new Section(sectionId, DISABLED).toJson();
-        sendCommandWithPayload(LINE_DISABLE, payload, sender);
+        Section section = new Section(sectionId, DISABLED);
+        sendCommandWithContent(LINE_DISABLE, section, sender);
     }
 
     @Override
@@ -78,14 +77,12 @@ public class SectionRequestSender implements MqttCallback {
                 return;
             }
 
-            Payload payloadObj = getPayloadFromMessage(message);
-            Command command = payloadObj.getCommand();
+            Payload payload = getPayloadFromMessage(message);
+            Command command = payload.getCommand();
 
             switch (command) {
                 case SEND_SECTION_STATUS:
-                    Section section = new Gson().fromJson(
-                            payloadObj.getContent(),
-                            Section.class);
+                    Section section = payload.getContentAs(Section.class);
                     CompletableFuture<SectionStatus> future = sectionStatuses.get(
                             section.getId());
 

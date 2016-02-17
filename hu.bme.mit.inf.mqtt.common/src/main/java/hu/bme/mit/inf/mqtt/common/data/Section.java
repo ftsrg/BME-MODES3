@@ -6,7 +6,7 @@ import com.google.gson.Gson;
  *
  * @author benedekh
  */
-public class Section {
+public class Section implements JsonConvertible {
 
     private final int id;
     private SectionStatus status = null;
@@ -38,6 +38,11 @@ public class Section {
         return this.occupancyStatus;
     }
 
+    public void setStatus(SectionStatus status) {
+        this.status = status;
+    }
+
+    @Override
     public String toJson() {
         return new Gson().toJson(this);
     }

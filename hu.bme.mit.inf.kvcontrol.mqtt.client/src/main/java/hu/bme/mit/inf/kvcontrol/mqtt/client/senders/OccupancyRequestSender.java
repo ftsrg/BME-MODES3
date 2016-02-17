@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
-import com.google.gson.Gson;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_OCCUPANCY;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
@@ -49,13 +48,12 @@ public class OccupancyRequestSender implements MqttCallback {
                 return;
             }
 
-            Payload payloadObj = getPayloadFromMessage(message);
-            Command command = payloadObj.getCommand();
+            Payload payload = getPayloadFromMessage(message);
+            Command command = payload.getCommand();
 
             switch (command) {
                 case SEND_OCCUPANCY:
-                    SectionArray sectionsArray = new Gson().fromJson(
-                            payloadObj.getContent(),
+                    SectionArray sectionsArray = payload.getContentAs(
                             SectionArray.class);
                     Section[] sections = sectionsArray.getSectionArray();
                     for (Section section : sections) {

@@ -6,7 +6,7 @@ import com.google.gson.Gson;
  *
  * @author benedekh
  */
-public class SectionArray {
+public class SectionArray implements JsonConvertible {
 
     private final Section[] sections;
 
@@ -18,6 +18,7 @@ public class SectionArray {
         return sections;
     }
 
+    @Override
     public String toJson() {
         return new Gson().toJson(this);
     }

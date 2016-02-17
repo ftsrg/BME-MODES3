@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.receiver;
 
-import com.google.gson.Gson;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_ALLOWED;
 import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_DENIED;
@@ -58,15 +57,15 @@ public class DistributedMessageReceiver implements MqttCallback {
             if (!receiver.getSubscribedTopic().equals(topic)) {
                 return;
             }
-            Payload payloadObj = getPayloadFromMessage(message);
-            StatemachineCommandMessage commandPayload = new Gson().fromJson(
-                    payloadObj.getContent(), StatemachineCommandMessage.class);
+            Payload payload = getPayloadFromMessage(message);
+            StatemachineCommandMessage commandPayload = payload.getContentAs(
+                    StatemachineCommandMessage.class);
 
             if (this.recipientID != commandPayload.getRecipientID()) {
                 return;
             }
 
-            Command command = payloadObj.getCommand();
+            Command command = payload.getCommand();
             byte[] packet = new byte[2];
 
             switch (command) {

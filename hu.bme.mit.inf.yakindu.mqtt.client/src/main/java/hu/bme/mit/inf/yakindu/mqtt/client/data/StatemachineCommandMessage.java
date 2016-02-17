@@ -1,12 +1,13 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.data;
 
 import com.google.gson.Gson;
+import hu.bme.mit.inf.mqtt.common.data.JsonConvertible;
 
 /**
  *
  * @author benedekh
  */
-public class StatemachineCommandMessage {
+public class StatemachineCommandMessage implements JsonConvertible{
 
     private final int recipientID;
     private Allowance allowance = null;
@@ -28,6 +29,7 @@ public class StatemachineCommandMessage {
         return this.allowance;
     }
 
+    @Override
     public String toJson() {
         return new Gson().toJson(this);
     }
