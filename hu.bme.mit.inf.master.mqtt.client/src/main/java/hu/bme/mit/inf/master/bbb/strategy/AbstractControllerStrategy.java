@@ -71,12 +71,12 @@ public abstract class AbstractControllerStrategy {
         return input.read();
     }
 
-    public abstract TurnoutStatus onGetTurnoutStatus();
+    protected abstract TurnoutStatus onGetTurnoutStatus();
 
-    public abstract SectionStatus onGetSectionStatus(int sectionId);
+    protected abstract SectionStatus onGetSectionStatus(int sectionId);
 
-    public abstract void onEnableSection(int sectionId);
+    protected abstract void onEnableSection(int sectionId);
 
-    public abstract void onDisableSection(int sectionId);
+    protected abstract void onDisableSection(int sectionId);
 
 }
