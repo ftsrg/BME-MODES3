@@ -26,8 +26,11 @@ import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 
 public class MessageHandler implements MqttCallback {
+
+    private static final String CLASS_NAME = MessageHandler.class.getName();
 
     private final ControllerConfiguration controllerConf;
     private final MQTTPublisherSubscriber mqttConnection;
@@ -41,23 +44,27 @@ public class MessageHandler implements MqttCallback {
         this.controllerStrategy = new AbstractControllerStrategy() {
 
             @Override
-            public TurnoutStatus onGetTurnoutStatus() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            protected TurnoutStatus onGetTurnoutStatus() {
+                throw new UnsupportedOperationException(
+                        "onGetTurnoutStatus Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public SectionStatus onGetSectionStatus(int sectionId) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            protected SectionStatus onGetSectionStatus(int sectionId) {
+                throw new UnsupportedOperationException(
+                        "onGetSectionStatus Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public void onEnableSection(int sectionId) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            protected void onEnableSection(int sectionId) {
+                throw new UnsupportedOperationException(
+                        "onEnableSection Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
 
             @Override
-            public void onDisableSection(int sectionId) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            protected void onDisableSection(int sectionId) {
+                throw new UnsupportedOperationException(
+                        "onDisableSection Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         };
     }
@@ -92,13 +99,13 @@ public class MessageHandler implements MqttCallback {
                     break;
             }
         } catch (Exception ex) {
-            logException(getClass().getName(), new Exception(ex));
+            logException(CLASS_NAME, new Exception(ex));
         }
     }
 
     @Override
     public void connectionLost(Throwable cause) {
-        logException(getClass().getName(), new Exception(cause));
+        logException(CLASS_NAME, new Exception(cause));
     }
 
     @Override
@@ -107,6 +114,8 @@ public class MessageHandler implements MqttCallback {
     }
 
     private void handleIdentity() {
+        logInfoMessage(CLASS_NAME, "identity query received");
+
         Identity identity = controllerConf.createIdentity();
         sendCommandWithContent(IDENTIFY, identity,
                 mqttConnection);
@@ -115,6 +124,9 @@ public class MessageHandler implements MqttCallback {
     private void handleGetSectionStatus(Payload payload) {
         Section section = payload.getContentAs(Section.class);
         if (controllerConf.controllerManagesSection(section)) {
+            logInfoMessage(CLASS_NAME,
+                    "section " + section.getId() + " status query received");
+
             SectionStatus status = controllerStrategy.getSectionStatus(
                     section.getId());
             section.setStatus(status);
@@ -126,6 +138,9 @@ public class MessageHandler implements MqttCallback {
     private void handleGetTurnoutStatus(Payload payload) {
         Turnout turnout = payload.getContentAs(Turnout.class);
         if (controllerConf.controllerManagesTurnout(turnout)) {
+            logInfoMessage(CLASS_NAME,
+                    "turnout status query received");
+
             TurnoutStatus status = controllerStrategy.getTurnoutStatus();
             turnout.setStatus(status);
             sendCommandWithContent(SEND_TURNOUT_STATUS,
@@ -136,6 +151,9 @@ public class MessageHandler implements MqttCallback {
     private void handleLineEnable(Payload payload) {
         Section section = payload.getContentAs(Section.class);
         if (controllerConf.controllerManagesSection(section)) {
+            logInfoMessage(CLASS_NAME,
+                    "enable section " + section.getId() + " command received");
+
             controllerStrategy.enableSection(section.getId());
         }
     }
@@ -143,6 +161,9 @@ public class MessageHandler implements MqttCallback {
     private void handleLineDisable(Payload payload) {
         Section section = payload.getContentAs(Section.class);
         if (controllerConf.controllerManagesSection(section)) {
+            logInfoMessage(CLASS_NAME,
+                    "disable section " + section.getId() + " command received");
+
             controllerStrategy.disableSection(section.getId());
         }
     }
