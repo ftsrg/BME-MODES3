@@ -50,13 +50,8 @@ public class ControllerConfiguration {
                     "No " + turnoutKey + " environmental variable is set.");
         } else {
             String turnoutID = env.get(turnoutKey);
-            try {
-                int id = Integer.parseInt(turnoutID);
-                return new Turnout(id);
-            } catch (NumberFormatException ex) {
-                throw new NumberFormatException(
-                        "TURNOUT_ID " + turnoutID + " cannot be converted to integer");
-            }
+            int id = convertStringToInt(turnoutID);
+            return new Turnout(id);
         }
     }
 
@@ -72,16 +67,35 @@ public class ControllerConfiguration {
 
             String[] sectionIDs = env.get(sectionsKey).split(";");
             for (String sectionID : sectionIDs) {
-                try {
-                    int id = Integer.parseInt(sectionID);
-                    sections.add(new Section(id));
-                } catch (NumberFormatException ex) {
-                    throw new NumberFormatException(
-                            "SECTION_ID " + sectionID + " cannot be converted to integer");
-                }
+                int id = convertStringToInt(sectionID);
+                sections.add(new Section(id));
             }
 
             return sections;
+        }
+    }
+
+    /**
+     * Supports both hexadecimal and decimal string representation of integers
+     * to be converted to int.
+     *
+     * First it tries to convert as decimal representation, then as hexadecimal
+     * one.
+     *
+     * @param number string representation of the number to be converted. (E.g.
+     * 0x81 or 129)
+     * @return
+     */
+    private int convertStringToInt(String number) {
+        try {
+            return Integer.parseInt(number);
+        } catch (NumberFormatException ex) {
+            try {
+                return Integer.parseInt(number.substring(2), 16);
+            } catch (NumberFormatException ee) {
+                throw new NumberFormatException(
+                        number + " cannot be converted to integer");
+            }
         }
     }
 }
