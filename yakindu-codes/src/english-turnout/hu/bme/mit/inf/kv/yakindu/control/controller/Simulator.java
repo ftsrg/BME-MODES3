@@ -141,10 +141,10 @@ public class Simulator {
             conf.setProtocol(parsed.valueOf(smMQTTProtocolArg));
         }
         if (parsed.has(smMQTTAddressArg)) {
-            conf.setProtocol(parsed.valueOf(smMQTTAddressArg));
+            conf.setAddress(parsed.valueOf(smMQTTAddressArg));
         }
         if (parsed.has(smMQTTTopicArg)) {
-            conf.setProtocol(parsed.valueOf(smMQTTTopicArg));
+            conf.setTopic(parsed.valueOf(smMQTTTopicArg));
         }
         if (smMQTTPort != null) {
             conf.setPort(smMQTTPort);

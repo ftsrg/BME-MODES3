@@ -46,27 +46,29 @@ public class MessageHandler implements MqttCallback {
             @Override
             protected TurnoutStatus onGetTurnoutStatus() {
                 throw new UnsupportedOperationException(
-                        "onGetTurnoutStatus Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        "onGetTurnoutStatus Not supported yet.");
             }
 
             @Override
             protected SectionStatus onGetSectionStatus(int sectionId) {
                 throw new UnsupportedOperationException(
-                        "onGetSectionStatus Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        "onGetSectionStatus Not supported yet.");
             }
 
             @Override
             protected void onEnableSection(int sectionId) {
                 throw new UnsupportedOperationException(
-                        "onEnableSection Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        "onEnableSection Not supported yet.");
             }
 
             @Override
             protected void onDisableSection(int sectionId) {
                 throw new UnsupportedOperationException(
-                        "onDisableSection Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                        "onDisableSection Not supported yet.");
             }
         };
+
+        logInfoMessage(CLASS_NAME, "MessageHandler started");
     }
 
     @Override
