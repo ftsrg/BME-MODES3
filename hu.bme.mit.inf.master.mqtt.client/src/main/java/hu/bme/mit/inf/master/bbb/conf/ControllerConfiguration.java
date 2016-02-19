@@ -23,8 +23,8 @@ public class ControllerConfiguration {
     }
 
     public Identity createIdentity() {
-        SectionArray sections = new SectionArray(
-                (Section[]) managedSections.toArray());
+        SectionArray sections = new SectionArray(managedSections.toArray(
+                new Section[managedSections.size()]));
         return new Identity(managedTurnout, sections);
     }
 

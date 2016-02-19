@@ -19,8 +19,12 @@ import hu.bme.mit.inf.mqtt.common.data.Identity;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
+import static hu.bme.mit.inf.mqtt.common.data.SectionStatus.DISABLED;
+import static hu.bme.mit.inf.mqtt.common.data.SectionStatus.ENABLED;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
+import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.DIVERGENT;
+import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.STRAIGHT;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
@@ -43,16 +47,33 @@ public class MessageHandler implements MqttCallback {
         this.mqttConnection.subscribe(this);
         this.controllerStrategy = new AbstractControllerStrategy() {
 
+            TurnoutStatus tstatus = STRAIGHT;
+            SectionStatus status = ENABLED;
+
             @Override
             protected TurnoutStatus onGetTurnoutStatus() {
-                throw new UnsupportedOperationException(
-                        "onGetTurnoutStatus Not supported yet.");
+                switch (tstatus) {
+                    case STRAIGHT:
+                        tstatus = DIVERGENT;
+                        break;
+                    case DIVERGENT:
+                        tstatus = STRAIGHT;
+                        break;
+                }
+                return tstatus;
             }
 
             @Override
             protected SectionStatus onGetSectionStatus(int sectionId) {
-                throw new UnsupportedOperationException(
-                        "onGetSectionStatus Not supported yet.");
+                switch (status) {
+                    case ENABLED:
+                        status = DISABLED;
+                        break;
+                    case DISABLED:
+                        status = ENABLED;
+                        break;
+                }
+                return status;
             }
 
             @Override
@@ -83,7 +104,7 @@ public class MessageHandler implements MqttCallback {
 
             switch (command) {
                 case IDENTIFY:
-                    handleIdentity();
+                    handleIdentity(payload);
                     break;
                 case GET_SECTION_STATUS:
                     handleGetSectionStatus(payload);
@@ -115,12 +136,15 @@ public class MessageHandler implements MqttCallback {
         // deliberately left empty
     }
 
-    private void handleIdentity() {
-        logInfoMessage(CLASS_NAME, "identity query received");
+    private void handleIdentity(Payload payload) {
+        Turnout turnout = payload.getContentAs(Turnout.class);
+        if (controllerConf.controllerManagesTurnout(turnout)) {
+            logInfoMessage(CLASS_NAME, "identity query received");
 
-        Identity identity = controllerConf.createIdentity();
-        sendCommandWithContent(IDENTIFY, identity,
-                mqttConnection);
+            Identity identity = controllerConf.createIdentity();
+            sendCommandWithContent(IDENTIFY, identity,
+                    mqttConnection);
+        }
     }
 
     private void handleGetSectionStatus(Payload payload) {
