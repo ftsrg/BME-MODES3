@@ -18,27 +18,27 @@ public class Main {
 
             ArgumentAcceptingOptionSpec<String> mqttProtocolArg
                     = parser.accepts("pp",
-                            "StateMachine MQTT Broker Protocol [optional, default = tcp]")
+                            "MQTT Broker Protocol [optional, default = tcp]")
                     .withRequiredArg().ofType(String.class);
 
             ArgumentAcceptingOptionSpec<String> mqttAddressArg
                     = parser.accepts("a",
-                            "StateMachine MQTT Broker Address [optional, default = localhost]")
+                            "MQTT Broker Address [optional, default = localhost]")
                     .withRequiredArg().ofType(String.class);
 
             ArgumentAcceptingOptionSpec<Integer> mqttPortArg
                     = parser.accepts("p",
-                            "StateMachine MQTT Broker Port [optional, default = 1883]")
+                            "MQTT Broker Port [optional, default = 1883]")
                     .withRequiredArg().ofType(Integer.class);
 
             ArgumentAcceptingOptionSpec<Integer> mqttQOSArg
                     = parser.accepts("q",
-                            "StateMachine MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
+                            "MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
                     .withRequiredArg().ofType(Integer.class);
 
             ArgumentAcceptingOptionSpec<String> mqttTopicArg
                     = parser.accepts("t",
-                            "StateMachine MQTT Broker Topic [optional, default = modes3/kvcontrol]")
+                            "MQTT Broker Topic [optional, default = modes3/kvcontrol]")
                     .withRequiredArg().ofType(String.class);
 
             parser.printHelpOn(System.out);
@@ -46,9 +46,9 @@ public class Main {
             OptionSet parsed = parser.parse(args);
 
             Integer mqttPort = getParameterIntegerValue(parsed,
-                    mqttPortArg, "-smbp");
+                    mqttPortArg, "-p");
             Integer mqttQOS = getParameterIntegerValue(parsed,
-                    mqttQOSArg, "-smbq");
+                    mqttQOSArg, "-q");
 
             boolean enableStatusLog = parsed.has("sl");
             setStatusLogEnabled(enableStatusLog);
