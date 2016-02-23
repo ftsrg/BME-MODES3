@@ -43,9 +43,16 @@ class RegexCompiler {
 	val HashMap<Functor, SymbolicEvent> symbolicEventMapping = new HashMap<Functor, SymbolicEvent>()
 	val Set<Transition> transitionsToTrapState = new HashSet<Transition>
 	var timerCnt = 0
+	public val tgfLogs = new HashMap<Automaton, StringBuilder>;
+	public val log = new StringBuilder
+	
+	def void println(StringBuilder builder, String toAppend){
+		builder.append(toAppend)
+		builder.append('\n')
+	}
 
 	def compile(RegexModel input) {
-		println("Compilation starts")
+		log.println("Compilation starts")
 		val retvalue = createComplexEventProcessor
 		symbolicEventsFromAlphabet(input.alphabet) // we must set this before the compilation starts, the 		
 		input.declarations.map[recursiveCompile(it)].forEach[retvalue.automata.add(it)]
@@ -58,6 +65,8 @@ class RegexCompiler {
 				transitionsToTrapState.forEach[if(it.from == state) it.to = automaton.trapState]
 			]
 		] // the timeout events must point to the trapstate
+		
+		
 		var id = 0
 		for (automaton : retvalue.automata) {
 			for (state : automaton.states) {
@@ -65,10 +74,11 @@ class RegexCompiler {
 			}
 		}
 
-		println("Compilation finished!")
+		log.println("Compilation finished!")
 
 		for (automaton : retvalue.automata) {
-			println(automaton.automatonToYed)
+			tgfLogs.put(automaton, new StringBuilder)
+			tgfLogs.get(automaton).println(automaton.automatonToYed)
 		}
 		retvalue
 	}
@@ -76,19 +86,18 @@ class RegexCompiler {
 	// XXX move this to an external utility class
 	public static def String automatonToYed(Automaton automaton) {
 		return '''
-			Automaton «automaton.name»
-			=========================
-			
+			9999999999 «automaton.name»
+«««			=========================
 			«FOR state : automaton.states»
 				«state.id» «state.id» «IF state.acceptor == true» acceptor«ELSEIF automaton.trapState == state» trap« ELSEIF automaton.initialState == state» initial«ENDIF»
 			«ENDFOR»
 			#
 			«FOR state : automaton.states»
 				«FOR transition : state.outgoingTransitions»
-				«transition.from.id» «transition.to.id»«IF transition instanceof EpsilonTransition» ε «ENDIF»«IF transition instanceof Transition»«IF transition.eventguard.type instanceof SymbolicInputEvent» «(transition.eventguard.type as SymbolicInputEvent).name»«ENDIF»«IF transition.eventguard.type instanceof SymbolicTimeoutEvent» « (transition.eventguard.type as SymbolicTimeoutEvent).timer.name» timeout«ENDIF»«ENDIF» «FOR action : transition.actions BEFORE ' actions = [ ' SEPARATOR ', ' AFTER ' ]'» «IF action instanceof SetTimerAction» set «action.timer.name»«ENDIF»«IF action instanceof ResetTimerAction» reset «action.timer.name»«ENDIF»«ENDFOR»
+				«transition.from.id» «transition.to.id»«IF transition instanceof EpsilonTransition» epsilon «ENDIF»«IF transition instanceof Transition»«IF transition.eventguard.type instanceof SymbolicInputEvent» «(transition.eventguard.type as SymbolicInputEvent).name»«ENDIF»«IF transition.eventguard.type instanceof SymbolicTimeoutEvent» « (transition.eventguard.type as SymbolicTimeoutEvent).timer.name» timeout«ENDIF»«ENDIF» «FOR action : transition.actions BEFORE ' actions = [ ' SEPARATOR ', ' AFTER ' ]'» «IF action instanceof SetTimerAction» set «action.timer.name»«ENDIF»«IF action instanceof ResetTimerAction» reset «action.timer.name»«ENDIF»«ENDFOR»
 				«ENDFOR»
 			«ENDFOR»
-			=========================
+«««			=========================
 		'''
 	}
 
@@ -102,21 +111,20 @@ class RegexCompiler {
 	}
 
 	protected def dispatch Automaton recursiveCompile(ExpressionDeclaration declaration) {
-		println("compiling " + declaration.name)
+		log.println("compiling " + declaration.name)
 		var compiled = recursiveCompile(declaration.body)
 		compiled.name = declaration.name
-		println(declaration.name + ' compiled')
+		log.println(declaration.name + ' compiled')
 		compiled
 	}
 	
 	protected def dispatch Automaton recursiveCompile(NegExpression expression){
-		val compiled = expression.recursiveCompile
+		val compiled = expression.body.recursiveCompile
 		compiled.states.forEach[it.acceptor = !it.acceptor]
 		return compiled;
 	}
 
 	protected def dispatch Automaton recursiveCompile(TimedExpression expression) {
-//		println('<<<regex compiler compiling timed expression>>>')
 		val compiled = recursiveCompile(expression.body)
 		val timer = createSymbolicTimer
 		timer.name = "t" + (timerCnt++)
@@ -214,6 +222,7 @@ class RegexCompiler {
 		transition.eventguard = createEventGuard
 		transition.eventguard.type = symbolicEventMapping.get(expression.functor)
 		// TODO parameters
+		
 		retvalue
 	}
 
@@ -224,17 +233,13 @@ class RegexCompiler {
 
 	protected def merge(Automaton firstAutomaton, Automaton secondAutomaton) {
 
-		val intermediateNode = createState
-		firstAutomaton.states.filter[it.acceptor].clone().forEach[
+		val intermediateState = secondAutomaton.initialState
+		firstAutomaton.states.filter[it.acceptor].forEach[
 			it.acceptor = false
 			var epsilonTrans = createEpsilonTransition
 			epsilonTrans.from = it
-			epsilonTrans.to = intermediateNode
+			epsilonTrans.to = intermediateState
 		]
-		
-		var epsilonToSecond = createEpsilonTransition
-		epsilonToSecond.from = intermediateNode
-		epsilonToSecond.to = secondAutomaton.initialState
 		
 		for(state : secondAutomaton.states.clone()){ //The clone is needed, as the list changes when items are removed
 			firstAutomaton.states.add(state)
@@ -335,14 +340,28 @@ class RegexCompiler {
 
 	protected def Automaton product(Automaton left, Automaton right) {
 		val retvalue = createAutomaton
+		
+		var id = 0
+		
+		left.name = 'left'
+		right.name = 'right'		
 
+		for(state : left.states){
+			state.id = id++
+		}
+		for(state : right.states){
+			state.id = id++
+		}
+		println(automatonToYed(left))
+		println(automatonToYed(right))
+		
 		val leftTrace = new HashMap<State, HashSet<State>> // for each state of the left operand, there are a row of states in the new matrix of states
 		val rightTrace = new HashMap<State, HashSet<State>> // for each state of the right operand, there are a column of states in the new matrix of states 
 		// constructing the new matrix of states for the product.
+		
 		for (leftState : left.states) {
 			for (rightState : right.states) {
 				var newState = createState
-
 				if(!leftTrace.containsKey(leftState)) leftTrace.put(leftState, new HashSet)
 				if(!rightTrace.containsKey(rightState)) rightTrace.put(rightState, new HashSet)
 
@@ -350,21 +369,42 @@ class RegexCompiler {
 
 				leftTrace.get(leftState).add(newState)
 				rightTrace.get(rightState).add(newState)
+				newState.id = id++
 			}
 		}
+		
+		println(automatonToYed(retvalue))
+		
+		println('LEFTTRACE')
+		leftTrace.forEach[originalState, newState|
+			println(originalState.id)
+			newState.forEach[println('\t'+it.id)]
+		]
+		
+		println('RIGHTTRACE')
+		rightTrace.forEach[originalState, newState|
+			println(originalState.id)
+			newState.forEach[println('\t'+it.id)]
+		]
+		
 		for (state : retvalue.states) {
 			val leftOriginal = leftTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
 			val rightOriginal = rightTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
+			println('For ciklus leftoriginalja : ' + leftOriginal.id + '\t RightOriginalja : ' + rightOriginal.id)
 			rightOriginal.outgoingTransitions.forEach [ transition |
+				println('<<RIGHT>> from ' + transition.from.id + '\t to ' + transition.to.id)
 				var cloneTransition = EcoreUtil.copy(transition)
+				println('LeftOriginalId = '+ leftOriginal.id + '\tRightOriginalId = ' + rightOriginal.id + '\tnewState.id = ' + state.id)
 				cloneTransition.from = state
-				cloneTransition.to = leftTrace.get(leftOriginal).filter[rightTrace.get(transition.to).contains(it)].head
+				cloneTransition.to = leftTrace.get(leftOriginal).findFirst[rightTrace.get(transition.to).contains(it)]
 			]
 
 			leftOriginal.outgoingTransitions.forEach [ transition |
+				println('<<LEFT>> from ' + transition.from.id + '\t to ' + transition.to.id)
 				var cloneTransition = EcoreUtil.copy(transition)
+				println('LeftOriginalId = '+ leftOriginal.id + '\tRightOriginalId = ' + rightOriginal.id + '\tnewState.id = ' + state.id)
 				cloneTransition.from = state
-				cloneTransition.to = rightTrace.get(rightOriginal).filter[leftTrace.get(transition.to).contains(it)].head
+				cloneTransition.to = rightTrace.get(rightOriginal).findFirst[leftTrace.get(transition.to).contains(it)]
 			]
 			if(leftOriginal.acceptor && rightOriginal.acceptor) state.acceptor = true
 		}
@@ -507,5 +547,4 @@ class RegexCompiler {
 		}
 		return result
 	}
-
 }
