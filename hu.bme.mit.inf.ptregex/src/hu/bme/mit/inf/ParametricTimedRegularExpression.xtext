@@ -3,8 +3,8 @@ grammar hu.bme.mit.inf.ParametricTimedRegularExpression with org.eclipse.xtext.c
 generate parametricTimedRegularExpression "http://www.bme.hu/mit/inf/ParametricTimedRegularExpression"
 
 RegexModel:
-	alphabet=Alphabet?
-	(declarations+=ExpressionDeclaration)+;
+	(alphabet=Alphabet)?
+	(declarations+=ExpressionDeclaration)*;
 
 Alphabet:
 	{Alphabet} 'alphabet' '=' '{' (functors+=Functor (',' functors+=Functor)*)? '}';
