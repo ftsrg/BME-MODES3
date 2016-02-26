@@ -340,21 +340,6 @@ class RegexCompiler {
 
 	protected def Automaton product(Automaton left, Automaton right) {
 		val retvalue = createAutomaton
-		
-		var id = 0
-		
-		left.name = 'left'
-		right.name = 'right'		
-
-		for(state : left.states){
-			state.id = id++
-		}
-		for(state : right.states){
-			state.id = id++
-		}
-		println(automatonToYed(left))
-		println(automatonToYed(right))
-		
 		val leftTrace = new HashMap<State, HashSet<State>> // for each state of the left operand, there are a row of states in the new matrix of states
 		val rightTrace = new HashMap<State, HashSet<State>> // for each state of the right operand, there are a column of states in the new matrix of states 
 		// constructing the new matrix of states for the product.
@@ -369,40 +354,22 @@ class RegexCompiler {
 
 				leftTrace.get(leftState).add(newState)
 				rightTrace.get(rightState).add(newState)
-				newState.id = id++
 			}
 		}
 		
-		println(automatonToYed(retvalue))
-		
-		println('LEFTTRACE')
-		leftTrace.forEach[originalState, newState|
-			println(originalState.id)
-			newState.forEach[println('\t'+it.id)]
-		]
-		
-		println('RIGHTTRACE')
-		rightTrace.forEach[originalState, newState|
-			println(originalState.id)
-			newState.forEach[println('\t'+it.id)]
-		]
+	
 		
 		for (state : retvalue.states) {
 			val leftOriginal = leftTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
 			val rightOriginal = rightTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
-			println('For ciklus leftoriginalja : ' + leftOriginal.id + '\t RightOriginalja : ' + rightOriginal.id)
 			rightOriginal.outgoingTransitions.forEach [ transition |
-				println('<<RIGHT>> from ' + transition.from.id + '\t to ' + transition.to.id)
 				var cloneTransition = EcoreUtil.copy(transition)
-				println('LeftOriginalId = '+ leftOriginal.id + '\tRightOriginalId = ' + rightOriginal.id + '\tnewState.id = ' + state.id)
 				cloneTransition.from = state
 				cloneTransition.to = leftTrace.get(leftOriginal).findFirst[rightTrace.get(transition.to).contains(it)]
 			]
 
 			leftOriginal.outgoingTransitions.forEach [ transition |
-				println('<<LEFT>> from ' + transition.from.id + '\t to ' + transition.to.id)
 				var cloneTransition = EcoreUtil.copy(transition)
-				println('LeftOriginalId = '+ leftOriginal.id + '\tRightOriginalId = ' + rightOriginal.id + '\tnewState.id = ' + state.id)
 				cloneTransition.from = state
 				cloneTransition.to = rightTrace.get(rightOriginal).findFirst[leftTrace.get(transition.to).contains(it)]
 			]

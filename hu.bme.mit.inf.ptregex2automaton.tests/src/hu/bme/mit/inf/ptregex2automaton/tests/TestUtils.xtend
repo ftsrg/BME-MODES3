@@ -33,7 +33,6 @@ class TestUtils {
 	}
 
 	def static RegexModel parseRegex(String input) {
-		//TODO Activator.getActiveRuntimeModule
 		var Injector injector = new ParametricTimedRegularExpressionStandaloneSetup().createInjectorAndDoEMFRegistration();
 		val resourceSet = injector.getInstance(XtextResourceSet)
 		val resource = resourceSet.createResource(URI.createURI("dummy:/temp.ptreg"))
@@ -55,7 +54,7 @@ class TestUtils {
 		val compiler = new RegexCompiler()
 		val compiled = compiler.compile(input)
 		compiler.tgfLogs.forEach[automaton, log|
-			log("compilation" + automaton.name + ".tgf", log.toString)
+			log("compilation_" + automaton.name + ".tgf", log.toString)
 		]
 		return compiled
 	}
@@ -74,6 +73,10 @@ class TestUtils {
 		for (word : input.trim.split('\\s').map[it.trim].filter[!it.equals('')]) {
 			if(word.startsWith('*')) {
 				val expressionName = word.substring(1)
+				if(!exec.acceptedLastTime(expressionName)){ //XXX we first check, print the trace, and assert later
+					val callingFunctionName = Thread.currentThread().getStackTrace().get(3).methodName
+					log(callingFunctionName + '.txt', exec.exec.log.toString)	
+				} 
 				Assert.assertEquals(
 					("Assertion failed at input " + lastEvent + " #" + processedInputs + " on pattern " + expressionName),
 					true,
@@ -85,7 +88,7 @@ class TestUtils {
 				lastEvent = word
 			}
 		}
-		val callingFunctionName = Thread.currentThread().getStackTrace().get(1).methodName
+		val callingFunctionName = Thread.currentThread().getStackTrace().get(3).methodName
 
 		log(callingFunctionName + '.txt', exec.exec.log.toString)
 	}
@@ -103,6 +106,7 @@ class TestUtils {
 	
 	def static void testVepl(String vepl, String input){
 		val model = vepl.parseVepl.compile.compile
+		testRegex(model, input)
 	}
 
 	def static void log(String fileName, String fileContent) {

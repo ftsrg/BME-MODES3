@@ -22,6 +22,7 @@ import org.eclipse.viatra.cep.vepl.vepl.Infinite
 import org.eclipse.viatra.cep.vepl.vepl.Multiplicity
 import org.eclipse.viatra.cep.vepl.vepl.OrOperator
 import org.eclipse.viatra.cep.vepl.vepl.VeplFactory
+import hu.bme.mit.inf.RegexPrinter
 
 class VeplCompiler {
 	static extension var ParametricTimedRegularExpressionFactory factory = ParametricTimedRegularExpressionFactory.eINSTANCE;
@@ -58,9 +59,22 @@ class VeplCompiler {
 		
 		
 		println('Adding Sigma* to the prefix of all patterns')
+		retvalue.declarations.forEach[
+			val seq = createSequence
+			val star = createStar
+			val any = createAny
+			star.body = any
+			seq.elements.add(star)
+			seq.elements.add(it.body)
+			
+			it.body = seq
+		]
 		
 		println('number of lettes = '+ retvalue.alphabet.functors.length)
 		println('number of declarations = ' + retvalue.declarations.length)
+		
+		println('Compiled Regular Expresssions')
+		println(RegexPrinter::regexToString(retvalue))
 		
 		return retvalue
 	}
@@ -134,7 +148,6 @@ class VeplCompiler {
 			retvalue = timedExpression
 		}
 		if(unaries.negOperator != null){
-//			throw new UnsupportedOperationException
 			val negated = createNegExpression
 			negated.body = retvalue
 			retvalue = negated
@@ -148,7 +161,10 @@ class VeplCompiler {
 		var retvalue = createSequence
 		retvalue.elements.add(left)
 		if(context == ContextEnum.CHRONICLE){
-			//TODO
+			val star = createStar
+			val anything = createAny
+			star.body = anything
+			retvalue.elements.add(star)
 		}		
 		retvalue.elements.add(right)
 		return retvalue
@@ -156,7 +172,10 @@ class VeplCompiler {
 
 	def dispatch Expression operate(Sequence left, Expression right, FollowsOperator operator, ContextEnum context) {
 		if(context == ContextEnum.CHRONICLE){
-			//TODO
+			val star = createStar
+			val anything = createAny
+			star.body = anything
+			left.elements.add(star)
 		}		
 		left.elements.add(right)
 		return left
@@ -176,13 +195,47 @@ class VeplCompiler {
 	
 	def dispatch Expression operate(Expression left, Expression right, AndOperator operator, ContextEnum context) {
 		var retvalue = createAnd
-		retvalue.elements.add(left)
-		retvalue.elements.add(right)
+		var tempLeft = left
+		var tempRight = right
+		if(context == ContextEnum.CHRONICLE){
+			val seqLeft = createSequence
+			val starLeft = createStar
+			val anyLeft = createAny
+			
+			val seqRight = createSequence
+			val starRight = createStar
+			val anyRight = createAny
+			
+			starLeft.body = anyLeft
+			seqLeft.elements.add(tempLeft)
+			seqLeft.elements.add(starLeft)
+			tempLeft = seqLeft
+			
+			starRight.body = anyRight
+			seqRight.elements.add(tempRight)
+			seqRight.elements.add(starRight)
+			tempRight = seqRight
+			
+		}
+		retvalue.elements.add(tempLeft)
+		retvalue.elements.add(tempRight)
 		return retvalue;
 	}
 
 	def dispatch Expression operate(And left, Expression right, AndOperator operator, ContextEnum context) {
-		left.elements.add(right)
+		var tempRight = right
+		if(context == ContextEnum.CHRONICLE){
+			val seq = createSequence
+			val star = createStar
+			var any = createAny
+			
+			star.body = any
+			seq.elements.add(right)
+			seq.elements.add(star)
+			
+			tempRight = seq
+		}
+		left.elements.add(tempRight)
 		return left
 	}	
 }
