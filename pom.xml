@@ -14,5 +14,7 @@
 		<module>hu.bme.mit.inf.kvcontrol.mqtt.client</module>
 		<!--<module>hu.bme.mit.inf.xpresscontroller</module>-->
         <module>hu.bme.mit.inf.mqtt.common</module>
+        <module>hu.bme.mit.inf.yakindu.sc.english</module>
+        <module>hu.bme.mit.inf.yakindu.sc.normal</module>
     </modules>
 </project>

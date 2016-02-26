@@ -1,0 +1,32 @@
+GeneratorModel for yakindu::java {
+
+	statechart Section {
+
+		feature Outlet {
+			targetProject = "normal-turnout"
+			targetFolder = "src-gen"
+		}
+		
+		feature GeneralFeatures {
+			InterfaceObserverSupport = true
+			RuntimeService = true
+		}
+
+		feature FunctionInlining {
+			inlineChoices = true
+			inlineEnterRegion = true
+			inlineEnterSequences = true
+			inlineEntries = true
+			inlineEntryActions = true
+			inlineExitActions = true
+			inlineExitRegion = true
+			inlineExitSequences = true
+			inlineReactions = true
+		}
+
+		feature RunnableWrapper {
+			namePrefix=""
+			nameSuffix = "Wrapper"
+		}
+	}
+}
