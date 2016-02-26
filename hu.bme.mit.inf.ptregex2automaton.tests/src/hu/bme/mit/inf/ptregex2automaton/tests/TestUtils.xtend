@@ -24,6 +24,9 @@ import org.eclipse.viatra.cep.vepl.vepl.EventModel
 import hu.bme.mit.inf.vepl2ptregex.VeplCompiler
 
 class TestUtils {
+	static val Injector RegexInjector = new ParametricTimedRegularExpressionStandaloneSetup().createInjectorAndDoEMFRegistration();
+	static val Injector VeplInjector = new VeplStandaloneSetup().createInjectorAndDoEMFRegistration();
+	
 	def static RegexModel parseRegex(CharSequence input) {
 		return parseRegex(input.toString)
 	}
@@ -33,8 +36,7 @@ class TestUtils {
 	}
 
 	def static RegexModel parseRegex(String input) {
-		var Injector injector = new ParametricTimedRegularExpressionStandaloneSetup().createInjectorAndDoEMFRegistration();
-		val resourceSet = injector.getInstance(XtextResourceSet)
+		val resourceSet = RegexInjector.getInstance(XtextResourceSet)
 		val resource = resourceSet.createResource(URI.createURI("dummy:/temp.ptreg"))
 		resource.load(new ByteArrayInputStream(input.getBytes), #{})
 		val parsed = (resource.contents.get(0) as RegexModel)
@@ -42,8 +44,7 @@ class TestUtils {
 	}
 
 	def static EventModel parseVepl(String input){
-		var Injector injector = new VeplStandaloneSetup().createInjectorAndDoEMFRegistration();
-		val resourceSet = injector.getInstance(XtextResourceSet)
+		val resourceSet = VeplInjector.getInstance(XtextResourceSet)
 		val resource = resourceSet.createResource(URI.createURI("dummy:/temp.vepl"))
 		resource.load(new ByteArrayInputStream(input.getBytes), #{})
 		val parsed = (resource.contents.get(0) as EventModel)
@@ -159,8 +160,7 @@ class TestExecutor {
 	def acceptedLastTime(String name) {
 		val expression = model.automata.findFirst[it.name.equals(name)]
 		if(expression == null) {
-			// TODO throw exception or assertion failiure?
-			return false
+			Assert.fail('There is no expression called ' + name)
 		}
 		return expression.states.findFirst[it.acceptor && it.tokens.length > 0] != null
 	}

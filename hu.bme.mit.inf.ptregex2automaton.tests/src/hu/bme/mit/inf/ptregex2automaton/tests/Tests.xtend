@@ -125,7 +125,7 @@ class Tests {
 			LeftSide 
 			Down
 			RightSide *Transition
-			Up *Bounce;
+			Up *Bounce
 			Down
 			NearGround
 			Up *EndGame *GroundBounce
