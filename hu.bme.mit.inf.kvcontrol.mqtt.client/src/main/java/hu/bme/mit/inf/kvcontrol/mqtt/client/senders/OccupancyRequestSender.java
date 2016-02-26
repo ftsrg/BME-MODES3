@@ -24,18 +24,6 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class OccupancyRequestSender implements MqttCallback {
 
-    public static final void main(String[] args) throws InterruptedException {
-        OccupancyRequestSender occupancyRequestSender = new OccupancyRequestSender(new MQTTConfiguration("modes3/kvcontrol"));
-
-        while (true) {
-            for (int i = 0x01; i < 0x18; ++i) {
-                System.out.println("i = " + i + "; occupied = " + occupancyRequestSender.isSectionOccupied(i));
-            }
-            Thread.sleep(500);
-            System.out.println("-----------");
-        }
-    }
-
     // the object subscribes as a callback for this sender in the constuctor
     private final MQTTPublisherSubscriber sender;
 
