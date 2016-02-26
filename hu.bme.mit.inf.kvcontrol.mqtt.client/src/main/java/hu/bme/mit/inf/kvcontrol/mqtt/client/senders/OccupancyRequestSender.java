@@ -2,10 +2,10 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_OCCUPANCY;
+import hu.bme.mit.inf.mqtt.common.data.OccupancyVector;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
-import hu.bme.mit.inf.mqtt.common.data.Section;
-import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus;
+import static hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus.FREE;
 import static hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus.OCCUPIED;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
@@ -24,6 +24,18 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class OccupancyRequestSender implements MqttCallback {
 
+    public static final void main(String[] args) throws InterruptedException {
+        OccupancyRequestSender occupancyRequestSender = new OccupancyRequestSender(new MQTTConfiguration("modes3/kvcontrol"));
+
+        while (true) {
+            for (int i = 0x01; i < 0x18; ++i) {
+                System.out.println("i = " + i + "; occupied = " + occupancyRequestSender.isSectionOccupied(i));
+            }
+            Thread.sleep(500);
+            System.out.println("-----------");
+        }
+    }
+
     // the object subscribes as a callback for this sender in the constuctor
     private final MQTTPublisherSubscriber sender;
 
@@ -37,7 +49,13 @@ public class OccupancyRequestSender implements MqttCallback {
     }
 
     public boolean isSectionOccupied(int sectionId) {
-        SectionOccupancyStatus status = sectionsOccupied.get(sectionId);
+        SectionOccupancyStatus status;
+        try {
+            status = sectionsOccupied.get(sectionId);
+        } catch (NullPointerException ex) {
+            status = FREE;
+            sectionsOccupied.put(sectionId, status);
+        }
         return status == OCCUPIED;
     }
 
@@ -53,13 +71,10 @@ public class OccupancyRequestSender implements MqttCallback {
 
             switch (command) {
                 case SEND_OCCUPANCY:
-                    SectionArray sectionsArray = payload.getContentAs(
-                            SectionArray.class);
-                    Section[] sections = sectionsArray.getSectionArray();
-                    for (Section section : sections) {
-                        sectionsOccupied.put(section.getId(),
-                                section.getOccupancyStatus());
-                    }
+                    OccupancyVector occupancyVector = payload.getContentAs(
+                            OccupancyVector.class);
+                    int occupancy = occupancyVector.getOccupancyVector();
+                    updateOccupancies(occupancy);
                     break;
                 default:
                     break;
@@ -77,6 +92,20 @@ public class OccupancyRequestSender implements MqttCallback {
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
         // deliberately left empty
+    }
+
+    private void updateOccupancies(int occupancy) {
+        for (int i = 0x01; i < 0x18; ++i) {
+            if (isOccupied(occupancy, i)) {
+                sectionsOccupied.put(i, OCCUPIED);
+            } else {
+                sectionsOccupied.put(i, FREE);
+            }
+        }
+    }
+
+    private boolean isOccupied(long number, int offset) {
+        return ((number & (1 << offset)) >> offset) == 1;
     }
 
 }
