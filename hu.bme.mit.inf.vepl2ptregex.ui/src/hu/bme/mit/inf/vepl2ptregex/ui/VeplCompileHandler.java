@@ -19,7 +19,6 @@ import EventAutomatonModel.Event;
 import EventAutomatonModel.EventAutomatonModelFactory;
 import hu.bme.mit.inf.parametricTimedRegularExpression.RegexModel;
 import hu.bme.mit.inf.ptregex2automaton.RegexCompiler;
-import hu.bme.mit.inf.ptregex2automaton.RegexPrinter;
 import hu.bme.mit.inf.qea.CEPExecutor;
 import hu.bme.mit.inf.vepl2ptregex.VeplCompiler;
 
@@ -56,7 +55,6 @@ public class VeplCompileHandler implements IHandler {
 					RegexModel regexModel = veplCompiler.compile(eventModel);
 					
 					System.out.println("Regex patterns : ");
-					System.out.println(RegexPrinter.regexToString(regexModel));
 					
 					RegexCompiler regexCompiler = new RegexCompiler();
 					ComplexEventProcessor result = regexCompiler.compile(regexModel);
