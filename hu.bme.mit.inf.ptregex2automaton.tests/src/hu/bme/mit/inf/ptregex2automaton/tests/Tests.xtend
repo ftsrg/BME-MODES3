@@ -71,7 +71,6 @@ class Tests {
 	def andTest2(){
 		TestUtils.testRegex('''
 			alphabet = {LeftSide, RightSide, Up, Down, Near, Far, NearGround}
-				«/* expression and21 = ( (Down Up) & (Near) ) */»
 				expression and31 = (LeftSide  RightSide) & (Down  Up)
 		''','''
 			LeftSide
@@ -109,7 +108,7 @@ class Tests {
 			}
 			
 			complexEvent DoubleBounce(){
-				as Bounce -> NOT Transition -> Bounce
+				as TableBounce -> NOT Transition -> TableBounce
 				context strict
 			}
 			
@@ -126,7 +125,7 @@ class Tests {
 			LeftSide 
 			Down
 			RightSide *Transition
-			Up *Bounce
+			Up *Bounce;
 			Down
 			NearGround
 			Up *EndGame *GroundBounce
