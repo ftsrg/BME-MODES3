@@ -51,7 +51,8 @@ Now start the Mosquitto Service at Windows Control Panel -> Administrative Tools
 
 ## Dependants
 
-* [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes): uses this library directly for communication between the state machines
+* [Yakindu-Codes-Normal-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.normal): uses this library directly for communication between the state machines
+* [Yakindu-Codes-English-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.english): uses this library directly for communication between the state machines
 
 ## Dependencies
 

@@ -19,7 +19,8 @@ Modules stored in the repository:
 * [MQTT-Common](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.mqtt.common)
 * [PiClient](https://github.com/FTSRG/BME-MODES3/tree/master/piclient_v4)
 * [SerialMonitor](https://github.com/FTSRG/BME-MODES3/tree/master/serialmonitor)
-* [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes)
+* [Yakindu-Codes-Normal-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.normal)
+* [Yakindu-Codes-English-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.english)
 * [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client)
 
 Deprecated modules stored in the repository:
@@ -27,3 +28,4 @@ Deprecated modules stored in the repository:
 * [BridgePoint-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/bridgepoint-codes) is deprecated, use [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes) instead.
 * [KVControl-BPExtension](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/kvcontrol-bpextension) is deprecated, use [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client) instead.
 * [KVControl-BPExtension-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/kvcontrol-bpextension-requestsender) is deprecated, use [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client) instead.
+* [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes) is deprecated use [Yakindu-Codes-Normal-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.normal) and [Yakindu-Codes-English-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.english) instead.

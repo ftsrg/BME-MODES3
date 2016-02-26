@@ -1,11 +1,15 @@
 package hu.bme.mit.inf.yakindu.sc.english.control.controller;
 
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.yakindu.sc.english.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.english.control.sm.Section;
 import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.getStateMachineMQTTConfiguration;
 import hu.bme.mit.inf.yakindu.sc.english.control.transmitter.DistributedMessageTransmitter;
 import hu.bme.mit.inf.yakindu.sc.english.control.transmitter.GeneralTransmitter;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
+import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.getKvcontrolMQTTConfiguration;
 import java.util.Set;
 
 import org.yakindu.scr.turnout.TurnoutWrapper;
@@ -35,8 +39,15 @@ public class YakinduSMRunner {
         int managedTurnoutId = (int) statemachine.getSCITurnout().getId();
         int managedTurnoutSectionId = turnoutSectionId;
 
+        MQTTConfiguration kvcontrolMQTTConf = getKvcontrolMQTTConfiguration();
+        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(
+                kvcontrolMQTTConf);
+        OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(
+                kvcontrolMQTTConf);
+
         generalTransmitter = new GeneralTransmitter(managedTurnoutId,
-                managedTurnoutSectionId, localSections, statemachine);
+                managedTurnoutSectionId, localSections, statemachine,
+                occupancyRequester, turnoutRequester);
         distributedTransmitter = new DistributedMessageTransmitter(statemachine);
         this.messageReceiver = new DistributedMessageReceiver(
                 getStateMachineMQTTConfiguration(), distributedTransmitter,

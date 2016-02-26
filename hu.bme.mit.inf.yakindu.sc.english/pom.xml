@@ -60,7 +60,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>hu.bme.mit.inf.master.mqtt.client.main.Main</mainClass>
+                            <mainClass>hu.bme.mit.inf.yakindu.sc.english.control.controller.Simulator</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -78,7 +78,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>hu.bme.mit.inf.master.mqtt.client.main.Main</mainClass>
+                            <mainClass>hu.bme.mit.inf.yakindu.sc.english.control.controller.Simulator</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Class-Path>.</Class-Path>

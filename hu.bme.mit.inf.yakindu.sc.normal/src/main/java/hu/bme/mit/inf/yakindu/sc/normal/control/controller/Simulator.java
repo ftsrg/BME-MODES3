@@ -7,12 +7,11 @@ import static hu.bme.mit.inf.yakindu.sc.normal.control.controller.StatemachineIn
 import static hu.bme.mit.inf.yakindu.sc.normal.control.controller.StatemachineInitializer.initialize0x85;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
-import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvControlAddress;
-import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvControlPort;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setStateMachineMQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
+import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolMQTTConfiguration;
 import java.io.IOException;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
@@ -41,13 +40,30 @@ public class Simulator {
                             "ID of the turnout to be simulated [optional]")
                     .withRequiredArg().ofType(Integer.class);
 
-            ArgumentAcceptingOptionSpec<String> kvControlAddressArg = parser
-                    .accepts("a", "kvControlAddress [optional]")
+            ArgumentAcceptingOptionSpec<String> kvMQTTProtocolArg
+                    = parser.accepts("kvbpp",
+                            "KVControl MQTT Broker Protocol [optional, default = tcp]")
                     .withRequiredArg().ofType(String.class);
 
-            ArgumentAcceptingOptionSpec<Integer> kvControlPortArg = parser
-                    .accepts("p", "kvControlPort [optional]")
+            ArgumentAcceptingOptionSpec<String> kvMQTTAddressArg
+                    = parser.accepts("kvba",
+                            "KVControl MQTT Broker Address [optional, default = localhost]")
+                    .withRequiredArg().ofType(String.class);
+
+            ArgumentAcceptingOptionSpec<Integer> kvMQTTPortArg
+                    = parser.accepts("kvbp",
+                            "KVControl MQTT Broker Port [optional, default = 1883]")
                     .withRequiredArg().ofType(Integer.class);
+
+            ArgumentAcceptingOptionSpec<Integer> kvMQTTQOSArg
+                    = parser.accepts("kvbq",
+                            "KVControl MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
+                    .withRequiredArg().ofType(Integer.class);
+
+            ArgumentAcceptingOptionSpec<String> kvMQTTTopicArg
+                    = parser.accepts("kvbt",
+                            "KVControl MQTT Broker Topic [optional, default = modes3/kvcontrol]")
+                    .withRequiredArg().ofType(String.class);
 
             ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg
                     = parser.accepts("smbpp",
@@ -83,8 +99,10 @@ public class Simulator {
 
             Integer turnoutId = getParameterIntegerValue(parsed, turnoutIdArg,
                     "-ti");
-            Integer kvControlPort = getParameterIntegerValue(parsed,
-                    kvControlPortArg, "-p");
+            Integer kvMQTTPort = getParameterIntegerValue(parsed,
+                    kvMQTTPortArg, "-kvbp");
+            Integer kvMQTTQOS = getParameterIntegerValue(parsed,
+                    kvMQTTQOSArg, "-kvbq");
             Integer smMQTTPort = getParameterIntegerValue(parsed,
                     smMQTTPortArg, "-smbp");
             Integer smMQTTQOS = getParameterIntegerValue(parsed,
@@ -92,8 +110,10 @@ public class Simulator {
 
             boolean enableStatusLog = parsed.has("sl");
 
-            setPreferences(kvControlAddressArg, kvControlPortArg, traceLogArg,
-                    parsed, enableStatusLog, kvControlPort);
+            setLoggingPreferences(traceLogArg, parsed, enableStatusLog);
+
+            setKVMQTTPreferences(parsed, kvMQTTProtocolArg, kvMQTTAddressArg,
+                    kvMQTTTopicArg, kvMQTTPort, kvMQTTQOS);
 
             setSMMQTTPreferences(parsed, smMQTTProtocolArg, smMQTTAddressArg,
                     smMQTTTopicArg, smMQTTPort, smMQTTQOS);
@@ -119,25 +139,57 @@ public class Simulator {
         return null;
     }
 
-    private static void setPreferences(
-            ArgumentAcceptingOptionSpec<String> kvControlAddressArg,
-            ArgumentAcceptingOptionSpec<Integer> kvControlPortArg,
+    private static void setLoggingPreferences(
             ArgumentAcceptingOptionSpec<String> traceLogArg,
-            OptionSet parsed, boolean isStatusLogEnabled, Integer kvControlPort) {
+            OptionSet parsed, boolean isStatusLogEnabled) {
 
         setStatusLogEnabled(isStatusLogEnabled);
 
-        if (parsed.has(kvControlAddressArg)) {
-            setKvControlAddress(parsed.valueOf(kvControlAddressArg));
-        }
-        if (parsed.has(kvControlPortArg)) {
-            setKvControlPort(kvControlPort);
-        }
         if (parsed.has(traceLogArg)) {
             SectionWrapperWithListeners.setTraceLogEnabled(true);
             TurnoutWrapperWithListeners.setTraceLogEnabled(true);
             setDefaultSavePath(parsed.valueOf(traceLogArg));
         }
+    }
+
+    private static MQTTConfiguration createConfiguration(
+            OptionSet parsed,
+            ArgumentAcceptingOptionSpec<String> protocolArg,
+            ArgumentAcceptingOptionSpec<String> addressArg,
+            ArgumentAcceptingOptionSpec<String> topicArg,
+            Integer port, Integer qos, String topic) {
+        MQTTConfiguration conf = new MQTTConfiguration(
+                topic);
+        if (parsed.has(protocolArg)) {
+            conf.setProtocol(parsed.valueOf(protocolArg));
+        }
+        if (parsed.has(addressArg)) {
+            conf.setAddress(parsed.valueOf(addressArg));
+        }
+        if (parsed.has(topicArg)) {
+            conf.setTopic(parsed.valueOf(topicArg));
+        }
+        if (port != null) {
+            conf.setPort(port);
+        }
+        if (qos != null) {
+            conf.setQOS(qos);
+        }
+        return conf;
+    }
+
+    private static void setKVMQTTPreferences(
+            OptionSet parsed,
+            ArgumentAcceptingOptionSpec<String> kvMQTTProtocolArg,
+            ArgumentAcceptingOptionSpec<String> kvMQTTAddressArg,
+            ArgumentAcceptingOptionSpec<String> kvMQTTTopicArg,
+            Integer kvMQTTPort, Integer kvMQTTQOS) {
+
+        MQTTConfiguration conf = createConfiguration(parsed, kvMQTTProtocolArg,
+                kvMQTTAddressArg, kvMQTTTopicArg, kvMQTTPort, kvMQTTQOS,
+                "modes3/kvcontrol");
+
+        setKvcontrolMQTTConfiguration(conf);
     }
 
     private static void setSMMQTTPreferences(
@@ -147,24 +199,9 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> smMQTTTopicArg,
             Integer smMQTTPort, Integer smMQTTQOS) {
 
-        MQTTConfiguration conf = new MQTTConfiguration(
+        MQTTConfiguration conf = createConfiguration(parsed, smMQTTProtocolArg,
+                smMQTTAddressArg, smMQTTTopicArg, smMQTTPort, smMQTTQOS,
                 "modes3/yakindu");
-
-        if (parsed.has(smMQTTProtocolArg)) {
-            conf.setProtocol(parsed.valueOf(smMQTTProtocolArg));
-        }
-        if (parsed.has(smMQTTAddressArg)) {
-            conf.setAddress(parsed.valueOf(smMQTTAddressArg));
-        }
-        if (parsed.has(smMQTTTopicArg)) {
-            conf.setTopic(parsed.valueOf(smMQTTTopicArg));
-        }
-        if (smMQTTPort != null) {
-            conf.setPort(smMQTTPort);
-        }
-        if (smMQTTQOS != null) {
-            conf.setQOS(smMQTTQOS);
-        }
 
         setStateMachineMQTTConfiguration(conf);
     }
