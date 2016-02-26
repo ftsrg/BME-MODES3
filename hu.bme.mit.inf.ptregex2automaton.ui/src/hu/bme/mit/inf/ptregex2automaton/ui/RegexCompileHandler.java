@@ -18,7 +18,7 @@ import EventAutomatonModel.Event;
 import EventAutomatonModel.EventAutomatonModelFactory;
 import hu.bme.mit.inf.parametricTimedRegularExpression.RegexModel;
 import hu.bme.mit.inf.ptregex2automaton.RegexCompiler;
-import hu.bme.mit.inf.qea.CEPExecutioner;
+import hu.bme.mit.inf.qea.CEPExecutor;
 
 public class RegexCompileHandler implements IHandler {
 
@@ -68,7 +68,7 @@ public class RegexCompileHandler implements IHandler {
 					Event nearGround =  EventAutomatonModelFactory.eINSTANCE.createEvent();
 					nearGround.setType(result.getSymbolicEvents().get(6));
 					
-					CEPExecutioner exec = new CEPExecutioner(result);
+					CEPExecutor exec = new CEPExecutor(result);
 
 					exec.pushEvent(right);
 					exec.pushEvent(down);

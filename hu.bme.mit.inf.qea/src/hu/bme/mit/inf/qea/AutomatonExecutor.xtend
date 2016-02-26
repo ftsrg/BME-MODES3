@@ -21,14 +21,19 @@ import java.util.Set
 import java.util.Stack
 import EventAutomatonModel.EventAutomatonModelFactory
 
-class AutomatonExecutioner {
+class AutomatonExecutor {
 	static extension var EventAutomatonModelFactory factory = EventAutomatonModelFactory.eINSTANCE;
 	var Automaton a
 	var Object lock;
 	var Set<hu.bme.mit.inf.qea.AutomatonTimeoutTask> runningTimers
+	public var log = new StringBuilder
+	
+	def void println(StringBuilder builder, String toAppend){
+		builder.append(toAppend)
+		builder.append('\n')
+	}
 
 
-//	Token initialToken
 	new(Automaton a) {
 		this.lock = new Object
 		this.a = a;
@@ -75,7 +80,7 @@ class AutomatonExecutioner {
 							if(eclosure.map[it.on].findFirst[it == u] == null) { // if we didn't put a token at that place before
 								val newToken2 = copyToken(t) // create a token
 								newToken2.on = u // place it to the new state
-								outGoingEpsilonTransition.actions.forEach[it.executeOn(newToken2) println("Action executed")] //execute all actions 
+								outGoingEpsilonTransition.actions.forEach[it.executeOn(newToken2)] //execute all actions 
 								eclosure.add(newToken2)
 								stack.push(newToken2)
 							}
@@ -90,10 +95,10 @@ class AutomatonExecutioner {
 			
 //			reduceTokens
 			
-			println("Automaton " + a.name + "s state:")
+			log.println("Automaton " + a.name + "s state:")
 			a.states.forEach[state | 
 				if(state.tokens.length != 0)
-					println("\tToken on " + state.id)
+					log.println("\tToken on " + state.id)
 //				token.parameters.forEach[it.printParameter]
 //				println("-------------") //TODO add parameters
 			]
@@ -101,7 +106,7 @@ class AutomatonExecutioner {
 			
 			a.states.filter[it.acceptor].forEach[
 				if(it.tokens.length!= 0){
-					println("\tA token has been accepted")
+					log.println("\tA token has been accepted")
 				}
 			]
 		}
@@ -109,7 +114,7 @@ class AutomatonExecutioner {
 	
 	def reduceTokens() {
 		val tokens = new HashSet<Token>
-		a.states.forEach[it.tokens.forEach[tokens.add(it)]]		
+		a.states.forEach[it.tokens.forEach[tokens.add(it)]]
 		val equivalents = new HashSet<HashSet<Token>> 
 		tokens.forEach[token1 | tokens.forEach [token2 | 
 			if(token1.on == token2.on){
@@ -219,18 +224,18 @@ class AutomatonExecutioner {
 //	}
 
 
-// Util stuff
-	def dispatch printParameter(FixParameter param) {
-		println("FIX = " + param.value)
-	}
-
-	def dispatch printParameter(FreeParameter param) {
-		print("FREE = {")
-		for (value : param.excludedValues)
-			print(value.toString + ", ")
-		println("}")
-
-	}
+// TODO Util stuff
+//	def dispatch printParameter(FixParameter param) {
+//		println("FIX = " + param.value)
+//	}
+//
+//	def dispatch printParameter(FreeParameter param) {
+//		print("FREE = {")
+//		for (value : param.excludedValues)
+//			print(value.toString + ", ")
+//		println("}")
+//
+//	}
 
 	public static def epsilonClosure(State s){
 		var list = new ArrayList<State>

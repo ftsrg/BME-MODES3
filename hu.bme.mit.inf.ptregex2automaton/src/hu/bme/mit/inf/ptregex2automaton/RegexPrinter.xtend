@@ -11,6 +11,7 @@ import hu.bme.mit.inf.parametricTimedRegularExpression.Star
 import hu.bme.mit.inf.parametricTimedRegularExpression.TimedExpression
 import hu.bme.mit.inf.parametricTimedRegularExpression.Expression
 import hu.bme.mit.inf.parametricTimedRegularExpression.And
+import hu.bme.mit.inf.parametricTimedRegularExpression.NegExpression
 
 class RegexPrinter {
 	def static public String regexToString(RegexModel input) {
@@ -22,6 +23,10 @@ class RegexPrinter {
 
 	def static private dispatch String printExpression(ExpressionDeclaration declaration) {
 		'''«declaration.name» = «printExpression(declaration.body)»'''
+	}
+	
+	def static private dispatch String printExpression(NegExpression neg){
+		'''(!«printExpression(neg.body)»)'''
 	}
 
 	def static private dispatch String printExpression(TimedExpression timed) {

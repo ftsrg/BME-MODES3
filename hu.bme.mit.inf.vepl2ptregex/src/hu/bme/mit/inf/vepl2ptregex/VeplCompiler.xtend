@@ -30,7 +30,7 @@ class VeplCompiler {
 	val inputEventTrace = new HashMap<AtomicEventPattern,Functor>
 	
 	new(){
-		retvalue.alphabet = createAlphabet //TODO y?
+		retvalue.alphabet = createAlphabet
 	}
 	
 	def public RegexModel compile(EventModel input){
@@ -131,9 +131,13 @@ class VeplCompiler {
 			var timedExpression = createTimedExpression
 			timedExpression.body = retvalue
 			timedExpression.timeout = unaries.timewindow.length
+			retvalue = timedExpression
 		}
 		if(unaries.negOperator != null){
-			throw new UnsupportedOperationException
+//			throw new UnsupportedOperationException
+			val negated = createNegExpression
+			negated.body = retvalue
+			retvalue = negated
 		}
 		
 		return retvalue
