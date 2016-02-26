@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.ptregex2automaton
+package hu.bme.mit.inf
 
 import hu.bme.mit.inf.parametricTimedRegularExpression.Any
 import hu.bme.mit.inf.parametricTimedRegularExpression.Choice
