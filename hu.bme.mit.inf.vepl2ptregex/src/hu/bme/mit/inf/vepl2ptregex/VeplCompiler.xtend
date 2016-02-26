@@ -148,7 +148,10 @@ class VeplCompiler {
 		var retvalue = createSequence
 		retvalue.elements.add(left)
 		if(context == ContextEnum.CHRONICLE){
-			//TODO
+			var star = createStar
+			var anything = createAny
+			star.body = anything
+			retvalue.elements.add(star)
 		}		
 		retvalue.elements.add(right)
 		return retvalue
@@ -156,7 +159,10 @@ class VeplCompiler {
 
 	def dispatch Expression operate(Sequence left, Expression right, FollowsOperator operator, ContextEnum context) {
 		if(context == ContextEnum.CHRONICLE){
-			//TODO
+			var star = createStar
+			var anything = createAny
+			star.body = anything
+			left.elements.add(star)
 		}		
 		left.elements.add(right)
 		return left
