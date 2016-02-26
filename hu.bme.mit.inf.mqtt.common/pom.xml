@@ -25,7 +25,7 @@
             <version>2.5</version>
         </dependency>
         <dependency>
-            <groupId>apache-log4j</groupId>
+            <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
         </dependency>

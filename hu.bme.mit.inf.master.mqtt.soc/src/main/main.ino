@@ -1,22 +1,10 @@
 /**
  * includes for MQTT
  */
-#include <StackTrace.h>
-#include <Countdown.h>
-#include <FP.h>
-#include <MQTTUnsubscribe.h>
-#include <MQTTConnect.h>
-#include <MQTTClient.h>
-#include <MQTTPublish.h>
-#include <WifiIPStack.h>
-#include <MQTTSubscribe.h>
-#include <IPStack.h>
-#include <MQTTFormat.h>
-#include <MQTTLogging.h>
-#include <MQTTPacket.h>
 #include <Ethernet.h>
-
-#include <ArduinoJson.h>
+#include <IPStack.h>
+#include <Countdown.h>
+#include <MQTTClient.h>
 
 /**
  * include for serial debug
@@ -26,10 +14,8 @@
 /**
  * defines for MQTT and debug
  */
-#define MQTT_PACKET_SIZE 256
 #define SOC_REFRESH_WAIT 200
 #define SERIAL_BAUD_RATE 9600
-
 
 /**
  * defines for SOC and S88
@@ -164,15 +150,18 @@ void S88_readOccupancy() {
     delayMicroseconds((SOC_CYCLE_COUNT + 2) * SOC_CLOCK_TIME_US);
 }
 
-/****************************************************************************
+/************************************************************************************
  * 
- * functions for MQTT:
+ * functions for MQTT: messageArrived(MQTT:MessageData&), connect(), sendOccupancy()
  * 
- * defines for MQTT: 
+ * defines for MQTT: SOC_REFRESH_WAIT
  *                  
- * global variables for MQTT: 
+ * global variables for MQTT: MQTT_PACKET_SIZE, c, ipstack, client, mac[], ip,
+ *                            clientId, hostname, topic, port
  * 
- ***************************************************************************/
+ ************************************************************************************/
+
+const byte MQTT_PACKET_SIZE = 200;
 
 EthernetClient c;
 IPStack ipstack(c);
@@ -180,11 +169,17 @@ MQTT::Client<IPStack, Countdown, MQTT_PACKET_SIZE, 1> client = MQTT::Client<IPSt
 
 //            K     V     192   168   1     160
 byte mac[] = {0x5B, 0x56, 0xC0, 0xA8, 0x01, 0xA0};
+IPAddress ip(192, 168, 0, 160);
 
 const char* clientId = "arduinoSOC";
-const char* hostname = "localhost";
+const char* hostname = "192.168.0.120";
 const char* topic = "modes3/kvcontrol";
 const int port = 1883;
+
+void messageArrived(MQTT::MessageData& md)
+{
+  
+}
 
 /**
  * MQTT connect
@@ -196,31 +191,16 @@ void connect()
   Serial.print(":");
   Serial.println(port);
  
-  int rc = ipstack.connect((char*)hostname, (int)port);
-  if (rc != 1)
-  {
-    Serial.print("rc from TCP connect is ");
-    Serial.println(rc);
-  }
- 
+  byte rc = ipstack.connect((char*)hostname, (int)port);
   Serial.println("MQTT connecting");
+  
   MQTTPacket_connectData data = MQTTPacket_connectData_initializer;       
   data.MQTTVersion = 3;
   data.clientID.cstring = (char*)clientId;
   rc = client.connect(data);
-  if (rc != 0)
-  {
-    Serial.print("rc from MQTT connect is ");
-    Serial.println(rc);
-  }
   Serial.println("MQTT connected");
   
-  rc = client.subscribe(topic, MQTT::QOS2, messageArrived);   
-  if (rc != 0)
-  {
-    Serial.print("rc from MQTT subscribe is ");
-    Serial.println(rc);
-  }
+  rc = client.subscribe(topic, MQTT::QOS1, messageArrived);   
   Serial.println("MQTT subscribed");
 }
 
@@ -230,46 +210,44 @@ void connect()
 void sendOccupancy(){
   // read the occupancy into the sensor global variable
   S88_readOccupancy();
-  
-  // Memory pool for JSON object tree.
-  //
-  // Inside the brackets, MQTT_PACKET_SIZE is the size of the pool in bytes,
-  // If the JSON object is more complex, you need to increase that value.
-  StaticJsonBuffer<MQTT_PACKET_SIZE> jsonBuffer;
+
+  // sensor = 4294967295; // debug value, all sections are occupied
 
   // create the occupancy JSON structure
-  // sample: {"command":"SEND_OCCUPANCY","content":"{\"sections\":[{\"id\":12,\"occupancyStatus\":\"FREE\"},{\"id\":13,\"occupancyStatus\":\"OCCUPIED\"}]}"}
-  JsonObject& root = jsonBuffer.createObject();
-  root["command"] = "SEND_OCCUPANCY";
-  JsonObject& content = root.createNestedObject("content");
-  JsonArray& sections = content.createNestedArray("sections");
+  // sample: {"command":"SEND_OCCUPANCY","content":"{\"occupancyVector\":[1,2,3,4]}"}
+  String base = "{\"command\":\"SEND_OCCUPANCY\",\"content\":\"{\\\"occupancyVector\\\":[";
   
-  unsigned byte offset = 1;
-  for(offset = 1; offset < 0x18; ++offset){
-    JsonObject& section = sections.createNestedObject();
-    section["id"] = id;
-    
-    if(((sensor & (1 << offset)) >> offset) == 1){
-      section["occupancyStatus"] = "OCCUPIED";
-    } else{
-      section["occupancyStatus"] = "FREE";
-    }
+  // we transfer 4 bytes always
+  for (byte i = 0; i < 4; i++) {
+     // cut the lowest 8 bits
+     byte tmp = sensor & 0xFF;
+     base.concat(tmp);
+     if(i < 3){
+      base.concat(",");
+     }
+     // shift the sensor with 8 bits
+     sensor >>= 8;
   }
+  base.concat("]}\"}");
+
+
+  int len = base.length()+1;
+  char buf[len];
+  base.toCharArray(buf,len);
+  Serial.println(buf);
 
   // send the json over MQTT
   MQTT::Message message;
   message.qos = MQTT::QOS1;
   message.retained = false;
   message.dup = false;
-  
-  char buf[MQTT_PACKET_SIZE];
-  root.printTo(buf, sizeof(buf));
-  
+
   message.payload = (void*)buf;
-  message.payloadlen = strlen(buf)+1;
+  message.payloadlen = strlen(buf);
 
   if (!client.isConnected())
     connect();
+
   client.publish(topic, message);
 }
 
@@ -280,7 +258,7 @@ void setup() {
   // initialize serial debug
   Serial.begin(SERIAL_BAUD_RATE);
   // connect to MQTT
-  Ethernet.begin(mac);
+  Ethernet.begin(mac, ip);
   connect(); 
   // initialize S88 protocol for getting the sections occupancies
   S88_Init();
