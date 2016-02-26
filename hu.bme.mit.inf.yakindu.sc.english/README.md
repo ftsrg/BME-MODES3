@@ -85,4 +85,4 @@ For the english turnout a separate statechart has been designed, that is in the 
 * [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client): to communicate with the other state machines
 
 ## Target Platform ##
-JRE 1.7
+JRE 1.8

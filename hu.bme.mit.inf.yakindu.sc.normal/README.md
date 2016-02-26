@@ -88,4 +88,4 @@ For the normal turnouts a general statechart (model) has been designed, that is 
 * [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client): to communicate with the other state machines
 
 ## Target Platform ##
-JRE 1.7
+JRE 1.8

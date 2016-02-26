@@ -17,8 +17,8 @@ Add the library as a dependency to a Java project.
 ## Dependants
 
  * [PiClient](https://github.com/FTSRG/BME-MODES3/tree/master/piclient_v4)
- * [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes)
- * [BridgePoint-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/bridgepoint-codes)
+ * [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/yakindu-codes)
+ * [BridgePoint-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/bridgepoint-codes)
  
 ## Dependencies
 
