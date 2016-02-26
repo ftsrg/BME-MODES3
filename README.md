@@ -13,6 +13,8 @@ Modules stored in the repository:
 * [KVControl](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol)
 * [KVControl-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.kvcontrol.mqtt.client)
 * [KVControl-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol-requestsender)
+* [Master-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.client)
+* [Master-MQTT-SOC](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.soc)
 * [Masters](https://github.com/FTSRG/BME-MODES3/tree/master/masters)
 * [MQTT-Common](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.mqtt.common)
 * [PiClient](https://github.com/FTSRG/BME-MODES3/tree/master/piclient_v4)
