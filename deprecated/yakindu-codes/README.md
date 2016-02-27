@@ -93,7 +93,7 @@ For the english turnout a separate statechart has been designed, that is in the 
 ## Dependencies ##
 
 * [JOpt Simple](http://pholser.github.io/jopt-simple/download.html): handling command-line arguments correctly
-* [KVControl-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol-requestsender): to communicate with KVControl
+* [KVControl-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/kvcontrol-requestsender): to communicate with KVControl
 * [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client): to communicate with the other state machines
 
 ## Target Platform ##
