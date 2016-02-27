@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.bme.mit.inf.piclient.ui;
 
 import hu.bme.mit.inf.piclient.util.TurnoutCache;
@@ -13,9 +8,8 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
-import hu.bme.mit.inf.kvcontrol.data.Relations;
-import hu.bme.mit.inf.kvcontrol.entities.Section;
-import hu.bme.mit.inf.kvcontrol.exceptions.NotFoundException;
+import hu.bme.mit.inf.mqtt.common.data.Section;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import org.apache.batik.swing.JSVGCanvas;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
@@ -24,6 +18,10 @@ import org.w3c.dom.svg.SVGDocument;
 import hu.bme.mit.inf.piclient.Application;
 import static hu.bme.mit.inf.piclient.Application.findStrokePattern;
 import static hu.bme.mit.inf.piclient.Application.sections;
+import static hu.bme.mit.inf.piclient.ui.SettingsWindow.occupancyControllerProxy;
+import static hu.bme.mit.inf.piclient.ui.SettingsWindow.sectionControllerProxy;
+import static hu.bme.mit.inf.piclient.ui.SettingsWindow.turnoutControllerProxy;
+import hu.bme.mit.inf.piclient.data.Relations;
 
 /**
  *
@@ -44,7 +42,7 @@ public class SVGRefresher implements Runnable {
         "0x14L", "0x15L", "0x16L", "0x17L"
     };
 
-    private HashMap<Integer, TurnoutCache> turnouts;
+    private final HashMap<Integer, TurnoutCache> turnouts;
 
     public SVGRefresher(JSVGCanvas canvas) {
         this.canvas = canvas;
@@ -66,72 +64,79 @@ public class SVGRefresher implements Runnable {
             try {
                 this.canvas.wait();
             } catch (InterruptedException ex) {
-                Logger.getLogger(SVGRefresher.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SVGRefresher.class.getName()).log(Level.SEVERE,
+                        null, ex);
             }
         }
         svgDocument = canvas.getSVGDocument();
 
-        RailwayWindow.log("Thread@" + Thread.currentThread().getName() + " started(svg turnout refresher)");
-        while (true) {
+        RailwayWindow.log(
+                "Thread@" + Thread.currentThread().getName() + " started(svg turnout refresher)");
+        while (!Thread.currentThread().isInterrupted()) {
 
             try {
                 Thread.sleep(100);
-                if (SettingsWindow.sectionController != null) {
+                if (sectionControllerProxy != null) {
                     refreshSections();
                 }
                 Thread.sleep(100);
-                if (SettingsWindow.occupancyController != null) {
+                if (occupancyControllerProxy != null) {
                     refreshOccupancy();
                 }
-
-                if (SettingsWindow.turnoutController != null) {
+                Thread.sleep(100);
+                if (turnoutControllerProxy != null) {
                     refreshTurnouts();
                 }
 
-                // need one mouse event to refresh svg
-                MouseEvent me = new MouseEvent(canvas, MouseEvent.MOUSE_MOVED, 0, 0, 100, 100, 1, false);
-                canvas.getMouseListeners()[0].mouseEntered(me);
+                refreshSVG();
 
+                Thread.sleep(SettingsWindow.Configuration.heartbeatTimeout - 300);
             } catch (InterruptedException ex) {
-                Logger.getLogger(SVGRefresher.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NotFoundException ex) {
-                Logger.getLogger(SVGRefresher.class.getName()).log(Level.SEVERE, null, ex);
+                logException(getClass().getName(), ex);
+                Thread.currentThread().interrupt();
             }
         }
     }
 
-    private void refreshSections() {
+    private void refreshSVG() {
+        // need one mouse event to refresh svg
+        MouseEvent me = new MouseEvent(canvas, MouseEvent.MOUSE_MOVED, 0,
+                0, 100, 100, 1, false);
+        canvas.getMouseListeners()[0].mouseEntered(me);
+    }
+
+    private void refreshSections() throws InterruptedException {
         for (Section section : sections.values()) {
-            String color = section.isEnabled() ? SettingsWindow.SECTION_ENABLED_COLOR : SettingsWindow.SECTION_DISABLED_COLOR;
-            Element elem = svgDocument.getElementById(Relations.getKey(section.getID()));
+            boolean isEnabled = SettingsWindow.sectionControllerProxy.isSectionEnabled(
+                    section.getId());
+
+            String color = isEnabled ? SettingsWindow.SECTION_ENABLED_COLOR : SettingsWindow.SECTION_DISABLED_COLOR;
+            Element elem = svgDocument.getElementById(Relations.getKey(
+                    section.getId()));
             this.changeElementColor(elem, "stroke", color, false);
         }
-    } // refreshSections
+    }
 
-    private void refreshOccupancy() throws DOMException {
+    private void refreshOccupancy() throws DOMException, InterruptedException {
 
         // refresh occupancy display
         for (int i = 0; i < occupancyVector.length; i++) {
             String locoObjectID = occupancyVector[i];
 
             if (!locoObjectID.equals("NOP")) {
-                boolean sectionOccupied = false;
-                synchronized (SettingsWindow.occupancyController) {
-                    try {
-                        sectionOccupied = SettingsWindow.occupancyController.isSectionOccupied(i);
-                    } catch (NotFoundException ex) {
-                        Logger.getLogger(SVGRefresher.class
-                                .getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+                boolean sectionOccupied = occupancyControllerProxy.isSectionOccupied(
+                        i);
 
                 Element elem = svgDocument.getElementById(locoObjectID);
-                this.changeElementColor(elem, "fill", sectionOccupied ? SettingsWindow.OCCUPANCY_BACKGROUND : "FFFFFF", false);
+                this.changeElementColor(elem, "fill",
+                        sectionOccupied ? SettingsWindow.OCCUPANCY_BACKGROUND : "FFFFFF",
+                        false);
             }
         }
-    } // refreshOccupancy
+    }
 
-    private void changeElementColor(Element elem, String attr, String color, boolean bringToFront) {
+    private void changeElementColor(Element elem, String attr, String color,
+            boolean bringToFront) {
         if (elem != null) {
 
             Matcher m = null;
@@ -140,7 +145,8 @@ public class SVGRefresher implements Runnable {
                     m = findStrokePattern.matcher(elem.getAttribute("style"));
                     break;
                 case "fill":
-                    m = Application.findFillPattern.matcher(elem.getAttribute("style"));
+                    m = Application.findFillPattern.matcher(elem.getAttribute(
+                            "style"));
                     break;
             }
 
@@ -154,9 +160,9 @@ public class SVGRefresher implements Runnable {
                 }
             }
         }
-    } // changeElementColor
+    }
 
-    private void refreshTurnouts() throws NotFoundException {
+    private void refreshTurnouts() throws InterruptedException {
 
         for (Map.Entry<Integer, TurnoutCache> turnout : turnouts.entrySet()) {
             Integer turnoutID = turnout.getKey();
@@ -168,16 +174,14 @@ public class SVGRefresher implements Runnable {
             }
 
             // normal turnouts
-            boolean isDivergent = false;
-            synchronized (SettingsWindow.turnoutController) {
-                isDivergent = SettingsWindow.turnoutController.isTurnoutDivergent(turnoutID);
-            }
+            boolean isDivergent = turnoutControllerProxy.isTurnoutDivergent(
+                    turnoutID);
 
             this.changeTurnout(turnoutID, turnoutCache, isDivergent);
         }
     }
 
-    private void changeXTurnout() throws NotFoundException {
+    private void changeXTurnout() {
         String[] elements = {"0x86E", "0x86K", "0x87E", "0x87K"};
         Element elem;
         String change = "NOP";
@@ -186,13 +190,8 @@ public class SVGRefresher implements Runnable {
         TurnoutCache c86 = turnouts.get(0x86);
         TurnoutCache c87 = turnouts.get(0x87);
 
-        boolean div86;
-        boolean div87;
-
-        synchronized (SettingsWindow.turnoutController) {
-            div86 = SettingsWindow.turnoutController.isTurnoutDivergent(0x86);
-            div87 = SettingsWindow.turnoutController.isTurnoutDivergent(0x87);
-        }
+        boolean div86 = turnoutControllerProxy.isTurnoutDivergent(0x86);
+        boolean div87 = turnoutControllerProxy.isTurnoutDivergent(0x87);
 
         if (div86 && div87 && (!c86.isDivergent() || !c87.isDivergent())) {
             change = "0x87E";
@@ -224,26 +223,32 @@ public class SVGRefresher implements Runnable {
             // all element to inactive
             for (String elemID : elements) {
                 elem = this.svgDocument.getElementById(elemID);
-                this.changeElementColor(elem, "stroke", SettingsWindow.TURNOUT_DEACTIVE_BRANCH_COLOR, false);
+                this.changeElementColor(elem, "stroke",
+                        SettingsWindow.TURNOUT_DEACTIVE_BRANCH_COLOR, false);
             }
-            RailwayWindow.log("X turnout changed to <br>route "+route);
+            RailwayWindow.log("X turnout changed to <br>route " + route);
             elem = this.svgDocument.getElementById(change);
-            this.changeElementColor(elem, "stroke", SettingsWindow.TURNOUT_ACTIVE_BRANCH_COLOR, true);
+            this.changeElementColor(elem, "stroke",
+                    SettingsWindow.TURNOUT_ACTIVE_BRANCH_COLOR, true);
         }
-
     }
 
-    private void changeTurnout(int turnoutID, TurnoutCache cache, boolean isDivergent) {
+    private void changeTurnout(int turnoutID, TurnoutCache cache,
+            boolean isDivergent) {
         Element elem;
 
         if (isDivergent && !cache.isDivergent()) {
             RailwayWindow.log("changing turnout #" + turnoutID + " to divergent");
 
-            elem = this.svgDocument.getElementById(String.format("0x%02XK", turnoutID));
-            this.changeElementColor(elem, "stroke", SettingsWindow.TURNOUT_DEACTIVE_BRANCH_COLOR, false);
+            elem = this.svgDocument.getElementById(String.format("0x%02XK",
+                    turnoutID));
+            this.changeElementColor(elem, "stroke",
+                    SettingsWindow.TURNOUT_DEACTIVE_BRANCH_COLOR, false);
 
-            elem = this.svgDocument.getElementById(String.format("0x%02XE", turnoutID));
-            this.changeElementColor(elem, "stroke", SettingsWindow.TURNOUT_ACTIVE_BRANCH_COLOR, true);
+            elem = this.svgDocument.getElementById(String.format("0x%02XE",
+                    turnoutID));
+            this.changeElementColor(elem, "stroke",
+                    SettingsWindow.TURNOUT_ACTIVE_BRANCH_COLOR, true);
 
             // refresh cache by overwriting the previous cache value
             cache = TurnoutCache.DIVERGENT;
@@ -251,16 +256,19 @@ public class SVGRefresher implements Runnable {
         } else if (!isDivergent && !cache.isStraight()) {
             RailwayWindow.log("changing turnout #" + turnoutID + " to straight");
 
-            elem = this.svgDocument.getElementById(String.format("0x%02XE", turnoutID));
-            this.changeElementColor(elem, "stroke", SettingsWindow.TURNOUT_DEACTIVE_BRANCH_COLOR, false);
+            elem = this.svgDocument.getElementById(String.format("0x%02XE",
+                    turnoutID));
+            this.changeElementColor(elem, "stroke",
+                    SettingsWindow.TURNOUT_DEACTIVE_BRANCH_COLOR, false);
 
-            elem = this.svgDocument.getElementById(String.format("0x%02XK", turnoutID));
-            this.changeElementColor(elem, "stroke", SettingsWindow.TURNOUT_ACTIVE_BRANCH_COLOR, true);
+            elem = this.svgDocument.getElementById(String.format("0x%02XK",
+                    turnoutID));
+            this.changeElementColor(elem, "stroke",
+                    SettingsWindow.TURNOUT_ACTIVE_BRANCH_COLOR, true);
 
             // refresh cache by overwriting the previous cache value
             cache = TurnoutCache.STRAIGHT;
             turnouts.put(turnoutID, cache);
         }
     }
-
 }

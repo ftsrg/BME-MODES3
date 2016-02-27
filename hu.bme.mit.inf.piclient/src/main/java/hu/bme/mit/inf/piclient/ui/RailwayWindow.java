@@ -10,11 +10,6 @@ import javax.swing.JScrollBar;
 import org.apache.batik.swing.JSVGCanvas;
 import hu.bme.mit.inf.piclient.Application;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  *
  * @author zsoltmazlo
@@ -22,7 +17,7 @@ import hu.bme.mit.inf.piclient.Application;
 public class RailwayWindow extends javax.swing.JFrame {
 
     private final JSVGCanvas canvas = new JSVGCanvas();
-    private final String svgFileName = "resources/layout.svg";
+    private final String svgFileName = "/hu/bme/mit/inf/piclient/ui/layout.svg";
 
     /**
      * Creates new form Application
@@ -38,7 +33,7 @@ public class RailwayWindow extends javax.swing.JFrame {
         canvas.addSVGLoadEventDispatcherListener(new SVGLoadAdapter(canvas, this));
         canvas.setPreferredSize(this.canvasHolder.getSize());
         canvas.setSize(this.canvasHolder.getSize());
-        canvas.setURI(svgFile.toURI().toString());
+        canvas.setURI(RailwayWindow.class.getResource(svgFileName).toString());
         canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 
         RailwayWindow.consoleHolder.setLayout(new BoxLayout(RailwayWindow.consoleHolder, BoxLayout.Y_AXIS));

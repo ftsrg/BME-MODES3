@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.bme.mit.inf.piclient;
 
 import java.awt.Color;
@@ -13,12 +8,12 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.border.Border;
-import hu.bme.mit.inf.kvcontrol.data.Relations;
-import hu.bme.mit.inf.kvcontrol.entities.Section;
+import hu.bme.mit.inf.mqtt.common.data.Section;
+import hu.bme.mit.inf.piclient.data.Relations;
 
 /**
  *
- * @author zsoltmazlo
+ * @author zsoltmazlo, benedekh
  */
 public class Application {
     
@@ -53,26 +48,11 @@ public class Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+        
         // start GUI
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-
-//                try {
-//                    // stílus beállítása az ablakokra
-////                    UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-//
-//                    SynthLookAndFeel laf = new SynthLookAndFeel();
-//                    laf.load(RailwayWindow.class.getResourceAsStream("theme.xml"), RailwayWindow.class);
-//                    UIManager.setLookAndFeel(laf);
-//
-//                } catch (UnsupportedLookAndFeelException ex) {
-//                    Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (ParseException ex) {
-//                    Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-
                 RailwayWindow gui = new RailwayWindow();
                 gui.setVisible(true);
                 gui.startTurnoutRefresherThread();

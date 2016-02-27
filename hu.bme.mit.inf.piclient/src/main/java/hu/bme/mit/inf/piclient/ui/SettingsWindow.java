@@ -1,77 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.bme.mit.inf.piclient.ui;
 
 import java.awt.Color;
-import java.io.IOException;
-import java.util.concurrent.ConcurrentMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JColorChooser;
-import javax.swing.JOptionPane;
-import hu.bme.mit.inf.kvcontrol.CommandServer;
-import hu.bme.mit.inf.kvcontrol.controllers.OccupancyController;
-import hu.bme.mit.inf.kvcontrol.controllers.SectionController;
-import hu.bme.mit.inf.kvcontrol.controllers.TurnoutController;
-import hu.bme.mit.inf.kvcontrol.entities.Section;
-import hu.bme.mit.inf.kvcontrol.exceptions.NotFoundException;
-import hu.bme.mit.inf.kvcontrol.interfaces.IController;
-import hu.bme.mit.inf.kvcontrol.interfaces.IOccupancyController;
-import hu.bme.mit.inf.kvcontrol.interfaces.ISectionController;
-import hu.bme.mit.inf.kvcontrol.interfaces.ITurnoutController;
-import hu.bme.mit.inf.kvcontrol.requests.AbstractRequest;
-import hu.bme.mit.inf.kvcontrol.senders.OccupancyRequestSender;
-import hu.bme.mit.inf.kvcontrol.senders.SectionStateRequestSender;
-import hu.bme.mit.inf.kvcontrol.senders.TurnoutDirectionRequestSender;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.piclient.Application;
 
 /**
  *
- * @author zsoltmazlo
+ * @author zsoltmazlo, benedekh
  */
 public class SettingsWindow extends javax.swing.JFrame {
 
     public static String TURNOUT_ACTIVE_BRANCH_COLOR = "000000";
     public static String TURNOUT_DEACTIVE_BRANCH_COLOR = "a8a8a8";
-//    public static String SECTION_DISABLED_COLOR = "DD0000";
-//    public static String SECTION_ENABLED_COLOR = "669900";
     public static String SECTION_DISABLED_COLOR = "FF0000";
     public static String SECTION_ENABLED_COLOR = "00CC00";
     public static String OCCUPANCY_BACKGROUND = "000000";
 
-    public static ITurnoutController turnoutController;
-    public static IOccupancyController occupancyController;
-    public static ISectionController sectionController;
-    
-    private static final String REMOTE_SERVER_ADDRESS_PREFIX = "http://";
-
-    private static final HeartBeatRunnable heartBeats = new HeartBeatRunnable(new Object());
-
-    private enum ConnectionType {
-
-        RemoteServer,
-        LocalServer,
-        Library
-    };
+    public static TurnoutControllerProxy turnoutControllerProxy;
+    public static OccupancyControllerProxy occupancyControllerProxy;
+    public static SectionControllerProxy sectionControllerProxy;
 
     public static class Configuration {
 
-        // kiszolgáló server címe
-        public static String address;
+        // mqttConfiguration information for the MQTT broker
+        public static MQTTConfiguration mqttConfiguration;
 
-        // kiszolgáló server port-ja
-        public static int port;
-
-        //  local szerver esetén mennyi lesz a timeout
+        //  how often shall we refresh the values
         public static int heartbeatTimeout = 800;
-
-        public static ConnectionType connectionType;
     }
-
-    public static CommandServer server;
 
     /**
      * Creates new form Settings
@@ -79,7 +39,6 @@ public class SettingsWindow extends javax.swing.JFrame {
     public SettingsWindow() {
         initComponents();
         getContentPane().setBackground(Application.pageBackground);
-        Configuration.connectionType = ConnectionType.RemoteServer;
     }
 
     /**
@@ -92,6 +51,7 @@ public class SettingsWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel4 = new javax.swing.JPanel();
+        remoteServerIP1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         turnoutStatusPolling = new javax.swing.JCheckBox();
@@ -118,16 +78,14 @@ public class SettingsWindow extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         pollingInterval = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        remoteServer = new javax.swing.JRadioButton();
-        remoteServerIP = new javax.swing.JTextField();
+        mqttTopicField = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        remoteServerPortField = new javax.swing.JTextField();
-        localServer = new javax.swing.JRadioButton();
+        mqttPortField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        localPort = new javax.swing.JTextField();
-        localConnectDirectly = new javax.swing.JCheckBox();
-        directServer = new javax.swing.JRadioButton();
+        mqttProtocolField = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        mqttAddressField = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -139,6 +97,8 @@ public class SettingsWindow extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        remoteServerIP1.setText("localhost");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -457,70 +417,34 @@ public class SettingsWindow extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Connection", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, Application.titleFont, Application.titleForeground));
         jPanel6.setForeground(new java.awt.Color(255, 255, 255));
 
-        remoteServer.setBackground(Application.pageBackground);
-        remoteServer.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
-        remoteServer.setForeground(Application.labelForeground);
-        remoteServer.setSelected(true);
-        remoteServer.setText("Connect to remote server");
-        remoteServer.setToolTipText("Connects to a remote control server, and sending REST calls over HTTP.");
-        remoteServer.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                remoteServerStateChanged(evt);
-            }
-        });
+        mqttTopicField.setText("modes3/kvcontrol");
 
         jLabel11.setBackground(Application.pageBackground);
         jLabel11.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
         jLabel11.setForeground(Application.labelForeground);
-        jLabel11.setText("Server:");
+        jLabel11.setText("Address:");
 
         jLabel12.setBackground(Application.pageBackground);
         jLabel12.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
         jLabel12.setForeground(Application.labelForeground);
         jLabel12.setText("Port:");
 
-        remoteServerPortField.setText("8080");
-        remoteServerPortField.setToolTipText("");
-
-        localServer.setBackground(Application.pageBackground);
-        localServer.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
-        localServer.setForeground(Application.labelForeground);
-        localServer.setText("Create local server");
-        localServer.setToolTipText("Creates an local server to receive REST calls.");
-        localServer.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                localServerStateChanged(evt);
-            }
-        });
+        mqttPortField.setText("1883");
+        mqttPortField.setToolTipText("");
 
         jLabel13.setBackground(Application.pageBackground);
         jLabel13.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
         jLabel13.setForeground(Application.labelForeground);
-        jLabel13.setText("Port:");
+        jLabel13.setText("Protocol:");
 
-        localPort.setText("8080");
-        localPort.setEnabled(false);
+        mqttProtocolField.setText("tcp");
 
-        localConnectDirectly.setBackground(Application.pageBackground);
-        localConnectDirectly.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
-        localConnectDirectly.setForeground(Application.labelForeground);
-        localConnectDirectly.setSelected(true);
-        localConnectDirectly.setText("Connect directly:");
-        localConnectDirectly.setToolTipText("When local server created, all client could connect to with REST calls. If this checked, the piClient will not send REST calls rather calling directly the server's functionallity.");
-        localConnectDirectly.setEnabled(false);
-        localConnectDirectly.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        localConnectDirectly.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jLabel14.setBackground(Application.pageBackground);
+        jLabel14.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
+        jLabel14.setForeground(Application.labelForeground);
+        jLabel14.setText("Topic:");
 
-        directServer.setBackground(Application.pageBackground);
-        directServer.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
-        directServer.setForeground(Application.labelForeground);
-        directServer.setText("Direct connection");
-        directServer.setToolTipText("Uses the control library directly.");
-        directServer.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                directServerStateChanged(evt);
-            }
-        });
+        mqttAddressField.setText("localhost");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -528,52 +452,41 @@ public class SettingsWindow extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mqttPortField))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mqttProtocolField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(remoteServer)
-                            .addComponent(directServer)
-                            .addComponent(localServer))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(remoteServerIP)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(remoteServerPortField, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(localPort, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(localConnectDirectly)))))
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mqttAddressField)
+                    .addComponent(mqttTopicField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(remoteServer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(remoteServerIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addComponent(remoteServerPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(localServer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mqttProtocolField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
-                    .addComponent(localPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(localConnectDirectly))
-                .addGap(10, 10, 10)
-                .addComponent(directServer))
+                    .addComponent(jLabel11)
+                    .addComponent(mqttAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(mqttPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mqttTopicField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -585,11 +498,6 @@ public class SettingsWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(pauseHeartBeat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(startHeartBeat))
                     .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
@@ -598,7 +506,12 @@ public class SettingsWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10))
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pauseHeartBeat)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(startHeartBeat)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -612,7 +525,7 @@ public class SettingsWindow extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -631,7 +544,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
     private void turnoutActiveBranchColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_turnoutActiveBranchColorMouseClicked
         Color prevColor = Color.decode("0x" + TURNOUT_ACTIVE_BRANCH_COLOR);
-        Color newColor = JColorChooser.showDialog(null, "Pick a color", prevColor);
+        Color newColor = JColorChooser.showDialog(null, "Pick a color",
+                prevColor);
         if (newColor != null) {
             turnoutActiveBranchColor.setBackground(newColor);
             int rgb = newColor.getRGB();
@@ -641,17 +555,20 @@ public class SettingsWindow extends javax.swing.JFrame {
 
     private void turnoutDeactiveBranchColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_turnoutDeactiveBranchColorMouseClicked
         Color prevColor = Color.decode("0x" + TURNOUT_DEACTIVE_BRANCH_COLOR);
-        Color newColor = JColorChooser.showDialog(null, "Pick a color", prevColor);
+        Color newColor = JColorChooser.showDialog(null, "Pick a color",
+                prevColor);
         if (newColor != null) {
             turnoutDeactiveBranchColor.setBackground(newColor);
             int rgb = newColor.getRGB();
-            TURNOUT_DEACTIVE_BRANCH_COLOR = String.format("%06X", rgb).substring(2);
+            TURNOUT_DEACTIVE_BRANCH_COLOR = String.format("%06X", rgb).substring(
+                    2);
         }
     }//GEN-LAST:event_turnoutDeactiveBranchColorMouseClicked
 
     private void lockedSectionColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lockedSectionColorMouseClicked
         Color prevColor = Color.decode("0x" + SECTION_DISABLED_COLOR);
-        Color newColor = JColorChooser.showDialog(null, "Pick a color", prevColor);
+        Color newColor = JColorChooser.showDialog(null, "Pick a color",
+                prevColor);
         if (newColor != null) {
             lockedSectionColor.setBackground(newColor);
             int rgb = newColor.getRGB();
@@ -661,7 +578,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
     private void unlockedSectionColorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_unlockedSectionColorMouseClicked
         Color prevColor = Color.decode("0x" + SECTION_ENABLED_COLOR);
-        Color newColor = JColorChooser.showDialog(null, "Pick a color", prevColor);
+        Color newColor = JColorChooser.showDialog(null, "Pick a color",
+                prevColor);
         if (newColor != null) {
             unlockedSectionColor.setBackground(newColor);
             int rgb = newColor.getRGB();
@@ -671,7 +589,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
     private void locoObjectBackgroundMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_locoObjectBackgroundMouseClicked
         Color prevColor = Color.decode("0x" + OCCUPANCY_BACKGROUND);
-        Color newColor = JColorChooser.showDialog(null, "Pick a color", prevColor);
+        Color newColor = JColorChooser.showDialog(null, "Pick a color",
+                prevColor);
         if (newColor != null) {
             locoObjectBackground.setBackground(newColor);
             int rgb = newColor.getRGB();
@@ -684,186 +603,63 @@ public class SettingsWindow extends javax.swing.JFrame {
         this.pollingInterval.setText(newValue + "ms");
         if (!jSlider1.getValueIsAdjusting()) {
             Configuration.heartbeatTimeout = newValue;
-            SettingsWindow.heartBeats.setPollingInterval(newValue);
         }
     }//GEN-LAST:event_jSlider1StateChanged
 
     private void pauseHeartBeatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pauseHeartBeatMouseClicked
-        SettingsWindow.heartBeats.pause();
+        occupancyControllerProxy.setPollingEnabled(false);
+        sectionControllerProxy.setPollingEnabled(false);
+        turnoutControllerProxy.setPollingEnabled(false);
     }//GEN-LAST:event_pauseHeartBeatMouseClicked
 
     private void startHeartBeatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startHeartBeatMouseClicked
-
-        switch (Configuration.connectionType) {
-            case LocalServer:
-                try {
-                    Configuration.port = Integer.parseInt(this.localPort.getText());
-                    RailwayWindow.log("Creating local server on port: " + String.valueOf(Configuration.port));
-
-                    // server indítása új thead-en
-                    if (server == null) {
-                        server = new CommandServer(Configuration.port, Configuration.heartbeatTimeout);
-                        new Thread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                server.start();
-                            }
-                        }).start();
-                    }
-
-
-                    // local esetén be kell állítani a kapott címet az abstractRequest-nek!
-                    AbstractRequest.setDefaultPort(Configuration.port);
-                    AbstractRequest.setDefultAddress("http://localhost");
-
-                    // proxy objektumok generálása
-                    if (turnoutStatusPolling.isSelected()) {
-                        // ha be van pippantva, akkor nem http kéréseket küldünk,
-                        // hanem direktben kérdezzük az adatokat
-                        if (localConnectDirectly.isSelected()) {
-                            turnoutController = server.turnoutController;
-                        } else {
-                            turnoutController = new TurnoutControllerProxy();
-                        }
-                    }
-
-                    if (sectionStatusPolling.isSelected()) {
-                        // ha be van pippantva, akkor nem http kéréseket küldünk,
-                        // hanem direktben kérdezzük az adatokat
-                        if (localConnectDirectly.isSelected()) {
-                            sectionController = server.sectionController;
-                        } else {
-                            sectionController = new SectionControllerProxy();
-                        }
-                    }
-
-                    if (occupancyStatusPolling.isSelected()) {
-                        // ha be van pippantva, akkor nem http kéréseket küldünk,
-                        // hanem direktben kérdezzük az adatokat
-                        if (localConnectDirectly.isSelected()) {
-                            occupancyController = server.occupancyController;
-                        } else {
-                            occupancyController = new OccupancyControllerProxy();
-                        }
-                    }
-                    
-                    new Thread(heartBeats).start();
-
-                } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(this, "Wrong number given as localport!");
-                    return;
-                }
-                break;
-
-            case RemoteServer:
-                try {
-                    Configuration.address = REMOTE_SERVER_ADDRESS_PREFIX + this.remoteServerIP.getText();
-                    Configuration.port = Integer.parseInt(this.remoteServerPortField.getText());
-                    RailwayWindow.log("Connecting to Remote server: "
-                            + Configuration.address + ":"
-                            + String.valueOf(Configuration.port));
-
-                    // remote esetén be kell állítani a kapott címet az abstractRequest-nek!
-                    AbstractRequest.setDefaultPort(Configuration.port);
-                    AbstractRequest.setDefultAddress(Configuration.address);
-
-                    // proxy objektumok generálása
-                    if (turnoutStatusPolling.isSelected()) {
-                        turnoutController = new TurnoutControllerProxy();
-                    }
-
-                    if (sectionStatusPolling.isSelected()) {
-                        sectionController = new SectionControllerProxy();
-                    }
-
-                    if (occupancyStatusPolling.isSelected()) {
-                        occupancyController = new OccupancyControllerProxy();
-                    }
-                    
-                    new Thread(heartBeats).start();
-
-                } catch (NumberFormatException e) {
-                    return;
-                }
-                break;
-
-            case Library:
-                RailwayWindow.log("Connecting using library");
-                if (turnoutStatusPolling.isSelected()) {
-                    SettingsWindow.turnoutController = new TurnoutController();
-                    turnoutController.startThreads();
-                }
-
-                if (sectionStatusPolling.isSelected()) {
-                    SettingsWindow.sectionController = new SectionController();
-                    sectionController.startThreads();
-                }
-
-                if (occupancyStatusPolling.isSelected()) {
-                    SettingsWindow.occupancyController = new OccupancyController();
-                    occupancyController.startThreads();
-                }
-                new Thread(heartBeats).start();
-                break;
+        String address = this.mqttAddressField.getText();
+        String protocol = this.mqttProtocolField.getText();
+        String portText = this.mqttPortField.getText();
+        int port = 1883;
+        try {
+            port = Integer.parseInt(portText);
+        } catch (NumberFormatException ex) {
+            RailwayWindow.log(
+                    "Port cannot be converted to number: " + portText + ". Default value (1883) used instead.");
         }
+        String topic = this.mqttTopicField.getText();
 
+        Configuration.mqttConfiguration = new MQTTConfiguration(topic);
+        Configuration.mqttConfiguration.setAddress(address);
+        Configuration.mqttConfiguration.setProtocol(protocol);
+        Configuration.mqttConfiguration.setPort(port);
+
+        turnoutControllerProxy = new TurnoutControllerProxy();
+        sectionControllerProxy = new SectionControllerProxy();
+        occupancyControllerProxy = new OccupancyControllerProxy();
+
+        // automatically close settings window
         dispose();
     }//GEN-LAST:event_startHeartBeatMouseClicked
 
     private void turnoutStatusPollingStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_turnoutStatusPollingStateChanged
-        SettingsWindow.heartBeats.setTurnoutPollingEnabled(turnoutStatusPolling.isSelected());
+        turnoutControllerProxy.setPollingEnabled(
+                turnoutStatusPolling.isSelected());
     }//GEN-LAST:event_turnoutStatusPollingStateChanged
 
     private void occupancyStatusPollingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_occupancyStatusPollingMouseClicked
-        SettingsWindow.heartBeats.setOccupancyPollingEnabled(occupancyStatusPolling.isSelected());
+        occupancyControllerProxy.setPollingEnabled(
+                turnoutStatusPolling.isSelected());
     }//GEN-LAST:event_occupancyStatusPollingMouseClicked
 
     private void sectionStatusPollingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sectionStatusPollingMouseClicked
-        SettingsWindow.heartBeats.setSectionPollingEnabled(sectionStatusPolling.isSelected());
+        sectionControllerProxy.setPollingEnabled(
+                turnoutStatusPolling.isSelected());
     }//GEN-LAST:event_sectionStatusPollingMouseClicked
 
-    private void directServerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_directServerStateChanged
-        if (this.directServer.isSelected()) {
-            Configuration.connectionType = ConnectionType.Library;
-            this.remoteServer.setSelected(false);
-            this.localServer.setSelected(false);
-        }
-    }//GEN-LAST:event_directServerStateChanged
-
-    private void localServerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_localServerStateChanged
-        if (localServer.isSelected()) {
-            Configuration.connectionType = ConnectionType.LocalServer;
-            this.remoteServer.setSelected(false);
-            this.directServer.setSelected(false);
-            this.localConnectDirectly.setEnabled(true);
-            this.localPort.setEnabled(true);
-        } else {
-            this.localConnectDirectly.setEnabled(false);
-            this.localPort.setEnabled(false);
-        }
-    }//GEN-LAST:event_localServerStateChanged
-
-    private void remoteServerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_remoteServerStateChanged
-        if (remoteServer.isSelected()) {
-            Configuration.connectionType = ConnectionType.RemoteServer;
-            this.localServer.setSelected(false);
-            this.directServer.setSelected(false);
-            this.remoteServerIP.setEnabled(true);
-            this.remoteServerPortField.setEnabled(true);
-        } else {
-            this.remoteServerIP.setEnabled(false);
-            this.remoteServerPortField.setEnabled(false);
-        }
-    }//GEN-LAST:event_remoteServerStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton directServer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -878,17 +674,16 @@ public class SettingsWindow extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JSlider jSlider1;
-    private javax.swing.JCheckBox localConnectDirectly;
-    private javax.swing.JTextField localPort;
-    private javax.swing.JRadioButton localServer;
     private javax.swing.JPanel lockedSectionColor;
     private javax.swing.JPanel locoObjectBackground;
+    private javax.swing.JTextField mqttAddressField;
+    private javax.swing.JTextField mqttPortField;
+    private javax.swing.JTextField mqttProtocolField;
+    private javax.swing.JTextField mqttTopicField;
     private javax.swing.JCheckBox occupancyStatusPolling;
     private javax.swing.JButton pauseHeartBeat;
     private javax.swing.JLabel pollingInterval;
-    private javax.swing.JRadioButton remoteServer;
-    private javax.swing.JTextField remoteServerIP;
-    private javax.swing.JTextField remoteServerPortField;
+    private javax.swing.JTextField remoteServerIP1;
     private javax.swing.JCheckBox sectionStatusPolling;
     private javax.swing.JButton startHeartBeat;
     private javax.swing.JPanel turnoutActiveBranchColor;
@@ -897,237 +692,91 @@ public class SettingsWindow extends javax.swing.JFrame {
     private javax.swing.JPanel unlockedSectionColor;
     // End of variables declaration//GEN-END:variables
 
-    private static class HeartBeatRunnable extends IController.RunnableStub {
+    public static final class OccupancyControllerProxy {
 
-        private boolean sectionPollingEnabled = true;
-        private boolean turnoutPollingEnabled = true;
-        private boolean occupancyPollingEnabled = true;
-        private int pollingInterval = 800;
-        private volatile boolean isRunning = true;
-
-        public HeartBeatRunnable(Object synObject) {
-            super(synObject);
-        }
-
-        private volatile boolean isPaused = false;
-
-        @Override
-        public void run() {
-            while (isRunning) {
-
-                if (isPaused) {
-                    try {
-                        synchronized (this.heartBeat) {
-                            this.heartBeat.wait();
-                        }
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(SettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-
-                try {
-                    if (this.isTurnoutPollingEnabled()) {
-                        SettingsWindow.turnoutController.sendHeartBeat();
-                    }
-                    Thread.sleep(100);
-
-                    if (this.isOccupancyPollingEnabled()) {
-                        SettingsWindow.occupancyController.sendHeartBeat();
-                    }
-                    Thread.sleep(100);
-
-                    if (this.isSectionPollingEnabled()) {
-                        SettingsWindow.sectionController.sendHeartBeat();
-                    }
-                    Thread.sleep(pollingInterval - 200);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(SettingsWindow.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-
-        public void pause() {
-            this.isPaused = true;
-        }
-
-        public void start() {
-            this.isPaused = false;
-            synchronized (this.heartBeat) {
-                this.heartBeat.notify();
-            }
-        }
-
-        /**
-         * @return the sectionPollingEnabled
-         */
-        public boolean isSectionPollingEnabled() {
-            return sectionPollingEnabled;
-        }
-
-        /**
-         * @param sectionPollingEnabled the sectionPollingEnabled to set
-         */
-        public void setSectionPollingEnabled(boolean sectionPollingEnabled) {
-            this.sectionPollingEnabled = sectionPollingEnabled;
-        }
-
-        /**
-         * @return the turnoutPollingEnabled
-         */
-        public boolean isTurnoutPollingEnabled() {
-            return turnoutPollingEnabled;
-        }
-
-        /**
-         * @param turnoutPollingEnabled the turnoutPollingEnabled to set
-         */
-        public void setTurnoutPollingEnabled(boolean turnoutPollingEnabled) {
-            this.turnoutPollingEnabled = turnoutPollingEnabled;
-        }
-
-        /**
-         * @return the occupancyPollingEnabled
-         */
-        public boolean isOccupancyPollingEnabled() {
-            return occupancyPollingEnabled;
-        }
-
-        /**
-         * @param occupancyPollingEnabled the occupancyPollingEnabled to set
-         */
-        public void setOccupancyPollingEnabled(boolean occupancyPollingEnabled) {
-            this.occupancyPollingEnabled = occupancyPollingEnabled;
-        }
-
-        /**
-         * @return the pollingInterval
-         */
-        public int getPollingInterval() {
-            return pollingInterval;
-        }
-
-        /**
-         * @param pollingInterval the pollingInterval to set
-         */
-        public void setPollingInterval(int pollingInterval) {
-            this.pollingInterval = pollingInterval;
-        }
-    }
-
-    private static final class OccupancyControllerProxy implements IOccupancyController {
-
-        private volatile int occupancyVector;
-
-        private final OccupancyController.OccupancyProcessor processor;
-        private long lastRefresh;
+        private final OccupancyRequestSender requestSender;
+        private boolean pollingEnabled;
 
         public OccupancyControllerProxy() {
-            processor = new OccupancyController.OccupancyProcessor();
-            this.getOccupancyVector();
+            this.requestSender = new OccupancyRequestSender(
+                    Configuration.mqttConfiguration);
+            this.pollingEnabled = true;
         }
 
-        @Override
-        public boolean isSectionOccupied(int sectionId) throws NotFoundException {
-            // a configuration-ban megadott időnként kell csak frissíteni a vectort!
-            if (lastRefresh + Configuration.heartbeatTimeout < System.currentTimeMillis()) {
-                // egyébként újra kell kérni az adatokat
-                getOccupancyVector();
-            }
-            return processor.isSectionOccupied(sectionId);
-        }
-
-        @Override
-        public int getOccupancyVector() {
-            occupancyVector = new OccupancyRequestSender().getOccupancyVector();
-            processor.refreshOccupancies(occupancyVector);
-            this.lastRefresh = System.currentTimeMillis();
-            return occupancyVector;
-        }
-
-        @Override
-        public void sendTCPPacket(int i, byte[] bytes) throws IOException {
-            // üres, ilyet nem fogunk kérni
-        }
-
-        @Override
-        public void sendHeartBeat() {
-            if (lastRefresh + Configuration.heartbeatTimeout < System.currentTimeMillis()) {
-                processor.refreshOccupancies(getOccupancyVector());
+        public boolean isSectionOccupied(int sectionId) {
+            if (pollingEnabled) {
+                return requestSender.isSectionOccupied(sectionId);
+            } else {
+                return false;
             }
         }
 
-        @Override
-        public void startThreads() {
-            // threadet meg főleg nem fogunk indítani
+        public void setPollingEnabled(boolean pollingEnabled) {
+            this.pollingEnabled = pollingEnabled;
         }
     }
 
-    private static class SectionControllerProxy implements ISectionController {
+    public static class SectionControllerProxy {
 
-        @Override
-        public void setSectionEnabled(int sectionId) throws NotFoundException {
-            new SectionStateRequestSender().enableSection(sectionId);
+        private final SectionRequestSender requestSender;
+        private boolean pollingEnabled;
+
+        public SectionControllerProxy() {
+            this.requestSender = new SectionRequestSender(
+                    Configuration.mqttConfiguration);
+            this.pollingEnabled = true;
         }
 
-        @Override
-        public void setSectionDisabled(int sectionId) throws NotFoundException {
-            new SectionStateRequestSender().disableSection(sectionId);
+        public void setSectionEnabled(int sectionId) {
+            requestSender.enableSection(sectionId);
         }
 
-        @Override
-        public boolean isSectionEnabled(int sectionId) throws NotFoundException {
-            return new SectionStateRequestSender().isSectionEnabled(sectionId);
+        public void setSectionDisabled(int sectionId) {
+            requestSender.disableSection(sectionId);
         }
 
-        @Override
-        public void sendTCPPacket(int i, byte[] bytes) throws IOException {
-            // üres, ilyet nem fogunk kérni
-        }
-
-        @Override
-        public void sendHeartBeat() {
-            ConcurrentMap<String, Section> sections = Application.sections;
-            for(Section section: sections.values()){
-                boolean sectionEnabled = new SectionStateRequestSender().isSectionEnabled(section.getID());
-                section.setIsEnabled(sectionEnabled);
+        public boolean isSectionEnabled(int sectionId) {
+            if (pollingEnabled) {
+                return requestSender.isSectionEnabled(sectionId);
+            } else {
+                return true;
             }
         }
 
-        @Override
-        public void startThreads() {
-            // threadet meg főleg nem fogunk indítani
+        public void setPollingEnabled(boolean pollingEnabled) {
+            this.pollingEnabled = pollingEnabled;
         }
-
     }
 
-    private static class TurnoutControllerProxy implements ITurnoutController {
+    public static class TurnoutControllerProxy {
 
-        @Override
-        public boolean isTurnoutDivergent(int turnoutId) throws NotFoundException {
-            return new TurnoutDirectionRequestSender().isTurnoutDivergent(turnoutId);
+        private final TurnoutRequestSender requestSender;
+        private boolean pollingEnabled;
+
+        public TurnoutControllerProxy() {
+            this.requestSender = new TurnoutRequestSender(
+                    Configuration.mqttConfiguration);
+            this.pollingEnabled = true;
         }
 
-        @Override
-        public boolean isTurnoutStraight(int turnoutId) throws NotFoundException {
-            return !(new TurnoutDirectionRequestSender().isTurnoutDivergent(turnoutId));
+        public boolean isTurnoutDivergent(int turnoutId) {
+            if (pollingEnabled) {
+                return requestSender.isTurnoutDivergent(turnoutId);
+            } else {
+                return false;
+            }
         }
 
-        @Override
-        public void sendTCPPacket(int i, byte[] bytes) throws IOException {
-            // üres, ilyet nem fogunk kérni
+        public boolean isTurnoutStraight(int turnoutId) {
+            if (pollingEnabled) {
+                return requestSender.isTurnoutStraight(turnoutId);
+            } else {
+                return true;
+            }
         }
 
-        @Override
-        public void sendHeartBeat() {
-            
-            // remote esetén sem fogunk kérni heartbeat-et
+        public void setPollingEnabled(boolean pollingEnabled) {
+            this.pollingEnabled = pollingEnabled;
         }
-
-        @Override
-        public void startThreads() {
-            // threadet meg főleg nem fogunk indítani
-        }
-
     }
-
 }

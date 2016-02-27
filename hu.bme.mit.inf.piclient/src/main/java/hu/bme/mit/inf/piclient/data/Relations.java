@@ -1,9 +1,9 @@
-package hu.bme.mit.inf.kvcontrol.data;
+package hu.bme.mit.inf.piclient.data;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import hu.bme.mit.inf.kvcontrol.entities.Section;
-import hu.bme.mit.inf.kvcontrol.entities.Turnout;
+import hu.bme.mit.inf.mqtt.common.data.Section;
+import hu.bme.mit.inf.mqtt.common.data.Turnout;
 
 /**
  * A data class for storing sections and turnouts of the layout
@@ -13,22 +13,16 @@ import hu.bme.mit.inf.kvcontrol.entities.Turnout;
 public class Relations {
 
     /**
-     * The offset, which determines the new starting address of the controllers.
-     * E.g.: 119 means 0x81 (129) will be transformed to 10. (129-119 = 10)
+     * All sections' ID and the responsible controller they belong are storedW
+     * here.
      */
-    private static final int ADDRESS_OFFSET_ADJUSTMENT = 119;
+    private static final ConcurrentMap<String, Section> sections = new ConcurrentHashMap<>();
 
     /**
      * All turnouts' ID and the responsible controller they belong are stored
      * here.
      */
     private static final ConcurrentMap<String, Turnout> turnouts = new ConcurrentHashMap<>();
-
-    /**
-     * All sections' ID and the responsible controller they belong are storedW
-     * here.
-     */
-    private static final ConcurrentMap<String, Section> sections = new ConcurrentHashMap<>();
 
     /**
      * Get Map of turnout and the responsible controller they belong to.
@@ -46,14 +40,11 @@ public class Relations {
                 {0x86, 0x86},
                 {0x87, 0x86}
             };
-
             for (int i = 0; i < turnoutRaw.length; ++i) {
                 turnouts.put(getKey(turnoutRaw[i][0]),
-                        new Turnout(turnoutRaw[i][0], turnoutRaw[i][1],
-                                turnoutRaw[i][1] - ADDRESS_OFFSET_ADJUSTMENT));
+                        new Turnout(turnoutRaw[i][0]));
             }
         }
-
         return turnouts;
     }
 
@@ -87,25 +78,12 @@ public class Relations {
                 {0x16, 0x86},
                 {0x17, 0x83}
             };
-
             for (int i = 0; i < sectionsRaw.length; ++i) {
                 sections.put(getKey(sectionsRaw[i][0]),
-                        new Section(sectionsRaw[i][0], sectionsRaw[i][1],
-                                sectionsRaw[i][1] - ADDRESS_OFFSET_ADJUSTMENT));
+                        new Section(sectionsRaw[i][0]));
             }
         }
         return sections;
-    }
-
-    /**
-     * create a usable key for Map classes from byte ID.
-     * <p>
-     * @param ID hashable ID
-     * <p>
-     * @return String hash
-     */
-    public static String getKey(byte ID) {
-        return String.format("0x%02X", ID);
     }
 
     /**

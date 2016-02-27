@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hu.bme.mit.inf.piclient.ui;
 
 import hu.bme.mit.inf.piclient.util.SectionClickAction;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import javax.swing.JFrame;
-import hu.bme.mit.inf.kvcontrol.data.Relations;
-import hu.bme.mit.inf.kvcontrol.entities.Section;
+import hu.bme.mit.inf.mqtt.common.data.Section;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.svg.SVGLoadEventDispatcherAdapter;
 import org.apache.batik.swing.svg.SVGLoadEventDispatcherEvent;
@@ -19,10 +14,11 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.svg.SVGSVGElement;
 import static hu.bme.mit.inf.piclient.Application.sections;
+import hu.bme.mit.inf.piclient.data.Relations;
 
 /**
  *
- * @author zsoltmazlo
+ * @author zsoltmazlo, benedekh
  */
 public class SVGLoadAdapter extends SVGLoadEventDispatcherAdapter {
 
@@ -43,13 +39,16 @@ public class SVGLoadAdapter extends SVGLoadEventDispatcherAdapter {
 
         // elements to find, because we using them to activate-deactive 
         for (Section section : sections.values()) {
-            Element elem = svgDocument.getElementById(Relations.getKey(section.getID()));
+            Element elem = svgDocument.getElementById(Relations.getKey(
+                    section.getId()));
             EventTarget targ = (EventTarget) elem;
 
             if (elem != null) {
-                targ.addEventListener("click", new SectionClickAction(section.getID()), false);
+                targ.addEventListener("click", new SectionClickAction(
+                        section.getId()), false);
             } else {
-                System.out.println("section not found! " + section.getID());
+                logInfoMessage(getClass().getName(),
+                        "section not found! " + section.getId());
             }
         }
 
@@ -61,7 +60,8 @@ public class SVGLoadAdapter extends SVGLoadEventDispatcherAdapter {
         root.setAttribute("height", String.valueOf(renderRect.height));
         root.setAttribute("viewBox", "0 0 2200 1500");
 
-        System.out.println("svg loaded");
+        logInfoMessage(getClass().getName(), "svg loaded");
+
         synchronized (this.canvas) {
             this.canvas.notify();
         }
