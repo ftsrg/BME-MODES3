@@ -80,6 +80,68 @@ class Tests {
 		''')
 	}
 	
+	@Test(expected = AssertionError)
+	def regexCompilationError(){
+		TestUtils.testRegex(
+		'''
+		foo bar qux''',
+		'''
+		«/* This should be a parsing error which is detected with an assertion */»
+		''')
+	}
+	
+	@Test(expected = AssertionError)
+	def veplCompilationError(){
+		TestUtils.testVepl(
+		'''
+		foo bar qux''',
+		'''
+		«/* This should be a compilation error which is detected with an assertion */»
+		''')
+	}
+	
+	@Test
+	def timerTest(){
+		TestUtils.testRegex(
+		'''
+		alphabet = {A, B}
+			expression timed = <(A B)>[1000]
+		''',
+		'''
+		A
+		B *timed
+		''')
+	}
+	
+	@Test
+	def iot(){
+		TestUtils.testVepl('''
+		package hu.bme.mit.inf.train
+		
+		atomicEvent TrainsFar(Train1 : int, Train2 : int)
+		atomicEvent TrainsNear(Train1 : int, Train2 : int)
+		atomicEvent TrainsClose(Train1: int, Train2 : int)
+		
+		complexEvent Warning(){
+			as TrainsFar(t1, t2) -> (TrainsNear(t1,t2) OR TrainsNear(t2,t1))
+			context strict
+		}
+		
+		complexEvent Error(){
+			as TrainsNear(t1,t2) -> (TrainsClose(t1,t2) OR TrainsClose(t2,t1))
+		}
+		
+		rule ShutDown on Error{
+			TrainSystem.shutdown()
+		}
+		
+		rule WarningMsg on Warning{
+			System.out.println("WARNING! THE TRAINS ARE TOO CLOSE")
+		}''','''
+		« /* this is just a compilation test */»
+		''')
+	}
+	
 	@Test
 	def test3(){
 		TestUtils.testVepl('''
