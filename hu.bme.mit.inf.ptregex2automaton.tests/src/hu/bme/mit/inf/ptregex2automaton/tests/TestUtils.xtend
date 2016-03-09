@@ -27,31 +27,33 @@ class TestUtils {
 	static val Injector RegexInjector = new ParametricTimedRegularExpressionStandaloneSetup().createInjectorAndDoEMFRegistration();
 	static val Injector VeplInjector = new VeplStandaloneSetup().createInjectorAndDoEMFRegistration();
 	
-	def static RegexModel parseRegex(CharSequence input) {
+	def protected static RegexModel parseRegex(CharSequence input) {
 		return parseRegex(input.toString)
 	}
 
-	def static EventModel parseVepl(CharSequence input) {
+	def protected static EventModel parseVepl(CharSequence input) {
 		return parseVepl(input.toString)
 	}
 
-	def static RegexModel parseRegex(String input) {
+	def protected static RegexModel parseRegex(String input) {
 		val resourceSet = RegexInjector.getInstance(XtextResourceSet)
 		val resource = resourceSet.createResource(URI.createURI("dummy:/temp.ptreg"))
 		resource.load(new ByteArrayInputStream(input.getBytes), #{})
+		Assert.assertEquals('File can not be parsed', 0, resource.getErrors.length)
 		val parsed = (resource.contents.get(0) as RegexModel)
 		return parsed;
 	}
 
-	def static EventModel parseVepl(String input){
+	def protected static EventModel parseVepl(String input){
 		val resourceSet = VeplInjector.getInstance(XtextResourceSet)
 		val resource = resourceSet.createResource(URI.createURI("dummy:/temp.vepl"))
 		resource.load(new ByteArrayInputStream(input.getBytes), #{})
+		Assert.assertEquals('File can not be parsed', 0, resource.getErrors.length)
 		val parsed = (resource.contents.get(0) as EventModel)
 		return parsed;
 	}
 
-	def static ComplexEventProcessor compile(RegexModel input) {
+	def protected static ComplexEventProcessor compile(RegexModel input) {
 		val compiler = new RegexCompiler()
 		val compiled = compiler.compile(input)
 		compiler.tgfLogs.forEach[automaton, log|
@@ -60,13 +62,13 @@ class TestUtils {
 		return compiled
 	}
 
-	def static Event getEventByName(ComplexEventProcessor model, String name) {
+	def protected static Event getEventByName(ComplexEventProcessor model, String name) {
 		val retvalue = EventAutomatonModelFactory.eINSTANCE.createEvent
 		retvalue.type = model.symbolicEvents.findFirst[it.name.equals(name)]
 		return retvalue
 	}
 	
-	def static void testRegex(ComplexEventProcessor model, String input){
+	def protected static void testRegex(ComplexEventProcessor model, String input){
 		val exec = new TestExecutor(model)
 
 		var processedInputs = 0
@@ -99,18 +101,18 @@ class TestUtils {
 		testRegex(model, input)
 	}
 	
-	def static RegexModel compile(EventModel em){
+	def protected static RegexModel compile(EventModel em){
 		val compiler =  new VeplCompiler()
 		val compiled = compiler.compile(em)
 		return compiled
 	}
 	
-	def static void testVepl(String vepl, String input){
+	def public static void testVepl(String vepl, String input){
 		val model = vepl.parseVepl.compile.compile
 		testRegex(model, input)
 	}
 
-	def static void log(String fileName, String fileContent) {
+	def public static void log(String fileName, String fileContent) {
 		var timestamp = (System.currentTimeMillis() / 1000L) as int;
 
 		var IWorkspace workspace = ResourcesPlugin.getWorkspace();
