@@ -37,7 +37,7 @@ import hu.bme.mit.inf.parametricTimedRegularExpression.Cardinality
 import hu.bme.mit.inf.parametricTimedRegularExpression.ParametricTimedRegularExpressionFactory
 
 class RegexCompiler {
-	static extension var EventAutomatonModelFactory factory = EventAutomatonModelFactory.eINSTANCE;
+	static extension val EventAutomatonModelFactory factory = EventAutomatonModelFactory.eINSTANCE;
 
 	val ArrayList<SymbolicInputEvent> symbolicEvents = new ArrayList<SymbolicInputEvent>()
 	val HashMap<Functor, SymbolicEvent> symbolicEventMapping = new HashMap<Functor, SymbolicEvent>()
@@ -45,6 +45,7 @@ class RegexCompiler {
 	var timerCnt = 0
 	public val tgfLogs = new HashMap<Automaton, StringBuilder>;
 	public val log = new StringBuilder
+	extension val AutomatonOptimizer optimizer = new AutomatonOptimizer
 	
 	def void println(StringBuilder builder, String toAppend){
 		builder.append(toAppend)
@@ -54,8 +55,16 @@ class RegexCompiler {
 	def compile(RegexModel input) {
 		log.println("Compilation starts")
 		val retvalue = createComplexEventProcessor
-		symbolicEventsFromAlphabet(input.alphabet) // we must set this before the compilation starts, the 		
-		input.declarations.map[recursiveCompile(it)].forEach[retvalue.automata.add(it)]
+		symbolicEventsFromAlphabet(input.alphabet) // this must be set before the compilation starts		
+//		input.declarations.map[determinizeNFA(recursiveCompile(it))].forEach[retvalue.automata.add(it)]
+
+		for(declaration : input.declarations){
+			if(!expressionContainsTiming(declaration)){
+				retvalue.automata.add(determinizeNFA(recursiveCompile(declaration), symbolicEvents))
+			}else{
+				retvalue.automata.add((recursiveCompile(declaration)))
+			}
+		}
 
 		symbolicEvents.forEach[retvalue.symbolicEvents.add(it)]
 
@@ -75,6 +84,8 @@ class RegexCompiler {
 		}
 
 		log.println("Compilation finished!")
+		
+
 
 		for (automaton : retvalue.automata) {
 			tgfLogs.put(automaton, new StringBuilder)
@@ -83,11 +94,9 @@ class RegexCompiler {
 		retvalue
 	}
 
-	// XXX move this to an external utility class
 	public static def String automatonToYed(Automaton automaton) {
 		return '''
-			9999999999 «automaton.name»
-«««			=========================
+			«Integer.MAX_VALUE» «automaton.name»
 			«FOR state : automaton.states»
 				«state.id» «state.id» «IF state.acceptor == true» acceptor«ELSEIF automaton.trapState == state» trap« ELSEIF automaton.initialState == state» initial«ENDIF»
 			«ENDFOR»
@@ -97,7 +106,6 @@ class RegexCompiler {
 				«transition.from.id» «transition.to.id»«IF transition instanceof EpsilonTransition» epsilon «ENDIF»«IF transition instanceof Transition»«IF transition.eventguard.type instanceof SymbolicInputEvent» «(transition.eventguard.type as SymbolicInputEvent).name»«ENDIF»«IF transition.eventguard.type instanceof SymbolicTimeoutEvent» « (transition.eventguard.type as SymbolicTimeoutEvent).timer.name» timeout«ENDIF»«ENDIF» «FOR action : transition.actions BEFORE ' actions = [ ' SEPARATOR ', ' AFTER ' ]'» «IF action instanceof SetTimerAction» set «action.timer.name»«ENDIF»«IF action instanceof ResetTimerAction» reset «action.timer.name»«ENDIF»«ENDFOR»
 				«ENDFOR»
 			«ENDFOR»
-«««			=========================
 		'''
 	}
 
@@ -126,19 +134,21 @@ class RegexCompiler {
 
 	protected def dispatch Automaton recursiveCompile(TimedExpression expression) {
 		val compiled = recursiveCompile(expression.body)
-		val timer = createSymbolicTimer
-		timer.name = "t" + (timerCnt++)
+		val newSymbolicTimer = createSymbolicTimer
+		newSymbolicTimer.name = "t" + (timerCnt++)
 		val timeoutEvent = createSymbolicTimeoutEvent
-		timer.timeoutEvent = timeoutEvent
+		newSymbolicTimer.timeoutEvent = timeoutEvent
+		compiled.timers.add(newSymbolicTimer)
+		
 		compiled.initialState.outgoingTransitions.forEach [
 			var newAction = createSetTimerAction;
-			newAction.timer = timer
+			newAction.timer = newSymbolicTimer
 			newAction.toValue = expression.timeout
 			it.actions.add(newAction)
 		]
 		compiled.states.filter[it.acceptor].forEach[it.incomingTransitions.forEach [
 			var newAction = createResetTimerAction
-			newAction.timer = timer
+			newAction.timer = newSymbolicTimer
 			it.actions.add(newAction)
 		]]
 		
@@ -221,7 +231,7 @@ class RegexCompiler {
 
 		transition.eventguard = createEventGuard
 		transition.eventguard.type = symbolicEventMapping.get(expression.functor)
-		// TODO parameters
+		// TODO add parameters
 		
 		retvalue
 	}
@@ -232,7 +242,6 @@ class RegexCompiler {
 	}
 
 	protected def merge(Automaton firstAutomaton, Automaton secondAutomaton) {
-
 		val intermediateState = secondAutomaton.initialState
 		firstAutomaton.states.filter[it.acceptor].forEach[
 			it.acceptor = false
@@ -240,7 +249,6 @@ class RegexCompiler {
 			epsilonTrans.from = it
 			epsilonTrans.to = intermediateState
 		]
-		
 		for(state : secondAutomaton.states.clone()){ //The clone is needed, as the list changes when items are removed
 			firstAutomaton.states.add(state)
 			secondAutomaton.states.remove(state) //Not sure tho
@@ -384,112 +392,6 @@ class RegexCompiler {
 		return retvalue
 	}
 
-	public static def epsilonClosure(State s) { // FIXME move this to an external utility package
-		var list = new ArrayList<State>
-		list.add(s)
-		epsilonClosure(list)
-	}
-
-	public static def epsilonClosure(Iterable<State> input) { // FIXME move this to an external utility package
-		var stack = new Stack<State>
-		var res = new HashSet<State>
-		for (state : input) {
-			stack.push(state)
-			res.add(state)
-		}
-		while (!stack.isEmpty()) {
-			var t = stack.pop
-			for (u : t.outgoingTransitions.filter[it instanceof EpsilonTransition].map[it.to]) {
-				if (!res.contains(u)) {
-					res.add(u)
-					stack.push(u)
-				}
-			}
-		}
-		return res;
-	}
-
-	protected def move(Iterable<State> T, SymbolicEvent a) {
-		var res = new HashSet<State>
-		for (state : T) {
-			var outGoingOnA = state.outgoingTransitions.filter[!(it instanceof EpsilonTransition)].filter [
-				(it as Transition).eventguard.type == a
-			].head
-			if (outGoingOnA != null) {
-				res.add(outGoingOnA.to)
-			}
-		}
-		return res;
-	}
-
-	protected def sameDFAState(Set<State> state1, Set<State> state2) {
-		for (state : state1) {
-			if (!state2.contains(state)) {
-				return false
-			}
-		}
-
-		for (state : state2) {
-			if (!state1.contains(state)) {
-				return false
-			}
-		}
-
-		return true;
-	}
-
-	protected def Automaton determinizeNFA(Automaton NFA) {
-		val DFA = createAutomaton
-		DFA.name = NFA.name
-
-		val Dstates = new HashSet<HashSet<State>>
-		val Dtrans = new HashMap<HashSet<State>, HashMap<SymbolicEvent, HashSet<State>>>
-		val marked = new HashSet<HashSet<State>>
-		var initialState = epsilonClosure(NFA.initialState)
-		Dstates.add(initialState)
-
-		while (!Dstates.map[marked.contains(it)].fold(true, [i, j|i && j])) {
-			var T = Dstates.filter[!marked.contains(it)].head
-			marked.add(T)
-			for (symbol : symbolicEvents) {
-				val U = epsilonClosure(move(T, symbol))
-				var sameU = Dstates.filter[sameDFAState(it, U)].head
-				if (sameU == null) {
-					Dstates.add(U)
-					sameU = U
-				}
-				if(Dtrans.get(T) == null) Dtrans.put(T, new HashMap<SymbolicEvent, HashSet<State>>)
-				Dtrans.get(T).put(symbol, sameU)
-
-			}
-		}
-
-		val Dstates2DFAStates = new HashMap<HashSet<State>, State>
-		for (state : Dstates) {
-			var newState = createState
-			DFA.states.add(newState)
-			Dstates2DFAStates.put(state, newState)
-		}
-
-		// TODO consider reusing the edges instead of the manual	 copy (which will be nasty when the parameters come)
-		Dtrans.forEach [p1, p2|
-			p2.forEach [p3, p4|
-				var newTrans = createTransition
-				newTrans.from = Dstates2DFAStates.get(p1)
-				newTrans.to = Dstates2DFAStates.get(p4)
-				newTrans.eventguard = createEventGuard
-				newTrans.eventguard.type = p3
-			]
-		]
-
-		DFA.initialState = Dstates2DFAStates.get(initialState)
-		for (state : DFA.states) {
-			if (Dstates2DFAStates.filter[i, j|j == state].keySet.head.filter[it.acceptor == true].length > 0)
-				state.acceptor = true
-		}
-
-		return DFA
-	}
 
 	static def List<List<Expression>> generatePerm(List<Expression> left, List<Expression> right) {
 		val result = new LinkedList<List<Expression>>
@@ -514,4 +416,5 @@ class RegexCompiler {
 		}
 		return result
 	}
+
 }
