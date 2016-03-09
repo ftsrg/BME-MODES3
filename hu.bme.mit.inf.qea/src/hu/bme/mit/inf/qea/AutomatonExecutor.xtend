@@ -40,7 +40,7 @@ class AutomatonExecutor {
 		this.runningTimers = new HashSet<hu.bme.mit.inf.qea.AutomatonTimeoutTask>
 
 		// initialize the first token
-//		var initialToken = createToken // TODO add parameters later
+//		var initialToken = createToken // TODO add parameters
 //		initialToken.on = a.initialState
 		epsilonClosure(a.initialState).forEach[it.tokens.add(createToken)]
 	}
@@ -175,11 +175,10 @@ class AutomatonExecutor {
 	}
 	
 	//FIXME refactor until this becomes a static method
-	//XXX move to external utility class
 	def protected copyToken(Token t){
 		val token = createToken
 		runningTimers.filter[it.subscribed.contains(t)].forEach[it.subscribe(token)] // timing
-		//TODO parameters
+		//TODO add parameters
 		
 		token
 	}
@@ -214,28 +213,6 @@ class AutomatonExecutor {
 		forall[binding|val constBinding = (binding as ConstantBinding); constBinding.boundTo.value.equals(event.parameters.findFirst[it.type == constBinding.binds])]
 	}
 
-//	def initializeInitialToken(Token token) {
-//		token.parameters.clear
-//		for (symparam : a.symbolicTokenParameters) {
-//			var toAdd = createFreeParameter
-//			toAdd.type = symparam
-//			token.parameters.add(toAdd)
-//		}
-//	}
-
-
-// TODO Util stuff
-//	def dispatch printParameter(FixParameter param) {
-//		println("FIX = " + param.value)
-//	}
-//
-//	def dispatch printParameter(FreeParameter param) {
-//		print("FREE = {")
-//		for (value : param.excludedValues)
-//			print(value.toString + ", ")
-//		println("}")
-//
-//	}
 
 	public static def epsilonClosure(State s){
 		var list = new ArrayList<State>

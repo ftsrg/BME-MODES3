@@ -15,6 +15,7 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.junit.Assert;
 
 @SuppressWarnings("all")
 public class TestExecutor {
@@ -62,7 +63,7 @@ public class TestExecutor {
     final Automaton expression = IterableExtensions.<Automaton>findFirst(_automata, _function);
     boolean _equals = Objects.equal(expression, null);
     if (_equals) {
-      return false;
+      Assert.fail(("There is no expression called " + name));
     }
     EList<State> _states = expression.getStates();
     final Function1<State, Boolean> _function_1 = (State it) -> {
