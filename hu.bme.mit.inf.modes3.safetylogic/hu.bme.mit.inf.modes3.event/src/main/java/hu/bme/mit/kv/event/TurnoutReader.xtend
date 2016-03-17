@@ -1,8 +1,6 @@
 package hu.bme.mit.kv.event
 
 import java.lang.Runnable
-import kvcontrol.requests.AbstractRequest
-import kvcontrol.senders.TurnoutDirectionRequestSender
 import hu.bme.mit.kv.model.railroadmodel.SectionModel
 import hu.bme.mit.kv.model.modelutil.ModelUtil
 import java.util.ArrayList
@@ -25,17 +23,15 @@ class TurnoutReader implements Runnable {
 		var Map<Integer, Integer> englishTurnoutMap = new HashMap<Integer,Integer>
 		englishTurnoutMap.put(7,4); //XXX add this mapping to the model? 
 
-		AbstractRequest.defaultPort = 8080
-		val sender = new TurnoutDirectionRequestSender
 		val turnoutStates = new ArrayList<Boolean>
 		for (var int i = 0; i != 10; i++) {
 			turnoutStates.add(true);
 		}
 		while (true) {
-//			println("Polling the turnouts")
 			synchronized (lock) {
 				for (id : turnoutIds) {
-					var isTrue = sender.isTurnoutStraight(id.toPhysicalID);
+//					var isTrue = sender.isTurnoutStraight(id.toPhysicalID);
+					var isTrue = true
 					if (isTrue != turnoutStates.get(id)) {
 
 						println("Switch" + id + "changed")
