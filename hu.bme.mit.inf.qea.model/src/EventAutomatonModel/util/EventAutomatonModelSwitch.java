@@ -194,12 +194,6 @@ public class EventAutomatonModelSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case EventAutomatonModelPackage.ABSTRACT_TRANSITION: {
-				AbstractTransition abstractTransition = (AbstractTransition)theEObject;
-				T result = caseAbstractTransition(abstractTransition);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case EventAutomatonModelPackage.ACTION: {
 				Action action = (Action)theEObject;
 				T result = caseAction(action);
@@ -234,6 +228,12 @@ public class EventAutomatonModelSwitch<T> extends Switch<T> {
 			case EventAutomatonModelPackage.EVENT_GUARD: {
 				EventGuard eventGuard = (EventGuard)theEObject;
 				T result = caseEventGuard(eventGuard);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION: {
+				AbstractTransition abstractTransition = (AbstractTransition)theEObject;
+				T result = caseAbstractTransition(abstractTransition);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

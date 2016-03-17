@@ -15,11 +15,11 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link EventAutomatonModel.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
- *   <li>{@link EventAutomatonModel.State#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  *   <li>{@link EventAutomatonModel.State#getTokens <em>Tokens</em>}</li>
  *   <li>{@link EventAutomatonModel.State#isAcceptor <em>Acceptor</em>}</li>
  *   <li>{@link EventAutomatonModel.State#getId <em>Id</em>}</li>
+ *   <li>{@link EventAutomatonModel.State#getIncomingTransitions <em>Incoming Transitions</em>}</li>
+ *   <li>{@link EventAutomatonModel.State#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  * </ul>
  *
  * @see EventAutomatonModel.EventAutomatonModelPackage#getState()

@@ -75,6 +75,7 @@ public class EventAutomatonModelFactoryImpl extends EFactoryImpl implements Even
 			case EventAutomatonModelPackage.TOKEN: return createToken();
 			case EventAutomatonModelPackage.TRANSITION: return createTransition();
 			case EventAutomatonModelPackage.EVENT_GUARD: return createEventGuard();
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION: return createAbstractTransition();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -268,6 +269,16 @@ public class EventAutomatonModelFactoryImpl extends EFactoryImpl implements Even
 	public EventGuard createEventGuard() {
 		EventGuardImpl eventGuard = new EventGuardImpl();
 		return eventGuard;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AbstractTransition createAbstractTransition() {
+		AbstractTransitionImpl abstractTransition = new AbstractTransitionImpl();
+		return abstractTransition;
 	}
 
 	/**

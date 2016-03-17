@@ -32,36 +32,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link EventAutomatonModel.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
- *   <li>{@link EventAutomatonModel.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
  *   <li>{@link EventAutomatonModel.impl.StateImpl#getTokens <em>Tokens</em>}</li>
  *   <li>{@link EventAutomatonModel.impl.StateImpl#isAcceptor <em>Acceptor</em>}</li>
  *   <li>{@link EventAutomatonModel.impl.StateImpl#getId <em>Id</em>}</li>
+ *   <li>{@link EventAutomatonModel.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
+ *   <li>{@link EventAutomatonModel.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class StateImpl extends MinimalEObjectImpl.Container implements State {
-	/**
-	 * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOutgoingTransitions()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<AbstractTransition> outgoingTransitions;
-
-	/**
-	 * The cached value of the '{@link #getIncomingTransitions() <em>Incoming Transitions</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getIncomingTransitions()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<AbstractTransition> incomingTransitions;
-
 	/**
 	 * The cached value of the '{@link #getTokens() <em>Tokens</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -111,6 +91,26 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 	 * @ordered
 	 */
 	protected int id = ID_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getIncomingTransitions() <em>Incoming Transitions</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIncomingTransitions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<AbstractTransition> incomingTransitions;
+
+	/**
+	 * The cached value of the '{@link #getOutgoingTransitions() <em>Outgoing Transitions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOutgoingTransitions()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<AbstractTransition> outgoingTransitions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -218,12 +218,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
-			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingTransitions()).basicAdd(otherEnd, msgs);
 			case EventAutomatonModelPackage.STATE__TOKENS:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getTokens()).basicAdd(otherEnd, msgs);
+			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingTransitions()).basicAdd(otherEnd, msgs);
+			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOutgoingTransitions()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -236,12 +236,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
-				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
-			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
-				return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
 			case EventAutomatonModelPackage.STATE__TOKENS:
 				return ((InternalEList<?>)getTokens()).basicRemove(otherEnd, msgs);
+			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
+				return ((InternalEList<?>)getIncomingTransitions()).basicRemove(otherEnd, msgs);
+			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
+				return ((InternalEList<?>)getOutgoingTransitions()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -254,16 +254,16 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
-				return getOutgoingTransitions();
-			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
-				return getIncomingTransitions();
 			case EventAutomatonModelPackage.STATE__TOKENS:
 				return getTokens();
 			case EventAutomatonModelPackage.STATE__ACCEPTOR:
 				return isAcceptor();
 			case EventAutomatonModelPackage.STATE__ID:
 				return getId();
+			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
+				return getIncomingTransitions();
+			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
+				return getOutgoingTransitions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -277,14 +277,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
-				getOutgoingTransitions().clear();
-				getOutgoingTransitions().addAll((Collection<? extends AbstractTransition>)newValue);
-				return;
-			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
-				getIncomingTransitions().clear();
-				getIncomingTransitions().addAll((Collection<? extends AbstractTransition>)newValue);
-				return;
 			case EventAutomatonModelPackage.STATE__TOKENS:
 				getTokens().clear();
 				getTokens().addAll((Collection<? extends Token>)newValue);
@@ -294,6 +286,14 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 				return;
 			case EventAutomatonModelPackage.STATE__ID:
 				setId((Integer)newValue);
+				return;
+			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
+				getIncomingTransitions().clear();
+				getIncomingTransitions().addAll((Collection<? extends AbstractTransition>)newValue);
+				return;
+			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
+				getOutgoingTransitions().clear();
+				getOutgoingTransitions().addAll((Collection<? extends AbstractTransition>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -307,12 +307,6 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
-				getOutgoingTransitions().clear();
-				return;
-			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
-				getIncomingTransitions().clear();
-				return;
 			case EventAutomatonModelPackage.STATE__TOKENS:
 				getTokens().clear();
 				return;
@@ -321,6 +315,12 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 				return;
 			case EventAutomatonModelPackage.STATE__ID:
 				setId(ID_EDEFAULT);
+				return;
+			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
+				getIncomingTransitions().clear();
+				return;
+			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
+				getOutgoingTransitions().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -334,16 +334,16 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
-				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
-			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
-				return incomingTransitions != null && !incomingTransitions.isEmpty();
 			case EventAutomatonModelPackage.STATE__TOKENS:
 				return tokens != null && !tokens.isEmpty();
 			case EventAutomatonModelPackage.STATE__ACCEPTOR:
 				return acceptor != ACCEPTOR_EDEFAULT;
 			case EventAutomatonModelPackage.STATE__ID:
 				return id != ID_EDEFAULT;
+			case EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS:
+				return incomingTransitions != null && !incomingTransitions.isEmpty();
+			case EventAutomatonModelPackage.STATE__OUTGOING_TRANSITIONS:
+				return outgoingTransitions != null && !outgoingTransitions.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -46,15 +46,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" lowerBound="1" eType="#//SymbolicParameter"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
-        eType="#//AbstractTransition" containment="true" eOpposite="#//AbstractTransition/from"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
-        eType="#//AbstractTransition" eOpposite="#//AbstractTransition/to"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tokens" upperBound="-1"
         eType="#//Token" containment="true" eOpposite="#//Token/on"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="acceptor" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" upperBound="-1"
+        eType="#//AbstractTransition" eOpposite="#//AbstractTransition/to"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingTransitions" upperBound="-1"
+        eType="#//AbstractTransition" containment="true" eOpposite="#//AbstractTransition/from"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantBinding" eSuperTypes="#//Binding">
     <eStructuralFeatures xsi:type="ecore:EReference" name="boundTo" lowerBound="1"
@@ -83,14 +83,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="timer" lowerBound="1" eType="#//SymbolicTimer"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EpsilonTransition" eSuperTypes="#//AbstractTransition"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractTransition" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//State"
-        eOpposite="#//State/outgoingTransitions"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//State"
-        eOpposite="#//State/incomingTransitions"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
-        eType="#//Action" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Action" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="SymbolicParameter" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -114,5 +106,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="bindings" upperBound="-1"
         eType="#//Binding" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//SymbolicEvent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractTransition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//State"
+        eOpposite="#//State/incomingTransitions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//State"
+        eOpposite="#//State/outgoingTransitions"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+        eType="#//Action" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

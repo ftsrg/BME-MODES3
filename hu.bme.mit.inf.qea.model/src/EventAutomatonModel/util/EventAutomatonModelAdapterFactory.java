@@ -144,10 +144,6 @@ public class EventAutomatonModelAdapterFactory extends AdapterFactoryImpl {
 				return createEpsilonTransitionAdapter();
 			}
 			@Override
-			public Adapter caseAbstractTransition(AbstractTransition object) {
-				return createAbstractTransitionAdapter();
-			}
-			@Override
 			public Adapter caseAction(Action object) {
 				return createActionAdapter();
 			}
@@ -170,6 +166,10 @@ public class EventAutomatonModelAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseEventGuard(EventGuard object) {
 				return createEventGuardAdapter();
+			}
+			@Override
+			public Adapter caseAbstractTransition(AbstractTransition object) {
+				return createAbstractTransitionAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

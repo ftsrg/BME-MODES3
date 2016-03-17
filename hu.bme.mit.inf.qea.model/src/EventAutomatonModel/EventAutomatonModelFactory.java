@@ -193,6 +193,15 @@ public interface EventAutomatonModelFactory extends EFactory {
 	EventGuard createEventGuard();
 
 	/**
+	 * Returns a new object of class '<em>Abstract Transition</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Abstract Transition</em>'.
+	 * @generated
+	 */
+	AbstractTransition createAbstractTransition();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

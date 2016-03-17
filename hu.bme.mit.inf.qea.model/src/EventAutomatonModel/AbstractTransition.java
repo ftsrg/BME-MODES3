@@ -3,7 +3,6 @@
 package EventAutomatonModel;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -15,13 +14,13 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link EventAutomatonModel.AbstractTransition#getFrom <em>From</em>}</li>
  *   <li>{@link EventAutomatonModel.AbstractTransition#getTo <em>To</em>}</li>
+ *   <li>{@link EventAutomatonModel.AbstractTransition#getFrom <em>From</em>}</li>
  *   <li>{@link EventAutomatonModel.AbstractTransition#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @see EventAutomatonModel.EventAutomatonModelPackage#getAbstractTransition()
- * @model abstract="true"
+ * @model
  * @generated
  */
 public interface AbstractTransition extends EObject {
@@ -54,6 +53,22 @@ public interface AbstractTransition extends EObject {
 	void setFrom(State value);
 
 	/**
+	 * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
+	 * The list contents are of type {@link EventAutomatonModel.Action}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Actions</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Actions</em>' containment reference list.
+	 * @see EventAutomatonModel.EventAutomatonModelPackage#getAbstractTransition_Actions()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Action> getActions();
+
+	/**
 	 * Returns the value of the '<em><b>To</b></em>' reference.
 	 * It is bidirectional and its opposite is '{@link EventAutomatonModel.State#getIncomingTransitions <em>Incoming Transitions</em>}'.
 	 * <!-- begin-user-doc -->
@@ -80,21 +95,5 @@ public interface AbstractTransition extends EObject {
 	 * @generated
 	 */
 	void setTo(State value);
-
-	/**
-	 * Returns the value of the '<em><b>Actions</b></em>' containment reference list.
-	 * The list contents are of type {@link EventAutomatonModel.Action}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Actions</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Actions</em>' containment reference list.
-	 * @see EventAutomatonModel.EventAutomatonModelPackage#getAbstractTransition_Actions()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<Action> getActions();
 
 } // AbstractTransition

@@ -238,7 +238,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @see EventAutomatonModel.impl.EventAutomatonModelPackageImpl#getAction()
 	 * @generated
 	 */
-	int ACTION = 20;
+	int ACTION = 19;
 
 	/**
 	 * The number of structural features of the '<em>Action</em>' class.
@@ -469,7 +469,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @see EventAutomatonModel.impl.EventAutomatonModelPackageImpl#getSymbolicParameter()
 	 * @generated
 	 */
-	int SYMBOLIC_PARAMETER = 21;
+	int SYMBOLIC_PARAMETER = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -629,31 +629,13 @@ public interface EventAutomatonModelPackage extends EPackage {
 	int STATE = 9;
 
 	/**
-	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATE__OUTGOING_TRANSITIONS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATE__INCOMING_TRANSITIONS = 1;
-
-	/**
 	 * The feature id for the '<em><b>Tokens</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int STATE__TOKENS = 2;
+	int STATE__TOKENS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Acceptor</b></em>' attribute.
@@ -662,7 +644,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATE__ACCEPTOR = 3;
+	int STATE__ACCEPTOR = 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -671,7 +653,25 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int STATE__ID = 4;
+	int STATE__ID = 2;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Transitions</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE__INCOMING_TRANSITIONS = 3;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Transitions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int STATE__OUTGOING_TRANSITIONS = 4;
 
 	/**
 	 * The number of structural features of the '<em>State</em>' class.
@@ -966,16 +966,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @see EventAutomatonModel.impl.EventAutomatonModelPackageImpl#getAbstractTransition()
 	 * @generated
 	 */
-	int ABSTRACT_TRANSITION = 19;
-
-	/**
-	 * The feature id for the '<em><b>From</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ABSTRACT_TRANSITION__FROM = 0;
+	int ABSTRACT_TRANSITION = 25;
 
 	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
@@ -984,7 +975,16 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_TRANSITION__TO = 1;
+	int ABSTRACT_TRANSITION__TO = 0;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_TRANSITION__FROM = 1;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -1024,15 +1024,6 @@ public interface EventAutomatonModelPackage extends EPackage {
 	int EPSILON_TRANSITION = 18;
 
 	/**
-	 * The feature id for the '<em><b>From</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EPSILON_TRANSITION__FROM = ABSTRACT_TRANSITION__FROM;
-
-	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1040,6 +1031,15 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int EPSILON_TRANSITION__TO = ABSTRACT_TRANSITION__TO;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int EPSILON_TRANSITION__FROM = ABSTRACT_TRANSITION__FROM;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -1076,7 +1076,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @see EventAutomatonModel.impl.EventAutomatonModelPackageImpl#getEvent()
 	 * @generated
 	 */
-	int EVENT = 22;
+	int EVENT = 21;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -1122,7 +1122,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @see EventAutomatonModel.impl.EventAutomatonModelPackageImpl#getToken()
 	 * @generated
 	 */
-	int TOKEN = 23;
+	int TOKEN = 22;
 
 	/**
 	 * The feature id for the '<em><b>On</b></em>' container reference.
@@ -1168,16 +1168,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @see EventAutomatonModel.impl.EventAutomatonModelPackageImpl#getTransition()
 	 * @generated
 	 */
-	int TRANSITION = 24;
-
-	/**
-	 * The feature id for the '<em><b>From</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRANSITION__FROM = ABSTRACT_TRANSITION__FROM;
+	int TRANSITION = 23;
 
 	/**
 	 * The feature id for the '<em><b>To</b></em>' reference.
@@ -1187,6 +1178,15 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int TRANSITION__TO = ABSTRACT_TRANSITION__TO;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSITION__FROM = ABSTRACT_TRANSITION__FROM;
 
 	/**
 	 * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -1232,7 +1232,7 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @see EventAutomatonModel.impl.EventAutomatonModelPackageImpl#getEventGuard()
 	 * @generated
 	 */
-	int EVENT_GUARD = 25;
+	int EVENT_GUARD = 24;
 
 	/**
 	 * The feature id for the '<em><b>Bindings</b></em>' containment reference list.
@@ -1780,17 +1780,6 @@ public interface EventAutomatonModelPackage extends EPackage {
 	EReference getAbstractTransition_From();
 
 	/**
-	 * Returns the meta object for the reference '{@link EventAutomatonModel.AbstractTransition#getTo <em>To</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>To</em>'.
-	 * @see EventAutomatonModel.AbstractTransition#getTo()
-	 * @see #getAbstractTransition()
-	 * @generated
-	 */
-	EReference getAbstractTransition_To();
-
-	/**
 	 * Returns the meta object for the containment reference list '{@link EventAutomatonModel.AbstractTransition#getActions <em>Actions</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1800,6 +1789,17 @@ public interface EventAutomatonModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAbstractTransition_Actions();
+
+	/**
+	 * Returns the meta object for the reference '{@link EventAutomatonModel.AbstractTransition#getTo <em>To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>To</em>'.
+	 * @see EventAutomatonModel.AbstractTransition#getTo()
+	 * @see #getAbstractTransition()
+	 * @generated
+	 */
+	EReference getAbstractTransition_To();
 
 	/**
 	 * Returns the meta object for class '{@link EventAutomatonModel.Action <em>Action</em>}'.
@@ -2397,20 +2397,20 @@ public interface EventAutomatonModelPackage extends EPackage {
 		EReference ABSTRACT_TRANSITION__FROM = eINSTANCE.getAbstractTransition_From();
 
 		/**
-		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ABSTRACT_TRANSITION__TO = eINSTANCE.getAbstractTransition_To();
-
-		/**
 		 * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference ABSTRACT_TRANSITION__ACTIONS = eINSTANCE.getAbstractTransition_Actions();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ABSTRACT_TRANSITION__TO = eINSTANCE.getAbstractTransition_To();
 
 		/**
 		 * The meta object literal for the '{@link EventAutomatonModel.impl.ActionImpl <em>Action</em>}' class.

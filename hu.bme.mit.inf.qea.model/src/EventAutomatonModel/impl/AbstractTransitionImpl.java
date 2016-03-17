@@ -6,20 +6,15 @@ import EventAutomatonModel.AbstractTransition;
 import EventAutomatonModel.Action;
 import EventAutomatonModel.EventAutomatonModelPackage;
 import EventAutomatonModel.State;
-
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -32,14 +27,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link EventAutomatonModel.impl.AbstractTransitionImpl#getFrom <em>From</em>}</li>
  *   <li>{@link EventAutomatonModel.impl.AbstractTransitionImpl#getTo <em>To</em>}</li>
+ *   <li>{@link EventAutomatonModel.impl.AbstractTransitionImpl#getFrom <em>From</em>}</li>
  *   <li>{@link EventAutomatonModel.impl.AbstractTransitionImpl#getActions <em>Actions</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Container implements AbstractTransition {
+public class AbstractTransitionImpl extends MinimalEObjectImpl.Container implements AbstractTransition {
 	/**
 	 * The cached value of the '{@link #getTo() <em>To</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -125,6 +120,18 @@ public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Action> getActions() {
+		if (actions == null) {
+			actions = new EObjectContainmentEList<Action>(Action.class, this, EventAutomatonModelPackage.ABSTRACT_TRANSITION__ACTIONS);
+		}
+		return actions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public State getTo() {
 		if (to != null && to.eIsProxy()) {
 			InternalEObject oldTo = (InternalEObject)to;
@@ -185,29 +192,17 @@ public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Containe
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Action> getActions() {
-		if (actions == null) {
-			actions = new EObjectContainmentEList<Action>(Action.class, this, EventAutomatonModelPackage.ABSTRACT_TRANSITION__ACTIONS);
-		}
-		return actions;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetFrom((State)otherEnd, msgs);
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__TO:
 				if (to != null)
 					msgs = ((InternalEObject)to).eInverseRemove(this, EventAutomatonModelPackage.STATE__INCOMING_TRANSITIONS, State.class, msgs);
 				return basicSetTo((State)otherEnd, msgs);
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetFrom((State)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -220,10 +215,10 @@ public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Containe
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
-				return basicSetFrom(null, msgs);
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__TO:
 				return basicSetTo(null, msgs);
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
+				return basicSetFrom(null, msgs);
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__ACTIONS:
 				return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
 		}
@@ -252,11 +247,11 @@ public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Containe
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
-				return getFrom();
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__TO:
 				if (resolve) return getTo();
 				return basicGetTo();
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
+				return getFrom();
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__ACTIONS:
 				return getActions();
 		}
@@ -272,11 +267,11 @@ public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Containe
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
-				setFrom((State)newValue);
-				return;
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__TO:
 				setTo((State)newValue);
+				return;
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
+				setFrom((State)newValue);
 				return;
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__ACTIONS:
 				getActions().clear();
@@ -294,11 +289,11 @@ public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Containe
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
-				setFrom((State)null);
-				return;
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__TO:
 				setTo((State)null);
+				return;
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
+				setFrom((State)null);
 				return;
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__ACTIONS:
 				getActions().clear();
@@ -315,10 +310,10 @@ public abstract class AbstractTransitionImpl extends MinimalEObjectImpl.Containe
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
-				return getFrom() != null;
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__TO:
 				return to != null;
+			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__FROM:
+				return getFrom() != null;
 			case EventAutomatonModelPackage.ABSTRACT_TRANSITION__ACTIONS:
 				return actions != null && !actions.isEmpty();
 		}

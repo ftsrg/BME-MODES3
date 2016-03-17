@@ -38,11 +38,11 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//Parameter/type"/>
     </genClasses>
     <genClasses ecoreClass="EventAutomatonModel.ecore#//State">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//State/outgoingTransitions"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//State/incomingTransitions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//State/tokens"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EventAutomatonModel.ecore#//State/acceptor"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EventAutomatonModel.ecore#//State/id"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//State/incomingTransitions"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//State/outgoingTransitions"/>
     </genClasses>
     <genClasses ecoreClass="EventAutomatonModel.ecore#//ConstantBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//ConstantBinding/boundTo"/>
@@ -67,11 +67,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//TimerAction/timer"/>
     </genClasses>
     <genClasses ecoreClass="EventAutomatonModel.ecore#//EpsilonTransition"/>
-    <genClasses image="false" ecoreClass="EventAutomatonModel.ecore#//AbstractTransition">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/from"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/to"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/actions"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="EventAutomatonModel.ecore#//Action"/>
     <genClasses image="false" ecoreClass="EventAutomatonModel.ecore#//SymbolicParameter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EventAutomatonModel.ecore#//SymbolicParameter/name"/>
@@ -90,6 +85,11 @@
     <genClasses ecoreClass="EventAutomatonModel.ecore#//EventGuard">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//EventGuard/bindings"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//EventGuard/type"/>
+    </genClasses>
+    <genClasses ecoreClass="EventAutomatonModel.ecore#//AbstractTransition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/to"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/from"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/actions"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

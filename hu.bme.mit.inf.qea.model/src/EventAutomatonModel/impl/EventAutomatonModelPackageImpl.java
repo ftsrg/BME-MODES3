@@ -524,7 +524,7 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 	 * @generated
 	 */
 	public EReference getState_OutgoingTransitions() {
-		return (EReference)stateEClass.getEStructuralFeatures().get(0);
+		return (EReference)stateEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -533,7 +533,7 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 	 * @generated
 	 */
 	public EReference getState_IncomingTransitions() {
-		return (EReference)stateEClass.getEStructuralFeatures().get(1);
+		return (EReference)stateEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -542,7 +542,7 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 	 * @generated
 	 */
 	public EReference getState_Tokens() {
-		return (EReference)stateEClass.getEStructuralFeatures().get(2);
+		return (EReference)stateEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -551,7 +551,7 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 	 * @generated
 	 */
 	public EAttribute getState_Acceptor() {
-		return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)stateEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -560,7 +560,7 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 	 * @generated
 	 */
 	public EAttribute getState_Id() {
-		return (EAttribute)stateEClass.getEStructuralFeatures().get(4);
+		return (EAttribute)stateEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -722,15 +722,6 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 	 * @generated
 	 */
 	public EReference getAbstractTransition_From() {
-		return (EReference)abstractTransitionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getAbstractTransition_To() {
 		return (EReference)abstractTransitionEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -741,6 +732,15 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 	 */
 	public EReference getAbstractTransition_Actions() {
 		return (EReference)abstractTransitionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getAbstractTransition_To() {
+		return (EReference)abstractTransitionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -931,11 +931,11 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 		createEReference(parameterEClass, PARAMETER__TYPE);
 
 		stateEClass = createEClass(STATE);
-		createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
-		createEReference(stateEClass, STATE__INCOMING_TRANSITIONS);
 		createEReference(stateEClass, STATE__TOKENS);
 		createEAttribute(stateEClass, STATE__ACCEPTOR);
 		createEAttribute(stateEClass, STATE__ID);
+		createEReference(stateEClass, STATE__INCOMING_TRANSITIONS);
+		createEReference(stateEClass, STATE__OUTGOING_TRANSITIONS);
 
 		constantBindingEClass = createEClass(CONSTANT_BINDING);
 		createEReference(constantBindingEClass, CONSTANT_BINDING__BOUND_TO);
@@ -962,11 +962,6 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 
 		epsilonTransitionEClass = createEClass(EPSILON_TRANSITION);
 
-		abstractTransitionEClass = createEClass(ABSTRACT_TRANSITION);
-		createEReference(abstractTransitionEClass, ABSTRACT_TRANSITION__FROM);
-		createEReference(abstractTransitionEClass, ABSTRACT_TRANSITION__TO);
-		createEReference(abstractTransitionEClass, ABSTRACT_TRANSITION__ACTIONS);
-
 		actionEClass = createEClass(ACTION);
 
 		symbolicParameterEClass = createEClass(SYMBOLIC_PARAMETER);
@@ -986,6 +981,11 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 		eventGuardEClass = createEClass(EVENT_GUARD);
 		createEReference(eventGuardEClass, EVENT_GUARD__BINDINGS);
 		createEReference(eventGuardEClass, EVENT_GUARD__TYPE);
+
+		abstractTransitionEClass = createEClass(ABSTRACT_TRANSITION);
+		createEReference(abstractTransitionEClass, ABSTRACT_TRANSITION__TO);
+		createEReference(abstractTransitionEClass, ABSTRACT_TRANSITION__FROM);
+		createEReference(abstractTransitionEClass, ABSTRACT_TRANSITION__ACTIONS);
 	}
 
 	/**
@@ -1068,11 +1068,11 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 		initEReference(getParameter_Type(), this.getSymbolicParameter(), null, "type", null, 1, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getState_OutgoingTransitions(), this.getAbstractTransition(), this.getAbstractTransition_From(), "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getState_IncomingTransitions(), this.getAbstractTransition(), this.getAbstractTransition_To(), "incomingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getState_Tokens(), this.getToken(), this.getToken_On(), "tokens", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getState_Acceptor(), theXMLTypePackage.getBoolean(), "acceptor", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getState_Id(), ecorePackage.getEInt(), "id", null, 1, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getState_IncomingTransitions(), this.getAbstractTransition(), this.getAbstractTransition_To(), "incomingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getState_OutgoingTransitions(), this.getAbstractTransition(), this.getAbstractTransition_From(), "outgoingTransitions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(constantBindingEClass, ConstantBinding.class, "ConstantBinding", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConstantBinding_BoundTo(), this.getFixParameter(), null, "boundTo", null, 1, 1, ConstantBinding.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1099,11 +1099,6 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 
 		initEClass(epsilonTransitionEClass, EpsilonTransition.class, "EpsilonTransition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(abstractTransitionEClass, AbstractTransition.class, "AbstractTransition", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getAbstractTransition_From(), this.getState(), this.getState_OutgoingTransitions(), "from", null, 1, 1, AbstractTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAbstractTransition_To(), this.getState(), this.getState_IncomingTransitions(), "to", null, 1, 1, AbstractTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getAbstractTransition_Actions(), this.getAction(), null, "actions", null, 0, -1, AbstractTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(actionEClass, Action.class, "Action", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(symbolicParameterEClass, SymbolicParameter.class, "SymbolicParameter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1123,6 +1118,11 @@ public class EventAutomatonModelPackageImpl extends EPackageImpl implements Even
 		initEClass(eventGuardEClass, EventGuard.class, "EventGuard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getEventGuard_Bindings(), this.getBinding(), null, "bindings", null, 0, -1, EventGuard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getEventGuard_Type(), this.getSymbolicEvent(), null, "type", null, 0, 1, EventGuard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(abstractTransitionEClass, AbstractTransition.class, "AbstractTransition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAbstractTransition_To(), this.getState(), this.getState_IncomingTransitions(), "to", null, 1, 1, AbstractTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAbstractTransition_From(), this.getState(), this.getState_OutgoingTransitions(), "from", null, 1, 1, AbstractTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAbstractTransition_Actions(), this.getAction(), null, "actions", null, 0, -1, AbstractTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
