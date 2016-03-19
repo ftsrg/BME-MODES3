@@ -17,7 +17,7 @@
 
 #define SERIAL_BAUD_RATE    9600
 
-#define VERBOSE_LOG     1
+#define VERBOSE_LOG     0
 
 
 
