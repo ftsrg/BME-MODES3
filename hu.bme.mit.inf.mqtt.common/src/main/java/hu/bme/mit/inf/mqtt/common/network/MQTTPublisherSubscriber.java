@@ -44,8 +44,8 @@ public class MQTTPublisherSubscriber {
             };
             connectThread = new Thread(clientConnectionEstablisher);
             connectThread.start();
-
-        } catch (MqttException ex) {
+            connectThread.join();
+        } catch (MqttException | InterruptedException ex) {
             logException(getClassName(), ex);
         }
     }
