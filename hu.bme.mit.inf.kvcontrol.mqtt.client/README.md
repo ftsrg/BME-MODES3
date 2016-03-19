@@ -59,4 +59,4 @@ Now start the Mosquitto Service at Windows Control Panel -> Administrative Tools
 * [MQTT-Common](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.mqtt.common): common classes used for MQTT communication and configuration.
 
 ## Target Platform
-JRE 1.8
+JRE 1.7

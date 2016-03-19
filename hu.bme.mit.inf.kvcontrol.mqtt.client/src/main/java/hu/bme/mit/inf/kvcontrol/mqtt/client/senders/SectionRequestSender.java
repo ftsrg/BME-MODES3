@@ -17,9 +17,7 @@ import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithCo
 import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -32,7 +30,7 @@ public class SectionRequestSender implements MqttCallback {
 
     private final MQTTPublisherSubscriber sender;
 
-    private final Map<Integer, CompletableFuture<SectionStatus>> sectionStatuses = new ConcurrentHashMap<>();
+    private final Map<Integer, SectionStatus> sectionStatuses = new ConcurrentHashMap<>();
 
     public SectionRequestSender(MQTTConfiguration config) {
         config.setClientID(generateId(getClass().getSimpleName()));
@@ -43,20 +41,13 @@ public class SectionRequestSender implements MqttCallback {
 
     public boolean isSectionEnabled(int sectionId) {
         if (!sectionStatuses.containsKey(sectionId)) {
-            sectionStatuses.put(sectionId, new CompletableFuture<>());
+            sectionStatuses.put(sectionId, SectionStatus.ENABLED);
         }
 
         Section section = new Section(sectionId);
         sendCommandWithContent(GET_SECTION_STATUS, section, sender);
 
-        SectionStatus status = null;
-        try {
-            status = sectionStatuses.get(sectionId).get();
-            sectionStatuses.remove(sectionId);
-        } catch (InterruptedException | ExecutionException ex) {
-            logException(getClass().getName(), ex);
-        }
-
+        SectionStatus status = sectionStatuses.get(sectionId);
         return status == ENABLED;
     }
 
@@ -83,12 +74,7 @@ public class SectionRequestSender implements MqttCallback {
             switch (command) {
                 case SEND_SECTION_STATUS:
                     Section section = payload.getContentAs(Section.class);
-                    CompletableFuture<SectionStatus> future = sectionStatuses.get(
-                            section.getId());
-
-                    if (future != null) {
-                        future.complete(section.getStatus());
-                    }
+                    sectionStatuses.put(section.getId(), section.getStatus());
                     break;
                 default:
                     break;

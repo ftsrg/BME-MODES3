@@ -14,9 +14,7 @@ import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithCo
 import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -29,7 +27,7 @@ public class TurnoutRequestSender implements MqttCallback {
 
     private final MQTTPublisherSubscriber sender;
 
-    private final Map<Integer, CompletableFuture<TurnoutStatus>> turnoutStatuses = new ConcurrentHashMap<>();
+    private final Map<Integer, TurnoutStatus> turnoutStatuses = new ConcurrentHashMap<>();
 
     public TurnoutRequestSender(MQTTConfiguration config) {
         config.setClientID(generateId(getClass().getSimpleName()));
@@ -40,20 +38,13 @@ public class TurnoutRequestSender implements MqttCallback {
 
     public boolean isTurnoutDivergent(int turnoutId) {
         if (!turnoutStatuses.containsKey(turnoutId)) {
-            turnoutStatuses.put(turnoutId, new CompletableFuture<>());
+            turnoutStatuses.put(turnoutId, DIVERGENT);
         }
 
         Turnout turnout = new Turnout(turnoutId);
         sendCommandWithContent(GET_TURNOUT_STATUS, turnout, sender);
 
-        TurnoutStatus status = null;
-        try {
-            status = turnoutStatuses.get(turnoutId).get();
-            turnoutStatuses.remove(turnoutId);
-        } catch (InterruptedException | ExecutionException ex) {
-            logException(getClass().getName(), ex);
-        }
-
+        TurnoutStatus status = turnoutStatuses.get(turnoutId);
         return status == DIVERGENT;
     }
 
@@ -74,12 +65,7 @@ public class TurnoutRequestSender implements MqttCallback {
             switch (command) {
                 case SEND_TURNOUT_STATUS:
                     Turnout turnout = payload.getContentAs(Turnout.class);
-                    CompletableFuture<TurnoutStatus> future = turnoutStatuses.get(
-                            turnout.getId());
-
-                    if (future != null) {
-                        future.complete(turnout.getStatus());
-                    }
+                    turnoutStatuses.put(turnout.getId(), turnout.getStatus());
                     break;
                 default:
                     break;
