@@ -72,8 +72,8 @@ public class SVGRefresher implements Runnable {
 
         RailwayWindow.log(
                 "Thread@" + Thread.currentThread().getName() + " started(svg turnout refresher)");
-        while (!Thread.currentThread().isInterrupted()) {
 
+        while (!Thread.currentThread().isInterrupted()) {
             try {
                 Thread.sleep(100);
                 if (sectionControllerProxy != null) {
@@ -87,10 +87,14 @@ public class SVGRefresher implements Runnable {
                 if (turnoutControllerProxy != null) {
                     refreshTurnouts();
                 }
+                Thread.sleep(100);
 
                 refreshSVG();
 
-                Thread.sleep(SettingsWindow.Configuration.heartbeatTimeout - 300);
+                if (SettingsWindow.Configuration.heartbeatTimeout >= 400) {
+                    Thread.sleep(
+                            SettingsWindow.Configuration.heartbeatTimeout - 400);
+                }
             } catch (InterruptedException ex) {
                 logException(getClass().getName(), ex);
                 Thread.currentThread().interrupt();
@@ -109,6 +113,8 @@ public class SVGRefresher implements Runnable {
         for (Section section : sections.values()) {
             boolean isEnabled = SettingsWindow.sectionControllerProxy.isSectionEnabled(
                     section.getId());
+            // 10 ms wait, otherwise mqtt will be throottled
+            Thread.sleep(10);
 
             String color = isEnabled ? SettingsWindow.SECTION_ENABLED_COLOR : SettingsWindow.SECTION_DISABLED_COLOR;
             Element elem = svgDocument.getElementById(Relations.getKey(
@@ -126,6 +132,8 @@ public class SVGRefresher implements Runnable {
             if (!locoObjectID.equals("NOP")) {
                 boolean sectionOccupied = occupancyControllerProxy.isSectionOccupied(
                         i);
+                // 10 ms wait, otherwise mqtt will be throottled
+                Thread.sleep(10);
 
                 Element elem = svgDocument.getElementById(locoObjectID);
                 this.changeElementColor(elem, "fill",
@@ -176,12 +184,14 @@ public class SVGRefresher implements Runnable {
             // normal turnouts
             boolean isDivergent = turnoutControllerProxy.isTurnoutDivergent(
                     turnoutID);
+            // 10 ms wait, otherwise mqtt will be throottled
+            Thread.sleep(10);
 
             this.changeTurnout(turnoutID, turnoutCache, isDivergent);
         }
     }
 
-    private void changeXTurnout() {
+    private void changeXTurnout() throws InterruptedException {
         String[] elements = {"0x86E", "0x86K", "0x87E", "0x87K"};
         Element elem;
         String change = "NOP";
@@ -191,7 +201,11 @@ public class SVGRefresher implements Runnable {
         TurnoutCache c87 = turnouts.get(0x87);
 
         boolean div86 = turnoutControllerProxy.isTurnoutDivergent(0x86);
+        // 10 ms wait, otherwise mqtt will be throottled
+        Thread.sleep(10);
         boolean div87 = turnoutControllerProxy.isTurnoutDivergent(0x87);
+        // 10 ms wait, otherwise mqtt will be throottled
+        Thread.sleep(10);
 
         if (div86 && div87 && (!c86.isDivergent() || !c87.isDivergent())) {
             change = "0x87E";

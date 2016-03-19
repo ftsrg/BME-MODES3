@@ -465,7 +465,7 @@ public class SettingsWindow extends javax.swing.JFrame {
         jLabel16.setForeground(Application.labelForeground);
         jLabel16.setText("Occupancy topic:");
 
-        mqttOccupancyTopicField.setText("modes3/kvcontrol/occupancy");
+        mqttOccupancyTopicField.setText("modes3/kvcontrol/soc");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
