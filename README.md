@@ -9,21 +9,24 @@ This repository uses [Maven](https://maven.apache.org/download.cgi) for some pro
 Modules stored in the repository:
 
 * [BP-TO-UPPAAL](https://github.com/FTSRG/BME-MODES3/tree/master/bp2uppaal)
-* [JSON](https://github.com/FTSRG/BME-MODES3/tree/master/json)
-* [KVControl](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol)
 * [KVControl-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.kvcontrol.mqtt.client)
-* [KVControl-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/kvcontrol-requestsender)
 * [Master-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.client)
 * [Master-MQTT-SOC](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.soc)
 * [Masters](https://github.com/FTSRG/BME-MODES3/tree/master/masters)
 * [MQTT-Common](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.mqtt.common)
-* [PiClient](https://github.com/FTSRG/BME-MODES3/tree/master/piclient_v4)
+[PiClient-MQTT](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.piclient)
 * [SerialMonitor](https://github.com/FTSRG/BME-MODES3/tree/master/serialmonitor)
-* [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes)
+* [Yakindu-Codes-Normal-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.normal)
+* [Yakindu-Codes-English-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.english)
 * [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client)
 
 Deprecated modules stored in the repository:
 
+* [JSON](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/json)
 * [BridgePoint-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/bridgepoint-codes) is deprecated, use [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes) instead.
+* [KVControl](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/kvcontrol) is deprecated, use [KVControl-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.kvcontrol.mqtt.client) instead.
+* [KVControl-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/kvcontrol-requestsender) is deprecated, use [KVControl-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.kvcontrol.mqtt.client) instead.
 * [KVControl-BPExtension](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/kvcontrol-bpextension) is deprecated, use [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client) instead.
 * [KVControl-BPExtension-RequestSender](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/kvcontrol-bpextension-requestsender) is deprecated, use [Yakindu-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.mqtt.client) instead.
+* [PiClient](https://github.com/FTSRG/BME-MODES3/tree/master/deprecated/piclient_v4) is deprecated use [PiClient-MQTT](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.piclient) instead
+* [Yakindu-Codes](https://github.com/FTSRG/BME-MODES3/tree/master/yakindu-codes) is deprecated use [Yakindu-Codes-Normal-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.normal) and [Yakindu-Codes-English-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.english) instead.

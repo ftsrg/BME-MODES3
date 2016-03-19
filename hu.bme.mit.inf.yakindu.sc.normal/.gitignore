@@ -1,0 +1,20 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# XCode files #
+###############
+*.xcodeproj
+
+# Generated sources and binaries #
+##################################
+bin/
+xtend-gen/
+src-gen/
+target/
