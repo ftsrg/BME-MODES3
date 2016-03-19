@@ -22,7 +22,7 @@ Create a Maven project in any IDE (Eclipse or NetBeans are recommended). Maven s
 
 Run in command-line: 
 
-`java -jar YakinduCodes-EnglishTurnout.jar [-sl] [-tp <statechart trace log directory path>] [--kvba <IP address of the KVControl MQTT Broker>] [--kvbp <port number of the KVControl MQTT Broker>] [--kvbpp <protocol of the KVControl MQTT Broker>] [--kvbq <QOS of the KVControl MQTT Broker>]  [--kvbt <topic name for the KVControl MQTT Broker>] [--smba <IP address of the MQTT Broker>] [--smbp <port number of the MQTT Broker>] [--smbpp <protocol of the MQTT Broker>] [--smbq <QOS of the MQTT Broker>]  [--smbt <topic name for the MQTT Broker>]`
+`java -jar YakinduCodes-EnglishTurnout.jar [-sl] [-tp <statechart trace log directory path>] [--kvba <IP address of the KVControl MQTT Broker>] [--kvbp <port number of the KVControl MQTT Broker>] [--kvbpp <protocol of the KVControl MQTT Broker>] [--kvbq <QOS of the KVControl MQTT Broker>] [--kvbst <section topic name for the KVControl MQTT Broker>] [--kvbtt <turnout topic name for the KVControl MQTT Broker>] [--kvbot <occupancy topic name for the KVControl MQTT Broker>] [--smba <IP address of the MQTT Broker>] [--smbp <port number of the MQTT Broker>] [--smbpp <protocol of the MQTT Broker>] [--smbq <QOS of the MQTT Broker>]  [--smbt <topic name for the MQTT Broker>]`
 
 Parameters:
 
@@ -32,7 +32,9 @@ Parameters:
 * `kvbp`: port number of the computer which runs the KVControl MQTT Broker *(default: 1883)*.
 * `kvbpp`: protocol of the computer which runs the KVControl MQTT Broker *(default: tcp)*.
 * `kvbq`: QOS of the KVControl MQTT Broker *(default: 1)*.
-* `kvbt`: topic name for the KVControl MQTT Broker *(default: modes3/kvcontrol)*.
+* `kvbst`: section topic name for the KVControl MQTT Broker *(default: modes3/kvcontrol/section)*.
+* `kvbtt`: turnout topic name for the KVControl MQTT Broker *(default: modes3/kvcontrol/turnout)*.
+* `kvbot`: occupancy topic name for the KVControl MQTT Broker *(default: modes3/kvcontrol/soc)*.
 * `smba`: IP address of the computer which runs the MQTT Broker *(default: localhost)*.
 * `smbp`: port number of the computer which runs the MQTT Broker *(default: 1883)*.
 * `smbpp`: protocol of the computer which runs the MQTT Broker *(default: tcp)*.

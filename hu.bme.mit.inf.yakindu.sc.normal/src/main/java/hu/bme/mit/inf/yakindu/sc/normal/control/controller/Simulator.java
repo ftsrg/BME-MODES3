@@ -11,7 +11,9 @@ import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.Communication
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
-import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolMQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolOccupancyMQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolSectionMQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolTurnoutMQTTConfiguration;
 import java.io.IOException;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
@@ -28,6 +30,10 @@ public class Simulator {
     public static final void main(String[] args) {
 
         try {
+            final String defaultSectionTopic = "modes3/kvcontrol/section";
+            final String defaultTurnoutTopic = "modes3/kvcontrol/turnout";
+            final String defaultOccupancyTopic = "modes3/kvcontrol/soc";
+
             OptionParser parser = new OptionParser();
             parser.accepts("sl", "enable status log [optional]");
 
@@ -60,9 +66,19 @@ public class Simulator {
                             "KVControl MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
                     .withRequiredArg().ofType(Integer.class);
 
-            ArgumentAcceptingOptionSpec<String> kvMQTTTopicArg
-                    = parser.accepts("kvbt",
-                            "KVControl MQTT Broker Topic [optional, default = modes3/kvcontrol]")
+            ArgumentAcceptingOptionSpec<String> kvMQTTSectionTopicArg
+                    = parser.accepts("kvbst",
+                            "KVControl MQTT Broker Section Topic [optional, default = " + defaultSectionTopic + "]")
+                    .withRequiredArg().ofType(String.class);
+
+            ArgumentAcceptingOptionSpec<String> kvMQTTTurnoutTopicArg
+                    = parser.accepts("kvbtt",
+                            "KVControl MQTT Broker Turnout Topic [optional, default = " + defaultTurnoutTopic + "]")
+                    .withRequiredArg().ofType(String.class);
+
+            ArgumentAcceptingOptionSpec<String> kvMQTTOccupancyTopicArg
+                    = parser.accepts("kvbot",
+                            "KVControl MQTT Broker Occupancy Topic [optional, default = " + defaultOccupancyTopic + "]")
                     .withRequiredArg().ofType(String.class);
 
             ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg
@@ -113,7 +129,16 @@ public class Simulator {
             setLoggingPreferences(traceLogArg, parsed, enableStatusLog);
 
             setKVMQTTPreferences(parsed, kvMQTTProtocolArg, kvMQTTAddressArg,
-                    kvMQTTTopicArg, kvMQTTPort, kvMQTTQOS);
+                    kvMQTTSectionTopicArg, defaultSectionTopic, "section",
+                    kvMQTTPort, kvMQTTQOS);
+
+            setKVMQTTPreferences(parsed, kvMQTTProtocolArg, kvMQTTAddressArg,
+                    kvMQTTTurnoutTopicArg, defaultTurnoutTopic, "turnout",
+                    kvMQTTPort, kvMQTTQOS);
+
+            setKVMQTTPreferences(parsed, kvMQTTProtocolArg, kvMQTTAddressArg,
+                    kvMQTTOccupancyTopicArg, defaultOccupancyTopic, "occupancy",
+                    kvMQTTPort, kvMQTTQOS);
 
             setSMMQTTPreferences(parsed, smMQTTProtocolArg, smMQTTAddressArg,
                     smMQTTTopicArg, smMQTTPort, smMQTTQOS);
@@ -183,13 +208,24 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> kvMQTTProtocolArg,
             ArgumentAcceptingOptionSpec<String> kvMQTTAddressArg,
             ArgumentAcceptingOptionSpec<String> kvMQTTTopicArg,
-            Integer kvMQTTPort, Integer kvMQTTQOS) {
+            String defaultTopicName, String target, Integer kvMQTTPort,
+            Integer kvMQTTQOS) {
 
         MQTTConfiguration conf = createConfiguration(parsed, kvMQTTProtocolArg,
                 kvMQTTAddressArg, kvMQTTTopicArg, kvMQTTPort, kvMQTTQOS,
-                "modes3/kvcontrol");
+                defaultTopicName);
 
-        setKvcontrolMQTTConfiguration(conf);
+        switch (target) {
+            case "section":
+                setKvcontrolSectionMQTTConfiguration(conf);
+                break;
+            case "turnout":
+                setKvcontrolTurnoutMQTTConfiguration(conf);
+                break;
+            case "occupancy":
+                setKvcontrolOccupancyMQTTConfiguration(conf);
+                break;
+        }
     }
 
     private static void setSMMQTTPreferences(

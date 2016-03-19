@@ -17,7 +17,7 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.DIVERGENT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.STRAIGHT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
-import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.getKvcontrolMQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.getKvcontrolSectionMQTTConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,7 +138,7 @@ public class StatemachineInitializer {
         sectionStatemachine.getSCISection().setId(sectionID);
         sectionStatemachine.getSCISection().setDirection(directionValue);
 
-        MQTTConfiguration kvcontrolMQTTConf = getKvcontrolMQTTConfiguration();
+        MQTTConfiguration kvcontrolMQTTConf = getKvcontrolSectionMQTTConfiguration();
         SectionRequestSender requestSender = new SectionRequestSender(
                 kvcontrolMQTTConf);
 
