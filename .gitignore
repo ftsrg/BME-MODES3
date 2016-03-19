@@ -18,3 +18,5 @@ Thumbs.db
 /xtend-gen/
 /src-gen/
 /target/
+/hu.bme.mit.inf.master.mqtt.soc/dist/
+/hu.bme.mit.inf.master.mqtt.soc/build/
