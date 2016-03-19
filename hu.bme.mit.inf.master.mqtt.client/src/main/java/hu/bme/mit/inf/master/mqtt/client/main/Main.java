@@ -15,6 +15,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         try {
+            final String defaultSectionTopic = "modes3/kvcontrol/section";
+            final String defaultTurnoutTopic = "modes3/kvcontrol/turnout";
+
             OptionParser parser = new OptionParser();
             parser.accepts("sl", "enable status log [optional]");
 
@@ -40,12 +43,12 @@ public class Main {
 
             ArgumentAcceptingOptionSpec<String> mqttSectionTopicArg
                     = parser.accepts("st",
-                            "MQTT Broker  Section Topic [optional, default = modes3/kvcontrol/section]")
+                            "MQTT Broker Section Topic [optional, default = " + defaultSectionTopic + "]")
                     .withRequiredArg().ofType(String.class);
 
             ArgumentAcceptingOptionSpec<String> mqttTurnoutTopicArg
                     = parser.accepts("tt",
-                            "MQTT Broker  Section Topic [optional, default = modes3/kvcontrol/turnout]")
+                            "MQTT Broker Turnout Topic [optional, default = " + defaultTurnoutTopic + "]")
                     .withRequiredArg().ofType(String.class);
 
             parser.printHelpOn(System.out);
@@ -62,12 +65,12 @@ public class Main {
 
             MQTTConfiguration sectionConf = createMQTTConfiguration(parsed,
                     mqttProtocolArg, mqttAddressArg,
-                    mqttSectionTopicArg, "modes3/kvcontrol/section", mqttPort,
+                    mqttSectionTopicArg, defaultSectionTopic, mqttPort,
                     mqttQOS);
 
             MQTTConfiguration turnoutConf = createMQTTConfiguration(parsed,
                     mqttProtocolArg, mqttAddressArg,
-                    mqttTurnoutTopicArg, "modes3/kvcontrol/turnout", mqttPort,
+                    mqttTurnoutTopicArg, defaultTurnoutTopic, mqttPort,
                     mqttQOS);
 
             startMessageHandler(sectionConf);
