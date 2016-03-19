@@ -1,17 +1,19 @@
 package hu.bme.mit.inf.master.mqtt.client.main;
 
-import hu.bme.mit.inf.master.mqtt.client.network.MessageHandler;
-import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
+
 import java.io.IOException;
+
+import hu.bme.mit.inf.master.mqtt.client.network.MessageHandler;
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         try {
             OptionParser parser = new OptionParser();
             parser.accepts("sl", "enable status log [optional]");
@@ -62,6 +64,10 @@ public class Main {
         } catch (IOException ex) {
             logException(Main.class.getName(), ex);
         }
+        
+        while(true) {
+        	Thread.sleep(100);
+        }
     }
 
     private static Integer getParameterIntegerValue(OptionSet parsed,
@@ -108,7 +114,7 @@ public class Main {
     }
 
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
-    private static void startMessageHandler(MQTTConfiguration conf) {
+    private static void startMessageHandler(MQTTConfiguration conf) throws Exception {
         new MessageHandler(conf);
     }
 

@@ -1,18 +1,17 @@
 package hu.bme.mit.inf.master.bbb.conf;
 
+import java.util.List;
+
 import hu.bme.mit.inf.mqtt.common.data.Identity;
 import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
  * @author benedekh
  */
-public class ControllerConfiguration {
+public class ControllerConfiguration implements IControllerConfiguration {
 
     private final Turnout managedTurnout;
     private final List<Section> managedSections;
@@ -42,37 +41,11 @@ public class ControllerConfiguration {
     }
 
     private Turnout createTurnout() {
-        String turnoutKey = "TURNOUT_ID";
-        Map<String, String> env = System.getenv();
-
-        if (!env.containsKey(turnoutKey)) {
-            throw new RuntimeException(
-                    "No " + turnoutKey + " environmental variable is set.");
-        } else {
-            String turnoutID = env.get(turnoutKey);
-            int id = convertStringToInt(turnoutID);
-            return new Turnout(id);
-        }
+        return null;
     }
 
     private List<Section> createSections() {
-        String sectionsKey = "SECTIONS";
-        Map<String, String> env = System.getenv();
-
-        if (!env.containsKey(sectionsKey)) {
-            throw new RuntimeException(
-                    "No " + sectionsKey + " environmental variable is set.");
-        } else {
-            List<Section> sections = new ArrayList<>();
-
-            String[] sectionIDs = env.get(sectionsKey).split(";");
-            for (String sectionID : sectionIDs) {
-                int id = convertStringToInt(sectionID);
-                sections.add(new Section(id));
-            }
-
-            return sections;
-        }
+    	return null;
     }
 
     /**
