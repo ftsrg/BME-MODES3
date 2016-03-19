@@ -13,6 +13,7 @@ public enum Command {
     LINE_ENABLE((byte) 0xC2),
     GET_SECTION_STATUS((byte) 0xC3),
     SEND_SECTION_STATUS((byte) 0xC4),
+    OCCUPANCY((byte)0xC5),
     GET_OCCUPANCY((byte) 0xC8),
     SEND_OCCUPANCY((byte) 0xC9),
     GET_TURNOUT_STATUS((byte) 0xCA),

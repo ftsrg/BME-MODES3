@@ -1,15 +1,13 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import hu.bme.mit.inf.mqtt.common.data.Command;
-import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_OCCUPANCY;
-import hu.bme.mit.inf.mqtt.common.data.OccupancyVector;
-import hu.bme.mit.inf.mqtt.common.data.Payload;
+import hu.bme.mit.inf.mqtt.common.data.OccupancyPayload;
 import hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus;
 import static hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus.FREE;
 import static hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus.OCCUPIED;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
-import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getOccupancyPayloadFromMessage;
 import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
@@ -54,14 +52,12 @@ public class OccupancyRequestSender implements MqttCallback {
                 return;
             }
 
-            Payload payload = getPayloadFromMessage(message);
+            OccupancyPayload payload = getOccupancyPayloadFromMessage(message);
             Command command = payload.getCommand();
 
             switch (command) {
-                case SEND_OCCUPANCY:
-                    OccupancyVector occupancyVector = payload.getContentAs(
-                            OccupancyVector.class);
-                    int occupancy = occupancyVector.getOccupancyVector();
+                case OCCUPANCY:
+                    int occupancy = payload.getOccupancyVector();
                     updateOccupancies(occupancy);
                     break;
                 default:
