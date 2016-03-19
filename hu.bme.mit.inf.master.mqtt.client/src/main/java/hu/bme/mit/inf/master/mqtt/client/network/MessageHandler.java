@@ -71,6 +71,7 @@ public class MessageHandler implements MqttCallback {
     @Override
     public void connectionLost(Throwable cause) {
         logException(CLASS_NAME, new Exception(cause));
+        mqttConnection.reconnectClient();
     }
 
     @Override
@@ -79,7 +80,7 @@ public class MessageHandler implements MqttCallback {
     }
 
     private void handleIdentity(Payload payload) {
-    	throw new UnsupportedOperationException(
+        throw new UnsupportedOperationException(
                 "handleIdentity Not supported yet.");
     }
 

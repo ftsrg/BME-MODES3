@@ -19,6 +19,9 @@ public class MQTTPublisherSubscriber {
     private String topic;
     private int qos;
 
+    private Thread connectThread;
+    private Runnable clientConnectionEstablisher;
+
     public MQTTPublisherSubscriber(MQTTConfiguration config) {
         try {
             final String address = config.getFullAddress();
@@ -33,32 +36,24 @@ public class MQTTPublisherSubscriber {
 
             client = new MqttAsyncClient(address, clientId, persistence);
 
-            Thread clientConnectionEstablisher = new Thread() {
+            clientConnectionEstablisher = new Runnable() {
+                @Override
                 public void run() {
-                    try {
-                        while (!client.isConnected()) {
-                            logInfoMessage(getClassName(),
-                                    "Connecting to broker: " + address);
-                            try {
-                                client.connect(connOpts);
-                            } catch (MqttException e) {
-                                int sleepTime = 1000 * 10;
-                                Thread.sleep(sleepTime);
-                            }
-                        }
-                    } catch (InterruptedException ex) {
-                        logException(getClassName(), ex);
-                    }
+                    establishClientConnection(address, connOpts);
                 }
             };
-            clientConnectionEstablisher.start();
+            connectThread = new Thread(clientConnectionEstablisher);
+            connectThread.start();
 
-            logInfoMessage(getClassName(), "Connected");
-            Thread.sleep(500);
-            client.subscribe(topic, qos);
-            logInfoMessage(getClassName(), "Subscribed");
-        } catch (MqttException | InterruptedException ex) {
+        } catch (MqttException ex) {
             logException(getClassName(), ex);
+        }
+    }
+
+    public synchronized void reconnectClient() {
+        if (!connectThread.isAlive()) {
+            connectThread = new Thread(clientConnectionEstablisher);
+            connectThread.start();
         }
     }
 
@@ -72,11 +67,34 @@ public class MQTTPublisherSubscriber {
             client.publish(topic, payload, qos, false);
         } catch (MqttException ex) {
             logException(getClassName(), ex);
+            reconnectClient();
         }
     }
 
     public String getSubscribedTopic() {
         return topic;
+    }
+
+    private void establishClientConnection(String address,
+            MqttConnectOptions connOpts) {
+        try {
+            while (!client.isConnected()) {
+                logInfoMessage(getClassName(),
+                        "Connecting to broker: " + address);
+                try {
+                    client.connect(connOpts);
+                } catch (MqttException e) {
+                    int sleepTime = 1000 * 10;
+                    Thread.sleep(sleepTime);
+                }
+                logInfoMessage(getClassName(), "Connected");
+                Thread.sleep(500);
+                client.subscribe(topic, qos);
+                logInfoMessage(getClassName(), "Subscribed");
+            }
+        } catch (MqttException | InterruptedException ex) {
+            logException(getClassName(), ex);
+        }
     }
 
     private static String getClassName() {

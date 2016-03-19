@@ -125,6 +125,7 @@ public class DistributedMessageReceiver implements MqttCallback {
     @Override
     public void connectionLost(Throwable cause) {
         logException(getClass().getName(), new Exception(cause));
+        receiver.reconnectClient();
     }
 
     @Override

@@ -92,6 +92,7 @@ public class TurnoutRequestSender implements MqttCallback {
     @Override
     public void connectionLost(Throwable cause) {
         logException(getClass().getName(), new Exception(cause));
+        sender.reconnectClient();
     }
 
     @Override
