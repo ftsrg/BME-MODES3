@@ -138,8 +138,6 @@
       </item>
       <item path="MQTTClient/StackTrace.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="MQTTClient/s88/s88.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="configuration.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -147,6 +145,8 @@
       <item path="mqtt-driver/mqtt-driver.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="mqtt-driver/mqtt-driver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="s88/s88.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="s88/s88.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -218,8 +218,6 @@
       </item>
       <item path="MQTTClient/StackTrace.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="MQTTClient/s88/s88.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="configuration.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -227,6 +225,8 @@
       <item path="mqtt-driver/mqtt-driver.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="mqtt-driver/mqtt-driver.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="s88/s88.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="s88/s88.h" ex="false" tool="3" flavor2="0">
       </item>

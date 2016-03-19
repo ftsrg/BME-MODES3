@@ -45,9 +45,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/MQTTClient/MQTTSubscribeServer.o \
 	${OBJECTDIR}/MQTTClient/MQTTUnsubscribeClient.o \
 	${OBJECTDIR}/MQTTClient/MQTTUnsubscribeServer.o \
-	${OBJECTDIR}/MQTTClient/s88/s88.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/mqtt-driver/mqtt-driver.o
+	${OBJECTDIR}/mqtt-driver/mqtt-driver.o \
+	${OBJECTDIR}/s88/s88.o
 
 
 # C Compiler Flags
@@ -124,11 +124,6 @@ ${OBJECTDIR}/MQTTClient/MQTTUnsubscribeServer.o: MQTTClient/MQTTUnsubscribeServe
 	${RM} "$@.d"
 	$(COMPILE.c) -g -I${INCLUDE} -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MQTTClient/MQTTUnsubscribeServer.o MQTTClient/MQTTUnsubscribeServer.c
 
-${OBJECTDIR}/MQTTClient/s88/s88.o: MQTTClient/s88/s88.cpp 
-	${MKDIR} -p ${OBJECTDIR}/MQTTClient/s88
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I${INCLUDE} -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MQTTClient/s88/s88.o MQTTClient/s88/s88.cpp
-
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -138,6 +133,11 @@ ${OBJECTDIR}/mqtt-driver/mqtt-driver.o: mqtt-driver/mqtt-driver.cpp
 	${MKDIR} -p ${OBJECTDIR}/mqtt-driver
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I${INCLUDE} -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mqtt-driver/mqtt-driver.o mqtt-driver/mqtt-driver.cpp
+
+${OBJECTDIR}/s88/s88.o: s88/s88.cpp 
+	${MKDIR} -p ${OBJECTDIR}/s88
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I${INCLUDE} -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/s88/s88.o s88/s88.cpp
 
 # Subprojects
 .build-subprojects:

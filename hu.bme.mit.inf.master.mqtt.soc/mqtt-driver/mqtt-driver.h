@@ -14,7 +14,7 @@
 
     void mqtt_connect();
     
-    void mqtt_send(char* message);
+    uint8_t mqtt_send(char* message);
 
 #endif	/* MQTT_DRIVER_H */
 
