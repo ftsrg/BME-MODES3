@@ -12,23 +12,29 @@ import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 
 public class Setting {
-	public Map<String, Integer> turnouts;
-	public Map<String, Integer> sections;
 
-	public static Setting loadPinoutConfig(int id) throws Exception {
-		Gson gson = new Gson();
-		JsonReader reader = new JsonReader(new InputStreamReader(Pinout.class.getClassLoader().getResourceAsStream("conf/settings.json")));
-		JsonObject settings = gson.fromJson(reader, JsonObject.class);
-		settings = settings.get("settings").getAsJsonObject();
+    public Map<String, Integer> turnouts;
+    public Map<String, Integer> sections;
 
-		return gson.fromJson(settings.get(HexConversionUtil.fromNumber(id)), Setting.class); 
-	}
+    public static Setting loadPinoutConfig(int id) throws Exception {
+        Gson gson = new Gson();
+        JsonReader reader = new JsonReader(new InputStreamReader(
+                Pinout.class.getClassLoader().getResourceAsStream(
+                        "conf/settings.json")));
+        JsonObject settings = gson.fromJson(reader, JsonObject.class);
+        settings = settings.get("settings").getAsJsonObject();
 
-	public boolean containsTurnout(Turnout turnout) {
-		return turnouts.containsKey(HexConversionUtil.fromNumber(turnout.getId()));
-	}
+        return gson.fromJson(settings.get(HexConversionUtil.fromNumber(id)),
+                Setting.class);
+    }
 
-	public boolean containsSection(Section section) {
-		return sections.containsKey(HexConversionUtil.fromNumber(section.getId()));
-	}
+    public boolean containsTurnout(Turnout turnout) {
+        return turnouts.containsKey(
+                HexConversionUtil.fromNumber(turnout.getId()));
+    }
+
+    public boolean containsSection(Section section) {
+        return sections.containsKey(
+                HexConversionUtil.fromNumber(section.getId()));
+    }
 }

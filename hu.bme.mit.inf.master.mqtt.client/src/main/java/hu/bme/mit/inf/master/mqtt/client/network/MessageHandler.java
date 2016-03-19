@@ -28,10 +28,10 @@ public class MessageHandler implements MqttCallback {
     private final MQTTPublisherSubscriber mqttConnection;
     private final ExpanderController controller;
 
-    public MessageHandler(MQTTConfiguration conf) throws Exception {
+    public MessageHandler(MQTTConfiguration conf) {
         this.mqttConnection = new MQTTPublisherSubscriber(conf);
         this.mqttConnection.subscribe(this);
-        this.controller = new ExpanderController();
+        this.controller = ExpanderController.getInstance();
     }
 
     @Override

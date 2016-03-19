@@ -38,9 +38,14 @@ public class Main {
                             "MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
                     .withRequiredArg().ofType(Integer.class);
 
-            ArgumentAcceptingOptionSpec<String> mqttTopicArg
-                    = parser.accepts("t",
-                            "MQTT Broker Topic [optional, default = modes3/kvcontrol]")
+            ArgumentAcceptingOptionSpec<String> mqttSectionTopicArg
+                    = parser.accepts("st",
+                            "MQTT Broker  Section Topic [optional, default = modes3/kvcontrol/section]")
+                    .withRequiredArg().ofType(String.class);
+
+            ArgumentAcceptingOptionSpec<String> mqttTurnoutTopicArg
+                    = parser.accepts("tt",
+                            "MQTT Broker  Section Topic [optional, default = modes3/kvcontrol/turnout]")
                     .withRequiredArg().ofType(String.class);
 
             parser.printHelpOn(System.out);
@@ -55,18 +60,25 @@ public class Main {
             boolean enableStatusLog = parsed.has("sl");
             setStatusLogEnabled(enableStatusLog);
 
-            MQTTConfiguration conf = createMQTTConfiguration(parsed,
+            MQTTConfiguration sectionConf = createMQTTConfiguration(parsed,
                     mqttProtocolArg, mqttAddressArg,
-                    mqttTopicArg, mqttPort, mqttQOS);
+                    mqttSectionTopicArg, "modes3/kvcontrol/section", mqttPort,
+                    mqttQOS);
 
-            startMessageHandler(conf);
+            MQTTConfiguration turnoutConf = createMQTTConfiguration(parsed,
+                    mqttProtocolArg, mqttAddressArg,
+                    mqttTurnoutTopicArg, "modes3/kvcontrol/turnout", mqttPort,
+                    mqttQOS);
+
+            startMessageHandler(sectionConf);
+            startMessageHandler(turnoutConf);
 
         } catch (IOException ex) {
             logException(Main.class.getName(), ex);
         }
-        
-        while(true) {
-        	Thread.sleep(100);
+
+        while (true) {
+            Thread.sleep(100);
         }
     }
 
@@ -89,10 +101,9 @@ public class Main {
             ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg,
             ArgumentAcceptingOptionSpec<String> smMQTTAddressArg,
             ArgumentAcceptingOptionSpec<String> smMQTTTopicArg,
-            Integer smMQTTPort, Integer smMQTTQOS) {
+            String defaultTopicName, Integer smMQTTPort, Integer smMQTTQOS) {
 
-        MQTTConfiguration conf = new MQTTConfiguration(
-                "modes3/kvcontrol");
+        MQTTConfiguration conf = new MQTTConfiguration(defaultTopicName);
 
         if (parsed.has(smMQTTProtocolArg)) {
             conf.setProtocol(parsed.valueOf(smMQTTProtocolArg));
@@ -114,7 +125,7 @@ public class Main {
     }
 
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
-    private static void startMessageHandler(MQTTConfiguration conf) throws Exception {
+    private static void startMessageHandler(MQTTConfiguration conf) {
         new MessageHandler(conf);
     }
 
