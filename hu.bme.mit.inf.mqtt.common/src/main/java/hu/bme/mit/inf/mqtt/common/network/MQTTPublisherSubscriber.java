@@ -21,22 +21,41 @@ public class MQTTPublisherSubscriber {
 
     public MQTTPublisherSubscriber(MQTTConfiguration config) {
         try {
-            String address = config.getFullAddress();
+            final String address = config.getFullAddress();
             String clientId = config.getClientID();
 
-            this.qos = config.getQOS();
-            this.topic = config.getTopic();
+            qos = config.getQOS();
+            topic = config.getTopic();
 
             MemoryPersistence persistence = new MemoryPersistence();
-            MqttConnectOptions connOpts = new MqttConnectOptions();
+            final MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
 
-            this.client = new MqttAsyncClient(address, clientId, persistence);
-            logInfoMessage(getClassName(), "Connecting to broker: " + address);
-            this.client.connect(connOpts);
+            client = new MqttAsyncClient(address, clientId, persistence);
+
+            Thread clientConnectionEstablisher = new Thread() {
+                public void run() {
+                    try {
+                        while (!client.isConnected()) {
+                            logInfoMessage(getClassName(),
+                                    "Connecting to broker: " + address);
+                            try {
+                                client.connect(connOpts);
+                            } catch (MqttException e) {
+                                int sleepTime = 1000 * 10;
+                                Thread.sleep(sleepTime);
+                            }
+                        }
+                    } catch (InterruptedException ex) {
+                        logException(getClassName(), ex);
+                    }
+                }
+            };
+            clientConnectionEstablisher.start();
+
             logInfoMessage(getClassName(), "Connected");
             Thread.sleep(500);
-            this.client.subscribe(topic, qos);
+            client.subscribe(topic, qos);
             logInfoMessage(getClassName(), "Subscribed");
         } catch (MqttException | InterruptedException ex) {
             logException(getClassName(), ex);
