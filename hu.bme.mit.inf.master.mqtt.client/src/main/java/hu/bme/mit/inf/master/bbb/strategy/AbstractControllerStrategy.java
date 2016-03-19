@@ -1,20 +1,21 @@
 package hu.bme.mit.inf.master.bbb.strategy;
 
+import static io.silverspoon.bulldog.core.platform.Platform.createBoard;
+import static io.silverspoon.bulldog.core.util.BulldogUtil.sleepMs;
+
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import io.silverspoon.bulldog.core.Signal;
 import io.silverspoon.bulldog.core.gpio.DigitalInput;
 import io.silverspoon.bulldog.core.gpio.DigitalOutput;
 import io.silverspoon.bulldog.core.platform.Board;
-import static io.silverspoon.bulldog.core.platform.Platform.createBoard;
-import static io.silverspoon.bulldog.core.util.BulldogUtil.sleepMs;
 
 public abstract class AbstractControllerStrategy {
 
     // Detect the board we are running on
     protected Board board;
 
-    protected static long SLEEP_MS_AFTER_SETTING_PIN = 500;
+    protected static long SLEEP_MS_AFTER_SETTING_PIN = 0;
 
     public AbstractControllerStrategy() {
         this.board = createBoard();
@@ -32,8 +33,8 @@ public abstract class AbstractControllerStrategy {
         return onGetSectionStatus(sectionId);
     }
 
-    public synchronized TurnoutStatus getTurnoutStatus() {
-        return onGetTurnoutStatus();
+    public synchronized TurnoutStatus getTurnoutStatus(int turnoutId) {
+        return onGetTurnoutStatus(turnoutId);
     }
 
     /**
@@ -71,7 +72,7 @@ public abstract class AbstractControllerStrategy {
         return input.read();
     }
 
-    protected abstract TurnoutStatus onGetTurnoutStatus();
+    protected abstract TurnoutStatus onGetTurnoutStatus(int turnoutId);
 
     protected abstract SectionStatus onGetSectionStatus(int sectionId);
 
