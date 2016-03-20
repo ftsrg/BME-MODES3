@@ -11,6 +11,10 @@ import hu.bme.mit.inf.master.bbb.utils.HexConversionUtil;
 import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 
+/**
+ * 
+ * @author hegyibalint
+ */
 public class Setting {
 
     public Map<String, Integer> turnouts;

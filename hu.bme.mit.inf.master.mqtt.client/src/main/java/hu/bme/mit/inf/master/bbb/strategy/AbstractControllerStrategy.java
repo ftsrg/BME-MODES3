@@ -13,13 +13,9 @@ import io.silverspoon.bulldog.core.platform.Board;
 public abstract class AbstractControllerStrategy {
 
     // Detect the board we are running on
-    protected Board board;
+    protected static final Board board = createBoard();
 
     protected static long SLEEP_MS_AFTER_SETTING_PIN = 0;
-
-    public AbstractControllerStrategy() {
-        this.board = createBoard();
-    }
 
     public synchronized void enableSection(int sectionId) {
         onEnableSection(sectionId);
@@ -50,8 +46,10 @@ public abstract class AbstractControllerStrategy {
      * @param level HIGH or LOW
      */
     protected void setPinLevel(final String pin, Signal level) {
-        DigitalOutput output = board.getPin(pin).as(DigitalOutput.class);
-        output.applySignal(level);
+        synchronized (board) {
+            DigitalOutput output = board.getPin(pin).as(DigitalOutput.class);
+            output.applySignal(level);
+        }
         sleepMs(SLEEP_MS_AFTER_SETTING_PIN);
     }
 
@@ -68,8 +66,12 @@ public abstract class AbstractControllerStrategy {
      * @return level of the pin: HIGH or LOW
      */
     protected Signal getPinLevel(final String pin) {
-        DigitalInput input = board.getPin(pin).as(DigitalInput.class);
-        return input.read();
+        Signal value;
+        synchronized (board) {
+            DigitalInput input = board.getPin(pin).as(DigitalInput.class);
+            value = input.read();
+        }
+        return value;
     }
 
     protected abstract TurnoutStatus onGetTurnoutStatus(int turnoutId);

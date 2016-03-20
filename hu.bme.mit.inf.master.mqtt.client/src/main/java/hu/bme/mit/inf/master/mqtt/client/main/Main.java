@@ -5,7 +5,8 @@ import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEna
 
 import java.io.IOException;
 
-import hu.bme.mit.inf.master.mqtt.client.network.MessageHandler;
+import hu.bme.mit.inf.master.mqtt.client.network.SectionsMessageHandler;
+import hu.bme.mit.inf.master.mqtt.client.network.TurnoutMessageHandler;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
@@ -73,8 +74,9 @@ public class Main {
                     mqttTurnoutTopicArg, defaultTurnoutTopic, mqttPort,
                     mqttQOS);
 
-            startMessageHandler(sectionConf);
-            startMessageHandler(turnoutConf);
+            // start the message handlers for the sections and turnout messages
+            new SectionsMessageHandler(sectionConf);
+            new TurnoutMessageHandler(turnoutConf);
 
         } catch (IOException ex) {
             logException(Main.class.getName(), ex);
@@ -125,11 +127,6 @@ public class Main {
         }
 
         return conf;
-    }
-
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
-    private static void startMessageHandler(MQTTConfiguration conf) {
-        new MessageHandler(conf);
     }
 
 }

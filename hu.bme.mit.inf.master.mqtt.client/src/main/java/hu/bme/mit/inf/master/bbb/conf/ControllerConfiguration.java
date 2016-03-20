@@ -9,7 +9,7 @@ import hu.bme.mit.inf.mqtt.common.data.Turnout;
 
 /**
  *
- * @author benedekh
+ * @author benedekh, hegyibalint
  */
 public class ControllerConfiguration implements IControllerConfiguration {
 
