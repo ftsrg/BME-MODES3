@@ -31,7 +31,7 @@ public class SectionRequestSender implements MqttCallback {
     private final MQTTPublisherSubscriber sender;
 
     // is active polling enabled
-    private boolean pollingEnabled = false;
+    private volatile boolean pollingEnabled = false;
 
     private final Map<Integer, SectionStatus> sectionStatuses = new ConcurrentHashMap<>();
 
