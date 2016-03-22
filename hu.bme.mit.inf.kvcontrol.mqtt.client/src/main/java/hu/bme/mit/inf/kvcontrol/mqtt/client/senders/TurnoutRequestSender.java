@@ -7,6 +7,7 @@ import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.DIVERGENT;
+import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.STRAIGHT;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
@@ -45,7 +46,7 @@ public class TurnoutRequestSender implements MqttCallback {
 
     public boolean isTurnoutDivergent(int turnoutId) {
         if (!turnoutStatuses.containsKey(turnoutId)) {
-            turnoutStatuses.put(turnoutId, DIVERGENT);
+            turnoutStatuses.put(turnoutId, STRAIGHT);
         }
 
         if (pollingEnabled) {
