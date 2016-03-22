@@ -119,10 +119,9 @@ public class SettingsWindow extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 0, 54));
         jLabel1.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
         jLabel1.setForeground(Application.labelForeground);
-        jLabel1.setText("status polling");
+        jLabel1.setText("status polling actively (not recommended)");
 
         turnoutStatusPolling.setBackground(Application.pageBackground);
-        turnoutStatusPolling.setSelected(true);
         turnoutStatusPolling.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 turnoutStatusPollingStateChanged(evt);
@@ -214,10 +213,9 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
         jLabel4.setForeground(Application.labelForeground);
-        jLabel4.setText("status polling");
+        jLabel4.setText("status polling actively (not recommended)");
 
         sectionStatusPolling.setBackground(Application.pageBackground);
-        sectionStatusPolling.setSelected(true);
         sectionStatusPolling.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 sectionStatusPollingMouseClicked(evt);
@@ -308,7 +306,7 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
         jLabel7.setForeground(Application.labelForeground);
-        jLabel7.setText("status polling");
+        jLabel7.setText("status polling (recommended)");
 
         occupancyStatusPolling.setBackground(Application.pageBackground);
         occupancyStatusPolling.setSelected(true);
@@ -487,7 +485,7 @@ public class SettingsWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mqttAddressField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                        .addComponent(mqttAddressField))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -700,12 +698,12 @@ public class SettingsWindow extends javax.swing.JFrame {
 
     private void occupancyStatusPollingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_occupancyStatusPollingMouseClicked
         occupancyControllerProxy.setPollingEnabled(
-                turnoutStatusPolling.isSelected());
+                occupancyStatusPolling.isSelected());
     }//GEN-LAST:event_occupancyStatusPollingMouseClicked
 
     private void sectionStatusPollingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sectionStatusPollingMouseClicked
         sectionControllerProxy.setPollingEnabled(
-                turnoutStatusPolling.isSelected());
+                sectionStatusPolling.isSelected());
     }//GEN-LAST:event_sectionStatusPollingMouseClicked
 
 
@@ -779,12 +777,10 @@ public class SettingsWindow extends javax.swing.JFrame {
     public static class SectionControllerProxy {
 
         private final SectionRequestSender requestSender;
-        private boolean pollingEnabled;
 
         public SectionControllerProxy() {
             this.requestSender = new SectionRequestSender(
                     Configuration.mqttSectionConfiguration);
-            this.pollingEnabled = true;
         }
 
         public void setSectionEnabled(int sectionId) {
@@ -796,47 +792,33 @@ public class SettingsWindow extends javax.swing.JFrame {
         }
 
         public boolean isSectionEnabled(int sectionId) {
-            if (pollingEnabled) {
-                return requestSender.isSectionEnabled(sectionId);
-            } else {
-                return true;
-            }
+            return requestSender.isSectionEnabled(sectionId);
         }
 
         public void setPollingEnabled(boolean pollingEnabled) {
-            this.pollingEnabled = pollingEnabled;
+            requestSender.setPollingEnabled(pollingEnabled);
         }
     }
 
     public static class TurnoutControllerProxy {
 
         private final TurnoutRequestSender requestSender;
-        private boolean pollingEnabled;
 
         public TurnoutControllerProxy() {
             this.requestSender = new TurnoutRequestSender(
                     Configuration.mqttTurnoutConfiguration);
-            this.pollingEnabled = true;
         }
 
         public boolean isTurnoutDivergent(int turnoutId) {
-            if (pollingEnabled) {
-                return requestSender.isTurnoutDivergent(turnoutId);
-            } else {
-                return false;
-            }
+            return requestSender.isTurnoutDivergent(turnoutId);
         }
 
         public boolean isTurnoutStraight(int turnoutId) {
-            if (pollingEnabled) {
-                return requestSender.isTurnoutStraight(turnoutId);
-            } else {
-                return true;
-            }
+            return requestSender.isTurnoutStraight(turnoutId);
         }
 
         public void setPollingEnabled(boolean pollingEnabled) {
-            this.pollingEnabled = pollingEnabled;
+            requestSender.setPollingEnabled(pollingEnabled);
         }
     }
 }

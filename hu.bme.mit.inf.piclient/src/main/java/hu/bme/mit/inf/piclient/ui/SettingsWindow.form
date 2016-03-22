@@ -180,7 +180,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Application.labelForeground" type="code"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="status polling"/>
+            <Property name="text" type="java.lang.String" value="status polling actively (not recommended)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="turnoutStatusPolling">
@@ -188,7 +188,6 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Application.pageBackground" type="code"/>
             </Property>
-            <Property name="selected" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="turnoutStatusPollingStateChanged"/>
@@ -336,7 +335,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Application.labelForeground" type="code"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="status polling"/>
+            <Property name="text" type="java.lang.String" value="status polling actively (not recommended)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="sectionStatusPolling">
@@ -344,7 +343,6 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Application.pageBackground" type="code"/>
             </Property>
-            <Property name="selected" type="boolean" value="true"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="sectionStatusPollingMouseClicked"/>
@@ -483,7 +481,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="Application.labelForeground" type="code"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="status polling"/>
+            <Property name="text" type="java.lang.String" value="status polling (recommended)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="occupancyStatusPolling">
@@ -671,7 +669,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="mqttAddressField" pref="100" max="32767" attributes="0"/>
+                          <Component id="mqttAddressField" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
