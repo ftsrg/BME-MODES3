@@ -45,6 +45,10 @@ public class TurnoutRequestSender implements MqttCallback {
     }
 
     public boolean isTurnoutDivergent(int turnoutId) {
+        return !isTurnoutStraight(turnoutId);
+    }
+
+    public boolean isTurnoutStraight(int turnoutId) {
         if (!turnoutStatuses.containsKey(turnoutId)) {
             turnoutStatuses.put(turnoutId, STRAIGHT);
         }
@@ -55,11 +59,7 @@ public class TurnoutRequestSender implements MqttCallback {
         }
 
         TurnoutStatus status = turnoutStatuses.get(turnoutId);
-        return status == DIVERGENT;
-    }
-
-    public boolean isTurnoutStraight(int turnoutId) {
-        return !isTurnoutDivergent(turnoutId);
+        return status == STRAIGHT;
     }
 
     @Override
