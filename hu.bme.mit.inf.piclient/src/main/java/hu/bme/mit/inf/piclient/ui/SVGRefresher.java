@@ -73,27 +73,28 @@ public class SVGRefresher implements Runnable {
         RailwayWindow.log(
                 "Thread@" + Thread.currentThread().getName() + " started(svg turnout refresher)");
 
+        final int sleepConstant = 50;
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(sleepConstant);
                 if (sectionControllerProxy != null) {
                     refreshSections();
                 }
-                Thread.sleep(100);
+                Thread.sleep(sleepConstant);
                 if (occupancyControllerProxy != null) {
                     refreshOccupancy();
                 }
-                Thread.sleep(100);
+                Thread.sleep(sleepConstant);
                 if (turnoutControllerProxy != null) {
                     refreshTurnouts();
                 }
-                Thread.sleep(100);
+                Thread.sleep(sleepConstant);
 
                 refreshSVG();
 
-                if (SettingsWindow.Configuration.heartbeatTimeout >= 400) {
+                if (SettingsWindow.Configuration.heartbeatTimeout >= 4 * sleepConstant) {
                     Thread.sleep(
-                            SettingsWindow.Configuration.heartbeatTimeout - 400);
+                            SettingsWindow.Configuration.heartbeatTimeout - 4 * sleepConstant);
                 }
             } catch (InterruptedException ex) {
                 logException(getClass().getName(), ex);
