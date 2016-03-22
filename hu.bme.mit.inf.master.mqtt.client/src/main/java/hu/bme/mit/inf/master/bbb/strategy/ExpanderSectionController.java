@@ -17,6 +17,8 @@ import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import io.silverspoon.bulldog.core.Signal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -41,6 +43,17 @@ public class ExpanderSectionController extends AbstractControllerStrategy implem
         for (String sec : controllerConf.getAllSection()) {
             onEnableSection(HexConversionUtil.fromString(sec));
         }
+    }
+
+    public List<Section> getSectionsWithStatus() {
+        List<Section> results = new ArrayList<>();
+        for (String sectionId : sectionStatus.keySet()) {
+            Section section = new Section(
+                    HexConversionUtil.fromString(sectionId));
+            section.setStatus(sectionStatus.get(sectionId));
+            results.add(section);
+        }
+        return results;
     }
 
     @Override

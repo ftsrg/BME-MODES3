@@ -783,6 +783,10 @@ public class SettingsWindow extends javax.swing.JFrame {
                     Configuration.mqttSectionConfiguration);
         }
 
+        public void initialRefresh() {
+            requestSender.sendIdentify();
+        }
+
         public void setSectionEnabled(int sectionId) {
             requestSender.enableSection(sectionId);
         }
@@ -807,6 +811,10 @@ public class SettingsWindow extends javax.swing.JFrame {
         public TurnoutControllerProxy() {
             this.requestSender = new TurnoutRequestSender(
                     Configuration.mqttTurnoutConfiguration);
+        }
+
+        public void initialRefresh() {
+            requestSender.sendIdentify();
         }
 
         public boolean isTurnoutDivergent(int turnoutId) {

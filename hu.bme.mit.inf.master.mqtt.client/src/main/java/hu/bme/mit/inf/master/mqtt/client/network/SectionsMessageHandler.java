@@ -12,11 +12,15 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import hu.bme.mit.inf.master.bbb.strategy.ExpanderSectionController;
 import hu.bme.mit.inf.mqtt.common.data.Command;
+import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_TURNOUT_STATUS;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
+import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
+import java.util.List;
 
 /**
  *
@@ -47,6 +51,8 @@ public class SectionsMessageHandler implements MqttCallback {
             Command command = payload.getCommand();
 
             switch (command) {
+                case IDENTIFY:
+                    handleIdentify();
                 case GET_SECTION_STATUS:
                     handleGetSectionStatus(payload);
                     break;
@@ -61,6 +67,14 @@ public class SectionsMessageHandler implements MqttCallback {
             }
         } catch (Exception ex) {
             logException(CLASS_NAME, new Exception(ex));
+        }
+    }
+
+    private void handleIdentify() throws InterruptedException {
+        List<Section> sections = sectionController.getSectionsWithStatus();
+        for (Section section : sections) {
+            sendCommandWithContent(SEND_SECTION_STATUS, section, mqttConnection);
+            Thread.sleep(10);
         }
     }
 

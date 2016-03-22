@@ -14,8 +14,10 @@ import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithCo
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import io.silverspoon.bulldog.core.Signal;
 import io.silverspoon.bulldog.core.gpio.DigitalInput;
+import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -93,23 +95,34 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
                 "ExpanderTurnoutController does not support section operations");
     }
 
+    public List<Turnout> getTurnoutsWithStatus() {
+        List<Turnout> results = new ArrayList<>();
+        for (String turnoutId : latestTurnoutStatus.keySet()) {
+            Turnout turnout = new Turnout(
+                    HexConversionUtil.fromString(turnoutId));
+            turnout.setStatus(latestTurnoutStatus.get(turnoutId));
+            results.add(turnout);
+        }
+        return results;
+    }
+
     private void updateTurnoutDirection(MQTTPublisherSubscriber mqttPublisher) {
-    	HashMap<String, DigitalInput> ioMap = new HashMap<String, DigitalInput>(4);
-    	
-    	for (String to : controllerConf.getAllTurnout()) {
-    		String[] pins = controllerConf.getTurnoutExpander(to);
-        	ioMap.put(pins[0], board.getPin(pins[0]).as(DigitalInput.class));
-        	ioMap.put(pins[1], board.getPin(pins[1]).as(DigitalInput.class));
-    	}
-    	
-        while (!Thread.interrupted()) {	
+        HashMap<String, DigitalInput> ioMap = new HashMap<>(4);
+
+        for (String to : controllerConf.getAllTurnout()) {
+            String[] pins = controllerConf.getTurnoutExpander(to);
+            ioMap.put(pins[0], board.getPin(pins[0]).as(DigitalInput.class));
+            ioMap.put(pins[1], board.getPin(pins[1]).as(DigitalInput.class));
+        }
+
+        while (!Thread.interrupted()) {
             for (String to : controllerConf.getAllTurnout()) {
                 String[] pins = controllerConf.getTurnoutExpander(to);
-                
+
                 if (ioMap.get(pins[0]).read() == Signal.High) {
                     latestTurnoutStatus.put(to, TurnoutStatus.STRAIGHT);
                 }
-                if (ioMap.get(pins[1]).read()  == Signal.High) {
+                if (ioMap.get(pins[1]).read() == Signal.High) {
                     latestTurnoutStatus.put(to, TurnoutStatus.DIVERGENT);
                 }
 

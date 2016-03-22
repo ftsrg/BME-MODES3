@@ -2,8 +2,12 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.GET_TURNOUT_STATUS;
+import static hu.bme.mit.inf.mqtt.common.data.Command.IDENTIFY;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_TURNOUT_STATUS;
+import hu.bme.mit.inf.mqtt.common.data.Identity;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
+import hu.bme.mit.inf.mqtt.common.data.Section;
+import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.STRAIGHT;
@@ -59,6 +63,14 @@ public class TurnoutRequestSender implements MqttCallback {
 
         TurnoutStatus status = turnoutStatuses.get(turnoutId);
         return status == STRAIGHT;
+    }
+
+    public void sendIdentify() {
+        Turnout dummyTurnout = new Turnout(0x01);
+        Section dummySection = new Section(0x01);
+        SectionArray dummyArray = new SectionArray(new Section[]{dummySection});
+        Identity identity = new Identity(dummyTurnout, dummyArray);
+        sendCommandWithContent(IDENTIFY, identity, sender);
     }
 
     @Override

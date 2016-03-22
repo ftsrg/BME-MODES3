@@ -2,14 +2,18 @@ package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.GET_SECTION_STATUS;
+import static hu.bme.mit.inf.mqtt.common.data.Command.IDENTIFY;
 import static hu.bme.mit.inf.mqtt.common.data.Command.LINE_DISABLE;
 import static hu.bme.mit.inf.mqtt.common.data.Command.LINE_ENABLE;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_SECTION_STATUS;
+import hu.bme.mit.inf.mqtt.common.data.Identity;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.data.Section;
+import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
 import static hu.bme.mit.inf.mqtt.common.data.SectionStatus.DISABLED;
 import static hu.bme.mit.inf.mqtt.common.data.SectionStatus.ENABLED;
+import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
@@ -41,8 +45,8 @@ public class SectionRequestSender implements MqttCallback {
         this.sender = new MQTTPublisherSubscriber(config);
         this.sender.subscribe(this);
     }
-    
-    public void setPollingEnabled(boolean isPollingEnabled){
+
+    public void setPollingEnabled(boolean isPollingEnabled) {
         this.pollingEnabled = isPollingEnabled;
     }
 
@@ -68,6 +72,14 @@ public class SectionRequestSender implements MqttCallback {
     public void disableSection(int sectionId) {
         Section section = new Section(sectionId, DISABLED);
         sendCommandWithContent(LINE_DISABLE, section, sender);
+    }
+
+    public void sendIdentify() {
+        Turnout dummyTurnout = new Turnout(0x01);
+        Section dummySection = new Section(0x01);
+        SectionArray dummyArray = new SectionArray(new Section[]{dummySection});
+        Identity identity = new Identity(dummyTurnout, dummyArray);
+        sendCommandWithContent(IDENTIFY, identity, sender);
     }
 
     @Override

@@ -1,13 +1,10 @@
 package hu.bme.mit.inf.master.mqtt.client.network;
 
-import hu.bme.mit.inf.master.bbb.strategy.ExpanderSectionController;
 import hu.bme.mit.inf.master.bbb.strategy.ExpanderTurnoutController;
 import hu.bme.mit.inf.mqtt.common.data.Command;
-import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_SECTION_STATUS;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_TURNOUT_STATUS;
+import hu.bme.mit.inf.mqtt.common.data.Identity;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
-import hu.bme.mit.inf.mqtt.common.data.Section;
-import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
@@ -16,6 +13,7 @@ import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMes
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
+import java.util.List;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -49,6 +47,9 @@ public class TurnoutMessageHandler implements MqttCallback {
             Command command = payload.getCommand();
 
             switch (command) {
+                case IDENTIFY:
+                    handleIdentify();
+                    break;
                 case GET_TURNOUT_STATUS:
                     handleGetTurnoutStatus(payload);
                     break;
@@ -69,6 +70,14 @@ public class TurnoutMessageHandler implements MqttCallback {
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
         // deliberately left empty
+    }
+
+    private void handleIdentify() throws InterruptedException {
+        List<Turnout> turnouts = turnoutController.getTurnoutsWithStatus();
+        for (Turnout turnout : turnouts) {
+            sendCommandWithContent(SEND_TURNOUT_STATUS, turnout, mqttConnection);
+            Thread.sleep(10);
+        }
     }
 
     private void handleGetTurnoutStatus(Payload payload) {
