@@ -27,6 +27,9 @@ public class TurnoutRequestSender implements MqttCallback {
 
     private final MQTTPublisherSubscriber sender;
 
+    // is active polling enabled
+    private boolean pollingEnabled = false;
+
     private final Map<Integer, TurnoutStatus> turnoutStatuses = new ConcurrentHashMap<>();
 
     public TurnoutRequestSender(MQTTConfiguration config) {
@@ -36,13 +39,19 @@ public class TurnoutRequestSender implements MqttCallback {
         this.sender.subscribe(this);
     }
 
+    public void setPollingEnabled(boolean isPollingEnabled) {
+        this.pollingEnabled = isPollingEnabled;
+    }
+
     public boolean isTurnoutDivergent(int turnoutId) {
         if (!turnoutStatuses.containsKey(turnoutId)) {
             turnoutStatuses.put(turnoutId, DIVERGENT);
         }
 
-        Turnout turnout = new Turnout(turnoutId);
-        sendCommandWithContent(GET_TURNOUT_STATUS, turnout, sender);
+        if (pollingEnabled) {
+            Turnout turnout = new Turnout(turnoutId);
+            sendCommandWithContent(GET_TURNOUT_STATUS, turnout, sender);
+        }
 
         TurnoutStatus status = turnoutStatuses.get(turnoutId);
         return status == DIVERGENT;

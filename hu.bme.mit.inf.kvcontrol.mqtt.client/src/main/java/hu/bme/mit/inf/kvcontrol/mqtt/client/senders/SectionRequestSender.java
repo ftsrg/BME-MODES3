@@ -30,6 +30,9 @@ public class SectionRequestSender implements MqttCallback {
 
     private final MQTTPublisherSubscriber sender;
 
+    // is active polling enabled
+    private boolean pollingEnabled = false;
+
     private final Map<Integer, SectionStatus> sectionStatuses = new ConcurrentHashMap<>();
 
     public SectionRequestSender(MQTTConfiguration config) {
@@ -38,14 +41,20 @@ public class SectionRequestSender implements MqttCallback {
         this.sender = new MQTTPublisherSubscriber(config);
         this.sender.subscribe(this);
     }
+    
+    public void setPollingEnabled(boolean isPollingEnabled){
+        this.pollingEnabled = isPollingEnabled;
+    }
 
     public boolean isSectionEnabled(int sectionId) {
         if (!sectionStatuses.containsKey(sectionId)) {
             sectionStatuses.put(sectionId, SectionStatus.ENABLED);
         }
 
-        Section section = new Section(sectionId);
-        sendCommandWithContent(GET_SECTION_STATUS, section, sender);
+        if (pollingEnabled) {
+            Section section = new Section(sectionId);
+            sendCommandWithContent(GET_SECTION_STATUS, section, sender);
+        }
 
         SectionStatus status = sectionStatuses.get(sectionId);
         return status == ENABLED;
