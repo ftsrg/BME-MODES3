@@ -753,7 +753,7 @@ public class SettingsWindow extends javax.swing.JFrame {
     public static final class OccupancyControllerProxy {
 
         private final OccupancyRequestSender requestSender;
-        private boolean pollingEnabled;
+        private volatile boolean pollingEnabled;
 
         public OccupancyControllerProxy() {
             this.requestSender = new OccupancyRequestSender(
