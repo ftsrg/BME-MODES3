@@ -64,7 +64,10 @@ public class ExpanderSectionController extends AbstractControllerStrategy implem
     @Override
     protected void onEnableSection(int sectionId) {
         String[] sectionExpander = controllerConf.getSectionExpander(sectionId);
+        this.setPinLevel(sectionExpander[0], Signal.High);
         this.setPinLevel(sectionExpander[1], Signal.High);
+        this.setPinLevel(sectionExpander[2], Signal.High);
+        this.setPinLevel(sectionExpander[3], Signal.High);
         sectionStatus.put(HexConversionUtil.fromNumber(sectionId), ENABLED);
         publishSectionStatus(sectionId, ENABLED, mqttPublisher);
     }
@@ -72,7 +75,10 @@ public class ExpanderSectionController extends AbstractControllerStrategy implem
     @Override
     protected void onDisableSection(int sectionId) {
         String[] sectionExpander = controllerConf.getSectionExpander(sectionId);
+        this.setPinLevel(sectionExpander[0], Signal.Low);
         this.setPinLevel(sectionExpander[1], Signal.Low);
+        this.setPinLevel(sectionExpander[2], Signal.Low);
+        this.setPinLevel(sectionExpander[3], Signal.Low);
         sectionStatus.put(HexConversionUtil.fromNumber(sectionId), DISABLED);
         publishSectionStatus(sectionId, DISABLED, mqttPublisher);
     }

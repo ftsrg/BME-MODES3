@@ -136,7 +136,7 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
             }
 
             try {
-                Thread.sleep(40);
+                Thread.sleep(25);
             } catch (InterruptedException e) {
                 logException(getClass().getName(), e);
                 Thread.currentThread().interrupt();
