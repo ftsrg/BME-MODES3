@@ -2,7 +2,7 @@ package hu.bme.mit.inf.yakindu.sc.english.control.controller;
 
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.yakindu.sc.english.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.english.control.sm.Section;
 import hu.bme.mit.inf.yakindu.sc.english.control.transmitter.DistributedMessageTransmitter;
@@ -27,8 +27,8 @@ public class YakinduSMRunner {
 
     private final DistributedMessageReceiver messageReceiver;
 
-    public YakinduSMRunner(MQTTPublisherSubscriber mqtt,
-            YakinduSMConfiguration conf) throws MqttException {
+    public YakinduSMRunner(MQTTPublishSubscribeDispatcher sender,
+            YakinduSMConfiguration conf) {
         TurnoutWrapper statemachine = conf.getTurnoutStatemachine();
         int turnoutSectionId = conf.getTurnoutSectionId();
         Set<Section> localSections = conf.getManagedSections();
@@ -40,15 +40,15 @@ public class YakinduSMRunner {
         int managedTurnoutSectionId = turnoutSectionId;
 
         OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(
-                mqtt);
-        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(mqtt);
+                sender);
+        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(sender);
 
         generalTransmitter = new GeneralTransmitter(managedTurnoutId,
                 managedTurnoutSectionId, localSections, statemachine,
                 occupancyRequester, turnoutRequester);
         distributedTransmitter = new DistributedMessageTransmitter(statemachine);
         this.messageReceiver = new DistributedMessageReceiver(
-                mqtt, distributedTransmitter,
+                sender, distributedTransmitter,
                 managedTurnoutId);
 
         // register the yakindu mqtt client for the turnoutEventListener

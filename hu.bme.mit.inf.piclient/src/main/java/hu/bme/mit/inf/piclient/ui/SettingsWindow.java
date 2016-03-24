@@ -7,6 +7,7 @@ import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import hu.bme.mit.inf.piclient.Application;
 import static hu.bme.mit.inf.piclient.ui.SettingsWindow.Configuration;
@@ -610,17 +611,13 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         MQTTConfiguration mqttConfiguration = createMQTTConfiguration(address,
                 protocol, port);
-
         MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(
                 mqttConfiguration);
+        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(pubsub);
 
-        try {
-            turnoutControllerProxy = new TurnoutControllerProxy(pubsub);
-            sectionControllerProxy = new SectionControllerProxy(pubsub);
-            occupancyControllerProxy = new OccupancyControllerProxy(pubsub);
-        } catch (MqttException e) {
-            logException(getClass().getName(), e);
-        }
+        turnoutControllerProxy = new TurnoutControllerProxy(sender);
+        sectionControllerProxy = new SectionControllerProxy(sender);
+        occupancyControllerProxy = new OccupancyControllerProxy(sender);
 
         // automatically close settings window
         dispose();
@@ -693,8 +690,8 @@ public class SettingsWindow extends javax.swing.JFrame {
         private final OccupancyRequestSender requestSender;
         private volatile boolean pollingEnabled;
 
-        public OccupancyControllerProxy(MQTTPublisherSubscriber pubsub) throws MqttException {
-            this.requestSender = new OccupancyRequestSender(pubsub);
+        public OccupancyControllerProxy(MQTTPublishSubscribeDispatcher sender) {
+            this.requestSender = new OccupancyRequestSender(sender);
             this.pollingEnabled = true;
         }
 
@@ -715,8 +712,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         private final SectionRequestSender requestSender;
 
-        public SectionControllerProxy(MQTTPublisherSubscriber pubsub) throws MqttException {
-            this.requestSender = new SectionRequestSender(pubsub);
+        public SectionControllerProxy(MQTTPublishSubscribeDispatcher sender) {
+            this.requestSender = new SectionRequestSender(sender);
         }
 
         public void initialRefresh() {
@@ -744,8 +741,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         private final TurnoutRequestSender requestSender;
 
-        public TurnoutControllerProxy(MQTTPublisherSubscriber pubsub) throws MqttException {
-            this.requestSender = new TurnoutRequestSender(pubsub);
+        public TurnoutControllerProxy(MQTTPublishSubscribeDispatcher sender) {
+            this.requestSender = new TurnoutRequestSender(sender);
         }
 
         public void initialRefresh() {

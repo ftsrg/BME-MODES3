@@ -2,7 +2,7 @@ package hu.bme.mit.inf.yakindu.sc.normal.control.controller;
 
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.normal.control.sm.Section;
 import hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.DistributedMessageTransmitter;
@@ -10,7 +10,6 @@ import hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.GeneralTransmitter;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 import java.util.Set;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.yakindu.scr.turnout.TurnoutWrapper;
 
 /**
@@ -27,8 +26,8 @@ public class YakinduSMRunner {
 
     private final DistributedMessageReceiver messageReceiver;
 
-    public YakinduSMRunner(MQTTPublisherSubscriber mqtt,
-            YakinduSMConfiguration conf) throws MqttException {
+    public YakinduSMRunner(MQTTPublishSubscribeDispatcher sender,
+            YakinduSMConfiguration conf) {
         TurnoutWrapper statemachine = conf.getTurnoutStatemachine();
         int turnoutSectionId = conf.getTurnoutSectionId();
         Set<Section> localSections = conf.getManagedSections();
@@ -39,9 +38,9 @@ public class YakinduSMRunner {
         int managedTurnoutId = (int) statemachine.getSCITurnout().getId();
         int managedTurnoutSectionId = turnoutSectionId;
 
-        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(mqtt);
+        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(sender);
         OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(
-                mqtt);
+                sender);
 
         this.generalTransmitter = new GeneralTransmitter(managedTurnoutId,
                 managedTurnoutSectionId, localSections, statemachine,
@@ -49,7 +48,7 @@ public class YakinduSMRunner {
         this.distributedTransmitter = new DistributedMessageTransmitter(
                 statemachine);
         this.messageReceiver = new DistributedMessageReceiver(
-                mqtt, distributedTransmitter,
+                sender, distributedTransmitter,
                 managedTurnoutId);
 
         // register the yakindu mqtt client for the turnoutEventListener

@@ -12,25 +12,28 @@ import hu.bme.mit.inf.mqtt.common.data.Command;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
-import hu.bme.mit.inf.mqtt.common.network.RequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import java.util.List;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
  *
  * @author benedekh, hegyibalint
  */
-public class SectionsMessageHandler extends RequestSender {
+public class SectionsMessageHandler implements MessageFilter {
 
+    private static final String topic = "modes3/kvcontrol/section";
     private static final String CLASS_NAME = SectionsMessageHandler.class.getName();
 
     private final ExpanderSectionController sectionController;
+    private final MQTTPublishSubscribeDispatcher sender;
 
-    public SectionsMessageHandler(MQTTPublisherSubscriber pubsub) throws MqttException {
-        super("modes3/kvcontrol/section", pubsub);
-        this.sectionController = new ExpanderSectionController(this);
+    public SectionsMessageHandler(MQTTPublishSubscribeDispatcher sender) {
+        this.sender = sender;
+        this.sender.subscribe(topic, this);
+        this.sectionController = new ExpanderSectionController(this.sender,
+                topic);
     }
 
     @Override
@@ -64,7 +67,7 @@ public class SectionsMessageHandler extends RequestSender {
         for (Section section : sections) {
             Payload payload = createCommandWithContent(SEND_SECTION_STATUS,
                     section);
-            publishMessage(payload);
+            sender.publishMessage(payload, topic);
             Thread.sleep(10);
         }
     }
@@ -80,7 +83,7 @@ public class SectionsMessageHandler extends RequestSender {
             section.setStatus(status);
             Payload payload = createCommandWithContent(SEND_SECTION_STATUS,
                     section);
-            publishMessage(payload);
+            sender.publishMessage(payload, topic);
         }
     }
 

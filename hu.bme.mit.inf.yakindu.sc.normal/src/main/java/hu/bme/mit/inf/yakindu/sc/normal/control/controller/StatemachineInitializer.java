@@ -2,6 +2,7 @@ package hu.bme.mit.inf.yakindu.sc.normal.control.controller;
 
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.normal.control.sm.RemoteTurnout;
 import hu.bme.mit.inf.yakindu.sc.normal.control.sm.Section;
@@ -37,7 +38,7 @@ public class StatemachineInitializer {
     private static final long STRAIGHT_VALUE = getValueFromDirection(STRAIGHT);
     private static final long TOP_VALUE = getValueFromDirection(TOP);
 
-    public static YakinduSMConfiguration initialize0x81(MQTTPublisherSubscriber mqtt) throws MqttException {
+    public static YakinduSMConfiguration initialize0x81(MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x81;
         int turnoutSectionID = 0x01;
@@ -59,9 +60,9 @@ public class StatemachineInitializer {
         int strSectionID = 0x09;
 
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                mqtt, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
+                sender, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-                mqtt, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
+                sender, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
 
         Section divSection = new Section(divSectionID, divSectionSM);
         Section strSection = new Section(strSectionID, strSectionSM);
@@ -80,7 +81,7 @@ public class StatemachineInitializer {
 
         TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
                 remoteTurnouts, localSections);
-        
+
         conf.setTurnoutEventListener(outgoingEventListener);
         turnoutStatemachine.addSectionsListener(outgoingEventListener);
         turnoutStatemachine.addTurnoutListener(outgoingEventListener);
@@ -92,7 +93,7 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x82(MQTTPublisherSubscriber mqtt) throws MqttException {
+    public static YakinduSMConfiguration initialize0x82(MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x82;
         int turnoutSectionID = 0x02;
@@ -114,9 +115,9 @@ public class StatemachineInitializer {
         int divSectionID = 0x0F;
 
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                mqtt, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
+                sender, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
         SectionWrapperWithListeners topSectionSM = createSectionStatemachine(
-                mqtt, topSectionID, turnoutStatemachine, TOP_VALUE);
+                sender, topSectionID, turnoutStatemachine, TOP_VALUE);
 
         Section divSection = new Section(divSectionID, divSectionSM);
         Section topSection = new Section(topSectionID, topSectionSM);
@@ -147,7 +148,7 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x83(MQTTPublisherSubscriber mqtt) throws MqttException {
+    public static YakinduSMConfiguration initialize0x83(MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x83;
         int turnoutSectionID = 0x03;
@@ -171,11 +172,11 @@ public class StatemachineInitializer {
         int strSectionID = 0x0B;
 
         SectionWrapperWithListeners topSectionSM = createSectionStatemachine(
-                mqtt, topSectionID, turnoutStatemachine, TOP_VALUE);
+                sender, topSectionID, turnoutStatemachine, TOP_VALUE);
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-        		mqtt, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
+                sender, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-        		mqtt, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
+                sender, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
 
         Section topSection = new Section(topSectionID, topSectionSM);
         Section divSection = new Section(divSectionID, divSectionSM);
@@ -208,7 +209,7 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x84(MQTTPublisherSubscriber mqtt) throws MqttException {
+    public static YakinduSMConfiguration initialize0x84(MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x84;
         int turnoutSectionID = 0x05;
@@ -230,9 +231,9 @@ public class StatemachineInitializer {
         int strSectionID = 0x0A;
 
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                mqtt, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
+                sender, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-                mqtt, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
+                sender, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
 
         Section divSection = new Section(divSectionID, divSectionSM);
         Section strSection = new Section(strSectionID, strSectionSM);
@@ -263,7 +264,7 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x85(MQTTPublisherSubscriber mqtt) throws MqttException {
+    public static YakinduSMConfiguration initialize0x85(MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x85;
         int turnoutSectionID = 0x06;
@@ -285,9 +286,9 @@ public class StatemachineInitializer {
         int strSectionID = 0x13;
 
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-                mqtt, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
+                sender, strSectionID, turnoutStatemachine, STRAIGHT_VALUE);
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                mqtt, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
+                sender, divSectionID, turnoutStatemachine, DIVERGENT_VALUE);
 
         Section strSection = new Section(strSectionID, strSectionSM);
         Section divSection = new Section(divSectionID, divSectionSM);
@@ -319,16 +320,16 @@ public class StatemachineInitializer {
     }
 
     private static SectionWrapperWithListeners createSectionStatemachine(
-    		MQTTPublisherSubscriber mqtt,
-            int sectionID, ITurnoutStatemachine turnoutStatemachine,
-            long directionValue) throws MqttException {
+            MQTTPublishSubscribeDispatcher sender, int sectionID,
+            ITurnoutStatemachine turnoutStatemachine,
+            long directionValue) {
         SectionWrapperWithListeners sectionStatemachine = new SectionWrapperWithListeners(
                 "section" + String.valueOf(sectionID));
         sectionStatemachine.init();
         sectionStatemachine.getSCISection().setId(sectionID);
         sectionStatemachine.getSCISection().setDirection(directionValue);
 
-        SectionRequestSender requestSender = new SectionRequestSender(mqtt);
+        SectionRequestSender requestSender = new SectionRequestSender(sender);
 
         SectionEventListener outgoingEventListener = new SectionEventListener(
                 turnoutStatemachine, requestSender);

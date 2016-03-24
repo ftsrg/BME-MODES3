@@ -8,25 +8,28 @@ import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import hu.bme.mit.inf.mqtt.common.network.RequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import hu.bme.mit.inf.mqtt.common.data.OccupancyPayload;
 import hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
 
 /**
  *
  * @author benedekh
  */
-public class OccupancyRequestSender extends RequestSender {
+public class OccupancyRequestSender implements MessageFilter {
 
+    private static final String topic = "modes3/kvcontrol/soc";
+
+    private final MQTTPublishSubscribeDispatcher requestSender;
     private final Map<Integer, SectionOccupancyStatus> sectionsOccupied = new ConcurrentHashMap<>();
 
-    public OccupancyRequestSender(MQTTPublisherSubscriber mqtt) throws MqttException {
-        super("modes3/kvcontrol/soc", mqtt);
+    public OccupancyRequestSender(MQTTPublishSubscribeDispatcher requestSender) {
+        this.requestSender = requestSender;
+        this.requestSender.subscribe(topic, this);
     }
 
     public boolean isSectionOccupied(int sectionId) {

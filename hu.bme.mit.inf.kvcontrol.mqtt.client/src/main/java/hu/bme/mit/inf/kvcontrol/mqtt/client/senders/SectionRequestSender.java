@@ -12,10 +12,9 @@ import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import hu.bme.mit.inf.mqtt.common.network.RequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import hu.bme.mit.inf.mqtt.common.data.Identity;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
@@ -23,22 +22,27 @@ import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
 
 /**
  *
  * @author benedekh
  */
-public class SectionRequestSender extends RequestSender {
+public class SectionRequestSender implements MessageFilter {
+
+    private static final String topic = "modes3/kvcontrol/section";
+
+    private final MQTTPublishSubscribeDispatcher requestSender;
 
     // is active polling enabled
     private volatile boolean pollingEnabled = false;
 
     private final Map<Integer, SectionStatus> sectionStatuses = new ConcurrentHashMap<>();
 
-    public SectionRequestSender(MQTTPublisherSubscriber mqtt) throws MqttException {
-        super("modes3/kvcontrol/section", mqtt);
+    public SectionRequestSender(MQTTPublishSubscribeDispatcher requestSender) {
+        this.requestSender = requestSender;
+        this.requestSender.subscribe(topic, this);
     }
 
     public void setPollingEnabled(boolean isPollingEnabled) {
@@ -54,7 +58,7 @@ public class SectionRequestSender extends RequestSender {
             Section section = new Section(sectionId);
             Payload payload = createCommandWithContent(GET_SECTION_STATUS,
                     section);
-            publishMessage(payload);
+            requestSender.publishMessage(payload, topic);
         }
 
         SectionStatus status = sectionStatuses.get(sectionId);
@@ -64,13 +68,13 @@ public class SectionRequestSender extends RequestSender {
     public void enableSection(int sectionId) {
         Section section = new Section(sectionId, ENABLED);
         Payload payload = createCommandWithContent(LINE_ENABLE, section);
-        publishMessage(payload);
+        requestSender.publishMessage(payload, topic);
     }
 
     public void disableSection(int sectionId) {
         Section section = new Section(sectionId, DISABLED);
         Payload payload = createCommandWithContent(LINE_DISABLE, section);
-        publishMessage(payload);
+        requestSender.publishMessage(payload, topic);
     }
 
     public void sendIdentify() {
@@ -79,7 +83,7 @@ public class SectionRequestSender extends RequestSender {
         SectionArray dummyArray = new SectionArray(new Section[]{dummySection});
         Identity identity = new Identity(dummyTurnout, dummyArray);
         Payload payload = createCommandWithContent(IDENTIFY, identity);
-        publishMessage(payload);
+        requestSender.publishMessage(payload, topic);
     }
 
     @Override

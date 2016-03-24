@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.yakindu.sc.english.control.controller;
 
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.yakindu.sc.english.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.english.control.sm.RemoteTurnout;
 import hu.bme.mit.inf.yakindu.sc.english.control.sm.Section;
@@ -20,7 +20,6 @@ import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
@@ -36,7 +35,7 @@ public class StatemachineInitializer {
     private static final long STRAIGHT_VALUE = getValueFromDirection(STRAIGHT);
 
     public static YakinduSMConfiguration initialize0x86(
-            MQTTPublisherSubscriber mqtt) throws MqttException {
+            MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x86;
         int turnoutSectionID = 0x04;
@@ -55,9 +54,9 @@ public class StatemachineInitializer {
         int strSectionID = 0x15;
 
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                divSectionID, turnoutStatemachine, DIVERGENT_VALUE, mqtt);
+                divSectionID, turnoutStatemachine, DIVERGENT_VALUE, sender);
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-                strSectionID, turnoutStatemachine, STRAIGHT_VALUE, mqtt);
+                strSectionID, turnoutStatemachine, STRAIGHT_VALUE, sender);
 
         Section divSection = new Section(divSectionID, divSectionSM);
         Section strSection = new Section(strSectionID, strSectionSM);
@@ -84,7 +83,7 @@ public class StatemachineInitializer {
     }
 
     public static YakinduSMConfiguration initialize0x87(
-            MQTTPublisherSubscriber mqtt) throws MqttException {
+            MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x87;
         int turnoutSectionID = 0x04;
@@ -103,9 +102,9 @@ public class StatemachineInitializer {
         int strSectionID = 0x16;
 
         SectionWrapperWithListeners divSectionSM = createSectionStatemachine(
-                divSectionID, turnoutStatemachine, DIVERGENT_VALUE, mqtt);
+                divSectionID, turnoutStatemachine, DIVERGENT_VALUE, sender);
         SectionWrapperWithListeners strSectionSM = createSectionStatemachine(
-                strSectionID, turnoutStatemachine, STRAIGHT_VALUE, mqtt);
+                strSectionID, turnoutStatemachine, STRAIGHT_VALUE, sender);
 
         Section divSection = new Section(divSectionID, divSectionSM);
         Section strSection = new Section(strSectionID, strSectionSM);
@@ -133,14 +132,14 @@ public class StatemachineInitializer {
 
     private static SectionWrapperWithListeners createSectionStatemachine(
             int sectionID, ITurnoutStatemachine turnoutStatemachine,
-            long directionValue, MQTTPublisherSubscriber mqtt) throws MqttException {
+            long directionValue, MQTTPublishSubscribeDispatcher sender) {
         SectionWrapperWithListeners sectionStatemachine = new SectionWrapperWithListeners(
                 "section" + String.valueOf(sectionID));
         sectionStatemachine.init();
         sectionStatemachine.getSCISection().setId(sectionID);
         sectionStatemachine.getSCISection().setDirection(directionValue);
 
-        SectionRequestSender requestSender = new SectionRequestSender(mqtt);
+        SectionRequestSender requestSender = new SectionRequestSender(sender);
 
         SectionEventListener outgoingEventListener = new SectionEventListener(
                 turnoutStatemachine, requestSender);

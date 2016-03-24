@@ -9,6 +9,7 @@ import hu.bme.mit.inf.master.mqtt.client.network.SectionsMessageHandler;
 import hu.bme.mit.inf.master.mqtt.client.network.TurnoutMessageHandler;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -57,8 +58,9 @@ public class Main {
 
             // start the message handlers for the sections and turnout messages
             MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(config);
-            new SectionsMessageHandler(pubsub);
-            new TurnoutMessageHandler(pubsub);
+            MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(pubsub);
+            new SectionsMessageHandler(sender);
+            new TurnoutMessageHandler(sender);
 
         } catch (IOException ex) {
             logException(Main.class.getName(), ex);

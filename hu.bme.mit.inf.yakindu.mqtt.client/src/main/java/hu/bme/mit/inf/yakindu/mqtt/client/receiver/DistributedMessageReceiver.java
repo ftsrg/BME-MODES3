@@ -13,9 +13,9 @@ import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_DIVE
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_STRAIGHT;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_TOP;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
-import hu.bme.mit.inf.mqtt.common.network.RequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
@@ -28,7 +28,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author benedekh
  */
-public class DistributedMessageReceiver extends RequestSender {
+public class DistributedMessageReceiver implements MessageFilter {
+
+    private static final String topic = "modes3/yakindu";
+
+    private final MQTTPublishSubscribeDispatcher sender;
 
     // the recipient of the messages is this handler
     private final int recipientID;
@@ -36,15 +40,17 @@ public class DistributedMessageReceiver extends RequestSender {
     // the target who shall get the received message
     private final IDistributedMessageTransmitter target;
 
-    public DistributedMessageReceiver(MQTTPublisherSubscriber mqtt,
-            IDistributedMessageTransmitter target, int recipientID) throws MqttException {
-        super("modes3/yakindu", mqtt);
+    public DistributedMessageReceiver(MQTTPublishSubscribeDispatcher sender,
+            IDistributedMessageTransmitter target, int recipientID) {
+        this.sender = sender;
+        this.sender.subscribe(topic, this);
+
         this.recipientID = recipientID;
         this.target = target;
     }
 
     public void publishPayload(Payload payload) {
-        publishMessage(payload);
+        sender.publishMessage(payload, topic);
     }
 
     @Override

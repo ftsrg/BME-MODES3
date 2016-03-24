@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
-import hu.bme.mit.inf.mqtt.common.network.RequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.GET_TURNOUT_STATUS;
 import static hu.bme.mit.inf.mqtt.common.data.Command.IDENTIFY;
@@ -12,27 +12,31 @@ import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.STRAIGHT;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author benedekh
  */
-public class TurnoutRequestSender extends RequestSender {
+public class TurnoutRequestSender implements MessageFilter {
+
+    private static final String topic = "modes3/kvcontrol/turnout";
+
+    private final MQTTPublishSubscribeDispatcher requestSender;
 
     // is active polling enabled
     private volatile boolean pollingEnabled = false;
     private final Map<Integer, TurnoutStatus> turnoutStatuses = new ConcurrentHashMap<>();
 
-    public TurnoutRequestSender(MQTTPublisherSubscriber mqtt) throws MqttException {
-        super("modes3/kvcontrol/turnout", mqtt);
+    public TurnoutRequestSender(MQTTPublishSubscribeDispatcher requestSender) {
+        this.requestSender = requestSender;
+        this.requestSender.subscribe(topic, this);
     }
 
     public void setPollingEnabled(boolean isPollingEnabled) {
@@ -52,7 +56,7 @@ public class TurnoutRequestSender extends RequestSender {
             Turnout turnout = new Turnout(turnoutId);
             Payload payload = createCommandWithContent(GET_TURNOUT_STATUS,
                     turnout);
-            publishMessage(payload);
+            requestSender.publishMessage(payload, topic);
         }
 
         TurnoutStatus status = turnoutStatuses.get(turnoutId);
@@ -65,7 +69,7 @@ public class TurnoutRequestSender extends RequestSender {
         SectionArray dummyArray = new SectionArray(new Section[]{dummySection});
         Identity identity = new Identity(dummyTurnout, dummyArray);
         Payload payload = createCommandWithContent(IDENTIFY, identity);
-        publishMessage(payload);
+        requestSender.publishMessage(payload, topic);
     }
 
     @Override

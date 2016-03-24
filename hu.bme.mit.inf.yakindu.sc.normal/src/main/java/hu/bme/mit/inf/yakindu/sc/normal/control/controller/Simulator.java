@@ -17,6 +17,7 @@ import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
@@ -145,28 +146,29 @@ public class Simulator {
         YakinduSMConfiguration smConf = null;
 
         MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(mqttConf);
+        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(mqtt);
 
         switch (turnoutId) {
             case 0x81:
-                smConf = initialize0x81(mqtt);
+                smConf = initialize0x81(sender);
                 break;
             case 0x82:
-                smConf = initialize0x82(mqtt);
+                smConf = initialize0x82(sender);
                 break;
             case 0x83:
-                smConf = initialize0x83(mqtt);
+                smConf = initialize0x83(sender);
                 break;
             case 0x84:
-                smConf = initialize0x84(mqtt);
+                smConf = initialize0x84(sender);
                 break;
             case 0x85:
-                smConf = initialize0x85(mqtt);
+                smConf = initialize0x85(sender);
                 break;
             default:
                 break;
         }
 
-        YakinduSMRunner yakinduController = new YakinduSMRunner(mqtt, smConf);
+        YakinduSMRunner yakinduController = new YakinduSMRunner(sender, smConf);
         yakinduController.start();
     }
 

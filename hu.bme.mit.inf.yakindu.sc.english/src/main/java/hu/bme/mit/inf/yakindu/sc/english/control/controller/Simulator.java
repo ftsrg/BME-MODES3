@@ -8,6 +8,7 @@ import hu.bme.mit.inf.yakindu.sc.english.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.english.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
@@ -125,11 +126,12 @@ public class Simulator {
         return conf;
     }
 
-    private static void initializeAndStartStatemachines(MQTTConfiguration conf) throws MqttException {
+    private static void initializeAndStartStatemachines(MQTTConfiguration conf) {
         MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(conf);
+        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(mqtt);
 
-        YakinduSMConfiguration sm134ConfObj = initialize0x86(mqtt);
-        YakinduSMConfiguration sm135ConfObj = initialize0x87(mqtt);
+        YakinduSMConfiguration sm134ConfObj = initialize0x86(sender);
+        YakinduSMConfiguration sm135ConfObj = initialize0x87(sender);
 
         // connect turnouts to each other
         sm134ConfObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
@@ -137,9 +139,9 @@ public class Simulator {
         sm135ConfObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
                 sm134ConfObj.getTurnoutStatemachine());
 
-        YakinduSMRunner turnout135Runner = new YakinduSMRunner(mqtt,
+        YakinduSMRunner turnout135Runner = new YakinduSMRunner(sender,
                 sm135ConfObj);
-        YakinduSMRunner turnout134Runner = new YakinduSMRunner(mqtt,
+        YakinduSMRunner turnout134Runner = new YakinduSMRunner(sender,
                 sm134ConfObj);
 
         turnout135Runner.start();

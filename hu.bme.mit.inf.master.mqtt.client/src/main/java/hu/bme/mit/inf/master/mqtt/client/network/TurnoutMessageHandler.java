@@ -6,29 +6,31 @@ import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_TURNOUT_STATUS;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
-import hu.bme.mit.inf.mqtt.common.network.RequestSender;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 import java.util.List;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author benedekh
  */
-public class TurnoutMessageHandler extends RequestSender {
+public class TurnoutMessageHandler implements MessageFilter {
 
+    private static final String topic = "modes3/kvcontrol/turnout";
     private static final String CLASS_NAME = SectionsMessageHandler.class.getName();
 
     private final ExpanderTurnoutController turnoutController;
+    private final MQTTPublishSubscribeDispatcher sender;
 
-    public TurnoutMessageHandler(MQTTPublisherSubscriber pubsub) throws MqttException {
-        super("modes3/kvcontrol/turnout", pubsub);
-        this.turnoutController = new ExpanderTurnoutController(this);
+    public TurnoutMessageHandler(MQTTPublishSubscribeDispatcher sender) {
+        this.sender = sender;
+        this.sender.subscribe(topic, this);
+        this.turnoutController = new ExpanderTurnoutController(this.sender, topic);
     }
 
     @Override
@@ -57,7 +59,7 @@ public class TurnoutMessageHandler extends RequestSender {
         for (Turnout turnout : turnouts) {
             Payload payload = createCommandWithContent(SEND_TURNOUT_STATUS,
                     turnout);
-            publishMessage(payload);
+            sender.publishMessage(payload, topic);
             Thread.sleep(10);
         }
     }
@@ -73,7 +75,7 @@ public class TurnoutMessageHandler extends RequestSender {
             turnout.setStatus(status);
             Payload payload = createCommandWithContent(SEND_TURNOUT_STATUS,
                     turnout);
-            publishMessage(payload);
+            sender.publishMessage(payload, topic);
         }
     }
 

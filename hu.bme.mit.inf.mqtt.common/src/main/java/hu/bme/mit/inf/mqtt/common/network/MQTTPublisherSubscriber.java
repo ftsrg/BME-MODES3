@@ -4,7 +4,6 @@ import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -50,6 +49,10 @@ public class MQTTPublisherSubscriber {
         }
     }
 
+    public int getQOS() {
+        return qos;
+    }
+
     public synchronized void reconnectClient() {
         if (!connectThread.isAlive()) {
             connectThread = new Thread(clientConnectionEstablisher);
@@ -57,12 +60,11 @@ public class MQTTPublisherSubscriber {
         }
     }
 
-    public void subscribe(String topic, MqttCallback callbackHandler) throws MqttException {
-        this.client.subscribe(topic, this.qos);
-        this.client.setCallback(callbackHandler);
+    public synchronized void subscribe(String[] topics, int[] qosArray) throws MqttException {
+        this.client.subscribe(topics, qosArray);
     }
 
-    public void publish(Object object, String topic) {
+    public synchronized void publish(Object object, String topic) {
         try {
             byte[] payload = new Gson().toJson(object).getBytes();
             client.publish(topic, payload, qos, false);
