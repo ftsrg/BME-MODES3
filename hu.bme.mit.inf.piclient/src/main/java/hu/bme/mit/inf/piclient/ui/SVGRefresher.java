@@ -234,12 +234,12 @@ public class SVGRefresher implements Runnable {
             c86 = TurnoutCache.STRAIGHT;
             c87 = TurnoutCache.STRAIGHT;
         } else if (div86 && !div87 && (!c86.isDivergent() || !c87.isStraight())) {
-            change = "0x87K";
+            change = "0x86K";
             route = "0x15&lt;&#8212;&gt;0x0E";
             c86 = TurnoutCache.DIVERGENT;
             c87 = TurnoutCache.STRAIGHT;
         } else if (!div86 && div87 && (!c86.isStraight() || !c87.isDivergent())) {
-            change = "0x86K";
+            change = "0x87K";
             route = "0x10&lt;&#8212;&gt;0x16";
             c86 = TurnoutCache.STRAIGHT;
             c87 = TurnoutCache.DIVERGENT;
