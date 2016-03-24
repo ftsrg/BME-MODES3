@@ -13,11 +13,10 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  */
 public class PayloadHelper {
 
-    public static void sendCommandWithContent(Command command,
-            JsonConvertible content, MQTTPublisherSubscriber publisher) {
+    public static Payload createCommandWithContent(Command command,
+            JsonConvertible content) {
         String payloadContent = content.toJson();
-        Payload payload = new Payload(command, payloadContent);
-        publisher.publish(payload);
+        return new Payload(command, payloadContent);
     }
 
     public static Payload getPayloadFromMessage(MqttMessage message) {
@@ -25,7 +24,8 @@ public class PayloadHelper {
         return new Gson().fromJson(payload, Payload.class);
     }
 
-    public static OccupancyPayload getOccupancyPayloadFromMessage(MqttMessage message) {
+    public static OccupancyPayload getOccupancyPayloadFromMessage(
+            MqttMessage message) {
         String payload = new String(message.getPayload());
         return new Gson().fromJson(payload, OccupancyPayload.class);
     }

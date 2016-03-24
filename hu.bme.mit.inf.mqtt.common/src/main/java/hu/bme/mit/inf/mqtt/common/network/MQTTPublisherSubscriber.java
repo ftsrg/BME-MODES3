@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 public class MQTTPublisherSubscriber {
 
     private MqttAsyncClient client;
-    private String topic;
     private int qos;
 
     private Thread connectThread;
@@ -59,11 +58,11 @@ public class MQTTPublisherSubscriber {
     }
 
     public void subscribe(String topic, MqttCallback callbackHandler) throws MqttException {
-    	this.client.subscribe(topic, this.qos);
+        this.client.subscribe(topic, this.qos);
         this.client.setCallback(callbackHandler);
     }
 
-    public void publish(Object object) {
+    public void publish(Object object, String topic) {
         try {
             byte[] payload = new Gson().toJson(object).getBytes();
             client.publish(topic, payload, qos, false);
@@ -71,10 +70,6 @@ public class MQTTPublisherSubscriber {
             logException(getClassName(), ex);
             reconnectClient();
         }
-    }
-
-    public String getSubscribedTopic() {
-        return topic;
     }
 
     private void establishClientConnection(String address,
@@ -90,11 +85,8 @@ public class MQTTPublisherSubscriber {
                     Thread.sleep(sleepTime);
                 }
                 logInfoMessage(getClassName(), "Connected");
-                Thread.sleep(500);
-                client.subscribe(topic, qos);
-                logInfoMessage(getClassName(), "Subscribed");
             }
-        } catch (MqttException | InterruptedException ex) {
+        } catch (InterruptedException ex) {
             logException(getClassName(), ex);
         }
     }

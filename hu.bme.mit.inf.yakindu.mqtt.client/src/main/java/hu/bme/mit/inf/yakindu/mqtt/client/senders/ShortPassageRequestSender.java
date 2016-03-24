@@ -4,15 +4,14 @@ import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_DIVERGENT;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_STRAIGHT;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_TOP;
-import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
-import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
-import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.DIVERGENT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.STRAIGHT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
+import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 
 /**
  *
@@ -20,12 +19,10 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
  */
 public class ShortPassageRequestSender {
 
-    private final MQTTPublisherSubscriber sender;
+    private final DistributedMessageReceiver sender;
 
-    public ShortPassageRequestSender(MQTTConfiguration config) {
-        config.setClientID(generateId(getClass().getSimpleName()));
-
-        this.sender = new MQTTPublisherSubscriber(config);
+    public ShortPassageRequestSender(DistributedMessageReceiver sender) {
+        this.sender = sender;
     }
 
     public void sendShortPassageRequest(Direction direction, int recipientID) {
@@ -47,7 +44,8 @@ public class ShortPassageRequestSender {
 
         StatemachineCommandMessage content = new StatemachineCommandMessage(
                 recipientID);
-        sendCommandWithContent(command, content, sender);
+        Payload payload = createCommandWithContent(command, content);
+        sender.publishPayload(payload);
     }
 
 }

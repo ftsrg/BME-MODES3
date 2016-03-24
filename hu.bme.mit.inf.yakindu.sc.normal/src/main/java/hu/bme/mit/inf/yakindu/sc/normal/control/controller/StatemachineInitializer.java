@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.yakindu.sc.normal.control.controller;
 
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
-import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.normal.control.sm.RemoteTurnout;
@@ -17,7 +16,6 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.DIVERGENT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.STRAIGHT;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
-import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.getKvcontrolSectionMQTTConfiguration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -82,6 +80,8 @@ public class StatemachineInitializer {
 
         TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
                 remoteTurnouts, localSections);
+        
+        conf.setTurnoutEventListener(outgoingEventListener);
         turnoutStatemachine.addSectionsListener(outgoingEventListener);
         turnoutStatemachine.addTurnoutListener(outgoingEventListener);
 

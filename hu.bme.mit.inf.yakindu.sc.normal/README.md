@@ -22,25 +22,17 @@ Create a Maven project in any IDE (Eclipse or NetBeans are recommended). Maven s
 
 Run in command-line: 
 
-`java -jar YakinduCodes-NormalTurnout.jar [-sl] [-tp <statechart trace log directory path>] [-ti <turnout ID>] [--kvba <IP address of the KVControl MQTT Broker>] [--kvbp <port number of the KVControl MQTT Broker>] [--kvbpp <protocol of the KVControl MQTT Broker>] [--kvbq <QOS of the KVControl MQTT Broker>] [--kvbst <section topic name for the KVControl MQTT Broker>] [--kvbtt <turnout topic name for the KVControl MQTT Broker>] [--kvbot <occupancy topic name for the KVControl MQTT Broker>] [--smba <IP address of the MQTT Broker>] [--smbp <port number of the MQTT Broker>] [--smbpp <protocol of the MQTT Broker>] [--smbq <QOS of the MQTT Broker>]  [--smbt <topic name for the MQTT Broker>]`
+`java -jar hu.bme.mit.inf.yakindu.sc.normal-1.0.0-SNAPSHOT-jar-with-dependencies.jar [--sl] [--tp <statechart trace log directory path>] [--ti <turnout ID>] [-a <IP address of MQTT Broker>] [-p <port number of MQTT Broker>] [--pp <protocol of MQTT Broker>] [-q <QOS of MQTT Broker>]`
 
 Parameters:
 
 * `sl`: if it is set, status information will be logged at the standard output and error output.
 * `tp`: if it is set and a path is given as a parameter, then the trace log will be saved to an XML file within the respective folder. This way transitions can be logged for the statecharts.
 * `ti`: ID (as a decimal number) of the respective turnout, whose statechart will be started. Possible values: 129 (0x81), 130 (0x82), 131 (0x83), 132 (0x84), 133 (0x85).
-* `kvba`: IP address of the computer which runs the KVControl MQTT Broker *(default: localhost)*.
-* `kvbp`: port number of the computer which runs the KVControl MQTT Broker *(default: 1883)*.
-* `kvbpp`: protocol of the computer which runs the KVControl MQTT Broker *(default: tcp)*.
-* `kvbq`: QOS of the KVControl MQTT Broker *(default: 1)*.
-* `kvbst`: section topic name for the KVControl MQTT Broker *(default: modes3/kvcontrol/section)*.
-* `kvbtt`: turnout topic name for the KVControl MQTT Broker *(default: modes3/kvcontrol/turnout)*.
-* `kvbot`: occupancy topic name for the KVControl MQTT Broker *(default: modes3/kvcontrol/soc)*.
-* `smba`: IP address of the computer which runs the MQTT Broker *(default: localhost)*.
-* `smbp`: port number of the computer which runs the MQTT Broker *(default: 1883)*.
-* `smbpp`: protocol of the computer which runs the MQTT Broker *(default: tcp)*.
-* `smbq`: QOS of the MQTT Broker *(default: 1)*.
-* `smbt`: topic name for the MQTT Broker *(default: modes3/yakindu)*.
+* `a`: IP address of the computer which runs the MQTT Broker *(default: localhost)*.
+* `p`: port number of the computer which runs the MQTT Broker *(default: 1883)*.
+* `pp`: protocol of the computer which runs the MQTT Broker *(default: tcp)*.
+* `q`: QOS of MQTT Broker *(default: 1)*.
 
 Although all parameters are optional, if the `ti` parameter is missing, the it will not be started.
 

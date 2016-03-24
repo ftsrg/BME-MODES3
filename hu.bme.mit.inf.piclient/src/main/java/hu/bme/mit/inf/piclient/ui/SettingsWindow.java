@@ -6,8 +6,11 @@ import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import hu.bme.mit.inf.piclient.Application;
 import static hu.bme.mit.inf.piclient.ui.SettingsWindow.Configuration;
+import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
  *
@@ -26,11 +29,6 @@ public class SettingsWindow extends javax.swing.JFrame {
     public static SectionControllerProxy sectionControllerProxy;
 
     public static class Configuration {
-
-        // mqttConfiguration information for the MQTT broker
-        public static MQTTConfiguration mqttSectionConfiguration;
-        public static MQTTConfiguration mqttTurnoutConfiguration;
-        public static MQTTConfiguration mqttOccupancyConfiguration;
 
         //  how often shall we refresh the values
         public static int heartbeatTimeout = 800;
@@ -81,18 +79,12 @@ public class SettingsWindow extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         pollingInterval = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        mqttSectionTopicField = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         mqttPortField = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         mqttProtocolField = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
         mqttAddressField = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        mqttTurnoutTopicField = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        mqttOccupancyTopicField = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -422,8 +414,6 @@ public class SettingsWindow extends javax.swing.JFrame {
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Connection", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, Application.titleFont, Application.titleForeground));
         jPanel6.setForeground(new java.awt.Color(255, 255, 255));
 
-        mqttSectionTopicField.setText("modes3/kvcontrol/section");
-
         jLabel11.setBackground(Application.pageBackground);
         jLabel11.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
         jLabel11.setForeground(Application.labelForeground);
@@ -444,26 +434,7 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         mqttProtocolField.setText("tcp");
 
-        jLabel14.setBackground(Application.pageBackground);
-        jLabel14.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
-        jLabel14.setForeground(Application.labelForeground);
-        jLabel14.setText("Section topic:");
-
         mqttAddressField.setText("localhost");
-
-        jLabel15.setBackground(Application.pageBackground);
-        jLabel15.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
-        jLabel15.setForeground(Application.labelForeground);
-        jLabel15.setText("Turnout topic:");
-
-        mqttTurnoutTopicField.setText("modes3/kvcontrol/turnout");
-
-        jLabel16.setBackground(Application.pageBackground);
-        jLabel16.setFont(new java.awt.Font("Ubuntu Light", 0, 14)); // NOI18N
-        jLabel16.setForeground(Application.labelForeground);
-        jLabel16.setText("Occupancy topic:");
-
-        mqttOccupancyTopicField.setText("modes3/kvcontrol/soc");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -471,33 +442,19 @@ public class SettingsWindow extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(mqttPortField))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(mqttProtocolField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mqttAddressField))
+                        .addComponent(mqttPortField))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
+                        .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mqttSectionTopicField))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mqttTurnoutTopicField))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mqttOccupancyTopicField)))
+                        .addComponent(mqttProtocolField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mqttAddressField)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -513,18 +470,7 @@ public class SettingsWindow extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(mqttPortField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mqttSectionTopicField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mqttTurnoutTopicField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(mqttOccupancyTopicField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -537,44 +483,45 @@ public class SettingsWindow extends javax.swing.JFrame {
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSlider1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pollingInterval)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel10))
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(pauseHeartBeat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(startHeartBeat)))
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pollingInterval)
+                        .addGap(126, 126, 126)
+                        .addComponent(jLabel10)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pauseHeartBeat)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(startHeartBeat)
+                .addGap(12, 12, 12))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
                     .addComponent(jLabel10)
-                    .addComponent(pollingInterval))
-                .addGap(18, 18, 18)
+                    .addComponent(pollingInterval)
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pauseHeartBeat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(startHeartBeat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(pauseHeartBeat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startHeartBeat, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -661,29 +608,27 @@ public class SettingsWindow extends javax.swing.JFrame {
             RailwayWindow.log(
                     "Port cannot be converted to number: " + portText + ". Default value (1883) used instead.");
         }
-        String sectionTopic = mqttSectionTopicField.getText();
-        String turnoutTopic = mqttTurnoutTopicField.getText();
-        String occupancyTopic = mqttOccupancyTopicField.getText();
 
-        Configuration.mqttSectionConfiguration = createMQTTConfiguration(
-                sectionTopic, address, protocol, port);
-        Configuration.mqttTurnoutConfiguration = createMQTTConfiguration(
-                turnoutTopic,
-                address, protocol, port);
-        Configuration.mqttOccupancyConfiguration = createMQTTConfiguration(
-                occupancyTopic,
-                address, protocol, port);
+        MQTTConfiguration mqttConfiguration = createMQTTConfiguration(address,
+                protocol, port);
 
-        turnoutControllerProxy = new TurnoutControllerProxy();
-        sectionControllerProxy = new SectionControllerProxy();
-        occupancyControllerProxy = new OccupancyControllerProxy();
+        MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(
+                mqttConfiguration);
+
+        try {
+            turnoutControllerProxy = new TurnoutControllerProxy(pubsub);
+            sectionControllerProxy = new SectionControllerProxy(pubsub);
+            occupancyControllerProxy = new OccupancyControllerProxy(pubsub);
+        } catch (MqttException e) {
+            logException(getClass().getName(), e);
+        }
 
         // automatically close settings window
         dispose();
     }//GEN-LAST:event_startHeartBeatMouseClicked
 
-    private MQTTConfiguration createMQTTConfiguration(String topic,
-            String address, String protocol, int port) {
+    private MQTTConfiguration createMQTTConfiguration(String address,
+            String protocol, int port) {
         MQTTConfiguration conf = new MQTTConfiguration();
         conf.setAddress(address);
         conf.setProtocol(protocol);
@@ -713,9 +658,6 @@ public class SettingsWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -733,11 +675,8 @@ public class SettingsWindow extends javax.swing.JFrame {
     private javax.swing.JPanel lockedSectionColor;
     private javax.swing.JPanel locoObjectBackground;
     private javax.swing.JTextField mqttAddressField;
-    private javax.swing.JTextField mqttOccupancyTopicField;
     private javax.swing.JTextField mqttPortField;
     private javax.swing.JTextField mqttProtocolField;
-    private javax.swing.JTextField mqttSectionTopicField;
-    private javax.swing.JTextField mqttTurnoutTopicField;
     private javax.swing.JCheckBox occupancyStatusPolling;
     private javax.swing.JButton pauseHeartBeat;
     private javax.swing.JLabel pollingInterval;
@@ -755,9 +694,8 @@ public class SettingsWindow extends javax.swing.JFrame {
         private final OccupancyRequestSender requestSender;
         private volatile boolean pollingEnabled;
 
-        public OccupancyControllerProxy() {
-            this.requestSender = new OccupancyRequestSender(
-                    Configuration.mqttOccupancyConfiguration);
+        public OccupancyControllerProxy(MQTTPublisherSubscriber pubsub) throws MqttException {
+            this.requestSender = new OccupancyRequestSender(pubsub);
             this.pollingEnabled = true;
         }
 
@@ -778,9 +716,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         private final SectionRequestSender requestSender;
 
-        public SectionControllerProxy() {
-            this.requestSender = new SectionRequestSender(
-                    Configuration.mqttSectionConfiguration);
+        public SectionControllerProxy(MQTTPublisherSubscriber pubsub) throws MqttException {
+            this.requestSender = new SectionRequestSender(pubsub);
         }
 
         public void initialRefresh() {
@@ -808,8 +745,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         private final TurnoutRequestSender requestSender;
 
-        public TurnoutControllerProxy() {
-            this.requestSender = new TurnoutRequestSender(Configuration.mqttTurnoutConfiguration);
+        public TurnoutControllerProxy(MQTTPublisherSubscriber pubsub) throws MqttException {
+            this.requestSender = new TurnoutRequestSender(pubsub);
         }
 
         public void initialRefresh() {

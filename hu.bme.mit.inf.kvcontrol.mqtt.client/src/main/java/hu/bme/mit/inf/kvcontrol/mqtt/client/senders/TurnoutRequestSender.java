@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
-import hu.bme.mit.inf.kvcontrol.mqtt.client.RequestSender;
+import hu.bme.mit.inf.mqtt.common.network.RequestSender;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.GET_TURNOUT_STATUS;
 import static hu.bme.mit.inf.mqtt.common.data.Command.IDENTIFY;
@@ -12,16 +12,12 @@ import hu.bme.mit.inf.mqtt.common.data.SectionArray;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.STRAIGHT;
-import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
-import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
-import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
@@ -36,7 +32,7 @@ public class TurnoutRequestSender extends RequestSender {
     private final Map<Integer, TurnoutStatus> turnoutStatuses = new ConcurrentHashMap<>();
 
     public TurnoutRequestSender(MQTTPublisherSubscriber mqtt) throws MqttException {
-    	super("modes3/kvcontrol/turnout", mqtt);
+        super("modes3/kvcontrol/turnout", mqtt);
     }
 
     public void setPollingEnabled(boolean isPollingEnabled) {
@@ -54,7 +50,9 @@ public class TurnoutRequestSender extends RequestSender {
 
         if (pollingEnabled) {
             Turnout turnout = new Turnout(turnoutId);
-            sendCommandWithContent(GET_TURNOUT_STATUS, turnout, mqtt);
+            Payload payload = createCommandWithContent(GET_TURNOUT_STATUS,
+                    turnout);
+            publishMessage(payload);
         }
 
         TurnoutStatus status = turnoutStatuses.get(turnoutId);
@@ -66,7 +64,8 @@ public class TurnoutRequestSender extends RequestSender {
         Section dummySection = new Section(0x01);
         SectionArray dummyArray = new SectionArray(new Section[]{dummySection});
         Identity identity = new Identity(dummyTurnout, dummyArray);
-        sendCommandWithContent(IDENTIFY, identity, mqtt);
+        Payload payload = createCommandWithContent(IDENTIFY, identity);
+        publishMessage(payload);
     }
 
     @Override
@@ -84,7 +83,7 @@ public class TurnoutRequestSender extends RequestSender {
                     break;
             }
         } catch (Exception ex) {
-            logException(getClass().getName(), new Exception(ex));
+            logException(getClass().getName(), ex);
         }
     }
 

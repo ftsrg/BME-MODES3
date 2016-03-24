@@ -4,13 +4,15 @@ import hu.bme.mit.inf.master.bbb.conf.ExpanderControllerConfiguration;
 import hu.bme.mit.inf.master.bbb.conf.IControllerConfiguration;
 import hu.bme.mit.inf.master.bbb.utils.HexConversionUtil;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SEND_TURNOUT_STATUS;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.mqtt.common.data.Section;
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
 import hu.bme.mit.inf.mqtt.common.data.Turnout;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import static hu.bme.mit.inf.mqtt.common.data.TurnoutStatus.STRAIGHT;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
-import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.sendCommandWithContent;
+import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
+import hu.bme.mit.inf.mqtt.common.network.RequestSender;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import io.silverspoon.bulldog.core.Signal;
 import io.silverspoon.bulldog.core.gpio.DigitalInput;
@@ -33,7 +35,7 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
     protected Map<String, TurnoutStatus> latestTurnoutStatus;
     protected Map<String, TurnoutStatus> formerTurnoutStatus;
 
-    public ExpanderTurnoutController(final MQTTPublisherSubscriber mqttPublisher) {
+    public ExpanderTurnoutController(final RequestSender mqttPublisher) {
         try {
             controllerConf = new ExpanderControllerConfiguration();
         } catch (Exception ex) {
@@ -106,7 +108,7 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
         return results;
     }
 
-    private void updateTurnoutDirection(MQTTPublisherSubscriber mqttPublisher) {
+    private void updateTurnoutDirection(RequestSender mqttPublisher) {
         HashMap<String, DigitalInput> ioMap = new HashMap<>(4);
 
         for (String to : controllerConf.getAllTurnout()) {
@@ -145,10 +147,11 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
     }
 
     private void publishTurnoutStatus(String id, TurnoutStatus status,
-            MQTTPublisherSubscriber mqttPublisher) {
+            RequestSender mqttPublisher) {
         Turnout turnout = new Turnout(HexConversionUtil.fromString(id));
         turnout.setStatus(status);
-        sendCommandWithContent(SEND_TURNOUT_STATUS, turnout, mqttPublisher);
+        Payload payload = createCommandWithContent(SEND_TURNOUT_STATUS, turnout);
+        mqttPublisher.publishMessage(payload);
     }
 
 }

@@ -13,27 +13,22 @@ import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_DIVE
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_STRAIGHT;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_TOP;
 import hu.bme.mit.inf.mqtt.common.data.Payload;
-import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
-import static hu.bme.mit.inf.mqtt.common.util.ClientIdGenerator.generateId;
+import hu.bme.mit.inf.mqtt.common.network.RequestSender;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.DENIED;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author benedekh
  */
-public class DistributedMessageReceiver implements MqttCallback {
-
-    // the object subscribes as a callback for this receiver in the constuctor
-    private MQTTPublisherSubscriber receiver;
+public class DistributedMessageReceiver extends RequestSender {
 
     // the recipient of the messages is this handler
     private final int recipientID;
@@ -41,22 +36,20 @@ public class DistributedMessageReceiver implements MqttCallback {
     // the target who shall get the received message
     private final IDistributedMessageTransmitter target;
 
-    public DistributedMessageReceiver(MQTTConfiguration config,
-            IDistributedMessageTransmitter target, int recipientID) {
-        config.setClientID(generateId(getClass().getSimpleName()));
-
-        this.receiver = new MQTTPublisherSubscriber(config);
-        this.receiver.subscribe(this);
+    public DistributedMessageReceiver(MQTTPublisherSubscriber mqtt,
+            IDistributedMessageTransmitter target, int recipientID) throws MqttException {
+        super("modes3/yakindu", mqtt);
         this.recipientID = recipientID;
         this.target = target;
     }
 
+    public void publishPayload(Payload payload) {
+        publishMessage(payload);
+    }
+
     @Override
-    public void messageArrived(String topic, MqttMessage message) {
+    public void filteredMessageArrived(MqttMessage message) {
         try {
-            if (!receiver.getSubscribedTopic().equals(topic)) {
-                return;
-            }
             Payload payload = getPayloadFromMessage(message);
             StatemachineCommandMessage commandPayload = payload.getContentAs(
                     StatemachineCommandMessage.class);
@@ -107,7 +100,7 @@ public class DistributedMessageReceiver implements MqttCallback {
 
             target.addPacket(packet);
         } catch (Exception ex) {
-            logException(getClass().getName(), new Exception(ex));
+            logException(getClass().getName(), ex);
         }
     }
 
@@ -122,14 +115,4 @@ public class DistributedMessageReceiver implements MqttCallback {
         }
     }
 
-    @Override
-    public void connectionLost(Throwable cause) {
-        logException(getClass().getName(), new Exception(cause));
-        receiver.reconnectClient();
-    }
-
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken token) {
-        // deliberately left empty
-    }
 }

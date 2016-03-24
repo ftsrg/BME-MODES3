@@ -3,15 +3,13 @@ package hu.bme.mit.inf.yakindu.sc.english.control.sm.handler;
 import static hu.bme.mit.inf.yakindu.sc.english.control.helper.NullSection.NULL_SECTION;
 import hu.bme.mit.inf.yakindu.sc.english.control.sm.RemoteTurnout;
 import static hu.bme.mit.inf.yakindu.sc.english.control.sm.handler.DirectionConverterHelper.getDirectionFromValue;
-import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.getStateMachineMQTTConfiguration;
-import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.DENIED;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
+import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 import hu.bme.mit.inf.yakindu.mqtt.client.senders.PassageRequestSender;
 import hu.bme.mit.inf.yakindu.mqtt.client.senders.PassageResponseSender;
-import hu.bme.mit.inf.yakindu.mqtt.client.senders.ShortPassageRequestSender;
 import java.util.Map;
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.section.ISectionStatemachine.SCISection;
@@ -30,19 +28,18 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
 
     private ITurnoutStatemachine otherHalfOfTurnout;
 
-    private final PassageRequestSender passageRequest;
-    private final ShortPassageRequestSender shortPassageRequest;
-    private final PassageResponseSender passageResponse;
+    private PassageRequestSender passageRequest = null;
+    private PassageResponseSender passageResponse = null;
 
     public TurnoutEventListener(Map<Direction, RemoteTurnout> remoteSections,
             Map<Direction, ISectionStatemachine> localSections) {
         this.remoteSections = remoteSections;
         this.localSections = localSections;
+    }
 
-        MQTTConfiguration conf = getStateMachineMQTTConfiguration();
-        this.passageRequest = new PassageRequestSender(conf);
-        this.shortPassageRequest = new ShortPassageRequestSender(conf);
-        this.passageResponse = new PassageResponseSender(conf);
+    public void setRequestSenders(DistributedMessageReceiver sender) {
+        this.passageRequest = new PassageRequestSender(sender);
+        this.passageResponse = new PassageResponseSender(sender);
     }
 
     public void setOtherHalfOfTurnoutSM(ITurnoutStatemachine otherHalfSM) {

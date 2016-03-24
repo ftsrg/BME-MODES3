@@ -25,11 +25,6 @@ public class Main {
                             "MQTT Broker Protocol [optional, default = tcp]")
                     .withRequiredArg().ofType(String.class);
 
-            ArgumentAcceptingOptionSpec<String> mqttAddressArg
-                    = parser.accepts("a",
-                            "MQTT Broker Address [optional, default = localhost]")
-                    .withRequiredArg().ofType(String.class);
-
             ArgumentAcceptingOptionSpec<Integer> mqttPortArg
                     = parser.accepts("p",
                             "MQTT Broker Port [optional, default = 1883]")
@@ -53,9 +48,7 @@ public class Main {
             setStatusLogEnabled(enableStatusLog);
 
             MQTTConfiguration config = createMQTTConfiguration(parsed,
-                    mqttProtocolArg, mqttAddressArg,
-                     mqttPort,
-                    mqttQOS);
+                    mqttProtocolArg, mqttPort, mqttQOS);
 
             // start the message handlers for the sections and turnout messages
             MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(config);
@@ -88,16 +81,12 @@ public class Main {
     private static MQTTConfiguration createMQTTConfiguration(
             OptionSet parsed,
             ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg,
-            ArgumentAcceptingOptionSpec<String> smMQTTAddressArg,
             Integer smMQTTPort, Integer smMQTTQOS) {
 
         MQTTConfiguration conf = new MQTTConfiguration();
 
         if (parsed.has(smMQTTProtocolArg)) {
             conf.setProtocol(parsed.valueOf(smMQTTProtocolArg));
-        }
-        if (parsed.has(smMQTTAddressArg)) {
-            conf.setAddress(parsed.valueOf(smMQTTAddressArg));
         }
         if (smMQTTPort != null) {
             conf.setPort(smMQTTPort);
