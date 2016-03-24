@@ -38,7 +38,8 @@ public class StatemachineInitializer {
     private static final long STRAIGHT_VALUE = getValueFromDirection(STRAIGHT);
     private static final long TOP_VALUE = getValueFromDirection(TOP);
 
-    public static YakinduSMConfiguration initialize0x81(MQTTPublishSubscribeDispatcher sender) {
+    public static YakinduSMConfiguration initialize0x81(
+            MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x81;
         int turnoutSectionID = 0x01;
@@ -93,7 +94,8 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x82(MQTTPublishSubscribeDispatcher sender) {
+    public static YakinduSMConfiguration initialize0x82(
+            MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x82;
         int turnoutSectionID = 0x02;
@@ -138,6 +140,8 @@ public class StatemachineInitializer {
 
         TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
                 remoteTurnouts, localSections);
+
+        conf.setTurnoutEventListener(outgoingEventListener);
         turnoutStatemachine.addSectionsListener(outgoingEventListener);
         turnoutStatemachine.addTurnoutListener(outgoingEventListener);
 
@@ -148,7 +152,8 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x83(MQTTPublishSubscribeDispatcher sender) {
+    public static YakinduSMConfiguration initialize0x83(
+            MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x83;
         int turnoutSectionID = 0x03;
@@ -199,6 +204,8 @@ public class StatemachineInitializer {
 
         TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
                 remoteTurnouts, localSections);
+
+        conf.setTurnoutEventListener(outgoingEventListener);
         turnoutStatemachine.addSectionsListener(outgoingEventListener);
         turnoutStatemachine.addTurnoutListener(outgoingEventListener);
 
@@ -209,7 +216,8 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x84(MQTTPublishSubscribeDispatcher sender) {
+    public static YakinduSMConfiguration initialize0x84(
+            MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x84;
         int turnoutSectionID = 0x05;
@@ -254,6 +262,8 @@ public class StatemachineInitializer {
 
         TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
                 remoteTurnouts, localSections);
+
+        conf.setTurnoutEventListener(outgoingEventListener);
         turnoutStatemachine.addSectionsListener(outgoingEventListener);
         turnoutStatemachine.addTurnoutListener(outgoingEventListener);
 
@@ -264,7 +274,8 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x85(MQTTPublishSubscribeDispatcher sender) {
+    public static YakinduSMConfiguration initialize0x85(
+            MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x85;
         int turnoutSectionID = 0x06;
@@ -309,6 +320,8 @@ public class StatemachineInitializer {
 
         TurnoutEventListener outgoingEventListener = new TurnoutEventListener(
                 remoteTurnouts, localSections);
+
+        conf.setTurnoutEventListener(outgoingEventListener);
         turnoutStatemachine.addSectionsListener(outgoingEventListener);
         turnoutStatemachine.addTurnoutListener(outgoingEventListener);
 
