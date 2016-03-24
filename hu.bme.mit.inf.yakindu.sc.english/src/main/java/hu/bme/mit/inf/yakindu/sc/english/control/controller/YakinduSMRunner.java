@@ -10,7 +10,6 @@ import hu.bme.mit.inf.yakindu.sc.english.control.transmitter.GeneralTransmitter;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 import java.util.Set;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.yakindu.scr.turnout.TurnoutWrapper;
 
 /**
@@ -28,7 +27,9 @@ public class YakinduSMRunner {
     private final DistributedMessageReceiver messageReceiver;
 
     public YakinduSMRunner(MQTTPublishSubscribeDispatcher sender,
-            YakinduSMConfiguration conf) {
+            YakinduSMConfiguration conf,
+            OccupancyRequestSender occupancyRequester,
+            TurnoutRequestSender turnoutRequester) {
         TurnoutWrapper statemachine = conf.getTurnoutStatemachine();
         int turnoutSectionId = conf.getTurnoutSectionId();
         Set<Section> localSections = conf.getManagedSections();
@@ -38,10 +39,6 @@ public class YakinduSMRunner {
 
         int managedTurnoutId = (int) statemachine.getSCITurnout().getId();
         int managedTurnoutSectionId = turnoutSectionId;
-
-        OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(
-                sender);
-        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(sender);
 
         generalTransmitter = new GeneralTransmitter(managedTurnoutId,
                 managedTurnoutSectionId, localSections, statemachine,

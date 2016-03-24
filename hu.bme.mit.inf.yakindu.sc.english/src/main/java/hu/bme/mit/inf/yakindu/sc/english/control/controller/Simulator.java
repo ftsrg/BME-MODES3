@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.yakindu.sc.english.control.controller;
 
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
 import static hu.bme.mit.inf.yakindu.sc.english.control.controller.StatemachineInitializer.initialize0x86;
 import static hu.bme.mit.inf.yakindu.sc.english.control.controller.StatemachineInitializer.initialize0x87;
 import java.io.IOException;
@@ -128,7 +130,8 @@ public class Simulator {
 
     private static void initializeAndStartStatemachines(MQTTConfiguration conf) {
         MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(conf);
-        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(mqtt);
+        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(
+                mqtt);
 
         YakinduSMConfiguration sm134ConfObj = initialize0x86(sender);
         YakinduSMConfiguration sm135ConfObj = initialize0x87(sender);
@@ -139,10 +142,14 @@ public class Simulator {
         sm135ConfObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
                 sm134ConfObj.getTurnoutStatemachine());
 
+        OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(
+                sender);
+        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(sender);
+
         YakinduSMRunner turnout135Runner = new YakinduSMRunner(sender,
-                sm135ConfObj);
+                sm135ConfObj, occupancyRequester, turnoutRequester);
         YakinduSMRunner turnout134Runner = new YakinduSMRunner(sender,
-                sm134ConfObj);
+                sm134ConfObj, occupancyRequester, turnoutRequester);
 
         turnout135Runner.start();
         turnout134Runner.start();
