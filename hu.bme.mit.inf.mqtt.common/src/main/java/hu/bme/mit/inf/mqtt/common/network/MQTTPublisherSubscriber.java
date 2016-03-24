@@ -84,8 +84,8 @@ public class MQTTPublisherSubscriber {
                     int sleepTime = 1000 * 10;
                     Thread.sleep(sleepTime);
                 }
-                logInfoMessage(getClassName(), "Connected");
             }
+            logInfoMessage(getClassName(), "Connected");
         } catch (InterruptedException ex) {
             logException(getClassName(), ex);
         }
