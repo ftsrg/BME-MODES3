@@ -8,6 +8,7 @@ import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import hu.bme.mit.inf.master.bbb.strategy.ExpanderSectionController;
@@ -33,10 +34,13 @@ public class SectionsMessageHandler implements MqttCallback {
     private final MQTTPublisherSubscriber mqttConnection;
     private final ExpanderSectionController sectionController;
 
-    public SectionsMessageHandler(MQTTConfiguration conf) {
-        this.mqttConnection = new MQTTPublisherSubscriber(conf);
-        this.mqttConnection.subscribe(this);
-
+    public SectionsMessageHandler(MQTTPublisherSubscriber pubsub) {
+        this.mqttConnection = pubsub;
+        try {
+			this.mqttConnection.subscribe("modes3/kvcontrol/section", this);
+		} catch (MqttException e) {
+			 logException(CLASS_NAME, e);
+		}
         this.sectionController = new ExpanderSectionController(mqttConnection);
     }
 

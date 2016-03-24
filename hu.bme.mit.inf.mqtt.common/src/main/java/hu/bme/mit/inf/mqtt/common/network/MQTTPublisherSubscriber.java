@@ -1,13 +1,15 @@
 package hu.bme.mit.inf.mqtt.common.network;
 
-import com.google.gson.Gson;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
+
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
-import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
-import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
+
+import com.google.gson.Gson;
 
 /**
  *
@@ -28,7 +30,6 @@ public class MQTTPublisherSubscriber {
             String clientId = config.getClientID();
 
             qos = config.getQOS();
-            topic = config.getTopic();
 
             MemoryPersistence persistence = new MemoryPersistence();
             final MqttConnectOptions connOpts = new MqttConnectOptions();
@@ -57,7 +58,8 @@ public class MQTTPublisherSubscriber {
         }
     }
 
-    public void subscribe(MqttCallback callbackHandler) {
+    public void subscribe(String topic, MqttCallback callbackHandler) throws MqttException {
+    	this.client.subscribe(topic, this.qos);
         this.client.setCallback(callbackHandler);
     }
 

@@ -11,12 +11,7 @@ public class MQTTConfiguration {
     private int port = 1883;
 
     private int qos = 1;
-    private String topic;
     private String clientId = new String();
-
-    public MQTTConfiguration(String topic) {
-        this.topic = topic;
-    }
 
     public void setProtocol(String protocol) {
         this.protocol = protocol;
@@ -24,10 +19,6 @@ public class MQTTConfiguration {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
     }
 
     public void setPort(int port) {
@@ -52,10 +43,6 @@ public class MQTTConfiguration {
 
     public int getQOS() {
         return this.qos;
-    }
-
-    public String getTopic() {
-        return this.topic;
     }
 
 }

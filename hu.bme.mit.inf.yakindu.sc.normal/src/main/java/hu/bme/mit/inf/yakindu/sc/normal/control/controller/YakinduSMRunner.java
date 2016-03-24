@@ -3,6 +3,7 @@ package hu.bme.mit.inf.yakindu.sc.normal.control.controller;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.normal.control.sm.Section;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.getStateMachineMQTTConfiguration;
@@ -13,6 +14,7 @@ import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.Communication
 import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.getKvcontrolTurnoutMQTTConfiguration;
 import java.util.Set;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.yakindu.scr.turnout.TurnoutWrapper;
 
 /**
@@ -29,7 +31,7 @@ public class YakinduSMRunner {
 
     private final DistributedMessageReceiver messageReceiver;
 
-    public YakinduSMRunner(YakinduSMConfiguration conf) {
+    public YakinduSMRunner(MQTTPublisherSubscriber mqtt, YakinduSMConfiguration conf) throws MqttException {
         TurnoutWrapper statemachine = conf.getTurnoutStatemachine();
         int turnoutSectionId = conf.getTurnoutSectionId();
         Set<Section> localSections = conf.getManagedSections();
@@ -40,12 +42,8 @@ public class YakinduSMRunner {
         int managedTurnoutId = (int) statemachine.getSCITurnout().getId();
         int managedTurnoutSectionId = turnoutSectionId;
 
-        MQTTConfiguration kvcontrolTurnoutMQTTConf = getKvcontrolTurnoutMQTTConfiguration();
-        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(
-                kvcontrolTurnoutMQTTConf);
-        MQTTConfiguration kvcontrolOccupancyMQTTConf = getKvcontrolOccupancyMQTTConfiguration();
-        OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(
-                kvcontrolOccupancyMQTTConf);
+        TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(mqtt);
+        OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(mqtt);
 
         this.generalTransmitter = new GeneralTransmitter(managedTurnoutId,
                 managedTurnoutSectionId, localSections, statemachine,

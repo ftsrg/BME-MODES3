@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><plugin>
-  <extension id="hu.bme.mit.kv.queries.RailRoadModelQueries" point="org.eclipse.incquery.runtime.queryspecification">
-    <group group="org.eclipse.incquery.runtime.extensibility.SingletonExtensionFactory:hu.bme.mit.kv.queries.RailRoadModelQueries" id="hu.bme.mit.kv.queries.RailRoadModelQueries"/>
-  </extension>
-</plugin>

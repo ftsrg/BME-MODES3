@@ -2,6 +2,7 @@ package hu.bme.mit.inf.yakindu.sc.english.control.controller;
 
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.yakindu.sc.english.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.english.control.sm.RemoteTurnout;
 import hu.bme.mit.inf.yakindu.sc.english.control.sm.Section;
@@ -21,6 +22,7 @@ import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.Communicatio
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
@@ -35,7 +37,7 @@ public class StatemachineInitializer {
     private static final long DIVERGENT_VALUE = getValueFromDirection(DIVERGENT);
     private static final long STRAIGHT_VALUE = getValueFromDirection(STRAIGHT);
 
-    public static YakinduSMConfiguration initialize0x86() {
+    public static YakinduSMConfiguration initialize0x86() throws MqttException {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x86;
         int turnoutSectionID = 0x04;
@@ -82,7 +84,7 @@ public class StatemachineInitializer {
         return conf;
     }
 
-    public static YakinduSMConfiguration initialize0x87() {
+    public static YakinduSMConfiguration initialize0x87() throws MqttException {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
         int turnoutID = 0x87;
         int turnoutSectionID = 0x04;
@@ -131,7 +133,7 @@ public class StatemachineInitializer {
 
     private static SectionWrapperWithListeners createSectionStatemachine(
             int sectionID, ITurnoutStatemachine turnoutStatemachine,
-            long directionValue) {
+            long directionValue) throws MqttException {
         SectionWrapperWithListeners sectionStatemachine = new SectionWrapperWithListeners(
                 "section" + String.valueOf(sectionID));
         sectionStatemachine.init();
@@ -139,8 +141,8 @@ public class StatemachineInitializer {
         sectionStatemachine.getSCISection().setDirection(directionValue);
 
         MQTTConfiguration kvcontrolMQTTConf = getKvcontrolSectionMQTTConfiguration();
-        SectionRequestSender requestSender = new SectionRequestSender(
-                kvcontrolMQTTConf);
+        MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(kvcontrolMQTTConf);
+        SectionRequestSender requestSender = new SectionRequestSender(mqtt);
 
         SectionEventListener outgoingEventListener = new SectionEventListener(
                 turnoutStatemachine, requestSender);

@@ -16,6 +16,7 @@ import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 import java.util.List;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
@@ -29,10 +30,13 @@ public class TurnoutMessageHandler implements MqttCallback {
     private final MQTTPublisherSubscriber mqttConnection;
     private final ExpanderTurnoutController turnoutController;
 
-    public TurnoutMessageHandler(MQTTConfiguration conf) {
-        this.mqttConnection = new MQTTPublisherSubscriber(conf);
-        this.mqttConnection.subscribe(this);
-
+    public TurnoutMessageHandler(MQTTPublisherSubscriber pubsub) {
+        this.mqttConnection = pubsub;
+        try {
+			this.mqttConnection.subscribe("modes3/kvcontrol/turnout", this);
+		} catch (MqttException e) {
+			 logException(CLASS_NAME, e);
+		}
         this.turnoutController = new ExpanderTurnoutController(mqttConnection);
     }
 

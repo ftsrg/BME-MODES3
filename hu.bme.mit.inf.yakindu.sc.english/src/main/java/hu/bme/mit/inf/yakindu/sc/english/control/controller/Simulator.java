@@ -8,14 +8,19 @@ import hu.bme.mit.inf.yakindu.sc.english.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.english.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
 import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.setStateMachineMQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
+import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.getKvcontrolSectionMQTTConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.setKvcontrolOccupancyMQTTConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.setKvcontrolSectionMQTTConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.english.control.transmitter.CommunicationConfiguration.setKvcontrolTurnoutMQTTConfiguration;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
@@ -25,7 +30,7 @@ import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
  */
 public class Simulator {
 
-    public static final void main(String[] args) {
+    public static final void main(String[] args) throws MqttException {
         try {
             final String defaultSectionTopic = "modes3/kvcontrol/section";
             final String defaultTurnoutTopic = "modes3/kvcontrol/turnout";
@@ -170,16 +175,12 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> addressArg,
             ArgumentAcceptingOptionSpec<String> topicArg,
             Integer port, Integer qos, String topic) {
-        MQTTConfiguration conf = new MQTTConfiguration(
-                topic);
+        MQTTConfiguration conf = new MQTTConfiguration();
         if (parsed.has(protocolArg)) {
             conf.setProtocol(parsed.valueOf(protocolArg));
         }
         if (parsed.has(addressArg)) {
             conf.setAddress(parsed.valueOf(addressArg));
-        }
-        if (parsed.has(topicArg)) {
-            conf.setTopic(parsed.valueOf(topicArg));
         }
         if (port != null) {
             conf.setPort(port);
@@ -229,7 +230,10 @@ public class Simulator {
         setStateMachineMQTTConfiguration(conf);
     }
 
-    private static void initializeAndStartStatemachines() {
+    private static void initializeAndStartStatemachines() throws MqttException {
+    	MQTTConfiguration kvcontrolMQTTConf = getKvcontrolSectionMQTTConfiguration();
+        MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(kvcontrolMQTTConf);
+    	
         YakinduSMConfiguration sm134ConfObj = initialize0x86();
         YakinduSMConfiguration sm135ConfObj = initialize0x87();
 
@@ -239,8 +243,8 @@ public class Simulator {
         sm135ConfObj.getTurnoutEventListener().setOtherHalfOfTurnoutSM(
                 sm134ConfObj.getTurnoutStatemachine());
 
-        YakinduSMRunner turnout135Runner = new YakinduSMRunner(sm135ConfObj);
-        YakinduSMRunner turnout134Runner = new YakinduSMRunner(sm134ConfObj);
+        YakinduSMRunner turnout135Runner = new YakinduSMRunner(mqtt, sm135ConfObj);
+        YakinduSMRunner turnout134Runner = new YakinduSMRunner(mqtt, sm134ConfObj);
 
         turnout135Runner.start();
         turnout134Runner.start();

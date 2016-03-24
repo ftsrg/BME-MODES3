@@ -8,6 +8,7 @@ import java.io.IOException;
 import hu.bme.mit.inf.master.mqtt.client.network.SectionsMessageHandler;
 import hu.bme.mit.inf.master.mqtt.client.network.TurnoutMessageHandler;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -16,9 +17,6 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         try {
-            final String defaultSectionTopic = "modes3/kvcontrol/section";
-            final String defaultTurnoutTopic = "modes3/kvcontrol/turnout";
-
             OptionParser parser = new OptionParser();
             parser.accepts("sl", "enable status log [optional]");
 
@@ -42,16 +40,6 @@ public class Main {
                             "MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
                     .withRequiredArg().ofType(Integer.class);
 
-            ArgumentAcceptingOptionSpec<String> mqttSectionTopicArg
-                    = parser.accepts("st",
-                            "MQTT Broker Section Topic [optional, default = " + defaultSectionTopic + "]")
-                    .withRequiredArg().ofType(String.class);
-
-            ArgumentAcceptingOptionSpec<String> mqttTurnoutTopicArg
-                    = parser.accepts("tt",
-                            "MQTT Broker Turnout Topic [optional, default = " + defaultTurnoutTopic + "]")
-                    .withRequiredArg().ofType(String.class);
-
             parser.printHelpOn(System.out);
 
             OptionSet parsed = parser.parse(args);
@@ -64,19 +52,15 @@ public class Main {
             boolean enableStatusLog = parsed.has("sl");
             setStatusLogEnabled(enableStatusLog);
 
-            MQTTConfiguration sectionConf = createMQTTConfiguration(parsed,
+            MQTTConfiguration config = createMQTTConfiguration(parsed,
                     mqttProtocolArg, mqttAddressArg,
-                    mqttSectionTopicArg, defaultSectionTopic, mqttPort,
-                    mqttQOS);
-
-            MQTTConfiguration turnoutConf = createMQTTConfiguration(parsed,
-                    mqttProtocolArg, mqttAddressArg,
-                    mqttTurnoutTopicArg, defaultTurnoutTopic, mqttPort,
+                     mqttPort,
                     mqttQOS);
 
             // start the message handlers for the sections and turnout messages
-            new SectionsMessageHandler(sectionConf);
-            new TurnoutMessageHandler(turnoutConf);
+            MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(config);
+            new SectionsMessageHandler(pubsub);
+            new TurnoutMessageHandler(pubsub);
 
         } catch (IOException ex) {
             logException(Main.class.getName(), ex);
@@ -105,19 +89,15 @@ public class Main {
             OptionSet parsed,
             ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg,
             ArgumentAcceptingOptionSpec<String> smMQTTAddressArg,
-            ArgumentAcceptingOptionSpec<String> smMQTTTopicArg,
-            String defaultTopicName, Integer smMQTTPort, Integer smMQTTQOS) {
+            Integer smMQTTPort, Integer smMQTTQOS) {
 
-        MQTTConfiguration conf = new MQTTConfiguration(defaultTopicName);
+        MQTTConfiguration conf = new MQTTConfiguration();
 
         if (parsed.has(smMQTTProtocolArg)) {
             conf.setProtocol(parsed.valueOf(smMQTTProtocolArg));
         }
         if (parsed.has(smMQTTAddressArg)) {
             conf.setAddress(parsed.valueOf(smMQTTAddressArg));
-        }
-        if (parsed.has(smMQTTTopicArg)) {
-            conf.setTopic(parsed.valueOf(smMQTTTopicArg));
         }
         if (smMQTTPort != null) {
             conf.setPort(smMQTTPort);

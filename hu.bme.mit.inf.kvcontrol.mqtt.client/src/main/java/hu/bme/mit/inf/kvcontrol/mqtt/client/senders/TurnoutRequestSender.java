@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.kvcontrol.mqtt.client.senders;
 
+import hu.bme.mit.inf.kvcontrol.mqtt.client.RequestSender;
 import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.GET_TURNOUT_STATUS;
 import static hu.bme.mit.inf.mqtt.common.data.Command.IDENTIFY;
@@ -21,26 +22,21 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
  *
  * @author benedekh
  */
-public class TurnoutRequestSender implements MqttCallback {
-
-    private final MQTTPublisherSubscriber sender;
+public class TurnoutRequestSender extends RequestSender {
 
     // is active polling enabled
     private volatile boolean pollingEnabled = false;
-
     private final Map<Integer, TurnoutStatus> turnoutStatuses = new ConcurrentHashMap<>();
 
-    public TurnoutRequestSender(MQTTConfiguration config) {
-        config.setClientID(generateId(getClass().getSimpleName()));
-
-        this.sender = new MQTTPublisherSubscriber(config);
-        this.sender.subscribe(this);
+    public TurnoutRequestSender(MQTTPublisherSubscriber mqtt) throws MqttException {
+    	super("modes3/kvcontrol/turnout", mqtt);
     }
 
     public void setPollingEnabled(boolean isPollingEnabled) {
@@ -58,7 +54,7 @@ public class TurnoutRequestSender implements MqttCallback {
 
         if (pollingEnabled) {
             Turnout turnout = new Turnout(turnoutId);
-            sendCommandWithContent(GET_TURNOUT_STATUS, turnout, sender);
+            sendCommandWithContent(GET_TURNOUT_STATUS, turnout, mqtt);
         }
 
         TurnoutStatus status = turnoutStatuses.get(turnoutId);
@@ -70,16 +66,12 @@ public class TurnoutRequestSender implements MqttCallback {
         Section dummySection = new Section(0x01);
         SectionArray dummyArray = new SectionArray(new Section[]{dummySection});
         Identity identity = new Identity(dummyTurnout, dummyArray);
-        sendCommandWithContent(IDENTIFY, identity, sender);
+        sendCommandWithContent(IDENTIFY, identity, mqtt);
     }
 
     @Override
-    public void messageArrived(String topic, MqttMessage message) {
+    public void filteredMessageArrived(MqttMessage message) {
         try {
-            if (!sender.getSubscribedTopic().equals(topic)) {
-                return;
-            }
-
             Payload payload = getPayloadFromMessage(message);
             Command command = payload.getCommand();
 
@@ -94,17 +86,6 @@ public class TurnoutRequestSender implements MqttCallback {
         } catch (Exception ex) {
             logException(getClass().getName(), new Exception(ex));
         }
-    }
-
-    @Override
-    public void connectionLost(Throwable cause) {
-        logException(getClass().getName(), new Exception(cause));
-        sender.reconnectClient();
-    }
-
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken token) {
-        // deliberately left empty
     }
 
 }

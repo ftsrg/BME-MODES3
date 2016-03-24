@@ -1,25 +1,31 @@
 package hu.bme.mit.inf.yakindu.sc.normal.control.controller;
 
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.controller.StatemachineInitializer.initialize0x81;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.controller.StatemachineInitializer.initialize0x82;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.controller.StatemachineInitializer.initialize0x83;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.controller.StatemachineInitializer.initialize0x84;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.controller.StatemachineInitializer.initialize0x85;
-import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
-import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setStateMachineMQTTConfiguration;
-import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
-import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
-import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolOccupancyMQTTConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolSectionMQTTConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setKvcontrolTurnoutMQTTConfiguration;
+import static hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration.setStateMachineMQTTConfiguration;
+
 import java.io.IOException;
+
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.yakindu.scr.section.SectionWrapperWithListeners;
+import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
+
+import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
+import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
+import hu.bme.mit.inf.yakindu.sc.normal.control.transmitter.CommunicationConfiguration;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import org.yakindu.scr.section.SectionWrapperWithListeners;
-import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 /**
  *
@@ -27,7 +33,7 @@ import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
  */
 public class Simulator {
 
-    public static final void main(String[] args) {
+    public static final void main(String[] args) throws MqttException {
 
         try {
             final String defaultSectionTopic = "modes3/kvcontrol/section";
@@ -65,21 +71,6 @@ public class Simulator {
                     = parser.accepts("kvbq",
                             "KVControl MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
                     .withRequiredArg().ofType(Integer.class);
-
-            ArgumentAcceptingOptionSpec<String> kvMQTTSectionTopicArg
-                    = parser.accepts("kvbst",
-                            "KVControl MQTT Broker Section Topic [optional, default = " + defaultSectionTopic + "]")
-                    .withRequiredArg().ofType(String.class);
-
-            ArgumentAcceptingOptionSpec<String> kvMQTTTurnoutTopicArg
-                    = parser.accepts("kvbtt",
-                            "KVControl MQTT Broker Turnout Topic [optional, default = " + defaultTurnoutTopic + "]")
-                    .withRequiredArg().ofType(String.class);
-
-            ArgumentAcceptingOptionSpec<String> kvMQTTOccupancyTopicArg
-                    = parser.accepts("kvbot",
-                            "KVControl MQTT Broker Occupancy Topic [optional, default = " + defaultOccupancyTopic + "]")
-                    .withRequiredArg().ofType(String.class);
 
             ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg
                     = parser.accepts("smbpp",
@@ -183,16 +174,12 @@ public class Simulator {
             ArgumentAcceptingOptionSpec<String> addressArg,
             ArgumentAcceptingOptionSpec<String> topicArg,
             Integer port, Integer qos, String topic) {
-        MQTTConfiguration conf = new MQTTConfiguration(
-                topic);
+        MQTTConfiguration conf = new MQTTConfiguration();
         if (parsed.has(protocolArg)) {
             conf.setProtocol(parsed.valueOf(protocolArg));
         }
         if (parsed.has(addressArg)) {
             conf.setAddress(parsed.valueOf(addressArg));
-        }
-        if (parsed.has(topicArg)) {
-            conf.setTopic(parsed.valueOf(topicArg));
         }
         if (port != null) {
             conf.setPort(port);
@@ -242,30 +229,33 @@ public class Simulator {
         setStateMachineMQTTConfiguration(conf);
     }
 
-    private static void initializeAndStartStateMachine(Integer turnoutId) {
-        YakinduSMConfiguration conf = null;
+    private static void initializeAndStartStateMachine(Integer turnoutId) throws MqttException {
+    	YakinduSMConfiguration conf = null;
+    	
+    	MQTTConfiguration kvcontrolMQTTConf = CommunicationConfiguration.getKvcontrolOccupancyMQTTConfiguration();
+        MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(kvcontrolMQTTConf);
 
         switch (turnoutId) {
             case 0x81:
-                conf = initialize0x81();
+                conf = initialize0x81(mqtt);
                 break;
             case 0x82:
-                conf = initialize0x82();
+                conf = initialize0x82(mqtt);
                 break;
             case 0x83:
-                conf = initialize0x83();
+                conf = initialize0x83(mqtt);
                 break;
             case 0x84:
-                conf = initialize0x84();
+                conf = initialize0x84(mqtt);
                 break;
             case 0x85:
-                conf = initialize0x85();
+                conf = initialize0x85(mqtt);
                 break;
             default:
                 break;
         }
 
-        YakinduSMRunner yakinduController = new YakinduSMRunner(conf);
+        YakinduSMRunner yakinduController = new YakinduSMRunner(mqtt, conf);
         yakinduController.start();
     }
 

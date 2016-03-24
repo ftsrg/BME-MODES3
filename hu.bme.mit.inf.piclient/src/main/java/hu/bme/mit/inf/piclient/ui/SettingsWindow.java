@@ -684,7 +684,7 @@ public class SettingsWindow extends javax.swing.JFrame {
 
     private MQTTConfiguration createMQTTConfiguration(String topic,
             String address, String protocol, int port) {
-        MQTTConfiguration conf = new MQTTConfiguration(topic);
+        MQTTConfiguration conf = new MQTTConfiguration();
         conf.setAddress(address);
         conf.setProtocol(protocol);
         conf.setPort(port);
@@ -809,8 +809,7 @@ public class SettingsWindow extends javax.swing.JFrame {
         private final TurnoutRequestSender requestSender;
 
         public TurnoutControllerProxy() {
-            this.requestSender = new TurnoutRequestSender(
-                    Configuration.mqttTurnoutConfiguration);
+            this.requestSender = new TurnoutRequestSender(Configuration.mqttTurnoutConfiguration);
         }
 
         public void initialRefresh() {
