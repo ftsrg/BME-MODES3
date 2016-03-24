@@ -20,6 +20,7 @@ public class MQTTPublishSubscribeDispatcher implements MqttCallback {
 
     public MQTTPublishSubscribeDispatcher(MQTTPublisherSubscriber mqtt) {
         this.mqtt = mqtt;
+        this.mqtt.setCallback(this);
         this.qos = mqtt.getQOS();
         this.subscribedHandlers = new TreeMap<>();
     }

@@ -9,32 +9,33 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import com.google.gson.Gson;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
 
 /**
  *
  * @author benedekh
  */
 public class MQTTPublisherSubscriber {
-
+    
     private MqttAsyncClient client;
     private int qos;
-
+    
     private Thread connectThread;
     private Runnable clientConnectionEstablisher;
-
+    
     public MQTTPublisherSubscriber(MQTTConfiguration config) {
         try {
             final String address = config.getFullAddress();
             String clientId = config.getClientID();
-
+            
             qos = config.getQOS();
-
+            
             MemoryPersistence persistence = new MemoryPersistence();
             final MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
-
+            
             client = new MqttAsyncClient(address, clientId, persistence);
-
+            
             clientConnectionEstablisher = new Runnable() {
                 @Override
                 public void run() {
@@ -48,22 +49,26 @@ public class MQTTPublisherSubscriber {
             logException(getClassName(), ex);
         }
     }
-
+    
     public int getQOS() {
         return qos;
     }
-
+    
+    public synchronized void setCallback(MqttCallback callback) {
+        client.setCallback(callback);
+    }
+    
     public synchronized void reconnectClient() {
         if (!connectThread.isAlive()) {
             connectThread = new Thread(clientConnectionEstablisher);
             connectThread.start();
         }
     }
-
+    
     public synchronized void subscribe(String[] topics, int[] qosArray) throws MqttException {
         this.client.subscribe(topics, qosArray);
     }
-
+    
     public synchronized void publish(Object object, String topic) {
         try {
             byte[] payload = new Gson().toJson(object).getBytes();
@@ -73,7 +78,7 @@ public class MQTTPublisherSubscriber {
             reconnectClient();
         }
     }
-
+    
     private void establishClientConnection(String address,
             MqttConnectOptions connOpts) {
         try {
@@ -92,9 +97,9 @@ public class MQTTPublisherSubscriber {
             logException(getClassName(), ex);
         }
     }
-
+    
     private static String getClassName() {
         return MQTTPublisherSubscriber.class.getName();
     }
-
+    
 }
