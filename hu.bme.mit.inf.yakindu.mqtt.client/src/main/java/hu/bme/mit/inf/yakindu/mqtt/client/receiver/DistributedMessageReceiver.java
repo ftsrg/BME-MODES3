@@ -21,7 +21,8 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
 import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.DENIED;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
-import org.eclipse.paho.client.mqttv3.MqttException;
+import java.util.Map;
+import java.util.TreeMap;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
@@ -34,19 +35,21 @@ public class DistributedMessageReceiver implements MessageFilter {
 
     private final MQTTPublishSubscribeDispatcher sender;
 
-    // the recipient of the messages is this handler
-    private final int recipientID;
+    // the recipient of the messages is this handler = key
+    // the target who shall get the received message = value
+    private final Map<Integer, IDistributedMessageTransmitter> targets;
 
-    // the target who shall get the received message
-    private final IDistributedMessageTransmitter target;
-
-    public DistributedMessageReceiver(MQTTPublishSubscribeDispatcher sender,
-            IDistributedMessageTransmitter target, int recipientID) {
+    public DistributedMessageReceiver(MQTTPublishSubscribeDispatcher sender) {
         this.sender = sender;
         this.sender.subscribe(topic, this);
+        this.targets = new TreeMap<>();
+    }
 
-        this.recipientID = recipientID;
-        this.target = target;
+    public void registerTargetRecipient(Integer recipientID,
+            IDistributedMessageTransmitter target) {
+        if (!targets.containsKey(recipientID)) {
+            targets.put(recipientID, target);
+        }
     }
 
     public void publishPayload(Payload payload) {
@@ -60,51 +63,51 @@ public class DistributedMessageReceiver implements MessageFilter {
             StatemachineCommandMessage commandPayload = payload.getContentAs(
                     StatemachineCommandMessage.class);
 
-            if (this.recipientID != commandPayload.getRecipientID()) {
-                return;
+            IDistributedMessageTransmitter target = targets.get(
+                    commandPayload.getRecipientID());
+
+            if (target != null) {
+                Command command = payload.getCommand();
+                byte[] packet = new byte[2];
+
+                switch (command) {
+                    case PASSAGE_REQUEST_TOP:
+                        // deliberately left empty
+                        break;
+                    case PASSAGE_REQUEST_STRAIGHT:
+                        // deliberately left empty
+                        break;
+                    case PASSAGE_REQUEST_DIVERGENT:
+                        // deliberately left empty
+                        break;
+                    case SHORT_PASSAGE_REQUEST_TOP:
+                        // deliberately left empty
+                        break;
+                    case SHORT_PASSAGE_REQUEST_STRAIGHT:
+                        // deliberately left empty
+                        break;
+                    case SHORT_PASSAGE_REQUEST_DIVERGENT:
+                        // deliberately left empty
+                        break;
+                    case PASSAGE_RESPONSE_TOP:
+                        packet[1] = getByteFromAllowance(
+                                commandPayload.getAllowance());
+                        break;
+                    case PASSAGE_RESPONSE_STRAIGHT:
+                        packet[1] = getByteFromAllowance(
+                                commandPayload.getAllowance());
+                        break;
+                    case PASSAGE_RESPONSE_DIVERGENT:
+                        packet[1] = getByteFromAllowance(
+                                commandPayload.getAllowance());
+                        break;
+                    default:
+                        return;
+                }
+
+                packet[0] = command.getValue();
+                target.addPacket(packet);
             }
-
-            Command command = payload.getCommand();
-            byte[] packet = new byte[2];
-
-            switch (command) {
-                case PASSAGE_REQUEST_TOP:
-                    // deliberately left empty
-                    break;
-                case PASSAGE_REQUEST_STRAIGHT:
-                    // deliberately left empty
-                    break;
-                case PASSAGE_REQUEST_DIVERGENT:
-                    // deliberately left empty
-                    break;
-                case SHORT_PASSAGE_REQUEST_TOP:
-                    // deliberately left empty
-                    break;
-                case SHORT_PASSAGE_REQUEST_STRAIGHT:
-                    // deliberately left empty
-                    break;
-                case SHORT_PASSAGE_REQUEST_DIVERGENT:
-                    // deliberately left empty
-                    break;
-                case PASSAGE_RESPONSE_TOP:
-                    packet[1] = getByteFromAllowance(
-                            commandPayload.getAllowance());
-                    break;
-                case PASSAGE_RESPONSE_STRAIGHT:
-                    packet[1] = getByteFromAllowance(
-                            commandPayload.getAllowance());
-                    break;
-                case PASSAGE_RESPONSE_DIVERGENT:
-                    packet[1] = getByteFromAllowance(
-                            commandPayload.getAllowance());
-                    break;
-                default:
-                    return;
-            }
-
-            packet[0] = command.getValue();
-
-            target.addPacket(packet);
         } catch (Exception ex) {
             logException(getClass().getName(), ex);
         }

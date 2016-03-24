@@ -14,6 +14,7 @@ import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.setStatusLogEnabled;
+import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -145,11 +146,15 @@ public class Simulator {
         OccupancyRequestSender occupancyRequester = new OccupancyRequestSender(
                 sender);
         TurnoutRequestSender turnoutRequester = new TurnoutRequestSender(sender);
+        DistributedMessageReceiver messageReceiver = new DistributedMessageReceiver(
+                sender);
 
         YakinduSMRunner turnout135Runner = new YakinduSMRunner(sender,
-                sm135ConfObj, occupancyRequester, turnoutRequester);
+                sm135ConfObj, occupancyRequester, turnoutRequester,
+                messageReceiver);
         YakinduSMRunner turnout134Runner = new YakinduSMRunner(sender,
-                sm134ConfObj, occupancyRequester, turnoutRequester);
+                sm134ConfObj, occupancyRequester, turnoutRequester,
+                messageReceiver);
 
         turnout135Runner.start();
         turnout134Runner.start();

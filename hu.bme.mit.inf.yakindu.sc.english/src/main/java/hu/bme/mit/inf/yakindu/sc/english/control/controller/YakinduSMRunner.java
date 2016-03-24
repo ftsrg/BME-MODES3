@@ -29,7 +29,9 @@ public class YakinduSMRunner {
     public YakinduSMRunner(MQTTPublishSubscribeDispatcher sender,
             YakinduSMConfiguration conf,
             OccupancyRequestSender occupancyRequester,
-            TurnoutRequestSender turnoutRequester) {
+            TurnoutRequestSender turnoutRequester,
+            DistributedMessageReceiver messageReceiver) {
+
         TurnoutWrapper statemachine = conf.getTurnoutStatemachine();
         int turnoutSectionId = conf.getTurnoutSectionId();
         Set<Section> localSections = conf.getManagedSections();
@@ -38,18 +40,20 @@ public class YakinduSMRunner {
         this.managedSections = localSections;
 
         int managedTurnoutId = (int) statemachine.getSCITurnout().getId();
+        System.out.println("STAAAAAAAAAAAAAAAAAAAAAAART: " + managedTurnoutId);
         int managedTurnoutSectionId = turnoutSectionId;
 
-        generalTransmitter = new GeneralTransmitter(managedTurnoutId,
+        this.generalTransmitter = new GeneralTransmitter(managedTurnoutId,
                 managedTurnoutSectionId, localSections, statemachine,
                 occupancyRequester, turnoutRequester);
-        distributedTransmitter = new DistributedMessageTransmitter(statemachine);
-        this.messageReceiver = new DistributedMessageReceiver(
-                sender, distributedTransmitter,
-                managedTurnoutId);
+        this.distributedTransmitter = new DistributedMessageTransmitter(
+                statemachine);
+        this.messageReceiver = messageReceiver;
+        this.messageReceiver.registerTargetRecipient(managedTurnoutId,
+                distributedTransmitter);
 
         // register the yakindu mqtt client for the turnoutEventListener
-        conf.getTurnoutEventListener().setRequestSenders(messageReceiver);
+        conf.getTurnoutEventListener().setRequestSenders(this.messageReceiver);
 
         generalTransmitter.setName(GeneralTransmitter.class.getName());
         distributedTransmitter.setName(
