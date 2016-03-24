@@ -30,6 +30,11 @@ public class Main {
                             "MQTT Broker Port [optional, default = 1883]")
                     .withRequiredArg().ofType(Integer.class);
 
+            ArgumentAcceptingOptionSpec<String> mqttAddressArg
+                    = parser.accepts("a",
+                            "MQTT Broker Address [optional, default = localhost]")
+                    .withRequiredArg().ofType(String.class);
+
             ArgumentAcceptingOptionSpec<Integer> mqttQOSArg
                     = parser.accepts("q",
                             "MQTT Broker QOS [optional, default = 1 (at least once); possible values: 0 - at most once, 2 - exactly once]")
@@ -47,8 +52,8 @@ public class Main {
             boolean enableStatusLog = parsed.has("sl");
             setStatusLogEnabled(enableStatusLog);
 
-            MQTTConfiguration config = createMQTTConfiguration(parsed,
-                    mqttProtocolArg, mqttPort, mqttQOS);
+            MQTTConfiguration config = createConfiguration(parsed,
+                    mqttProtocolArg, mqttAddressArg, mqttPort, mqttQOS);
 
             // start the message handlers for the sections and turnout messages
             MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(config);
@@ -78,23 +83,24 @@ public class Main {
         return null;
     }
 
-    private static MQTTConfiguration createMQTTConfiguration(
+    private static MQTTConfiguration createConfiguration(
             OptionSet parsed,
-            ArgumentAcceptingOptionSpec<String> smMQTTProtocolArg,
-            Integer smMQTTPort, Integer smMQTTQOS) {
-
+            ArgumentAcceptingOptionSpec<String> protocolArg,
+            ArgumentAcceptingOptionSpec<String> addressArg,
+            Integer port, Integer qos) {
         MQTTConfiguration conf = new MQTTConfiguration();
-
-        if (parsed.has(smMQTTProtocolArg)) {
-            conf.setProtocol(parsed.valueOf(smMQTTProtocolArg));
+        if (parsed.has(protocolArg)) {
+            conf.setProtocol(parsed.valueOf(protocolArg));
         }
-        if (smMQTTPort != null) {
-            conf.setPort(smMQTTPort);
+        if (parsed.has(addressArg)) {
+            conf.setAddress(parsed.valueOf(addressArg));
         }
-        if (smMQTTQOS != null) {
-            conf.setQOS(smMQTTQOS);
+        if (port != null) {
+            conf.setPort(port);
         }
-
+        if (qos != null) {
+            conf.setQOS(qos);
+        }
         return conf;
     }
 
