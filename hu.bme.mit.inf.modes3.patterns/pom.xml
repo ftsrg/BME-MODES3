@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>hu.bme.mit.inf</groupId>
+		<artifactId>hu.bme.mit.inf</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>hu.bme.mit.inf.modes3.patterns</artifactId>
+
+
+
+
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.common</artifactId>
+			<version>${emf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+			<version>${emf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.incquery</groupId>
+			<artifactId>org.eclipse.incquery.runtime</artifactId>
+			<version>${incquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.incquery</groupId>
+			<artifactId>incquery-maven-plugin</artifactId>
+			<version>${incquery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>hu.bme.mit.inf</groupId>
+			<artifactId>hu.bme.mit.inf.modes3.model</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+</project>
