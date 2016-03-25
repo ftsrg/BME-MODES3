@@ -47,12 +47,12 @@ public class YakinduSMRunner {
                 occupancyRequester, turnoutRequester);
         this.distributedTransmitter = new DistributedMessageTransmitter(
                 statemachine);
-        this.messageReceiver = new DistributedMessageReceiver(
-                sender, distributedTransmitter,
-                managedTurnoutId);
+        this.messageReceiver = new DistributedMessageReceiver(sender);
+        this.messageReceiver.registerTargetRecipient(managedTurnoutId,
+                distributedTransmitter);
 
         // register the yakindu mqtt client for the turnoutEventListener
-        conf.getTurnoutEventListener().setRequestSenders(messageReceiver);
+        conf.getTurnoutEventListener().setRequestSenders(this.messageReceiver);
 
         generalTransmitter.setName(GeneralTransmitter.class.getName());
         distributedTransmitter.setName(

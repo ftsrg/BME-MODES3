@@ -68,10 +68,12 @@ public class GeneralTransmitter extends Thread {
                 managedTurnoutId);
         if (turnoutIsStraight && !turnoutWasStraight) {
             statemachine.getSCITurnout().raiseTurnoutStraight();
-            logInfoMessage(getClass().getName(), "turnout is straight");
+            logInfoMessage(getClass().getName(),
+                    "turnout " + managedTurnoutId + " is straight");
         } else if (!turnoutIsStraight && turnoutWasStraight) {
             statemachine.getSCITurnout().raiseTurnoutDivergent();
-            logInfoMessage(getClass().getName(), "turnout is divergent");
+            logInfoMessage(getClass().getName(),
+                    "turnout " + managedTurnoutId + " is divergent");
         }
         turnoutWasStraight = turnoutIsStraight;
 
