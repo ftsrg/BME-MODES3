@@ -53,7 +53,6 @@ public class GeneralTransmitter extends Thread {
     @Override
     public void run() {
         logInfoMessage(getClass().getName(), "STARTED");
-        turnoutRequester.sendIdentify();
         while (!isInterrupted()) {
             updateTurnoutDirection();
             updateOccupancies();

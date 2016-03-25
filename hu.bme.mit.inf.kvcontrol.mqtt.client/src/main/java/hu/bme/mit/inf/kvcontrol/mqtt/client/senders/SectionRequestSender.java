@@ -43,6 +43,7 @@ public class SectionRequestSender implements MessageFilter {
     public SectionRequestSender(MQTTPublishSubscribeDispatcher requestSender) {
         this.requestSender = requestSender;
         this.requestSender.subscribe(topic, this);
+        this.sendIdentify();
     }
 
     public void setPollingEnabled(boolean isPollingEnabled) {

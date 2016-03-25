@@ -74,13 +74,8 @@ public class SVGRefresher implements Runnable {
                 "Thread@" + Thread.currentThread().getName() + " started(svg turnout refresher)");
 
         final int sleepConstant = 50;
-        boolean trackInfoInitialRefreshCompleted = false;
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                if (!trackInfoInitialRefreshCompleted) {
-                    trackInfoInitialRefreshCompleted = initialRefreshTrackInfo();
-                }
-
                 Thread.sleep(sleepConstant);
                 if (sectionControllerProxy != null) {
                     refreshSections();
@@ -105,16 +100,6 @@ public class SVGRefresher implements Runnable {
                 logException(getClass().getName(), ex);
                 Thread.currentThread().interrupt();
             }
-        }
-    }
-
-    private boolean initialRefreshTrackInfo() {
-        if ((sectionControllerProxy != null) && (turnoutControllerProxy != null)) {
-            sectionControllerProxy.initialRefresh();
-            turnoutControllerProxy.initialRefresh();
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -234,12 +219,12 @@ public class SVGRefresher implements Runnable {
             c86 = TurnoutCache.STRAIGHT;
             c87 = TurnoutCache.STRAIGHT;
         } else if (div86 && !div87 && (!c86.isDivergent() || !c87.isStraight())) {
-            change = "0x86K";
+            change = "0x87K";
             route = "0x15&lt;&#8212;&gt;0x0E";
             c86 = TurnoutCache.DIVERGENT;
             c87 = TurnoutCache.STRAIGHT;
         } else if (!div86 && div87 && (!c86.isStraight() || !c87.isDivergent())) {
-            change = "0x87K";
+            change = "0x86K";
             route = "0x10&lt;&#8212;&gt;0x16";
             c86 = TurnoutCache.STRAIGHT;
             c87 = TurnoutCache.DIVERGENT;

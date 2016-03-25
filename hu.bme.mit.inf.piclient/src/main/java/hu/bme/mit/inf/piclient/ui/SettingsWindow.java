@@ -8,10 +8,8 @@ import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
-import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import hu.bme.mit.inf.piclient.Application;
 import static hu.bme.mit.inf.piclient.ui.SettingsWindow.Configuration;
-import org.eclipse.paho.client.mqttv3.MqttException;
 
 /**
  *
@@ -716,10 +714,6 @@ public class SettingsWindow extends javax.swing.JFrame {
             this.requestSender = new SectionRequestSender(sender);
         }
 
-        public void initialRefresh() {
-            requestSender.sendIdentify();
-        }
-
         public void setSectionEnabled(int sectionId) {
             requestSender.enableSection(sectionId);
         }
@@ -743,10 +737,6 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         public TurnoutControllerProxy(MQTTPublishSubscribeDispatcher sender) {
             this.requestSender = new TurnoutRequestSender(sender);
-        }
-
-        public void initialRefresh() {
-            requestSender.sendIdentify();
         }
 
         public boolean isTurnoutDivergent(int turnoutId) {
