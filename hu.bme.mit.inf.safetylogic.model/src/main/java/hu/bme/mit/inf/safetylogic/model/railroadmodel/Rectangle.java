@@ -3,6 +3,7 @@
 package hu.bme.mit.inf.safetylogic.model.railroadmodel;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -91,13 +92,5 @@ public interface Rectangle extends EObject {
 	 * @generated
 	 */
 	EList<Double> getInverseMatrix();
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model required="true"
-	 * @generated
-	 */
-	boolean isPointInside(Point point);
 
 } // Rectangle

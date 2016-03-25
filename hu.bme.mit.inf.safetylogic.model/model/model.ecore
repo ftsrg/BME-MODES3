@@ -46,9 +46,6 @@
         eType="#//Section" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Rectangle">
-    <eOperations name="isPointInside" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eParameters name="point" eType="#//Point"/>
-    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="origin" lowerBound="1"
         eType="#//Point" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="size" lowerBound="1" eType="#//Dimension"

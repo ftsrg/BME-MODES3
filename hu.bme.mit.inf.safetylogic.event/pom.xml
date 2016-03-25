@@ -7,7 +7,7 @@
 		<artifactId>hu.bme.mit.inf</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>hu.bme.mit.inf.modes3.event</artifactId>
+	<artifactId>hu.bme.mit.inf.safetylogic.event</artifactId>
 
 	<dependencies>
 		<dependency>
@@ -47,22 +47,27 @@
 		</dependency>
 		<dependency>
 			<groupId>hu.bme.mit.inf</groupId>
-			<artifactId>hu.bme.mit.inf.modes3.patterns</artifactId>
+			<artifactId>hu.bme.mit.inf.safetylogic.patterns</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>hu.bme.mit.inf</groupId>
-			<artifactId>hu.bme.mit.inf.modes3.model</artifactId>
+			<artifactId>hu.bme.mit.inf.safetylogic.model</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>hu.bme.mit.inf</groupId>
-			<artifactId>hu.bme.mit.inf.modes3.model.util</artifactId>
+			<artifactId>hu.bme.mit.inf.safetylogic.model.util</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>hu.bme.mit.inf</groupId>
 			<artifactId>hu.bme.mit.inf.mqtt.common</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>hu.bme.mit.inf</groupId>
+			<artifactId>hu.bme.mit.inf.kvcontrol.mqtt.client</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

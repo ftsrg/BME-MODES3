@@ -1,9 +1,11 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
+import hu.bme.mit.inf.safetylogic.patterns.SoloBlindTrackMatch;
+import hu.bme.mit.inf.safetylogic.patterns.util.SoloBlindTrackQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.incquery.runtime.api.IMatchProcessor;
@@ -13,10 +15,6 @@ import org.eclipse.incquery.runtime.api.impl.BaseMatcher;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.eclipse.incquery.runtime.matchers.tuple.Tuple;
 import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil;
-
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
-import hu.bme.mit.inf.safetylogic.patterns.util.SoloBlindTrackProcessor;
-import hu.bme.mit.inf.safetylogic.patterns.util.SoloBlindTrackQuerySpecification;
 
 /**
  * Generated pattern matcher API of the hu.bme.mit.inf.safetylogic.patterns.soloBlindTrack pattern,

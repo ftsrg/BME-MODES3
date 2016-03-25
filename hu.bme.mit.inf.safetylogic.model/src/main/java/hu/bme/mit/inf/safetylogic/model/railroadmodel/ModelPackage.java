@@ -4,7 +4,6 @@ package hu.bme.mit.inf.safetylogic.model.railroadmodel;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -543,22 +542,13 @@ public interface ModelPackage extends EPackage {
 	int RECTANGLE_FEATURE_COUNT = 3;
 
 	/**
-	 * The operation id for the '<em>Is Point Inside</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECTANGLE___IS_POINT_INSIDE__POINT = 0;
-
-	/**
 	 * The number of operations of the '<em>Rectangle</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RECTANGLE_OPERATION_COUNT = 1;
+	int RECTANGLE_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.DimensionImpl <em>Dimension</em>}' class.
@@ -1090,16 +1080,6 @@ public interface ModelPackage extends EPackage {
 	EAttribute getRectangle_InverseMatrix();
 
 	/**
-	 * Returns the meta object for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Rectangle#isPointInside(hu.bme.mit.inf.safetylogic.model.railroadmodel.Point) <em>Is Point Inside</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Point Inside</em>' operation.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Rectangle#isPointInside(hu.bme.mit.inf.safetylogic.model.railroadmodel.Point)
-	 * @generated
-	 */
-	EOperation getRectangle__IsPointInside__Point();
-
-	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Dimension <em>Dimension</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1424,14 +1404,6 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RECTANGLE__INVERSE_MATRIX = eINSTANCE.getRectangle_InverseMatrix();
-
-		/**
-		 * The meta object literal for the '<em><b>Is Point Inside</b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EOperation RECTANGLE___IS_POINT_INSIDE__POINT = eINSTANCE.getRectangle__IsPointInside__Point();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.DimensionImpl <em>Dimension</em>}' class.

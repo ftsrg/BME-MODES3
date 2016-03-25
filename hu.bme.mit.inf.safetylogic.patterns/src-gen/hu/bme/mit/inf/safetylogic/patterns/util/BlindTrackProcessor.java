@@ -1,9 +1,8 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
-
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack;
 import hu.bme.mit.inf.safetylogic.patterns.BlindTrackMatch;
+import org.eclipse.incquery.runtime.api.IMatchProcessor;
 
 /**
  * A match processor tailored for the hu.bme.mit.inf.safetylogic.patterns.blindTrack pattern.

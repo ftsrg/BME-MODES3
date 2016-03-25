@@ -42,9 +42,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Rectangle/origin"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Rectangle/size"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Rectangle/inverseMatrix"/>
-      <genOperations ecoreOperation="model.ecore#//Rectangle/isPointInside">
-        <genParameters ecoreParameter="model.ecore#//Rectangle/isPointInside/point"/>
-      </genOperations>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Dimension">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Dimension/width"/>

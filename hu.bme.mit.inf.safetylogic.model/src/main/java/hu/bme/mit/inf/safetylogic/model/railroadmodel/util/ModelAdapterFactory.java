@@ -2,23 +2,14 @@
  */
 package hu.bme.mit.inf.safetylogic.model.railroadmodel.util;
 
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.*;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-import org.eclipse.emf.ecore.EObject;
 
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Dimension;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.EnglishTurnout;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Point;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Rectangle;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turn;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout;
+import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->

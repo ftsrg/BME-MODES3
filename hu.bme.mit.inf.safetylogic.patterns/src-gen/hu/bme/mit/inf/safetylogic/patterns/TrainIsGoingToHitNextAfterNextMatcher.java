@@ -1,9 +1,11 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
+import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextAfterNextMatch;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainIsGoingToHitNextAfterNextQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.incquery.runtime.api.IMatchProcessor;
@@ -13,10 +15,6 @@ import org.eclipse.incquery.runtime.api.impl.BaseMatcher;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.eclipse.incquery.runtime.matchers.tuple.Tuple;
 import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil;
-
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainIsGoingToHitNextAfterNextProcessor;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainIsGoingToHitNextAfterNextQuerySpecification;
 
 /**
  * Generated pattern matcher API of the hu.bme.mit.inf.safetylogic.patterns.trainIsGoingToHitNextAfterNext pattern,

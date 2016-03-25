@@ -1,9 +1,11 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
+import com.google.common.collect.Sets;
+import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatch;
+import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatcher;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.incquery.runtime.api.IncQueryEngine;
 import org.eclipse.incquery.runtime.api.impl.BaseGeneratedEMFPQuery;
@@ -19,11 +21,6 @@ import org.eclipse.incquery.runtime.matchers.psystem.basicenumerables.TypeConstr
 import org.eclipse.incquery.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.incquery.runtime.matchers.psystem.queries.QueryInitializationException;
 import org.eclipse.incquery.runtime.matchers.tuple.FlatTuple;
-
-import com.google.common.collect.Sets;
-
-import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatch;
-import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatcher;
 
 /**
  * A pattern-specific query specification that can instantiate SoloCounterClockwiseBlindTrackMatcher in a type-safe way.

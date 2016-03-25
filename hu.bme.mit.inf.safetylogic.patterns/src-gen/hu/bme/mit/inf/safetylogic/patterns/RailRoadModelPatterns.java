@@ -1,9 +1,21 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
-import org.eclipse.incquery.runtime.api.IncQueryEngine;
-import org.eclipse.incquery.runtime.api.impl.BaseGeneratedPatternGroup;
-import org.eclipse.incquery.runtime.exception.IncQueryException;
-
+import hu.bme.mit.inf.safetylogic.patterns.BlindTrackMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.InSameRailroadPartMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.NextSectionFromSectionInClockwiseMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.SectionNeighborMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.SectionsInSameRailroadPartAsTrainMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.SoloBlindTrackMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.SoloClockwiseBlindTrackMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.SoloSectionMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TrainGoingToCutTheTurnoutMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextAfterNextMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TrainsNextTurnoutMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TurnoutMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TwoTrainsInSameSectionMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.BlindTrackQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.InSameRailroadPartQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.NextSectionFromSectionInClockwiseQuerySpecification;
@@ -20,12 +32,15 @@ import hu.bme.mit.inf.safetylogic.patterns.util.TrainIsGoingToHitQuerySpecificat
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainsNextTurnoutQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TurnoutQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TwoTrainsInSameSectionQuerySpecification;
+import org.eclipse.incquery.runtime.api.IncQueryEngine;
+import org.eclipse.incquery.runtime.api.impl.BaseGeneratedPatternGroup;
+import org.eclipse.incquery.runtime.exception.IncQueryException;
 
 /**
- * A pattern group formed of all patterns defined in RailRoadModelQueries.eiq.
+ * A pattern group formed of all patterns defined in RailRoadModelPatterns.eiq.
  * 
  * <p>Use the static instance as any {@link org.eclipse.incquery.runtime.api.IPatternGroup}, to conveniently prepare
- * an EMF-IncQuery engine for matching all patterns originally defined in file RailRoadModelQueries.eiq,
+ * an EMF-IncQuery engine for matching all patterns originally defined in file RailRoadModelPatterns.eiq,
  * in order to achieve better performance than one-by-one on-demand matcher initialization.
  * 
  * <p> From package hu.bme.mit.inf.safetylogic.patterns, the group contains the definition of the following patterns: <ul>
@@ -51,7 +66,7 @@ import hu.bme.mit.inf.safetylogic.patterns.util.TwoTrainsInSameSectionQuerySpeci
  * 
  */
 @SuppressWarnings("all")
-public final class RailRoadModelQueries extends BaseGeneratedPatternGroup {
+public final class RailRoadModelPatterns extends BaseGeneratedPatternGroup {
   /**
    * Access the pattern group.
    * 
@@ -59,16 +74,16 @@ public final class RailRoadModelQueries extends BaseGeneratedPatternGroup {
    * @throws IncQueryException if there was an error loading the generated code of pattern specifications
    * 
    */
-  public static RailRoadModelQueries instance() throws IncQueryException {
+  public static RailRoadModelPatterns instance() throws IncQueryException {
     if (INSTANCE == null) {
-    	INSTANCE = new RailRoadModelQueries();
+    	INSTANCE = new RailRoadModelPatterns();
     }
     return INSTANCE;
   }
   
-  private static RailRoadModelQueries INSTANCE;
+  private static RailRoadModelPatterns INSTANCE;
   
-  private RailRoadModelQueries() throws IncQueryException {
+  private RailRoadModelPatterns() throws IncQueryException {
     querySpecifications.add(TurnoutQuerySpecification.instance());
     querySpecifications.add(SectionNeighborQuerySpecification.instance());
     querySpecifications.add(InSameRailroadPartQuerySpecification.instance());

@@ -7,10 +7,8 @@
 		<artifactId>hu.bme.mit.inf</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>hu.bme.mit.inf.modes3.patterns</artifactId>
-
-
-
+	
+	<artifactId>hu.bme.mit.inf.safetylogic.patterns</artifactId>
 
 	<dependencies>
 		<dependency>
@@ -35,7 +33,7 @@
 		</dependency>
 		<dependency>
 			<groupId>hu.bme.mit.inf</groupId>
-			<artifactId>hu.bme.mit.inf.modes3.model</artifactId>
+			<artifactId>hu.bme.mit.inf.safetylogic.model</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

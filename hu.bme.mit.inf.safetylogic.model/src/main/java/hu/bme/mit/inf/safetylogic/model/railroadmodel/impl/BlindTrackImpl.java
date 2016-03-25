@@ -2,10 +2,10 @@
  */
 package hu.bme.mit.inf.safetylogic.model.railroadmodel.impl;
 
-import org.eclipse.emf.ecore.EClass;
-
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage;
+
+import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->

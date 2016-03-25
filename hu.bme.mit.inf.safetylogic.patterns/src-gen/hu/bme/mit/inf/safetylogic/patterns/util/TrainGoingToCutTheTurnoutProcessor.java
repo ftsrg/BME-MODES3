@@ -1,10 +1,9 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
-
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout;
 import hu.bme.mit.inf.safetylogic.patterns.TrainGoingToCutTheTurnoutMatch;
+import org.eclipse.incquery.runtime.api.IMatchProcessor;
 
 /**
  * A match processor tailored for the hu.bme.mit.inf.safetylogic.patterns.trainGoingToCutTheTurnout pattern.

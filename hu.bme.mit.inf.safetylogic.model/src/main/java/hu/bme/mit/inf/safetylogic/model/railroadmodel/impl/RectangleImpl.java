@@ -2,22 +2,25 @@
  */
 package hu.bme.mit.inf.safetylogic.model.railroadmodel.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeEList;
-
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Dimension;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Point;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Rectangle;
+
+import java.util.Collection;
+
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
+
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -187,17 +190,6 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isPointInside(Point point) {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -287,20 +279,6 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 				return inverseMatrix != null && !inverseMatrix.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
-		switch (operationID) {
-			case ModelPackage.RECTANGLE___IS_POINT_INSIDE__POINT:
-				return isPointInside((Point)arguments.get(0));
-		}
-		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

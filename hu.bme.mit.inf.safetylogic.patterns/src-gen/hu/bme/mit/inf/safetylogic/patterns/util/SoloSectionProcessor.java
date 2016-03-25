@@ -1,9 +1,8 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
-import org.eclipse.incquery.runtime.api.IMatchProcessor;
-
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
 import hu.bme.mit.inf.safetylogic.patterns.SoloSectionMatch;
+import org.eclipse.incquery.runtime.api.IMatchProcessor;
 
 /**
  * A match processor tailored for the hu.bme.mit.inf.safetylogic.patterns.soloSection pattern.

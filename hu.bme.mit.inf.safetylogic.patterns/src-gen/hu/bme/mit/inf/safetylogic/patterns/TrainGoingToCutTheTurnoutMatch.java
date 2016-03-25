@@ -1,16 +1,13 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainGoingToCutTheTurnoutQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-
 import org.eclipse.incquery.runtime.api.IPatternMatch;
 import org.eclipse.incquery.runtime.api.impl.BasePatternMatch;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
-
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainGoingToCutTheTurnoutProcessor;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainGoingToCutTheTurnoutQuerySpecification;
 
 /**
  * Pattern-specific match representation of the hu.bme.mit.inf.safetylogic.patterns.trainGoingToCutTheTurnout pattern,

@@ -5,53 +5,40 @@ import hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.Map
+import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender
 
-class TurnoutReader implements Runnable {
+class TurnoutReader {
+	var SectionModel sectionmodel
+	var TurnoutRequestSender trs
 
-	var Object lock;
-	var SectionModel sectionmodel;
-
-	new(SectionModel model, Object l) {
-		sectionmodel = model
-		lock = l;
+	new(SectionModel model, TurnoutRequestSender trs) {
+		this.sectionmodel = model
+		this.trs = trs
 	}
 
-	override run() {
+	def setTurnoutStatuses() {
 		var turnoutIds = #[1, 2, 4, 3, 5, 6, 7]; // XXX add the turnouts list to the model
-		
-		var Map<Integer, Integer> englishTurnoutMap = new HashMap<Integer,Integer>
-		englishTurnoutMap.put(7,4); //XXX add this mapping to the model? 
-
+		var Map<Integer, Integer> englishTurnoutMap = new HashMap<Integer, Integer>
+		englishTurnoutMap.put(7, 4); // XXX add this mapping to the model? 
 		val turnoutStates = new ArrayList<Boolean>
 		for (var int i = 0; i != 10; i++) {
 			turnoutStates.add(true);
 		}
-		while (true) {
-			synchronized (lock) {
-				for (id : turnoutIds) {
-//					var isTrue = sender.isTurnoutStraight(id.toPhysicalID);
-					var isTrue = true
-					if (isTrue != turnoutStates.get(id)) {
-
-						println("Switch" + id + "changed")
-						if(englishTurnoutMap.keySet.contains(id)){
-							var remappedId = englishTurnoutMap.get(id);
-							ModelUtil.switchEnglishTurnout(ModelUtil.getTurnoutByID(sectionmodel, remappedId));
-
-						}else{
-							ModelUtil.switchTurnout(ModelUtil.getTurnoutByID(sectionmodel, id));
-							
-						}
-						
-						turnoutStates.set(id, isTrue);
-					}
+		for (id : turnoutIds) {
+			if (trs.isTurnoutStraight(id.toPhysicalID) != turnoutStates.get(id)) {
+				println("Switch" + id + "changed")
+				if (englishTurnoutMap.keySet.contains(id)) {
+					var remappedId = englishTurnoutMap.get(id);
+					ModelUtil.switchEnglishTurnout(ModelUtil.getTurnoutByID(sectionmodel, remappedId));
+				} else {
+					ModelUtil.switchTurnout(ModelUtil.getTurnoutByID(sectionmodel, id));
 				}
+				turnoutStates.set(id, trs.isTurnoutStraight(id.toPhysicalID));
 			}
-			Thread.sleep(500)
 		}
 	}
 
-	def toPhysicalID(Integer integer) { //XXX This should be in the model too
+	def toPhysicalID(Integer integer) { // XXX This should be in the model too
 		switch integer {
 			case 1: 0x81
 			case 2: 0x82

@@ -3,6 +3,8 @@ package hu.bme.mit.inf.saferylogic.model.modelutil
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.EnglishTurnout
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelFactory
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Point
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Rectangle
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout
@@ -243,6 +245,23 @@ class ModelUtil {
 		var temp = englishTurnout.clockwise
 		englishTurnout.clockwise = englishTurnout.notConnectedClockwiseSection
 		englishTurnout.notConnectedClockwiseSection = temp
+	}
+	
+	public static def isPointInside(Rectangle rect, Point p) {
+		val size = rect.size
+		val origin = rect.origin
+		val inverseMatrix = rect.inverseMatrix;
+		val invp = ModelFactory.eINSTANCE.createPoint();
+		
+		invp.setX(inverseMatrix.get(0) * p.getX() + inverseMatrix.get(1) * p.getY() + inverseMatrix.get(2));
+		invp.setY(inverseMatrix.get(3) * p.getX() + inverseMatrix.get(4) * p.getY() + inverseMatrix.get(5));
+		
+		if (origin.getX() < p.getX() && p.getX() < origin.getX() + size.getWidth() &&
+			origin.getY() < p.getY() && p.getY() < origin.getY() + size.getHeight()) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }

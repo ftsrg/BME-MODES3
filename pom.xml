@@ -65,10 +65,10 @@
         <module>hu.bme.mit.inf.yakindu.sc.english</module>
         <module>hu.bme.mit.inf.yakindu.sc.normal</module>
         <module>hu.bme.mit.inf.piclient</module>
-        <module>hu.bme.mit.inf.modes3.event</module>
-        <module>hu.bme.mit.inf.modes3.model</module>
-        <module>hu.bme.mit.inf.modes3.model.util</module>
-        <module>hu.bme.mit.inf.modes3.patterns</module>
+        <module>hu.bme.mit.inf.safetylogic.event</module>
+        <module>hu.bme.mit.inf.safetylogic.model</module>
+        <module>hu.bme.mit.inf.safetylogic.model.util</module>
+        <module>hu.bme.mit.inf.safetylogic.patterns</module>
 
         <!--<module>hu.bme.mit.inf.xpresscontroller</module>-->
     </modules>

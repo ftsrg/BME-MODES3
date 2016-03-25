@@ -1,9 +1,12 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
+import hu.bme.mit.inf.safetylogic.patterns.SectionsInSameRailroadPartAsTrainMatch;
+import hu.bme.mit.inf.safetylogic.patterns.util.SectionsInSameRailroadPartAsTrainQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.incquery.runtime.api.IMatchProcessor;
@@ -13,11 +16,6 @@ import org.eclipse.incquery.runtime.api.impl.BaseMatcher;
 import org.eclipse.incquery.runtime.exception.IncQueryException;
 import org.eclipse.incquery.runtime.matchers.tuple.Tuple;
 import org.eclipse.incquery.runtime.util.IncQueryLoggingUtil;
-
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
-import hu.bme.mit.inf.safetylogic.patterns.util.SectionsInSameRailroadPartAsTrainProcessor;
-import hu.bme.mit.inf.safetylogic.patterns.util.SectionsInSameRailroadPartAsTrainQuerySpecification;
 
 /**
  * Generated pattern matcher API of the hu.bme.mit.inf.safetylogic.patterns.sectionsInSameRailroadPartAsTrain pattern,

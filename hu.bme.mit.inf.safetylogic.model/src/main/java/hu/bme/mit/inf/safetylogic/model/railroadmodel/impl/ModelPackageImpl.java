@@ -2,13 +2,6 @@
  */
 package hu.bme.mit.inf.safetylogic.model.railroadmodel.impl;
 
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Dimension;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.EnglishTurnout;
@@ -22,6 +15,13 @@ import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turn;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout;
+
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -425,15 +425,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EOperation getRectangle__IsPointInside__Point() {
-		return rectangleEClass.getEOperations().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getDimension() {
 		return dimensionEClass;
 	}
@@ -546,7 +537,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		createEReference(rectangleEClass, RECTANGLE__ORIGIN);
 		createEReference(rectangleEClass, RECTANGLE__SIZE);
 		createEAttribute(rectangleEClass, RECTANGLE__INVERSE_MATRIX);
-		createEOperation(rectangleEClass, RECTANGLE___IS_POINT_INSIDE__POINT);
 
 		dimensionEClass = createEClass(DIMENSION);
 		createEAttribute(dimensionEClass, DIMENSION__WIDTH);
@@ -627,9 +617,6 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage {
 		initEReference(getRectangle_Origin(), this.getPoint(), null, "origin", null, 1, 1, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRectangle_Size(), this.getDimension(), null, "size", null, 1, 1, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRectangle_InverseMatrix(), ecorePackage.getEDouble(), "inverseMatrix", "0.0", 0, 8, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-		EOperation op = initEOperation(getRectangle__IsPointInside__Point(), ecorePackage.getEBoolean(), "isPointInside", 1, 1, IS_UNIQUE, IS_ORDERED);
-		addEParameter(op, this.getPoint(), "point", 0, 1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(dimensionEClass, Dimension.class, "Dimension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDimension_Width(), ecorePackage.getEDouble(), "width", null, 0, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

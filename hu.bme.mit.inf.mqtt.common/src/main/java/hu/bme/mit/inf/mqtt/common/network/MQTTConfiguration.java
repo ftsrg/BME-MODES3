@@ -13,6 +13,14 @@ public class MQTTConfiguration {
     private int qos = 1;
     private String clientId = new String();
 
+    public MQTTConfiguration() {
+    	
+    }
+    
+    public MQTTConfiguration(String address) {
+    	this.address = address;
+    }
+    
     public void setProtocol(String protocol) {
         this.protocol = protocol;
     }
