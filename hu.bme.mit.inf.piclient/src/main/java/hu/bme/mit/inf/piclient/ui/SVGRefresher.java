@@ -74,13 +74,8 @@ public class SVGRefresher implements Runnable {
                 "Thread@" + Thread.currentThread().getName() + " started(svg turnout refresher)");
 
         final int sleepConstant = 50;
-        boolean trackInfoInitialRefreshCompleted = false;
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                if (!trackInfoInitialRefreshCompleted) {
-                    trackInfoInitialRefreshCompleted = initialRefreshTrackInfo();
-                }
-
                 Thread.sleep(sleepConstant);
                 if (sectionControllerProxy != null) {
                     refreshSections();
@@ -105,16 +100,6 @@ public class SVGRefresher implements Runnable {
                 logException(getClass().getName(), ex);
                 Thread.currentThread().interrupt();
             }
-        }
-    }
-
-    private boolean initialRefreshTrackInfo() {
-        if ((sectionControllerProxy != null) && (turnoutControllerProxy != null)) {
-            sectionControllerProxy.initialRefresh();
-            turnoutControllerProxy.initialRefresh();
-            return true;
-        } else {
-            return false;
         }
     }
 

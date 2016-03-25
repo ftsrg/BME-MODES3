@@ -37,6 +37,7 @@ public class TurnoutRequestSender implements MessageFilter {
     public TurnoutRequestSender(MQTTPublishSubscribeDispatcher requestSender) {
         this.requestSender = requestSender;
         this.requestSender.subscribe(topic, this);
+        this.sendIdentify();
     }
 
     public void setPollingEnabled(boolean isPollingEnabled) {
