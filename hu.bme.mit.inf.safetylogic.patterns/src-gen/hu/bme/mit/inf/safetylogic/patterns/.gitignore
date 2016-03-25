@@ -29,3 +29,5 @@
 /.RailRoadModelPatterns.java._trace
 /.TrainIsGoingToHitMatch.java._trace
 /.TrainIsGoingToHitMatcher.java._trace
+/.TurnoutMatch.java._trace
+/.TurnoutMatcher.java._trace

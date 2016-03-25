@@ -27,7 +27,6 @@ import org.eclipse.incquery.runtime.api.IncQueryEngine
 import org.eclipse.incquery.runtime.emf.EMFScope
 
 class Safetylogic {
-
 	var Resource resource
 	var ResourceSet resourceSet
 	var IncQueryEngine queryEngine
@@ -37,6 +36,7 @@ class Safetylogic {
 
 	var SectionModel sectionModel // root of the runtime EMF model
 	var TrainModel trainModel
+	var TurnoutReader turnoutReader
 
 	new(MQTTPublishSubscribeDispatcher dispatcher) {
 		srs = new SectionRequestSender(dispatcher)
@@ -44,6 +44,7 @@ class Safetylogic {
 		
 		sectionModel = ModelUtil.loadReadySectionModel
 		trainModel = ModelUtil.createReadyTrainModel(sectionModel)
+		turnoutReader = new TurnoutReader(sectionModel, trs)
 
 		val reg = Resource.Factory.Registry.INSTANCE
 		val m = reg.getExtensionToFactoryMap()
@@ -100,8 +101,17 @@ class Safetylogic {
 
 		return minSec
 	}
+	
+	val log = new StringBuilder
+	
+	def println(StringBuilder log, String what){
+		println(what)
+		log.append(what)
+		log.append("\n")
+	}
 
 	def handle(CVPayload payload) {
+		turnoutReader.setTurnoutStatuses
 		for (train : payload.trains) {
 			val id = train.id
 			val posX = train.x
@@ -122,7 +132,7 @@ class Safetylogic {
 			if (occupied == null) { // If it's not on a turnout, it must be on a section
 				occupied = findClosestSection(modelTrain, sectionModel)
 			}
-			println(
+			log.println(
 				"#:\tID = " + modelTrain.id + "\tX = " + modelTrain.x + "\tY = " + modelTrain.y + "\tspeed = " + speed +
 					"\tdirection = " + modelTrain.isGoingClockwise + "\tsection = 0x" + ModelUtil.toHexa(occupied.id))
 			modelTrain.currentlyOn = occupied
@@ -141,32 +151,32 @@ class Safetylogic {
 	def processSafetylogic() {
 		var matches = TrainsNextTurnoutMatcher.on(queryEngine).allMatches
 		if (matches.size == 0) {
-			println("I don't see the next turnout")
+			log.println("I don't see the next turnout")
 		}
 		for (match : matches) {
-			println("train " + match.train.id + " next turnout = " + match.turnout.id)
+			log.println("train " + match.train.id + " next turnout = " + match.turnout.id)
 		}
 		val cutMatches = TrainGoingToCutTheTurnoutMatcher.on(queryEngine).allMatches
 		if (cutMatches.size == 0) {
-			println("No cut")
+			log.println("No cut")
 		} else {
 			for (match : cutMatches) {
-				println("CUT on turnout #" + match.turnout.id + " with train #" + match.train.id)
+				log.println("CUT on turnout #" + match.turnout.id + " with train #" + match.train.id)
 				match.train.currentlyOn.enabled = false
 				disableSection(match.train.currentlyOn.id);
 			}
 		}
 		var trainHitMatchers = TrainIsGoingToHitMatcher.on(queryEngine).allMatches
 		if (trainHitMatchers.size == 0) {
-			println("No train is going to hit the other");
+			log.println("No train is going to hit the other");
 		}
 		for (match : trainHitMatchers) {
-			println("Train #" + match.t1.id + " is going to hit train #" + match.t2.id)
+			log.println("Train #" + match.t1.id + " is going to hit train #" + match.t2.id)
 			match.t1.currentlyOn.enabled = false
 			disableSection(match.t1.currentlyOn.id);
 		}
 		sectionModel.sections.filter[section|section.enabled == true].forEach [
-			//enableSection(it.id)
+			enableSection(it.id)
 		]
 	}
 

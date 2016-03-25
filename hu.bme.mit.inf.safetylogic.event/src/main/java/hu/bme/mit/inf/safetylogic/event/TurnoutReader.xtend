@@ -8,22 +8,24 @@ import java.util.Map
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender
 
 class TurnoutReader {
-	var SectionModel sectionmodel
-	var TurnoutRequestSender trs
+	val SectionModel sectionmodel
+	val TurnoutRequestSender trs
+	val turnoutIds = #[1, 2, 4, 3, 5, 6, 7]; // XXX add the turnouts list to the model
+	val Map<Integer, Integer> englishTurnoutMap = new HashMap<Integer, Integer>
+	val turnoutStates = new ArrayList<Boolean>
 
 	new(SectionModel model, TurnoutRequestSender trs) {
 		this.sectionmodel = model
 		this.trs = trs
-	}
 
-	def setTurnoutStatuses() {
-		var turnoutIds = #[1, 2, 4, 3, 5, 6, 7]; // XXX add the turnouts list to the model
-		var Map<Integer, Integer> englishTurnoutMap = new HashMap<Integer, Integer>
 		englishTurnoutMap.put(7, 4); // XXX add this mapping to the model? 
-		val turnoutStates = new ArrayList<Boolean>
 		for (var int i = 0; i != 10; i++) {
 			turnoutStates.add(true);
 		}
+
+	}
+
+	def setTurnoutStatuses() {
 		for (id : turnoutIds) {
 			if (trs.isTurnoutStraight(id.toPhysicalID) != turnoutStates.get(id)) {
 				println("Switch" + id + "changed")
@@ -38,7 +40,7 @@ class TurnoutReader {
 		}
 	}
 
-	def toPhysicalID(Integer integer) { // XXX This should be in the model too
+	static def toPhysicalID(Integer integer) { // XXX This should be in the model too
 		switch integer {
 			case 1: 0x81
 			case 2: 0x82
