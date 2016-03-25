@@ -40,7 +40,6 @@ public class YakinduSMRunner {
         this.managedSections = localSections;
 
         int managedTurnoutId = (int) statemachine.getSCITurnout().getId();
-        System.out.println("STAAAAAAAAAAAAAAAAAAAAAAART: " + managedTurnoutId);
         int managedTurnoutSectionId = turnoutSectionId;
 
         this.generalTransmitter = new GeneralTransmitter(managedTurnoutId,
