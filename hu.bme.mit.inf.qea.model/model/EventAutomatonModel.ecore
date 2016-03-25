@@ -115,4 +115,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
         eType="#//Action" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NotEquivalentRelation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="states" lowerBound="2"
+        upperBound="2" eType="#//State"/>
+  </eClassifiers>
 </ecore:EPackage>

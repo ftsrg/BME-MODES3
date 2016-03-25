@@ -91,5 +91,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/from"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//AbstractTransition/actions"/>
     </genClasses>
+    <genClasses ecoreClass="EventAutomatonModel.ecore#//NotEquivalentRelation">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EventAutomatonModel.ecore#//NotEquivalentRelation/states"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>
