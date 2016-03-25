@@ -67,15 +67,21 @@ public class SectionRequestSender implements MessageFilter {
     }
 
     public void enableSection(int sectionId) {
-        Section section = new Section(sectionId, ENABLED);
-        Payload payload = createCommandWithContent(LINE_ENABLE, section);
-        requestSender.publishMessage(payload, topic);
+        SectionStatus lastStatus = sectionStatuses.get(sectionId);
+        if (lastStatus != ENABLED) {
+            Section section = new Section(sectionId, ENABLED);
+            Payload payload = createCommandWithContent(LINE_ENABLE, section);
+            requestSender.publishMessage(payload, topic);
+        }
     }
 
     public void disableSection(int sectionId) {
-        Section section = new Section(sectionId, DISABLED);
-        Payload payload = createCommandWithContent(LINE_DISABLE, section);
-        requestSender.publishMessage(payload, topic);
+        SectionStatus lastStatus = sectionStatuses.get(sectionId);
+        if (lastStatus != DISABLED) {
+            Section section = new Section(sectionId, DISABLED);
+            Payload payload = createCommandWithContent(LINE_DISABLE, section);
+            requestSender.publishMessage(payload, topic);
+        }
     }
 
     public void sendIdentify() {
