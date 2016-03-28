@@ -1,0 +1,2 @@
+1) Correct parametrization, see Dockerfile and README.md for the English and the Normal turnouts on the repository.
+2) sudo docker build -t my.kvcontrol .
