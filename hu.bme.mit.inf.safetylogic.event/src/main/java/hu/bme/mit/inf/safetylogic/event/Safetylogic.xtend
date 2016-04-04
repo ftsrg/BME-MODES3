@@ -149,6 +149,10 @@ class Safetylogic {
 	}
 
 	def processSafetylogic() {
+		sectionModel.sections.forEach[section | 
+			section.enabled = true;
+		]
+		
 		var matches = TrainsNextTurnoutMatcher.on(queryEngine).allMatches
 		if (matches.size == 0) {
 			log.println("I don't see the next turnout")
@@ -176,7 +180,8 @@ class Safetylogic {
 			disableSection(match.t1.currentlyOn.id);
 		}
 		sectionModel.sections.filter[section|section.enabled == true].forEach [
-			enableSection(it.id)
+			val id = it.id
+			enableSection(id)
 		]
 	}
 

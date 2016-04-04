@@ -53,11 +53,11 @@ public abstract class SectionNeighborMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("s1".equals(parameterName) ) {
-    	this.fS1 = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) newValue;
+    	this.fS1 = (Section) newValue;
     	return true;
     }
     if ("s2".equals(parameterName) ) {
-    	this.fS2 = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) newValue;
+    	this.fS2 = (Section) newValue;
     	return true;
     }
     return false;

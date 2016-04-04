@@ -29,7 +29,6 @@ import java.util.HashSet
 import java.util.LinkedList
 import java.util.List
 import java.util.Set
-import java.util.Stack
 import org.eclipse.emf.ecore.util.EcoreUtil
 import hu.bme.mit.inf.parametricTimedRegularExpression.NegExpression
 import hu.bme.mit.inf.parametricTimedRegularExpression.Plus
@@ -46,8 +45,8 @@ class RegexCompiler {
 	public val tgfLogs = new HashMap<Automaton, StringBuilder>;
 	public val log = new StringBuilder
 	extension val AutomatonOptimizer optimizer = new AutomatonOptimizer
-	
-	def void println(StringBuilder builder, String toAppend){
+
+	def void println(StringBuilder builder, String toAppend) {
 		builder.append(toAppend)
 		builder.append('\n')
 	}
@@ -56,26 +55,26 @@ class RegexCompiler {
 		log.println("Compilation starts")
 		val retvalue = createComplexEventProcessor
 		symbolicEventsFromAlphabet(input.alphabet) // this must be set before the compilation starts		
-//		input.declarations.map[determinizeNFA(recursiveCompile(it))].forEach[retvalue.automata.add(it)]
-
-		for(declaration : input.declarations){
-			if(!expressionContainsTiming(declaration)){
-				retvalue.automata.add(determinizeNFA(recursiveCompile(declaration), symbolicEvents))
-			}else{
-				retvalue.automata.add((recursiveCompile(declaration)))
-			}
+		for (declaration : input.declarations) {
+			if(!expressionContainsTiming(declaration)) {
+				retvalue.automata.add(determinizeNFA(recursiveCompile(declaration), symbolicEvents).DFA)
+			} else {
+				retvalue.automata.add(minimizeNFA(recursiveCompile(declaration)))
+//				if(expressionContainsExactlyOneTiming(declaration)){
+//					BalintClass.BalintMethod(minimizeNFA(recursiveCompile(declaration)))
+//				}
+			} 
 		}
 
 		symbolicEvents.forEach[retvalue.symbolicEvents.add(it)]
 
 		retvalue.automata.forEach[var trapState = createState; it.states.add(trapState); it.trapState = trapState] // create trapstates
-		retvalue.automata.forEach [automaton|
-			automaton.states.forEach [state|
+		retvalue.automata.forEach [ automaton |
+			automaton.states.forEach [ state |
 				transitionsToTrapState.forEach[if(it.from == state) it.to = automaton.trapState]
 			]
 		] // the timeout events must point to the trapstate
-		
-		
+
 		var id = 0
 		for (automaton : retvalue.automata) {
 			for (state : automaton.states) {
@@ -84,8 +83,6 @@ class RegexCompiler {
 		}
 
 		log.println("Compilation finished!")
-		
-
 
 		for (automaton : retvalue.automata) {
 			tgfLogs.put(automaton, new StringBuilder)
@@ -125,8 +122,8 @@ class RegexCompiler {
 		log.println(declaration.name + ' compiled')
 		compiled
 	}
-	
-	protected def dispatch Automaton recursiveCompile(NegExpression expression){
+
+	protected def dispatch Automaton recursiveCompile(NegExpression expression) {
 		val compiled = expression.body.recursiveCompile
 		compiled.states.forEach[it.acceptor = !it.acceptor]
 		return compiled;
@@ -139,19 +136,21 @@ class RegexCompiler {
 		val timeoutEvent = createSymbolicTimeoutEvent
 		newSymbolicTimer.timeoutEvent = timeoutEvent
 		compiled.timers.add(newSymbolicTimer)
-		
+
 		compiled.initialState.outgoingTransitions.forEach [
 			var newAction = createSetTimerAction;
 			newAction.timer = newSymbolicTimer
 			newAction.toValue = expression.timeout
 			it.actions.add(newAction)
 		]
-		compiled.states.filter[it.acceptor].forEach[it.incomingTransitions.forEach [
-			var newAction = createResetTimerAction
-			newAction.timer = newSymbolicTimer
-			it.actions.add(newAction)
-		]]
-		
+		compiled.states.filter[it.acceptor].forEach [
+			it.incomingTransitions.forEach [
+				var newAction = createResetTimerAction
+				newAction.timer = newSymbolicTimer
+				it.actions.add(newAction)
+			]
+		]
+
 		compiled.states.filter[it != compiled.initialState && !it.acceptor].forEach [
 			val newTrans = createTransition
 			newTrans.from = it
@@ -197,7 +196,7 @@ class RegexCompiler {
 		val excludedLetters = expression.excludes.map[it.functor]
 		var includedLetters = new ArrayList<Functor>
 		for (possibleLetter : symbolicEventMapping.keySet) {
-			if (!excludedLetters.contains(possibleLetter))
+			if(!excludedLetters.contains(possibleLetter))
 				includedLetters.add(possibleLetter)
 		}
 		var includedSymbols = new ArrayList<SymbolicEvent>
@@ -232,7 +231,6 @@ class RegexCompiler {
 		transition.eventguard = createEventGuard
 		transition.eventguard.type = symbolicEventMapping.get(expression.functor)
 		// TODO add parameters
-		
 		retvalue
 	}
 
@@ -243,15 +241,15 @@ class RegexCompiler {
 
 	protected def merge(Automaton firstAutomaton, Automaton secondAutomaton) {
 		val intermediateState = secondAutomaton.initialState
-		firstAutomaton.states.filter[it.acceptor].forEach[
+		firstAutomaton.states.filter[it.acceptor].forEach [
 			it.acceptor = false
 			var epsilonTrans = createEpsilonTransition
 			epsilonTrans.from = it
 			epsilonTrans.to = intermediateState
 		]
-		for(state : secondAutomaton.states.clone()){ //The clone is needed, as the list changes when items are removed
+		for (state : secondAutomaton.states.clone()) { // The clone is needed, as the list changes when items are removed
 			firstAutomaton.states.add(state)
-			secondAutomaton.states.remove(state) //Not sure tho
+			secondAutomaton.states.remove(state)
 		}
 
 		return firstAutomaton
@@ -261,36 +259,36 @@ class RegexCompiler {
 		val retvalue = createAutomaton
 		val newFirst = createState
 		val newLast = createState
-		
+
 		retvalue.initialState = newFirst
 		newLast.acceptor = true
-		
+
 		retvalue.states.add(newFirst)
 		retvalue.states.add(newLast)
-		
-		for(expr : expression.elements){
+
+		for (expr : expression.elements) {
 			val compiled = expr.recursiveCompile
 			val epsilonFromInitial = createEpsilonTransition
 			epsilonFromInitial.from = newFirst
 			epsilonFromInitial.to = compiled.initialState
-			
-			compiled.states.filter[it.acceptor].clone.forEach[
+
+			compiled.states.filter[it.acceptor].clone.forEach [
 				it.acceptor = false
 				var epsilonToLast = createEpsilonTransition
 				epsilonToLast.from = it
 				epsilonToLast.to = newLast
 			]
-			
-			 compiled.states.clone().forEach[
-			 	compiled.states.remove(it)
-			 	retvalue.states.add(it)
-			 ]
+
+			compiled.states.clone().forEach [
+				compiled.states.remove(it)
+				retvalue.states.add(it)
+			]
 		}
 
 		return retvalue
 	}
-	
-	protected def dispatch Automaton recursiveCompile(Plus expression){
+
+	protected def dispatch Automaton recursiveCompile(Plus expression) {
 		var sequence = ParametricTimedRegularExpressionFactory.eINSTANCE.createSequence
 		var star = ParametricTimedRegularExpressionFactory.eINSTANCE.createStar
 		star.body = EcoreUtil.copy(expression)
@@ -298,10 +296,10 @@ class RegexCompiler {
 		sequence.elements.add(EcoreUtil.copy(expression))
 		return recursiveCompile(sequence);
 	}
-	
-	protected def dispatch Automaton recursiveCompile(Cardinality expression){
+
+	protected def dispatch Automaton recursiveCompile(Cardinality expression) {
 		var sequence = ParametricTimedRegularExpressionFactory.eINSTANCE.createSequence
-		for(var i = 0; i!= expression.n; i++){
+		for (var i = 0; i != expression.n; i++) {
 			sequence.elements.add(EcoreUtil.copy(expression))
 		}
 		return recursiveCompile(sequence)
@@ -321,13 +319,13 @@ class RegexCompiler {
 		beginEpsilon.from = first
 		beginEpsilon.to = compiledAutomaton.initialState
 
-		compiledAutomaton.states.filter[it.acceptor].clone.forEach[
+		compiledAutomaton.states.filter[it.acceptor].clone.forEach [
 			var endEpsilon = createEpsilonTransition
 			var returnEpsilon = createEpsilonTransition
-			
+
 			returnEpsilon.from = it
 			returnEpsilon.to = compiledAutomaton.initialState
-			
+
 			endEpsilon.from = it
 			endEpsilon.to = last
 		]
@@ -351,7 +349,6 @@ class RegexCompiler {
 		val leftTrace = new HashMap<State, HashSet<State>> // for each state of the left operand, there are a row of states in the new matrix of states
 		val rightTrace = new HashMap<State, HashSet<State>> // for each state of the right operand, there are a column of states in the new matrix of states 
 		// constructing the new matrix of states for the product.
-		
 		for (leftState : left.states) {
 			for (rightState : right.states) {
 				var newState = createState
@@ -364,9 +361,7 @@ class RegexCompiler {
 				rightTrace.get(rightState).add(newState)
 			}
 		}
-		
-	
-		
+
 		for (state : retvalue.states) {
 			val leftOriginal = leftTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
 			val rightOriginal = rightTrace.filter[oldState, newStates|newStates.contains(state)].keySet.head
@@ -388,14 +383,12 @@ class RegexCompiler {
 			leftTrace.get(left.initialState).contains(it) && rightTrace.get(right.initialState).contains(it)
 		].head
 
-
 		return retvalue
 	}
 
-
 	static def List<List<Expression>> generatePerm(List<Expression> left, List<Expression> right) {
 		val result = new LinkedList<List<Expression>>
-		if (left.head != null) {
+		if(left.head != null) {
 			generatePerm(left.tail.toList, right).forEach [
 				val newRes = new LinkedList<Expression>;
 				newRes.add(left.head);
@@ -403,7 +396,7 @@ class RegexCompiler {
 				result.add(newRes)
 			]
 		}
-		if (right.head != null) {
+		if(right.head != null) {
 			generatePerm(left, right.tail.toList).forEach [
 				val newRes = new LinkedList<Expression>;
 				newRes.add(right.head);
@@ -411,7 +404,7 @@ class RegexCompiler {
 				result.add(newRes)
 			]
 		}
-		if (right.head == null && left.head == null) {
+		if(right.head == null && left.head == null) {
 			result.add(new LinkedList<Expression>)
 		}
 		return result

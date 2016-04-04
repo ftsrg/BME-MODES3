@@ -25,6 +25,7 @@ import java.util.HashSet
 import java.util.Set
 import java.util.Stack
 import org.eclipse.emf.ecore.util.EcoreUtil
+import org.eclipse.xtend.lib.macro.declaration.Declaration
 
 class AutomatonOptimizer {
 
@@ -37,8 +38,8 @@ class AutomatonOptimizer {
 	def dispatch boolean recursiveCheckForTiming(Expression e) {
 		throw new UnsupportedOperationException('''«e.class.name»''')
 	}
-	
-	def dispatch boolean recursiveCheckForTiming(NegExpression expression){
+
+	def dispatch boolean recursiveCheckForTiming(NegExpression expression) {
 		return recursiveCheckForTiming(expression.body)
 	}
 
@@ -74,68 +75,122 @@ class AutomatonOptimizer {
 		return star.body.recursiveCheckForTiming
 	}
 
+	def boolean expressionContainsExactlyOneTiming(ExpressionDeclaration dec) {
+		//TODO
+		return false;
+	}
+
+	
+	def dispatch int recursiveCountForTiming(Expression e) {
+		throw new UnsupportedOperationException('''«e.class.name»''')
+	}
+
+	def dispatch int recursiveCountForTiming(NegExpression expression) {
+		return recursiveCountForTiming(expression.body)
+	}
+
+	def dispatch int recursiveCountForTiming(TimedExpression expression) {
+		return 1;
+	}
+
+	def dispatch int recursiveCountForTiming(Event e) {
+		return 0;
+	}
+
+	def dispatch int recursiveCountForTiming(Inverse e) {
+		return 0;
+	}
+
+	def dispatch int recursiveCountForTiming(Any e) {
+		return 0;
+	}
+
+	def dispatch int recursiveCountForTiming(Sequence seq) {
+		var count = 0;
+		for(expressionCount : seq.elements.map[recursiveCountForTiming]){
+			count += expressionCount
+		}
+		return count
+	}
+
+	def dispatch int recursiveCountForTiming(Choice choice) {
+		var count = 0;
+		for(expressionCount : choice.elements.map[recursiveCountForTiming]){
+			count += expressionCount
+		}
+		return count
+	}
+
+	def dispatch int recursiveCountForTiming(And and) {
+		var count = 0;
+		for(expressionCount : and.elements.map[recursiveCountForTiming]){
+			count += expressionCount
+		}
+		return count
+	}
+
+	def dispatch int recursiveCountForTiming(Star star) {
+		return star.body.recursiveCountForTiming
+		
+	}
+
 	public def Automaton minimizeNFA(Automaton a) {
 		val epsilonLess = removeEpsilons(a)
 		val merged = mergeEquivalent(epsilonLess)
-		return merged; 
+		return merged;
 	}
-	
+
 	def Automaton removeEpsilons(Automaton automaton) {
-		val mapping = new HashMap<State, Set<Action>> 
+		val mapping = new HashMap<State, Set<Action>>
 		val states = automaton.states.filter[it.incomingTransitions.exists[it instanceof EpsilonTransition]]
-		states.forEach[
+		states.forEach [
 			mapping.put(it, collectActionFromStateOnEpsilonTransitions(it))
 		]
-		
+
 		val HashSet<EpsilonTransition> epsilonTransitions = new HashSet
 		states.forEach[it.outgoingTransitions.filter[it instanceof EpsilonTransition].forEach[epsilonTransitions.add(it as EpsilonTransition)]]
 		epsilonTransitions.forEach[it.from.outgoingTransitions.remove(it)] // remove all epsilon transitions
-		
-		
 		val HashSet<Transition> nonEpsilonTransitions = new HashSet
 		states.forEach[it.outgoingTransitions.filter[it instanceof Transition].forEach[nonEpsilonTransitions.add(it as Transition)]]
-		
-		nonEpsilonTransitions.forEach[ nonEpsilon | 
+
+		nonEpsilonTransitions.forEach [ nonEpsilon |
 			val epsilonClosure = epsilonClosure(nonEpsilon.to)
-			epsilonClosure.forEach[
+			epsilonClosure.forEach [
 				val newTransition = createTransition
-				newTransition.eventguard = EcoreUtil.copy(nonEpsilon.eventguard) 
-				
-				mapping.get(it).forEach[
+				newTransition.eventguard = EcoreUtil.copy(nonEpsilon.eventguard)
+
+				mapping.get(it).forEach [
 					newTransition.actions.add(EcoreUtil.copy(it))
 				]
 			]
 		]
-		
-		nonEpsilonTransitions.forEach[it.from.outgoingTransitions.remove(it)]// remove the 'old' transitions
-		
-		
+
+		nonEpsilonTransitions.forEach[it.from.outgoingTransitions.remove(it)] // remove the 'old' transitions
 		return automaton;
 	}
-	
+
 	def Set<Action> collectActionFromStateOnEpsilonTransitions(State state) {
 		val retvalue = new HashSet<Action>
 		val unchecked = new Stack<EpsilonTransition>
 		val marked = new HashSet<EpsilonTransition>
-		
+
 		state.incomingTransitions.filter[it instanceof EpsilonTransition].forEach[unchecked.add(it as EpsilonTransition)]
-		
-		while(!unchecked.empty()){
+
+		while(!unchecked.empty()) {
 			val t = unchecked.pop
 			marked.add(t)
 			t.actions.forEach[retvalue.add(it)]
 			t.from.incomingTransitions.filter[it instanceof EpsilonTransition && !marked.contains(it)].forEach[unchecked.add(it as EpsilonTransition)]
 		}
-		
-		
-		return retvalue; 
+
+		return retvalue;
 	}
-	
+
 	def Automaton mergeEquivalent(Automaton automaton) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 
-	public def Automaton determinizeNFA(Automaton NFA, ArrayList<SymbolicInputEvent> symbolicEvents) {
+	public def DeterminizationResult determinizeNFA(Automaton NFA, ArrayList<SymbolicInputEvent> symbolicEvents) {
 		val DFA = createAutomaton
 		DFA.name = NFA.name
 
@@ -184,7 +239,7 @@ class AutomatonOptimizer {
 				state.acceptor = true
 		}
 
-		return DFA
+		return new DeterminizationResult(DFA, NFA, Dstates2DFAStates)
 	}
 
 	public static def epsilonClosure(State s) {
@@ -238,4 +293,17 @@ class AutomatonOptimizer {
 		}
 		return true;
 	}
+}
+
+class DeterminizationResult {
+	val public Automaton DFA;
+	val public HashMap<HashSet<State>, State> mapping;
+	val public Automaton NFA;
+
+	new(Automaton DFA, Automaton NFA, HashMap<HashSet<State>, State> mapping) {
+		this.DFA = DFA
+		this.NFA = NFA
+		this.mapping = mapping
+	}
+
 }

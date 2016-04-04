@@ -193,7 +193,7 @@ public class SoloBlindTrackMatcher extends BaseMatcher<SoloBlindTrackMatch> {
   @Override
   protected SoloBlindTrackMatch tupleToMatch(final Tuple t) {
     try {
-    	return SoloBlindTrackMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) t.get(POSITION_SECTION));
+    	return SoloBlindTrackMatch.newMatch((Section) t.get(POSITION_SECTION));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -203,7 +203,7 @@ public class SoloBlindTrackMatcher extends BaseMatcher<SoloBlindTrackMatch> {
   @Override
   protected SoloBlindTrackMatch arrayToMatch(final Object[] match) {
     try {
-    	return SoloBlindTrackMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_SECTION]);
+    	return SoloBlindTrackMatch.newMatch((Section) match[POSITION_SECTION]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -213,7 +213,7 @@ public class SoloBlindTrackMatcher extends BaseMatcher<SoloBlindTrackMatch> {
   @Override
   protected SoloBlindTrackMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return SoloBlindTrackMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_SECTION]);
+    	return SoloBlindTrackMatch.newMutableMatch((Section) match[POSITION_SECTION]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

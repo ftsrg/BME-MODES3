@@ -53,11 +53,11 @@ public abstract class TrainIsGoingToHitNextMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("t1".equals(parameterName) ) {
-    	this.fT1 = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) newValue;
+    	this.fT1 = (Train) newValue;
     	return true;
     }
     if ("t2".equals(parameterName) ) {
-    	this.fT2 = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) newValue;
+    	this.fT2 = (Train) newValue;
     	return true;
     }
     return false;

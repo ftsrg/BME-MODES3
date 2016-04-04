@@ -268,7 +268,7 @@ public class SectionNeighborMatcher extends BaseMatcher<SectionNeighborMatch> {
   @Override
   protected SectionNeighborMatch tupleToMatch(final Tuple t) {
     try {
-    	return SectionNeighborMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) t.get(POSITION_S1), (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) t.get(POSITION_S2));
+    	return SectionNeighborMatch.newMatch((Section) t.get(POSITION_S1), (Section) t.get(POSITION_S2));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -278,7 +278,7 @@ public class SectionNeighborMatcher extends BaseMatcher<SectionNeighborMatch> {
   @Override
   protected SectionNeighborMatch arrayToMatch(final Object[] match) {
     try {
-    	return SectionNeighborMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_S1], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_S2]);
+    	return SectionNeighborMatch.newMatch((Section) match[POSITION_S1], (Section) match[POSITION_S2]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -288,7 +288,7 @@ public class SectionNeighborMatcher extends BaseMatcher<SectionNeighborMatch> {
   @Override
   protected SectionNeighborMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return SectionNeighborMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_S1], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_S2]);
+    	return SectionNeighborMatch.newMutableMatch((Section) match[POSITION_S1], (Section) match[POSITION_S2]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

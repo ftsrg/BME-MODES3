@@ -264,7 +264,7 @@ public class SectionsInSameRailroadPartAsTrainMatcher extends BaseMatcher<Sectio
   @Override
   protected SectionsInSameRailroadPartAsTrainMatch tupleToMatch(final Tuple t) {
     try {
-    	return SectionsInSameRailroadPartAsTrainMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) t.get(POSITION_TRAIN), (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) t.get(POSITION_SECTION));
+    	return SectionsInSameRailroadPartAsTrainMatch.newMatch((Train) t.get(POSITION_TRAIN), (Section) t.get(POSITION_SECTION));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -274,7 +274,7 @@ public class SectionsInSameRailroadPartAsTrainMatcher extends BaseMatcher<Sectio
   @Override
   protected SectionsInSameRailroadPartAsTrainMatch arrayToMatch(final Object[] match) {
     try {
-    	return SectionsInSameRailroadPartAsTrainMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_TRAIN], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_SECTION]);
+    	return SectionsInSameRailroadPartAsTrainMatch.newMatch((Train) match[POSITION_TRAIN], (Section) match[POSITION_SECTION]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -284,7 +284,7 @@ public class SectionsInSameRailroadPartAsTrainMatcher extends BaseMatcher<Sectio
   @Override
   protected SectionsInSameRailroadPartAsTrainMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return SectionsInSameRailroadPartAsTrainMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_TRAIN], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_SECTION]);
+    	return SectionsInSameRailroadPartAsTrainMatch.newMutableMatch((Train) match[POSITION_TRAIN], (Section) match[POSITION_SECTION]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

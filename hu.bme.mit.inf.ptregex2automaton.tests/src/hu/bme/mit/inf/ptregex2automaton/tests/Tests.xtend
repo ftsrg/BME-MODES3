@@ -26,6 +26,29 @@ class Tests {
 	}
 	
 	@Test
+	def timedSequence(){
+		TestUtils.testRegex('''
+		alphabet = {A,B}
+			expression timedSequence = S* A <(A B)>[1000] B
+		''','''
+			A A B B *timedSequence
+			A A 2000 B B !timedSequence
+		''')
+	}
+	
+	@Test
+	def timedChoice(){
+		TestUtils.testRegex('''
+		alphabet = {A,B}
+			expression timedChoice = S* (A A) | <(A B)>[1000]
+		''','''
+			 A B *timedChoice
+			 A A *timedChoice
+			 A 1100 B !timedChoice
+		''')
+	}
+	
+	@Test
 	def test1(){
 		TestUtils.testRegex('''
 		alphabet = {A,B,C}

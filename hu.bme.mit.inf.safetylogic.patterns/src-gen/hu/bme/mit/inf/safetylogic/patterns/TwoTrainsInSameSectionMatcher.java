@@ -264,7 +264,7 @@ public class TwoTrainsInSameSectionMatcher extends BaseMatcher<TwoTrainsInSameSe
   @Override
   protected TwoTrainsInSameSectionMatch tupleToMatch(final Tuple t) {
     try {
-    	return TwoTrainsInSameSectionMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) t.get(POSITION_T1), (hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) t.get(POSITION_T2));
+    	return TwoTrainsInSameSectionMatch.newMatch((Train) t.get(POSITION_T1), (Train) t.get(POSITION_T2));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -274,7 +274,7 @@ public class TwoTrainsInSameSectionMatcher extends BaseMatcher<TwoTrainsInSameSe
   @Override
   protected TwoTrainsInSameSectionMatch arrayToMatch(final Object[] match) {
     try {
-    	return TwoTrainsInSameSectionMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_T1], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_T2]);
+    	return TwoTrainsInSameSectionMatch.newMatch((Train) match[POSITION_T1], (Train) match[POSITION_T2]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -284,7 +284,7 @@ public class TwoTrainsInSameSectionMatcher extends BaseMatcher<TwoTrainsInSameSe
   @Override
   protected TwoTrainsInSameSectionMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TwoTrainsInSameSectionMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_T1], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_T2]);
+    	return TwoTrainsInSameSectionMatch.newMutableMatch((Train) match[POSITION_T1], (Train) match[POSITION_T2]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

@@ -10,7 +10,7 @@ public class MQTTConfiguration {
     private String address = "localhost";
     private int port = 1883;
 
-    private int qos = 1;
+    private int qos = 0;
     private String clientId = new String();
 
     public MQTTConfiguration() {

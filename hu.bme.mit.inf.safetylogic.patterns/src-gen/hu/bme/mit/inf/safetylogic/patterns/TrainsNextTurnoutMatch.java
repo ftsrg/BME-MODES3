@@ -54,11 +54,11 @@ public abstract class TrainsNextTurnoutMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("train".equals(parameterName) ) {
-    	this.fTrain = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) newValue;
+    	this.fTrain = (Train) newValue;
     	return true;
     }
     if ("turnout".equals(parameterName) ) {
-    	this.fTurnout = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) newValue;
+    	this.fTurnout = (Turnout) newValue;
     	return true;
     }
     return false;

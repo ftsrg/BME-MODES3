@@ -191,7 +191,7 @@ public class TurnoutMatcher extends BaseMatcher<TurnoutMatch> {
   @Override
   protected TurnoutMatch tupleToMatch(final Tuple t) {
     try {
-    	return TurnoutMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) t.get(POSITION_TURNOUT));
+    	return TurnoutMatch.newMatch((Turnout) t.get(POSITION_TURNOUT));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -201,7 +201,7 @@ public class TurnoutMatcher extends BaseMatcher<TurnoutMatch> {
   @Override
   protected TurnoutMatch arrayToMatch(final Object[] match) {
     try {
-    	return TurnoutMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) match[POSITION_TURNOUT]);
+    	return TurnoutMatch.newMatch((Turnout) match[POSITION_TURNOUT]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -211,7 +211,7 @@ public class TurnoutMatcher extends BaseMatcher<TurnoutMatch> {
   @Override
   protected TurnoutMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TurnoutMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) match[POSITION_TURNOUT]);
+    	return TurnoutMatch.newMutableMatch((Turnout) match[POSITION_TURNOUT]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

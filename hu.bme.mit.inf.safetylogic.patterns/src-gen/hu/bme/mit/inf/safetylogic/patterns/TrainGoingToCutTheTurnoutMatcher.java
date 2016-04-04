@@ -283,7 +283,7 @@ public class TrainGoingToCutTheTurnoutMatcher extends BaseMatcher<TrainGoingToCu
   @Override
   protected TrainGoingToCutTheTurnoutMatch tupleToMatch(final Tuple t) {
     try {
-    	return TrainGoingToCutTheTurnoutMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) t.get(POSITION_TRAIN), (hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) t.get(POSITION_TURNOUT));
+    	return TrainGoingToCutTheTurnoutMatch.newMatch((Train) t.get(POSITION_TRAIN), (Turnout) t.get(POSITION_TURNOUT));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -293,7 +293,7 @@ public class TrainGoingToCutTheTurnoutMatcher extends BaseMatcher<TrainGoingToCu
   @Override
   protected TrainGoingToCutTheTurnoutMatch arrayToMatch(final Object[] match) {
     try {
-    	return TrainGoingToCutTheTurnoutMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_TRAIN], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) match[POSITION_TURNOUT]);
+    	return TrainGoingToCutTheTurnoutMatch.newMatch((Train) match[POSITION_TRAIN], (Turnout) match[POSITION_TURNOUT]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -303,7 +303,7 @@ public class TrainGoingToCutTheTurnoutMatcher extends BaseMatcher<TrainGoingToCu
   @Override
   protected TrainGoingToCutTheTurnoutMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TrainGoingToCutTheTurnoutMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) match[POSITION_TRAIN], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) match[POSITION_TURNOUT]);
+    	return TrainGoingToCutTheTurnoutMatch.newMutableMatch((Train) match[POSITION_TRAIN], (Turnout) match[POSITION_TURNOUT]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

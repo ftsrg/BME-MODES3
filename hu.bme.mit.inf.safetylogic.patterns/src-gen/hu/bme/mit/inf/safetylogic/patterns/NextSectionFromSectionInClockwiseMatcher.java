@@ -267,7 +267,7 @@ public class NextSectionFromSectionInClockwiseMatcher extends BaseMatcher<NextSe
   @Override
   protected NextSectionFromSectionInClockwiseMatch tupleToMatch(final Tuple t) {
     try {
-    	return NextSectionFromSectionInClockwiseMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) t.get(POSITION_SECTION), (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) t.get(POSITION_NEXTSECTION));
+    	return NextSectionFromSectionInClockwiseMatch.newMatch((Section) t.get(POSITION_SECTION), (Section) t.get(POSITION_NEXTSECTION));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -277,7 +277,7 @@ public class NextSectionFromSectionInClockwiseMatcher extends BaseMatcher<NextSe
   @Override
   protected NextSectionFromSectionInClockwiseMatch arrayToMatch(final Object[] match) {
     try {
-    	return NextSectionFromSectionInClockwiseMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_SECTION], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_NEXTSECTION]);
+    	return NextSectionFromSectionInClockwiseMatch.newMatch((Section) match[POSITION_SECTION], (Section) match[POSITION_NEXTSECTION]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -287,7 +287,7 @@ public class NextSectionFromSectionInClockwiseMatcher extends BaseMatcher<NextSe
   @Override
   protected NextSectionFromSectionInClockwiseMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return NextSectionFromSectionInClockwiseMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_SECTION], (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) match[POSITION_NEXTSECTION]);
+    	return NextSectionFromSectionInClockwiseMatch.newMutableMatch((Section) match[POSITION_SECTION], (Section) match[POSITION_NEXTSECTION]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

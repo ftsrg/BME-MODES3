@@ -107,7 +107,7 @@
         eType="#//Binding" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//SymbolicEvent"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractTransition">
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractTransition" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="to" lowerBound="1" eType="#//State"
         eOpposite="#//State/incomingTransitions"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" lowerBound="1" eType="#//State"

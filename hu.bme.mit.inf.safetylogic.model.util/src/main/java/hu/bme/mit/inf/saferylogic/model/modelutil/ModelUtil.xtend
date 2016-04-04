@@ -153,6 +153,10 @@ class ModelUtil {
 		train1.id = 0
 		train2.id = 1
 		train3.id = 2
+		
+		train1.currentlyOn = getSectionByID(sectionModel, 9)
+		train2.currentlyOn = getSectionByID(sectionModel, 17)
+		train3.currentlyOn = getSectionByID(sectionModel, 17)
 
 		trainModel.trains.add(train1)
 		trainModel.trains.add(train2)

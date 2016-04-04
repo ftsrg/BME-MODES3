@@ -82,7 +82,10 @@ class TestUtils {
 			var processedInputs = 0
 			var lastEvent = " "
 			for (word : input.trim.split('\\s').map[it.trim].filter[!it.equals('')]) {
-				if (word.startsWith('*')) {
+				if(word.matches("\\d+")){
+					Thread.sleep(Integer.parseInt(word))
+				}
+				else if (word.startsWith('*')) {
 					val expressionName = word.substring(1)
 					if (!exec.acceptedLastTime(expressionName)) { // XXX we first check, print the trace, and assert later
 						val callingFunctionName = Thread.currentThread().getStackTrace().get(3).methodName
@@ -92,6 +95,18 @@ class TestUtils {
 						("Assertion failed at input " + lastEvent + " #" + processedInputs + " on pattern " +
 							expressionName),
 						true,
+						exec.acceptedLastTime(expressionName)
+					)
+				} else if (word.startsWith('!')){
+					val expressionName = word.substring(1)
+					if (exec.acceptedLastTime(expressionName)) { // XXX we first check, print the trace, and assert later
+						val callingFunctionName = Thread.currentThread().getStackTrace().get(3).methodName
+						log(callingFunctionName + '.txt', exec.exec.log.toString)
+					}
+					Assert.assertEquals(
+						("Assertion failed at input " + lastEvent + " #" + processedInputs + " on pattern " +
+							expressionName),
+						false,
 						exec.acceptedLastTime(expressionName)
 					)
 				} else {
@@ -116,7 +131,7 @@ class TestUtils {
 			var Resource resource=resSet.createResource(URI.createURI("test.ptregex")) 
 			resource.getContents().add(model) 
 			try {
-				resource.save(Collections.EMPTY_MAP) 
+//				resource.save(Collections.EMPTY_MAP) 
 			} catch (IOException e) {
 				e.printStackTrace() 
 			}

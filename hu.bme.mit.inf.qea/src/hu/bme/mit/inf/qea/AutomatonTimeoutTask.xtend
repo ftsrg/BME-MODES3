@@ -8,8 +8,6 @@ import java.util.Set
 import java.util.concurrent.TimeUnit
 
 class AutomatonTimeoutTask implements Runnable {
-
-
 	var Set<Token> subscribedTokens
 	var Object lock
 	SymbolicTimer timer
@@ -52,13 +50,9 @@ class AutomatonTimeoutTask implements Runnable {
 						println("A timer activated and throwing the token away :)")
 						token.on = activeEdge.to
 					}
-					
 				}
 			}
 			registry.remove(this)	
 		}
-
-		
 	}
 }
-					

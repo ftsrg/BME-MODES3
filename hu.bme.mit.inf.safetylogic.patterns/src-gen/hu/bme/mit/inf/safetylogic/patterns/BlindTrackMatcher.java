@@ -191,7 +191,7 @@ public class BlindTrackMatcher extends BaseMatcher<BlindTrackMatch> {
   @Override
   protected BlindTrackMatch tupleToMatch(final Tuple t) {
     try {
-    	return BlindTrackMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack) t.get(POSITION_BLINDTRACK));
+    	return BlindTrackMatch.newMatch((BlindTrack) t.get(POSITION_BLINDTRACK));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -201,7 +201,7 @@ public class BlindTrackMatcher extends BaseMatcher<BlindTrackMatch> {
   @Override
   protected BlindTrackMatch arrayToMatch(final Object[] match) {
     try {
-    	return BlindTrackMatch.newMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack) match[POSITION_BLINDTRACK]);
+    	return BlindTrackMatch.newMatch((BlindTrack) match[POSITION_BLINDTRACK]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -211,7 +211,7 @@ public class BlindTrackMatcher extends BaseMatcher<BlindTrackMatch> {
   @Override
   protected BlindTrackMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return BlindTrackMatch.newMutableMatch((hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack) match[POSITION_BLINDTRACK]);
+    	return BlindTrackMatch.newMutableMatch((BlindTrack) match[POSITION_BLINDTRACK]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

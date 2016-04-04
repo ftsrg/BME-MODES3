@@ -45,7 +45,7 @@ public abstract class SoloSectionMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("section".equals(parameterName) ) {
-    	this.fSection = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) newValue;
+    	this.fSection = (Section) newValue;
     	return true;
     }
     return false;

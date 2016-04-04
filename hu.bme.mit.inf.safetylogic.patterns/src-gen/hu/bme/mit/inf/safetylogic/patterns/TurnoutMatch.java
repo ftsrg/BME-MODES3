@@ -45,7 +45,7 @@ public abstract class TurnoutMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("turnout".equals(parameterName) ) {
-    	this.fTurnout = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout) newValue;
+    	this.fTurnout = (Turnout) newValue;
     	return true;
     }
     return false;

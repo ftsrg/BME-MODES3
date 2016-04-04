@@ -45,7 +45,7 @@ public abstract class BlindTrackMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("blindTrack".equals(parameterName) ) {
-    	this.fBlindTrack = (hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack) newValue;
+    	this.fBlindTrack = (BlindTrack) newValue;
     	return true;
     }
     return false;

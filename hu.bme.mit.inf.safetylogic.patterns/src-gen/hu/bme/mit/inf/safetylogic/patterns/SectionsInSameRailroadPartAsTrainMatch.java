@@ -54,11 +54,11 @@ public abstract class SectionsInSameRailroadPartAsTrainMatch extends BasePattern
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("train".equals(parameterName) ) {
-    	this.fTrain = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Train) newValue;
+    	this.fTrain = (Train) newValue;
     	return true;
     }
     if ("section".equals(parameterName) ) {
-    	this.fSection = (hu.bme.mit.inf.safetylogic.model.railroadmodel.Section) newValue;
+    	this.fSection = (Section) newValue;
     	return true;
     }
     return false;
