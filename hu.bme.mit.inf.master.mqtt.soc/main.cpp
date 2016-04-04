@@ -49,5 +49,6 @@ void loop() {
     Serial.print(", success: ");
     Serial.println(success);
 #endif
-    delay(SOC_REFRESH_RATE);
+    // no delay at all, after a successful read start a new one
+    // delay(SOC_REFRESH_RATE);
 }
