@@ -26,6 +26,7 @@ import java.util.Set
 import java.util.Stack
 import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.xtend.lib.macro.declaration.Declaration
+import hu.bme.mit.inf.parametricTimedRegularExpression.Plus
 
 class AutomatonOptimizer {
 
@@ -74,10 +75,13 @@ class AutomatonOptimizer {
 	def dispatch boolean recursiveCheckForTiming(Star star) {
 		return star.body.recursiveCheckForTiming
 	}
+	
+	def dispatch boolean recursiveCheckForTiming(Plus star) {
+		return star.body.recursiveCheckForTiming
+	}
 
 	def boolean expressionContainsExactlyOneTiming(ExpressionDeclaration dec) {
-		//TODO
-		return false;
+		return recursiveCountForTiming(dec.body) == 1;
 	}
 
 	
@@ -131,7 +135,10 @@ class AutomatonOptimizer {
 
 	def dispatch int recursiveCountForTiming(Star star) {
 		return star.body.recursiveCountForTiming
-		
+	}
+
+	def dispatch int recursiveCountForTiming(Plus plus){
+		return plus.body.recursiveCountForTiming
 	}
 
 	public def Automaton minimizeNFA(Automaton a) {
