@@ -37,6 +37,14 @@ class Tests {
 	}
 	
 	@Test
+	def failingTimedSequence(){
+		TestUtils.testRegex('''
+		alphabet = {A,B,C}
+			expression timedSequence = S* <A B{10}>[100] C
+		''','''''')
+	}
+	
+	@Test
 	def timedChoice(){
 		TestUtils.testRegex('''
 		alphabet = {A,B}
