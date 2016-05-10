@@ -71,5 +71,6 @@
         <module>hu.bme.mit.inf.safetylogic.patterns</module>
 
         <!--<module>hu.bme.mit.inf.xpresscontroller</module>-->
+        <module>hu.bme.mit.inf.eda</module>
     </modules>
 </project>

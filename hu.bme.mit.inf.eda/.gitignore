@@ -14,9 +14,7 @@ Thumbs.db
 
 # Generated sources and binaries #
 ##################################
-/bin/
-/xtend-gen/
-/src-gen/
-/target/
-/hu.bme.mit.inf.master.mqtt.soc/dist/
-/hu.bme.mit.inf.master.mqtt.soc/build/
+bin/
+xtend-gen/
+src-gen/
+target/
