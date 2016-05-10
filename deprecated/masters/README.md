@@ -1,5 +1,7 @@
 # Arduino masters
 
+*This module is deprecated, use [Master-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.client) and [Master-MQTT-SOC](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.soc) instead.*
+
 Source codes uploded to Arduino for communication over TCP/IP and UDP protocols.
 
 **Beware which folder (tcp or udp) you want to use!**
