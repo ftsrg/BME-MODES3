@@ -14,7 +14,7 @@ Modules stored in the repository:
 * [Master-MQTT-SOC](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.soc)
 * [Masters](https://github.com/FTSRG/BME-MODES3/tree/master/masters)
 * [MQTT-Common](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.mqtt.common)
-[PiClient-MQTT](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.piclient)
+* [PiClient-MQTT](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.piclient)
 * [SerialMonitor](https://github.com/FTSRG/BME-MODES3/tree/master/serialmonitor)
 * [Yakindu-Codes-Normal-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.normal)
 * [Yakindu-Codes-English-Turnout](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.yakindu.sc.english)
