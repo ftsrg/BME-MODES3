@@ -18,6 +18,7 @@ Create a Maven project in any IDE (Eclipse or NetBeans are recommended). Maven s
 
 * [Maven](https://maven.apache.org/download.cgi): to build the project.
 * [Paho](http://www.eclipse.org/paho/): the MQTT client. *See pom.xml*
+* [JOpt Simple](http://pholser.github.io/jopt-simple/download.html): handling command-line arguments correctly
 * [GSON](https://github.com/google/gson): we use Gson instead of JSON, because it is more convenient. *See pom.xml*
 * [log4j](http://logging.apache.org/log4j/1.2/): for logging. *See pom.xml*
 

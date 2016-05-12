@@ -29,6 +29,11 @@
             <artifactId>log4j</artifactId>
             <version>1.2.14</version>
         </dependency>
+        <dependency>
+            <groupId>net.sf.jopt-simple</groupId>
+            <artifactId>jopt-simple</artifactId>
+            <version>5.0-beta-1</version>
+        </dependency>
     </dependencies>
     
     <build>

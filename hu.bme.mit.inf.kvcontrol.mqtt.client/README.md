@@ -51,7 +51,7 @@ Now start the Mosquitto Service at Windows Control Panel -> Administrative Tools
 
 ## Dependants
 
-*None*
+* [EDA](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.eda): Exploratory Data Analysis module of the railway track.
 
 ## Dependencies
 
