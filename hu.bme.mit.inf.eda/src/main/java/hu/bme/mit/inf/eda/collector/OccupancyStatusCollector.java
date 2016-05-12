@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -21,7 +22,7 @@ public class OccupancyStatusCollector implements Collector {
     protected Collection<Integer> sectionsToBeCollected = new ArrayList<>();
 
     // timestamp, sectionId, occupancyStatus (occupied/free)
-    protected Collection<SectionOccupancyStatusEntry> statusEntries = new ArrayList<>();
+    protected List<SectionOccupancyStatusEntry> statusEntries = new ArrayList<>();
 
     // request sender to acquire status information
     protected OccupancyRequestSender requestSender;

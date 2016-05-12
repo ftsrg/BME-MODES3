@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -21,7 +22,7 @@ public class TurnoutStatusCollector implements Collector {
     protected Collection<Integer> turnoutsToBeCollected = new ArrayList<>();
 
     // timestamp, turnoutId, turnoutStatus (divergent/straight)
-    protected Collection<TurnoutStatusEntry> statusEntries = new ArrayList<>();
+    protected List<TurnoutStatusEntry> statusEntries = new ArrayList<>();
 
     // request sender to acquire status information
     protected TurnoutRequestSender requestSender;

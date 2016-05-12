@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -21,7 +22,7 @@ public class SectionStatusCollector implements Collector {
     protected Collection<Integer> sectionsToBeCollected = new ArrayList<>();
 
     // timestamp, sectionId, status (enabled/disabled)
-    protected Collection<SectionStatusEntry> statusEntries = new ArrayList<>();
+    protected List<SectionStatusEntry> statusEntries = new ArrayList<>();
 
     // request sender to acquire status information
     protected SectionRequestSender requestSender;
