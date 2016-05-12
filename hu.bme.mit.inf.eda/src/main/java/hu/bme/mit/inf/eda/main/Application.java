@@ -1,8 +1,18 @@
 package hu.bme.mit.inf.eda.main;
 
+import hu.bme.mit.inf.eda.collector.Collector;
+import hu.bme.mit.inf.eda.collector.OccupancyStatusCollector;
+import hu.bme.mit.inf.eda.collector.SectionStatusCollector;
+import hu.bme.mit.inf.eda.collector.TurnoutStatusCollector;
+import hu.bme.mit.inf.eda.data.CollectionTimeSettings;
+import static hu.bme.mit.inf.eda.util.PathValidator.isPathValid;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashSet;
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -31,14 +41,14 @@ public class Application {
                             "Path for occupancy section status (occupied/free) log file [optional, if omitted then section occupancy status is excluded]")
                     .withRequiredArg().ofType(String.class);
 
-            ArgumentAcceptingOptionSpec<Integer> logIntervalArg
-                    = parser.accepts("li",
-                            "Interval for logging in minutes. [optional, default = 1]")
+            ArgumentAcceptingOptionSpec<Integer> intervalArg
+                    = parser.accepts("i",
+                            "Interval for data collection in minutes. [optional, default = 1]")
                     .withRequiredArg().ofType(Integer.class);
 
-            ArgumentAcceptingOptionSpec<Integer> logFrequencyArg
-                    = parser.accepts("lf",
-                            "Frequency for logging in milliseconds. [optional, default = 100]")
+            ArgumentAcceptingOptionSpec<Integer> frequencyArg
+                    = parser.accepts("f",
+                            "Frequency for data collection in milliseconds. [optional, default = 100]")
                     .withRequiredArg().ofType(Integer.class);
 
             ArgumentAcceptingOptionSpec<String> mqttProtocolArg
@@ -80,10 +90,10 @@ public class Application {
                     mqttPortArg, "-p");
             Integer mqttQOS = getParameterIntegerValue(parsed,
                     mqttQOSArg, "-q");
-            Integer logInterval = getParameterIntegerValue(parsed,
-                    logIntervalArg, "--li");
-            Integer logFrequency = getParameterIntegerValue(parsed,
-                    logFrequencyArg, "--lf");
+            Integer interval = getParameterIntegerValue(parsed,
+                    intervalArg, "-i");
+            Integer frequency = getParameterIntegerValue(parsed,
+                    frequencyArg, "-f");
 
             String sectionStatusPath = getParameterStringValue(parsed,
                     sectionStatusLogPathArg, "--sl");
@@ -95,8 +105,60 @@ public class Application {
             MQTTConfiguration config = createConfiguration(parsed,
                     mqttProtocolArg, mqttAddressArg, mqttPort, mqttQOS);
 
+            CollectionTimeSettings timeSettings = createTimeSettings(interval,
+                    frequency);
+
+            Collection<Collector> collectors = createCollectors(
+                    sectionStatusPath, occupancyStatusPath, turnoutStatusPath,
+                    config, timeSettings);
+            startCollectors(collectors);
+
         } catch (IOException ex) {
             logException(Application.class.getName(), ex);
+        }
+    }
+
+    private static CollectionTimeSettings createTimeSettings(Integer intervalInt,
+            Integer frequencyInt) {
+        int interval = (intervalInt == null) ? 1 : intervalInt;
+        int frequency = (frequencyInt == null) ? 100 : frequencyInt;
+
+        return new CollectionTimeSettings(interval, frequency);
+    }
+
+    private static Collection<Collector> createCollectors(
+            String sectionStatusPath,
+            String occupancyStatusPath, String turnoutStatusPath,
+            MQTTConfiguration config, CollectionTimeSettings timeSettings) {
+
+        MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(config);
+        MQTTPublishSubscribeDispatcher dispatcher = new MQTTPublishSubscribeDispatcher(
+                pubsub);
+
+        Collection<Collector> collectors = new HashSet<>();
+
+        if (sectionStatusPath != null && isPathValid(sectionStatusPath)) {
+            collectors.add(new SectionStatusCollector(dispatcher, timeSettings,
+                    sectionStatusPath));
+        }
+
+        if (occupancyStatusPath != null && isPathValid(occupancyStatusPath)) {
+            collectors.add(
+                    new OccupancyStatusCollector(dispatcher, timeSettings,
+                            occupancyStatusPath));
+        }
+
+        if (turnoutStatusPath != null && isPathValid(turnoutStatusPath)) {
+            collectors.add(new TurnoutStatusCollector(dispatcher, timeSettings,
+                    turnoutStatusPath));
+        }
+
+        return collectors;
+    }
+
+    private static void startCollectors(Collection<Collector> collectors) {
+        for (Collector collector : collectors) {
+            collector.startCollectingData();
         }
     }
 

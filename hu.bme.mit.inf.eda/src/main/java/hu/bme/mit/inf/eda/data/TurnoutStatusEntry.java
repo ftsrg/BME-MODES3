@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.eda.data;
 
-import hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
 import java.time.LocalDateTime;
 
