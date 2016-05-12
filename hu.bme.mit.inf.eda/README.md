@@ -62,7 +62,6 @@ Now start the Mosquitto Service at Windows Control Panel -> Administrative Tools
 ## Dependencies ##
 
 * [Maven](https://maven.apache.org/download.cgi): to build the project
-* [JOpt Simple](http://pholser.github.io/jopt-simple/download.html): handling command-line arguments correctly
 * [KVControl-MQTT-Client](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.kvcontrol.mqtt.client): to communicate with the [embedded controller](https://github.com/FTSRG/BME-MODES3/tree/master/hu.bme.mit.inf.master.mqtt.client)
 
 ## Target Platform ##
