@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.yakindu.sc.normal.control.controller;
 
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import hu.bme.mit.inf.yakindu.sc.normal.control.sm.RemoteTurnout;
@@ -21,7 +20,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.eclipse.paho.client.mqttv3.MqttException;
 import org.yakindu.scr.section.ISectionStatemachine;
 
 import org.yakindu.scr.section.SectionWrapperWithListeners;

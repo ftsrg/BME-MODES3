@@ -15,7 +15,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
  *
  * @author benedekh
  */
-public class MQTTPublisherSubscriber {
+class MQTTPublisherSubscriber {
 
     private MqttAsyncClient client;
     private int qos;

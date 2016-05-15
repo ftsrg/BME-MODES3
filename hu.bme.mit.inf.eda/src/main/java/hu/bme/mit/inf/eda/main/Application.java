@@ -8,7 +8,6 @@ import hu.bme.mit.inf.eda.data.CollectionTimeSettings;
 import static hu.bme.mit.inf.eda.util.PathValidator.isPathValid;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.mqtt.common.parameters.ArgumentDescriptor;
 import hu.bme.mit.inf.mqtt.common.parameters.ArgumentRegistrar;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
@@ -111,9 +110,8 @@ public class Application {
             String occupancyStatusPath, String turnoutStatusPath,
             MQTTConfiguration config, CollectionTimeSettings timeSettings) {
 
-        MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(config);
         MQTTPublishSubscribeDispatcher dispatcher = new MQTTPublishSubscribeDispatcher(
-                pubsub);
+                config);
 
         Collection<Collector> collectors = new HashSet<>();
 

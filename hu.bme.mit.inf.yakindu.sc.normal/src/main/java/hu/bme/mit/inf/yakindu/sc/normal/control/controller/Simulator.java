@@ -16,7 +16,6 @@ import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.yakindu.sc.normal.control.helper.YakinduSMConfiguration;
 import joptsimple.ArgumentAcceptingOptionSpec;
@@ -145,8 +144,8 @@ public class Simulator {
             MQTTConfiguration mqttConf, Integer turnoutId) throws MqttException {
         YakinduSMConfiguration smConf = null;
 
-        MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(mqttConf);
-        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(mqtt);
+        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(
+                mqttConf);
 
         switch (turnoutId) {
             case 0x81:

@@ -6,7 +6,6 @@ import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.piclient.Application;
 import static hu.bme.mit.inf.piclient.ui.SettingsWindow.Configuration;
@@ -609,9 +608,8 @@ public class SettingsWindow extends javax.swing.JFrame {
 
         MQTTConfiguration mqttConfiguration = createMQTTConfiguration(address,
                 protocol, port);
-        MQTTPublisherSubscriber pubsub = new MQTTPublisherSubscriber(
+        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(
                 mqttConfiguration);
-        MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(pubsub);
 
         turnoutControllerProxy = new TurnoutControllerProxy(sender);
         sectionControllerProxy = new SectionControllerProxy(sender);

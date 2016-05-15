@@ -9,7 +9,6 @@ import java.io.IOException;
 import hu.bme.mit.inf.yakindu.sc.english.control.helper.YakinduSMConfiguration;
 import static hu.bme.mit.inf.yakindu.sc.english.control.trace.StatemachineTraceBuilder.setDefaultSavePath;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublisherSubscriber;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
@@ -130,9 +129,8 @@ public class Simulator {
     }
 
     private static void initializeAndStartStatemachines(MQTTConfiguration conf) {
-        MQTTPublisherSubscriber mqtt = new MQTTPublisherSubscriber(conf);
         MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(
-                mqtt);
+                conf);
 
         YakinduSMConfiguration sm134ConfObj = initialize0x86(sender);
         YakinduSMConfiguration sm135ConfObj = initialize0x87(sender);
