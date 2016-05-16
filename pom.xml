@@ -65,12 +65,12 @@
         <module>hu.bme.mit.inf.yakindu.sc.english</module>
         <module>hu.bme.mit.inf.yakindu.sc.normal</module>
         <module>hu.bme.mit.inf.piclient</module>
+		<module>hu.bme.mit.inf.eda</module>
         <module>hu.bme.mit.inf.safetylogic.event</module>
         <module>hu.bme.mit.inf.safetylogic.model</module>
         <module>hu.bme.mit.inf.safetylogic.model.util</module>
         <module>hu.bme.mit.inf.safetylogic.patterns</module>
 
         <!--<module>hu.bme.mit.inf.xpresscontroller</module>-->
-        <module>hu.bme.mit.inf.eda</module>
     </modules>
 </project>

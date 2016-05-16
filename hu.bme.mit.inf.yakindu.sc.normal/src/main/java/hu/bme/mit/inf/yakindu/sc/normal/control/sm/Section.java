@@ -4,12 +4,16 @@ import org.yakindu.scr.section.ISectionStatemachine.SCISection;
 import org.yakindu.scr.section.SectionWrapper;
 
 /**
+ * It stores the ID of the section and the respective statechart too.
  *
  * @author benedekh
  */
 public class Section {
 
+    // the ID of the section
     private final int sectionId;
+
+    // the statechart of the respective section
     private final SectionWrapper statemachine;
 
     public Section(int sectionId, SectionWrapper sm) {
@@ -21,14 +25,17 @@ public class Section {
         return this.sectionId;
     }
 
+    // a proxy method for getting the SCISection interface
     public SCISection getSCISection() {
         return statemachine.getSCISection();
     }
 
+    // a proxy method for firing a runCycle
     public void runCycle() {
         statemachine.runCycle();
     }
 
+    // a proxy method for entering the statechart
     public void enter() {
         statemachine.enter();
     }

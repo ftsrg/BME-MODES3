@@ -27,6 +27,9 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 /**
+ * This class instantiates and initializes the respective statecharts, based on
+ * the turnout's ID (see respective methods). Each method requires only the MQTT
+ * subscriber through the MQTT communication will be done.
  *
  * @author benedekh
  */
@@ -36,6 +39,13 @@ public class StatemachineInitializer {
     private static final long STRAIGHT_VALUE = getValueFromDirection(STRAIGHT);
     private static final long TOP_VALUE = getValueFromDirection(TOP);
 
+    /**
+     * Instantiates and initializes the statemachines of 0x81 turnout, and the
+     * connecting sections' statecharts as well.
+     *
+     * @param sender the object used for the MQTT communication
+     * @return a configuration that stores the initialized statecharts
+     */
     public static YakinduSMConfiguration initialize0x81(
             MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
@@ -92,6 +102,13 @@ public class StatemachineInitializer {
         return conf;
     }
 
+    /**
+     * Instantiates and initializes the statemachines of 0x82 turnout, and the
+     * connecting sections' statecharts as well.
+     *
+     * @param sender the object used for the MQTT communication
+     * @return a configuration that stores the initialized statecharts
+     */
     public static YakinduSMConfiguration initialize0x82(
             MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
@@ -150,6 +167,13 @@ public class StatemachineInitializer {
         return conf;
     }
 
+    /**
+     * Instantiates and initializes the statemachines of 0x83 turnout, and the
+     * connecting sections' statecharts as well.
+     *
+     * @param sender the object used for the MQTT communication
+     * @return a configuration that stores the initialized statecharts
+     */
     public static YakinduSMConfiguration initialize0x83(
             MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
@@ -214,6 +238,13 @@ public class StatemachineInitializer {
         return conf;
     }
 
+    /**
+     * Instantiates and initializes the statemachines of 0x84 turnout, and the
+     * connecting sections' statecharts as well.
+     *
+     * @param sender the object used for the MQTT communication
+     * @return a configuration that stores the initialized statecharts
+     */
     public static YakinduSMConfiguration initialize0x84(
             MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
@@ -272,6 +303,13 @@ public class StatemachineInitializer {
         return conf;
     }
 
+    /**
+     * Instantiates and initializes the statemachines of 0x85 turnout, and the
+     * connecting sections' statecharts as well.
+     *
+     * @param sender the object used for the MQTT communication
+     * @return a configuration that stores the initialized statecharts
+     */
     public static YakinduSMConfiguration initialize0x85(
             MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
@@ -330,6 +368,20 @@ public class StatemachineInitializer {
         return conf;
     }
 
+    /**
+     * Create the section's statemachine based on its ID.
+     *
+     * @param sectionID the ID of the section whose statemachine should be
+     * created.
+     * @param turnoutStatemachine the statechart of the turnout to whom the
+     * section connects
+     * @param directionValue the direction from which the section connects to
+     * the turnout
+     * @param sender the object used for the MQTT communication
+     *
+     * @return the section's statechart implementation with trace logging
+     * capabilites
+     */
     private static SectionWrapperWithListeners createSectionStatemachine(
             MQTTPublishSubscribeDispatcher sender, int sectionID,
             ITurnoutStatemachine turnoutStatemachine,

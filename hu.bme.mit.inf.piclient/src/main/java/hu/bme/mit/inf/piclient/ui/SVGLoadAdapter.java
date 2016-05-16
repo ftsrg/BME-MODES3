@@ -17,6 +17,7 @@ import static hu.bme.mit.inf.piclient.Application.sections;
 import hu.bme.mit.inf.piclient.data.Relations;
 
 /**
+ * The SVG loader class.
  *
  * @author zsoltmazlo, benedekh
  */

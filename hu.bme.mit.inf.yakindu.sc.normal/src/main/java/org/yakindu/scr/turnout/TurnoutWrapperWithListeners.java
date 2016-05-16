@@ -6,12 +6,17 @@ import java.util.List;
 import org.yakindu.scr.turnout.TurnoutStatemachine.State;
 
 /**
+ * Thread-safe wrapper for the turnout's statechart with extra trace logging
+ * capabilities.
  *
  * @author benedekh
  */
 public class TurnoutWrapperWithListeners extends TurnoutWrapper {
 
+    // if trace logging is enabled
     private static boolean TRACE_LOG_ENABLED = false;
+
+    // the trace logger object
     private final StatemachineTraceBuilder<State> traceBuilder;
 
     public TurnoutWrapperWithListeners(String statemachineName) {
@@ -22,6 +27,10 @@ public class TurnoutWrapperWithListeners extends TurnoutWrapper {
         TRACE_LOG_ENABLED = traceLogEnabled;
     }
 
+    /**
+     * Process the received events and after that check whether the active
+     * states have changed (log trace changes).
+     */
     @Override
     public void run() {
 
@@ -44,18 +53,31 @@ public class TurnoutWrapperWithListeners extends TurnoutWrapper {
         }
     }
 
+    /**
+     * Proxy for registering a new SCISectionsListener.
+     *
+     * @param listener to be registered
+     */
     public void addSectionsListener(SCISectionsListener listener) {
         synchronized (statemachine) {
             getSCISections().getListeners().add(listener);
         }
     }
 
+    /**
+     * Proxy for registering a new SCITurnoutListener.
+     *
+     * @param listener to be registered
+     */
     public void addTurnoutListener(SCITurnoutListener listener) {
         synchronized (statemachine) {
             getSCITurnout().getListeners().add(listener);
         }
     }
 
+    /**
+     * Update the trace log.
+     */
     private void updateLogTrace() {
         List<State> activeStates = getActiveStates();
         boolean isOccupied = statemachine.getSCITurnout().getIsOccupied();
@@ -67,6 +89,11 @@ public class TurnoutWrapperWithListeners extends TurnoutWrapper {
         }
     }
 
+    /**
+     * Get latest active states from the statechart.
+     *
+     * @return the latest active states.
+     */
     private List<State> getActiveStates() {
         List<State> activeStates = new ArrayList<>();
         for (State value : State.values()) {

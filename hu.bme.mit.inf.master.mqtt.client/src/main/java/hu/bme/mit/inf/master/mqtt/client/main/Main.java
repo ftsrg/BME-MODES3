@@ -13,6 +13,21 @@ import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
+/**
+ * The application that is uploaded to the embedded controllers. It manages the
+ * referred turnout and the connecting sections.
+ *
+ * The actual pinout configuration is located at
+ * src/main/resources/conf/settings.json.
+ *
+ * For details see
+ * {@link hu.bme.mit.inf.master.bbb.strategy.ExpanderSectionController} and
+ * {@link hu.bme.mit.inf.master.bbb.strategy.ExpanderTurnoutController} and
+ * {@link hu.bme.mit.inf.master.bbb.conf.ExpanderControllerConfiguration}
+ * classes.
+ *
+ * @author benedekh
+ */
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -56,7 +71,8 @@ public class Main {
                     mqttProtocolArg, mqttAddressArg, mqttPort, mqttQOS);
 
             // start the message handlers for the sections and turnout messages
-            MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(config);
+            MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(
+                    config);
             new SectionsMessageHandler(sender);
             new TurnoutMessageHandler(sender);
 
@@ -69,6 +85,15 @@ public class Main {
         }
     }
 
+    /**
+     * Get the Integer parameter of the respective command-line argument.
+     *
+     * @param parsed the parsed arguments
+     * @param parameter the argument whose parameter should be extracted
+     * @param parameterFieldName the name of the argument
+     * @return the referred argument's Integer parameter extracted
+     * @throws IOException if the parameter cannot be converted to Integer
+     */
     private static Integer getParameterIntegerValue(OptionSet parsed,
             ArgumentAcceptingOptionSpec<Integer> parameter,
             String parameterFieldName) throws IOException {
@@ -83,6 +108,16 @@ public class Main {
         return null;
     }
 
+    /**
+     * Creates a MQTT Configuration based on the parameters.
+     *
+     * @param parsed the parsed arguments
+     * @param protocolArg the protocol of the MQTT Broker
+     * @param addressArg the address of the MQTT Broker
+     * @param port the port of the MQTT Broker
+     * @param qos the QOS (Quality of Service) of the MQTT Broker
+     * @return a new MQTT Configuration
+     */
     private static MQTTConfiguration createConfiguration(
             OptionSet parsed,
             ArgumentAcceptingOptionSpec<String> protocolArg,

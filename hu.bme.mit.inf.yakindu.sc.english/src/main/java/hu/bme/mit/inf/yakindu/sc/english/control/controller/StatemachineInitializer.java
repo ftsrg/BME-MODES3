@@ -26,6 +26,9 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 /**
+ * This class instantiates and initializes the respective statecharts, based on
+ * the turnout's ID (see respective methods). Each method requires only the MQTT
+ * subscriber through the MQTT communication will be done.
  *
  * @author benedekh
  */
@@ -34,6 +37,13 @@ public class StatemachineInitializer {
     private static final long DIVERGENT_VALUE = getValueFromDirection(DIVERGENT);
     private static final long STRAIGHT_VALUE = getValueFromDirection(STRAIGHT);
 
+    /**
+     * Instantiates and initializes the statemachines of 0x86 turnout, and the
+     * connecting sections' statecharts as well.
+     *
+     * @param sender the object used for the MQTT communication
+     * @return a configuration that stores the initialized statecharts
+     */
     public static YakinduSMConfiguration initialize0x86(
             MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
@@ -82,6 +92,13 @@ public class StatemachineInitializer {
         return conf;
     }
 
+    /**
+     * Instantiates and initializes the statemachines of 0x87 turnout, and the
+     * connecting sections' statecharts as well.
+     *
+     * @param sender the object used for the MQTT communication
+     * @return a configuration that stores the initialized statecharts
+     */
     public static YakinduSMConfiguration initialize0x87(
             MQTTPublishSubscribeDispatcher sender) {
         YakinduSMConfiguration conf = new YakinduSMConfiguration();
@@ -130,6 +147,20 @@ public class StatemachineInitializer {
         return conf;
     }
 
+    /**
+     * Create the section's statemachine based on its ID.
+     *
+     * @param sectionID the ID of the section whose statemachine should be
+     * created.
+     * @param turnoutStatemachine the statechart of the turnout to whom the
+     * section connects
+     * @param directionValue the direction from which the section connects to
+     * the turnout
+     * @param sender the object used for the MQTT communication
+     *
+     * @return the section's statechart implementation with trace logging
+     * capabilites
+     */
     private static SectionWrapperWithListeners createSectionStatemachine(
             int sectionID, ITurnoutStatemachine turnoutStatemachine,
             long directionValue, MQTTPublishSubscribeDispatcher sender) {

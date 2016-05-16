@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.eda.collector;
 
-import hu.bme.mit.inf.eda.data.CollectionTimeSettings;
+import hu.bme.mit.inf.eda.data.TimeSettings;
 import hu.bme.mit.inf.eda.data.SectionOccupancyStatusEntry;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus;
@@ -14,11 +14,13 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * Collects the sections occupancies (occupied / free) from the railway track.
  *
  * @author benedekh
  */
 public class OccupancyStatusCollector implements Collector {
 
+    // the IDs of the sections whose occupancy status shall be collected
     protected Collection<Integer> sectionsToBeCollected = new ArrayList<>();
 
     // timestamp, sectionId, occupancyStatus (occupied/free)
@@ -30,8 +32,15 @@ public class OccupancyStatusCollector implements Collector {
     // it calls us frequently to collect data
     protected CollectorRunnableSlave collectorSlave;
 
+    /**
+     * @param dispatcher for which it subscribes on a topic for sections
+     * occupancies
+     * @param timeSettings settings for how long and how frequently the data
+     * should be collected
+     * @param path the output file path of the collected data
+     */
     public OccupancyStatusCollector(MQTTPublishSubscribeDispatcher dispatcher,
-            CollectionTimeSettings timeSettings, String path) {
+            TimeSettings timeSettings, String path) {
         this.requestSender = new OccupancyRequestSender(dispatcher);
         this.collectorSlave = new CollectorRunnableSlave(this, timeSettings,
                 path);
@@ -72,6 +81,12 @@ public class OccupancyStatusCollector implements Collector {
         }
     }
 
+    /**
+     * Appends a new section occupancy status entry to the former ones.
+     *
+     * @param sectionId the referred section's ID
+     * @param status the occupancy status of the section
+     */
     protected void addNewStatusEntry(int sectionId,
             SectionOccupancyStatus status) {
         statusEntries.add(new SectionOccupancyStatusEntry(LocalDateTime.now(),

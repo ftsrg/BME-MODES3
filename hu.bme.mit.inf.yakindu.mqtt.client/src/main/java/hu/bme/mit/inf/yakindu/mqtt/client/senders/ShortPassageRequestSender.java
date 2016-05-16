@@ -14,17 +14,31 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 
 /**
+ * Used for sending a short passage request to a turnout's statechart.
  *
  * @author benedekh
  */
 public class ShortPassageRequestSender {
 
+    // used for transmitting the messages
     private final DistributedMessageReceiver sender;
 
+    /**
+     * @param sender used for transmitting the messages
+     */
     public ShortPassageRequestSender(DistributedMessageReceiver sender) {
         this.sender = sender;
     }
 
+    /**
+     * Send a short passage request to the referred turnout's (recipient ID)
+     * statechart, that can reach the sender turnout's statemachine from the
+     * referred direction.
+     *
+     * @param direction from which the target (recipient) can reach the sender
+     * ("local") turnout's statechart.
+     * @param recipientID the recipient turnout (switch)'s ID
+     */
     public void sendShortPassageRequest(Direction direction, int recipientID) {
         Command command;
 

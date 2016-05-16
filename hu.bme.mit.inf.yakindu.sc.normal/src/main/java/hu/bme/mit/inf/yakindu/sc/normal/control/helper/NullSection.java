@@ -5,8 +5,9 @@ import java.util.List;
 import org.yakindu.scr.section.ISectionStatemachine;
 
 /**
+ * Dummy implementation for a non-existent section.
  *
- * @author benjo
+ * @author benedekh
  */
 public class NullSection implements ISectionStatemachine.SCISection {
 

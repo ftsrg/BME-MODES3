@@ -6,11 +6,19 @@ import java.io.File;
 import java.io.IOException;
 
 /**
+ * Validates a path.
  *
  * @author benedekh
  */
 public class PathValidator {
 
+    /**
+     * Validates the referred path. The path is valid, if (1) it exists, (2) a
+     * file can be created there.
+     *
+     * @param path to be validated
+     * @return true if the referred path is valid, false otherwise
+     */
     public static boolean isPathValid(String path) {
         try {
             new File(path).createNewFile();

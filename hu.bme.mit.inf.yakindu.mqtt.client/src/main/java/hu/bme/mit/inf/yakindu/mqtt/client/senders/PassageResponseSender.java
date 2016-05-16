@@ -15,17 +15,33 @@ import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 
 /**
+ * Used for sending a passage response to a turnout's statechart.
  *
  * @author benedekh
  */
 public class PassageResponseSender {
 
+    // used for transmitting the messages
     private final DistributedMessageReceiver sender;
 
+    /**
+     * @param sender used for transmitting the messages
+     */
     public PassageResponseSender(DistributedMessageReceiver sender) {
         this.sender = sender;
     }
 
+    /**
+     * Send a passage response to the referred turnout's (recipient ID)
+     * statechart, that can reach the sender turnout's statemachine from the
+     * referred direction.
+     *
+     * @param direction from which the target (recipient) can reach the sender
+     * ("local") turnout's statechart.
+     * @param allowance whether the passage is allowed or not, for the train
+     * coming from the target turnout's area
+     * @param recipientID the recipient turnout (switch)'s ID
+     */
     public void sendPassageResponse(Direction direction, Allowance allowance,
             int recipientID) {
 

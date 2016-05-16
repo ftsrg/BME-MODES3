@@ -22,18 +22,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * The section controller part of the embedded controller. Through it the
+ * referred sections can be managed.
  *
  * @author hegyibalint, benedekh
  */
 public class ExpanderSectionController extends AbstractControllerStrategy implements IControllerConfiguration {
 
+    // the transmitter of messages through MQTT
     protected MQTTPublishSubscribeDispatcher mqttPublisher;
+
+    // the topic for that the section controller sends the status information
     protected String subscribedTopic;
-    
+
+    // the actual embedded controller which manages the sections
     protected ExpanderControllerConfiguration controllerConf;
+
+    // the sections statuses based on the section ID
     protected Map<String, SectionStatus> sectionStatus;
 
-    public ExpanderSectionController(MQTTPublishSubscribeDispatcher mqttPublisher, String topic) {
+    /**
+     * @param mqttPublisher the transmitter of messages through MQTT
+     * @param topic the topic for that the section controller sends the status
+     * information
+     */
+    public ExpanderSectionController(
+            MQTTPublishSubscribeDispatcher mqttPublisher, String topic) {
         try {
             controllerConf = new ExpanderControllerConfiguration();
         } catch (Exception ex) {
@@ -49,6 +63,9 @@ public class ExpanderSectionController extends AbstractControllerStrategy implem
         }
     }
 
+    /**
+     * @return the most recent section status information
+     */
     public List<Section> getSectionsWithStatus() {
         List<Section> results = new ArrayList<>();
         for (String sectionId : sectionStatus.keySet()) {
@@ -73,7 +90,7 @@ public class ExpanderSectionController extends AbstractControllerStrategy implem
         this.setPinLevel(sectionExpander[2], Signal.High);
         this.setPinLevel(sectionExpander[3], Signal.High);
         sectionStatus.put(HexConversionUtil.fromNumber(sectionId), ENABLED);
-        publishSectionStatus(sectionId, ENABLED, mqttPublisher);
+        publishSectionStatus(sectionId, ENABLED);
     }
 
     @Override
@@ -84,7 +101,7 @@ public class ExpanderSectionController extends AbstractControllerStrategy implem
         this.setPinLevel(sectionExpander[2], Signal.Low);
         this.setPinLevel(sectionExpander[3], Signal.Low);
         sectionStatus.put(HexConversionUtil.fromNumber(sectionId), DISABLED);
-        publishSectionStatus(sectionId, DISABLED, mqttPublisher);
+        publishSectionStatus(sectionId, DISABLED);
     }
 
     @Override
@@ -104,8 +121,14 @@ public class ExpanderSectionController extends AbstractControllerStrategy implem
                 "ExpanderSectionController does not support turnout operations");
     }
 
-    private void publishSectionStatus(int id, SectionStatus status,
-            MQTTPublishSubscribeDispatcher mqttPublisher) {
+    /**
+     * Sends the respective section's status to the subscribed topic through
+     * MQTT.
+     *
+     * @param id the ID of section whose status will be transferred
+     * @param status the status of the referred section
+     */
+    private void publishSectionStatus(int id, SectionStatus status) {
         Section section = new Section(id);
         section.setStatus(status);
         Payload payload = createCommandWithContent(SEND_SECTION_STATUS, section);

@@ -18,30 +18,53 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine.SCISectionsListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine.SCITurnoutListener;
 
 /**
+ * Event handler for outgoing events from the turnout's statechart.
  *
  * @author benedekh
  */
 public class TurnoutEventListener implements SCITurnoutListener, SCISectionsListener {
 
+    // the remote turnout's sections with their connection directions
     private final Map<Direction, RemoteTurnout> remoteSections;
+    // the local sections statecharts with their connection directions
     private final Map<Direction, ISectionStatemachine> localSections;
 
+    // the other half of the english turnout
     private ITurnoutStatemachine otherHalfOfTurnout;
 
+    // passage request sender object (for communication between remote statecharts)
     private PassageRequestSender passageRequest = null;
+    // passage response sender object (for communication between remote statecharts)
     private PassageResponseSender passageResponse = null;
 
+    /**
+     * @param remoteSections // the remote turnout's sections with their
+     * connection directions
+     * @param localSections the local sections statecharts with their connection
+     * directions
+     */
     public TurnoutEventListener(Map<Direction, RemoteTurnout> remoteSections,
             Map<Direction, ISectionStatemachine> localSections) {
         this.remoteSections = remoteSections;
         this.localSections = localSections;
     }
 
+    /**
+     * Initialize the Passage[Request|Response]Senders based on the common MQTT
+     * connection.
+     *
+     * @param sender the common MQTT sender/receiver.
+     */
     public void setRequestSenders(DistributedMessageReceiver sender) {
         this.passageRequest = new PassageRequestSender(sender);
         this.passageResponse = new PassageResponseSender(sender);
     }
 
+    /**
+     * Set the other half of the english turnout for event handling.
+     *
+     * @param otherHalfSM the other half of the english turnout
+     */
     public void setOtherHalfOfTurnoutSM(ITurnoutStatemachine otherHalfSM) {
         this.otherHalfOfTurnout = otherHalfSM;
     }
@@ -70,6 +93,13 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 directionValue);
     }
 
+    /**
+     * Get the local section's event handler by its connection direction.
+     *
+     * @param directionValue the connection direction based on the statechart
+     * long value
+     * @return
+     */
     private SCISection getLocalSectionByDirectionValue(
             long directionValue) {
         Direction direction = getDirectionFromValue(directionValue);
@@ -134,6 +164,12 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
         }
     }
 
+    /**
+     * Send a passage request to the remote turnout through MQTT.
+     *
+     * @param directionValue the direction of the connecting turnout's
+     * statechart
+     */
     private void sendPassageRequest(long directionValue) {
         RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(
                 directionValue);
@@ -145,6 +181,12 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 "passage request sent to " + remoteTurnout.getTurnoutId());
     }
 
+    /**
+     * Send a passage allowed response to the remote turnout through MQTT.
+     *
+     * @param directionValue the direction of the connecting turnout's
+     * statechart
+     */
     private void sendPassageAllowed(long directionValue) {
         RemoteTurnout remoteTurnout = getRemoteTurnoutByDirectionValue(
                 directionValue);
@@ -156,11 +198,22 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 "passage allowed sent to " + remoteTurnout.getTurnoutId());
     }
 
+    /**
+     * Send a passage denied response to the remote turnout through MQTT.
+     *
+     * @param directionValue the direction of the connecting turnout's
+     * statechart
+     */
     private void sendPassageDeniedTo(long directionValue) {
         Direction direction = getDirectionFromValue(directionValue);
         sendPassageDenied(direction);
     }
 
+    /**
+     * Send a passage denied response to the remote turnout through MQTT.
+     *
+     * @param direction the direction of the connecting turnout's statechart
+     */
     private void sendPassageDenied(Direction direction) {
         RemoteTurnout remoteTurnout = remoteSections.get(direction);
 
@@ -171,6 +224,14 @@ public class TurnoutEventListener implements SCITurnoutListener, SCISectionsList
                 "passage denied sent to " + remoteTurnout.getTurnoutId());
     }
 
+    /**
+     * Get the remote turnout's object by its connection direction in the
+     * statechart.
+     *
+     * @param directionValue the direction of the connection turnout's
+     * statechart
+     * @return
+     */
     private RemoteTurnout getRemoteTurnoutByDirectionValue(long directionValue) {
         Direction direction = getDirectionFromValue(directionValue);
         RemoteTurnout remoteTurnout = remoteSections.get(direction);

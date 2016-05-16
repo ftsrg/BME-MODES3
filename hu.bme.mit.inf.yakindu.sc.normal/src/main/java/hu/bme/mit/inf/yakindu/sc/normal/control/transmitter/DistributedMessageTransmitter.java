@@ -15,14 +15,18 @@ import hu.bme.mit.inf.yakindu.mqtt.client.receiver.IDistributedMessageTransmitte
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
 /**
+ * The message handler that transmits the messages TO the statecharts FROM the
+ * MQTT.
  *
  * @author benedekh
  */
 public class DistributedMessageTransmitter extends Thread implements IDistributedMessageTransmitter {
 
+    // the received packets over MQTT
     private final BlockingQueue<byte[]> distributedPackets = new LinkedBlockingQueue<>();
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
 
+    // the statemachine's interface
     private final ITurnoutStatemachine statemachine;
 
     public DistributedMessageTransmitter(ITurnoutStatemachine sm) {
@@ -34,6 +38,10 @@ public class DistributedMessageTransmitter extends Thread implements IDistribute
         distributedPackets.add(packet);
     }
 
+    /**
+     * Get the latest packets and convert them to statechart specific events
+     * with parameters.
+     */
     @Override
     public void run() {
         logInfoMessage(getClass().getName(), "STARTED");
@@ -80,6 +88,11 @@ public class DistributedMessageTransmitter extends Thread implements IDistribute
         logInfoMessage(getClass().getName(), "INTERRUPTED");
     }
 
+    /**
+     * Remote section lock received from the referred direction.
+     *
+     * @param from the direction from the remote section lock was received
+     */
     private void remSectionLock(final Direction from) {
         final long directionValue = getValueFromDirection(from);
 
@@ -94,10 +107,22 @@ public class DistributedMessageTransmitter extends Thread implements IDistribute
         });
     }
 
+    /**
+     * Remote short section lock received from the referred direction.
+     *
+     * @param from the direction from the remote short section lock was received
+     */
     private void remShortSectionLock(final Direction from) {
         // deliberately left empty
     }
 
+    /**
+     * Remote passage response received from the referred direction.
+     *
+     * @param isAllowedByte the byte value denoting the passage is allowed or
+     * not
+     * @param from the direction from the remote passage response was received
+     */
     private void remPassageResponse(final byte isAllowedByte,
             final Direction from) {
         final long directionValue = getValueFromDirection(from);

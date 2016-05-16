@@ -1,6 +1,13 @@
 package hu.bme.mit.inf.mqtt.common.data;
 
 /**
+ * An enum to make difference between the commands sent through the network.
+ *
+ * They can be grouped as "commands to the embedded controllers" and "commands
+ * to the statemachines". The former ones goes to the railway track's embedded
+ * controllers, the latter ones goes between the different statecharts (called
+ * as "safety-logic", implemented in Yakindu Statecharts).
+ *
  * @author zsoltmazlo, benedekh
  */
 public enum Command {
@@ -13,12 +20,11 @@ public enum Command {
     LINE_ENABLE((byte) 0xC2),
     GET_SECTION_STATUS((byte) 0xC3),
     SEND_SECTION_STATUS((byte) 0xC4),
-    OCCUPANCY((byte)0xC5),
+    OCCUPANCY((byte) 0xC5),
     GET_OCCUPANCY((byte) 0xC8),
     SEND_OCCUPANCY((byte) 0xC9),
     GET_TURNOUT_STATUS((byte) 0xCA),
     SEND_TURNOUT_STATUS((byte) 0xCB),
-    
     /**
      * Commands to the statemachines.
      */

@@ -4,7 +4,7 @@ import hu.bme.mit.inf.eda.collector.Collector;
 import hu.bme.mit.inf.eda.collector.OccupancyStatusCollector;
 import hu.bme.mit.inf.eda.collector.SectionStatusCollector;
 import hu.bme.mit.inf.eda.collector.TurnoutStatusCollector;
-import hu.bme.mit.inf.eda.data.CollectionTimeSettings;
+import hu.bme.mit.inf.eda.data.TimeSettings;
 import static hu.bme.mit.inf.eda.util.PathValidator.isPathValid;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
@@ -18,6 +18,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * The application of the EDA (Exploratory Data Analysis) component.
+ *
+ * Different data collectors can be registered and enabled so different data can
+ * be collected from the model railway track. Most of the data is transferred
+ * through different MQTT topics, for that the collectors subscribe.
+ *
+ * The frequency and the duration of the data collection can be set.
  *
  * @author benedekh
  */
@@ -83,7 +90,7 @@ public class Application {
             // create configuration objects
             MQTTConfiguration config = createConfiguration(protocolArg,
                     addressArg, mqttPort, mqttQOS);
-            CollectionTimeSettings timeSettings = createTimeSettings(interval,
+            TimeSettings timeSettings = createTimeSettings(interval,
                     frequency);
 
             // create and start collectors
@@ -97,18 +104,41 @@ public class Application {
         }
     }
 
-    private static CollectionTimeSettings createTimeSettings(Integer intervalInt,
+    /**
+     * Create a time settings for the data collection.
+     *
+     * @param intervalInt the duration of the data collection in minutes
+     * @param frequencyInt the frequency the data shall be updated in
+     * milliseconds
+     * @return the new time settings object
+     */
+    private static TimeSettings createTimeSettings(Integer intervalInt,
             Integer frequencyInt) {
         int interval = (intervalInt == null) ? 1 : intervalInt;
         int frequency = (frequencyInt == null) ? 100 : frequencyInt;
 
-        return new CollectionTimeSettings(interval, frequency);
+        return new TimeSettings(interval, frequency);
     }
 
+    /**
+     * Creates the data collectors based on the referred output path. If the
+     * output path is null, then the referred collector will not be
+     * instantiated.
+     *
+     * @param sectionStatusPath the output file path for the section status data
+     * collection
+     * @param occupancyStatusPath the output file path for the section occupancy
+     * status data collection
+     * @param turnoutStatusPath the output file path for the turnout status data
+     * collection
+     * @param config the MQTT Configuration
+     * @param timeSettings the time interval and frequency for data collection
+     * @return a collection of data collectors
+     */
     private static Collection<Collector> createCollectors(
             String sectionStatusPath,
             String occupancyStatusPath, String turnoutStatusPath,
-            MQTTConfiguration config, CollectionTimeSettings timeSettings) {
+            MQTTConfiguration config, TimeSettings timeSettings) {
 
         MQTTPublishSubscribeDispatcher dispatcher = new MQTTPublishSubscribeDispatcher(
                 config);
@@ -134,16 +164,32 @@ public class Application {
         return collectors;
     }
 
+    /**
+     * Starts the referred data collectors.
+     *
+     * @param collectors to be started
+     */
     private static void startCollectors(Collection<Collector> collectors) {
         for (Collector collector : collectors) {
             collector.startCollectingData();
         }
     }
 
+    /**
+     * Creates a MQTT Configuration based on the parameters.
+     *
+     * @param protocolArg the protocol of the MQTT Broker
+     * @param addressArg the address of the MQTT Broker
+     * @param port the port of the MQTT Broker
+     * @param qos the QOS (Quality of Service) of the MQTT Broker
+     * @return a new MQTT Configuration
+     */
     private static MQTTConfiguration createConfiguration(
             String protocolArg, String addressArg,
             Integer port, Integer qos) {
+
         MQTTConfiguration conf = new MQTTConfiguration();
+
         if (protocolArg != null) {
             conf.setProtocol(protocolArg);
         }

@@ -23,6 +23,8 @@ import org.yakindu.scr.section.SectionWrapperWithListeners;
 import org.yakindu.scr.turnout.TurnoutWrapperWithListeners;
 
 /**
+ * The application which starts the english turnout's and the connecting
+ * sections statemachines and handles the events and messages.
  *
  * @author benedekh
  */
@@ -80,6 +82,15 @@ public class Simulator {
         }
     }
 
+    /**
+     * Get the Integer parameter of the respective command-line argument.
+     *
+     * @param parsed the parsed arguments
+     * @param parameter the argument whose parameter should be extracted
+     * @param parameterFieldName the name of the argument
+     * @return the referred argument's Integer parameter extracted
+     * @throws IOException if the parameter cannot be converted to Integer
+     */
     private static Integer getParameterIntegerValue(OptionSet parsed,
             ArgumentAcceptingOptionSpec<Integer> parameter,
             String parameterFieldName) throws IOException {
@@ -94,6 +105,19 @@ public class Simulator {
         return null;
     }
 
+    /**
+     * Sets the logging preferences for the statuses (info messages) and for the
+     * statemachines as a trace log.
+     *
+     * For details see {@link hu.bme.mit.inf.mqtt.common.util.logging} and
+     * {@link hu.bme.mit.inf.yakindu.sc.english.control.trace.StatemachineTraceBuilder}.
+     *
+     * @param traceLogArg if it is set, then trace info will be saved for the
+     * statecharts.
+     * @param parsed the parsed command-line arguments
+     * @param isStatusLogEnabled if it is set, then info messages will be logged
+     * (as would be printed to the standard output)
+     */
     private static void setLoggingPreferences(
             ArgumentAcceptingOptionSpec<String> traceLogArg,
             OptionSet parsed, boolean isStatusLogEnabled) {
@@ -107,6 +131,16 @@ public class Simulator {
         }
     }
 
+    /**
+     * Creates a MQTT Configuration based on the parameters.
+     *
+     * @param parsed the parsed arguments
+     * @param protocolArg the protocol of the MQTT Broker
+     * @param addressArg the address of the MQTT Broker
+     * @param port the port of the MQTT Broker
+     * @param qos the QOS (Quality of Service) of the MQTT Broker
+     * @return a new MQTT Configuration
+     */
     private static MQTTConfiguration createConfiguration(
             OptionSet parsed,
             ArgumentAcceptingOptionSpec<String> protocolArg,
@@ -128,6 +162,15 @@ public class Simulator {
         return conf;
     }
 
+    /**
+     * Initialize and start statecharts based on the MQTT configuration for the
+     * MQTT connection.
+     *
+     * For the initialization details see
+     * {@link hu.bme.mit.inf.yakindu.sc.english.control.controller.StatemachineInitializer}.
+     *
+     * @param conf the configuration data for the MQTT connection.
+     */
     private static void initializeAndStartStatemachines(MQTTConfiguration conf) {
         MQTTPublishSubscribeDispatcher sender = new MQTTPublishSubscribeDispatcher(
                 conf);

@@ -16,21 +16,36 @@ import java.util.List;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 /**
+ * The message handler of turnout related commands received on the subscribed
+ * topic. This class transmits the received turnout commands to the actual
+ * actuators, so the respective turnouts statuses can be queried.
  *
- * @author benedekh
+ * It is a proxy between the MQTT communication and the embedded controller.
+ *
+ * @author benedekh, hegyibalint
  */
 public class TurnoutMessageHandler implements MessageFilter {
 
+    // the topic for that it subscribes
     private static final String topic = "modes3/kvcontrol/turnout";
+
+    // the name of the class
     private static final String CLASS_NAME = SectionsMessageHandler.class.getName();
 
+    // the actuator that can access the referred turnout
     private final ExpanderTurnoutController turnoutController;
+
+    // the transmitter of messages through MQTT
     private final MQTTPublishSubscribeDispatcher sender;
 
+    /**
+     * @param sender the transmitter of messages through MQTT
+     */
     public TurnoutMessageHandler(MQTTPublishSubscribeDispatcher sender) {
         this.sender = sender;
         this.sender.subscribe(topic, this);
-        this.turnoutController = new ExpanderTurnoutController(this.sender, topic);
+        this.turnoutController = new ExpanderTurnoutController(this.sender,
+                topic);
     }
 
     @Override
@@ -54,6 +69,12 @@ public class TurnoutMessageHandler implements MessageFilter {
         }
     }
 
+    /**
+     * Handles the identity queries. It means the managed turnouts statuses
+     * should be transmitted to the subscribed topic.
+     *
+     * @throws InterruptedException if the thread has been interrupted
+     */
     private void handleIdentify() throws InterruptedException {
         List<Turnout> turnouts = turnoutController.getTurnoutsWithStatus();
         for (Turnout turnout : turnouts) {
@@ -64,6 +85,14 @@ public class TurnoutMessageHandler implements MessageFilter {
         }
     }
 
+    /**
+     * If the embedded controller manages the referred turnout (that is received
+     * in the Payload), then its status will be queried and sent back on the
+     * subscribed topic.
+     *
+     * @param receivedPayload the payload that stores the turnout's ID whose
+     * status should be queried
+     */
     private void handleGetTurnoutStatus(Payload receivedPayload) {
         Turnout turnout = receivedPayload.getContentAs(Turnout.class);
         if (turnoutController.controllerManagesTurnout(turnout)) {

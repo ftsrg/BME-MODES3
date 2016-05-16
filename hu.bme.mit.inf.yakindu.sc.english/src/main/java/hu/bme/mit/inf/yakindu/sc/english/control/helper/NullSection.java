@@ -6,8 +6,9 @@ import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.section.ISectionStatemachine.SCISection;
 
 /**
+ * Dummy implementation for a non-existent section.
  *
- * @author benjo
+ * @author benedekh
  */
 public class NullSection implements SCISection {
 

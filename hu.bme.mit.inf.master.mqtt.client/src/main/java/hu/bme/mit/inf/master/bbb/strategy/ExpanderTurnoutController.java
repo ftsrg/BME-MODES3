@@ -23,19 +23,42 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * The turnout controller part of the embedded controller. Through it the
+ * referred turnout can be managed.
  *
- * @author benedekh
+ * @author hegyibalint, benedekh
  */
 public class ExpanderTurnoutController extends AbstractControllerStrategy implements IControllerConfiguration {
 
+    /**
+     * The turnout direction (status) updater thread, that always refreshes the
+     * turnout's status.
+     *
+     */
     protected Thread turnoutDirectionUpdater;
+
+    // the actual embedded controller which manages the turnout
     protected ExpanderControllerConfiguration controllerConf;
+
+    // the transmitter of messages through MQTT
+    protected MQTTPublishSubscribeDispatcher mqttPublisher;
+
+    // the topic for that the turnout controller sends the status information
     protected String subscribedTopic;
 
+    // the latest turnout statuses (straight / divergent), based on turnout ID
     protected Map<String, TurnoutStatus> latestTurnoutStatus;
+
+    // the former (not the latest) turnout statuses (straight / divergent), based on turnout ID
     protected Map<String, TurnoutStatus> formerTurnoutStatus;
 
-    public ExpanderTurnoutController(final MQTTPublishSubscribeDispatcher mqttPublisher,
+    /**
+     * @param mqttPublisher the transmitter of messages through MQTT
+     * @param topic the topic for that the turnout controller sends the status
+     * information
+     */
+    public ExpanderTurnoutController(
+            MQTTPublishSubscribeDispatcher mqttPublisher,
             String topic) {
         try {
             controllerConf = new ExpanderControllerConfiguration();
@@ -43,6 +66,7 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
             logException(getClass().getName(), ex);
         }
 
+        this.mqttPublisher = mqttPublisher;
         subscribedTopic = topic;
 
         latestTurnoutStatus = new ConcurrentHashMap<>();
@@ -52,14 +76,14 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
             TurnoutStatus defaultDirection = STRAIGHT;
             latestTurnoutStatus.put(to, defaultDirection);
             formerTurnoutStatus.put(to, defaultDirection);
-            publishTurnoutStatus(to, defaultDirection, mqttPublisher);
+            publishTurnoutStatus(to, defaultDirection);
         }
 
         // turnout direction updater
         turnoutDirectionUpdater = new Thread(new Runnable() {
             @Override
             public void run() {
-                updateTurnoutDirection(mqttPublisher);
+                updateTurnoutDirection();
             }
         });
 
@@ -100,6 +124,9 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
                 "ExpanderTurnoutController does not support section operations");
     }
 
+    /**
+     * @return the most recent turnout status information
+     */
     public List<Turnout> getTurnoutsWithStatus() {
         List<Turnout> results = new ArrayList<>();
         for (String turnoutId : latestTurnoutStatus.keySet()) {
@@ -111,7 +138,12 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
         return results;
     }
 
-    private void updateTurnoutDirection(MQTTPublishSubscribeDispatcher mqttPublisher) {
+    /**
+     * Automatically refreshes the managed turnouts statuses
+     * (latestTurnoutStatus), if they have been changed since the last check
+     * (formerTurnoutStatus).
+     */
+    private void updateTurnoutDirection() {
         HashMap<String, DigitalInput> ioMap = new HashMap<>(4);
 
         for (String to : controllerConf.getAllTurnout()) {
@@ -136,7 +168,7 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
 
                 if (latest != former) {
                     formerTurnoutStatus.put(to, latest);
-                    publishTurnoutStatus(to, latest, mqttPublisher);
+                    publishTurnoutStatus(to, latest);
                 }
             }
 
@@ -149,8 +181,14 @@ public class ExpanderTurnoutController extends AbstractControllerStrategy implem
         }
     }
 
-    private void publishTurnoutStatus(String id, TurnoutStatus status,
-            MQTTPublishSubscribeDispatcher mqttPublisher) {
+    /**
+     * Sends the respective turnout's status to the subscribed topic through
+     * MQTT.
+     *
+     * @param id the ID of turnout whose status will be transferred
+     * @param status the status of the referred turnout
+     */
+    private void publishTurnoutStatus(String id, TurnoutStatus status) {
         Turnout turnout = new Turnout(HexConversionUtil.fromString(id));
         turnout.setStatus(status);
         Payload payload = createCommandWithContent(SEND_TURNOUT_STATUS, turnout);

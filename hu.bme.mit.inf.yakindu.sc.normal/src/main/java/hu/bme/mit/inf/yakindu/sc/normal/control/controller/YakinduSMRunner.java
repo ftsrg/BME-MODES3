@@ -13,19 +13,44 @@ import java.util.Set;
 import org.yakindu.scr.turnout.TurnoutWrapper;
 
 /**
+ * This class is responsible for initializing (starting) and running the
+ * registered turnout's statechart, and the connecting sections statehcarts as
+ * well.
  *
  * @author benedekh
  */
 public class YakinduSMRunner {
 
+    // a thread-safe wrapper of the turnout's statechart 
     private final TurnoutWrapper managedStatemachine;
+
+    /**
+     * Sections that connect to the respective turnout. It stores the sections
+     * statehcarts as well!
+     */
     private final Set<Section> managedSections;
 
+    /**
+     * A transmitter object that transfers the required information (sections
+     * and turnouts occupancies, turnouts direction) to the respective turnouts
+     * and sections statecharts.
+     */
     private final GeneralTransmitter generalTransmitter;
+
+    /**
+     * The message handler that transmits the messages TO the statecharts FROM
+     * the MQTT.
+     */
     private final DistributedMessageTransmitter distributedTransmitter;
 
+    // it is a proxy before distributedTransmitter.
     private final DistributedMessageReceiver messageReceiver;
 
+    /**
+     * @param sender that is used for the MQTT communication
+     * @param conf the object that stores the turnout's and the connecting
+     * sections' statecharts
+     */
     public YakinduSMRunner(MQTTPublishSubscribeDispatcher sender,
             YakinduSMConfiguration conf) {
         TurnoutWrapper statemachine = conf.getTurnoutStatemachine();
@@ -59,11 +84,17 @@ public class YakinduSMRunner {
                 DistributedMessageTransmitter.class.getName());
     }
 
+    /**
+     * Initialize & start the statecharts and the message transmitter.
+     */
     public void start() {
         initializeSM();
         startSM();
     }
 
+    /**
+     * Initializes the statecharts (both turnout's and sections).
+     */
     private void initializeSM() {
         managedStatemachine.enter();
         for (Section sections : managedSections) {
@@ -71,6 +102,10 @@ public class YakinduSMRunner {
         }
     }
 
+    /**
+     * Starts the statecharts (both turnout's and sections), and the message
+     * transmitters as well.
+     */
     private void startSM() {
         new Thread(managedStatemachine).start();
         for (Section sections : managedSections) {

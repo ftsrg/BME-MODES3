@@ -9,11 +9,13 @@ import hu.bme.mit.inf.piclient.Application;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
 
 /**
+ * The image panel that stores the logo.
  *
  * @author zsoltmazlo, benedekh
  */
 public class ImagePanel extends JPanel {
 
+    // the logo of the project
     private BufferedImage image;
 
     public ImagePanel() {

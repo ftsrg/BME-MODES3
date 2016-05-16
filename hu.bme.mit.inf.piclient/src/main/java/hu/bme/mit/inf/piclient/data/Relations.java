@@ -7,7 +7,7 @@ import hu.bme.mit.inf.mqtt.common.data.Turnout;
 
 /**
  * A data class for storing sections and turnouts of the layout
- * <p>
+ *
  * @author zsoltmazlo, benedekh
  */
 public class Relations {
@@ -88,9 +88,8 @@ public class Relations {
 
     /**
      * create a usable key for Map classes from byte ID.
-     * <p>
+     *
      * @param ID hashable ID
-     * <p>
      * @return String hash
      */
     public static String getKey(int ID) {

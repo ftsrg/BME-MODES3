@@ -11,6 +11,8 @@ import org.apache.batik.swing.JSVGCanvas;
 import hu.bme.mit.inf.piclient.Application;
 
 /**
+ * The frame of the GUI, that contains the main window, the side and the menu
+ * panels.
  *
  * @author zsoltmazlo
  */
@@ -24,19 +26,21 @@ public class RailwayWindow extends javax.swing.JFrame {
      */
     public RailwayWindow() {
         initComponents();
-        
+
         getContentPane().setBackground(Application.pageBackground);
 
         this.canvasHolder.setLayout(new BorderLayout());
         this.canvasHolder.add("Center", canvas);
         File svgFile = new File(svgFileName);
-        canvas.addSVGLoadEventDispatcherListener(new SVGLoadAdapter(canvas, this));
+        canvas.addSVGLoadEventDispatcherListener(
+                new SVGLoadAdapter(canvas, this));
         canvas.setPreferredSize(this.canvasHolder.getSize());
         canvas.setSize(this.canvasHolder.getSize());
         canvas.setURI(RailwayWindow.class.getResource(svgFileName).toString());
         canvas.setDocumentState(JSVGCanvas.ALWAYS_DYNAMIC);
 
-        RailwayWindow.consoleHolder.setLayout(new BoxLayout(RailwayWindow.consoleHolder, BoxLayout.Y_AXIS));
+        RailwayWindow.consoleHolder.setLayout(new BoxLayout(
+                RailwayWindow.consoleHolder, BoxLayout.Y_AXIS));
         RailwayWindow.log("GUI setted up");
     }
 
@@ -45,13 +49,20 @@ public class RailwayWindow extends javax.swing.JFrame {
         thread.start();
     }
 
+    /**
+     * The logger in the right panel.
+     *
+     * @param message that should be logged in the panel
+     */
     public final static void log(String message) {
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();
 
-        String content = String.format("%02d:%02d-%s", now.getHours(), now.getMinutes(), message);
+        String content = String.format("%02d:%02d-%s", now.getHours(),
+                now.getMinutes(), message);
 
-        JLabel entry = new JLabel("<html><body style='width: 192px; margin: 0 3px'>" + content + "</body></html>");
+        JLabel entry = new JLabel(
+                "<html><body style='width: 192px; margin: 0 3px'>" + content + "</body></html>");
         entry.setFont(Application.labelFont);
         entry.setForeground(Application.labelForeground);
         RailwayWindow.consoleHolder.add(entry);

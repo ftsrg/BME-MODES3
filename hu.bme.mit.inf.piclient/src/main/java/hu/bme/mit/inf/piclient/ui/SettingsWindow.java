@@ -11,6 +11,12 @@ import hu.bme.mit.inf.piclient.Application;
 import static hu.bme.mit.inf.piclient.ui.SettingsWindow.Configuration;
 
 /**
+ * The Settings window of the application. It can set which information
+ * (section, turnout statuses, section occupancies) shall be queried, what are
+ * the MQTT Configuration information (protocol, QOS, address, topics).
+ *
+ * Besides the coloring of different things (section is enabled/disabled,
+ * turnout is straight/divergent, etc.) can be changed as well.
  *
  * @author zsoltmazlo, benedekh
  */
@@ -681,6 +687,9 @@ public class SettingsWindow extends javax.swing.JFrame {
     private javax.swing.JPanel unlockedSectionColor;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * A proxy class for getting the sections occupancy information.
+     */
     public static final class OccupancyControllerProxy {
 
         private final OccupancyRequestSender requestSender;
@@ -699,11 +708,20 @@ public class SettingsWindow extends javax.swing.JFrame {
             }
         }
 
+        /**
+         * Set whether the occupancies shall be refreshed.
+         *
+         * @param pollingEnabled set the polling enabled or not
+         */
         public void setPollingEnabled(boolean pollingEnabled) {
             this.pollingEnabled = pollingEnabled;
         }
     }
 
+    /**
+     * A proxy class for getting the sections status information, and for
+     * enabling/disabling sections.
+     */
     public static class SectionControllerProxy {
 
         private final SectionRequestSender requestSender;
@@ -724,11 +742,19 @@ public class SettingsWindow extends javax.swing.JFrame {
             return requestSender.isSectionEnabled(sectionId);
         }
 
+        /**
+         * Set whether the sections status shall be refreshed.
+         *
+         * @param pollingEnabled set the polling enabled or not
+         */
         public void setPollingEnabled(boolean pollingEnabled) {
             requestSender.setPollingEnabled(pollingEnabled);
         }
     }
 
+    /**
+     * A proxy class for getting the turnout status information.
+     */
     public static class TurnoutControllerProxy {
 
         private final TurnoutRequestSender requestSender;
@@ -745,6 +771,11 @@ public class SettingsWindow extends javax.swing.JFrame {
             return requestSender.isTurnoutStraight(turnoutId);
         }
 
+        /**
+         * Set whether the turnouts status shall be refreshed.
+         *
+         * @param pollingEnabled set the polling enabled or not
+         */
         public void setPollingEnabled(boolean pollingEnabled) {
             requestSender.setPollingEnabled(pollingEnabled);
         }

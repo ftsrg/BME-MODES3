@@ -6,6 +6,7 @@ import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 
 /**
+ * Event listener for click events on sections.
  *
  * @author zsoltmazlo
  */
@@ -17,6 +18,11 @@ public class SectionClickAction implements EventListener {
         this.sectionID = sectionID;
     }
 
+    /**
+     * Enable or disable the respective section.
+     *
+     * @param event the click event
+     */
     @Override
     public void handleEvent(Event event) {
         if (SettingsWindow.sectionControllerProxy.isSectionEnabled(sectionID)) {

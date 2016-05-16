@@ -6,14 +6,23 @@ import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
 /**
+ * Event handler for outgoing events from the section's statechart.
  *
  * @author benedekh
  */
 public class SectionEventListener implements SCISectionListener {
 
+    // the statechart of the local turnout to which the section connects
     private final ITurnoutStatemachine localTurnout;
+
+    // the request sender for the railway track
     private final SectionRequestSender sectionRequestSender;
 
+    /**
+     * @param turnoutStatemachine the statechart of the local turnout to which
+     * the section connects
+     * @param sectionRequester the request sender for the railway track
+     */
     public SectionEventListener(ITurnoutStatemachine turnoutStatemachine,
             SectionRequestSender sectionRequester) {
         this.localTurnout = turnoutStatemachine;

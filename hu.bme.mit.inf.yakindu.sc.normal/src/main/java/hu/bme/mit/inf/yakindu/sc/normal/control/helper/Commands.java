@@ -1,6 +1,8 @@
 package hu.bme.mit.inf.yakindu.sc.normal.control.helper;
 
 /**
+ * Commands used for communication between the statecharts. It is used between
+ * the MQTT and the statecharts themselves.
  *
  * @author benedekh
  */

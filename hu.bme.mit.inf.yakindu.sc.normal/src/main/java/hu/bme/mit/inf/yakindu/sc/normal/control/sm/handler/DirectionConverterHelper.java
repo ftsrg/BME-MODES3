@@ -1,12 +1,10 @@
 package hu.bme.mit.inf.yakindu.sc.normal.control.sm.handler;
 
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
-import org.yakindu.scr.section.SectionStatemachine;
-import org.yakindu.scr.turnout.TurnoutStatemachine;
-
-
 
 /**
+ * Converts the long representation of the direction used within the
+ * statecharts, to the Java specific direction Enum and vice versa.
  *
  * @author bendekh
  */
@@ -17,12 +15,15 @@ public class DirectionConverterHelper {
     private static final int TOP = 2;
 
     /**
-     * @see TurnoutStatemachine.java -> init() method
-     * @see SectionStatemachine.java -> init() method
+     * See {@link org.yakindu.scr.turnout.TurnoutStatemachine#init()} and
+     * {@link org.yakindu.scr.section.SectionStatemachine#init()}.
      *
      * sCISections.setSTRAIGHT(0); -> STRAIGHT == 0;
      * sCISections.setDIVERGENT(1); -> DIVERGENT == 1; sCISections.setTOP(2); ->
      * TOP == 2;
+     * 
+     * @param value that shall be converted to enum
+     * @return the converted representation of the long
      */
     public static Direction getDirectionFromValue(long value) {
         int intValue = (int) value;
@@ -38,6 +39,13 @@ public class DirectionConverterHelper {
         }
     }
 
+    /**
+     * Convert from the Java specific Enum to the statechart specific direction
+     * long value.
+     *
+     * @param direction that shall be converted to long
+     * @return the converted representation of the enum
+     */
     public static long getValueFromDirection(Direction direction) {
         switch (direction) {
             case STRAIGHT:

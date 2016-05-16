@@ -24,6 +24,10 @@ import static hu.bme.mit.inf.piclient.ui.SettingsWindow.turnoutControllerProxy;
 import hu.bme.mit.inf.piclient.data.Relations;
 
 /**
+ * The class that refreshes the SVG. It changes the colors of the sections
+ * (enabled/disabled) and turnouts (straight/divergent), based on their
+ * statuses. The sections occupancy is visualized as well, by a small LOCO logo
+ * near to the respective sections.
  *
  * @author zsoltmazlo
  */
@@ -103,13 +107,22 @@ public class SVGRefresher implements Runnable {
         }
     }
 
+    /**
+     * Fake a mouse event in order to update the SVG.
+     */
     private void refreshSVG() {
-        // need one mouse event to refresh svg
         MouseEvent me = new MouseEvent(canvas, MouseEvent.MOUSE_MOVED, 0,
                 0, 100, 100, 1, false);
         canvas.getMouseListeners()[0].mouseEntered(me);
     }
 
+    /**
+     * Refreshes the sections graphical display based on their status. Enabled
+     * means that section will be GREEN, disabled means that section will be
+     * RED.
+     *
+     * @throws InterruptedException if the thread is interrupted
+     */
     private void refreshSections() throws InterruptedException {
         for (Section section : sections.values()) {
             boolean isEnabled = SettingsWindow.sectionControllerProxy.isSectionEnabled(
@@ -124,7 +137,13 @@ public class SVGRefresher implements Runnable {
         }
     }
 
-    private void refreshOccupancy() throws DOMException, InterruptedException {
+    /**
+     * Refresh sections occupancy. A LOCO logo will be displayed next to the
+     * occupied sections.
+     *
+     * @throws InterruptedException if the thread is interrupted
+     */
+    private void refreshOccupancy() throws InterruptedException {
 
         // refresh occupancy display
         for (int i = 0; i < occupancyVector.length; i++) {
@@ -144,6 +163,15 @@ public class SVGRefresher implements Runnable {
         }
     }
 
+    /**
+     * Change the color of the respective SVG element.
+     *
+     * @param elem the element whose color shall be changed
+     * @param attr the attribute (stroke or fill) that shall be changed
+     * @param color the new color of the element
+     * @param bringToFront true if the referred element should be broguth to the
+     * front
+     */
     private void changeElementColor(Element elem, String attr, String color,
             boolean bringToFront) {
         if (elem != null) {
@@ -171,6 +199,12 @@ public class SVGRefresher implements Runnable {
         }
     }
 
+    /**
+     * Refreshes the turnouts graphical display based on their status (straight
+     * / divergent).
+     *
+     * @throws InterruptedException if the thread is interrupted
+     */
     private void refreshTurnouts() throws InterruptedException {
 
         for (Map.Entry<Integer, TurnoutCache> turnout : turnouts.entrySet()) {
@@ -192,6 +226,12 @@ public class SVGRefresher implements Runnable {
         }
     }
 
+    /**
+     * Refreshes the English (X) turnout's graphical display based on its
+     * turnouts statuses (straight / divergent).
+     *
+     * @throws InterruptedException if the thread is interrupted
+     */
     private void changeXTurnout() throws InterruptedException {
         String[] elements = {"0x86E", "0x86K", "0x87E", "0x87K"};
         Element elem;
@@ -248,6 +288,13 @@ public class SVGRefresher implements Runnable {
         }
     }
 
+    /**
+     * Change the referred turnout's graphical display.
+     *
+     * @param turnoutID the ID of the respective turnout
+     * @param cache the cached version of the respective turnout
+     * @param isDivergent true if the turnout is divergent
+     */
     private void changeTurnout(int turnoutID, TurnoutCache cache,
             boolean isDivergent) {
         Element elem;
