@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.eda.data;
+package hu.bme.mit.inf.eda.util;
 
 /**
  * The time settings (duration and frequency) of the data collection.

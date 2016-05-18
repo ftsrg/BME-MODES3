@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.eda.collector;
 
-import hu.bme.mit.inf.eda.data.TimeSettings;
+import hu.bme.mit.inf.eda.util.TimeSettings;
 import hu.bme.mit.inf.eda.data.SectionOccupancyStatusEntry;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.OccupancyRequestSender;
 import hu.bme.mit.inf.mqtt.common.data.SectionOccupancyStatus;
@@ -72,11 +72,11 @@ public class OccupancyStatusCollector implements Collector {
 
     @Override
     public void print(PrintWriter writer) {
-        writer.append("timestamp,section,occupancy");
+        writer.println("timestamp,section,occupancy");
         writer.flush();
 
         for (SectionOccupancyStatusEntry entry : statusEntries) {
-            writer.append(entry.toString());
+            writer.println(entry.toString());
             writer.flush();
         }
     }

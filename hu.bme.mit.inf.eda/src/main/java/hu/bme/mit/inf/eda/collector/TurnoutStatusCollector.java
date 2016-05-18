@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.eda.collector;
 
-import hu.bme.mit.inf.eda.data.TimeSettings;
+import hu.bme.mit.inf.eda.util.TimeSettings;
 import hu.bme.mit.inf.eda.data.TurnoutStatusEntry;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.TurnoutRequestSender;
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
@@ -73,11 +73,11 @@ public class TurnoutStatusCollector implements Collector {
 
     @Override
     public void print(PrintWriter writer) {
-        writer.append("timestamp,turnout,status");
+        writer.println("timestamp,turnout,status");
         writer.flush();
 
         for (TurnoutStatusEntry entry : statusEntries) {
-            writer.append(entry.toString());
+            writer.println(entry.toString());
             writer.flush();
         }
     }

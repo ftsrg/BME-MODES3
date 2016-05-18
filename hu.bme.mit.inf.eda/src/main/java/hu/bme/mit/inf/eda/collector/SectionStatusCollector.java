@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.eda.collector;
 
-import hu.bme.mit.inf.eda.data.TimeSettings;
+import hu.bme.mit.inf.eda.util.TimeSettings;
 import hu.bme.mit.inf.eda.data.SectionStatusEntry;
 import hu.bme.mit.inf.kvcontrol.mqtt.client.senders.SectionRequestSender;
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
@@ -75,11 +75,11 @@ public class SectionStatusCollector implements Collector {
 
     @Override
     public void print(PrintWriter writer) {
-        writer.append("timestamp,section,status");
+        writer.println("timestamp,section,status");
         writer.flush();
 
         for (SectionStatusEntry entry : statusEntries) {
-            writer.append(entry.toString());
+            writer.println(entry.toString());
             writer.flush();
         }
     }

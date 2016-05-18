@@ -4,7 +4,7 @@ import hu.bme.mit.inf.eda.collector.Collector;
 import hu.bme.mit.inf.eda.collector.OccupancyStatusCollector;
 import hu.bme.mit.inf.eda.collector.SectionStatusCollector;
 import hu.bme.mit.inf.eda.collector.TurnoutStatusCollector;
-import hu.bme.mit.inf.eda.data.TimeSettings;
+import hu.bme.mit.inf.eda.util.TimeSettings;
 import static hu.bme.mit.inf.eda.util.PathValidator.isPathValid;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
@@ -140,23 +140,33 @@ public class Application {
             String occupancyStatusPath, String turnoutStatusPath,
             MQTTConfiguration config, TimeSettings timeSettings) {
 
-        MQTTPublishSubscribeDispatcher dispatcher = new MQTTPublishSubscribeDispatcher(
-                config);
-
+        MQTTPublishSubscribeDispatcher dispatcher = null;
         Collection<Collector> collectors = new HashSet<>();
 
         if (sectionStatusPath != null && isPathValid(sectionStatusPath)) {
+            if (dispatcher == null) {
+                dispatcher = new MQTTPublishSubscribeDispatcher(
+                        config);
+            }
             collectors.add(new SectionStatusCollector(dispatcher, timeSettings,
                     sectionStatusPath));
         }
 
         if (occupancyStatusPath != null && isPathValid(occupancyStatusPath)) {
+            if (dispatcher == null) {
+                dispatcher = new MQTTPublishSubscribeDispatcher(
+                        config);
+            }
             collectors.add(
                     new OccupancyStatusCollector(dispatcher, timeSettings,
                             occupancyStatusPath));
         }
 
         if (turnoutStatusPath != null && isPathValid(turnoutStatusPath)) {
+            if (dispatcher == null) {
+                dispatcher = new MQTTPublishSubscribeDispatcher(
+                        config);
+            }
             collectors.add(new TurnoutStatusCollector(dispatcher, timeSettings,
                     turnoutStatusPath));
         }
