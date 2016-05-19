@@ -3,6 +3,7 @@ package hu.bme.mit.inf.eda.main;
 import hu.bme.mit.inf.eda.collector.Collector;
 import hu.bme.mit.inf.eda.collector.OccupancyStatusCollector;
 import hu.bme.mit.inf.eda.collector.SectionStatusCollector;
+import hu.bme.mit.inf.eda.collector.TrainsCVCollector;
 import hu.bme.mit.inf.eda.collector.TurnoutStatusCollector;
 import hu.bme.mit.inf.eda.util.TimeSettings;
 import static hu.bme.mit.inf.eda.util.PathValidator.isPathValid;
@@ -44,6 +45,9 @@ public class Application {
             reg.registerArgumentWithOptions(new ArgumentDescriptor("ol",
                     "Path for occupancy section status (occupied/free) log file [optional, if omitted then section occupancy status is excluded]",
                     String.class));
+            reg.registerArgumentWithOptions(new ArgumentDescriptor("tcvl",
+                    "Path for trains location information based on CV (Computer Vision) log file [optional, if omitted then trains CV status is excluded]",
+                    String.class));
             reg.registerArgumentWithOptions(new ArgumentDescriptor("i",
                     "Interval for data collection in minutes. [optional, default = 1]",
                     Integer.class));
@@ -84,6 +88,7 @@ public class Application {
             String sectionStatusPath = reg.getParameterStringValue("sl");
             String occupancyStatusPath = reg.getParameterStringValue("ol");
             String turnoutStatusPath = reg.getParameterStringValue("tl");
+            String trainCVStatusPath = reg.getParameterStringValue("tcvl");
             String protocolArg = reg.getParameterStringValue("pp");
             String addressArg = reg.getParameterStringValue("a");
 
@@ -96,7 +101,7 @@ public class Application {
             // create and start collectors
             Collection<Collector> collectors = createCollectors(
                     sectionStatusPath, occupancyStatusPath, turnoutStatusPath,
-                    config, timeSettings);
+                    trainCVStatusPath, config, timeSettings);
             startCollectors(collectors);
 
         } catch (IOException ex) {
@@ -131,6 +136,8 @@ public class Application {
      * status data collection
      * @param turnoutStatusPath the output file path for the turnout status data
      * collection
+     * @param trainsCVPath the output file path for the train information
+     * received from the CV (Computer Vision)
      * @param config the MQTT Configuration
      * @param timeSettings the time interval and frequency for data collection
      * @return a collection of data collectors
@@ -138,6 +145,7 @@ public class Application {
     private static Collection<Collector> createCollectors(
             String sectionStatusPath,
             String occupancyStatusPath, String turnoutStatusPath,
+            String trainsCVPath,
             MQTTConfiguration config, TimeSettings timeSettings) {
 
         MQTTPublishSubscribeDispatcher dispatcher = null;
@@ -169,6 +177,15 @@ public class Application {
             }
             collectors.add(new TurnoutStatusCollector(dispatcher, timeSettings,
                     turnoutStatusPath));
+        }
+
+        if (trainsCVPath != null && isPathValid(trainsCVPath)) {
+            if (dispatcher == null) {
+                dispatcher = new MQTTPublishSubscribeDispatcher(
+                        config);
+            }
+            collectors.add(new TrainsCVCollector(dispatcher, timeSettings,
+                    trainsCVPath));
         }
 
         return collectors;

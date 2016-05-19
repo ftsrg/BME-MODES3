@@ -12,13 +12,14 @@ Create a Maven project in any IDE (Eclipse or NetBeans are recommended). Maven s
 
 Run in command-line: 
 
-`java -jar hu.bme.mit.inf.eda-1.0-SNAPSHOT-jar-with-dependencies.jar [--sl <section status log path>] [--tl <turnout status log path>] [--ol <section occupancy log path>] [-i <data collection interval in minutes>] [-f <data collection frequency in milliseconds>] [-a <IP address of MQTT Broker>] [-p <port number of MQTT Broker>] [--pp <protocol of MQTT Broker>] [-q <QOS of MQTT Broker>]`
+`java -jar hu.bme.mit.inf.eda-1.0-SNAPSHOT-jar-with-dependencies.jar [--sl <section status log path>] [--tl <turnout status log path>] [--ol <section occupancy log path>] [--tcvl <trains location based on CV log path>] [-i <data collection interval in minutes>] [-f <data collection frequency in milliseconds>] [-a <IP address of MQTT Broker>] [-p <port number of MQTT Broker>] [--pp <protocol of MQTT Broker>] [-q <QOS of MQTT Broker>]`
 
 Parameters:
 
 * `sl`: Path for section status (enabled/disabled) log file [optional, if omitted then section status is excluded].
 * `tl`: Path for turnout status (divergent/straight) log file [optional, if omitted then turnout status is excluded].
 * `ol`: Path for occupancy section status (occupied/free) log file [optional, if omitted then section occupancy status is excluded].
+* `tcvl`: Path for trains location information based on CV (Computer Vision) log file [optional, if omitted then trains CV status is excluded].
 * `i`: data collection interval in minutes (default: 1).
 * `f`: data collection frequency in milliseconds (default: 100).
 * `a`: IP address of the computer which runs the MQTT Broker *(default: localhost)*.
