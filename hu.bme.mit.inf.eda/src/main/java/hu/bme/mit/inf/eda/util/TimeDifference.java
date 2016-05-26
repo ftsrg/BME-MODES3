@@ -20,15 +20,18 @@ public class TimeDifference {
         this.seconds = seconds;
     }
 
-    public long getHours() {
-        return hours;
-    }
-
-    public long getMinutes() {
-        return minutes;
-    }
-
     public long getSeconds() {
         return seconds;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(String.valueOf(hours));
+        sb.append(" hours ");
+        sb.append(minutes);
+        sb.append(" minutes ");
+        sb.append(seconds);
+        sb.append(" seconds.");
+        return sb.toString();
     }
 }

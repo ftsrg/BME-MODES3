@@ -1,30 +1,29 @@
 package hu.bme.mit.inf.eda.main;
 
-import hu.bme.mit.inf.eda.collector.Collector;
-import hu.bme.mit.inf.eda.collector.OccupancyStatusCollector;
-import hu.bme.mit.inf.eda.collector.SectionStatusCollector;
-import hu.bme.mit.inf.eda.collector.TrainsCVCollector;
-import hu.bme.mit.inf.eda.collector.TurnoutStatusCollector;
+import hu.bme.mit.inf.eda.collector.*;
 import hu.bme.mit.inf.eda.util.TimeSettings;
-import static hu.bme.mit.inf.eda.util.PathValidator.isPathValid;
 import hu.bme.mit.inf.mqtt.common.network.MQTTConfiguration;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.mqtt.common.parameters.ArgumentDescriptor;
 import hu.bme.mit.inf.mqtt.common.parameters.ArgumentRegistrar;
-import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import static hu.bme.mit.inf.eda.util.PathValidator.isPathValid;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logInfoMessage;
+
 /**
  * The application of the EDA (Exploratory Data Analysis) component.
- *
+ * <p>
  * Different data collectors can be registered and enabled so different data can
  * be collected from the model railway track. Most of the data is transferred
  * through different MQTT topics, for that the collectors subscribe.
- *
+ * <p>
  * The frequency and the duration of the data collection can be set.
  *
  * @author benedekh
@@ -73,9 +72,8 @@ public class Application {
             Set<String> requiredArgs = new HashSet<>(Arrays.asList("sl", "tl",
                     "ol"));
             if (!reg.hasMandatoryArguments(requiredArgs)) {
-                System.err.println("Logger does not log any status information.");
-                System.err.println(
-                        "Choose at least one: section status, turnout status, occupancy status.");
+                logInfoMessage(Application.class.getName(), "Logger does not log any status information.");
+                logInfoMessage(Application.class.getName(), "Choose at least one: section status, turnout status, occupancy status.");
                 return;
             }
 
@@ -112,13 +110,13 @@ public class Application {
     /**
      * Create a time settings for the data collection.
      *
-     * @param intervalInt the duration of the data collection in minutes
+     * @param intervalInt  the duration of the data collection in minutes
      * @param frequencyInt the frequency the data shall be updated in
-     * milliseconds
+     *                     milliseconds
      * @return the new time settings object
      */
     private static TimeSettings createTimeSettings(Integer intervalInt,
-            Integer frequencyInt) {
+                                                   Integer frequencyInt) {
         int interval = (intervalInt == null) ? 1 : intervalInt;
         int frequency = (frequencyInt == null) ? 100 : frequencyInt;
 
@@ -130,16 +128,16 @@ public class Application {
      * output path is null, then the referred collector will not be
      * instantiated.
      *
-     * @param sectionStatusPath the output file path for the section status data
-     * collection
+     * @param sectionStatusPath   the output file path for the section status data
+     *                            collection
      * @param occupancyStatusPath the output file path for the section occupancy
-     * status data collection
-     * @param turnoutStatusPath the output file path for the turnout status data
-     * collection
-     * @param trainsCVPath the output file path for the train information
-     * received from the CV (Computer Vision)
-     * @param config the MQTT Configuration
-     * @param timeSettings the time interval and frequency for data collection
+     *                            status data collection
+     * @param turnoutStatusPath   the output file path for the turnout status data
+     *                            collection
+     * @param trainsCVPath        the output file path for the train information
+     *                            received from the CV (Computer Vision)
+     * @param config              the MQTT Configuration
+     * @param timeSettings        the time interval and frequency for data collection
      * @return a collection of data collectors
      */
     private static Collection<Collector> createCollectors(
@@ -196,7 +194,7 @@ public class Application {
      *
      * @param collectors to be started
      */
-    private static void startCollectors(Collection<Collector> collectors) {
+    private static void startCollectors(Iterable<Collector> collectors) {
         for (Collector collector : collectors) {
             collector.startCollectingData();
         }
@@ -206,9 +204,9 @@ public class Application {
      * Creates a MQTT Configuration based on the parameters.
      *
      * @param protocolArg the protocol of the MQTT Broker
-     * @param addressArg the address of the MQTT Broker
-     * @param port the port of the MQTT Broker
-     * @param qos the QOS (Quality of Service) of the MQTT Broker
+     * @param addressArg  the address of the MQTT Broker
+     * @param port        the port of the MQTT Broker
+     * @param qos         the QOS (Quality of Service) of the MQTT Broker
      * @return a new MQTT Configuration
      */
     private static MQTTConfiguration createConfiguration(

@@ -12,17 +12,17 @@ public interface Collector {
     /**
      * On request collect data by the collector implementation.
      */
-    public void collect();
+    void collect();
 
     /**
      * Starts data collection.
      */
-    public void startCollectingData();
+    void startCollectingData();
 
     /**
      * Print the collected data on the writer.
      *
      * @param writer that prints the collected data
      */
-    public void print(PrintWriter writer);
+    void print(PrintWriter writer);
 }

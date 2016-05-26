@@ -4,8 +4,9 @@ import com.google.gson.Gson;
 import hu.bme.mit.inf.mqtt.common.data.TrainsCV;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
-import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
 
 /**
  * Stores the latest trains information received from the CV (Computer Vision).

@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.eda.data;
 
 import hu.bme.mit.inf.mqtt.common.data.SectionStatus;
+
 import java.time.LocalDateTime;
 
 /**
@@ -20,12 +21,12 @@ public class SectionStatusEntry {
     protected SectionStatus sectionStatus;
 
     /**
-     * @param timestamp the timestamp of the entry
-     * @param sectionId the referred section's ID
+     * @param timestamp     the timestamp of the entry
+     * @param sectionId     the referred section's ID
      * @param sectionStatus the status of the referred section
      */
     public SectionStatusEntry(LocalDateTime timestamp, int sectionId,
-            SectionStatus sectionStatus) {
+                              SectionStatus sectionStatus) {
         this.timestamp = timestamp;
         this.sectionId = sectionId;
         this.sectionStatus = sectionStatus;

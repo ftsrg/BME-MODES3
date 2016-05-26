@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.eda.data;
 
 import hu.bme.mit.inf.mqtt.common.data.TurnoutStatus;
+
 import java.time.LocalDateTime;
 
 /**
@@ -20,12 +21,12 @@ public class TurnoutStatusEntry {
     protected TurnoutStatus turnoutStatus;
 
     /**
-     * @param timestamp the timestamp of the entry
-     * @param turnoutId the referred turnout's ID
+     * @param timestamp     the timestamp of the entry
+     * @param turnoutId     the referred turnout's ID
      * @param turnoutStatus the status of the referred turnout
      */
     public TurnoutStatusEntry(LocalDateTime timestamp, int turnoutId,
-            TurnoutStatus turnoutStatus) {
+                              TurnoutStatus turnoutStatus) {
         this.timestamp = timestamp;
         this.turnoutId = turnoutId;
         this.turnoutStatus = turnoutStatus;

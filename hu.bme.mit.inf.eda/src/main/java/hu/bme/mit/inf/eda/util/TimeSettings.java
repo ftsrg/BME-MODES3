@@ -14,9 +14,9 @@ public class TimeSettings {
     private final int frequency;
 
     /**
-     * @param duration the time interval of data collection in minutes
+     * @param duration  the time interval of data collection in minutes
      * @param frequency the frequency in milliseconds the collection should be
-     * refreshed
+     *                  refreshed
      */
     public TimeSettings(int duration, int frequency) {
         this.duration = duration;

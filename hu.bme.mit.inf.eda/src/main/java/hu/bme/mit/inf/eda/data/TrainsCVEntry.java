@@ -2,6 +2,7 @@ package hu.bme.mit.inf.eda.data;
 
 import hu.bme.mit.inf.mqtt.common.data.TrainCV;
 import hu.bme.mit.inf.mqtt.common.data.TrainsCV;
+
 import java.time.LocalDateTime;
 
 /**
@@ -28,7 +29,7 @@ public class TrainsCVEntry {
         StringBuilder sb = new StringBuilder();
 
         for (TrainCV latestTrainCVStatus : latestStatus.getTrains()) {
-            sb.append(timestamp.toString());
+            sb.append(timestamp);
             sb.append(",");
             sb.append(latestTrainCVStatus.getID());
             sb.append(",");
@@ -43,9 +44,7 @@ public class TrainsCVEntry {
         }
 
         // remove trailing line break
-        String trimmed = sb.toString().trim();
-
-        return trimmed;
+        return sb.toString().trim();
     }
 
 }

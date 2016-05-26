@@ -4,9 +4,10 @@ import hu.bme.mit.inf.eda.interceptor.TrainCVInterceptor;
 import hu.bme.mit.inf.eda.util.TimeSettings;
 import hu.bme.mit.inf.mqtt.common.data.TrainsCV;
 import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Collects trains information based on CV (Computer Vision).
@@ -16,7 +17,7 @@ import java.util.List;
 public class TrainsCVCollector implements Collector {
 
     // list of <timestamp, <ID, X, Y, speed, direction>> entries
-    protected final List<TrainsCV> statusEntries = new ArrayList<>();
+    protected final Collection<TrainsCV> statusEntries = new ArrayList<>();
 
     // request sender to acquire status information
     protected final TrainCVInterceptor requestSender;
@@ -25,9 +26,9 @@ public class TrainsCVCollector implements Collector {
     protected final CollectorRunnableSlave collectorSlave;
 
     public TrainsCVCollector(MQTTPublishSubscribeDispatcher dispatcher,
-            TimeSettings timeSettings, String path) {
-        this.requestSender = new TrainCVInterceptor(dispatcher);
-        this.collectorSlave = new CollectorRunnableSlave(this, timeSettings,
+                             TimeSettings timeSettings, String path) {
+        requestSender = new TrainCVInterceptor(dispatcher);
+        collectorSlave = new CollectorRunnableSlave(this, timeSettings,
                 path);
     }
 
@@ -50,7 +51,7 @@ public class TrainsCVCollector implements Collector {
         writer.flush();
 
         for (TrainsCV entry : statusEntries) {
-            writer.println(entry.toString());
+            writer.println(entry);
             writer.flush();
         }
     }
