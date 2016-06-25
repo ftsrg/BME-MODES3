@@ -35,17 +35,14 @@ Board Board::detectBoard(VideoCapture& vid, Mat cameraMatrix, Mat distCoeffs) {
 	benchmarkBoard.bottomRight = Point2f(1920, 1080);
 	benchmarkBoard.calculatePerspectiveMat();
 	return benchmarkBoard;
-
 	#else
 
 	Mat raw;
 	vid >> raw;
-
 	std::cout << raw.size() << std::endl;
 
 	Mat undistorted;
 	cv::undistort(raw, undistorted, cameraMatrix, distCoeffs);
-
 	Point2i decPoint = raw.size() / 2;
 
 	#ifdef ENABLE_GPU

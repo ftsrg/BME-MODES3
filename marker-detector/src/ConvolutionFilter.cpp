@@ -3,7 +3,7 @@
 
 void ConvolutionFilter::process() {
 	static Mat raw;
-	cv::swap(inputFilter.getData<0>(), raw);
+	inputFilter.getData<0>().copyTo(raw);
 	inputFilter.clearToProcess();
 	setData<1>(raw);
 	

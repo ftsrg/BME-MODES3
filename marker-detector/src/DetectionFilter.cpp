@@ -5,9 +5,9 @@ void DetectionFilter::process() {
 	auto timestamp = std::chrono::steady_clock::now();
 	
 	static Mat raw;
-	cv::swap(convFilter.getData<1>(), raw);
+	convFilter.getData<1>().copyTo(raw);
 	static Mat contour;
-	cv::swap(convFilter.getData<0>(), contour);
+	convFilter.getData<0>().copyTo(contour);
 	convFilter.clearToProcess();
 	
 	auto mc = calculateMassCenters(contour);
@@ -106,7 +106,7 @@ void DetectionFilter::process() {
 	//cv::line(raw, Point2f(0, 120), Point2f(1920, 120), Scalar(255, 255, 255), 2);
 	//cv::line(raw, Point2f(0, 960), Point2f(1920, 960), Scalar(255, 255, 255), 2);
 	
-	cv::resize(raw, raw, raw.size() / 2);
+
 	setData<0>(raw);
 	setData<1>(serializer);
 }

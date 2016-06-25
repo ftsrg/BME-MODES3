@@ -30,15 +30,13 @@ const int RED2 = 0; // 0
 const int RED2_LOW = RED2 - HUE_DEVIATION;
 const int RED2_HIGH = RED2 + HUE_DEVIATION;
 
-const int GREEN = 154; // 0
+const int GREEN = 160; // 0
 const int GREEN_LOW = GREEN - HUE_DEVIATION;
 const int GREEN_HIGH = GREEN + HUE_DEVIATION;
 
-const int BLUE = 300; // 0
+const int BLUE = 240; // 0
 const int BLUE_LOW = BLUE - HUE_DEVIATION;
 const int BLUE_HIGH = BLUE + HUE_DEVIATION;
-
-const int GB_DECISION = 100;
 /// -----------------------------------------------
 
 

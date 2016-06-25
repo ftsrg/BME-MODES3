@@ -24,9 +24,11 @@ Mat distCoeffs, cameraMatrix;
 
 int main(int argc, char** argv)
 {
+	cv::namedWindow("DetectionOut");
+	
 	#ifdef MQTT_ENABLED
 		MqttClient client;
-		if (!client.Connect("localhost")) {
+		if (!client.Connect("192.168.1.2")) {
 			std::cout << "Error while connectiong to MQTT broker, aborting";
 			return -10;
 		}
@@ -40,7 +42,7 @@ int main(int argc, char** argv)
 	VideoCapture vid("Test4T.mov");
 	vid.set(CAP_PROP_FPS, 5);
 	#else
-	VideoCapture vid(0);
+	VideoCapture vid(1);
 	#endif
 	vid.set(CAP_PROP_FRAME_WIDTH, 1920);
 	vid.set(CAP_PROP_FRAME_HEIGHT, 1080);
@@ -60,10 +62,13 @@ int main(int argc, char** argv)
 		auto start = std::chrono::steady_clock::now();
 
 		static Mat output;
-		cv::swap(detFilter.getData<0>(), output);
+		detFilter.getData<0>().copyTo(output);
 		detFilter.clearToProcess();
-		//imshow("DetectionOut", output);
-		//waitKey(1);
+		
+		// EYE CANDY
+		//cv::resize(output, output, output.size() / 3 * 2);
+		imshow("DetectionOut", output);
+		waitKey(1);
 
 		static DataSerializer data;
 		data = detFilter.getData<1>();

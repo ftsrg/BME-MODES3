@@ -110,6 +110,7 @@ Mat convolve(Mat raw, Mat circleSpectrum, float thresold) {
 
 bool findMarker(Point2f a, Point2f b, double min, double max) {
 	double distance = cv::norm(a - b);
+	//std::cout << distance << std::endl;
 	if (min < distance && distance < max) {
 		return true;
 	}
@@ -131,26 +132,24 @@ int identifyMarker(Point2f markerCenter, Mat img) {
 	Point3f hsv = hsvMat.at<Point3f>(0, 0);
 	
 	float hue = hsv.x;
-	//std::cout << "Hue: " << hue << std::endl;
+	std::cout << "Hue: " << hue << std::endl;
 	
 	float sat = hsv.y;
-	//std::cout << "Sat: " << sat << std::endl;
+	std::cout << "Sat: " << sat << std::endl;
 	
 	float val = hsv.z;
-	//std::cout << val << std::endl << std::endl;
+	std::cout << "Val: " << val << std::endl << std::endl;
 	
-	if (val > 100) {
+	if (val > 40) {
 		if (RED1_LOW < hue && hue < RED1_HIGH)
 			return MARKER_R;
 		else if (RED2_LOW < hue && hue < RED2_HIGH)
 			return MARKER_R;
-		else if (GREEN_LOW < hue && hue < GREEN_HIGH)
-			return MARKER_G;
+		//else if (GREEN_LOW < hue && hue < GREEN_HIGH)
+		//	return MARKER_G;
+		else if (BLUE_LOW < hue && hue < BLUE_HIGH)
+			return MARKER_B;
 	}
-	
-	if (BLUE_LOW < hue && hue < BLUE_HIGH)
-		return MARKER_B;
-	
 	
 	return MARKER_UNKNOWN;
 }
