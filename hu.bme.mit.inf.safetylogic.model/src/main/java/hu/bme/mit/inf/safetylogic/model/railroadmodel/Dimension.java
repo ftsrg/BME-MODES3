@@ -33,7 +33,7 @@ public interface Dimension extends EObject {
 	 * @return the value of the '<em>Width</em>' attribute.
 	 * @see #setWidth(double)
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getDimension_Width()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	double getWidth();
@@ -59,7 +59,7 @@ public interface Dimension extends EObject {
 	 * @return the value of the '<em>Height</em>' attribute.
 	 * @see #setHeight(double)
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getDimension_Height()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	double getHeight();

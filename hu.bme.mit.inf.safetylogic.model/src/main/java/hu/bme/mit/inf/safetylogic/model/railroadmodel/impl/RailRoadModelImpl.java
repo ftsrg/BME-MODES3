@@ -3,8 +3,9 @@
 package hu.bme.mit.inf.safetylogic.model.railroadmodel.impl;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel;
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement;
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel;
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
 
 import java.util.Collection;
 
@@ -22,18 +23,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Section Model</b></em>'.
+ * An implementation of the model object '<em><b>Rail Road Model</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionModelImpl#getSections <em>Sections</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl#getSections <em>Sections</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl#getTrains <em>Trains</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class SectionModelImpl extends MinimalEObjectImpl.Container implements SectionModel {
+public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements RailRoadModel {
 	/**
 	 * The cached value of the '{@link #getSections() <em>Sections</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -42,14 +44,24 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Section> sections;
+	protected EList<RailRoadElement> sections;
+
+	/**
+	 * The cached value of the '{@link #getTrains() <em>Trains</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTrains()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Train> trains;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SectionModelImpl() {
+	protected RailRoadModelImpl() {
 		super();
 	}
 
@@ -60,7 +72,7 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return ModelPackage.Literals.SECTION_MODEL;
+		return ModelPackage.Literals.RAIL_ROAD_MODEL;
 	}
 
 	/**
@@ -68,11 +80,23 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Section> getSections() {
+	public EList<RailRoadElement> getSections() {
 		if (sections == null) {
-			sections = new EObjectContainmentEList<Section>(Section.class, this, ModelPackage.SECTION_MODEL__SECTIONS);
+			sections = new EObjectContainmentEList<RailRoadElement>(RailRoadElement.class, this, ModelPackage.RAIL_ROAD_MODEL__SECTIONS);
 		}
 		return sections;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Train> getTrains() {
+		if (trains == null) {
+			trains = new EObjectContainmentEList<Train>(Train.class, this, ModelPackage.RAIL_ROAD_MODEL__TRAINS);
+		}
+		return trains;
 	}
 
 	/**
@@ -83,8 +107,10 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ModelPackage.SECTION_MODEL__SECTIONS:
+			case ModelPackage.RAIL_ROAD_MODEL__SECTIONS:
 				return ((InternalEList<?>)getSections()).basicRemove(otherEnd, msgs);
+			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
+				return ((InternalEList<?>)getTrains()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -97,8 +123,10 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ModelPackage.SECTION_MODEL__SECTIONS:
+			case ModelPackage.RAIL_ROAD_MODEL__SECTIONS:
 				return getSections();
+			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
+				return getTrains();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -112,9 +140,13 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ModelPackage.SECTION_MODEL__SECTIONS:
+			case ModelPackage.RAIL_ROAD_MODEL__SECTIONS:
 				getSections().clear();
-				getSections().addAll((Collection<? extends Section>)newValue);
+				getSections().addAll((Collection<? extends RailRoadElement>)newValue);
+				return;
+			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
+				getTrains().clear();
+				getTrains().addAll((Collection<? extends Train>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -128,8 +160,11 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ModelPackage.SECTION_MODEL__SECTIONS:
+			case ModelPackage.RAIL_ROAD_MODEL__SECTIONS:
 				getSections().clear();
+				return;
+			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
+				getTrains().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -143,10 +178,12 @@ public class SectionModelImpl extends MinimalEObjectImpl.Container implements Se
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ModelPackage.SECTION_MODEL__SECTIONS:
+			case ModelPackage.RAIL_ROAD_MODEL__SECTIONS:
 				return sections != null && !sections.isEmpty();
+			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
+				return trains != null && !trains.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
 
-} //SectionModelImpl
+} //RailRoadModelImpl

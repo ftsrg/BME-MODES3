@@ -22,15 +22,6 @@ public interface ModelFactory extends EFactory {
 	ModelFactory eINSTANCE = hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Train Model</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Train Model</em>'.
-	 * @generated
-	 */
-	TrainModel createTrainModel();
-
-	/**
 	 * Returns a new object of class '<em>Train</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -38,15 +29,6 @@ public interface ModelFactory extends EFactory {
 	 * @generated
 	 */
 	Train createTrain();
-
-	/**
-	 * Returns a new object of class '<em>Section</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Section</em>'.
-	 * @generated
-	 */
-	Section createSection();
 
 	/**
 	 * Returns a new object of class '<em>Turnout</em>'.
@@ -58,15 +40,6 @@ public interface ModelFactory extends EFactory {
 	Turnout createTurnout();
 
 	/**
-	 * Returns a new object of class '<em>Turn</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Turn</em>'.
-	 * @generated
-	 */
-	Turn createTurn();
-
-	/**
 	 * Returns a new object of class '<em>Point</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -76,13 +49,13 @@ public interface ModelFactory extends EFactory {
 	Point createPoint();
 
 	/**
-	 * Returns a new object of class '<em>Section Model</em>'.
+	 * Returns a new object of class '<em>Rail Road Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Section Model</em>'.
+	 * @return a new object of class '<em>Rail Road Model</em>'.
 	 * @generated
 	 */
-	SectionModel createSectionModel();
+	RailRoadModel createRailRoadModel();
 
 	/**
 	 * Returns a new object of class '<em>Rectangle</em>'.
@@ -103,22 +76,13 @@ public interface ModelFactory extends EFactory {
 	Dimension createDimension();
 
 	/**
-	 * Returns a new object of class '<em>English Turnout</em>'.
+	 * Returns a new object of class '<em>Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>English Turnout</em>'.
+	 * @return a new object of class '<em>Segment</em>'.
 	 * @generated
 	 */
-	EnglishTurnout createEnglishTurnout();
-
-	/**
-	 * Returns a new object of class '<em>Blind Track</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Blind Track</em>'.
-	 * @generated
-	 */
-	BlindTrack createBlindTrack();
+	Segment createSegment();
 
 	/**
 	 * Returns the package supported by this factory.

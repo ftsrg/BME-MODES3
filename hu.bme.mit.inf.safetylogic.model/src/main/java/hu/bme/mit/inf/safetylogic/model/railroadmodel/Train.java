@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getCurrentlyOn <em>Currently On</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getX <em>X</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getY <em>Y</em>}</li>
- *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#isGoingClockwise <em>Going Clockwise</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getId <em>Id</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getPreviouslyOn <em>Previously On</em>}</li>
  * </ul>
  *
  * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTrain()
@@ -34,12 +34,12 @@ public interface Train extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Currently On</em>' reference.
-	 * @see #setCurrentlyOn(Section)
+	 * @see #setCurrentlyOn(RailRoadElement)
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTrain_CurrentlyOn()
 	 * @model required="true"
 	 * @generated
 	 */
-	Section getCurrentlyOn();
+	RailRoadElement getCurrentlyOn();
 
 	/**
 	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getCurrentlyOn <em>Currently On</em>}' reference.
@@ -49,7 +49,7 @@ public interface Train extends EObject {
 	 * @see #getCurrentlyOn()
 	 * @generated
 	 */
-	void setCurrentlyOn(Section value);
+	void setCurrentlyOn(RailRoadElement value);
 
 	/**
 	 * Returns the value of the '<em><b>X</b></em>' attribute.
@@ -104,32 +104,6 @@ public interface Train extends EObject {
 	void setY(double value);
 
 	/**
-	 * Returns the value of the '<em><b>Going Clockwise</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Going Clockwise</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Going Clockwise</em>' attribute.
-	 * @see #setGoingClockwise(boolean)
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTrain_GoingClockwise()
-	 * @model required="true"
-	 * @generated
-	 */
-	boolean isGoingClockwise();
-
-	/**
-	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#isGoingClockwise <em>Going Clockwise</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Going Clockwise</em>' attribute.
-	 * @see #isGoingClockwise()
-	 * @generated
-	 */
-	void setGoingClockwise(boolean value);
-
-	/**
 	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -154,5 +128,31 @@ public interface Train extends EObject {
 	 * @generated
 	 */
 	void setId(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Previously On</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Previously On</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Previously On</em>' reference.
+	 * @see #setPreviouslyOn(RailRoadElement)
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTrain_PreviouslyOn()
+	 * @model required="true"
+	 * @generated
+	 */
+	RailRoadElement getPreviouslyOn();
+
+	/**
+	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getPreviouslyOn <em>Previously On</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Previously On</em>' reference.
+	 * @see #getPreviouslyOn()
+	 * @generated
+	 */
+	void setPreviouslyOn(RailRoadElement value);
 
 } // Train

@@ -56,30 +56,16 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ModelPackage.TRAIN_MODEL: return createTrainModel();
 			case ModelPackage.TRAIN: return createTrain();
-			case ModelPackage.SECTION: return createSection();
 			case ModelPackage.TURNOUT: return createTurnout();
-			case ModelPackage.TURN: return createTurn();
 			case ModelPackage.POINT: return createPoint();
-			case ModelPackage.SECTION_MODEL: return createSectionModel();
+			case ModelPackage.RAIL_ROAD_MODEL: return createRailRoadModel();
 			case ModelPackage.RECTANGLE: return createRectangle();
 			case ModelPackage.DIMENSION: return createDimension();
-			case ModelPackage.ENGLISH_TURNOUT: return createEnglishTurnout();
-			case ModelPackage.BLIND_TRACK: return createBlindTrack();
+			case ModelPackage.SEGMENT: return createSegment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TrainModel createTrainModel() {
-		TrainModelImpl trainModel = new TrainModelImpl();
-		return trainModel;
 	}
 
 	/**
@@ -97,29 +83,9 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Section createSection() {
-		SectionImpl section = new SectionImpl();
-		return section;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Turnout createTurnout() {
 		TurnoutImpl turnout = new TurnoutImpl();
 		return turnout;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Turn createTurn() {
-		TurnImpl turn = new TurnImpl();
-		return turn;
 	}
 
 	/**
@@ -137,9 +103,9 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SectionModel createSectionModel() {
-		SectionModelImpl sectionModel = new SectionModelImpl();
-		return sectionModel;
+	public RailRoadModel createRailRoadModel() {
+		RailRoadModelImpl railRoadModel = new RailRoadModelImpl();
+		return railRoadModel;
 	}
 
 	/**
@@ -167,19 +133,9 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EnglishTurnout createEnglishTurnout() {
-		EnglishTurnoutImpl englishTurnout = new EnglishTurnoutImpl();
-		return englishTurnout;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public BlindTrack createBlindTrack() {
-		BlindTrackImpl blindTrack = new BlindTrackImpl();
-		return blindTrack;
+	public Segment createSegment() {
+		SegmentImpl segment = new SegmentImpl();
+		return segment;
 	}
 
 	/**

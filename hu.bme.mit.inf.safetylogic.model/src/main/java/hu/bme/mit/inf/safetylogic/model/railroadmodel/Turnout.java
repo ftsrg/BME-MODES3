@@ -12,68 +12,18 @@ package hu.bme.mit.inf.safetylogic.model.railroadmodel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getNotConnectedSection <em>Not Connected Section</em>}</li>
- *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isTwoSectionsInClockwiseDirection <em>Two Sections In Clockwise Direction</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getRectangle <em>Rectangle</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getTop <em>Top</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getStraight <em>Straight</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getDivergent <em>Divergent</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent <em>Is Divergent</em>}</li>
  * </ul>
  *
  * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout()
  * @model
  * @generated
  */
-public interface Turnout extends Section {
-	/**
-	 * Returns the value of the '<em><b>Not Connected Section</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Not Connected Section</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Not Connected Section</em>' reference.
-	 * @see #setNotConnectedSection(Section)
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_NotConnectedSection()
-	 * @model required="true"
-	 * @generated
-	 */
-	Section getNotConnectedSection();
-
-	/**
-	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getNotConnectedSection <em>Not Connected Section</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Not Connected Section</em>' reference.
-	 * @see #getNotConnectedSection()
-	 * @generated
-	 */
-	void setNotConnectedSection(Section value);
-
-	/**
-	 * Returns the value of the '<em><b>Two Sections In Clockwise Direction</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Two Sections In Clockwise Direction</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Two Sections In Clockwise Direction</em>' attribute.
-	 * @see #setTwoSectionsInClockwiseDirection(boolean)
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_TwoSectionsInClockwiseDirection()
-	 * @model required="true"
-	 * @generated
-	 */
-	boolean isTwoSectionsInClockwiseDirection();
-
-	/**
-	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isTwoSectionsInClockwiseDirection <em>Two Sections In Clockwise Direction</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Two Sections In Clockwise Direction</em>' attribute.
-	 * @see #isTwoSectionsInClockwiseDirection()
-	 * @generated
-	 */
-	void setTwoSectionsInClockwiseDirection(boolean value);
-
+public interface Turnout extends RailRoadElement {
 	/**
 	 * Returns the value of the '<em><b>Rectangle</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -99,5 +49,109 @@ public interface Turnout extends Section {
 	 * @generated
 	 */
 	void setRectangle(Rectangle value);
+
+	/**
+	 * Returns the value of the '<em><b>Top</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Top</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Top</em>' reference.
+	 * @see #setTop(RailRoadElement)
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_Top()
+	 * @model required="true"
+	 * @generated
+	 */
+	RailRoadElement getTop();
+
+	/**
+	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getTop <em>Top</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Top</em>' reference.
+	 * @see #getTop()
+	 * @generated
+	 */
+	void setTop(RailRoadElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Straight</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Straight</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Straight</em>' reference.
+	 * @see #setStraight(RailRoadElement)
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_Straight()
+	 * @model required="true"
+	 * @generated
+	 */
+	RailRoadElement getStraight();
+
+	/**
+	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getStraight <em>Straight</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Straight</em>' reference.
+	 * @see #getStraight()
+	 * @generated
+	 */
+	void setStraight(RailRoadElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Divergent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Divergent</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Divergent</em>' reference.
+	 * @see #setDivergent(RailRoadElement)
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_Divergent()
+	 * @model required="true"
+	 * @generated
+	 */
+	RailRoadElement getDivergent();
+
+	/**
+	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getDivergent <em>Divergent</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Divergent</em>' reference.
+	 * @see #getDivergent()
+	 * @generated
+	 */
+	void setDivergent(RailRoadElement value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Divergent</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Divergent</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Divergent</em>' attribute.
+	 * @see #setIsDivergent(boolean)
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_IsDivergent()
+	 * @model required="true"
+	 * @generated
+	 */
+	boolean isIsDivergent();
+
+	/**
+	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent <em>Is Divergent</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Divergent</em>' attribute.
+	 * @see #isIsDivergent()
+	 * @generated
+	 */
+	void setIsDivergent(boolean value);
 
 } // Turnout

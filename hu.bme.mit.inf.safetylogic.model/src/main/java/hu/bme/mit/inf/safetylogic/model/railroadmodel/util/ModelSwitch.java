@@ -66,35 +66,22 @@ public class ModelSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ModelPackage.TRAIN_MODEL: {
-				TrainModel trainModel = (TrainModel)theEObject;
-				T result = caseTrainModel(trainModel);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
 			case ModelPackage.TRAIN: {
 				Train train = (Train)theEObject;
 				T result = caseTrain(train);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ModelPackage.SECTION: {
-				Section section = (Section)theEObject;
-				T result = caseSection(section);
+			case ModelPackage.RAIL_ROAD_ELEMENT: {
+				RailRoadElement railRoadElement = (RailRoadElement)theEObject;
+				T result = caseRailRoadElement(railRoadElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ModelPackage.TURNOUT: {
 				Turnout turnout = (Turnout)theEObject;
 				T result = caseTurnout(turnout);
-				if (result == null) result = caseSection(turnout);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ModelPackage.TURN: {
-				Turn turn = (Turn)theEObject;
-				T result = caseTurn(turn);
-				if (result == null) result = caseSection(turn);
+				if (result == null) result = caseRailRoadElement(turnout);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -104,9 +91,9 @@ public class ModelSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ModelPackage.SECTION_MODEL: {
-				SectionModel sectionModel = (SectionModel)theEObject;
-				T result = caseSectionModel(sectionModel);
+			case ModelPackage.RAIL_ROAD_MODEL: {
+				RailRoadModel railRoadModel = (RailRoadModel)theEObject;
+				T result = caseRailRoadModel(railRoadModel);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -122,38 +109,15 @@ public class ModelSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ModelPackage.ENGLISH_TURNOUT: {
-				EnglishTurnout englishTurnout = (EnglishTurnout)theEObject;
-				T result = caseEnglishTurnout(englishTurnout);
-				if (result == null) result = caseTurnout(englishTurnout);
-				if (result == null) result = caseSection(englishTurnout);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ModelPackage.BLIND_TRACK: {
-				BlindTrack blindTrack = (BlindTrack)theEObject;
-				T result = caseBlindTrack(blindTrack);
-				if (result == null) result = caseSection(blindTrack);
+			case ModelPackage.SEGMENT: {
+				Segment segment = (Segment)theEObject;
+				T result = caseSegment(segment);
+				if (result == null) result = caseRailRoadElement(segment);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			default: return defaultCase(theEObject);
 		}
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Train Model</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Train Model</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTrainModel(TrainModel object) {
-		return null;
 	}
 
 	/**
@@ -172,17 +136,17 @@ public class ModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Section</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Rail Road Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Section</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Rail Road Element</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSection(Section object) {
+	public T caseRailRoadElement(RailRoadElement object) {
 		return null;
 	}
 
@@ -202,21 +166,6 @@ public class ModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Turn</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Turn</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseTurn(Turn object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Point</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -232,17 +181,17 @@ public class ModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Section Model</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Rail Road Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Section Model</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Rail Road Model</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseSectionModel(SectionModel object) {
+	public T caseRailRoadModel(RailRoadModel object) {
 		return null;
 	}
 
@@ -277,32 +226,17 @@ public class ModelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>English Turnout</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Segment</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>English Turnout</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Segment</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseEnglishTurnout(EnglishTurnout object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Blind Track</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Blind Track</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseBlindTrack(BlindTrack object) {
+	public T caseSegment(Segment object) {
 		return null;
 	}
 

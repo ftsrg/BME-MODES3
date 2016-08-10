@@ -88,7 +88,7 @@ public interface Rectangle extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Inverse Matrix</em>' attribute list.
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getRectangle_InverseMatrix()
-	 * @model default="0.0" unique="false" upper="8" ordered="false"
+	 * @model default="0.0" unique="false" required="true" upper="8" ordered="false"
 	 * @generated
 	 */
 	EList<Double> getInverseMatrix();

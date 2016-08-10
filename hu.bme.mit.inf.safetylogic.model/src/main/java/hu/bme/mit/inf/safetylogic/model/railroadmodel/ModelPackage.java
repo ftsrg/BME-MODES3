@@ -57,43 +57,6 @@ public interface ModelPackage extends EPackage {
 	ModelPackage eINSTANCE = hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TrainModelImpl <em>Train Model</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TrainModelImpl
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getTrainModel()
-	 * @generated
-	 */
-	int TRAIN_MODEL = 0;
-
-	/**
-	 * The feature id for the '<em><b>Trains</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAIN_MODEL__TRAINS = 0;
-
-	/**
-	 * The number of structural features of the '<em>Train Model</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAIN_MODEL_FEATURE_COUNT = 1;
-
-	/**
-	 * The number of operations of the '<em>Train Model</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAIN_MODEL_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TrainImpl <em>Train</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -101,7 +64,7 @@ public interface ModelPackage extends EPackage {
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getTrain()
 	 * @generated
 	 */
-	int TRAIN = 1;
+	int TRAIN = 0;
 
 	/**
 	 * The feature id for the '<em><b>Currently On</b></em>' reference.
@@ -131,22 +94,22 @@ public interface ModelPackage extends EPackage {
 	int TRAIN__Y = 2;
 
 	/**
-	 * The feature id for the '<em><b>Going Clockwise</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TRAIN__GOING_CLOCKWISE = 3;
-
-	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRAIN__ID = 4;
+	int TRAIN__ID = 3;
+
+	/**
+	 * The feature id for the '<em><b>Previously On</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRAIN__PREVIOUSLY_ON = 4;
 
 	/**
 	 * The number of structural features of the '<em>Train</em>' class.
@@ -167,32 +130,14 @@ public interface ModelPackage extends EPackage {
 	int TRAIN_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionImpl <em>Section</em>}' class.
+	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl <em>Rail Road Element</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionImpl
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getSection()
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getRailRoadElement()
 	 * @generated
 	 */
-	int SECTION = 2;
-
-	/**
-	 * The feature id for the '<em><b>Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SECTION__CLOCKWISE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Counter Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SECTION__COUNTER_CLOCKWISE = 1;
+	int RAIL_ROAD_ELEMENT = 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -201,7 +146,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION__ID = 2;
+	int RAIL_ROAD_ELEMENT__ID = 0;
 
 	/**
 	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
@@ -210,34 +155,25 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION__POINTS = 3;
+	int RAIL_ROAD_ELEMENT__POINTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * The number of structural features of the '<em>Rail Road Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION__ENABLED = 4;
+	int RAIL_ROAD_ELEMENT_FEATURE_COUNT = 2;
 
 	/**
-	 * The number of structural features of the '<em>Section</em>' class.
+	 * The number of operations of the '<em>Rail Road Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION_FEATURE_COUNT = 5;
-
-	/**
-	 * The number of operations of the '<em>Section</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SECTION_OPERATION_COUNT = 0;
+	int RAIL_ROAD_ELEMENT_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl <em>Turnout</em>}' class.
@@ -247,25 +183,7 @@ public interface ModelPackage extends EPackage {
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getTurnout()
 	 * @generated
 	 */
-	int TURNOUT = 3;
-
-	/**
-	 * The feature id for the '<em><b>Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__CLOCKWISE = SECTION__CLOCKWISE;
-
-	/**
-	 * The feature id for the '<em><b>Counter Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__COUNTER_CLOCKWISE = SECTION__COUNTER_CLOCKWISE;
+	int TURNOUT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -274,7 +192,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__ID = SECTION__ID;
+	int TURNOUT__ID = RAIL_ROAD_ELEMENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
@@ -283,34 +201,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__POINTS = SECTION__POINTS;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__ENABLED = SECTION__ENABLED;
-
-	/**
-	 * The feature id for the '<em><b>Not Connected Section</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__NOT_CONNECTED_SECTION = SECTION_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Two Sections In Clockwise Direction</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__TWO_SECTIONS_IN_CLOCKWISE_DIRECTION = SECTION_FEATURE_COUNT + 1;
+	int TURNOUT__POINTS = RAIL_ROAD_ELEMENT__POINTS;
 
 	/**
 	 * The feature id for the '<em><b>Rectangle</b></em>' containment reference.
@@ -319,7 +210,43 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__RECTANGLE = SECTION_FEATURE_COUNT + 2;
+	int TURNOUT__RECTANGLE = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Top</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TURNOUT__TOP = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Straight</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TURNOUT__STRAIGHT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Divergent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TURNOUT__DIVERGENT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Is Divergent</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TURNOUT__IS_DIVERGENT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Turnout</em>' class.
@@ -328,7 +255,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT_FEATURE_COUNT = SECTION_FEATURE_COUNT + 3;
+	int TURNOUT_FEATURE_COUNT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Turnout</em>' class.
@@ -337,80 +264,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT_OPERATION_COUNT = SECTION_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnImpl <em>Turn</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnImpl
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getTurn()
-	 * @generated
-	 */
-	int TURN = 4;
-
-	/**
-	 * The feature id for the '<em><b>Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURN__CLOCKWISE = SECTION__CLOCKWISE;
-
-	/**
-	 * The feature id for the '<em><b>Counter Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURN__COUNTER_CLOCKWISE = SECTION__COUNTER_CLOCKWISE;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURN__ID = SECTION__ID;
-
-	/**
-	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURN__POINTS = SECTION__POINTS;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURN__ENABLED = SECTION__ENABLED;
-
-	/**
-	 * The number of structural features of the '<em>Turn</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURN_FEATURE_COUNT = SECTION_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Turn</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURN_OPERATION_COUNT = SECTION_OPERATION_COUNT + 0;
+	int TURNOUT_OPERATION_COUNT = RAIL_ROAD_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.PointImpl <em>Point</em>}' class.
@@ -420,7 +274,7 @@ public interface ModelPackage extends EPackage {
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getPoint()
 	 * @generated
 	 */
-	int POINT = 5;
+	int POINT = 3;
 
 	/**
 	 * The feature id for the '<em><b>X</b></em>' attribute.
@@ -459,14 +313,14 @@ public interface ModelPackage extends EPackage {
 	int POINT_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionModelImpl <em>Section Model</em>}' class.
+	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl <em>Rail Road Model</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionModelImpl
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getSectionModel()
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getRailRoadModel()
 	 * @generated
 	 */
-	int SECTION_MODEL = 6;
+	int RAIL_ROAD_MODEL = 4;
 
 	/**
 	 * The feature id for the '<em><b>Sections</b></em>' containment reference list.
@@ -475,25 +329,34 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION_MODEL__SECTIONS = 0;
+	int RAIL_ROAD_MODEL__SECTIONS = 0;
 
 	/**
-	 * The number of structural features of the '<em>Section Model</em>' class.
+	 * The feature id for the '<em><b>Trains</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION_MODEL_FEATURE_COUNT = 1;
+	int RAIL_ROAD_MODEL__TRAINS = 1;
 
 	/**
-	 * The number of operations of the '<em>Section Model</em>' class.
+	 * The number of structural features of the '<em>Rail Road Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SECTION_MODEL_OPERATION_COUNT = 0;
+	int RAIL_ROAD_MODEL_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Rail Road Model</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAIL_ROAD_MODEL_OPERATION_COUNT = 0;
 
 	/**
 	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RectangleImpl <em>Rectangle</em>}' class.
@@ -503,7 +366,7 @@ public interface ModelPackage extends EPackage {
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getRectangle()
 	 * @generated
 	 */
-	int RECTANGLE = 7;
+	int RECTANGLE = 5;
 
 	/**
 	 * The feature id for the '<em><b>Origin</b></em>' containment reference.
@@ -558,7 +421,7 @@ public interface ModelPackage extends EPackage {
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getDimension()
 	 * @generated
 	 */
-	int DIMENSION = 8;
+	int DIMENSION = 6;
 
 	/**
 	 * The feature id for the '<em><b>Width</b></em>' attribute.
@@ -597,32 +460,14 @@ public interface ModelPackage extends EPackage {
 	int DIMENSION_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.EnglishTurnoutImpl <em>English Turnout</em>}' class.
+	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SegmentImpl <em>Segment</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.EnglishTurnoutImpl
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getEnglishTurnout()
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SegmentImpl
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getSegment()
 	 * @generated
 	 */
-	int ENGLISH_TURNOUT = 9;
-
-	/**
-	 * The feature id for the '<em><b>Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENGLISH_TURNOUT__CLOCKWISE = TURNOUT__CLOCKWISE;
-
-	/**
-	 * The feature id for the '<em><b>Counter Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENGLISH_TURNOUT__COUNTER_CLOCKWISE = TURNOUT__COUNTER_CLOCKWISE;
+	int SEGMENT = 7;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -631,7 +476,7 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ENGLISH_TURNOUT__ID = TURNOUT__ID;
+	int SEGMENT__ID = RAIL_ROAD_ELEMENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
@@ -640,165 +485,44 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ENGLISH_TURNOUT__POINTS = TURNOUT__POINTS;
+	int SEGMENT__POINTS = RAIL_ROAD_ELEMENT__POINTS;
 
 	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
+	 * The feature id for the '<em><b>Is Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENGLISH_TURNOUT__ENABLED = TURNOUT__ENABLED;
+	int SEGMENT__IS_ENABLED = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Not Connected Section</b></em>' reference.
+	 * The feature id for the '<em><b>Connected To</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENGLISH_TURNOUT__NOT_CONNECTED_SECTION = TURNOUT__NOT_CONNECTED_SECTION;
+	int SEGMENT__CONNECTED_TO = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
-	 * The feature id for the '<em><b>Two Sections In Clockwise Direction</b></em>' attribute.
+	 * The number of structural features of the '<em>Segment</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENGLISH_TURNOUT__TWO_SECTIONS_IN_CLOCKWISE_DIRECTION = TURNOUT__TWO_SECTIONS_IN_CLOCKWISE_DIRECTION;
+	int SEGMENT_FEATURE_COUNT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Rectangle</b></em>' containment reference.
+	 * The number of operations of the '<em>Segment</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ENGLISH_TURNOUT__RECTANGLE = TURNOUT__RECTANGLE;
+	int SEGMENT_OPERATION_COUNT = RAIL_ROAD_ELEMENT_OPERATION_COUNT + 0;
 
-	/**
-	 * The feature id for the '<em><b>Not Connected Clockwise Section</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENGLISH_TURNOUT__NOT_CONNECTED_CLOCKWISE_SECTION = TURNOUT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>English Turnout</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENGLISH_TURNOUT_FEATURE_COUNT = TURNOUT_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of operations of the '<em>English Turnout</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ENGLISH_TURNOUT_OPERATION_COUNT = TURNOUT_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.BlindTrackImpl <em>Blind Track</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.BlindTrackImpl
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getBlindTrack()
-	 * @generated
-	 */
-	int BLIND_TRACK = 10;
-
-	/**
-	 * The feature id for the '<em><b>Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLIND_TRACK__CLOCKWISE = SECTION__CLOCKWISE;
-
-	/**
-	 * The feature id for the '<em><b>Counter Clockwise</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLIND_TRACK__COUNTER_CLOCKWISE = SECTION__COUNTER_CLOCKWISE;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLIND_TRACK__ID = SECTION__ID;
-
-	/**
-	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLIND_TRACK__POINTS = SECTION__POINTS;
-
-	/**
-	 * The feature id for the '<em><b>Enabled</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLIND_TRACK__ENABLED = SECTION__ENABLED;
-
-	/**
-	 * The number of structural features of the '<em>Blind Track</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLIND_TRACK_FEATURE_COUNT = SECTION_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Blind Track</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BLIND_TRACK_OPERATION_COUNT = SECTION_OPERATION_COUNT + 0;
-
-
-	/**
-	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel <em>Train Model</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Train Model</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel
-	 * @generated
-	 */
-	EClass getTrainModel();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel#getTrains <em>Trains</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Trains</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel#getTrains()
-	 * @see #getTrainModel()
-	 * @generated
-	 */
-	EReference getTrainModel_Trains();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train <em>Train</em>}'.
@@ -844,17 +568,6 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTrain_Y();
 
 	/**
-	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#isGoingClockwise <em>Going Clockwise</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Going Clockwise</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#isGoingClockwise()
-	 * @see #getTrain()
-	 * @generated
-	 */
-	EAttribute getTrain_GoingClockwise();
-
-	/**
 	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -866,69 +579,47 @@ public interface ModelPackage extends EPackage {
 	EAttribute getTrain_Id();
 
 	/**
-	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Section <em>Section</em>}'.
+	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getPreviouslyOn <em>Previously On</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Section</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Section
+	 * @return the meta object for the reference '<em>Previously On</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Train#getPreviouslyOn()
+	 * @see #getTrain()
 	 * @generated
 	 */
-	EClass getSection();
+	EReference getTrain_PreviouslyOn();
 
 	/**
-	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getClockwise <em>Clockwise</em>}'.
+	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement <em>Rail Road Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Clockwise</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getClockwise()
-	 * @see #getSection()
+	 * @return the meta object for class '<em>Rail Road Element</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement
 	 * @generated
 	 */
-	EReference getSection_Clockwise();
+	EClass getRailRoadElement();
 
 	/**
-	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getCounterClockwise <em>Counter Clockwise</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Counter Clockwise</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getCounterClockwise()
-	 * @see #getSection()
-	 * @generated
-	 */
-	EReference getSection_CounterClockwise();
-
-	/**
-	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getId()
-	 * @see #getSection()
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getId()
+	 * @see #getRailRoadElement()
 	 * @generated
 	 */
-	EAttribute getSection_Id();
+	EAttribute getRailRoadElement_Id();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getPoints <em>Points</em>}'.
+	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getPoints <em>Points</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Points</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#getPoints()
-	 * @see #getSection()
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getPoints()
+	 * @see #getRailRoadElement()
 	 * @generated
 	 */
-	EReference getSection_Points();
-
-	/**
-	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#isEnabled <em>Enabled</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Enabled</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Section#isEnabled()
-	 * @see #getSection()
-	 * @generated
-	 */
-	EAttribute getSection_Enabled();
+	EReference getRailRoadElement_Points();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout <em>Turnout</em>}'.
@@ -939,28 +630,6 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getTurnout();
-
-	/**
-	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getNotConnectedSection <em>Not Connected Section</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Not Connected Section</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getNotConnectedSection()
-	 * @see #getTurnout()
-	 * @generated
-	 */
-	EReference getTurnout_NotConnectedSection();
-
-	/**
-	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isTwoSectionsInClockwiseDirection <em>Two Sections In Clockwise Direction</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Two Sections In Clockwise Direction</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isTwoSectionsInClockwiseDirection()
-	 * @see #getTurnout()
-	 * @generated
-	 */
-	EAttribute getTurnout_TwoSectionsInClockwiseDirection();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getRectangle <em>Rectangle</em>}'.
@@ -974,14 +643,48 @@ public interface ModelPackage extends EPackage {
 	EReference getTurnout_Rectangle();
 
 	/**
-	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turn <em>Turn</em>}'.
+	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getTop <em>Top</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Turn</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turn
+	 * @return the meta object for the reference '<em>Top</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getTop()
+	 * @see #getTurnout()
 	 * @generated
 	 */
-	EClass getTurn();
+	EReference getTurnout_Top();
+
+	/**
+	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getStraight <em>Straight</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Straight</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getStraight()
+	 * @see #getTurnout()
+	 * @generated
+	 */
+	EReference getTurnout_Straight();
+
+	/**
+	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getDivergent <em>Divergent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Divergent</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getDivergent()
+	 * @see #getTurnout()
+	 * @generated
+	 */
+	EReference getTurnout_Divergent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent <em>Is Divergent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Divergent</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent()
+	 * @see #getTurnout()
+	 * @generated
+	 */
+	EAttribute getTurnout_IsDivergent();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Point <em>Point</em>}'.
@@ -1016,25 +719,36 @@ public interface ModelPackage extends EPackage {
 	EAttribute getPoint_Y();
 
 	/**
-	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel <em>Section Model</em>}'.
+	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel <em>Rail Road Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Section Model</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel
+	 * @return the meta object for class '<em>Rail Road Model</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel
 	 * @generated
 	 */
-	EClass getSectionModel();
+	EClass getRailRoadModel();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel#getSections <em>Sections</em>}'.
+	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel#getSections <em>Sections</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference list '<em>Sections</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel#getSections()
-	 * @see #getSectionModel()
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel#getSections()
+	 * @see #getRailRoadModel()
 	 * @generated
 	 */
-	EReference getSectionModel_Sections();
+	EReference getRailRoadModel_Sections();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel#getTrains <em>Trains</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Trains</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel#getTrains()
+	 * @see #getRailRoadModel()
+	 * @generated
+	 */
+	EReference getRailRoadModel_Trains();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Rectangle <em>Rectangle</em>}'.
@@ -1112,35 +826,36 @@ public interface ModelPackage extends EPackage {
 	EAttribute getDimension_Height();
 
 	/**
-	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.EnglishTurnout <em>English Turnout</em>}'.
+	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Segment <em>Segment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>English Turnout</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.EnglishTurnout
+	 * @return the meta object for class '<em>Segment</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Segment
 	 * @generated
 	 */
-	EClass getEnglishTurnout();
+	EClass getSegment();
 
 	/**
-	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.EnglishTurnout#getNotConnectedClockwiseSection <em>Not Connected Clockwise Section</em>}'.
+	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Segment#isIsEnabled <em>Is Enabled</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Not Connected Clockwise Section</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.EnglishTurnout#getNotConnectedClockwiseSection()
-	 * @see #getEnglishTurnout()
+	 * @return the meta object for the attribute '<em>Is Enabled</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Segment#isIsEnabled()
+	 * @see #getSegment()
 	 * @generated
 	 */
-	EReference getEnglishTurnout_NotConnectedClockwiseSection();
+	EAttribute getSegment_IsEnabled();
 
 	/**
-	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack <em>Blind Track</em>}'.
+	 * Returns the meta object for the reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Segment#getConnectedTo <em>Connected To</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Blind Track</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack
+	 * @return the meta object for the reference list '<em>Connected To</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Segment#getConnectedTo()
+	 * @see #getSegment()
 	 * @generated
 	 */
-	EClass getBlindTrack();
+	EReference getSegment_ConnectedTo();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1165,24 +880,6 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	interface Literals {
-		/**
-		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TrainModelImpl <em>Train Model</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TrainModelImpl
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getTrainModel()
-		 * @generated
-		 */
-		EClass TRAIN_MODEL = eINSTANCE.getTrainModel();
-
-		/**
-		 * The meta object literal for the '<em><b>Trains</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TRAIN_MODEL__TRAINS = eINSTANCE.getTrainModel_Trains();
-
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TrainImpl <em>Train</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -1218,14 +915,6 @@ public interface ModelPackage extends EPackage {
 		EAttribute TRAIN__Y = eINSTANCE.getTrain_Y();
 
 		/**
-		 * The meta object literal for the '<em><b>Going Clockwise</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TRAIN__GOING_CLOCKWISE = eINSTANCE.getTrain_GoingClockwise();
-
-		/**
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1234,30 +923,22 @@ public interface ModelPackage extends EPackage {
 		EAttribute TRAIN__ID = eINSTANCE.getTrain_Id();
 
 		/**
-		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionImpl <em>Section</em>}' class.
+		 * The meta object literal for the '<em><b>Previously On</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionImpl
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getSection()
 		 * @generated
 		 */
-		EClass SECTION = eINSTANCE.getSection();
+		EReference TRAIN__PREVIOUSLY_ON = eINSTANCE.getTrain_PreviouslyOn();
 
 		/**
-		 * The meta object literal for the '<em><b>Clockwise</b></em>' reference feature.
+		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl <em>Rail Road Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getRailRoadElement()
 		 * @generated
 		 */
-		EReference SECTION__CLOCKWISE = eINSTANCE.getSection_Clockwise();
-
-		/**
-		 * The meta object literal for the '<em><b>Counter Clockwise</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SECTION__COUNTER_CLOCKWISE = eINSTANCE.getSection_CounterClockwise();
+		EClass RAIL_ROAD_ELEMENT = eINSTANCE.getRailRoadElement();
 
 		/**
 		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
@@ -1265,7 +946,7 @@ public interface ModelPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute SECTION__ID = eINSTANCE.getSection_Id();
+		EAttribute RAIL_ROAD_ELEMENT__ID = eINSTANCE.getRailRoadElement_Id();
 
 		/**
 		 * The meta object literal for the '<em><b>Points</b></em>' containment reference list feature.
@@ -1273,15 +954,7 @@ public interface ModelPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference SECTION__POINTS = eINSTANCE.getSection_Points();
-
-		/**
-		 * The meta object literal for the '<em><b>Enabled</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute SECTION__ENABLED = eINSTANCE.getSection_Enabled();
+		EReference RAIL_ROAD_ELEMENT__POINTS = eINSTANCE.getRailRoadElement_Points();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl <em>Turnout</em>}' class.
@@ -1294,22 +967,6 @@ public interface ModelPackage extends EPackage {
 		EClass TURNOUT = eINSTANCE.getTurnout();
 
 		/**
-		 * The meta object literal for the '<em><b>Not Connected Section</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TURNOUT__NOT_CONNECTED_SECTION = eINSTANCE.getTurnout_NotConnectedSection();
-
-		/**
-		 * The meta object literal for the '<em><b>Two Sections In Clockwise Direction</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TURNOUT__TWO_SECTIONS_IN_CLOCKWISE_DIRECTION = eINSTANCE.getTurnout_TwoSectionsInClockwiseDirection();
-
-		/**
 		 * The meta object literal for the '<em><b>Rectangle</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1318,14 +975,36 @@ public interface ModelPackage extends EPackage {
 		EReference TURNOUT__RECTANGLE = eINSTANCE.getTurnout_Rectangle();
 
 		/**
-		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnImpl <em>Turn</em>}' class.
+		 * The meta object literal for the '<em><b>Top</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnImpl
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getTurn()
 		 * @generated
 		 */
-		EClass TURN = eINSTANCE.getTurn();
+		EReference TURNOUT__TOP = eINSTANCE.getTurnout_Top();
+
+		/**
+		 * The meta object literal for the '<em><b>Straight</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TURNOUT__STRAIGHT = eINSTANCE.getTurnout_Straight();
+
+		/**
+		 * The meta object literal for the '<em><b>Divergent</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TURNOUT__DIVERGENT = eINSTANCE.getTurnout_Divergent();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Divergent</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TURNOUT__IS_DIVERGENT = eINSTANCE.getTurnout_IsDivergent();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.PointImpl <em>Point</em>}' class.
@@ -1354,14 +1033,14 @@ public interface ModelPackage extends EPackage {
 		EAttribute POINT__Y = eINSTANCE.getPoint_Y();
 
 		/**
-		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionModelImpl <em>Section Model</em>}' class.
+		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl <em>Rail Road Model</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SectionModelImpl
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getSectionModel()
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getRailRoadModel()
 		 * @generated
 		 */
-		EClass SECTION_MODEL = eINSTANCE.getSectionModel();
+		EClass RAIL_ROAD_MODEL = eINSTANCE.getRailRoadModel();
 
 		/**
 		 * The meta object literal for the '<em><b>Sections</b></em>' containment reference list feature.
@@ -1369,7 +1048,15 @@ public interface ModelPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference SECTION_MODEL__SECTIONS = eINSTANCE.getSectionModel_Sections();
+		EReference RAIL_ROAD_MODEL__SECTIONS = eINSTANCE.getRailRoadModel_Sections();
+
+		/**
+		 * The meta object literal for the '<em><b>Trains</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RAIL_ROAD_MODEL__TRAINS = eINSTANCE.getRailRoadModel_Trains();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RectangleImpl <em>Rectangle</em>}' class.
@@ -1432,32 +1119,30 @@ public interface ModelPackage extends EPackage {
 		EAttribute DIMENSION__HEIGHT = eINSTANCE.getDimension_Height();
 
 		/**
-		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.EnglishTurnoutImpl <em>English Turnout</em>}' class.
+		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SegmentImpl <em>Segment</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.EnglishTurnoutImpl
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getEnglishTurnout()
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.SegmentImpl
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getSegment()
 		 * @generated
 		 */
-		EClass ENGLISH_TURNOUT = eINSTANCE.getEnglishTurnout();
+		EClass SEGMENT = eINSTANCE.getSegment();
 
 		/**
-		 * The meta object literal for the '<em><b>Not Connected Clockwise Section</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Is Enabled</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference ENGLISH_TURNOUT__NOT_CONNECTED_CLOCKWISE_SECTION = eINSTANCE.getEnglishTurnout_NotConnectedClockwiseSection();
+		EAttribute SEGMENT__IS_ENABLED = eINSTANCE.getSegment_IsEnabled();
 
 		/**
-		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.BlindTrackImpl <em>Blind Track</em>}' class.
+		 * The meta object literal for the '<em><b>Connected To</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.BlindTrackImpl
-		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getBlindTrack()
 		 * @generated
 		 */
-		EClass BLIND_TRACK = eINSTANCE.getBlindTrack();
+		EReference SEGMENT__CONNECTED_TO = eINSTANCE.getSegment_ConnectedTo();
 
 	}
 

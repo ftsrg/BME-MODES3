@@ -33,7 +33,7 @@ public interface Point extends EObject {
 	 * @return the value of the '<em>X</em>' attribute.
 	 * @see #setX(double)
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getPoint_X()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	double getX();
@@ -59,7 +59,7 @@ public interface Point extends EObject {
 	 * @return the value of the '<em>Y</em>' attribute.
 	 * @see #setY(double)
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getPoint_Y()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	double getY();
