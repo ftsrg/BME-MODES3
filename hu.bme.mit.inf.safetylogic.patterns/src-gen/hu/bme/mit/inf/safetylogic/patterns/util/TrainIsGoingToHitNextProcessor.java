@@ -2,6 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
 import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextMatch;
+
 import org.eclipse.incquery.runtime.api.IMatchProcessor;
 
 /**

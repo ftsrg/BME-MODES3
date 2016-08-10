@@ -1,10 +1,12 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
+
 import hu.bme.mit.inf.safetylogic.patterns.TrainGoingToCutTheTurnoutMatch;
 import hu.bme.mit.inf.safetylogic.patterns.TrainGoingToCutTheTurnoutMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.InSameRailroadPartQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainsNextTurnoutQuerySpecification;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

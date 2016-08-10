@@ -1,6 +1,8 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
+import hu.bme.mit.inf.safetylogic.patterns.SoloBlindTrackMatch;
+import hu.bme.mit.inf.safetylogic.patterns.SoloBlindTrackMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.SoloBlindTrackQuerySpecification;
 import java.util.Arrays;
 import java.util.List;

@@ -2,6 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
 import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatch;
+import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.SoloCounterClockwiseBlindTrackQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;

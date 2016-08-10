@@ -23,7 +23,7 @@ import org.eclipse.paho.client.mqttv3.MqttCallback;
  *
  * @author benedekh
  */
-class MQTTPublisherSubscriber {
+public class MQTTPublisherSubscriber {
 
     // the client which connects to the MQTT Broker
     private MqttAsyncClient client;

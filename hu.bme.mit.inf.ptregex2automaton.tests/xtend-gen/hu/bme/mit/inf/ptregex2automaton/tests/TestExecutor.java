@@ -7,7 +7,6 @@ import EventAutomatonModel.EventAutomatonModelFactory;
 import EventAutomatonModel.State;
 import EventAutomatonModel.SymbolicEvent;
 import EventAutomatonModel.SymbolicInputEvent;
-import EventAutomatonModel.Token;
 import com.google.common.base.Objects;
 import hu.bme.mit.inf.qea.CEPExecutor;
 import org.eclipse.emf.common.util.EList;
@@ -67,17 +66,7 @@ public class TestExecutor {
     }
     EList<State> _states = expression.getStates();
     final Function1<State, Boolean> _function_1 = (State it) -> {
-      boolean _and = false;
-      boolean _isAcceptor = it.isAcceptor();
-      if (!_isAcceptor) {
-        _and = false;
-      } else {
-        EList<Token> _tokens = it.getTokens();
-        int _length = ((Object[])Conversions.unwrapArray(_tokens, Object.class)).length;
-        boolean _greaterThan = (_length > 0);
-        _and = _greaterThan;
-      }
-      return Boolean.valueOf(_and);
+      return Boolean.valueOf((it.isAcceptor() && (((Object[])Conversions.unwrapArray(it.getTokens(), Object.class)).length > 0)));
     };
     State _findFirst = IterableExtensions.<State>findFirst(_states, _function_1);
     return (!Objects.equal(_findFirst, null));

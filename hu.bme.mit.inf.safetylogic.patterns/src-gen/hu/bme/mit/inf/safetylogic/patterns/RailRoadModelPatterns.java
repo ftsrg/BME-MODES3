@@ -3,6 +3,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 import hu.bme.mit.inf.safetylogic.patterns.BlindTrackMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.InSameRailroadPartMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionFromSectionInClockwiseMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.RailRoadModelPatterns;
 import hu.bme.mit.inf.safetylogic.patterns.SectionNeighborMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.SectionsInSameRailroadPartAsTrainMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.SoloBlindTrackMatcher;

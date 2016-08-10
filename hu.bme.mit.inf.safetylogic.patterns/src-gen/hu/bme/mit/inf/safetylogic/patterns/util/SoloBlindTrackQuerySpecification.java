@@ -1,10 +1,12 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
+
 import hu.bme.mit.inf.safetylogic.patterns.SoloBlindTrackMatch;
 import hu.bme.mit.inf.safetylogic.patterns.SoloBlindTrackMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.SoloClockwiseBlindTrackQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.SoloCounterClockwiseBlindTrackQuerySpecification;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

@@ -2,6 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
 import hu.bme.mit.inf.safetylogic.patterns.InSameRailroadPartMatch;
+import hu.bme.mit.inf.safetylogic.patterns.InSameRailroadPartMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.InSameRailroadPartQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;

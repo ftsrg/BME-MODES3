@@ -2,6 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
 import hu.bme.mit.inf.safetylogic.patterns.SoloSectionMatch;
+import hu.bme.mit.inf.safetylogic.patterns.SoloSectionMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.SoloSectionQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;

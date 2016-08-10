@@ -1,8 +1,10 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
+
 import hu.bme.mit.inf.safetylogic.patterns.TurnoutMatch;
 import hu.bme.mit.inf.safetylogic.patterns.TurnoutMatcher;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

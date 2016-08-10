@@ -3,6 +3,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout;
 import hu.bme.mit.inf.safetylogic.patterns.TrainsNextTurnoutMatch;
+import hu.bme.mit.inf.safetylogic.patterns.TrainsNextTurnoutMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainsNextTurnoutQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;

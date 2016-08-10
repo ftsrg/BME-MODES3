@@ -2,6 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.BlindTrack;
 import hu.bme.mit.inf.safetylogic.patterns.BlindTrackMatch;
+import hu.bme.mit.inf.safetylogic.patterns.BlindTrackMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.BlindTrackQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;

@@ -1,10 +1,12 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
+
 import hu.bme.mit.inf.safetylogic.patterns.InSameRailroadPartMatch;
 import hu.bme.mit.inf.safetylogic.patterns.InSameRailroadPartMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.SectionNeighborQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.SoloSectionQuerySpecification;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

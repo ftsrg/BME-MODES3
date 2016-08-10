@@ -2,6 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section;
 import hu.bme.mit.inf.safetylogic.patterns.SoloCounterClockwiseBlindTrackMatch;
+
 import org.eclipse.incquery.runtime.api.IMatchProcessor;
 
 /**

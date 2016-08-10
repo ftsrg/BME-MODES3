@@ -7,9 +7,8 @@ import hu.bme.mit.inf.safetylogic.event.receiver.CVReceiver
 
 class Main {	
 	val config = new MQTTConfiguration("192.168.1.2")
-	val mqtt = new MQTTPublisherSubscriber(config)
-	val dispatcher = new MQTTPublishSubscribeDispatcher(mqtt)
-	
+	val mqtt = new MQTTPublisherSubscriber(config) //TODO @benjo why do we need this?
+	val dispatcher = new MQTTPublishSubscribeDispatcher(config)
 	var CVReceiver receiver
 	var Safetylogic sl
 

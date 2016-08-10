@@ -1,6 +1,8 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
+import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextMatch;
+import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainIsGoingToHitNextQuerySpecification;
 import java.util.Arrays;
 import java.util.List;

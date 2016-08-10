@@ -1,9 +1,11 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
+
 import hu.bme.mit.inf.safetylogic.patterns.SoloSectionMatch;
 import hu.bme.mit.inf.safetylogic.patterns.SoloSectionMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.SoloBlindTrackQuerySpecification;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

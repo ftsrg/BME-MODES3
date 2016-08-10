@@ -1,8 +1,10 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
+
 import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextMatch;
 import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitNextMatcher;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;

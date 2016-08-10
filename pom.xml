@@ -42,7 +42,7 @@
             <plugin>
                 <groupId>org.eclipse.xtend</groupId>
                 <artifactId>xtend-maven-plugin</artifactId>
-                <version>2.7.0</version>
+                <version>2.9.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -54,6 +54,12 @@
                     </execution>
                 </executions>
             </plugin>
+		<plugin>
+            	<groupId>org.eclipse.tycho</groupId>
+            <artifactId>tycho-maven-plugin</artifactId>
+            <version>0.25.0</version>
+            <extensions>true</extensions>
+         </plugin>
         </plugins>
     </build>
 
@@ -65,7 +71,7 @@
         <module>hu.bme.mit.inf.yakindu.sc.english</module>
         <module>hu.bme.mit.inf.yakindu.sc.normal</module>
         <module>hu.bme.mit.inf.piclient</module>
-		<module>hu.bme.mit.inf.eda</module>
+	<module>hu.bme.mit.inf.eda</module>
         <module>hu.bme.mit.inf.safetylogic.event</module>
         <module>hu.bme.mit.inf.safetylogic.model</module>
         <module>hu.bme.mit.inf.safetylogic.model.util</module>

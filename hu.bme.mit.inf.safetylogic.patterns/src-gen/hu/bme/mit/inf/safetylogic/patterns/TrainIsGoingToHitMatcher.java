@@ -2,6 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
 import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitMatch;
+import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainIsGoingToHitQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
