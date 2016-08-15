@@ -35,7 +35,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="divergent" lowerBound="1"
         eType="#//RailRoadElement"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentlyDivergent" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Point">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="x" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
@@ -64,7 +64,8 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Segment" eSuperTypes="#//RailRoadElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEnabled" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEnabled" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectedTo" lowerBound="1"
         upperBound="2" eType="#//RailRoadElement"/>
   </eClassifiers>

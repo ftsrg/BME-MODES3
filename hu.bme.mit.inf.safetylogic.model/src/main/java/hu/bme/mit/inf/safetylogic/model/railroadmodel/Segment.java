@@ -33,7 +33,7 @@ public interface Segment extends RailRoadElement {
 	 * @return the value of the '<em>Is Enabled</em>' attribute.
 	 * @see #setIsEnabled(boolean)
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getSegment_IsEnabled()
-	 * @model
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean" required="true"
 	 * @generated
 	 */
 	boolean isIsEnabled();

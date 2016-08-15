@@ -586,7 +586,7 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_bWHCUF8EEea5KZg8wZA8Fg" name="currentlyDivergent : EBoolean = false" tooltipText="">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_bWHCUF8EEea5KZg8wZA8Fg" name="currentlyDivergent : Boolean = false" tooltipText="">
           <target xmi:type="ecore:EAttribute" href="model.ecore#//Turnout/currentlyDivergent"/>
           <semanticElements xmi:type="ecore:EAttribute" href="model.ecore#//Turnout/currentlyDivergent"/>
           <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_gXkKAF8EEea5KZg8wZA8Fg" labelAlignment="LEFT" description="_i00bMEpVEeW6wL3s9ln4_g">
@@ -780,11 +780,11 @@
           <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@style"/>
         </ownedStyle>
         <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_mfMFAF8DEea5KZg8wZA8Fg" name="isEnabled : EBoolean = false" tooltipText="">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_mfMFAF8DEea5KZg8wZA8Fg" name="isEnabled : Boolean = false" tooltipText="">
           <target xmi:type="ecore:EAttribute" href="model.ecore#//Segment/isEnabled"/>
           <semanticElements xmi:type="ecore:EAttribute" href="model.ecore#//Segment/isEnabled"/>
-          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_oiARUF8DEea5KZg8wZA8Fg" labelAlignment="LEFT">
-            <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
+          <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_jxOr0GLmEeaaTMLhSIjF3w" labelAlignment="LEFT" description="_i00bMEpVEeW6wL3s9ln4_g">
+            <labelFormat>bold</labelFormat>
           </ownedStyle>
           <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']"/>
         </ownedElements>

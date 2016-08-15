@@ -139,7 +139,7 @@ public interface Turnout extends RailRoadElement {
 	 * @return the value of the '<em>Currently Divergent</em>' attribute.
 	 * @see #setCurrentlyDivergent(boolean)
 	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_CurrentlyDivergent()
-	 * @model required="true"
+	 * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean" required="true"
 	 * @generated
 	 */
 	boolean isCurrentlyDivergent();
