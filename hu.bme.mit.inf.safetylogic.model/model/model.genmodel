@@ -6,8 +6,8 @@
     complianceLevel="8.0" copyrightFields="false" language="" operationReflection="true"
     importOrganizing="true">
   <foreignModel>model.ecore</foreignModel>
-  <genPackages prefix="Model" basePackage="hu.bme.mit.inf.safetylogic.model" disposableProviderFactory="true"
-      ecorePackage="model.ecore#/">
+  <genPackages prefix="RailRoadModel" basePackage="hu.bme.mit.inf.safetylogic.model"
+      disposableProviderFactory="true" ecorePackage="model.ecore#/">
     <genClasses ecoreClass="model.ecore#//Train">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Train/currentlyOn"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Train/x"/>

@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.saferylogic.model.modelutil
 
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
 
 class ModelHandler {
 	private RailRoadModel model;

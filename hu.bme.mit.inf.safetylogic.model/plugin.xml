@@ -7,4 +7,12 @@
             class="hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage"
             genModel="model/model.genmodel"/>
    </extension>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated model -->
+      <package
+            uri="http://hu.bme.mit.inf.safetylogic.railroadmodel"
+            class="hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelPackage"
+            genModel="model/model.genmodel"/>
+   </extension>
+
 </plugin>

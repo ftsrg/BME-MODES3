@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="RailRoadModel" version="11.0.0.201601261200">
+  <ownedViewpoints>
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="RailRoadModel" domainClass="RailRoadModel.RailRoadModel" enablePopupBars="true">
+      <defaultLayer name="Default">
+        <nodeMappings name="Segment" domainClass="Segment">
+          <style xsi:type="style:SquareDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="Turnout" domainClass="Turnout">
+          <style xsi:type="style:LozengeNodeDescription" labelExpression="feature:id" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          </style>
+        </nodeMappings>
+        <edgeMappings name="Segment Connection" deletionDescription="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@toolSections.0/@ownedTools[name='Remove%20Segment%20Connection']" sourceMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Segment']" targetMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Segment'] //@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout']" targetFinderExpression="feature:connectedTo">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Turnout Top" deletionDescription="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@toolSections.0/@ownedTools[name='Remove%20Top']" sourceMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout']" targetMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout'] //@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Segment']" targetFinderExpression="feature:top">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelExpression="top">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Turnout Straight" deletionDescription="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@toolSections.0/@ownedTools[name='Remove%20Straight']" sourceMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout']" targetMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Segment'] //@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout']" targetFinderExpression="feature:straight">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelExpression="straight">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Turnout Divergent" deletionDescription="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@toolSections.0/@ownedTools[name='Remove%20Divergent']" sourceMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout']" targetMapping="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Segment'] //@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout']" targetFinderExpression="feature:divergent">
+          <style sizeComputationExpression="2">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelExpression="divergent">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <toolSections>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Create Segment" nodeMappings="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Segment']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="Segment" referenceName="sections" variableName="id">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="id" valueExpression="0"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Create Turnout" nodeMappings="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@nodeMappings[name='Turnout']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="Turnout" referenceName="sections">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="id" valueExpression="0"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Segment Connection" edgeMappings="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@edgeMappings[name='Segment%20Connection']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="connectedTo" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Turnout Top" edgeMappings="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@edgeMappings[name='Turnout%20Top']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="top" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Turnout Straight" edgeMappings="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@edgeMappings[name='Turnout%20Straight']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="straight" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Turnout Divergent" edgeMappings="//@ownedViewpoints[name='']/@ownedRepresentations[name='RailRoadModel']/@defaultLayer/@edgeMappings[name='Turnout%20Divergent']">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="divergent" valueExpression="var:target"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DeleteElementDescription" name="Remove Segment Connection">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <containerView name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool_1:Unset" featureName="connectedTo" elementExpression="feature:connectedTo"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DeleteElementDescription" name="Remove Top">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <containerView name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool_1:Unset" featureName="top" elementExpression="feature:top"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DeleteElementDescription" name="Remove Straight">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <containerView name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool_1:Unset" featureName="straight" elementExpression="feature:straight"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:DeleteElementDescription" name="Remove Divergent">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <containerView name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool_1:Unset" featureName="divergent" elementExpression="feature:divergent"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+    </ownedRepresentations>
+  </ownedViewpoints>
+</description:Group>
