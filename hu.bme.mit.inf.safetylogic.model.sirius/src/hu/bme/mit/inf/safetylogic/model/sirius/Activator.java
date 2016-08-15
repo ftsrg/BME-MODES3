@@ -1,4 +1,4 @@
-package hu.mit.bme.inf.safetylogic.model.sirius;
+package hu.bme.mit.inf.safetylogic.model.sirius;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: hu.mit.bme.inf.safetylogic.model.sirius
 Bundle-SymbolicName: hu.bme.mit.inf.safetylogic.model.sirius;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: hu.mit.bme.inf.safetylogic.model.sirius.Activator
+Bundle-Activator: hu.bme.mit.inf.safetylogic.model.sirius.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
