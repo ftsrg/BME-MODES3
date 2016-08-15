@@ -16,7 +16,7 @@ package hu.bme.mit.inf.safetylogic.model.railroadmodel;
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getTop <em>Top</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getStraight <em>Straight</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#getDivergent <em>Divergent</em>}</li>
- *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent <em>Is Divergent</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isCurrentlyDivergent <em>Currently Divergent</em>}</li>
  * </ul>
  *
  * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout()
@@ -129,29 +129,29 @@ public interface Turnout extends RailRoadElement {
 	void setDivergent(RailRoadElement value);
 
 	/**
-	 * Returns the value of the '<em><b>Is Divergent</b></em>' attribute.
+	 * Returns the value of the '<em><b>Currently Divergent</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Is Divergent</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Currently Divergent</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Divergent</em>' attribute.
-	 * @see #setIsDivergent(boolean)
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_IsDivergent()
+	 * @return the value of the '<em>Currently Divergent</em>' attribute.
+	 * @see #setCurrentlyDivergent(boolean)
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getTurnout_CurrentlyDivergent()
 	 * @model required="true"
 	 * @generated
 	 */
-	boolean isIsDivergent();
+	boolean isCurrentlyDivergent();
 
 	/**
-	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent <em>Is Divergent</em>}' attribute.
+	 * Sets the value of the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isCurrentlyDivergent <em>Currently Divergent</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Divergent</em>' attribute.
-	 * @see #isIsDivergent()
+	 * @param value the new value of the '<em>Currently Divergent</em>' attribute.
+	 * @see #isCurrentlyDivergent()
 	 * @generated
 	 */
-	void setIsDivergent(boolean value);
+	void setCurrentlyDivergent(boolean value);
 
 } // Turnout

@@ -18,13 +18,16 @@
     <genClasses ecoreClass="model.ecore#//RailRoadElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//RailRoadElement/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/points"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/connected"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/currentlyConnected"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/viablePaths"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Turnout">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Turnout/rectangle"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Turnout/top"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Turnout/straight"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Turnout/divergent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Turnout/isDivergent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Turnout/currentlyDivergent"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Point">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Point/x"/>
@@ -33,6 +36,7 @@
     <genClasses ecoreClass="model.ecore#//RailRoadModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadModel/sections"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadModel/trains"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadModel/paths"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Rectangle">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Rectangle/origin"/>
@@ -46,6 +50,11 @@
     <genClasses ecoreClass="model.ecore#//Segment">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//Segment/isEnabled"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Segment/connectedTo"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//Path">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Path/from"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Path/via"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//Path/to"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -3,6 +3,7 @@
 package hu.bme.mit.inf.safetylogic.model.railroadmodel.impl;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage;
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Path;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train;
@@ -31,6 +32,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl#getSections <em>Sections</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl#getTrains <em>Trains</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadModelImpl#getPaths <em>Paths</em>}</li>
  * </ul>
  *
  * @generated
@@ -55,6 +57,16 @@ public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements R
 	 * @ordered
 	 */
 	protected EList<Train> trains;
+
+	/**
+	 * The cached value of the '{@link #getPaths() <em>Paths</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPaths()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Path> paths;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -104,6 +116,18 @@ public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements R
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Path> getPaths() {
+		if (paths == null) {
+			paths = new EObjectContainmentEList<Path>(Path.class, this, ModelPackage.RAIL_ROAD_MODEL__PATHS);
+		}
+		return paths;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -111,6 +135,8 @@ public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements R
 				return ((InternalEList<?>)getSections()).basicRemove(otherEnd, msgs);
 			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
 				return ((InternalEList<?>)getTrains()).basicRemove(otherEnd, msgs);
+			case ModelPackage.RAIL_ROAD_MODEL__PATHS:
+				return ((InternalEList<?>)getPaths()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -127,6 +153,8 @@ public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements R
 				return getSections();
 			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
 				return getTrains();
+			case ModelPackage.RAIL_ROAD_MODEL__PATHS:
+				return getPaths();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -148,6 +176,10 @@ public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements R
 				getTrains().clear();
 				getTrains().addAll((Collection<? extends Train>)newValue);
 				return;
+			case ModelPackage.RAIL_ROAD_MODEL__PATHS:
+				getPaths().clear();
+				getPaths().addAll((Collection<? extends Path>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -166,6 +198,9 @@ public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements R
 			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
 				getTrains().clear();
 				return;
+			case ModelPackage.RAIL_ROAD_MODEL__PATHS:
+				getPaths().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -182,6 +217,8 @@ public class RailRoadModelImpl extends MinimalEObjectImpl.Container implements R
 				return sections != null && !sections.isEmpty();
 			case ModelPackage.RAIL_ROAD_MODEL__TRAINS:
 				return trains != null && !trains.isEmpty();
+			case ModelPackage.RAIL_ROAD_MODEL__PATHS:
+				return paths != null && !paths.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

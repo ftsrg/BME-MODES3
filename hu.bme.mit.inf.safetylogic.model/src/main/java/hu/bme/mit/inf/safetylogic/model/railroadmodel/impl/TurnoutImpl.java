@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl#getTop <em>Top</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl#getStraight <em>Straight</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl#getDivergent <em>Divergent</em>}</li>
- *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl#isIsDivergent <em>Is Divergent</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl#isCurrentlyDivergent <em>Currently Divergent</em>}</li>
  * </ul>
  *
  * @generated
@@ -74,24 +74,24 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 	protected RailRoadElement divergent;
 
 	/**
-	 * The default value of the '{@link #isIsDivergent() <em>Is Divergent</em>}' attribute.
+	 * The default value of the '{@link #isCurrentlyDivergent() <em>Currently Divergent</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsDivergent()
+	 * @see #isCurrentlyDivergent()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean IS_DIVERGENT_EDEFAULT = false;
+	protected static final boolean CURRENTLY_DIVERGENT_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #isIsDivergent() <em>Is Divergent</em>}' attribute.
+	 * The cached value of the '{@link #isCurrentlyDivergent() <em>Currently Divergent</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isIsDivergent()
+	 * @see #isCurrentlyDivergent()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean isDivergent = IS_DIVERGENT_EDEFAULT;
+	protected boolean currentlyDivergent = CURRENTLY_DIVERGENT_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -274,8 +274,8 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isIsDivergent() {
-		return isDivergent;
+	public boolean isCurrentlyDivergent() {
+		return currentlyDivergent;
 	}
 
 	/**
@@ -283,11 +283,11 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setIsDivergent(boolean newIsDivergent) {
-		boolean oldIsDivergent = isDivergent;
-		isDivergent = newIsDivergent;
+	public void setCurrentlyDivergent(boolean newCurrentlyDivergent) {
+		boolean oldCurrentlyDivergent = currentlyDivergent;
+		currentlyDivergent = newCurrentlyDivergent;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TURNOUT__IS_DIVERGENT, oldIsDivergent, isDivergent));
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.TURNOUT__CURRENTLY_DIVERGENT, oldCurrentlyDivergent, currentlyDivergent));
 	}
 
 	/**
@@ -323,8 +323,8 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 			case ModelPackage.TURNOUT__DIVERGENT:
 				if (resolve) return getDivergent();
 				return basicGetDivergent();
-			case ModelPackage.TURNOUT__IS_DIVERGENT:
-				return isIsDivergent();
+			case ModelPackage.TURNOUT__CURRENTLY_DIVERGENT:
+				return isCurrentlyDivergent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -349,8 +349,8 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 			case ModelPackage.TURNOUT__DIVERGENT:
 				setDivergent((RailRoadElement)newValue);
 				return;
-			case ModelPackage.TURNOUT__IS_DIVERGENT:
-				setIsDivergent((Boolean)newValue);
+			case ModelPackage.TURNOUT__CURRENTLY_DIVERGENT:
+				setCurrentlyDivergent((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -376,8 +376,8 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 			case ModelPackage.TURNOUT__DIVERGENT:
 				setDivergent((RailRoadElement)null);
 				return;
-			case ModelPackage.TURNOUT__IS_DIVERGENT:
-				setIsDivergent(IS_DIVERGENT_EDEFAULT);
+			case ModelPackage.TURNOUT__CURRENTLY_DIVERGENT:
+				setCurrentlyDivergent(CURRENTLY_DIVERGENT_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -399,8 +399,8 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 				return straight != null;
 			case ModelPackage.TURNOUT__DIVERGENT:
 				return divergent != null;
-			case ModelPackage.TURNOUT__IS_DIVERGENT:
-				return isDivergent != IS_DIVERGENT_EDEFAULT;
+			case ModelPackage.TURNOUT__CURRENTLY_DIVERGENT:
+				return currentlyDivergent != CURRENTLY_DIVERGENT_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -415,8 +415,8 @@ public class TurnoutImpl extends RailRoadElementImpl implements Turnout {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (isDivergent: ");
-		result.append(isDivergent);
+		result.append(" (currentlyDivergent: ");
+		result.append(currentlyDivergent);
 		result.append(')');
 		return result.toString();
 	}

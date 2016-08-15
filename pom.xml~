@@ -10,8 +10,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <emf.version>2.10.1.v20140901-1043</emf.version>
-        <!--incquery.version>1.2.0-SNAPSHOT</incquery.version!-->
-        <viatra.version>1.2.1</viatra.version>
+        <incquery.version>1.2.0-SNAPSHOT</incquery.version>
+        <!--<viatra.version>0.9.0-SNAPSHOT</viatra.version>-->
         <xtend.version>2.9.0</xtend.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

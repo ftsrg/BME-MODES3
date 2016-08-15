@@ -17,6 +17,9 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getId <em>Id</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getPoints <em>Points</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getConnected <em>Connected</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getCurrentlyConnected <em>Currently Connected</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getViablePaths <em>Viable Paths</em>}</li>
  * </ul>
  *
  * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getRailRoadElement()
@@ -65,5 +68,53 @@ public interface RailRoadElement extends EObject {
 	 * @generated
 	 */
 	EList<Point> getPoints();
+
+	/**
+	 * Returns the value of the '<em><b>Connected</b></em>' reference list.
+	 * The list contents are of type {@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Connected</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Connected</em>' reference list.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getRailRoadElement_Connected()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<RailRoadElement> getConnected();
+
+	/**
+	 * Returns the value of the '<em><b>Currently Connected</b></em>' reference list.
+	 * The list contents are of type {@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Currently Connected</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Currently Connected</em>' reference list.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getRailRoadElement_CurrentlyConnected()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<RailRoadElement> getCurrentlyConnected();
+
+	/**
+	 * Returns the value of the '<em><b>Viable Paths</b></em>' reference list.
+	 * The list contents are of type {@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Path}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Viable Paths</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Viable Paths</em>' reference list.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage#getRailRoadElement_ViablePaths()
+	 * @model transient="true" changeable="false" volatile="true" derived="true"
+	 * @generated
+	 */
+	EList<Path> getViablePaths();
 
 } // RailRoadElement

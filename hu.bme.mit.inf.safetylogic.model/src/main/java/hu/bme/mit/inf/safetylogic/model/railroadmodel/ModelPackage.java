@@ -158,13 +158,40 @@ public interface ModelPackage extends EPackage {
 	int RAIL_ROAD_ELEMENT__POINTS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Connected</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAIL_ROAD_ELEMENT__CONNECTED = 2;
+
+	/**
+	 * The feature id for the '<em><b>Currently Connected</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED = 3;
+
+	/**
+	 * The feature id for the '<em><b>Viable Paths</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAIL_ROAD_ELEMENT__VIABLE_PATHS = 4;
+
+	/**
 	 * The number of structural features of the '<em>Rail Road Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RAIL_ROAD_ELEMENT_FEATURE_COUNT = 2;
+	int RAIL_ROAD_ELEMENT_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Rail Road Element</em>' class.
@@ -204,6 +231,33 @@ public interface ModelPackage extends EPackage {
 	int TURNOUT__POINTS = RAIL_ROAD_ELEMENT__POINTS;
 
 	/**
+	 * The feature id for the '<em><b>Connected</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TURNOUT__CONNECTED = RAIL_ROAD_ELEMENT__CONNECTED;
+
+	/**
+	 * The feature id for the '<em><b>Currently Connected</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TURNOUT__CURRENTLY_CONNECTED = RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED;
+
+	/**
+	 * The feature id for the '<em><b>Viable Paths</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TURNOUT__VIABLE_PATHS = RAIL_ROAD_ELEMENT__VIABLE_PATHS;
+
+	/**
 	 * The feature id for the '<em><b>Rectangle</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -240,13 +294,13 @@ public interface ModelPackage extends EPackage {
 	int TURNOUT__DIVERGENT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Is Divergent</b></em>' attribute.
+	 * The feature id for the '<em><b>Currently Divergent</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__IS_DIVERGENT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 4;
+	int TURNOUT__CURRENTLY_DIVERGENT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Turnout</em>' class.
@@ -341,13 +395,22 @@ public interface ModelPackage extends EPackage {
 	int RAIL_ROAD_MODEL__TRAINS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Paths</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int RAIL_ROAD_MODEL__PATHS = 2;
+
+	/**
 	 * The number of structural features of the '<em>Rail Road Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RAIL_ROAD_MODEL_FEATURE_COUNT = 2;
+	int RAIL_ROAD_MODEL_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Rail Road Model</em>' class.
@@ -488,6 +551,33 @@ public interface ModelPackage extends EPackage {
 	int SEGMENT__POINTS = RAIL_ROAD_ELEMENT__POINTS;
 
 	/**
+	 * The feature id for the '<em><b>Connected</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEGMENT__CONNECTED = RAIL_ROAD_ELEMENT__CONNECTED;
+
+	/**
+	 * The feature id for the '<em><b>Currently Connected</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEGMENT__CURRENTLY_CONNECTED = RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED;
+
+	/**
+	 * The feature id for the '<em><b>Viable Paths</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEGMENT__VIABLE_PATHS = RAIL_ROAD_ELEMENT__VIABLE_PATHS;
+
+	/**
 	 * The feature id for the '<em><b>Is Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -522,6 +612,62 @@ public interface ModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int SEGMENT_OPERATION_COUNT = RAIL_ROAD_ELEMENT_OPERATION_COUNT + 0;
+
+
+	/**
+	 * The meta object id for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.PathImpl <em>Path</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.PathImpl
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getPath()
+	 * @generated
+	 */
+	int PATH = 8;
+
+	/**
+	 * The feature id for the '<em><b>From</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATH__FROM = 0;
+
+	/**
+	 * The feature id for the '<em><b>Via</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATH__VIA = 1;
+
+	/**
+	 * The feature id for the '<em><b>To</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATH__TO = 2;
+
+	/**
+	 * The number of structural features of the '<em>Path</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATH_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Path</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PATH_OPERATION_COUNT = 0;
 
 
 	/**
@@ -622,6 +768,39 @@ public interface ModelPackage extends EPackage {
 	EReference getRailRoadElement_Points();
 
 	/**
+	 * Returns the meta object for the reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getConnected <em>Connected</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Connected</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getConnected()
+	 * @see #getRailRoadElement()
+	 * @generated
+	 */
+	EReference getRailRoadElement_Connected();
+
+	/**
+	 * Returns the meta object for the reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getCurrentlyConnected <em>Currently Connected</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Currently Connected</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getCurrentlyConnected()
+	 * @see #getRailRoadElement()
+	 * @generated
+	 */
+	EReference getRailRoadElement_CurrentlyConnected();
+
+	/**
+	 * Returns the meta object for the reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getViablePaths <em>Viable Paths</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Viable Paths</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement#getViablePaths()
+	 * @see #getRailRoadElement()
+	 * @generated
+	 */
+	EReference getRailRoadElement_ViablePaths();
+
+	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout <em>Turnout</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -676,15 +855,15 @@ public interface ModelPackage extends EPackage {
 	EReference getTurnout_Divergent();
 
 	/**
-	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent <em>Is Divergent</em>}'.
+	 * Returns the meta object for the attribute '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isCurrentlyDivergent <em>Currently Divergent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Is Divergent</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isIsDivergent()
+	 * @return the meta object for the attribute '<em>Currently Divergent</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout#isCurrentlyDivergent()
 	 * @see #getTurnout()
 	 * @generated
 	 */
-	EAttribute getTurnout_IsDivergent();
+	EAttribute getTurnout_CurrentlyDivergent();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Point <em>Point</em>}'.
@@ -749,6 +928,17 @@ public interface ModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getRailRoadModel_Trains();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel#getPaths <em>Paths</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Paths</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel#getPaths()
+	 * @see #getRailRoadModel()
+	 * @generated
+	 */
+	EReference getRailRoadModel_Paths();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Rectangle <em>Rectangle</em>}'.
@@ -858,6 +1048,49 @@ public interface ModelPackage extends EPackage {
 	EReference getSegment_ConnectedTo();
 
 	/**
+	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Path <em>Path</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Path</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Path
+	 * @generated
+	 */
+	EClass getPath();
+
+	/**
+	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Path#getFrom <em>From</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>From</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Path#getFrom()
+	 * @see #getPath()
+	 * @generated
+	 */
+	EReference getPath_From();
+
+	/**
+	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Path#getVia <em>Via</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Via</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Path#getVia()
+	 * @see #getPath()
+	 * @generated
+	 */
+	EReference getPath_Via();
+
+	/**
+	 * Returns the meta object for the reference '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.Path#getTo <em>To</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>To</em>'.
+	 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.Path#getTo()
+	 * @see #getPath()
+	 * @generated
+	 */
+	EReference getPath_To();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -957,6 +1190,30 @@ public interface ModelPackage extends EPackage {
 		EReference RAIL_ROAD_ELEMENT__POINTS = eINSTANCE.getRailRoadElement_Points();
 
 		/**
+		 * The meta object literal for the '<em><b>Connected</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RAIL_ROAD_ELEMENT__CONNECTED = eINSTANCE.getRailRoadElement_Connected();
+
+		/**
+		 * The meta object literal for the '<em><b>Currently Connected</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED = eINSTANCE.getRailRoadElement_CurrentlyConnected();
+
+		/**
+		 * The meta object literal for the '<em><b>Viable Paths</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RAIL_ROAD_ELEMENT__VIABLE_PATHS = eINSTANCE.getRailRoadElement_ViablePaths();
+
+		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.TurnoutImpl <em>Turnout</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -999,12 +1256,12 @@ public interface ModelPackage extends EPackage {
 		EReference TURNOUT__DIVERGENT = eINSTANCE.getTurnout_Divergent();
 
 		/**
-		 * The meta object literal for the '<em><b>Is Divergent</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Currently Divergent</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TURNOUT__IS_DIVERGENT = eINSTANCE.getTurnout_IsDivergent();
+		EAttribute TURNOUT__CURRENTLY_DIVERGENT = eINSTANCE.getTurnout_CurrentlyDivergent();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.PointImpl <em>Point</em>}' class.
@@ -1057,6 +1314,14 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RAIL_ROAD_MODEL__TRAINS = eINSTANCE.getRailRoadModel_Trains();
+
+		/**
+		 * The meta object literal for the '<em><b>Paths</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference RAIL_ROAD_MODEL__PATHS = eINSTANCE.getRailRoadModel_Paths();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RectangleImpl <em>Rectangle</em>}' class.
@@ -1143,6 +1408,40 @@ public interface ModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SEGMENT__CONNECTED_TO = eINSTANCE.getSegment_ConnectedTo();
+
+		/**
+		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.PathImpl <em>Path</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.PathImpl
+		 * @see hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.ModelPackageImpl#getPath()
+		 * @generated
+		 */
+		EClass PATH = eINSTANCE.getPath();
+
+		/**
+		 * The meta object literal for the '<em><b>From</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PATH__FROM = eINSTANCE.getPath_From();
+
+		/**
+		 * The meta object literal for the '<em><b>Via</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PATH__VIA = eINSTANCE.getPath_Via();
+
+		/**
+		 * The meta object literal for the '<em><b>To</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PATH__TO = eINSTANCE.getPath_To();
 
 	}
 

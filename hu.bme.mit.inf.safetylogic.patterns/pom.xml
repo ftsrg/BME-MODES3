@@ -21,16 +21,28 @@
 			<artifactId>org.eclipse.emf.ecore</artifactId>
 			<version>${emf.version}</version>
 		</dependency>
+		<!--dependency> <groupId>org.eclipse.incquery</groupId> <artifactId>incquery-runtime</artifactId> 
+			<version>${incquery.version}</version> </dependency! -->
 		<dependency>
-			<groupId>org.eclipse.incquery</groupId>
-			<artifactId>org.eclipse.incquery.runtime</artifactId>
-			<version>${incquery.version}</version>
+			<groupId>org.eclipse.viatra</groupId>
+			<artifactId>viatra-query-runtime</artifactId>
+			<version>${viatra.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.eclipse.viatra</groupId>
+			<artifactId>viatra-maven-plugin</artifactId>
+			<version>${viatra.version}</version>
+		</dependency>
+			<dependency>
+		<groupId>org.eclipse.viatra</groupId>
+		<artifactId>viatra-query-language</artifactId>
+		<version>${viatra.version}</version>
+	</dependency>
+		<!--  dependency>
 			<groupId>org.eclipse.incquery</groupId>
 			<artifactId>incquery-maven-plugin</artifactId>
 			<version>${incquery.version}</version>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>hu.bme.mit.inf</groupId>
 			<artifactId>hu.bme.mit.inf.safetylogic.model</artifactId>

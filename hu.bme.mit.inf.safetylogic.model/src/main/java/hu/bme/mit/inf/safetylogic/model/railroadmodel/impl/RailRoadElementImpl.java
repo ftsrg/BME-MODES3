@@ -3,6 +3,7 @@
 package hu.bme.mit.inf.safetylogic.model.railroadmodel.impl;
 
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelPackage;
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.Path;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Point;
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadElement;
 
@@ -32,6 +33,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl#getId <em>Id</em>}</li>
  *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl#getPoints <em>Points</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl#getConnected <em>Connected</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl#getCurrentlyConnected <em>Currently Connected</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.safetylogic.model.railroadmodel.impl.RailRoadElementImpl#getViablePaths <em>Viable Paths</em>}</li>
  * </ul>
  *
  * @generated
@@ -124,6 +128,45 @@ public abstract class RailRoadElementImpl extends MinimalEObjectImpl.Container i
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<RailRoadElement> getConnected() {
+		// TODO: implement this method to return the 'Connected' reference list
+		// Ensure that you remove @generated or mark it @generated NOT
+		// The list is expected to implement org.eclipse.emf.ecore.util.InternalEList and org.eclipse.emf.ecore.EStructuralFeature.Setting
+		// so it's likely that an appropriate subclass of org.eclipse.emf.ecore.util.EcoreEList should be used.
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<RailRoadElement> getCurrentlyConnected() {
+		// TODO: implement this method to return the 'Currently Connected' reference list
+		// Ensure that you remove @generated or mark it @generated NOT
+		// The list is expected to implement org.eclipse.emf.ecore.util.InternalEList and org.eclipse.emf.ecore.EStructuralFeature.Setting
+		// so it's likely that an appropriate subclass of org.eclipse.emf.ecore.util.EcoreEList should be used.
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Path> getViablePaths() {
+		// TODO: implement this method to return the 'Viable Paths' reference list
+		// Ensure that you remove @generated or mark it @generated NOT
+		// The list is expected to implement org.eclipse.emf.ecore.util.InternalEList and org.eclipse.emf.ecore.EStructuralFeature.Setting
+		// so it's likely that an appropriate subclass of org.eclipse.emf.ecore.util.EcoreEList should be used.
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -145,6 +188,12 @@ public abstract class RailRoadElementImpl extends MinimalEObjectImpl.Container i
 				return getId();
 			case ModelPackage.RAIL_ROAD_ELEMENT__POINTS:
 				return getPoints();
+			case ModelPackage.RAIL_ROAD_ELEMENT__CONNECTED:
+				return getConnected();
+			case ModelPackage.RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED:
+				return getCurrentlyConnected();
+			case ModelPackage.RAIL_ROAD_ELEMENT__VIABLE_PATHS:
+				return getViablePaths();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -199,6 +248,12 @@ public abstract class RailRoadElementImpl extends MinimalEObjectImpl.Container i
 				return id != ID_EDEFAULT;
 			case ModelPackage.RAIL_ROAD_ELEMENT__POINTS:
 				return points != null && !points.isEmpty();
+			case ModelPackage.RAIL_ROAD_ELEMENT__CONNECTED:
+				return !getConnected().isEmpty();
+			case ModelPackage.RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED:
+				return !getCurrentlyConnected().isEmpty();
+			case ModelPackage.RAIL_ROAD_ELEMENT__VIABLE_PATHS:
+				return !getViablePaths().isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -85,6 +85,15 @@ public interface ModelFactory extends EFactory {
 	Segment createSegment();
 
 	/**
+	 * Returns a new object of class '<em>Path</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Path</em>'.
+	 * @generated
+	 */
+	Path createPath();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

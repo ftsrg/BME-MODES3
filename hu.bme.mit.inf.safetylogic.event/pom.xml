@@ -35,10 +35,18 @@
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
 		</dependency>
+		<!--dependency> <groupId>org.eclipse.incquery</groupId> <artifactId>incquery-runtime</artifactId> 
+			<version>${incquery.version}</version> </dependency! -->
 		<dependency>
-			<groupId>org.eclipse.incquery</groupId>
-			<artifactId>incquery-runtime</artifactId>
-			<version>${incquery.version}</version>
+			<groupId>org.eclipse.viatra</groupId>
+			<artifactId>viatra-query-runtime</artifactId>
+			<version>${viatra.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.viatra</groupId>
+			<artifactId>viatra-maven-plugin</artifactId>
+			<version>${viatra.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>

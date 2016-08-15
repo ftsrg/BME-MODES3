@@ -8,11 +8,7 @@ import hu.bme.mit.inf.safetylogic.event.prototype.CVPayload
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.ModelFactory
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Point
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Section
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.SectionModel
 import hu.bme.mit.inf.safetylogic.model.railroadmodel.Train
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.TrainModel
-import hu.bme.mit.inf.safetylogic.model.railroadmodel.Turnout
-import hu.bme.mit.inf.safetylogic.patterns.TrainGoingToCutTheTurnoutMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainIsGoingToHitMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainsNextTurnoutMatcher
 import java.util.ArrayList
@@ -23,28 +19,28 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
-import org.eclipse.incquery.runtime.api.IncQueryEngine
-import org.eclipse.incquery.runtime.emf.EMFScope
+import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
+import org.eclipse.viatra.query.runtime.emf.EMFScope
+import hu.bme.mit.inf.safetylogic.model.railroadmodel.RailRoadModel
 
 class Safetylogic {
 	var Resource resource
 	var ResourceSet resourceSet
-	var IncQueryEngine queryEngine
+	var ViatraQueryEngine queryEngine
 
 	var SectionRequestSender srs;
 	var TurnoutRequestSender trs;
 
-	var SectionModel sectionModel // root of the runtime EMF model
-	var TrainModel trainModel
+	var RailRoadModel railRoadModel // root of the runtime EMF model
 	var TurnoutReader turnoutReader
 
 	new(MQTTPublishSubscribeDispatcher dispatcher) {
 		srs = new SectionRequestSender(dispatcher)
 		trs = new TurnoutRequestSender(dispatcher)
 		
-		sectionModel = ModelUtil.loadReadySectionModel
-		trainModel = ModelUtil.createReadyTrainModel(sectionModel)
-		turnoutReader = new TurnoutReader(sectionModel, trs)
+		railRoadModel = ModelUtil.loadReadySectionModel
+		trainModel = ModelUtil.createReadyTrainModel(railRoadModel)
+		turnoutReader = new TurnoutReader(railRoadModel, trs)
 
 		val reg = Resource.Factory.Registry.INSTANCE
 		val m = reg.getExtensionToFactoryMap()
@@ -52,10 +48,10 @@ class Safetylogic {
 
 		resourceSet = new ResourceSetImpl()
 		resource = resourceSet.createResource(URI.createURI("railroad.model"))
-		resource.getContents().add(sectionModel)
+		resource.getContents().add(railRoadModel)
 		resource.getContents().add(trainModel)
 		
-		queryEngine = IncQueryEngine.on(new EMFScope(resourceSet))
+		queryEngine = ViatraQueryEngine.on(new EMFScope(resourceSet))
 	}
 
 	def Turnout findOccupiedTurnout(Train t, SectionModel sm) {
@@ -128,9 +124,9 @@ class Safetylogic {
 			if (!direction.toUpperCase.equals("NONE")) {
 				modelTrain.goingClockwise = (direction.equals("CW"))
 			}
-			var Section occupied = findOccupiedTurnout(modelTrain, sectionModel)
+			var Section occupied = findOccupiedTurnout(modelTrain, railRoadModel)
 			if (occupied == null) { // If it's not on a turnout, it must be on a section
-				occupied = findClosestSection(modelTrain, sectionModel)
+				occupied = findClosestSection(modelTrain, railRoadModel)
 			}
 			log.println(
 				"#:\tID = " + modelTrain.id + "\tX = " + modelTrain.x + "\tY = " + modelTrain.y + "\tspeed = " + speed +
@@ -149,7 +145,7 @@ class Safetylogic {
 	}
 
 	def processSafetylogic() {
-		sectionModel.sections.forEach[section | 
+		railRoadModel.sections.forEach[section | 
 			section.enabled = true;
 		]
 		
@@ -179,7 +175,7 @@ class Safetylogic {
 			match.t1.currentlyOn.enabled = false
 			disableSection(match.t1.currentlyOn.id);
 		}
-		sectionModel.sections.filter[section|section.enabled == true].forEach [
+		railRoadModel.sections.filter[section|section.enabled == true].forEach [
 			val id = it.id
 			enableSection(id)
 		]

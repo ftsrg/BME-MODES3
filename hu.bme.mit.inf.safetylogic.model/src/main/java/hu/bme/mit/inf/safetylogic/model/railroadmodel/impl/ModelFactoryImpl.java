@@ -63,6 +63,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 			case ModelPackage.RECTANGLE: return createRectangle();
 			case ModelPackage.DIMENSION: return createDimension();
 			case ModelPackage.SEGMENT: return createSegment();
+			case ModelPackage.PATH: return createPath();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -136,6 +137,16 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory {
 	public Segment createSegment() {
 		SegmentImpl segment = new SegmentImpl();
 		return segment;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Path createPath() {
+		PathImpl path = new PathImpl();
+		return path;
 	}
 
 	/**
