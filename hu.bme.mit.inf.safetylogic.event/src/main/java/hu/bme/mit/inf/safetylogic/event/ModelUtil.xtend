@@ -13,8 +13,8 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
 
 class ModelUtil {
-	
-		def static loadSectionResource() {
+
+	def private static loadSectionResource() {
 		// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		RailRoadModelPackage.eINSTANCE.class
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel", new XMIResourceFactoryImpl());
@@ -25,38 +25,37 @@ class ModelUtil {
 		resource.load(stream, Collections.emptyMap)
 		resource
 	}
-	
-	def public static void main(String[] args){
+
+	def static loadModel() {
 		val resource = ModelUtil.loadSectionResource
 		ModelUtil.createAllPaths(resource)
-		val model = resource.getModelFromResource
-		println("Sections length = " + model.sections.length)
-		println("Paths length = " + model.paths.length) //TODO check if this is valid
-		
+		return resource;
+
 	}
-	
-		def static createAllPaths(Resource modelResource){
+
+	def private static createAllPaths(Resource modelResource) {
 		// get all matches of the pattern
 		// initialization
 		// phase 1: (managed) ViatraQueryEngine
 		val ViatraQueryEngine engine = ViatraQueryEngine.on(new EMFScope(modelResource))
 		// phase 2: the matcher itself
 		val matcher = ThreeConnectedRailRoadPartsMatcher.on(engine)
+		
+		val paths = getModelFromResource(modelResource).paths
 		// get all matches of the pattern
-		matcher.getAllMatches().forEach[
+		matcher.getAllMatches().forEach [
 			val path = RailRoadModelFactory.eINSTANCE.createPath
 			path.via = it.middle
 			path.from = it.one
 			path.to = it.other
-			getModelFromResource(modelResource).paths.add(path)
+			paths.add(path)
 		]
-		
-		
+
 		return modelResource
 	}
-	
-	//TODO this is a copy of the ModelHandler functions, this shouldn't be duplicated
-	def static getModelFromResource(Resource resource){
+
+	def static getModelFromResource(Resource resource) {
 		resource.contents.head as RailRoadModel
 	}
 }
+

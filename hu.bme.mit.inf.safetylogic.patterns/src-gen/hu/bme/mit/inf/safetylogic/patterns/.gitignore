@@ -11,3 +11,8 @@
 /.PathBuildingHelperQueries.java._trace
 /.ThreeConnectedRailRoadPartsMatch.java._trace
 /.ThreeConnectedRailRoadPartsMatcher.java._trace
+/.SafetyPatterns.java._trace
+/.TrainHitsAnotherTrainMatch.java._trace
+/.TrainHitsAnotherTrainMatcher.java._trace
+/.TrainCutsTurnoutMatch.java._trace
+/.TrainCutsTurnoutMatcher.java._trace

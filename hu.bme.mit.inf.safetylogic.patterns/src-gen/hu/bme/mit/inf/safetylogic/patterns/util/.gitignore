@@ -8,3 +8,12 @@
 /.ViablePathsQuerySpecification.java._trace
 /.ThreeConnectedRailRoadPartsProcessor.java._trace
 /.ThreeConnectedRailRoadPartsQuerySpecification.java._trace
+/.NextSectionQuerySpecification.java._trace
+/.TrainHitsAnotherTrainProcessor.java._trace
+/.TrainHitsAnotherTrainQuerySpecification.java._trace
+/.TrainHitsAnotherTrainNextAfterNextQuerySpecification.java._trace
+/.TrainHitsAnotherTrainNextQuerySpecification.java._trace
+/.TrainCutsTurnoutNextQuerySpecification.java._trace
+/.TrainCutsTurnoutNextAfterNextQuerySpecification.java._trace
+/.TrainCutsTurnoutProcessor.java._trace
+/.TrainCutsTurnoutQuerySpecification.java._trace
