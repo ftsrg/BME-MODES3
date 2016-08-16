@@ -10,7 +10,6 @@ private pattern nextSection(Old : RailRoadElement, Current : RailRoadElement, Ne
 }
 
 //------------------------------------Train Collision Stuff------------------------------------//
-//TODO find better word than offender.
 private pattern trainHitsAnotherTrainNextAfterNext(Offender : Train, Victim : Train) {
 	Train.currentlyOn(Offender, CurrentPosition);
 	Train.previouslyOn(Offender, OldPosition);

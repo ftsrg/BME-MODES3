@@ -1,29 +1,21 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.receiver;
 
-import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_ALLOWED;
 import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_DENIED;
-import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_DIVERGENT;
-import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_STRAIGHT;
-import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_REQUEST_TOP;
-import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_DIVERGENT;
-import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_STRAIGHT;
-import static hu.bme.mit.inf.mqtt.common.data.Command.PASSAGE_RESPONSE_TOP;
-import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_DIVERGENT;
-import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_STRAIGHT;
-import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_TOP;
-import hu.bme.mit.inf.mqtt.common.data.Payload;
-import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.getPayloadFromMessage;
-import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
 import static hu.bme.mit.inf.mqtt.common.util.logging.LogManager.logException;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.ALLOWED;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance.DENIED;
-import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
+
 import java.util.Map;
 import java.util.TreeMap;
+
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+
+import hu.bme.mit.inf.mqtt.common.data.Command;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
+import hu.bme.mit.inf.mqtt.common.network.MQTTPublishSubscribeDispatcher;
+import hu.bme.mit.inf.mqtt.common.network.MessageFilter;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.Allowance;
+import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
 
 /**
  * It is used for receiving the messages that are sent the referred turnout

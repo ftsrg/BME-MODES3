@@ -1,15 +1,13 @@
 package hu.bme.mit.inf.yakindu.mqtt.client.senders;
 
-import hu.bme.mit.inf.mqtt.common.data.Command;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_DIVERGENT;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_STRAIGHT;
 import static hu.bme.mit.inf.mqtt.common.data.Command.SHORT_PASSAGE_REQUEST_TOP;
-import hu.bme.mit.inf.mqtt.common.data.Payload;
 import static hu.bme.mit.inf.mqtt.common.network.PayloadHelper.createCommandWithContent;
+
+import hu.bme.mit.inf.mqtt.common.data.Command;
+import hu.bme.mit.inf.mqtt.common.data.Payload;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.Direction;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.DIVERGENT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.STRAIGHT;
-import static hu.bme.mit.inf.yakindu.mqtt.client.data.Direction.TOP;
 import hu.bme.mit.inf.yakindu.mqtt.client.data.StatemachineCommandMessage;
 import hu.bme.mit.inf.yakindu.mqtt.client.receiver.DistributedMessageReceiver;
 
