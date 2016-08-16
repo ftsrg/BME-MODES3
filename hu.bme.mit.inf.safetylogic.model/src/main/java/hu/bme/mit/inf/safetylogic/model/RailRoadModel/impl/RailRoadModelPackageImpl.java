@@ -243,33 +243,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getRailRoadElement_Connected() {
-		return (EReference)railRoadElementEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRailRoadElement_CurrentlyConnected() {
-		return (EReference)railRoadElementEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRailRoadElement_ViablePaths() {
-		return (EReference)railRoadElementEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getTurnout() {
 		return turnoutEClass;
 	}
@@ -546,9 +519,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		railRoadElementEClass = createEClass(RAIL_ROAD_ELEMENT);
 		createEAttribute(railRoadElementEClass, RAIL_ROAD_ELEMENT__ID);
 		createEReference(railRoadElementEClass, RAIL_ROAD_ELEMENT__POINTS);
-		createEReference(railRoadElementEClass, RAIL_ROAD_ELEMENT__CONNECTED);
-		createEReference(railRoadElementEClass, RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED);
-		createEReference(railRoadElementEClass, RAIL_ROAD_ELEMENT__VIABLE_PATHS);
 
 		turnoutEClass = createEClass(TURNOUT);
 		createEReference(turnoutEClass, TURNOUT__RECTANGLE);
@@ -630,9 +600,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		initEClass(railRoadElementEClass, RailRoadElement.class, "RailRoadElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRailRoadElement_Id(), ecorePackage.getEInt(), "id", null, 1, 1, RailRoadElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getRailRoadElement_Points(), this.getPoint(), null, "points", null, 2, -1, RailRoadElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRailRoadElement_Connected(), this.getRailRoadElement(), null, "connected", null, 0, -1, RailRoadElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getRailRoadElement_CurrentlyConnected(), this.getRailRoadElement(), null, "currentlyConnected", null, 0, -1, RailRoadElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getRailRoadElement_ViablePaths(), this.getPath(), null, "viablePaths", null, 0, -1, RailRoadElement.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(turnoutEClass, Turnout.class, "Turnout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getTurnout_Rectangle(), this.getRectangle(), null, "rectangle", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -670,6 +637,26 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore";	
+		addAnnotation
+		  (this, 
+		   source, 
+		   new String[] {
+			 "settingDelegates", "org.eclipse.viatra.query.querybasedfeature"
+		   });
 	}
 
 } //RailRoadModelPackageImpl

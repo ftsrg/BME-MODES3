@@ -18,9 +18,6 @@
     <genClasses ecoreClass="model.ecore#//RailRoadElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//RailRoadElement/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/points"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/connected"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/currentlyConnected"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model.ecore#//RailRoadElement/viablePaths"/>
     </genClasses>
     <genClasses ecoreClass="model.ecore#//Turnout">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//Turnout/rectangle"/>

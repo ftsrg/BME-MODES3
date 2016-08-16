@@ -1,0 +1,9 @@
+package hu.bme.mit.inf.safetylogic.patterns
+
+import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
+
+
+pattern threeConnectedRailRoadParts(one : RailRoadElement, middle : RailRoadElement, other : RailRoadElement) {
+	find connected(middle, one);
+	find connected(middle, other);
+} 

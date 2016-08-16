@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Patterns
+Bundle-SymbolicName: hu.bme.mit.inf.safetylogic.patterns;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Export-Package: hu.bme.mit.inf.safetylogic.patterns,
+ hu.bme.mit.inf.safetylogic.patterns.java,
+ hu.bme.mit.inf.safetylogic.patterns.util
+Require-Bundle: org.eclipse.viatra.addon.querybasedfeatures.runtime

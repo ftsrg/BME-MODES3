@@ -1,7 +1,0 @@
-package hu.bme.mit.inf.safetylogic.patterns
-
-import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
-
-pattern foo(asd : RailRoadElement){
-	RailRoadElement(asd);
-}

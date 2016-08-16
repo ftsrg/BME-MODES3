@@ -64,9 +64,6 @@ public class RailRoadElementItemProvider
 			super.getPropertyDescriptors(object);
 
 			addIdPropertyDescriptor(object);
-			addConnectedPropertyDescriptor(object);
-			addCurrentlyConnectedPropertyDescriptor(object);
-			addViablePathsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -89,72 +86,6 @@ public class RailRoadElementItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Connected feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addConnectedPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_RailRoadElement_connected_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RailRoadElement_connected_feature", "_UI_RailRoadElement_type"),
-				 RailRoadModelPackage.Literals.RAIL_ROAD_ELEMENT__CONNECTED,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Currently Connected feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addCurrentlyConnectedPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_RailRoadElement_currentlyConnected_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RailRoadElement_currentlyConnected_feature", "_UI_RailRoadElement_type"),
-				 RailRoadModelPackage.Literals.RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Viable Paths feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addViablePathsPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_RailRoadElement_viablePaths_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_RailRoadElement_viablePaths_feature", "_UI_RailRoadElement_type"),
-				 RailRoadModelPackage.Literals.RAIL_ROAD_ELEMENT__VIABLE_PATHS,
-				 true,
-				 false,
-				 true,
-				 null,
 				 null,
 				 null));
 	}

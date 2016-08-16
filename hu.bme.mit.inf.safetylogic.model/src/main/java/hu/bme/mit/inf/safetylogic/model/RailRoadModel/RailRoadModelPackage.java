@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
  * @model kind="package"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore settingDelegates='org.eclipse.viatra.query.querybasedfeature'"
  * @generated
  */
 public interface RailRoadModelPackage extends EPackage {
@@ -158,40 +159,13 @@ public interface RailRoadModelPackage extends EPackage {
 	int RAIL_ROAD_ELEMENT__POINTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Connected</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RAIL_ROAD_ELEMENT__CONNECTED = 2;
-
-	/**
-	 * The feature id for the '<em><b>Currently Connected</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED = 3;
-
-	/**
-	 * The feature id for the '<em><b>Viable Paths</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RAIL_ROAD_ELEMENT__VIABLE_PATHS = 4;
-
-	/**
 	 * The number of structural features of the '<em>Rail Road Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RAIL_ROAD_ELEMENT_FEATURE_COUNT = 5;
+	int RAIL_ROAD_ELEMENT_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Rail Road Element</em>' class.
@@ -229,33 +203,6 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @ordered
 	 */
 	int TURNOUT__POINTS = RAIL_ROAD_ELEMENT__POINTS;
-
-	/**
-	 * The feature id for the '<em><b>Connected</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__CONNECTED = RAIL_ROAD_ELEMENT__CONNECTED;
-
-	/**
-	 * The feature id for the '<em><b>Currently Connected</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__CURRENTLY_CONNECTED = RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED;
-
-	/**
-	 * The feature id for the '<em><b>Viable Paths</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__VIABLE_PATHS = RAIL_ROAD_ELEMENT__VIABLE_PATHS;
 
 	/**
 	 * The feature id for the '<em><b>Rectangle</b></em>' containment reference.
@@ -551,33 +498,6 @@ public interface RailRoadModelPackage extends EPackage {
 	int SEGMENT__POINTS = RAIL_ROAD_ELEMENT__POINTS;
 
 	/**
-	 * The feature id for the '<em><b>Connected</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEGMENT__CONNECTED = RAIL_ROAD_ELEMENT__CONNECTED;
-
-	/**
-	 * The feature id for the '<em><b>Currently Connected</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEGMENT__CURRENTLY_CONNECTED = RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED;
-
-	/**
-	 * The feature id for the '<em><b>Viable Paths</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEGMENT__VIABLE_PATHS = RAIL_ROAD_ELEMENT__VIABLE_PATHS;
-
-	/**
 	 * The feature id for the '<em><b>Is Enabled</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -765,39 +685,6 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getRailRoadElement_Points();
-
-	/**
-	 * Returns the meta object for the reference list '{@link hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement#getConnected <em>Connected</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Connected</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement#getConnected()
-	 * @see #getRailRoadElement()
-	 * @generated
-	 */
-	EReference getRailRoadElement_Connected();
-
-	/**
-	 * Returns the meta object for the reference list '{@link hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement#getCurrentlyConnected <em>Currently Connected</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Currently Connected</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement#getCurrentlyConnected()
-	 * @see #getRailRoadElement()
-	 * @generated
-	 */
-	EReference getRailRoadElement_CurrentlyConnected();
-
-	/**
-	 * Returns the meta object for the reference list '{@link hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement#getViablePaths <em>Viable Paths</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Viable Paths</em>'.
-	 * @see hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement#getViablePaths()
-	 * @see #getRailRoadElement()
-	 * @generated
-	 */
-	EReference getRailRoadElement_ViablePaths();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout <em>Turnout</em>}'.
@@ -1187,30 +1074,6 @@ public interface RailRoadModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference RAIL_ROAD_ELEMENT__POINTS = eINSTANCE.getRailRoadElement_Points();
-
-		/**
-		 * The meta object literal for the '<em><b>Connected</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RAIL_ROAD_ELEMENT__CONNECTED = eINSTANCE.getRailRoadElement_Connected();
-
-		/**
-		 * The meta object literal for the '<em><b>Currently Connected</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RAIL_ROAD_ELEMENT__CURRENTLY_CONNECTED = eINSTANCE.getRailRoadElement_CurrentlyConnected();
-
-		/**
-		 * The meta object literal for the '<em><b>Viable Paths</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RAIL_ROAD_ELEMENT__VIABLE_PATHS = eINSTANCE.getRailRoadElement_ViablePaths();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.safetylogic.model.RailRoadModel.impl.TurnoutImpl <em>Turnout</em>}' class.

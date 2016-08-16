@@ -2,6 +2,9 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="RailRoadModel" nsURI="http://hu.bme.mit.inf.safetylogic.railroadmodel"
     nsPrefix="RailRoadModel">
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="settingDelegates" value="org.eclipse.viatra.query.querybasedfeature"/>
+  </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Train">
     <eStructuralFeatures xsi:type="ecore:EReference" name="currentlyOn" lowerBound="1"
         eType="#//RailRoadElement"/>
@@ -17,14 +20,6 @@
         iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="points" lowerBound="2"
         upperBound="-1" eType="#//Point" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connected" upperBound="-1"
-        eType="#//RailRoadElement" changeable="false" volatile="true" transient="true"
-        derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="currentlyConnected" upperBound="-1"
-        eType="#//RailRoadElement" changeable="false" volatile="true" transient="true"
-        derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="viablePaths" upperBound="-1"
-        eType="#//Path" changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Turnout" eSuperTypes="#//RailRoadElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rectangle" lowerBound="1"

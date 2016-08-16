@@ -21,5 +21,16 @@
 			<artifactId>org.eclipse.emf.ecore</artifactId>
 			<version>${emf.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.viatra</groupId>
+			<artifactId>viatra-query-runtime</artifactId>
+			<version>${viatra.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.viatra</groupId>
+			<artifactId>viatra-maven-plugin</artifactId>
+			<version>${viatra.version}</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><plugin>
+  <extension id="hu.bme.mit.inf.safetylogic.patterns.PathBuildingHelperQueries" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.bme.mit.inf.safetylogic.patterns.PathBuildingHelperQueries" id="hu.bme.mit.inf.safetylogic.patterns.PathBuildingHelperQueries">
+      <query-specification fqn="hu.bme.mit.inf.safetylogic.patterns.threeConnectedRailRoadParts"/>
+    </group>
+  </extension>
+  <extension id="hu.bme.mit.inf.safetylogic.patterns.DerivedFeatures" point="org.eclipse.viatra.query.runtime.queryspecification">
+    <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.bme.mit.inf.safetylogic.patterns.DerivedFeatures" id="hu.bme.mit.inf.safetylogic.patterns.DerivedFeatures">
+      <query-specification fqn="hu.bme.mit.inf.safetylogic.patterns.currentlyConnected"/>
+      <query-specification fqn="hu.bme.mit.inf.safetylogic.patterns.connected"/>
+      <query-specification fqn="hu.bme.mit.inf.safetylogic.patterns.viablePaths"/>
+    </group>
+  </extension>
+</plugin>
