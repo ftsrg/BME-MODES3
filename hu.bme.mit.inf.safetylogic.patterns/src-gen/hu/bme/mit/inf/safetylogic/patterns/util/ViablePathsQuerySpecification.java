@@ -20,6 +20,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Inequality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
@@ -122,7 +123,8 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
       		PBody body = new PBody(this);
       		PVariable var_This = body.getOrCreateVariableByName("This");
       		PVariable var_path = body.getOrCreateVariableByName("path");
-      		PVariable var_connectedOnes = body.getOrCreateVariableByName("connectedOnes");
+      		PVariable var_connected1 = body.getOrCreateVariableByName("connected1");
+      		PVariable var_connected2 = body.getOrCreateVariableByName("connected2");
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
@@ -131,26 +133,33 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
       		));
       		// 	Segment(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment")));
-      		// 	Segment.connectedTo(This, connectedOnes)
+      		// 	Segment.connectedTo(This, connected1)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment")));
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
       		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment", "connectedTo")));
-      		new Equality(body, var__virtual_0_, var_connectedOnes);
+      		new Equality(body, var__virtual_0_, var_connected1);
+      		// 	Segment.connectedTo(This, connected2)
+      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment")));
+      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
+      		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment", "connectedTo")));
+      		new Equality(body, var__virtual_1_, var_connected2);
+      		// 	connected1 != connected2
+      		new Inequality(body, var_connected1, var_connected2);
       		// 		Path.via(path, This)
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
-      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_path, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "via")));
-      		new Equality(body, var__virtual_1_, var_This);
-      		// 	Path.from(path, connectedOnes)
-      		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
-      		new TypeConstraint(body, new FlatTuple(var_path, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "from")));
-      		new Equality(body, var__virtual_2_, var_connectedOnes);
-      		// 	Path.to(path, connectedOnes)
+      		new TypeConstraint(body, new FlatTuple(var_path, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "via")));
+      		new Equality(body, var__virtual_2_, var_This);
+      		// 	Path.from(path, connected1)
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		PVariable var__virtual_3_ = body.getOrCreateVariableByName(".virtual{3}");
-      		new TypeConstraint(body, new FlatTuple(var_path, var__virtual_3_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "to")));
-      		new Equality(body, var__virtual_3_, var_connectedOnes);
+      		new TypeConstraint(body, new FlatTuple(var_path, var__virtual_3_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "from")));
+      		new Equality(body, var__virtual_3_, var_connected1);
+      		// 	Path.to(path, connected2)
+      		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
+      		PVariable var__virtual_4_ = body.getOrCreateVariableByName(".virtual{4}");
+      		new TypeConstraint(body, new FlatTuple(var_path, var__virtual_4_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "to")));
+      		new Equality(body, var__virtual_4_, var_connected2);
       		bodies.add(body);
       	}
       	{

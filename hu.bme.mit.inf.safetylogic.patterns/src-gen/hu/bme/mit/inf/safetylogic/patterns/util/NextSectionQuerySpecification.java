@@ -4,14 +4,14 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
+import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatch;
+import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.ViablePathsQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
-import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFPQuery;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecification;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
@@ -35,7 +35,7 @@ import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
  * 
  */
 @SuppressWarnings("all")
-final class NextSectionQuerySpecification extends BaseGeneratedEMFQuerySpecification<ViatraQueryMatcher<IPatternMatch>> {
+public final class NextSectionQuerySpecification extends BaseGeneratedEMFQuerySpecification<NextSectionMatcher> {
   private NextSectionQuerySpecification() {
     super(GeneratedPQuery.INSTANCE);
   }
@@ -54,18 +54,18 @@ final class NextSectionQuerySpecification extends BaseGeneratedEMFQuerySpecifica
   }
   
   @Override
-  protected ViatraQueryMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
-    throw new UnsupportedOperationException();
+  protected NextSectionMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
+    return NextSectionMatcher.on(engine);
   }
   
   @Override
-  public IPatternMatch newEmptyMatch() {
-    throw new UnsupportedOperationException();
+  public NextSectionMatch newEmptyMatch() {
+    return NextSectionMatch.newEmptyMatch();
   }
   
   @Override
-  public IPatternMatch newMatch(final Object... parameters) {
-    throw new UnsupportedOperationException();
+  public NextSectionMatch newMatch(final Object... parameters) {
+    return NextSectionMatch.newMatch((hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement) parameters[0], (hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement) parameters[1], (hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement) parameters[2]);
   }
   
   /**

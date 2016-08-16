@@ -2,7 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns
 
 import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
 
-private pattern nextSection(Old : RailRoadElement, Current : RailRoadElement, Next : RailRoadElement){
+pattern nextSection(Old : RailRoadElement, Current : RailRoadElement, Next : RailRoadElement){
 	find viablePaths(Current, p);
 	Path.from(p, Old);
 	Path.via(p, Current);

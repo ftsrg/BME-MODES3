@@ -3,8 +3,10 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.util.NextSectionQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainCutsTurnoutQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
@@ -50,8 +52,17 @@ public final class SafetyPatterns extends BaseGeneratedPatternGroup {
   private static SafetyPatterns INSTANCE;
   
   private SafetyPatterns() throws ViatraQueryException {
+    querySpecifications.add(NextSectionQuerySpecification.instance());
     querySpecifications.add(TrainHitsAnotherTrainQuerySpecification.instance());
     querySpecifications.add(TrainCutsTurnoutQuerySpecification.instance());
+  }
+  
+  public NextSectionQuerySpecification getNextSection() throws ViatraQueryException {
+    return NextSectionQuerySpecification.instance();
+  }
+  
+  public NextSectionMatcher getNextSection(final ViatraQueryEngine engine) throws ViatraQueryException {
+    return NextSectionMatcher.on(engine);
   }
   
   public TrainHitsAnotherTrainQuerySpecification getTrainHitsAnotherTrain() throws ViatraQueryException {

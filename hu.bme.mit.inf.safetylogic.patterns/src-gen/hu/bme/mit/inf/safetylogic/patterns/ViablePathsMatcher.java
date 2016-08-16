@@ -33,11 +33,13 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * //TODO {@literal @}QueryBasedFeature(feature = "viablePaths")
  * pattern viablePaths(This : RailRoadElement, path : Path) = {
  * 	Segment(This);
- * 	Segment.connectedTo(This, connectedOnes);
+ * 	Segment.connectedTo(This, connected1);
+ * 	Segment.connectedTo(This, connected2);
+ * 	connected1 != connected2;
  * 	
  * 	Path.via(path, This);
- * 	Path.from(path, connectedOnes);
- * 	Path.to(path, connectedOnes);
+ * 	Path.from(path, connected1);
+ * 	Path.to(path, connected2);
  * } or {
  * 	Turnout(This);
  * 	Turnout.currentlyDivergent(This, true);
