@@ -32,6 +32,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * pattern threeConnectedRailRoadParts(one : RailRoadElement, middle : RailRoadElement, other : RailRoadElement) {
  * 	find connected(middle, one);
  * 	find connected(middle, other);
+ * 	one != other;
  * }
  * </pre></code>
  * 

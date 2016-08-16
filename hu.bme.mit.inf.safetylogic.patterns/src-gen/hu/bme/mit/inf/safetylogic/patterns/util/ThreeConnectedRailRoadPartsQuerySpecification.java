@@ -19,6 +19,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Inequality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.PositivePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
@@ -135,6 +136,8 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
       		new PositivePatternCall(body, new FlatTuple(var_middle, var_one), ConnectedQuerySpecification.instance().getInternalQueryRepresentation());
       		// 	find connected(middle, other)
       		new PositivePatternCall(body, new FlatTuple(var_middle, var_other), ConnectedQuerySpecification.instance().getInternalQueryRepresentation());
+      		// 	one != other
+      		new Inequality(body, var_one, var_other);
       		bodies.add(body);
       	}
       	// to silence compiler error
