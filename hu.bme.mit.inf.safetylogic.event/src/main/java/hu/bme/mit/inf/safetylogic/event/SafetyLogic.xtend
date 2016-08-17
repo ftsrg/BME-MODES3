@@ -1,12 +1,12 @@
 package hu.bme.mit.inf.safetylogic.event
 
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Path
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
+import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
-import hu.bme.mit.inf.safetylogic.patterns.ViablePathsMatcher
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Path
 
 class SafetyLogic {
 
@@ -32,17 +32,15 @@ class SafetyLogic {
 //		train2.previouslyOn = model.sections.findFirst[it.id == 14]
 		model.trains.add(train1)
 		model.trains.add(train2)
-
-		// BOILERPLATE TESTCODE FINISHED HERE
-//		model.paths.filter[it.from.id == 14 && it.via.id == 12].forEach [
-//			println("from " + it.from.id + "\t via " + it.via.id + "\t to " + it.to.id)
-//		]
 		
-//		NextSectionMatcher.on(engine).allMatches.filter[it.old.id == 14 && it.current.id == 12].forEach[
-//			println("from " + it.old.id + "\t via " + it.current.id + "\t to " + it.next.id)
-//		]
 
+		model.paths.filter[it.from.id == 14 && it.via.id == 12].forEach [
+			println(it.print)
+		]
 
+		NextSectionMatcher.on(engine).allMatches.filter[it.old.id == 14 && it.current.id == 12].forEach [
+			println("from " + it.old.id + "\t via " + it.current.id + "\t to " + it.next.id)
+		]
 
 		val hitMatcher = TrainHitsAnotherTrainMatcher.on(engine)
 		if(hitMatcher.allMatches.length == 0) {
@@ -54,9 +52,10 @@ class SafetyLogic {
 
 		println(model.paths.length)
 		println(model.sections.length)
+	// BOILERPLATE TESTCODE FINISHED HERE
 	}
-	
-	def private print(Path p){
+
+	def private print(Path p) {
 		'''Path from:«p.from»	via:«p.via»		to:«p.to»'''
 	}
 
