@@ -36,7 +36,11 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * } or {
  * 	Turnout(This);
  * 	Turnout.top(This, connectedTo);
+ * } or {
+ * 	Turnout(This);
  * 	Turnout.divergent(This, connectedTo);
+ * } or {
+ * 	Turnout(This);
  * 	Turnout.straight(This, connectedTo);
  * }
  * </pre></code>

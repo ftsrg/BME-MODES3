@@ -1,31 +1,23 @@
 package hu.bme.mit.inf.safetylogic.event
 
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Path
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
+import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatch
 import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
+import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
+import java.io.PrintWriter
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
-import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch
-import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
-import java.io.PrintWriter
 
 class SafetyLogic {
 
 	protected var ViatraQueryEngine engine;
-	protected var TrainHitsAnotherTrainMatcher hitMatcher
-	protected var TrainCutsTurnoutMatcher cutMatcher
-	protected var CurrentlyConnectedMatcher curConMatcher
-
 	def setup(Resource modelResource) {
 		engine = ViatraQueryEngine.on(new EMFScope(modelResource))
-		hitMatcher = TrainHitsAnotherTrainMatcher.on(engine)
-		cutMatcher = TrainCutsTurnoutMatcher.on(engine)
-		curConMatcher = CurrentlyConnectedMatcher.on(engine)
 	}
 
 	private def getCuts() {
@@ -37,7 +29,7 @@ class SafetyLogic {
 	}
 
 	private def getCurrentlyConnected(RailRoadElement what) {
-		curConMatcher.getAllValuesOfconnectedTo(what)
+		CurrentlyConnectedMatcher.on(engine).getAllValuesOfconnectedTo(what)
 	}
 
 	private def boolAsInt(Boolean b) {
@@ -49,14 +41,15 @@ class SafetyLogic {
 	}
 
 	private def print(TrainCutsTurnoutMatch match) {
-		'''CUT: «match.offender» «match.victim»'''
+		'''CUT: «match.offender.id» «match.victim.id»'''
 	}
 
 	private def print(TrainHitsAnotherTrainMatch match) {
-		'''HIT: «match.offender» «match.victim»'''
+		'''HIT: «match.offender.id» «match.victim.id»'''
 	}
 
 	def start() {
+		println("Testing started...")
 
 		val resource = ModelUtil.loadModel()
 		setup(resource);
@@ -85,6 +78,10 @@ class SafetyLogic {
 										for (train1Previous : train1Position.currentlyConnected) {
 											for (train2Position : model.sections.filter[it.id != train1Position.id]) {
 												for (train2Previous : train2Position.currentlyConnected) {
+//													val train1Position = model.sections.findFirst[id == 24]
+//													val train1Previous = model.sections.findFirst[id == 15]
+//													val train2Position = model.sections.findFirst[id == 29]
+//													val train2Previous = model.sections.findFirst[id == 28]
 													val currentTurnouts = #[turnout1State, turnout2State, turnout3State, turnout4State, turnout5State, turnout6State, turnout7State]
 													for (var i = 0; i != 6; i++) {
 														val ii = i;
@@ -97,7 +94,11 @@ class SafetyLogic {
 													train2.previouslyOn = train2Previous
 
 													writer.println(
-														'''test #«testNmbr++»	«turnout1State.boolAsInt» «turnout2State.boolAsInt» «turnout3State.boolAsInt» «turnout4State.boolAsInt» «turnout5State.boolAsInt» «turnout6State.boolAsInt» «turnout7State.boolAsInt» «train1.currentlyOn.id» «train1.previouslyOn.id» «train2.currentlyOn.id» «train2.previouslyOn.id» «cuts.forEach[print]»	«hits.forEach[print]»'''
+														'''test #«testNmbr++»	«turnout1State.boolAsInt» «turnout2State.boolAsInt
+														» «turnout3State.boolAsInt» «turnout4State.boolAsInt» «turnout5State.boolAsInt
+														» «turnout6State.boolAsInt» «turnout7State.boolAsInt» «
+														train1.currentlyOn.id» «train1.previouslyOn.id» «train2.currentlyOn.id» «train2.previouslyOn.id
+														» «FOR cut : cuts»«cut.print»«ENDFOR»	«FOR hit : hits»«hit.print»«ENDFOR»'''
 													)
 												}
 											}
@@ -112,5 +113,7 @@ class SafetyLogic {
 				}
 			}
 		}
+		writer.close
+		println("Testing finished")
 	}
 }
