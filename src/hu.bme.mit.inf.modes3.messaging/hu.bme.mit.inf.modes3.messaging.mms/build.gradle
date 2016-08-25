@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+apply plugin: 'com.google.protobuf'
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    // The production code uses the SLF4J logging API at compile time
+    compile 'org.slf4j:slf4j-api:1.7.21'
+	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
+	compile 'com.google.protobuf:protobuf-java:3.0.0'
+	compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+	
+	compile project(':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.common')
+	compile project(':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.zeromq')
+
+    testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+	main.xtendOutputDir = 'src/main/xtend-gen'
+	test.xtendOutputDir = 'src/test/xtend-gen'
+}
+
+protobuf {
+	protoc {
+		artifact = 'com.google.protobuf:protoc:3.0.0'
+	}
+	generatedFilesBaseDir = "$projectDir/src/"
+}

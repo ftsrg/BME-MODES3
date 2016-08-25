@@ -1,0 +1,13 @@
+/Message.proto
+/SegmentControl.proto
+/SegmentState.proto
+/TrainCurrentSegment.proto
+/TrainCurrentSpeed.proto
+/TrainDirectionControl.proto
+/TrainFunctionControl.proto
+/TrainReferenceSpeed.proto
+/TrainReferenceSpeedControl.proto
+/TurnoutControl.proto
+/TurnoutState.proto
+/hu/
+/TrainReferenceSpeedStatus.proto

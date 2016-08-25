@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
+option java_multiple_files = true;
+
+message TrainDirectionControl {
+	enum ControlState {
+		FORWARD = 0;
+		BACKWARD = 1;
+	}
+
+	uint32 trainID = 1;
+	ControlState controlState = 2;
+}
