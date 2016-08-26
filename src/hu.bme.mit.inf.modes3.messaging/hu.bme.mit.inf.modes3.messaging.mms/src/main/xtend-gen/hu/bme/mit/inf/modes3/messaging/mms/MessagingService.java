@@ -1,11 +1,16 @@
 package hu.bme.mit.inf.modes3.messaging.mms;
 
 import com.google.protobuf.GeneratedMessageV3;
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.SegmentStateHandler;
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.TrainCurrentSegmentHandler;
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.TrainCurrentSpeedHandler;
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.TrainReferenceSpeedHandler;
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.TurnoutStateHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.control.SegmentControlHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.control.TrainDirectionControlHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.control.TrainFunctionControlHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.control.TrainReferenceSpeedControlHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.control.TurnoutControlHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.status.SegmentStateHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.status.TrainCurrentSegmentHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.status.TrainCurrentSpeedHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.status.TrainReferenceSpeedHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.status.TurnoutStateHandler;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState;
@@ -16,12 +21,13 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl;
+import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState;
 import hu.bme.mit.inf.modes3.transports.zeromq.ZMQTransport;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.function.Consumer;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
@@ -41,107 +47,114 @@ public class MessagingService {
   @Accessors({ AccessorType.PUBLIC_SETTER, AccessorType.PROTECTED_GETTER })
   private TurnoutStateHandler turnoutStateHandler = null;
   
+  @Accessors({ AccessorType.PUBLIC_SETTER, AccessorType.PROTECTED_GETTER })
+  private SegmentControlHandler segmentControlHandler = null;
+  
+  @Accessors({ AccessorType.PUBLIC_SETTER, AccessorType.PROTECTED_GETTER })
+  private TrainDirectionControlHandler trainDirectionControlHandler = null;
+  
+  @Accessors({ AccessorType.PUBLIC_SETTER, AccessorType.PROTECTED_GETTER })
+  private TrainReferenceSpeedControlHandler trainReferenceSpeedControlHandler = null;
+  
+  @Accessors({ AccessorType.PUBLIC_SETTER, AccessorType.PROTECTED_GETTER })
+  private TrainFunctionControlHandler trainFunctionControlHandler = null;
+  
+  @Accessors({ AccessorType.PUBLIC_SETTER, AccessorType.PROTECTED_GETTER })
+  private TurnoutControlHandler turnoutControlHandler = null;
+  
   public void start() {
-    try {
-      final ZMQTransport transport = new ZMQTransport();
-      transport.connect();
-      while ((!Thread.currentThread().isInterrupted())) {
-        {
-          Thread.sleep(1000);
-          byte[] _receiveMessage = transport.receiveMessage();
-          final Message message = Message.parseFrom(_receiveMessage);
-          Message.MessageType _type = message.getType();
-          if (_type != null) {
-            switch (_type) {
-              case SEGMENT_CONTROL:
+    final ZMQTransport transport = new ZMQTransport();
+    transport.connect();
+    while ((!Thread.currentThread().isInterrupted())) {
+      try {
+        byte[] _receiveMessage = transport.receiveMessage();
+        final Message message = Message.parseFrom(_receiveMessage);
+        Message.MessageType _type = message.getType();
+        if (_type != null) {
+          switch (_type) {
+            case SEGMENT_CONTROL:
+              if (this.segmentControlHandler!=null) {
                 SegmentControl _segmentControl = message.getSegmentControl();
-                this.dispatchMessage(_segmentControl);
-                break;
-              case SEGMENT_STATE:
+                this.segmentControlHandler.handleSegmentControl(_segmentControl);
+              }
+              break;
+            case SEGMENT_STATE:
+              if (this.segmentStateHandler!=null) {
                 SegmentState _segmentState = message.getSegmentState();
-                this.dispatchMessage(_segmentState);
-                break;
-              case TRAIN_CURRENT_SEGMENT:
+                this.segmentStateHandler.handleSegmentState(_segmentState);
+              }
+              break;
+            case TRAIN_CURRENT_SEGMENT:
+              if (this.trainCurrentSegmentHandler!=null) {
                 TrainCurrentSegment _trainCurrentSegment = message.getTrainCurrentSegment();
-                this.dispatchMessage(_trainCurrentSegment);
-                break;
-              case TRAIN_CURRENT_SPEED:
+                this.trainCurrentSegmentHandler.handleTrainCurrentSegment(_trainCurrentSegment);
+              }
+              break;
+            case TRAIN_CURRENT_SPEED:
+              if (this.trainCurrentSpeedHandler!=null) {
                 TrainCurrentSpeed _trainCurrentSpeed = message.getTrainCurrentSpeed();
-                this.dispatchMessage(_trainCurrentSpeed);
-                break;
-              case TRAIN_DIRECTION_CONTROL:
+                this.trainCurrentSpeedHandler.handleTrainCurrentSpeed(_trainCurrentSpeed);
+              }
+              break;
+            case TRAIN_DIRECTION_CONTROL:
+              if (this.trainDirectionControlHandler!=null) {
                 TrainDirectionControl _trainDirectionControl = message.getTrainDirectionControl();
-                this.dispatchMessage(_trainDirectionControl);
-                break;
-              case TRAIN_FUNCTION_CONTROL:
+                this.trainDirectionControlHandler.handleTrainDirectionControl(_trainDirectionControl);
+              }
+              break;
+            case TRAIN_FUNCTION_CONTROL:
+              if (this.trainFunctionControlHandler!=null) {
                 TrainFunctionControl _trainFunctionControl = message.getTrainFunctionControl();
-                this.dispatchMessage(_trainFunctionControl);
-                break;
-              case TRAIN_REFERENCE_SPEED:
+                this.trainFunctionControlHandler.handleTrainFunctionControl(_trainFunctionControl);
+              }
+              break;
+            case TRAIN_REFERENCE_SPEED:
+              if (this.trainReferenceSpeedHandler!=null) {
                 TrainReferenceSpeed _trainReferenceSpeed = message.getTrainReferenceSpeed();
-                this.dispatchMessage(_trainReferenceSpeed);
-                break;
-              case TRAIN_REFERENCE_SPEED_CONTROL:
+                this.trainReferenceSpeedHandler.handleTrainReferenceSpeed(_trainReferenceSpeed);
+              }
+              break;
+            case TRAIN_REFERENCE_SPEED_CONTROL:
+              if (this.trainReferenceSpeedControlHandler!=null) {
                 TrainReferenceSpeedControl _trainReferenceSpeedControl = message.getTrainReferenceSpeedControl();
-                this.dispatchMessage(_trainReferenceSpeedControl);
-                break;
-              case TURNOUT_CONTROL:
+                this.trainReferenceSpeedControlHandler.handleTrainReferenceSpeedControl(_trainReferenceSpeedControl);
+              }
+              break;
+            case TURNOUT_CONTROL:
+              if (this.turnoutControlHandler!=null) {
                 TurnoutControl _turnoutControl = message.getTurnoutControl();
-                this.dispatchMessage(_turnoutControl);
-                break;
-              case TURNOUT_STATE:
-                TurnoutControl _turnoutControl_1 = message.getTurnoutControl();
-                this.dispatchMessage(_turnoutControl_1);
-                break;
-              default:
-                InputOutput.<String>println("Oops");
-                break;
-            }
-          } else {
-            InputOutput.<String>println("Oops");
+                this.turnoutControlHandler.handleTurnoutControl(_turnoutControl);
+              }
+              break;
+            case TURNOUT_STATE:
+              if (this.turnoutStateHandler!=null) {
+                TurnoutState _turnoutState = message.getTurnoutState();
+                this.turnoutStateHandler.handleTurnoutState(_turnoutState);
+              }
+              break;
+            default:
+              final Consumer<Object> _function = (Object it) -> {
+              };
+              Collections.EMPTY_LIST.forEach(_function);
+              break;
           }
+        } else {
+          final Consumer<Object> _function = (Object it) -> {
+          };
+          Collections.EMPTY_LIST.forEach(_function);
+        }
+      } catch (final Throwable _t) {
+        if (_t instanceof Exception) {
+          final Exception e = (Exception)_t;
+        } else {
+          throw Exceptions.sneakyThrow(_t);
         }
       }
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  protected Object _dispatchMessage(final SegmentControl message) {
-    return null;
-  }
-  
-  protected Object _dispatchMessage(final SegmentState message) {
-    return null;
-  }
-  
-  protected Object _dispatchMessage(final TrainCurrentSegment message) {
-    return null;
-  }
-  
-  protected Object _dispatchMessage(final TrainCurrentSpeed message) {
-    return null;
-  }
-  
-  protected Object _dispatchMessage(final TrainDirectionControl message) {
-    return null;
-  }
-  
-  public Object dispatchMessage(final GeneratedMessageV3 message) {
-    if (message instanceof SegmentControl) {
-      return _dispatchMessage((SegmentControl)message);
-    } else if (message instanceof SegmentState) {
-      return _dispatchMessage((SegmentState)message);
-    } else if (message instanceof TrainCurrentSegment) {
-      return _dispatchMessage((TrainCurrentSegment)message);
-    } else if (message instanceof TrainCurrentSpeed) {
-      return _dispatchMessage((TrainCurrentSpeed)message);
-    } else if (message instanceof TrainDirectionControl) {
-      return _dispatchMessage((TrainDirectionControl)message);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(message).toString());
-    }
+  public void sendMessage(final GeneratedMessageV3 message) {
+    throw new UnsupportedOperationException("TODO: auto-generated method stub");
   }
   
   @Pure
@@ -187,5 +200,50 @@ public class MessagingService {
   
   public void setTurnoutStateHandler(final TurnoutStateHandler turnoutStateHandler) {
     this.turnoutStateHandler = turnoutStateHandler;
+  }
+  
+  @Pure
+  protected SegmentControlHandler getSegmentControlHandler() {
+    return this.segmentControlHandler;
+  }
+  
+  public void setSegmentControlHandler(final SegmentControlHandler segmentControlHandler) {
+    this.segmentControlHandler = segmentControlHandler;
+  }
+  
+  @Pure
+  protected TrainDirectionControlHandler getTrainDirectionControlHandler() {
+    return this.trainDirectionControlHandler;
+  }
+  
+  public void setTrainDirectionControlHandler(final TrainDirectionControlHandler trainDirectionControlHandler) {
+    this.trainDirectionControlHandler = trainDirectionControlHandler;
+  }
+  
+  @Pure
+  protected TrainReferenceSpeedControlHandler getTrainReferenceSpeedControlHandler() {
+    return this.trainReferenceSpeedControlHandler;
+  }
+  
+  public void setTrainReferenceSpeedControlHandler(final TrainReferenceSpeedControlHandler trainReferenceSpeedControlHandler) {
+    this.trainReferenceSpeedControlHandler = trainReferenceSpeedControlHandler;
+  }
+  
+  @Pure
+  protected TrainFunctionControlHandler getTrainFunctionControlHandler() {
+    return this.trainFunctionControlHandler;
+  }
+  
+  public void setTrainFunctionControlHandler(final TrainFunctionControlHandler trainFunctionControlHandler) {
+    this.trainFunctionControlHandler = trainFunctionControlHandler;
+  }
+  
+  @Pure
+  protected TurnoutControlHandler getTurnoutControlHandler() {
+    return this.turnoutControlHandler;
+  }
+  
+  public void setTurnoutControlHandler(final TurnoutControlHandler turnoutControlHandler) {
+    this.turnoutControlHandler = turnoutControlHandler;
   }
 }

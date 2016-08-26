@@ -27,3 +27,7 @@ protobuf {
 	}
 	generatedFilesBaseDir = "$projectDir/src/"
 }
+
+task('hello') {
+	print(sourceSets.main.java)
+}
