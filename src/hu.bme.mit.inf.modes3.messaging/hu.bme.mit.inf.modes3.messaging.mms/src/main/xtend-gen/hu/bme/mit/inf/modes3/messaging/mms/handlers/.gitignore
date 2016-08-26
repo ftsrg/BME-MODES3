@@ -9,3 +9,6 @@
 /.TrainReferenceSpeedHandler.java._trace
 /.TurnoutStateHandler.java._trace
 /.bdfshjodfijo.java._trace
+/.MessageHandler.java._trace
+/.HandlerProvider.java._trace
+/.ProtobufHandlerProvider.java._trace

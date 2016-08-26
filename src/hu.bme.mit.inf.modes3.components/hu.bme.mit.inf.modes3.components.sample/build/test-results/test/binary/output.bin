@@ -1,0 +1,7 @@
+SegmentState handler called
+=================
+Protobuf message:
+-----------------
+segmentID: 12
+state: OCCUPIED
+=================

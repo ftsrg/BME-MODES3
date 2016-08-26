@@ -4,12 +4,16 @@ import hu.bme.mit.inf.modes3.transports.common.Transport
 
 class ZMQTransport extends Transport {
 	
-	def connect() {
+	override byte[] receiveMessage() {
 		
 	}
 	
-	def byte[] receiveMessage() {
-		
+	override connect() {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override sendMessage(byte[] message) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 }

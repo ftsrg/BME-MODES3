@@ -1,25 +1,21 @@
 package hu.bme.mit.inf.modes3.components.sample;
 
+import hu.bme.mit.inf.modes3.components.common.AbstractComponent;
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService;
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.status.SegmentStateHandler;
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher;
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.SegmentStateHandler;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOrBuilder;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
-public class SampleComponent implements SegmentStateHandler {
-  private MessagingService mms;
-  
-  public SampleComponent(final MessagingService _mms) {
-    this.mms = _mms;
-    this.mms.setSegmentStateHandler(this);
-    this.mms.start();
-  }
-  
+public class SampleComponent extends AbstractComponent implements SegmentStateHandler {
   @Override
-  public void handleSegmentState(final SegmentStateOrBuilder event) {
-    InputOutput.<String>println("SegmentStateHandler called");
-    InputOutput.<SegmentStateOrBuilder>println(event);
+  public void init() {
+    final ProtobufMessageDispatcher dispatcher = new ProtobufMessageDispatcher();
+    dispatcher.setSegmentStateHandler(this);
+    super.setDispatcher(dispatcher);
+    super.start();
   }
   
   public void sendSegmentControlMessage() {
@@ -31,8 +27,19 @@ public class SampleComponent implements SegmentStateHandler {
       final SegmentControl.Builder message = SegmentControl.newBuilder();
       message.setSegmentID(12);
       message.setControlState(SegmentControl.ControlState.DISABLE);
+      MessagingService _mms = this.getMms();
       SegmentControl _build = message.build();
-      this.mms.sendMessage(_build);
+      _mms.sendMessage(_build);
     }
+  }
+  
+  @Override
+  public void handleMessage(final SegmentStateOrBuilder message) {
+    InputOutput.<String>println("SegmentState handler called");
+    InputOutput.<String>println("=================");
+    InputOutput.<String>println("Protobuf message:");
+    InputOutput.<String>println("-----------------");
+    InputOutput.<SegmentStateOrBuilder>print(message);
+    InputOutput.<String>println("=================");
   }
 }

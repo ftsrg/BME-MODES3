@@ -26,6 +26,7 @@ include ':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.comm
 include ':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.zeromq'
 
 include ':hu.bme.mit.inf.modes3.components'
+include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.common'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.sample'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.sefetylogic'
 // TODO: Add components

@@ -10,44 +10,45 @@ import org.mockito.Mock
 import static org.mockito.Mockito.*;
 
 class SampleComponentTest {
-	
+
 	@Mock
 	private MessagingService mms;
-	
+
 	private SampleComponent component;
-	
+
 	@Before
 	def void init() {
 		mms = mock(MessagingService)
-		component = new SampleComponent(mms)
+		
+		component = new SampleComponent
+		component.mms = mms
 	}
-	
+
 	@Test
-	def void testSampleComponent() {
+	def void testSampleComponentHandleMessage() {
 		// Arrange
 		val state = SegmentState.newBuilder
 		state.segmentID = 12
 		state.state = SegmentState.State.OCCUPIED
-		
+
 		// Act
-		component.handleSegmentState(state.build)
-		
+		component.handleMessage(state.build)
+
 		// Assert
 	}
-	
-	
+
 	@Test
-	def void testSampleComponentSend() {
+	def void testSampleComponentSendMessage() {
 		// Arrange
 		val messageBuilder = SegmentControl.newBuilder
-			messageBuilder.segmentID = 12
-			messageBuilder.controlState = SegmentControl.ControlState.DISABLE
-		
+		messageBuilder.segmentID = 12
+		messageBuilder.controlState = SegmentControl.ControlState.DISABLE
+
 		// Act
 		component.sendSegmentControlMessage();
-		
+
 		// Assert
 		verify(mms).sendMessage(messageBuilder.build)
 	}
-	
+
 }

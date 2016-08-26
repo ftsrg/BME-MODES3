@@ -20,21 +20,22 @@ public class SampleComponentTest {
   public void init() {
     MessagingService _mock = Mockito.<MessagingService>mock(MessagingService.class);
     this.mms = _mock;
-    SampleComponent _sampleComponent = new SampleComponent(this.mms);
+    SampleComponent _sampleComponent = new SampleComponent();
     this.component = _sampleComponent;
+    this.component.setMms(this.mms);
   }
   
   @Test
-  public void testSampleComponent() {
+  public void testSampleComponentHandleMessage() {
     final SegmentState.Builder state = SegmentState.newBuilder();
     state.setSegmentID(12);
     state.setState(SegmentState.State.OCCUPIED);
     SegmentState _build = state.build();
-    this.component.handleSegmentState(_build);
+    this.component.handleMessage(_build);
   }
   
   @Test
-  public void testSampleComponentSend() {
+  public void testSampleComponentSendMessage() {
     final SegmentControl.Builder messageBuilder = SegmentControl.newBuilder();
     messageBuilder.setSegmentID(12);
     messageBuilder.setControlState(SegmentControl.ControlState.DISABLE);

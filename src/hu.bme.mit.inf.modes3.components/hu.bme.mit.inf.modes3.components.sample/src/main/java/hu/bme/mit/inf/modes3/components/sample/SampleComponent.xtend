@@ -1,27 +1,19 @@
 package hu.bme.mit.inf.modes3.components.sample
 
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.status.SegmentStateHandler
+import hu.bme.mit.inf.modes3.components.common.AbstractComponent
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.SegmentStateHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOrBuilder
 
-class SampleComponent implements SegmentStateHandler {
+class SampleComponent extends AbstractComponent implements SegmentStateHandler {
 	
-	//protected def SampleComponent() { }
-	
-	private MessagingService mms;
-	
-	new(MessagingService _mms) {
-		this.mms = _mms
-		mms.segmentStateHandler = this
-		mms.start
-	}
-	
-	override handleSegmentState(SegmentStateOrBuilder event) {
-		println('SegmentStateHandler called')
-		println(event)
+	override void init() {
+		val dispatcher = new ProtobufMessageDispatcher
+		dispatcher.segmentStateHandler = this
 		
-		//decision(event)
+		super.dispatcher = dispatcher
+		super.start		
 	}
 	
 	def void sendSegmentControlMessage() {
@@ -36,6 +28,17 @@ class SampleComponent implements SegmentStateHandler {
 			
 			mms.sendMessage(message.build)
 		}
+	}
+	
+	override handleMessage(SegmentStateOrBuilder message) {
+		println('SegmentState handler called')
+		
+		println('=================')
+		println('Protobuf message:')
+		println('-----------------')
+		print(message)
+		println('=================')
+		
 	}
 	
 }

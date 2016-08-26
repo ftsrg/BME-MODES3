@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="hu.bme.mit.inf.modes3.components.sample.SampleComponentTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2016-08-26T14:19:23" hostname="MBP" time="0.67">
+  <properties/>
+  <testcase name="testSampleComponentHandleMessage" classname="hu.bme.mit.inf.modes3.components.sample.SampleComponentTest" time="0.642"/>
+  <testcase name="testSampleComponentSendMessage" classname="hu.bme.mit.inf.modes3.components.sample.SampleComponentTest" time="0.028"/>
+  <system-out><![CDATA[SegmentState handler called
+=================
+Protobuf message:
+-----------------
+segmentID: 12
+state: OCCUPIED
+=================
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

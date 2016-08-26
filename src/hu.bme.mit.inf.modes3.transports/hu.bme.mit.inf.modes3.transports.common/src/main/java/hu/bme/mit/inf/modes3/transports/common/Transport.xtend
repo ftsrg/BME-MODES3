@@ -7,5 +7,8 @@ abstract class Transport {
 	def Transport(TransportConfigurations configuration) {
 		
 	}
-	 
+	
+	def void connect();
+	def byte[] receiveMessage();
+	def void sendMessage(byte[] message);
 }
