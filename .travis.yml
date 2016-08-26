@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk8
+install: false
+script:
+  - cd src
+  - ./gradlew build
+branches: 
+  only: 
+    - gen3-arch
