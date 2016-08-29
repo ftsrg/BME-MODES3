@@ -3,12 +3,21 @@ package hu.bme.mit.inf.modes3.components.controller.turnout
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
 import java.util.concurrent.ConcurrentHashMap
 
-abstract class CachedStateTurnoutController extends TurnoutCallBackController {
+class CachedStateTurnoutController extends TurnoutCallBackController {
+	var TurnoutStateChangeListener turnoutStateChangeListener
+	var TurnoutControlInfoListener turnoutControlInfoListener
 	val states = new ConcurrentHashMap<Integer, TurnoutStateValue>
+
+	new(TurnoutStateChangeListener turnoutStateChangeListener, TurnoutControlInfoListener turnoutControlInfoListener) {
+		this.turnoutStateChangeListener = turnoutStateChangeListener
+		this.turnoutControlInfoListener = turnoutControlInfoListener
+	}
+
+
 
 	override onTurnoutStateInfo(int id, TurnoutStateValue state) {
 		if(!states.get(id)?.equals(state)) {
-			onTurnoutStateChange(id, state)
+			turnoutStateChangeListener.onTurnoutStateChange(id, state)
 		}
 		states.put(id, state);
 	}
@@ -23,9 +32,9 @@ abstract class CachedStateTurnoutController extends TurnoutCallBackController {
 		}
 		return state
 	}
-	
-	def void onTurnoutStateChange(int id, TurnoutStateValue state);
 
-	
+	override onTurnoutControlInfo(int id, TurnoutStateValue state) {
+		turnoutControlInfoListener.onTurnoutControlInfo(id, state)
+	}
 
 }
