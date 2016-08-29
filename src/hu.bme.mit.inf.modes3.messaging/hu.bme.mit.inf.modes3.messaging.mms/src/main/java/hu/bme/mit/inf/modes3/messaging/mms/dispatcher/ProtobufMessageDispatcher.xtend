@@ -55,7 +55,7 @@ class ProtobufMessageDispatcher implements MessageDispatcher {
 		}
 	}
 
-	override convertMessageToRaw(Object _message) throws ClassCastException, IllegalArgumentException {
+	override convertMessageToRaw(Object _message) throws IllegalArgumentException {
 		try {
 			internalConvertMessageToRaw(_message as GeneratedMessageV3);
 		} catch (ClassCastException e) {

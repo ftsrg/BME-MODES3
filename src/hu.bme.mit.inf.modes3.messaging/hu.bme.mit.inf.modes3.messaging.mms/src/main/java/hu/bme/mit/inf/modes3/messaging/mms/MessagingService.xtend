@@ -24,7 +24,7 @@ class MessagingService {
 		}
 	}
 	
-	def sendMessage(Object message) throws ClassCastException {
+	def sendMessage(Object message) throws IllegalArgumentException {
 		transport.sendMessage(dispatcher.convertMessageToRaw(message))
 	}
 	
