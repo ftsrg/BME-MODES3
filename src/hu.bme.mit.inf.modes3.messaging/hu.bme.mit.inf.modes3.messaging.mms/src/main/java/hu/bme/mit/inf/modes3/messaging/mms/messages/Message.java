@@ -102,19 +102,6 @@ public  final class Message extends
             break;
           }
           case 50: {
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.Builder subBuilder = null;
-            if (trainDirectionControl_ != null) {
-              subBuilder = trainDirectionControl_.toBuilder();
-            }
-            trainDirectionControl_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(trainDirectionControl_);
-              trainDirectionControl_ = subBuilder.buildPartial();
-            }
-
-            break;
-          }
-          case 58: {
             hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder subBuilder = null;
             if (trainFunctionControl_ != null) {
               subBuilder = trainFunctionControl_.toBuilder();
@@ -127,7 +114,7 @@ public  final class Message extends
 
             break;
           }
-          case 66: {
+          case 58: {
             hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed.Builder subBuilder = null;
             if (trainReferenceSpeed_ != null) {
               subBuilder = trainReferenceSpeed_.toBuilder();
@@ -140,7 +127,7 @@ public  final class Message extends
 
             break;
           }
-          case 74: {
+          case 66: {
             hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder subBuilder = null;
             if (trainReferenceSpeedControl_ != null) {
               subBuilder = trainReferenceSpeedControl_.toBuilder();
@@ -153,7 +140,7 @@ public  final class Message extends
 
             break;
           }
-          case 82: {
+          case 74: {
             hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder subBuilder = null;
             if (turnoutControl_ != null) {
               subBuilder = turnoutControl_.toBuilder();
@@ -166,7 +153,7 @@ public  final class Message extends
 
             break;
           }
-          case 90: {
+          case 82: {
             hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState.Builder subBuilder = null;
             if (turnoutState_ != null) {
               subBuilder = turnoutState_.toBuilder();
@@ -481,127 +468,106 @@ public  final class Message extends
     return getTrainCurrentSpeed();
   }
 
-  public static final int TRAINDIRECTIONCONTROL_FIELD_NUMBER = 6;
-  private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl trainDirectionControl_;
-  /**
-   * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-   */
-  public boolean hasTrainDirectionControl() {
-    return trainDirectionControl_ != null;
-  }
-  /**
-   * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-   */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl getTrainDirectionControl() {
-    return trainDirectionControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.getDefaultInstance() : trainDirectionControl_;
-  }
-  /**
-   * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-   */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControlOrBuilder getTrainDirectionControlOrBuilder() {
-    return getTrainDirectionControl();
-  }
-
-  public static final int TRAINFUNCTIONCONTROL_FIELD_NUMBER = 7;
+  public static final int TRAINFUNCTIONCONTROL_FIELD_NUMBER = 6;
   private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl trainFunctionControl_;
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
    */
   public boolean hasTrainFunctionControl() {
     return trainFunctionControl_ != null;
   }
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl getTrainFunctionControl() {
     return trainFunctionControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.getDefaultInstance() : trainFunctionControl_;
   }
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder getTrainFunctionControlOrBuilder() {
     return getTrainFunctionControl();
   }
 
-  public static final int TRAINREFERENCESPEED_FIELD_NUMBER = 8;
+  public static final int TRAINREFERENCESPEED_FIELD_NUMBER = 7;
   private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed trainReferenceSpeed_;
   /**
-   * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+   * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
    */
   public boolean hasTrainReferenceSpeed() {
     return trainReferenceSpeed_ != null;
   }
   /**
-   * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+   * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed getTrainReferenceSpeed() {
     return trainReferenceSpeed_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed.getDefaultInstance() : trainReferenceSpeed_;
   }
   /**
-   * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+   * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedOrBuilder getTrainReferenceSpeedOrBuilder() {
     return getTrainReferenceSpeed();
   }
 
-  public static final int TRAINREFERENCESPEEDCONTROL_FIELD_NUMBER = 9;
+  public static final int TRAINREFERENCESPEEDCONTROL_FIELD_NUMBER = 8;
   private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl trainReferenceSpeedControl_;
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
    */
   public boolean hasTrainReferenceSpeedControl() {
     return trainReferenceSpeedControl_ != null;
   }
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl getTrainReferenceSpeedControl() {
     return trainReferenceSpeedControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.getDefaultInstance() : trainReferenceSpeedControl_;
   }
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder getTrainReferenceSpeedControlOrBuilder() {
     return getTrainReferenceSpeedControl();
   }
 
-  public static final int TURNOUTCONTROL_FIELD_NUMBER = 10;
+  public static final int TURNOUTCONTROL_FIELD_NUMBER = 9;
   private hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl turnoutControl_;
   /**
-   * <code>optional .TurnoutControl turnoutControl = 10;</code>
+   * <code>optional .TurnoutControl turnoutControl = 9;</code>
    */
   public boolean hasTurnoutControl() {
     return turnoutControl_ != null;
   }
   /**
-   * <code>optional .TurnoutControl turnoutControl = 10;</code>
+   * <code>optional .TurnoutControl turnoutControl = 9;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl getTurnoutControl() {
     return turnoutControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.getDefaultInstance() : turnoutControl_;
   }
   /**
-   * <code>optional .TurnoutControl turnoutControl = 10;</code>
+   * <code>optional .TurnoutControl turnoutControl = 9;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder getTurnoutControlOrBuilder() {
     return getTurnoutControl();
   }
 
-  public static final int TURNOUTSTATE_FIELD_NUMBER = 11;
+  public static final int TURNOUTSTATE_FIELD_NUMBER = 10;
   private hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState turnoutState_;
   /**
-   * <code>optional .TurnoutState turnoutState = 11;</code>
+   * <code>optional .TurnoutState turnoutState = 10;</code>
    */
   public boolean hasTurnoutState() {
     return turnoutState_ != null;
   }
   /**
-   * <code>optional .TurnoutState turnoutState = 11;</code>
+   * <code>optional .TurnoutState turnoutState = 10;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState getTurnoutState() {
     return turnoutState_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState.getDefaultInstance() : turnoutState_;
   }
   /**
-   * <code>optional .TurnoutState turnoutState = 11;</code>
+   * <code>optional .TurnoutState turnoutState = 10;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder getTurnoutStateOrBuilder() {
     return getTurnoutState();
@@ -634,23 +600,20 @@ public  final class Message extends
     if (trainCurrentSpeed_ != null) {
       output.writeMessage(5, getTrainCurrentSpeed());
     }
-    if (trainDirectionControl_ != null) {
-      output.writeMessage(6, getTrainDirectionControl());
-    }
     if (trainFunctionControl_ != null) {
-      output.writeMessage(7, getTrainFunctionControl());
+      output.writeMessage(6, getTrainFunctionControl());
     }
     if (trainReferenceSpeed_ != null) {
-      output.writeMessage(8, getTrainReferenceSpeed());
+      output.writeMessage(7, getTrainReferenceSpeed());
     }
     if (trainReferenceSpeedControl_ != null) {
-      output.writeMessage(9, getTrainReferenceSpeedControl());
+      output.writeMessage(8, getTrainReferenceSpeedControl());
     }
     if (turnoutControl_ != null) {
-      output.writeMessage(10, getTurnoutControl());
+      output.writeMessage(9, getTurnoutControl());
     }
     if (turnoutState_ != null) {
-      output.writeMessage(11, getTurnoutState());
+      output.writeMessage(10, getTurnoutState());
     }
   }
 
@@ -679,29 +642,25 @@ public  final class Message extends
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(5, getTrainCurrentSpeed());
     }
-    if (trainDirectionControl_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(6, getTrainDirectionControl());
-    }
     if (trainFunctionControl_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(7, getTrainFunctionControl());
+        .computeMessageSize(6, getTrainFunctionControl());
     }
     if (trainReferenceSpeed_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(8, getTrainReferenceSpeed());
+        .computeMessageSize(7, getTrainReferenceSpeed());
     }
     if (trainReferenceSpeedControl_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(9, getTrainReferenceSpeedControl());
+        .computeMessageSize(8, getTrainReferenceSpeedControl());
     }
     if (turnoutControl_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(10, getTurnoutControl());
+        .computeMessageSize(9, getTurnoutControl());
     }
     if (turnoutState_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(11, getTurnoutState());
+        .computeMessageSize(10, getTurnoutState());
     }
     memoizedSize = size;
     return size;
@@ -739,11 +698,6 @@ public  final class Message extends
     if (hasTrainCurrentSpeed()) {
       result = result && getTrainCurrentSpeed()
           .equals(other.getTrainCurrentSpeed());
-    }
-    result = result && (hasTrainDirectionControl() == other.hasTrainDirectionControl());
-    if (hasTrainDirectionControl()) {
-      result = result && getTrainDirectionControl()
-          .equals(other.getTrainDirectionControl());
     }
     result = result && (hasTrainFunctionControl() == other.hasTrainFunctionControl());
     if (hasTrainFunctionControl()) {
@@ -797,10 +751,6 @@ public  final class Message extends
     if (hasTrainCurrentSpeed()) {
       hash = (37 * hash) + TRAINCURRENTSPEED_FIELD_NUMBER;
       hash = (53 * hash) + getTrainCurrentSpeed().hashCode();
-    }
-    if (hasTrainDirectionControl()) {
-      hash = (37 * hash) + TRAINDIRECTIONCONTROL_FIELD_NUMBER;
-      hash = (53 * hash) + getTrainDirectionControl().hashCode();
     }
     if (hasTrainFunctionControl()) {
       hash = (37 * hash) + TRAINFUNCTIONCONTROL_FIELD_NUMBER;
@@ -966,12 +916,6 @@ public  final class Message extends
         trainCurrentSpeed_ = null;
         trainCurrentSpeedBuilder_ = null;
       }
-      if (trainDirectionControlBuilder_ == null) {
-        trainDirectionControl_ = null;
-      } else {
-        trainDirectionControl_ = null;
-        trainDirectionControlBuilder_ = null;
-      }
       if (trainFunctionControlBuilder_ == null) {
         trainFunctionControl_ = null;
       } else {
@@ -1044,11 +988,6 @@ public  final class Message extends
         result.trainCurrentSpeed_ = trainCurrentSpeed_;
       } else {
         result.trainCurrentSpeed_ = trainCurrentSpeedBuilder_.build();
-      }
-      if (trainDirectionControlBuilder_ == null) {
-        result.trainDirectionControl_ = trainDirectionControl_;
-      } else {
-        result.trainDirectionControl_ = trainDirectionControlBuilder_.build();
       }
       if (trainFunctionControlBuilder_ == null) {
         result.trainFunctionControl_ = trainFunctionControl_;
@@ -1130,9 +1069,6 @@ public  final class Message extends
       }
       if (other.hasTrainCurrentSpeed()) {
         mergeTrainCurrentSpeed(other.getTrainCurrentSpeed());
-      }
-      if (other.hasTrainDirectionControl()) {
-        mergeTrainDirectionControl(other.getTrainDirectionControl());
       }
       if (other.hasTrainFunctionControl()) {
         mergeTrainFunctionControl(other.getTrainFunctionControl());
@@ -1687,134 +1623,17 @@ public  final class Message extends
       return trainCurrentSpeedBuilder_;
     }
 
-    private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl trainDirectionControl_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControlOrBuilder> trainDirectionControlBuilder_;
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public boolean hasTrainDirectionControl() {
-      return trainDirectionControlBuilder_ != null || trainDirectionControl_ != null;
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl getTrainDirectionControl() {
-      if (trainDirectionControlBuilder_ == null) {
-        return trainDirectionControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.getDefaultInstance() : trainDirectionControl_;
-      } else {
-        return trainDirectionControlBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public Builder setTrainDirectionControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl value) {
-      if (trainDirectionControlBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        trainDirectionControl_ = value;
-        onChanged();
-      } else {
-        trainDirectionControlBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public Builder setTrainDirectionControl(
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.Builder builderForValue) {
-      if (trainDirectionControlBuilder_ == null) {
-        trainDirectionControl_ = builderForValue.build();
-        onChanged();
-      } else {
-        trainDirectionControlBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public Builder mergeTrainDirectionControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl value) {
-      if (trainDirectionControlBuilder_ == null) {
-        if (trainDirectionControl_ != null) {
-          trainDirectionControl_ =
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.newBuilder(trainDirectionControl_).mergeFrom(value).buildPartial();
-        } else {
-          trainDirectionControl_ = value;
-        }
-        onChanged();
-      } else {
-        trainDirectionControlBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public Builder clearTrainDirectionControl() {
-      if (trainDirectionControlBuilder_ == null) {
-        trainDirectionControl_ = null;
-        onChanged();
-      } else {
-        trainDirectionControl_ = null;
-        trainDirectionControlBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.Builder getTrainDirectionControlBuilder() {
-      
-      onChanged();
-      return getTrainDirectionControlFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControlOrBuilder getTrainDirectionControlOrBuilder() {
-      if (trainDirectionControlBuilder_ != null) {
-        return trainDirectionControlBuilder_.getMessageOrBuilder();
-      } else {
-        return trainDirectionControl_ == null ?
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.getDefaultInstance() : trainDirectionControl_;
-      }
-    }
-    /**
-     * <code>optional .TrainDirectionControl trainDirectionControl = 6;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControlOrBuilder> 
-        getTrainDirectionControlFieldBuilder() {
-      if (trainDirectionControlBuilder_ == null) {
-        trainDirectionControlBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionControlOrBuilder>(
-                getTrainDirectionControl(),
-                getParentForChildren(),
-                isClean());
-        trainDirectionControl_ = null;
-      }
-      return trainDirectionControlBuilder_;
-    }
-
     private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl trainFunctionControl_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder> trainFunctionControlBuilder_;
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public boolean hasTrainFunctionControl() {
       return trainFunctionControlBuilder_ != null || trainFunctionControl_ != null;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl getTrainFunctionControl() {
       if (trainFunctionControlBuilder_ == null) {
@@ -1824,7 +1643,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public Builder setTrainFunctionControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl value) {
       if (trainFunctionControlBuilder_ == null) {
@@ -1840,7 +1659,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public Builder setTrainFunctionControl(
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder builderForValue) {
@@ -1854,7 +1673,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public Builder mergeTrainFunctionControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl value) {
       if (trainFunctionControlBuilder_ == null) {
@@ -1872,7 +1691,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public Builder clearTrainFunctionControl() {
       if (trainFunctionControlBuilder_ == null) {
@@ -1886,7 +1705,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder getTrainFunctionControlBuilder() {
       
@@ -1894,7 +1713,7 @@ public  final class Message extends
       return getTrainFunctionControlFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder getTrainFunctionControlOrBuilder() {
       if (trainFunctionControlBuilder_ != null) {
@@ -1905,7 +1724,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 7;</code>
+     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder> 
@@ -1925,13 +1744,13 @@ public  final class Message extends
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedOrBuilder> trainReferenceSpeedBuilder_;
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public boolean hasTrainReferenceSpeed() {
       return trainReferenceSpeedBuilder_ != null || trainReferenceSpeed_ != null;
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed getTrainReferenceSpeed() {
       if (trainReferenceSpeedBuilder_ == null) {
@@ -1941,7 +1760,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public Builder setTrainReferenceSpeed(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed value) {
       if (trainReferenceSpeedBuilder_ == null) {
@@ -1957,7 +1776,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public Builder setTrainReferenceSpeed(
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed.Builder builderForValue) {
@@ -1971,7 +1790,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public Builder mergeTrainReferenceSpeed(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed value) {
       if (trainReferenceSpeedBuilder_ == null) {
@@ -1989,7 +1808,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public Builder clearTrainReferenceSpeed() {
       if (trainReferenceSpeedBuilder_ == null) {
@@ -2003,7 +1822,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed.Builder getTrainReferenceSpeedBuilder() {
       
@@ -2011,7 +1830,7 @@ public  final class Message extends
       return getTrainReferenceSpeedFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedOrBuilder getTrainReferenceSpeedOrBuilder() {
       if (trainReferenceSpeedBuilder_ != null) {
@@ -2022,7 +1841,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 8;</code>
+     * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedOrBuilder> 
@@ -2042,13 +1861,13 @@ public  final class Message extends
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder> trainReferenceSpeedControlBuilder_;
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public boolean hasTrainReferenceSpeedControl() {
       return trainReferenceSpeedControlBuilder_ != null || trainReferenceSpeedControl_ != null;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl getTrainReferenceSpeedControl() {
       if (trainReferenceSpeedControlBuilder_ == null) {
@@ -2058,7 +1877,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public Builder setTrainReferenceSpeedControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl value) {
       if (trainReferenceSpeedControlBuilder_ == null) {
@@ -2074,7 +1893,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public Builder setTrainReferenceSpeedControl(
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder builderForValue) {
@@ -2088,7 +1907,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public Builder mergeTrainReferenceSpeedControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl value) {
       if (trainReferenceSpeedControlBuilder_ == null) {
@@ -2106,7 +1925,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public Builder clearTrainReferenceSpeedControl() {
       if (trainReferenceSpeedControlBuilder_ == null) {
@@ -2120,7 +1939,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder getTrainReferenceSpeedControlBuilder() {
       
@@ -2128,7 +1947,7 @@ public  final class Message extends
       return getTrainReferenceSpeedControlFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder getTrainReferenceSpeedControlOrBuilder() {
       if (trainReferenceSpeedControlBuilder_ != null) {
@@ -2139,7 +1958,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 9;</code>
+     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder> 
@@ -2159,13 +1978,13 @@ public  final class Message extends
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder> turnoutControlBuilder_;
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public boolean hasTurnoutControl() {
       return turnoutControlBuilder_ != null || turnoutControl_ != null;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl getTurnoutControl() {
       if (turnoutControlBuilder_ == null) {
@@ -2175,7 +1994,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public Builder setTurnoutControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl value) {
       if (turnoutControlBuilder_ == null) {
@@ -2191,7 +2010,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public Builder setTurnoutControl(
         hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder builderForValue) {
@@ -2205,7 +2024,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public Builder mergeTurnoutControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl value) {
       if (turnoutControlBuilder_ == null) {
@@ -2223,7 +2042,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public Builder clearTurnoutControl() {
       if (turnoutControlBuilder_ == null) {
@@ -2237,7 +2056,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder getTurnoutControlBuilder() {
       
@@ -2245,7 +2064,7 @@ public  final class Message extends
       return getTurnoutControlFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder getTurnoutControlOrBuilder() {
       if (turnoutControlBuilder_ != null) {
@@ -2256,7 +2075,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 10;</code>
+     * <code>optional .TurnoutControl turnoutControl = 9;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder> 
@@ -2276,13 +2095,13 @@ public  final class Message extends
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder> turnoutStateBuilder_;
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public boolean hasTurnoutState() {
       return turnoutStateBuilder_ != null || turnoutState_ != null;
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState getTurnoutState() {
       if (turnoutStateBuilder_ == null) {
@@ -2292,7 +2111,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public Builder setTurnoutState(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState value) {
       if (turnoutStateBuilder_ == null) {
@@ -2308,7 +2127,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public Builder setTurnoutState(
         hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState.Builder builderForValue) {
@@ -2322,7 +2141,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public Builder mergeTurnoutState(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState value) {
       if (turnoutStateBuilder_ == null) {
@@ -2340,7 +2159,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public Builder clearTurnoutState() {
       if (turnoutStateBuilder_ == null) {
@@ -2354,7 +2173,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState.Builder getTurnoutStateBuilder() {
       
@@ -2362,7 +2181,7 @@ public  final class Message extends
       return getTurnoutStateFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder getTurnoutStateOrBuilder() {
       if (turnoutStateBuilder_ != null) {
@@ -2373,7 +2192,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .TurnoutState turnoutState = 11;</code>
+     * <code>optional .TurnoutState turnoutState = 10;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder> 

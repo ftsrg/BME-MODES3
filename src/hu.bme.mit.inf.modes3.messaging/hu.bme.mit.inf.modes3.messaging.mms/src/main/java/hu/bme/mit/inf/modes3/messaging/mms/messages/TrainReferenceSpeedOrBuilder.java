@@ -16,4 +16,13 @@ public interface TrainReferenceSpeedOrBuilder extends
    * <code>optional uint32 referenceSpeed = 2;</code>
    */
   int getReferenceSpeed();
+
+  /**
+   * <code>optional .TrainDirectionValue direction = 3;</code>
+   */
+  int getDirectionValue();
+  /**
+   * <code>optional .TrainDirectionValue direction = 3;</code>
+   */
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue getDirection();
 }

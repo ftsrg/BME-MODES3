@@ -28,11 +28,11 @@ public final class TurnoutStateOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\022TurnoutState.proto\"k\n\014TurnoutState\022\021\n\t" +
-      "turnoutID\030\001 \001(\r\022\"\n\005state\030\002 \001(\0162\023.Turnout" +
-      "State.State\"$\n\005State\022\014\n\010STRAIGHT\020\000\022\r\n\tDI" +
-      "VERGENT\020\001B0\n,hu.bme.mit.inf.modes3.messa" +
-      "ging.mms.messagesP\001b\006proto3"
+      "\n\022TurnoutState.proto\032\013Enums.proto\"D\n\014Tur" +
+      "noutState\022\021\n\tturnoutID\030\001 \001(\r\022!\n\005state\030\002 " +
+      "\001(\0162\022.TurnoutStateValueB0\n,hu.bme.mit.in" +
+      "f.modes3.messaging.mms.messagesP\001b\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -45,6 +45,7 @@ public final class TurnoutStateOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          hu.bme.mit.inf.modes3.messaging.mms.messages.Enums.getDescriptor(),
         }, assigner);
     internal_static_TurnoutState_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -52,6 +53,7 @@ public final class TurnoutStateOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TurnoutState_descriptor,
         new java.lang.String[] { "TurnoutID", "State", });
+    hu.bme.mit.inf.modes3.messaging.mms.messages.Enums.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

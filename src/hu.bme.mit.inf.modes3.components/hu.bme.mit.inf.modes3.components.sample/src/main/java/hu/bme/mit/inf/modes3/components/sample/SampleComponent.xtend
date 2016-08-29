@@ -5,6 +5,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.SegmentStateHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 
 class SampleComponent extends AbstractComponent implements SegmentStateHandler {
 	
@@ -24,7 +25,7 @@ class SampleComponent extends AbstractComponent implements SegmentStateHandler {
 		if (sendMessage) {
 			val message = SegmentControl.newBuilder
 			message.segmentID = 12
-			message.controlState = SegmentControl.ControlState.DISABLE
+			message.controlState = SegmentStateValue.DISABLED
 			
 			mms.sendMessage(message.build)
 		}

@@ -13,11 +13,11 @@ public interface SegmentControlOrBuilder extends
   int getSegmentID();
 
   /**
-   * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+   * <code>optional .SegmentStateValue controlState = 2;</code>
    */
   int getControlStateValue();
   /**
-   * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+   * <code>optional .SegmentStateValue controlState = 2;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState getControlState();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue getControlState();
 }

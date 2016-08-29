@@ -78,104 +78,6 @@ public  final class TurnoutControl extends
             hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.class, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder.class);
   }
 
-  /**
-   * Protobuf enum {@code TurnoutControl.ControlState}
-   */
-  public enum ControlState
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>STRAIGHT = 0;</code>
-     */
-    STRAIGHT(0),
-    /**
-     * <code>DIVERGENT = 1;</code>
-     */
-    DIVERGENT(1),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>STRAIGHT = 0;</code>
-     */
-    public static final int STRAIGHT_VALUE = 0;
-    /**
-     * <code>DIVERGENT = 1;</code>
-     */
-    public static final int DIVERGENT_VALUE = 1;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static ControlState valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static ControlState forNumber(int value) {
-      switch (value) {
-        case 0: return STRAIGHT;
-        case 1: return DIVERGENT;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<ControlState>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        ControlState> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ControlState>() {
-            public ControlState findValueByNumber(int number) {
-              return ControlState.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final ControlState[] VALUES = values();
-
-    public static ControlState valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private ControlState(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:TurnoutControl.ControlState)
-  }
-
   public static final int TURNOUTID_FIELD_NUMBER = 1;
   private int turnoutID_;
   /**
@@ -188,17 +90,17 @@ public  final class TurnoutControl extends
   public static final int CONTROLSTATE_FIELD_NUMBER = 2;
   private int controlState_;
   /**
-   * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+   * <code>optional .TurnoutStateValue controlState = 2;</code>
    */
   public int getControlStateValue() {
     return controlState_;
   }
   /**
-   * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+   * <code>optional .TurnoutStateValue controlState = 2;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState getControlState() {
-    hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState result = hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState.valueOf(controlState_);
-    return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState.UNRECOGNIZED : result;
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue getControlState() {
+    hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue result = hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue.valueOf(controlState_);
+    return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -216,7 +118,7 @@ public  final class TurnoutControl extends
     if (turnoutID_ != 0) {
       output.writeUInt32(1, turnoutID_);
     }
-    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState.STRAIGHT.getNumber()) {
+    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue.STRAIGHT.getNumber()) {
       output.writeEnum(2, controlState_);
     }
   }
@@ -230,7 +132,7 @@ public  final class TurnoutControl extends
       size += com.google.protobuf.CodedOutputStream
         .computeUInt32Size(1, turnoutID_);
     }
-    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState.STRAIGHT.getNumber()) {
+    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue.STRAIGHT.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(2, controlState_);
     }
@@ -514,13 +416,13 @@ public  final class TurnoutControl extends
 
     private int controlState_ = 0;
     /**
-     * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+     * <code>optional .TurnoutStateValue controlState = 2;</code>
      */
     public int getControlStateValue() {
       return controlState_;
     }
     /**
-     * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+     * <code>optional .TurnoutStateValue controlState = 2;</code>
      */
     public Builder setControlStateValue(int value) {
       controlState_ = value;
@@ -528,16 +430,16 @@ public  final class TurnoutControl extends
       return this;
     }
     /**
-     * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+     * <code>optional .TurnoutStateValue controlState = 2;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState getControlState() {
-      hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState result = hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState.valueOf(controlState_);
-      return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState.UNRECOGNIZED : result;
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue getControlState() {
+      hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue result = hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue.valueOf(controlState_);
+      return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue.UNRECOGNIZED : result;
     }
     /**
-     * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+     * <code>optional .TurnoutStateValue controlState = 2;</code>
      */
-    public Builder setControlState(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState value) {
+    public Builder setControlState(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -547,7 +449,7 @@ public  final class TurnoutControl extends
       return this;
     }
     /**
-     * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+     * <code>optional .TurnoutStateValue controlState = 2;</code>
      */
     public Builder clearControlState() {
       

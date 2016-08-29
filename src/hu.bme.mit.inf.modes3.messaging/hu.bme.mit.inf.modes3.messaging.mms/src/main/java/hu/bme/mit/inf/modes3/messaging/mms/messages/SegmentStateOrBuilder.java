@@ -13,11 +13,11 @@ public interface SegmentStateOrBuilder extends
   int getSegmentID();
 
   /**
-   * <code>optional .SegmentState.State state = 2;</code>
+   * <code>optional .SegmentStateValue state = 2;</code>
    */
   int getStateValue();
   /**
-   * <code>optional .SegmentState.State state = 2;</code>
+   * <code>optional .SegmentStateValue state = 2;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState.State getState();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue getState();
 }

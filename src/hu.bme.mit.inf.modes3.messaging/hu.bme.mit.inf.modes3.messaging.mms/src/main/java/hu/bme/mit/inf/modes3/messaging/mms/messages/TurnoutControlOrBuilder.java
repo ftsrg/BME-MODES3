@@ -13,11 +13,11 @@ public interface TurnoutControlOrBuilder extends
   int getTurnoutID();
 
   /**
-   * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+   * <code>optional .TurnoutStateValue controlState = 2;</code>
    */
   int getControlStateValue();
   /**
-   * <code>optional .TurnoutControl.ControlState controlState = 2;</code>
+   * <code>optional .TurnoutStateValue controlState = 2;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.ControlState getControlState();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue getControlState();
 }

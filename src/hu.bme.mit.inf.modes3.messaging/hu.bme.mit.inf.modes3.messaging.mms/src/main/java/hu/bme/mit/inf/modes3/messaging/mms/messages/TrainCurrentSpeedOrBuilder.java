@@ -16,4 +16,13 @@ public interface TrainCurrentSpeedOrBuilder extends
    * <code>optional uint32 currentSpeed = 2;</code>
    */
   int getCurrentSpeed();
+
+  /**
+   * <code>optional .TrainDirectionValue direction = 3;</code>
+   */
+  int getDirectionValue();
+  /**
+   * <code>optional .TrainDirectionValue direction = 3;</code>
+   */
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue getDirection();
 }

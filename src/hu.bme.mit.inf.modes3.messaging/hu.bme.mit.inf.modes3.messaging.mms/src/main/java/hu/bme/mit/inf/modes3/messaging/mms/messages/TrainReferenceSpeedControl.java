@@ -17,6 +17,7 @@ public  final class TrainReferenceSpeedControl extends
   private TrainReferenceSpeedControl() {
     trainID_ = 0;
     referenceSpeed_ = 0;
+    direction_ = 0;
   }
 
   @java.lang.Override
@@ -52,6 +53,12 @@ public  final class TrainReferenceSpeedControl extends
           case 16: {
 
             referenceSpeed_ = input.readUInt32();
+            break;
+          }
+          case 24: {
+            int rawValue = input.readEnum();
+
+            direction_ = rawValue;
             break;
           }
         }
@@ -95,6 +102,22 @@ public  final class TrainReferenceSpeedControl extends
     return referenceSpeed_;
   }
 
+  public static final int DIRECTION_FIELD_NUMBER = 3;
+  private int direction_;
+  /**
+   * <code>optional .TrainDirectionValue direction = 3;</code>
+   */
+  public int getDirectionValue() {
+    return direction_;
+  }
+  /**
+   * <code>optional .TrainDirectionValue direction = 3;</code>
+   */
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue getDirection() {
+    hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue result = hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue.valueOf(direction_);
+    return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue.UNRECOGNIZED : result;
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -113,6 +136,9 @@ public  final class TrainReferenceSpeedControl extends
     if (referenceSpeed_ != 0) {
       output.writeUInt32(2, referenceSpeed_);
     }
+    if (direction_ != hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue.FORWARD.getNumber()) {
+      output.writeEnum(3, direction_);
+    }
   }
 
   public int getSerializedSize() {
@@ -127,6 +153,10 @@ public  final class TrainReferenceSpeedControl extends
     if (referenceSpeed_ != 0) {
       size += com.google.protobuf.CodedOutputStream
         .computeUInt32Size(2, referenceSpeed_);
+    }
+    if (direction_ != hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue.FORWARD.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(3, direction_);
     }
     memoizedSize = size;
     return size;
@@ -148,6 +178,7 @@ public  final class TrainReferenceSpeedControl extends
         == other.getTrainID());
     result = result && (getReferenceSpeed()
         == other.getReferenceSpeed());
+    result = result && direction_ == other.direction_;
     return result;
   }
 
@@ -162,6 +193,8 @@ public  final class TrainReferenceSpeedControl extends
     hash = (53 * hash) + getTrainID();
     hash = (37 * hash) + REFERENCESPEED_FIELD_NUMBER;
     hash = (53 * hash) + getReferenceSpeed();
+    hash = (37 * hash) + DIRECTION_FIELD_NUMBER;
+    hash = (53 * hash) + direction_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -284,6 +317,8 @@ public  final class TrainReferenceSpeedControl extends
 
       referenceSpeed_ = 0;
 
+      direction_ = 0;
+
       return this;
     }
 
@@ -308,6 +343,7 @@ public  final class TrainReferenceSpeedControl extends
       hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl result = new hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl(this);
       result.trainID_ = trainID_;
       result.referenceSpeed_ = referenceSpeed_;
+      result.direction_ = direction_;
       onBuilt();
       return result;
     }
@@ -354,6 +390,9 @@ public  final class TrainReferenceSpeedControl extends
       }
       if (other.getReferenceSpeed() != 0) {
         setReferenceSpeed(other.getReferenceSpeed());
+      }
+      if (other.direction_ != 0) {
+        setDirectionValue(other.getDirectionValue());
       }
       onChanged();
       return this;
@@ -429,6 +468,50 @@ public  final class TrainReferenceSpeedControl extends
     public Builder clearReferenceSpeed() {
       
       referenceSpeed_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private int direction_ = 0;
+    /**
+     * <code>optional .TrainDirectionValue direction = 3;</code>
+     */
+    public int getDirectionValue() {
+      return direction_;
+    }
+    /**
+     * <code>optional .TrainDirectionValue direction = 3;</code>
+     */
+    public Builder setDirectionValue(int value) {
+      direction_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional .TrainDirectionValue direction = 3;</code>
+     */
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue getDirection() {
+      hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue result = hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue.valueOf(direction_);
+      return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>optional .TrainDirectionValue direction = 3;</code>
+     */
+    public Builder setDirection(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      direction_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>optional .TrainDirectionValue direction = 3;</code>
+     */
+    public Builder clearDirection() {
+      
+      direction_ = 0;
       onChanged();
       return this;
     }

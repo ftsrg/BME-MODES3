@@ -28,11 +28,11 @@ public final class SegmentStateOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\022SegmentState.proto\"f\n\014SegmentState\022\021\n\t" +
-      "segmentID\030\001 \001(\r\022\"\n\005state\030\002 \001(\0162\023.Segment" +
-      "State.State\"\037\n\005State\022\010\n\004FREE\020\000\022\014\n\010OCCUPI" +
-      "ED\020\001B0\n,hu.bme.mit.inf.modes3.messaging." +
-      "mms.messagesP\001b\006proto3"
+      "\n\022SegmentState.proto\032\013Enums.proto\"D\n\014Seg" +
+      "mentState\022\021\n\tsegmentID\030\001 \001(\r\022!\n\005state\030\002 " +
+      "\001(\0162\022.SegmentStateValueB0\n,hu.bme.mit.in" +
+      "f.modes3.messaging.mms.messagesP\001b\006proto" +
+      "3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -45,6 +45,7 @@ public final class SegmentStateOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          hu.bme.mit.inf.modes3.messaging.mms.messages.Enums.getDescriptor(),
         }, assigner);
     internal_static_SegmentState_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -52,6 +53,7 @@ public final class SegmentStateOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_SegmentState_descriptor,
         new java.lang.String[] { "SegmentID", "State", });
+    hu.bme.mit.inf.modes3.messaging.mms.messages.Enums.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -78,104 +78,6 @@ public  final class SegmentControl extends
             hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.class, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.Builder.class);
   }
 
-  /**
-   * Protobuf enum {@code SegmentControl.ControlState}
-   */
-  public enum ControlState
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <code>DISABLE = 0;</code>
-     */
-    DISABLE(0),
-    /**
-     * <code>ENABLE = 1;</code>
-     */
-    ENABLE(1),
-    UNRECOGNIZED(-1),
-    ;
-
-    /**
-     * <code>DISABLE = 0;</code>
-     */
-    public static final int DISABLE_VALUE = 0;
-    /**
-     * <code>ENABLE = 1;</code>
-     */
-    public static final int ENABLE_VALUE = 1;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static ControlState valueOf(int value) {
-      return forNumber(value);
-    }
-
-    public static ControlState forNumber(int value) {
-      switch (value) {
-        case 0: return DISABLE;
-        case 1: return ENABLE;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<ControlState>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        ControlState> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<ControlState>() {
-            public ControlState findValueByNumber(int number) {
-              return ControlState.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final ControlState[] VALUES = values();
-
-    public static ControlState valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private ControlState(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:SegmentControl.ControlState)
-  }
-
   public static final int SEGMENTID_FIELD_NUMBER = 1;
   private int segmentID_;
   /**
@@ -188,17 +90,17 @@ public  final class SegmentControl extends
   public static final int CONTROLSTATE_FIELD_NUMBER = 2;
   private int controlState_;
   /**
-   * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+   * <code>optional .SegmentStateValue controlState = 2;</code>
    */
   public int getControlStateValue() {
     return controlState_;
   }
   /**
-   * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+   * <code>optional .SegmentStateValue controlState = 2;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState getControlState() {
-    hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState result = hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState.valueOf(controlState_);
-    return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState.UNRECOGNIZED : result;
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue getControlState() {
+    hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue result = hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue.valueOf(controlState_);
+    return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue.UNRECOGNIZED : result;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -216,7 +118,7 @@ public  final class SegmentControl extends
     if (segmentID_ != 0) {
       output.writeUInt32(1, segmentID_);
     }
-    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState.DISABLE.getNumber()) {
+    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue.DISABLED.getNumber()) {
       output.writeEnum(2, controlState_);
     }
   }
@@ -230,7 +132,7 @@ public  final class SegmentControl extends
       size += com.google.protobuf.CodedOutputStream
         .computeUInt32Size(1, segmentID_);
     }
-    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState.DISABLE.getNumber()) {
+    if (controlState_ != hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue.DISABLED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(2, controlState_);
     }
@@ -514,13 +416,13 @@ public  final class SegmentControl extends
 
     private int controlState_ = 0;
     /**
-     * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+     * <code>optional .SegmentStateValue controlState = 2;</code>
      */
     public int getControlStateValue() {
       return controlState_;
     }
     /**
-     * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+     * <code>optional .SegmentStateValue controlState = 2;</code>
      */
     public Builder setControlStateValue(int value) {
       controlState_ = value;
@@ -528,16 +430,16 @@ public  final class SegmentControl extends
       return this;
     }
     /**
-     * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+     * <code>optional .SegmentStateValue controlState = 2;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState getControlState() {
-      hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState result = hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState.valueOf(controlState_);
-      return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState.UNRECOGNIZED : result;
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue getControlState() {
+      hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue result = hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue.valueOf(controlState_);
+      return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue.UNRECOGNIZED : result;
     }
     /**
-     * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+     * <code>optional .SegmentStateValue controlState = 2;</code>
      */
-    public Builder setControlState(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.ControlState value) {
+    public Builder setControlState(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -547,7 +449,7 @@ public  final class SegmentControl extends
       return this;
     }
     /**
-     * <code>optional .SegmentControl.ControlState controlState = 2;</code>
+     * <code>optional .SegmentStateValue controlState = 2;</code>
      */
     public Builder clearControlState() {
       

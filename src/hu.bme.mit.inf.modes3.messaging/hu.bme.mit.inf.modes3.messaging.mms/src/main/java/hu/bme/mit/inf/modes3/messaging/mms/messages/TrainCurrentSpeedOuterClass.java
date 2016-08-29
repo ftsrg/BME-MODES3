@@ -28,10 +28,11 @@ public final class TrainCurrentSpeedOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\027TrainCurrentSpeed.proto\":\n\021TrainCurren" +
-      "tSpeed\022\017\n\007trainID\030\001 \001(\r\022\024\n\014currentSpeed\030" +
-      "\002 \001(\rB0\n,hu.bme.mit.inf.modes3.messaging" +
-      ".mms.messagesP\001b\006proto3"
+      "\n\027TrainCurrentSpeed.proto\032\013Enums.proto\"c" +
+      "\n\021TrainCurrentSpeed\022\017\n\007trainID\030\001 \001(\r\022\024\n\014" +
+      "currentSpeed\030\002 \001(\r\022\'\n\tdirection\030\003 \001(\0162\024." +
+      "TrainDirectionValueB0\n,hu.bme.mit.inf.mo" +
+      "des3.messaging.mms.messagesP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -44,13 +45,15 @@ public final class TrainCurrentSpeedOuterClass {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          hu.bme.mit.inf.modes3.messaging.mms.messages.Enums.getDescriptor(),
         }, assigner);
     internal_static_TrainCurrentSpeed_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_TrainCurrentSpeed_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TrainCurrentSpeed_descriptor,
-        new java.lang.String[] { "TrainID", "CurrentSpeed", });
+        new java.lang.String[] { "TrainID", "CurrentSpeed", "Direction", });
+    hu.bme.mit.inf.modes3.messaging.mms.messages.Enums.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
