@@ -2,8 +2,10 @@ package hu.bme.mit.inf.modes3.components.bbb.handlers;
 
 import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.bbb.utils.SectionStatus
-import java.util.Map.Entry
-import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback
+import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
+import hu.bme.mit.inf.modes3.components.controller.state.TrackElementStateSender
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 
 /**
  * The message handler of section related commands received on the subscribed
@@ -11,91 +13,75 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * actuators, so the respective sections can be managed (enabled / disabled) or
  * theirs statuses can be queried.
  * 
- * It is a proxy between the MQTT communication and the embedded controller.
- * 
  * @author benedekh, hegyibalint
  */
-public class SectionsMessageHandler {
+public class SectionsMessageHandler implements ISegmentCommandListener {
 
 	// the actuator that can access the referred section
-	@Accessors(PRIVATE_GETTER, PRIVATE_SETTER) final ExpanderSectionController sectionController
+	val sectionController = new ExpanderSectionController
 
-	/**
-	 * @param sender the transmitter of messages through MQTT
-	 */
-	new() {
-		sectionController = new ExpanderSectionController
+	// segment state sender to the network
+	var TrackElementStateSender trackElementStateSender
+
+	// to receive commands from the network
+	var TrackElementCommandCallback commandCallback
+
+	new(TrackElementStateSender _trackElementStateSender, TrackElementCommandCallback _commandCallback) {
+		trackElementStateSender = _trackElementStateSender
+		commandCallback = _commandCallback
+
+		commandCallback.segmentCommandListener = this
 	}
 
 	/**
-	 * Handles the identity queries. It means the managed sections statuses
-	 * should be transmitted to the subscribed topic.
+	 * If the embedded controller manages the referred section, then its status will be queried and sent back.
 	 * 
-	 * @throws InterruptedException if the thread has been interrupted
+	 * @param sectionId the section's ID whose status should be queried
 	 */
-	private def handleIdentify() throws InterruptedException {
-		val sections = sectionController.getSectionsWithStatus
-		for (Entry<String, SectionStatus> sectionEntry : sections) {
-			// TODO publish status messages
-			// sender.publishMessage(payload, topic);
+	private def handleGetSectionStatus(int sectionId) {
+		if (sectionController.controllerManagesSection(sectionId)) {
+			// TODO logging
+			val sectionStatus = sectionController.getSectionStatus(sectionId)
+			var state = if (sectionStatus == SectionStatus.ENABLED)
+					SegmentStateValue.ENABLED
+				else
+					SegmentStateValue.DISABLED
+			trackElementStateSender.sendSegmentState(sectionId, state)
 		}
 	}
 
 	/**
-	 * If the embedded controller manages the referred section (that is received
-	 * in the Payload), then its status will be queried and sent back on the
-	 * subscribed topic.
+	 * If the embedded controller manages the referred section, then this section will be enabled.
 	 * 
-	 * @param receivedPayload the payload that stores the section's ID whose
-	 * status should be queried
+	 * @param sectionId the section's ID that should be enabled
 	 */
-	private def handleGetSectionStatus() {
-		/*Section section = receivedPayload.getContentAs(Section.class);
-		 * if (sectionController.controllerManagesSection(section)) {
-		 *     logInfoMessage(CLASS_NAME,
-		 *             "section " + section.getId() + " status query received");
-
-		 *     SectionStatus status = sectionController.getSectionStatus(
-		 *             section.getId());
-		 *     section.setStatus(status);
-		 *     Payload payload = createCommandWithContent(SEND_SECTION_STATUS,
-		 *             section);
-		 *     sender.publishMessage(payload, topic);
-		 }*/
+	private def handleLineEnable(int sectionId) {
+		if (sectionController.controllerManagesSection(sectionId)) {
+			// TODO logging
+			sectionController.enableSection(sectionId);
+			trackElementStateSender.sendSegmentState(sectionId, SegmentStateValue.ENABLED)
+		}
 	}
 
 	/**
-	 * If the embedded controller manages the referred section (that is received
-	 * in the Payload), then this section will be enabled.
+	 * If the embedded controller manages the referred section, then this section will be disabled.
 	 * 
-	 * @param receivedPayload the payload that stores the section's ID that
-	 * should be enabled
+	 * @param sectionId the section's ID that should be disabled
 	 */
-	private def handleLineEnable() {
-		/*Section section = payload.getContentAs(Section.class);
-		 * if (sectionController.controllerManagesSection(section)) {
-		 *     logInfoMessage(CLASS_NAME,
-		 *             "enable section " + section.getId() + " command received");
-
-		 *     sectionController.enableSection(section.getId());
-		 }*/
+	private def handleLineDisable(int sectionId) {
+		if (sectionController.controllerManagesSection(sectionId)) {
+			// TODO logging
+			sectionController.disableSection(sectionId);
+			trackElementStateSender.sendSegmentState(sectionId, SegmentStateValue.DISABLED)
+		}
 	}
 
-	/**
-	 * If the embedded controller manages the referred section (that is received
-	 * in the Payload), then this section will be disabled.
-	 * 
-	 * @param receivedPayload the payload that stores the section's ID that
-	 * should be disabled
-	 */
-	private def handleLineDisable() {
-		/*Section section = payload.getContentAs(Section.class);
-		 * if (sectionController.controllerManagesSection(section)) {
-		 *     logInfoMessage(CLASS_NAME,
-		 *             "disable section " + section.getId() + " command received");
-
-		 *     sectionController.disableSection(section.getId());
-		 }*/
+	override onSegmentCommand(int id, SegmentStateValue state) {
+		switch (state) {
+			case SegmentStateValue.ENABLED: handleLineEnable(id)
+			case SegmentStateValue.DISABLED: handleLineDisable(id)
+			default: return
+		}
 	}
 
 }
