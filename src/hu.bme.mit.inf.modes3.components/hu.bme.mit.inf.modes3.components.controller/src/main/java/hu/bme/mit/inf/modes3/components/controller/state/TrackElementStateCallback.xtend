@@ -1,11 +1,11 @@
 package hu.bme.mit.inf.modes3.components.controller.state
 
-import hu.bme.mit.inf.modes3.components.common.AbstractComponent
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
+import hu.bme.mit.inf.modes3.components.common.ProtobufAbstractComponent
 
-class TrackElementStateCallback extends AbstractComponent{
+class TrackElementStateCallback extends ProtobufAbstractComponent{
 	var ISegmentStateListener segmentStateListener
 	var ITurnoutStateListener turnoutStateListener
 
@@ -14,14 +14,12 @@ class TrackElementStateCallback extends AbstractComponent{
 		this.turnoutStateListener = turnoutStateListener
 	}
 
-	override init() {
-		val dispatcher = new ProtobufMessageDispatcher
+	override onInit() {
 		val segmentStateClient = new SegmentStateClient(this)
 		val turnoutStateClient = new TurnoutStateClient(this)
 
 		dispatcher.segmentStateHandler = segmentStateClient
 		dispatcher.turnoutStateHandler = turnoutStateClient
-		super.dispatcher = dispatcher
 	}
 	
 	def onSegmentState(int id, SegmentStateValue state){

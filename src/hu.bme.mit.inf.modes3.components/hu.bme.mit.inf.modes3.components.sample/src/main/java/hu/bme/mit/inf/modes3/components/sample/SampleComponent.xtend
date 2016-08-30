@@ -1,20 +1,15 @@
 package hu.bme.mit.inf.modes3.components.sample
 
-import hu.bme.mit.inf.modes3.components.common.AbstractComponent
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.components.common.ProtobufAbstractComponent
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.SegmentStateHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 
-class SampleComponent extends AbstractComponent implements SegmentStateHandler {
+class SampleComponent extends ProtobufAbstractComponent implements SegmentStateHandler {
 	
-	override void init() {
-		val dispatcher = new ProtobufMessageDispatcher
+	override void onInit() {
 		dispatcher.segmentStateHandler = this
-		
-		super.dispatcher = dispatcher
-		super.start		
 	}
 	
 	def void sendSegmentControlMessage() {

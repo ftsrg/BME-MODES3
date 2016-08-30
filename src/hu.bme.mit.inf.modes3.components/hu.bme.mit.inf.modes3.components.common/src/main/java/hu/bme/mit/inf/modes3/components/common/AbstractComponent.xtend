@@ -13,7 +13,12 @@ abstract class AbstractComponent {
 	@Accessors Transport transport = new ZMQTransport
 	@Accessors MessageDispatcher dispatcher = new ProtobufMessageDispatcher
 	
-	def void init();
+	def void init(){
+		onInit();
+		start();
+	}
+	
+	def void onInit();
 	
 	def void start() {
 		mms.start(transport, dispatcher)
