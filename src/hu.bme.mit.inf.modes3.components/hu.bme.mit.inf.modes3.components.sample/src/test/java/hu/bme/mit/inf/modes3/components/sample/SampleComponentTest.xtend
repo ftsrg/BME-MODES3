@@ -21,7 +21,7 @@ class SampleComponentTest {
 		mms = mock(MessagingService)
 		
 		component = new SampleComponent
-		component.mms = mms
+//		component.mms = mms
 	}
 
 	@Test
