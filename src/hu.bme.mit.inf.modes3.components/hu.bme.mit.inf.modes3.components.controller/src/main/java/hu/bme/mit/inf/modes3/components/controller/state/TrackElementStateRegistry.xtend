@@ -3,12 +3,32 @@ package hu.bme.mit.inf.modes3.components.controller.state
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
 import java.util.concurrent.ConcurrentHashMap
+import org.eclipse.xtend.lib.annotations.Accessors
 
-class TrackElementStateRegistry implements ISegmentStateListener, ITurnoutStateListener {
+class TrackElementStateRegistry {
 	val segments = new ConcurrentHashMap<Integer, SegmentStateValue>
 	val turnouts = new ConcurrentHashMap<Integer, TurnoutStateValue>
 
-	val trackElementStateCallback = new TrackElementStateCallback(this, this)
+	//TODO remove this accessor somehow
+	@Accessors(PRIVATE_GETTER, PACKAGE_SETTER) TrackElementStateCallback trackElementStateCallback = new TrackElementStateCallback(new ISegmentStateListener() {
+
+		override onSegmentState(int id, SegmentStateValue state) {
+			if(segments.get(id) != state) {
+				segmentStateChangeListener.onSegmentStateChange(id, segments.get(id), state)
+				segments.put(id, state)
+			}
+		}
+
+	}, new ITurnoutStateListener() {
+
+		override onTurnoutState(int id, TurnoutStateValue state) {
+			if(turnouts.get(id) != state) {
+				turnoutStateChangeListener.onTurnoutStateChange(id, turnouts.get(id), state)
+				turnouts.put(id, state)
+			}
+		}
+
+	})
 
 	var ITurnoutStateChangeListener turnoutStateChangeListener
 	var ISegmentStateChangeListener segmentStateChangeListener
@@ -27,7 +47,7 @@ class TrackElementStateRegistry implements ISegmentStateListener, ITurnoutStateL
 			override onTurnoutStateChange(int id, TurnoutStateValue oldValue, TurnoutStateValue newValue) {
 			}
 		}
-		trackElementStateCallback.class //just to remove the unused warning on this field
+		trackElementStateCallback.class // just to remove the unused warning on this field
 	}
 
 	new(ISegmentStateChangeListener segmentStateChangeListener) {
@@ -37,29 +57,13 @@ class TrackElementStateRegistry implements ISegmentStateListener, ITurnoutStateL
 			}
 		}
 	}
-	
-	
+
 	new(ITurnoutStateChangeListener turnoutStateChangeListener) {
 		this.turnoutStateChangeListener = turnoutStateChangeListener
 		this.segmentStateChangeListener = new ISegmentStateChangeListener() {
 			override onSegmentStateChange(int id, SegmentStateValue oldValue, SegmentStateValue newValue) {
 			}
 		}
-	}
-
-	override onSegmentState(int id, SegmentStateValue state) {
-		if(segments.get(id) != state) {
-			segmentStateChangeListener.onSegmentStateChange(id, segments.get(id), state)
-			segments.put(id, state)
-		}
-	}
-
-	override onTurnoutState(int id, TurnoutStateValue state) {
-		if(turnouts.get(id) != state) {
-			turnoutStateChangeListener.onTurnoutStateChange(id, turnouts.get(id), state)
-			turnouts.put(id, state)
-		}
-
 	}
 
 	def getSegmentState(int id) {

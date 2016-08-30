@@ -1,9 +1,8 @@
 package hu.bme.mit.inf.modes3.components.controller.state
 
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.components.common.ProtobufAbstractComponent
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
-import hu.bme.mit.inf.modes3.components.common.ProtobufAbstractComponent
 
 class TrackElementStateCallback extends ProtobufAbstractComponent{
 	var ISegmentStateListener segmentStateListener
