@@ -31,8 +31,4 @@ class TrackElementStateCallback extends AbstractComponent{
 	def onTurnoutState(int id, TurnoutStateValue state){
 		turnoutStateListener.onTurnoutState(id, state)
 	}
-
-
 }
-
-
