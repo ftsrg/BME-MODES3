@@ -3,7 +3,7 @@ package hu.bme.mit.inf.modes3.components.sample
 import hu.bme.mit.inf.modes3.components.common.AbstractComponent
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.SegmentStateHandler
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 
@@ -23,10 +23,10 @@ class SampleComponent extends AbstractComponent implements SegmentStateHandler {
 	
 	private def decision(boolean sendMessage) {
 		if (sendMessage) {
-			val message = SegmentControl.newBuilder
+			val message = SegmentCommand.newBuilder
 			message.segmentID = 12
-			message.controlState = SegmentStateValue.DISABLED
-			
+			message.state = SegmentStateValue.DISABLED
+			 
 			mms.sendMessage(message.build)
 		}
 	}

@@ -1,14 +1,14 @@
 package hu.bme.mit.inf.modes3.components.sample
 
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 
-import static org.mockito.Mockito.*;
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
+import static org.mockito.Mockito.*
 
 class SampleComponentTest {
 
@@ -40,9 +40,9 @@ class SampleComponentTest {
 	@Test
 	def void testSampleComponentSendMessage() {
 		// Arrange
-		val messageBuilder = SegmentControl.newBuilder
+		val messageBuilder = SegmentCommand.newBuilder
 		messageBuilder.segmentID = 12
-		messageBuilder.controlState = SegmentStateValue.DISABLED
+		messageBuilder.state = SegmentStateValue.DISABLED
 
 		// Act
 		component.sendSegmentControlMessage();

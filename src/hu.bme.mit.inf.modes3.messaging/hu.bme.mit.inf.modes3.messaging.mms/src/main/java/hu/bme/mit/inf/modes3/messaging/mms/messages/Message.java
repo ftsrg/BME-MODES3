@@ -50,14 +50,14 @@ public  final class Message extends
             break;
           }
           case 18: {
-            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.Builder subBuilder = null;
-            if (segmentControl_ != null) {
-              subBuilder = segmentControl_.toBuilder();
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.Builder subBuilder = null;
+            if (segmentCommand_ != null) {
+              subBuilder = segmentCommand_.toBuilder();
             }
-            segmentControl_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.parser(), extensionRegistry);
+            segmentCommand_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom(segmentControl_);
-              segmentControl_ = subBuilder.buildPartial();
+              subBuilder.mergeFrom(segmentCommand_);
+              segmentCommand_ = subBuilder.buildPartial();
             }
 
             break;
@@ -102,14 +102,14 @@ public  final class Message extends
             break;
           }
           case 50: {
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder subBuilder = null;
-            if (trainFunctionControl_ != null) {
-              subBuilder = trainFunctionControl_.toBuilder();
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.Builder subBuilder = null;
+            if (trainFunctionCommand_ != null) {
+              subBuilder = trainFunctionCommand_.toBuilder();
             }
-            trainFunctionControl_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.parser(), extensionRegistry);
+            trainFunctionCommand_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom(trainFunctionControl_);
-              trainFunctionControl_ = subBuilder.buildPartial();
+              subBuilder.mergeFrom(trainFunctionCommand_);
+              trainFunctionCommand_ = subBuilder.buildPartial();
             }
 
             break;
@@ -128,27 +128,27 @@ public  final class Message extends
             break;
           }
           case 66: {
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder subBuilder = null;
-            if (trainReferenceSpeedControl_ != null) {
-              subBuilder = trainReferenceSpeedControl_.toBuilder();
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.Builder subBuilder = null;
+            if (trainReferenceSpeedCommand_ != null) {
+              subBuilder = trainReferenceSpeedCommand_.toBuilder();
             }
-            trainReferenceSpeedControl_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.parser(), extensionRegistry);
+            trainReferenceSpeedCommand_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom(trainReferenceSpeedControl_);
-              trainReferenceSpeedControl_ = subBuilder.buildPartial();
+              subBuilder.mergeFrom(trainReferenceSpeedCommand_);
+              trainReferenceSpeedCommand_ = subBuilder.buildPartial();
             }
 
             break;
           }
           case 74: {
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder subBuilder = null;
-            if (turnoutControl_ != null) {
-              subBuilder = turnoutControl_.toBuilder();
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.Builder subBuilder = null;
+            if (turnoutCommand_ != null) {
+              subBuilder = turnoutCommand_.toBuilder();
             }
-            turnoutControl_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.parser(), extensionRegistry);
+            turnoutCommand_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom(turnoutControl_);
-              turnoutControl_ = subBuilder.buildPartial();
+              subBuilder.mergeFrom(turnoutCommand_);
+              turnoutCommand_ = subBuilder.buildPartial();
             }
 
             break;
@@ -199,9 +199,9 @@ public  final class Message extends
      */
     NULL(0),
     /**
-     * <code>SEGMENT_CONTROL = 1;</code>
+     * <code>SEGMENT_COMMAND = 1;</code>
      */
-    SEGMENT_CONTROL(1),
+    SEGMENT_COMMAND(1),
     /**
      * <code>SEGMENT_STATE = 2;</code>
      */
@@ -215,25 +215,25 @@ public  final class Message extends
      */
     TRAIN_CURRENT_SPEED(4),
     /**
-     * <code>TRAIN_DIRECTION_CONTROL = 5;</code>
+     * <code>TRAIN_DIRECTION_COMMAND = 5;</code>
      */
-    TRAIN_DIRECTION_CONTROL(5),
+    TRAIN_DIRECTION_COMMAND(5),
     /**
-     * <code>TRAIN_FUNCTION_CONTROL = 6;</code>
+     * <code>TRAIN_FUNCTION_COMMAND = 6;</code>
      */
-    TRAIN_FUNCTION_CONTROL(6),
+    TRAIN_FUNCTION_COMMAND(6),
     /**
      * <code>TRAIN_REFERENCE_SPEED = 7;</code>
      */
     TRAIN_REFERENCE_SPEED(7),
     /**
-     * <code>TRAIN_REFERENCE_SPEED_CONTROL = 8;</code>
+     * <code>TRAIN_REFERENCE_SPEED_COMMAND = 8;</code>
      */
-    TRAIN_REFERENCE_SPEED_CONTROL(8),
+    TRAIN_REFERENCE_SPEED_COMMAND(8),
     /**
-     * <code>TURNOUT_CONTROL = 9;</code>
+     * <code>TURNOUT_COMMAND = 9;</code>
      */
-    TURNOUT_CONTROL(9),
+    TURNOUT_COMMAND(9),
     /**
      * <code>TURNOUT_STATE = 10;</code>
      */
@@ -246,9 +246,9 @@ public  final class Message extends
      */
     public static final int NULL_VALUE = 0;
     /**
-     * <code>SEGMENT_CONTROL = 1;</code>
+     * <code>SEGMENT_COMMAND = 1;</code>
      */
-    public static final int SEGMENT_CONTROL_VALUE = 1;
+    public static final int SEGMENT_COMMAND_VALUE = 1;
     /**
      * <code>SEGMENT_STATE = 2;</code>
      */
@@ -262,25 +262,25 @@ public  final class Message extends
      */
     public static final int TRAIN_CURRENT_SPEED_VALUE = 4;
     /**
-     * <code>TRAIN_DIRECTION_CONTROL = 5;</code>
+     * <code>TRAIN_DIRECTION_COMMAND = 5;</code>
      */
-    public static final int TRAIN_DIRECTION_CONTROL_VALUE = 5;
+    public static final int TRAIN_DIRECTION_COMMAND_VALUE = 5;
     /**
-     * <code>TRAIN_FUNCTION_CONTROL = 6;</code>
+     * <code>TRAIN_FUNCTION_COMMAND = 6;</code>
      */
-    public static final int TRAIN_FUNCTION_CONTROL_VALUE = 6;
+    public static final int TRAIN_FUNCTION_COMMAND_VALUE = 6;
     /**
      * <code>TRAIN_REFERENCE_SPEED = 7;</code>
      */
     public static final int TRAIN_REFERENCE_SPEED_VALUE = 7;
     /**
-     * <code>TRAIN_REFERENCE_SPEED_CONTROL = 8;</code>
+     * <code>TRAIN_REFERENCE_SPEED_COMMAND = 8;</code>
      */
-    public static final int TRAIN_REFERENCE_SPEED_CONTROL_VALUE = 8;
+    public static final int TRAIN_REFERENCE_SPEED_COMMAND_VALUE = 8;
     /**
-     * <code>TURNOUT_CONTROL = 9;</code>
+     * <code>TURNOUT_COMMAND = 9;</code>
      */
-    public static final int TURNOUT_CONTROL_VALUE = 9;
+    public static final int TURNOUT_COMMAND_VALUE = 9;
     /**
      * <code>TURNOUT_STATE = 10;</code>
      */
@@ -306,15 +306,15 @@ public  final class Message extends
     public static MessageType forNumber(int value) {
       switch (value) {
         case 0: return NULL;
-        case 1: return SEGMENT_CONTROL;
+        case 1: return SEGMENT_COMMAND;
         case 2: return SEGMENT_STATE;
         case 3: return TRAIN_CURRENT_SEGMENT;
         case 4: return TRAIN_CURRENT_SPEED;
-        case 5: return TRAIN_DIRECTION_CONTROL;
-        case 6: return TRAIN_FUNCTION_CONTROL;
+        case 5: return TRAIN_DIRECTION_COMMAND;
+        case 6: return TRAIN_FUNCTION_COMMAND;
         case 7: return TRAIN_REFERENCE_SPEED;
-        case 8: return TRAIN_REFERENCE_SPEED_CONTROL;
-        case 9: return TURNOUT_CONTROL;
+        case 8: return TRAIN_REFERENCE_SPEED_COMMAND;
+        case 9: return TURNOUT_COMMAND;
         case 10: return TURNOUT_STATE;
         default: return null;
       }
@@ -384,25 +384,25 @@ public  final class Message extends
     return result == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.Message.MessageType.UNRECOGNIZED : result;
   }
 
-  public static final int SEGMENTCONTROL_FIELD_NUMBER = 2;
-  private hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl segmentControl_;
+  public static final int SEGMENTCOMMAND_FIELD_NUMBER = 2;
+  private hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand segmentCommand_;
   /**
-   * <code>optional .SegmentControl segmentControl = 2;</code>
+   * <code>optional .SegmentCommand segmentCommand = 2;</code>
    */
-  public boolean hasSegmentControl() {
-    return segmentControl_ != null;
+  public boolean hasSegmentCommand() {
+    return segmentCommand_ != null;
   }
   /**
-   * <code>optional .SegmentControl segmentControl = 2;</code>
+   * <code>optional .SegmentCommand segmentCommand = 2;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl getSegmentControl() {
-    return segmentControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.getDefaultInstance() : segmentControl_;
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand getSegmentCommand() {
+    return segmentCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.getDefaultInstance() : segmentCommand_;
   }
   /**
-   * <code>optional .SegmentControl segmentControl = 2;</code>
+   * <code>optional .SegmentCommand segmentCommand = 2;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControlOrBuilder getSegmentControlOrBuilder() {
-    return getSegmentControl();
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder getSegmentCommandOrBuilder() {
+    return getSegmentCommand();
   }
 
   public static final int SEGMENTSTATE_FIELD_NUMBER = 3;
@@ -468,25 +468,25 @@ public  final class Message extends
     return getTrainCurrentSpeed();
   }
 
-  public static final int TRAINFUNCTIONCONTROL_FIELD_NUMBER = 6;
-  private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl trainFunctionControl_;
+  public static final int TRAINFUNCTIONCOMMAND_FIELD_NUMBER = 6;
+  private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand trainFunctionCommand_;
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+   * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
    */
-  public boolean hasTrainFunctionControl() {
-    return trainFunctionControl_ != null;
+  public boolean hasTrainFunctionCommand() {
+    return trainFunctionCommand_ != null;
   }
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+   * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl getTrainFunctionControl() {
-    return trainFunctionControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.getDefaultInstance() : trainFunctionControl_;
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand getTrainFunctionCommand() {
+    return trainFunctionCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.getDefaultInstance() : trainFunctionCommand_;
   }
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+   * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder getTrainFunctionControlOrBuilder() {
-    return getTrainFunctionControl();
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommandOrBuilder getTrainFunctionCommandOrBuilder() {
+    return getTrainFunctionCommand();
   }
 
   public static final int TRAINREFERENCESPEED_FIELD_NUMBER = 7;
@@ -510,46 +510,46 @@ public  final class Message extends
     return getTrainReferenceSpeed();
   }
 
-  public static final int TRAINREFERENCESPEEDCONTROL_FIELD_NUMBER = 8;
-  private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl trainReferenceSpeedControl_;
+  public static final int TRAINREFERENCESPEEDCOMMAND_FIELD_NUMBER = 8;
+  private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand trainReferenceSpeedCommand_;
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+   * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
    */
-  public boolean hasTrainReferenceSpeedControl() {
-    return trainReferenceSpeedControl_ != null;
+  public boolean hasTrainReferenceSpeedCommand() {
+    return trainReferenceSpeedCommand_ != null;
   }
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+   * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl getTrainReferenceSpeedControl() {
-    return trainReferenceSpeedControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.getDefaultInstance() : trainReferenceSpeedControl_;
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand getTrainReferenceSpeedCommand() {
+    return trainReferenceSpeedCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.getDefaultInstance() : trainReferenceSpeedCommand_;
   }
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+   * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder getTrainReferenceSpeedControlOrBuilder() {
-    return getTrainReferenceSpeedControl();
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommandOrBuilder getTrainReferenceSpeedCommandOrBuilder() {
+    return getTrainReferenceSpeedCommand();
   }
 
-  public static final int TURNOUTCONTROL_FIELD_NUMBER = 9;
-  private hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl turnoutControl_;
+  public static final int TURNOUTCOMMAND_FIELD_NUMBER = 9;
+  private hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand turnoutCommand_;
   /**
-   * <code>optional .TurnoutControl turnoutControl = 9;</code>
+   * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
    */
-  public boolean hasTurnoutControl() {
-    return turnoutControl_ != null;
+  public boolean hasTurnoutCommand() {
+    return turnoutCommand_ != null;
   }
   /**
-   * <code>optional .TurnoutControl turnoutControl = 9;</code>
+   * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl getTurnoutControl() {
-    return turnoutControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.getDefaultInstance() : turnoutControl_;
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand getTurnoutCommand() {
+    return turnoutCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.getDefaultInstance() : turnoutCommand_;
   }
   /**
-   * <code>optional .TurnoutControl turnoutControl = 9;</code>
+   * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder getTurnoutControlOrBuilder() {
-    return getTurnoutControl();
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder getTurnoutCommandOrBuilder() {
+    return getTurnoutCommand();
   }
 
   public static final int TURNOUTSTATE_FIELD_NUMBER = 10;
@@ -588,8 +588,8 @@ public  final class Message extends
     if (type_ != hu.bme.mit.inf.modes3.messaging.mms.messages.Message.MessageType.NULL.getNumber()) {
       output.writeEnum(1, type_);
     }
-    if (segmentControl_ != null) {
-      output.writeMessage(2, getSegmentControl());
+    if (segmentCommand_ != null) {
+      output.writeMessage(2, getSegmentCommand());
     }
     if (segmentState_ != null) {
       output.writeMessage(3, getSegmentState());
@@ -600,17 +600,17 @@ public  final class Message extends
     if (trainCurrentSpeed_ != null) {
       output.writeMessage(5, getTrainCurrentSpeed());
     }
-    if (trainFunctionControl_ != null) {
-      output.writeMessage(6, getTrainFunctionControl());
+    if (trainFunctionCommand_ != null) {
+      output.writeMessage(6, getTrainFunctionCommand());
     }
     if (trainReferenceSpeed_ != null) {
       output.writeMessage(7, getTrainReferenceSpeed());
     }
-    if (trainReferenceSpeedControl_ != null) {
-      output.writeMessage(8, getTrainReferenceSpeedControl());
+    if (trainReferenceSpeedCommand_ != null) {
+      output.writeMessage(8, getTrainReferenceSpeedCommand());
     }
-    if (turnoutControl_ != null) {
-      output.writeMessage(9, getTurnoutControl());
+    if (turnoutCommand_ != null) {
+      output.writeMessage(9, getTurnoutCommand());
     }
     if (turnoutState_ != null) {
       output.writeMessage(10, getTurnoutState());
@@ -626,9 +626,9 @@ public  final class Message extends
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(1, type_);
     }
-    if (segmentControl_ != null) {
+    if (segmentCommand_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getSegmentControl());
+        .computeMessageSize(2, getSegmentCommand());
     }
     if (segmentState_ != null) {
       size += com.google.protobuf.CodedOutputStream
@@ -642,21 +642,21 @@ public  final class Message extends
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(5, getTrainCurrentSpeed());
     }
-    if (trainFunctionControl_ != null) {
+    if (trainFunctionCommand_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(6, getTrainFunctionControl());
+        .computeMessageSize(6, getTrainFunctionCommand());
     }
     if (trainReferenceSpeed_ != null) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(7, getTrainReferenceSpeed());
     }
-    if (trainReferenceSpeedControl_ != null) {
+    if (trainReferenceSpeedCommand_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(8, getTrainReferenceSpeedControl());
+        .computeMessageSize(8, getTrainReferenceSpeedCommand());
     }
-    if (turnoutControl_ != null) {
+    if (turnoutCommand_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(9, getTurnoutControl());
+        .computeMessageSize(9, getTurnoutCommand());
     }
     if (turnoutState_ != null) {
       size += com.google.protobuf.CodedOutputStream
@@ -679,10 +679,10 @@ public  final class Message extends
 
     boolean result = true;
     result = result && type_ == other.type_;
-    result = result && (hasSegmentControl() == other.hasSegmentControl());
-    if (hasSegmentControl()) {
-      result = result && getSegmentControl()
-          .equals(other.getSegmentControl());
+    result = result && (hasSegmentCommand() == other.hasSegmentCommand());
+    if (hasSegmentCommand()) {
+      result = result && getSegmentCommand()
+          .equals(other.getSegmentCommand());
     }
     result = result && (hasSegmentState() == other.hasSegmentState());
     if (hasSegmentState()) {
@@ -699,25 +699,25 @@ public  final class Message extends
       result = result && getTrainCurrentSpeed()
           .equals(other.getTrainCurrentSpeed());
     }
-    result = result && (hasTrainFunctionControl() == other.hasTrainFunctionControl());
-    if (hasTrainFunctionControl()) {
-      result = result && getTrainFunctionControl()
-          .equals(other.getTrainFunctionControl());
+    result = result && (hasTrainFunctionCommand() == other.hasTrainFunctionCommand());
+    if (hasTrainFunctionCommand()) {
+      result = result && getTrainFunctionCommand()
+          .equals(other.getTrainFunctionCommand());
     }
     result = result && (hasTrainReferenceSpeed() == other.hasTrainReferenceSpeed());
     if (hasTrainReferenceSpeed()) {
       result = result && getTrainReferenceSpeed()
           .equals(other.getTrainReferenceSpeed());
     }
-    result = result && (hasTrainReferenceSpeedControl() == other.hasTrainReferenceSpeedControl());
-    if (hasTrainReferenceSpeedControl()) {
-      result = result && getTrainReferenceSpeedControl()
-          .equals(other.getTrainReferenceSpeedControl());
+    result = result && (hasTrainReferenceSpeedCommand() == other.hasTrainReferenceSpeedCommand());
+    if (hasTrainReferenceSpeedCommand()) {
+      result = result && getTrainReferenceSpeedCommand()
+          .equals(other.getTrainReferenceSpeedCommand());
     }
-    result = result && (hasTurnoutControl() == other.hasTurnoutControl());
-    if (hasTurnoutControl()) {
-      result = result && getTurnoutControl()
-          .equals(other.getTurnoutControl());
+    result = result && (hasTurnoutCommand() == other.hasTurnoutCommand());
+    if (hasTurnoutCommand()) {
+      result = result && getTurnoutCommand()
+          .equals(other.getTurnoutCommand());
     }
     result = result && (hasTurnoutState() == other.hasTurnoutState());
     if (hasTurnoutState()) {
@@ -736,9 +736,9 @@ public  final class Message extends
     hash = (19 * hash) + getDescriptorForType().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
     hash = (53 * hash) + type_;
-    if (hasSegmentControl()) {
-      hash = (37 * hash) + SEGMENTCONTROL_FIELD_NUMBER;
-      hash = (53 * hash) + getSegmentControl().hashCode();
+    if (hasSegmentCommand()) {
+      hash = (37 * hash) + SEGMENTCOMMAND_FIELD_NUMBER;
+      hash = (53 * hash) + getSegmentCommand().hashCode();
     }
     if (hasSegmentState()) {
       hash = (37 * hash) + SEGMENTSTATE_FIELD_NUMBER;
@@ -752,21 +752,21 @@ public  final class Message extends
       hash = (37 * hash) + TRAINCURRENTSPEED_FIELD_NUMBER;
       hash = (53 * hash) + getTrainCurrentSpeed().hashCode();
     }
-    if (hasTrainFunctionControl()) {
-      hash = (37 * hash) + TRAINFUNCTIONCONTROL_FIELD_NUMBER;
-      hash = (53 * hash) + getTrainFunctionControl().hashCode();
+    if (hasTrainFunctionCommand()) {
+      hash = (37 * hash) + TRAINFUNCTIONCOMMAND_FIELD_NUMBER;
+      hash = (53 * hash) + getTrainFunctionCommand().hashCode();
     }
     if (hasTrainReferenceSpeed()) {
       hash = (37 * hash) + TRAINREFERENCESPEED_FIELD_NUMBER;
       hash = (53 * hash) + getTrainReferenceSpeed().hashCode();
     }
-    if (hasTrainReferenceSpeedControl()) {
-      hash = (37 * hash) + TRAINREFERENCESPEEDCONTROL_FIELD_NUMBER;
-      hash = (53 * hash) + getTrainReferenceSpeedControl().hashCode();
+    if (hasTrainReferenceSpeedCommand()) {
+      hash = (37 * hash) + TRAINREFERENCESPEEDCOMMAND_FIELD_NUMBER;
+      hash = (53 * hash) + getTrainReferenceSpeedCommand().hashCode();
     }
-    if (hasTurnoutControl()) {
-      hash = (37 * hash) + TURNOUTCONTROL_FIELD_NUMBER;
-      hash = (53 * hash) + getTurnoutControl().hashCode();
+    if (hasTurnoutCommand()) {
+      hash = (37 * hash) + TURNOUTCOMMAND_FIELD_NUMBER;
+      hash = (53 * hash) + getTurnoutCommand().hashCode();
     }
     if (hasTurnoutState()) {
       hash = (37 * hash) + TURNOUTSTATE_FIELD_NUMBER;
@@ -892,11 +892,11 @@ public  final class Message extends
       super.clear();
       type_ = 0;
 
-      if (segmentControlBuilder_ == null) {
-        segmentControl_ = null;
+      if (segmentCommandBuilder_ == null) {
+        segmentCommand_ = null;
       } else {
-        segmentControl_ = null;
-        segmentControlBuilder_ = null;
+        segmentCommand_ = null;
+        segmentCommandBuilder_ = null;
       }
       if (segmentStateBuilder_ == null) {
         segmentState_ = null;
@@ -916,11 +916,11 @@ public  final class Message extends
         trainCurrentSpeed_ = null;
         trainCurrentSpeedBuilder_ = null;
       }
-      if (trainFunctionControlBuilder_ == null) {
-        trainFunctionControl_ = null;
+      if (trainFunctionCommandBuilder_ == null) {
+        trainFunctionCommand_ = null;
       } else {
-        trainFunctionControl_ = null;
-        trainFunctionControlBuilder_ = null;
+        trainFunctionCommand_ = null;
+        trainFunctionCommandBuilder_ = null;
       }
       if (trainReferenceSpeedBuilder_ == null) {
         trainReferenceSpeed_ = null;
@@ -928,17 +928,17 @@ public  final class Message extends
         trainReferenceSpeed_ = null;
         trainReferenceSpeedBuilder_ = null;
       }
-      if (trainReferenceSpeedControlBuilder_ == null) {
-        trainReferenceSpeedControl_ = null;
+      if (trainReferenceSpeedCommandBuilder_ == null) {
+        trainReferenceSpeedCommand_ = null;
       } else {
-        trainReferenceSpeedControl_ = null;
-        trainReferenceSpeedControlBuilder_ = null;
+        trainReferenceSpeedCommand_ = null;
+        trainReferenceSpeedCommandBuilder_ = null;
       }
-      if (turnoutControlBuilder_ == null) {
-        turnoutControl_ = null;
+      if (turnoutCommandBuilder_ == null) {
+        turnoutCommand_ = null;
       } else {
-        turnoutControl_ = null;
-        turnoutControlBuilder_ = null;
+        turnoutCommand_ = null;
+        turnoutCommandBuilder_ = null;
       }
       if (turnoutStateBuilder_ == null) {
         turnoutState_ = null;
@@ -969,10 +969,10 @@ public  final class Message extends
     public hu.bme.mit.inf.modes3.messaging.mms.messages.Message buildPartial() {
       hu.bme.mit.inf.modes3.messaging.mms.messages.Message result = new hu.bme.mit.inf.modes3.messaging.mms.messages.Message(this);
       result.type_ = type_;
-      if (segmentControlBuilder_ == null) {
-        result.segmentControl_ = segmentControl_;
+      if (segmentCommandBuilder_ == null) {
+        result.segmentCommand_ = segmentCommand_;
       } else {
-        result.segmentControl_ = segmentControlBuilder_.build();
+        result.segmentCommand_ = segmentCommandBuilder_.build();
       }
       if (segmentStateBuilder_ == null) {
         result.segmentState_ = segmentState_;
@@ -989,25 +989,25 @@ public  final class Message extends
       } else {
         result.trainCurrentSpeed_ = trainCurrentSpeedBuilder_.build();
       }
-      if (trainFunctionControlBuilder_ == null) {
-        result.trainFunctionControl_ = trainFunctionControl_;
+      if (trainFunctionCommandBuilder_ == null) {
+        result.trainFunctionCommand_ = trainFunctionCommand_;
       } else {
-        result.trainFunctionControl_ = trainFunctionControlBuilder_.build();
+        result.trainFunctionCommand_ = trainFunctionCommandBuilder_.build();
       }
       if (trainReferenceSpeedBuilder_ == null) {
         result.trainReferenceSpeed_ = trainReferenceSpeed_;
       } else {
         result.trainReferenceSpeed_ = trainReferenceSpeedBuilder_.build();
       }
-      if (trainReferenceSpeedControlBuilder_ == null) {
-        result.trainReferenceSpeedControl_ = trainReferenceSpeedControl_;
+      if (trainReferenceSpeedCommandBuilder_ == null) {
+        result.trainReferenceSpeedCommand_ = trainReferenceSpeedCommand_;
       } else {
-        result.trainReferenceSpeedControl_ = trainReferenceSpeedControlBuilder_.build();
+        result.trainReferenceSpeedCommand_ = trainReferenceSpeedCommandBuilder_.build();
       }
-      if (turnoutControlBuilder_ == null) {
-        result.turnoutControl_ = turnoutControl_;
+      if (turnoutCommandBuilder_ == null) {
+        result.turnoutCommand_ = turnoutCommand_;
       } else {
-        result.turnoutControl_ = turnoutControlBuilder_.build();
+        result.turnoutCommand_ = turnoutCommandBuilder_.build();
       }
       if (turnoutStateBuilder_ == null) {
         result.turnoutState_ = turnoutState_;
@@ -1058,8 +1058,8 @@ public  final class Message extends
       if (other.type_ != 0) {
         setTypeValue(other.getTypeValue());
       }
-      if (other.hasSegmentControl()) {
-        mergeSegmentControl(other.getSegmentControl());
+      if (other.hasSegmentCommand()) {
+        mergeSegmentCommand(other.getSegmentCommand());
       }
       if (other.hasSegmentState()) {
         mergeSegmentState(other.getSegmentState());
@@ -1070,17 +1070,17 @@ public  final class Message extends
       if (other.hasTrainCurrentSpeed()) {
         mergeTrainCurrentSpeed(other.getTrainCurrentSpeed());
       }
-      if (other.hasTrainFunctionControl()) {
-        mergeTrainFunctionControl(other.getTrainFunctionControl());
+      if (other.hasTrainFunctionCommand()) {
+        mergeTrainFunctionCommand(other.getTrainFunctionCommand());
       }
       if (other.hasTrainReferenceSpeed()) {
         mergeTrainReferenceSpeed(other.getTrainReferenceSpeed());
       }
-      if (other.hasTrainReferenceSpeedControl()) {
-        mergeTrainReferenceSpeedControl(other.getTrainReferenceSpeedControl());
+      if (other.hasTrainReferenceSpeedCommand()) {
+        mergeTrainReferenceSpeedCommand(other.getTrainReferenceSpeedCommand());
       }
-      if (other.hasTurnoutControl()) {
-        mergeTurnoutControl(other.getTurnoutControl());
+      if (other.hasTurnoutCommand()) {
+        mergeTurnoutCommand(other.getTurnoutCommand());
       }
       if (other.hasTurnoutState()) {
         mergeTurnoutState(other.getTurnoutState());
@@ -1155,121 +1155,121 @@ public  final class Message extends
       return this;
     }
 
-    private hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl segmentControl_ = null;
+    private hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand segmentCommand_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControlOrBuilder> segmentControlBuilder_;
+        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder> segmentCommandBuilder_;
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public boolean hasSegmentControl() {
-      return segmentControlBuilder_ != null || segmentControl_ != null;
+    public boolean hasSegmentCommand() {
+      return segmentCommandBuilder_ != null || segmentCommand_ != null;
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl getSegmentControl() {
-      if (segmentControlBuilder_ == null) {
-        return segmentControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.getDefaultInstance() : segmentControl_;
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand getSegmentCommand() {
+      if (segmentCommandBuilder_ == null) {
+        return segmentCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.getDefaultInstance() : segmentCommand_;
       } else {
-        return segmentControlBuilder_.getMessage();
+        return segmentCommandBuilder_.getMessage();
       }
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public Builder setSegmentControl(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl value) {
-      if (segmentControlBuilder_ == null) {
+    public Builder setSegmentCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand value) {
+      if (segmentCommandBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        segmentControl_ = value;
+        segmentCommand_ = value;
         onChanged();
       } else {
-        segmentControlBuilder_.setMessage(value);
+        segmentCommandBuilder_.setMessage(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public Builder setSegmentControl(
-        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.Builder builderForValue) {
-      if (segmentControlBuilder_ == null) {
-        segmentControl_ = builderForValue.build();
+    public Builder setSegmentCommand(
+        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.Builder builderForValue) {
+      if (segmentCommandBuilder_ == null) {
+        segmentCommand_ = builderForValue.build();
         onChanged();
       } else {
-        segmentControlBuilder_.setMessage(builderForValue.build());
+        segmentCommandBuilder_.setMessage(builderForValue.build());
       }
 
       return this;
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public Builder mergeSegmentControl(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl value) {
-      if (segmentControlBuilder_ == null) {
-        if (segmentControl_ != null) {
-          segmentControl_ =
-            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.newBuilder(segmentControl_).mergeFrom(value).buildPartial();
+    public Builder mergeSegmentCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand value) {
+      if (segmentCommandBuilder_ == null) {
+        if (segmentCommand_ != null) {
+          segmentCommand_ =
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.newBuilder(segmentCommand_).mergeFrom(value).buildPartial();
         } else {
-          segmentControl_ = value;
+          segmentCommand_ = value;
         }
         onChanged();
       } else {
-        segmentControlBuilder_.mergeFrom(value);
+        segmentCommandBuilder_.mergeFrom(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public Builder clearSegmentControl() {
-      if (segmentControlBuilder_ == null) {
-        segmentControl_ = null;
+    public Builder clearSegmentCommand() {
+      if (segmentCommandBuilder_ == null) {
+        segmentCommand_ = null;
         onChanged();
       } else {
-        segmentControl_ = null;
-        segmentControlBuilder_ = null;
+        segmentCommand_ = null;
+        segmentCommandBuilder_ = null;
       }
 
       return this;
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.Builder getSegmentControlBuilder() {
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.Builder getSegmentCommandBuilder() {
       
       onChanged();
-      return getSegmentControlFieldBuilder().getBuilder();
+      return getSegmentCommandFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControlOrBuilder getSegmentControlOrBuilder() {
-      if (segmentControlBuilder_ != null) {
-        return segmentControlBuilder_.getMessageOrBuilder();
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder getSegmentCommandOrBuilder() {
+      if (segmentCommandBuilder_ != null) {
+        return segmentCommandBuilder_.getMessageOrBuilder();
       } else {
-        return segmentControl_ == null ?
-            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.getDefaultInstance() : segmentControl_;
+        return segmentCommand_ == null ?
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.getDefaultInstance() : segmentCommand_;
       }
     }
     /**
-     * <code>optional .SegmentControl segmentControl = 2;</code>
+     * <code>optional .SegmentCommand segmentCommand = 2;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControlOrBuilder> 
-        getSegmentControlFieldBuilder() {
-      if (segmentControlBuilder_ == null) {
-        segmentControlBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControlOrBuilder>(
-                getSegmentControl(),
+        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder> 
+        getSegmentCommandFieldBuilder() {
+      if (segmentCommandBuilder_ == null) {
+        segmentCommandBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder>(
+                getSegmentCommand(),
                 getParentForChildren(),
                 isClean());
-        segmentControl_ = null;
+        segmentCommand_ = null;
       }
-      return segmentControlBuilder_;
+      return segmentCommandBuilder_;
     }
 
     private hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState segmentState_ = null;
@@ -1623,121 +1623,121 @@ public  final class Message extends
       return trainCurrentSpeedBuilder_;
     }
 
-    private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl trainFunctionControl_ = null;
+    private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand trainFunctionCommand_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder> trainFunctionControlBuilder_;
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommandOrBuilder> trainFunctionCommandBuilder_;
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public boolean hasTrainFunctionControl() {
-      return trainFunctionControlBuilder_ != null || trainFunctionControl_ != null;
+    public boolean hasTrainFunctionCommand() {
+      return trainFunctionCommandBuilder_ != null || trainFunctionCommand_ != null;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl getTrainFunctionControl() {
-      if (trainFunctionControlBuilder_ == null) {
-        return trainFunctionControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.getDefaultInstance() : trainFunctionControl_;
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand getTrainFunctionCommand() {
+      if (trainFunctionCommandBuilder_ == null) {
+        return trainFunctionCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.getDefaultInstance() : trainFunctionCommand_;
       } else {
-        return trainFunctionControlBuilder_.getMessage();
+        return trainFunctionCommandBuilder_.getMessage();
       }
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public Builder setTrainFunctionControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl value) {
-      if (trainFunctionControlBuilder_ == null) {
+    public Builder setTrainFunctionCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand value) {
+      if (trainFunctionCommandBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        trainFunctionControl_ = value;
+        trainFunctionCommand_ = value;
         onChanged();
       } else {
-        trainFunctionControlBuilder_.setMessage(value);
+        trainFunctionCommandBuilder_.setMessage(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public Builder setTrainFunctionControl(
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder builderForValue) {
-      if (trainFunctionControlBuilder_ == null) {
-        trainFunctionControl_ = builderForValue.build();
+    public Builder setTrainFunctionCommand(
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.Builder builderForValue) {
+      if (trainFunctionCommandBuilder_ == null) {
+        trainFunctionCommand_ = builderForValue.build();
         onChanged();
       } else {
-        trainFunctionControlBuilder_.setMessage(builderForValue.build());
+        trainFunctionCommandBuilder_.setMessage(builderForValue.build());
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public Builder mergeTrainFunctionControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl value) {
-      if (trainFunctionControlBuilder_ == null) {
-        if (trainFunctionControl_ != null) {
-          trainFunctionControl_ =
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.newBuilder(trainFunctionControl_).mergeFrom(value).buildPartial();
+    public Builder mergeTrainFunctionCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand value) {
+      if (trainFunctionCommandBuilder_ == null) {
+        if (trainFunctionCommand_ != null) {
+          trainFunctionCommand_ =
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.newBuilder(trainFunctionCommand_).mergeFrom(value).buildPartial();
         } else {
-          trainFunctionControl_ = value;
+          trainFunctionCommand_ = value;
         }
         onChanged();
       } else {
-        trainFunctionControlBuilder_.mergeFrom(value);
+        trainFunctionCommandBuilder_.mergeFrom(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public Builder clearTrainFunctionControl() {
-      if (trainFunctionControlBuilder_ == null) {
-        trainFunctionControl_ = null;
+    public Builder clearTrainFunctionCommand() {
+      if (trainFunctionCommandBuilder_ == null) {
+        trainFunctionCommand_ = null;
         onChanged();
       } else {
-        trainFunctionControl_ = null;
-        trainFunctionControlBuilder_ = null;
+        trainFunctionCommand_ = null;
+        trainFunctionCommandBuilder_ = null;
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder getTrainFunctionControlBuilder() {
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.Builder getTrainFunctionCommandBuilder() {
       
       onChanged();
-      return getTrainFunctionControlFieldBuilder().getBuilder();
+      return getTrainFunctionCommandFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder getTrainFunctionControlOrBuilder() {
-      if (trainFunctionControlBuilder_ != null) {
-        return trainFunctionControlBuilder_.getMessageOrBuilder();
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommandOrBuilder getTrainFunctionCommandOrBuilder() {
+      if (trainFunctionCommandBuilder_ != null) {
+        return trainFunctionCommandBuilder_.getMessageOrBuilder();
       } else {
-        return trainFunctionControl_ == null ?
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.getDefaultInstance() : trainFunctionControl_;
+        return trainFunctionCommand_ == null ?
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.getDefaultInstance() : trainFunctionCommand_;
       }
     }
     /**
-     * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+     * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder> 
-        getTrainFunctionControlFieldBuilder() {
-      if (trainFunctionControlBuilder_ == null) {
-        trainFunctionControlBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder>(
-                getTrainFunctionControl(),
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommandOrBuilder> 
+        getTrainFunctionCommandFieldBuilder() {
+      if (trainFunctionCommandBuilder_ == null) {
+        trainFunctionCommandBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommandOrBuilder>(
+                getTrainFunctionCommand(),
                 getParentForChildren(),
                 isClean());
-        trainFunctionControl_ = null;
+        trainFunctionCommand_ = null;
       }
-      return trainFunctionControlBuilder_;
+      return trainFunctionCommandBuilder_;
     }
 
     private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed trainReferenceSpeed_ = null;
@@ -1857,238 +1857,238 @@ public  final class Message extends
       return trainReferenceSpeedBuilder_;
     }
 
-    private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl trainReferenceSpeedControl_ = null;
+    private hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand trainReferenceSpeedCommand_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder> trainReferenceSpeedControlBuilder_;
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommandOrBuilder> trainReferenceSpeedCommandBuilder_;
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public boolean hasTrainReferenceSpeedControl() {
-      return trainReferenceSpeedControlBuilder_ != null || trainReferenceSpeedControl_ != null;
+    public boolean hasTrainReferenceSpeedCommand() {
+      return trainReferenceSpeedCommandBuilder_ != null || trainReferenceSpeedCommand_ != null;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl getTrainReferenceSpeedControl() {
-      if (trainReferenceSpeedControlBuilder_ == null) {
-        return trainReferenceSpeedControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.getDefaultInstance() : trainReferenceSpeedControl_;
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand getTrainReferenceSpeedCommand() {
+      if (trainReferenceSpeedCommandBuilder_ == null) {
+        return trainReferenceSpeedCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.getDefaultInstance() : trainReferenceSpeedCommand_;
       } else {
-        return trainReferenceSpeedControlBuilder_.getMessage();
+        return trainReferenceSpeedCommandBuilder_.getMessage();
       }
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public Builder setTrainReferenceSpeedControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl value) {
-      if (trainReferenceSpeedControlBuilder_ == null) {
+    public Builder setTrainReferenceSpeedCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand value) {
+      if (trainReferenceSpeedCommandBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        trainReferenceSpeedControl_ = value;
+        trainReferenceSpeedCommand_ = value;
         onChanged();
       } else {
-        trainReferenceSpeedControlBuilder_.setMessage(value);
+        trainReferenceSpeedCommandBuilder_.setMessage(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public Builder setTrainReferenceSpeedControl(
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder builderForValue) {
-      if (trainReferenceSpeedControlBuilder_ == null) {
-        trainReferenceSpeedControl_ = builderForValue.build();
+    public Builder setTrainReferenceSpeedCommand(
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.Builder builderForValue) {
+      if (trainReferenceSpeedCommandBuilder_ == null) {
+        trainReferenceSpeedCommand_ = builderForValue.build();
         onChanged();
       } else {
-        trainReferenceSpeedControlBuilder_.setMessage(builderForValue.build());
+        trainReferenceSpeedCommandBuilder_.setMessage(builderForValue.build());
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public Builder mergeTrainReferenceSpeedControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl value) {
-      if (trainReferenceSpeedControlBuilder_ == null) {
-        if (trainReferenceSpeedControl_ != null) {
-          trainReferenceSpeedControl_ =
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.newBuilder(trainReferenceSpeedControl_).mergeFrom(value).buildPartial();
+    public Builder mergeTrainReferenceSpeedCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand value) {
+      if (trainReferenceSpeedCommandBuilder_ == null) {
+        if (trainReferenceSpeedCommand_ != null) {
+          trainReferenceSpeedCommand_ =
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.newBuilder(trainReferenceSpeedCommand_).mergeFrom(value).buildPartial();
         } else {
-          trainReferenceSpeedControl_ = value;
+          trainReferenceSpeedCommand_ = value;
         }
         onChanged();
       } else {
-        trainReferenceSpeedControlBuilder_.mergeFrom(value);
+        trainReferenceSpeedCommandBuilder_.mergeFrom(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public Builder clearTrainReferenceSpeedControl() {
-      if (trainReferenceSpeedControlBuilder_ == null) {
-        trainReferenceSpeedControl_ = null;
+    public Builder clearTrainReferenceSpeedCommand() {
+      if (trainReferenceSpeedCommandBuilder_ == null) {
+        trainReferenceSpeedCommand_ = null;
         onChanged();
       } else {
-        trainReferenceSpeedControl_ = null;
-        trainReferenceSpeedControlBuilder_ = null;
+        trainReferenceSpeedCommand_ = null;
+        trainReferenceSpeedCommandBuilder_ = null;
       }
 
       return this;
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder getTrainReferenceSpeedControlBuilder() {
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.Builder getTrainReferenceSpeedCommandBuilder() {
       
       onChanged();
-      return getTrainReferenceSpeedControlFieldBuilder().getBuilder();
+      return getTrainReferenceSpeedCommandFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder getTrainReferenceSpeedControlOrBuilder() {
-      if (trainReferenceSpeedControlBuilder_ != null) {
-        return trainReferenceSpeedControlBuilder_.getMessageOrBuilder();
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommandOrBuilder getTrainReferenceSpeedCommandOrBuilder() {
+      if (trainReferenceSpeedCommandBuilder_ != null) {
+        return trainReferenceSpeedCommandBuilder_.getMessageOrBuilder();
       } else {
-        return trainReferenceSpeedControl_ == null ?
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.getDefaultInstance() : trainReferenceSpeedControl_;
+        return trainReferenceSpeedCommand_ == null ?
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.getDefaultInstance() : trainReferenceSpeedCommand_;
       }
     }
     /**
-     * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+     * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder> 
-        getTrainReferenceSpeedControlFieldBuilder() {
-      if (trainReferenceSpeedControlBuilder_ == null) {
-        trainReferenceSpeedControlBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder>(
-                getTrainReferenceSpeedControl(),
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommandOrBuilder> 
+        getTrainReferenceSpeedCommandFieldBuilder() {
+      if (trainReferenceSpeedCommandBuilder_ == null) {
+        trainReferenceSpeedCommandBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommandOrBuilder>(
+                getTrainReferenceSpeedCommand(),
                 getParentForChildren(),
                 isClean());
-        trainReferenceSpeedControl_ = null;
+        trainReferenceSpeedCommand_ = null;
       }
-      return trainReferenceSpeedControlBuilder_;
+      return trainReferenceSpeedCommandBuilder_;
     }
 
-    private hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl turnoutControl_ = null;
+    private hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand turnoutCommand_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder> turnoutControlBuilder_;
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder> turnoutCommandBuilder_;
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public boolean hasTurnoutControl() {
-      return turnoutControlBuilder_ != null || turnoutControl_ != null;
+    public boolean hasTurnoutCommand() {
+      return turnoutCommandBuilder_ != null || turnoutCommand_ != null;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl getTurnoutControl() {
-      if (turnoutControlBuilder_ == null) {
-        return turnoutControl_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.getDefaultInstance() : turnoutControl_;
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand getTurnoutCommand() {
+      if (turnoutCommandBuilder_ == null) {
+        return turnoutCommand_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.getDefaultInstance() : turnoutCommand_;
       } else {
-        return turnoutControlBuilder_.getMessage();
+        return turnoutCommandBuilder_.getMessage();
       }
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public Builder setTurnoutControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl value) {
-      if (turnoutControlBuilder_ == null) {
+    public Builder setTurnoutCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand value) {
+      if (turnoutCommandBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        turnoutControl_ = value;
+        turnoutCommand_ = value;
         onChanged();
       } else {
-        turnoutControlBuilder_.setMessage(value);
+        turnoutCommandBuilder_.setMessage(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public Builder setTurnoutControl(
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder builderForValue) {
-      if (turnoutControlBuilder_ == null) {
-        turnoutControl_ = builderForValue.build();
+    public Builder setTurnoutCommand(
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.Builder builderForValue) {
+      if (turnoutCommandBuilder_ == null) {
+        turnoutCommand_ = builderForValue.build();
         onChanged();
       } else {
-        turnoutControlBuilder_.setMessage(builderForValue.build());
+        turnoutCommandBuilder_.setMessage(builderForValue.build());
       }
 
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public Builder mergeTurnoutControl(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl value) {
-      if (turnoutControlBuilder_ == null) {
-        if (turnoutControl_ != null) {
-          turnoutControl_ =
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.newBuilder(turnoutControl_).mergeFrom(value).buildPartial();
+    public Builder mergeTurnoutCommand(hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand value) {
+      if (turnoutCommandBuilder_ == null) {
+        if (turnoutCommand_ != null) {
+          turnoutCommand_ =
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.newBuilder(turnoutCommand_).mergeFrom(value).buildPartial();
         } else {
-          turnoutControl_ = value;
+          turnoutCommand_ = value;
         }
         onChanged();
       } else {
-        turnoutControlBuilder_.mergeFrom(value);
+        turnoutCommandBuilder_.mergeFrom(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public Builder clearTurnoutControl() {
-      if (turnoutControlBuilder_ == null) {
-        turnoutControl_ = null;
+    public Builder clearTurnoutCommand() {
+      if (turnoutCommandBuilder_ == null) {
+        turnoutCommand_ = null;
         onChanged();
       } else {
-        turnoutControl_ = null;
-        turnoutControlBuilder_ = null;
+        turnoutCommand_ = null;
+        turnoutCommandBuilder_ = null;
       }
 
       return this;
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder getTurnoutControlBuilder() {
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.Builder getTurnoutCommandBuilder() {
       
       onChanged();
-      return getTurnoutControlFieldBuilder().getBuilder();
+      return getTurnoutCommandFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder getTurnoutControlOrBuilder() {
-      if (turnoutControlBuilder_ != null) {
-        return turnoutControlBuilder_.getMessageOrBuilder();
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder getTurnoutCommandOrBuilder() {
+      if (turnoutCommandBuilder_ != null) {
+        return turnoutCommandBuilder_.getMessageOrBuilder();
       } else {
-        return turnoutControl_ == null ?
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.getDefaultInstance() : turnoutControl_;
+        return turnoutCommand_ == null ?
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.getDefaultInstance() : turnoutCommand_;
       }
     }
     /**
-     * <code>optional .TurnoutControl turnoutControl = 9;</code>
+     * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder> 
-        getTurnoutControlFieldBuilder() {
-      if (turnoutControlBuilder_ == null) {
-        turnoutControlBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder>(
-                getTurnoutControl(),
+        hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder> 
+        getTurnoutCommandFieldBuilder() {
+      if (turnoutCommandBuilder_ == null) {
+        turnoutCommandBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder>(
+                getTurnoutCommand(),
                 getParentForChildren(),
                 isClean());
-        turnoutControl_ = null;
+        turnoutCommand_ = null;
       }
-      return turnoutControlBuilder_;
+      return turnoutCommandBuilder_;
     }
 
     private hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState turnoutState_ = null;

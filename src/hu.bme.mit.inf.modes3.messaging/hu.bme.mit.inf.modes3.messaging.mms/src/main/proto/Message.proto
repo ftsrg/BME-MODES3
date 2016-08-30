@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-import "SegmentControl.proto";
+import "SegmentCommand.proto";
 import "SegmentState.proto";
 import "TrainCurrentSegment.proto";
 import "TrainCurrentSpeed.proto";
-import "TrainFunctionControl.proto";
+import "TrainFunctionCommand.proto";
 import "TrainReferenceSpeed.proto";
-import "TrainReferenceSpeedControl.proto";
-import "TurnoutControl.proto";
+import "TrainReferenceSpeedCommand.proto";
+import "TurnoutCommand.proto";
 import "TurnoutState.proto";
 
 option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
@@ -16,27 +16,27 @@ option java_multiple_files = true;
 message Message {
 	enum MessageType {
 		NULL = 0;
-		SEGMENT_CONTROL = 1;
+		SEGMENT_COMMAND = 1;
 		SEGMENT_STATE = 2;
 		TRAIN_CURRENT_SEGMENT = 3;
 		TRAIN_CURRENT_SPEED = 4;
-		TRAIN_DIRECTION_CONTROL = 5;
-		TRAIN_FUNCTION_CONTROL = 6;
+		TRAIN_DIRECTION_COMMAND = 5;
+		TRAIN_FUNCTION_COMMAND = 6;
 		TRAIN_REFERENCE_SPEED = 7;
-		TRAIN_REFERENCE_SPEED_CONTROL = 8;
-		TURNOUT_CONTROL = 9;
+		TRAIN_REFERENCE_SPEED_COMMAND = 8;
+		TURNOUT_COMMAND = 9;
 		TURNOUT_STATE = 10;
 	}
 
 	MessageType type = 1;
 
-	SegmentControl segmentControl = 2;
+	SegmentCommand segmentCommand = 2;
 	SegmentState segmentState = 3;
 	TrainCurrentSegment trainCurrentSegment = 4;
 	TrainCurrentSpeed trainCurrentSpeed = 5;
-	TrainFunctionControl trainFunctionControl = 6;
+	TrainFunctionCommand trainFunctionCommand = 6;
 	TrainReferenceSpeed trainReferenceSpeed = 7;
-	TrainReferenceSpeedControl trainReferenceSpeedControl = 8;
-	TurnoutControl turnoutControl = 9;
+	TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
+	TurnoutCommand turnoutCommand = 9;
 	TurnoutState turnoutState = 10;
 }

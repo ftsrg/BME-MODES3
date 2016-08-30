@@ -17,17 +17,17 @@ public interface MessageOrBuilder extends
   hu.bme.mit.inf.modes3.messaging.mms.messages.Message.MessageType getType();
 
   /**
-   * <code>optional .SegmentControl segmentControl = 2;</code>
+   * <code>optional .SegmentCommand segmentCommand = 2;</code>
    */
-  boolean hasSegmentControl();
+  boolean hasSegmentCommand();
   /**
-   * <code>optional .SegmentControl segmentControl = 2;</code>
+   * <code>optional .SegmentCommand segmentCommand = 2;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControl getSegmentControl();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand getSegmentCommand();
   /**
-   * <code>optional .SegmentControl segmentControl = 2;</code>
+   * <code>optional .SegmentCommand segmentCommand = 2;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentControlOrBuilder getSegmentControlOrBuilder();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder getSegmentCommandOrBuilder();
 
   /**
    * <code>optional .SegmentState segmentState = 3;</code>
@@ -69,17 +69,17 @@ public interface MessageOrBuilder extends
   hu.bme.mit.inf.modes3.messaging.mms.messages.TrainCurrentSpeedOrBuilder getTrainCurrentSpeedOrBuilder();
 
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+   * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
    */
-  boolean hasTrainFunctionControl();
+  boolean hasTrainFunctionCommand();
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+   * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControl getTrainFunctionControl();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommand getTrainFunctionCommand();
   /**
-   * <code>optional .TrainFunctionControl trainFunctionControl = 6;</code>
+   * <code>optional .TrainFunctionCommand trainFunctionCommand = 6;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionControlOrBuilder getTrainFunctionControlOrBuilder();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainFunctionCommandOrBuilder getTrainFunctionCommandOrBuilder();
 
   /**
    * <code>optional .TrainReferenceSpeed trainReferenceSpeed = 7;</code>
@@ -95,30 +95,30 @@ public interface MessageOrBuilder extends
   hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedOrBuilder getTrainReferenceSpeedOrBuilder();
 
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+   * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
    */
-  boolean hasTrainReferenceSpeedControl();
+  boolean hasTrainReferenceSpeedCommand();
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+   * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControl getTrainReferenceSpeedControl();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand getTrainReferenceSpeedCommand();
   /**
-   * <code>optional .TrainReferenceSpeedControl trainReferenceSpeedControl = 8;</code>
+   * <code>optional .TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedControlOrBuilder getTrainReferenceSpeedControlOrBuilder();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommandOrBuilder getTrainReferenceSpeedCommandOrBuilder();
 
   /**
-   * <code>optional .TurnoutControl turnoutControl = 9;</code>
+   * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
    */
-  boolean hasTurnoutControl();
+  boolean hasTurnoutCommand();
   /**
-   * <code>optional .TurnoutControl turnoutControl = 9;</code>
+   * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControl getTurnoutControl();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand getTurnoutCommand();
   /**
-   * <code>optional .TurnoutControl turnoutControl = 9;</code>
+   * <code>optional .TurnoutCommand turnoutCommand = 9;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutControlOrBuilder getTurnoutControlOrBuilder();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder getTurnoutCommandOrBuilder();
 
   /**
    * <code>optional .TurnoutState turnoutState = 10;</code>
