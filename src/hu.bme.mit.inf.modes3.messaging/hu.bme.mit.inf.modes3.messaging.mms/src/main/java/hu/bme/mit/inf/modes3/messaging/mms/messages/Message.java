@@ -166,6 +166,19 @@ public  final class Message extends
 
             break;
           }
+          case 90: {
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.Builder subBuilder = null;
+            if (segmentOccupancy_ != null) {
+              subBuilder = segmentOccupancy_.toBuilder();
+            }
+            segmentOccupancy_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(segmentOccupancy_);
+              segmentOccupancy_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
         }
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -238,6 +251,10 @@ public  final class Message extends
      * <code>TURNOUT_STATE = 10;</code>
      */
     TURNOUT_STATE(10),
+    /**
+     * <code>SEGMENT_OCCUPANCY = 11;</code>
+     */
+    SEGMENT_OCCUPANCY(11),
     UNRECOGNIZED(-1),
     ;
 
@@ -285,6 +302,10 @@ public  final class Message extends
      * <code>TURNOUT_STATE = 10;</code>
      */
     public static final int TURNOUT_STATE_VALUE = 10;
+    /**
+     * <code>SEGMENT_OCCUPANCY = 11;</code>
+     */
+    public static final int SEGMENT_OCCUPANCY_VALUE = 11;
 
 
     public final int getNumber() {
@@ -316,6 +337,7 @@ public  final class Message extends
         case 8: return TRAIN_REFERENCE_SPEED_COMMAND;
         case 9: return TURNOUT_COMMAND;
         case 10: return TURNOUT_STATE;
+        case 11: return SEGMENT_OCCUPANCY;
         default: return null;
       }
     }
@@ -573,6 +595,27 @@ public  final class Message extends
     return getTurnoutState();
   }
 
+  public static final int SEGMENTOCCUPANCY_FIELD_NUMBER = 11;
+  private hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy segmentOccupancy_;
+  /**
+   * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+   */
+  public boolean hasSegmentOccupancy() {
+    return segmentOccupancy_ != null;
+  }
+  /**
+   * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+   */
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy getSegmentOccupancy() {
+    return segmentOccupancy_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.getDefaultInstance() : segmentOccupancy_;
+  }
+  /**
+   * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+   */
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder getSegmentOccupancyOrBuilder() {
+    return getSegmentOccupancy();
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -614,6 +657,9 @@ public  final class Message extends
     }
     if (turnoutState_ != null) {
       output.writeMessage(10, getTurnoutState());
+    }
+    if (segmentOccupancy_ != null) {
+      output.writeMessage(11, getSegmentOccupancy());
     }
   }
 
@@ -661,6 +707,10 @@ public  final class Message extends
     if (turnoutState_ != null) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(10, getTurnoutState());
+    }
+    if (segmentOccupancy_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(11, getSegmentOccupancy());
     }
     memoizedSize = size;
     return size;
@@ -724,6 +774,11 @@ public  final class Message extends
       result = result && getTurnoutState()
           .equals(other.getTurnoutState());
     }
+    result = result && (hasSegmentOccupancy() == other.hasSegmentOccupancy());
+    if (hasSegmentOccupancy()) {
+      result = result && getSegmentOccupancy()
+          .equals(other.getSegmentOccupancy());
+    }
     return result;
   }
 
@@ -771,6 +826,10 @@ public  final class Message extends
     if (hasTurnoutState()) {
       hash = (37 * hash) + TURNOUTSTATE_FIELD_NUMBER;
       hash = (53 * hash) + getTurnoutState().hashCode();
+    }
+    if (hasSegmentOccupancy()) {
+      hash = (37 * hash) + SEGMENTOCCUPANCY_FIELD_NUMBER;
+      hash = (53 * hash) + getSegmentOccupancy().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -946,6 +1005,12 @@ public  final class Message extends
         turnoutState_ = null;
         turnoutStateBuilder_ = null;
       }
+      if (segmentOccupancyBuilder_ == null) {
+        segmentOccupancy_ = null;
+      } else {
+        segmentOccupancy_ = null;
+        segmentOccupancyBuilder_ = null;
+      }
       return this;
     }
 
@@ -1013,6 +1078,11 @@ public  final class Message extends
         result.turnoutState_ = turnoutState_;
       } else {
         result.turnoutState_ = turnoutStateBuilder_.build();
+      }
+      if (segmentOccupancyBuilder_ == null) {
+        result.segmentOccupancy_ = segmentOccupancy_;
+      } else {
+        result.segmentOccupancy_ = segmentOccupancyBuilder_.build();
       }
       onBuilt();
       return result;
@@ -1084,6 +1154,9 @@ public  final class Message extends
       }
       if (other.hasTurnoutState()) {
         mergeTurnoutState(other.getTurnoutState());
+      }
+      if (other.hasSegmentOccupancy()) {
+        mergeSegmentOccupancy(other.getSegmentOccupancy());
       }
       onChanged();
       return this;
@@ -2206,6 +2279,123 @@ public  final class Message extends
         turnoutState_ = null;
       }
       return turnoutStateBuilder_;
+    }
+
+    private hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy segmentOccupancy_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder> segmentOccupancyBuilder_;
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public boolean hasSegmentOccupancy() {
+      return segmentOccupancyBuilder_ != null || segmentOccupancy_ != null;
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy getSegmentOccupancy() {
+      if (segmentOccupancyBuilder_ == null) {
+        return segmentOccupancy_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.getDefaultInstance() : segmentOccupancy_;
+      } else {
+        return segmentOccupancyBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public Builder setSegmentOccupancy(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy value) {
+      if (segmentOccupancyBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        segmentOccupancy_ = value;
+        onChanged();
+      } else {
+        segmentOccupancyBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public Builder setSegmentOccupancy(
+        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.Builder builderForValue) {
+      if (segmentOccupancyBuilder_ == null) {
+        segmentOccupancy_ = builderForValue.build();
+        onChanged();
+      } else {
+        segmentOccupancyBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public Builder mergeSegmentOccupancy(hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy value) {
+      if (segmentOccupancyBuilder_ == null) {
+        if (segmentOccupancy_ != null) {
+          segmentOccupancy_ =
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.newBuilder(segmentOccupancy_).mergeFrom(value).buildPartial();
+        } else {
+          segmentOccupancy_ = value;
+        }
+        onChanged();
+      } else {
+        segmentOccupancyBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public Builder clearSegmentOccupancy() {
+      if (segmentOccupancyBuilder_ == null) {
+        segmentOccupancy_ = null;
+        onChanged();
+      } else {
+        segmentOccupancy_ = null;
+        segmentOccupancyBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.Builder getSegmentOccupancyBuilder() {
+      
+      onChanged();
+      return getSegmentOccupancyFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder getSegmentOccupancyOrBuilder() {
+      if (segmentOccupancyBuilder_ != null) {
+        return segmentOccupancyBuilder_.getMessageOrBuilder();
+      } else {
+        return segmentOccupancy_ == null ?
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.getDefaultInstance() : segmentOccupancy_;
+      }
+    }
+    /**
+     * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder> 
+        getSegmentOccupancyFieldBuilder() {
+      if (segmentOccupancyBuilder_ == null) {
+        segmentOccupancyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder>(
+                getSegmentOccupancy(),
+                getParentForChildren(),
+                isClean());
+        segmentOccupancy_ = null;
+      }
+      return segmentOccupancyBuilder_;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {

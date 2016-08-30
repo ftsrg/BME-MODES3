@@ -1,6 +1,8 @@
 package hu.bme.mit.inf.modes3.components.controller.command
 
 import hu.bme.mit.inf.modes3.components.common.ProtobufAbstractComponent
+import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
+import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
 
@@ -14,7 +16,7 @@ class TrackElementCommandCallback extends ProtobufAbstractComponent {
 	}
 
 	override onInit() {
-		val segmentCommandListener = new SegmentCommandClient(this)
+		val segmentCommandListener = new SegmentCommandClient(this) 
 		val turnoutCommandListener = new TurnoutCommandClient(this)
 
 		dispatcher.segmentCommandHandler = segmentCommandListener
