@@ -10,14 +10,9 @@ class ControlComponentTest {
 
 	private TrackElementStateRegistry elementStateRegistry;
 
-	@Mock
-	private TrackElementStateCallback stateCallback
 
 	@Before
 	def void init() {
-		elementStateRegistry = new TrackElementStateRegistry
-		stateCallback = mock(TrackElementStateCallback)
-		elementStateRegistry.trackElementStateCallback = stateCallback
 	}
 
 	@Test

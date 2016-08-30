@@ -4,9 +4,9 @@ import hu.bme.mit.inf.modes3.messaging.mms.handlers.control.SegmentCommandHandle
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder
 
 package class SegmentCommandClient implements SegmentCommandHandler {
-	private var TrackElementCommandCallback callback
+	private var hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback callback
 
-	new(TrackElementCommandCallback controller) {
+	new(hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback controller) {
 		callback = controller
 	}
 

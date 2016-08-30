@@ -27,13 +27,14 @@ class SampleComponent extends ProtobufAbstractComponent implements SegmentStateH
 	}
 	
 	override handleMessage(SegmentStateOrBuilder message) {
-		println('SegmentState handler called')
+		println(
+		'''SegmentState handler called')
 		
-		println('=================')
-		println('Protobuf message:')
-		println('-----------------')
-		print(message)
-		println('=================')
+		=================
+		Protobuf message:
+		-----------------
+		«message»
+		=================''')
 		
 	}
 	
