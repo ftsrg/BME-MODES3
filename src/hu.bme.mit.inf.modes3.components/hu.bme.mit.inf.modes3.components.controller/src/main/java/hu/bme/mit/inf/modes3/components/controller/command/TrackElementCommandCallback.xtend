@@ -5,15 +5,11 @@ import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCo
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class TrackElementCommandCallback extends ProtobufAbstractComponent {
-	var ISegmentCommandListener segmentCommandListener
-	var ITurnoutCommandListener turnoutCommandListener
-
-	new(ISegmentCommandListener segmentCommandListener, ITurnoutCommandListener turnoutCommandListener) {
-		this.segmentCommandListener = segmentCommandListener
-		this.turnoutCommandListener = turnoutCommandListener
-	}
+	@Accessors(PUBLIC_SETTER) var  ISegmentCommandListener segmentCommandListener
+	@Accessors(PUBLIC_SETTER) var ITurnoutCommandListener turnoutCommandListener
 
 	override onInit() {
 		val segmentCommandListener = new SegmentCommandClient(this) 
@@ -24,11 +20,11 @@ class TrackElementCommandCallback extends ProtobufAbstractComponent {
 	}
 
 	def onSegmentCommand(int id, SegmentStateValue state) {
-		segmentCommandListener.onSegmentCommand(id, state)
+		segmentCommandListener?.onSegmentCommand(id, state)
 	}
 
 	def onTurnoutCommand(int id, TurnoutStateValue state) {
-		turnoutCommandListener.onTurnoutCommand(id, state)
+		turnoutCommandListener?.onTurnoutCommand(id, state)
 	}
 
 }
