@@ -17,3 +17,8 @@ enum TurnoutStateValue {
 	STRAIGHT = 0;
 	DIVERGENT = 1;
 }
+
+enum SegmentOccupancyValue {
+	FREE = 0;
+	OCCUPIED = 1;
+}

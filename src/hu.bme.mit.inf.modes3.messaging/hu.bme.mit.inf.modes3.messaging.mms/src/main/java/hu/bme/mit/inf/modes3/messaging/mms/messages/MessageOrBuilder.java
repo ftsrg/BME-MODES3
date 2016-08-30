@@ -132,4 +132,17 @@ public interface MessageOrBuilder extends
    * <code>optional .TurnoutState turnoutState = 10;</code>
    */
   hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder getTurnoutStateOrBuilder();
+
+  /**
+   * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+   */
+  boolean hasSegmentOccupancy();
+  /**
+   * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+   */
+  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy getSegmentOccupancy();
+  /**
+   * <code>optional .SegmentOccupancy segmentOccupancy = 11;</code>
+   */
+  hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder getSegmentOccupancyOrBuilder();
 }

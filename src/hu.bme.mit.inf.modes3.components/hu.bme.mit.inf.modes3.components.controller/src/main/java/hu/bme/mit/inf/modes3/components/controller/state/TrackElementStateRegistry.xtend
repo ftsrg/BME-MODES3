@@ -10,7 +10,7 @@ class TrackElementStateRegistry {
 	val turnouts = new ConcurrentHashMap<Integer, TurnoutStateValue>
 
 	//TODO remove this accessor somehow
-	@Accessors(PRIVATE_GETTER, PACKAGE_SETTER) TrackElementStateCallback trackElementStateCallback = new TrackElementStateCallback(new ISegmentStateListener() {
+	@Accessors(PACKAGE_GETTER, PACKAGE_SETTER) TrackElementStateCallback trackElementStateCallback = new TrackElementStateCallback(new ISegmentStateListener() {
 
 		override onSegmentState(int id, SegmentStateValue state) {
 			if(segments.get(id) != state) {
