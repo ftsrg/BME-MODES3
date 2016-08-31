@@ -24,7 +24,7 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 		override onSegmentState(int id, SegmentState state) {
 			if(segments.get(id) != state) {
-				segmentStateChangeListener.onSegmentStateChange(id, segments.get(id), state)
+				segmentStateChangeListener?.onSegmentStateChange(id, segments.get(id), state)
 				segments.put(id, state)
 			}
 		}
@@ -33,7 +33,7 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 		override onTurnoutState(int id, TurnoutState state) {
 			if(turnouts.get(id) != state) {
-				turnoutStateChangeListener.onTurnoutStateChange(id, turnouts.get(id), state)
+				turnoutStateChangeListener?.onTurnoutStateChange(id, turnouts.get(id), state)
 				turnouts.put(id, state)
 			}
 		}
@@ -41,7 +41,7 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	}, new ISegmentOccupancyListener() {
 		override onSegmentOccupancy(int id, SegmentOccupancy state) {
 			if(occupancy.get(id) != state) {
-				segmentOccupancyChangeListener.onSegmentOccupancyChange(id, occupancy.get(id), state)
+				segmentOccupancyChangeListener?.onSegmentOccupancyChange(id, occupancy.get(id), state)
 				occupancy.put(id, state)
 			}
 		}
