@@ -8,3 +8,5 @@ script:
 branches: 
   only: 
     - gen3-arch
+notifications:
+  slack: ftsrg:WZdZQP5KHhnxklapMmjNEe3I

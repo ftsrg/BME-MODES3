@@ -23,6 +23,8 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
@@ -32,6 +34,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainCurrentSegmentOrBuilder> trainCurrentSegmentHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TurnoutStateOrBuilder> turnoutStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentStateOrBuilder> segmentStateHandler
+	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentOccupancyOrBuilder> segmentOccupancyHandler
 
 	// COMMANDS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainReferenceSpeedCommandOrBuilder> trainReferenceSpeedCommandHandler
@@ -51,6 +54,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 			case Message.MessageType.TRAIN_REFERENCE_SPEED_COMMAND: trainReferenceSpeedCommandHandler?.handleMessage(message.trainReferenceSpeedCommand)
 			case Message.MessageType.TURNOUT_COMMAND: turnoutCommandHandler?.handleMessage(message.turnoutCommand)
 			case Message.MessageType.TURNOUT_STATE: turnoutStateHandler?.handleMessage(message.turnoutState)
+			case Message.MessageType.SEGMENT_OCCUPANCY: segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
 			default: return
 		}
 	}
@@ -58,7 +62,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	override convertMessageToRaw(Object _message) throws IllegalArgumentException {
 		try {
 			internalConvertMessageToRaw(_message as GeneratedMessageV3);
-		} catch (ClassCastException e) {
+		} catch(ClassCastException e) {
 			throw new IllegalArgumentException(e.message, e)
 		}
 	}
@@ -123,6 +127,13 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 		val message = Message.newBuilder
 		message.type = Message.MessageType.TURNOUT_STATE
 		message.turnoutState = _message
+		message.build.toByteArray
+	}
+
+	def dispatch byte[] internalConvertMessageToRaw(SegmentOccupancy _message) {
+		val message = Message.newBuilder
+		message.type = Message.MessageType.SEGMENT_OCCUPANCY
+		message.segmentOccupancy = _message
 		message.build.toByteArray
 	}
 

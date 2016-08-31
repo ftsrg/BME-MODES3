@@ -9,6 +9,7 @@ import "TrainReferenceSpeed.proto";
 import "TrainReferenceSpeedCommand.proto";
 import "TurnoutCommand.proto";
 import "TurnoutState.proto";
+import "SegmentOccupancy.proto";
 
 option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
 option java_multiple_files = true;
@@ -26,6 +27,7 @@ message Message {
 		TRAIN_REFERENCE_SPEED_COMMAND = 8;
 		TURNOUT_COMMAND = 9;
 		TURNOUT_STATE = 10;
+		SEGMENT_OCCUPANCY = 11;
 	}
 
 	MessageType type = 1;
@@ -39,4 +41,5 @@ message Message {
 	TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
 	TurnoutCommand turnoutCommand = 9;
 	TurnoutState turnoutState = 10;
+	SegmentOccupancy segmentOccupancy = 11;
 }

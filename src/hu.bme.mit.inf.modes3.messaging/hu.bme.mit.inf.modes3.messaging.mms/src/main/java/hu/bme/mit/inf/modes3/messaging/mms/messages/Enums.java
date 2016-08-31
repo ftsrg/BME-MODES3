@@ -27,8 +27,9 @@ public final class Enums {
       "SABLED\020\000\022\013\n\007ENABLED\020\001*0\n\023TrainDirectionV" +
       "alue\022\013\n\007FORWARD\020\000\022\014\n\010BACKWARD\020\001*0\n\021Turno" +
       "utStateValue\022\014\n\010STRAIGHT\020\000\022\r\n\tDIVERGENT\020" +
-      "\001B0\n,hu.bme.mit.inf.modes3.messaging.mms" +
-      ".messagesP\001b\006proto3"
+      "\001*/\n\025SegmentOccupancyValue\022\010\n\004FREE\020\000\022\014\n\010" +
+      "OCCUPIED\020\001B0\n,hu.bme.mit.inf.modes3.mess" +
+      "aging.mms.messagesP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
