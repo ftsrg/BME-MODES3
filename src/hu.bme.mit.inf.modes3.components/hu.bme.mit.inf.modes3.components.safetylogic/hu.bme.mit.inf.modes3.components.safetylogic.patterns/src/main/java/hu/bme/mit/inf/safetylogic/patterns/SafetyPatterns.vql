@@ -1,0 +1,63 @@
+package hu.bme.mit.inf.safetylogic.patterns
+
+import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
+
+pattern nextSection(Old : RailRoadElement, Current : RailRoadElement, Next : RailRoadElement){
+	find viablePaths(Current, p);
+	Path.from(p, Old);
+	Path.via(p, Current);
+	Path.to(p, Next);
+}
+
+//------------------------------------Train Collision Stuff------------------------------------//
+private pattern trainHitsAnotherTrainNextAfterNext(Offender : Train, Victim : Train) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	find nextSection(CurrentPosition, NextPosition, NextPositionAfterNextPosition);
+	
+	Train.currentlyOn(Victim, NextPositionAfterNextPosition);
+}
+
+private pattern trainHitsAnotherTrainNext(Offender : Train, Victim : Train) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	
+	Train.currentlyOn(Victim, NextPosition);
+}
+
+pattern trainHitsAnotherTrain(Offender : Train, Victim : Train){
+	find trainHitsAnotherTrainNext(Offender, Victim);
+} or {
+	find trainHitsAnotherTrainNextAfterNext(Offender, Victim);
+}
+
+//------------------------------------Turnout Cutting Stuff------------------------------------//
+
+private pattern trainCutsTurnoutNext(Offender : Train, Victim : RailRoadElement) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, Victim);
+	
+	neg find currentlyConnected(Victim, CurrentPosition);
+}
+
+private pattern trainCutsTurnoutNextAfterNext(Offender : Train, Victim : RailRoadElement) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	find nextSection(CurrentPosition, NextPosition, Victim);
+	
+	neg find currentlyConnected(Victim, NextPosition);
+}
+
+pattern trainCutsTurnout(Offender : Train, Victim : RailRoadElement){
+	find trainCutsTurnoutNext(Offender, Victim);
+} or {
+	find trainCutsTurnoutNextAfterNext(Offender, Victim);
+}
