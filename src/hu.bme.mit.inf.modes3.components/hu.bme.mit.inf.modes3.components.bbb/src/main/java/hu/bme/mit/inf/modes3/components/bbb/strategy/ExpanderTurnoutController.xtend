@@ -1,8 +1,8 @@
-package hu.bme.mit.inf.modes3.bbb.strategy;
+package hu.bme.mit.inf.modes3.components.bbb.strategy;
 
-import hu.bme.mit.inf.modes3.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
+import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
 import io.silverspoon.bulldog.core.Signal
 import io.silverspoon.bulldog.core.gpio.DigitalInput
@@ -21,16 +21,16 @@ import org.slf4j.LoggerFactory
  */
 class ExpanderTurnoutController extends AbstractControllerStrategy implements IControllerConfiguration {
 
-	@Accessors(PRIVATE_GETTER, PRIVATE_SETTER) val Logger logger = LoggerFactory.getLogger(ExpanderTurnoutController)
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger = LoggerFactory.getLogger(ExpanderTurnoutController)
 
 	// IO map for the input pins (to get turnout direction)
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ioMap = new HashMap<String, DigitalInput>(4)
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) val ioMap = new HashMap<String, DigitalInput>(4)
 
 	// the actual embedded controller which manages the turnout
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var ExpanderControllerConfiguration controllerConf
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var ExpanderControllerConfiguration controllerConf
 
 	// the latest turnout statuses (straight / divergent), based on turnout ID
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutState> turnoutStatus
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, TurnoutState> turnoutStatus
 
 	new() {
 		try {

@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.bbb.strategy;
+package hu.bme.mit.inf.modes3.components.bbb.strategy;
 
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
 import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
@@ -21,10 +21,10 @@ import static io.silverspoon.bulldog.core.util.BulldogUtil.sleepMs
 abstract class AbstractControllerStrategy {
 
 	// Detect the board we are running on
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) static val Board board = createBoard
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) static val Board board = createBoard
 
 	// sleep time after setting the pin value
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) static val SLEEP_MS_AFTER_SETTING_PIN = 0
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) static val SLEEP_MS_AFTER_SETTING_PIN = 0
 
 	/**
 	 * Enables the referred section, so trains can move on.

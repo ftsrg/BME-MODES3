@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.bbb.prototypes;
+package hu.bme.mit.inf.modes3.components.bbb.prototypes;
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -19,7 +19,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class Pinout {
 
 	// the pinout header addresses of the BeagleBone Black embedded controller.
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, String[]> headers
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, String[]> headers
 
 	/**
 	 * @return the pinout header configuration

@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.bbb.utils;
+package hu.bme.mit.inf.modes3.components.bbb.utils;
 
 import java.util.Map
 import java.util.TreeMap
@@ -11,9 +11,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class HexConversionUtil {
 
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) static val Map<Integer, String> intToStrConversionCache = new TreeMap
+	@Accessors(#[PROTECTED_GETTER,
+		PROTECTED_SETTER]) static val Map<Integer, String> intToStrConversionCache = new TreeMap
 
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) static val Map<String, Integer> strToIntConversionCache = new TreeMap
+	@Accessors(#[PROTECTED_GETTER,
+		PROTECTED_SETTER]) static val Map<String, Integer> strToIntConversionCache = new TreeMap
 
 	/**
 	 * Convert the parameter number to HEX String.
