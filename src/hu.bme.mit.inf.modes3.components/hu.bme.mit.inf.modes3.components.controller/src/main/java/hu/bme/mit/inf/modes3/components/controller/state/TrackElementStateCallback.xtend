@@ -1,12 +1,12 @@
 package hu.bme.mit.inf.modes3.components.controller.state
 
 import hu.bme.mit.inf.modes3.components.common.ProtobufAbstractComponent
+import hu.bme.mit.inf.modes3.components.controller.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
+import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
+import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ISegmentOccupancyListener
 import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ISegmentStateListener
 import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITurnoutStateListener
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
-import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ISegmentOccupancyListener
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyValue
 
 class TrackElementStateCallback extends ProtobufAbstractComponent{
 	var ISegmentStateListener segmentStateListener
@@ -29,15 +29,15 @@ class TrackElementStateCallback extends ProtobufAbstractComponent{
 		dispatcher.segmentOccupancyHandler = segmentOccupancyClient
 	}
 	
-	def onSegmentState(int id, SegmentStateValue state){
+	def onSegmentState(int id, SegmentState state){
 		segmentStateListener.onSegmentState(id, state)
 	}
 	
-	def onTurnoutState(int id, TurnoutStateValue state){
+	def onTurnoutState(int id, TurnoutState state){
 		turnoutStateListener.onTurnoutState(id, state)
 	}
 	
-	def onSegmentOccupancy(int id, SegmentOccupancyValue state){
+	def onSegmentOccupancy(int id, SegmentOccupancy state){
 		segmentOccupancyListener.onSegmentOccupancy(id, state)
 	}
 }

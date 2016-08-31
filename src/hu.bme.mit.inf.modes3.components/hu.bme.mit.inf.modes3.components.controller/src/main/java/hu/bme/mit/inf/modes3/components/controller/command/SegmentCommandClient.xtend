@@ -1,18 +1,19 @@
 package hu.bme.mit.inf.modes3.components.controller.command
 
+import hu.bme.mit.inf.modes3.components.controller.enums.EnumTransformator
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.control.SegmentCommandHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder
 
 package class SegmentCommandClient implements SegmentCommandHandler {
-	private var hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback callback
+	private var TrackElementCommandCallback callback
 
-	new(hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback controller) {
+	new(TrackElementCommandCallback controller) {
 		callback = controller
 	}
 
 	override handleMessage(SegmentCommandOrBuilder message) {
 		val id = message.segmentID
-		val state = message.state
+		val state = EnumTransformator.toGeneral(message.state)
 		callback.onSegmentCommand(id, state)
 	}
 
