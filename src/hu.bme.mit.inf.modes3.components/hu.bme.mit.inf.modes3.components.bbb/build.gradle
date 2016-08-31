@@ -6,7 +6,9 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
 	compile 'io.silverspoon:bulldog-devices:0.2.1'
-	compile 'io.silverspoon:bulldog-board-beagleboneblack:0.2.1'
+	compile ('io.silverspoon:bulldog-board-beagleboneblack:0.2.1') {
+		exclude module: 'bulldog-linux-native-beagleboneblack'
+	}
 	compile 'com.google.code.gson:gson:2.7'
 	compile project(':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.common')
 	compile project(':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.controller')
