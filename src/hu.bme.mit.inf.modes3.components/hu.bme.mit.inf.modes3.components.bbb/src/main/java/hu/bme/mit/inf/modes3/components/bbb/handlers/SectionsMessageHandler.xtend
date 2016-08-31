@@ -1,10 +1,10 @@
 package hu.bme.mit.inf.modes3.components.bbb.handlers;
 
 import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderSectionController
-import hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
+import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
-import hu.bme.mit.inf.modes3.components.controller.state.TrackElementStateSender
+import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElementStateSender
 
 /**
  * The message handler of section related commands received on the subscribed
@@ -20,12 +20,12 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 	val sectionController = new ExpanderSectionController
 
 	// segment state sender to the network
-	var TrackElementStateSender trackElementStateSender
+	var ITrackElementStateSender trackElementStateSender
 
 	// to receive commands from the network
-	var TrackElementCommandCallback commandCallback
+	var ITrackElementCommandCallback commandCallback
 
-	new(TrackElementStateSender _trackElementStateSender, TrackElementCommandCallback _commandCallback) {
+	new(ITrackElementStateSender _trackElementStateSender, ITrackElementCommandCallback _commandCallback) {
 		trackElementStateSender = _trackElementStateSender
 		commandCallback = _commandCallback
 
