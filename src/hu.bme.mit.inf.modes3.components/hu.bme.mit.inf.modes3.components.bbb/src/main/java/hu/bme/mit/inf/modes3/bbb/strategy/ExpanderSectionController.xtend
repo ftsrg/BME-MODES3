@@ -5,8 +5,8 @@ import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
 import io.silverspoon.bulldog.core.Signal
-import java.util.Map
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -25,7 +25,7 @@ class ExpanderSectionController extends AbstractControllerStrategy implements IC
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var ExpanderControllerConfiguration controllerConf;
 
 	// the sections statuses based on the section ID
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, SegmentState> sectionStatus;
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var ConcurrentMap<String, SegmentState> sectionStatus;
 
 	new() {
 		try {
@@ -40,14 +40,11 @@ class ExpanderSectionController extends AbstractControllerStrategy implements IC
 			onEnableSection(HexConversionUtil.fromString(sec))
 		}
 	}
-
-	/**
-	 * @return the most recent section status information
-	 */
-	def getSectionsWithStatus() {
-		sectionStatus.entrySet
+	
+	def getManagedSections(){
+		controllerConf.allSection
 	}
-
+	
 	override onGetSectionStatus(int sectionId) {
 		sectionStatus.get(HexConversionUtil.fromNumber(sectionId))
 	}

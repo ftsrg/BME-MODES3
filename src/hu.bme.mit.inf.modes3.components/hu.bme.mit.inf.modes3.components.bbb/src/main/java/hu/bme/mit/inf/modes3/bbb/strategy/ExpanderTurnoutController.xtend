@@ -66,6 +66,10 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
 	}
 
+	def getManagedTurnouts() {
+		controllerConf.allTurnout
+	}
+
 	override protected onGetTurnoutStatus(int turnoutId) {
 		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
 		val pins = controllerConf.getTurnoutExpander(turnoutStr)
@@ -89,11 +93,17 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 	}
 
 	override protected onSetTurnoutStraight(int turnoutId) {
+		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
+		val pins = controllerConf.getTurnoutExpander(turnoutStr)
 		// TODO implement
+		turnoutStatus.put(turnoutStr, TurnoutState.STRAIGHT)
 	}
 
 	override protected onSetTurnoutDivergent(int turnoutId) {
+		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
+		val pins = controllerConf.getTurnoutExpander(turnoutStr)
 		// TODO implement
+		turnoutStatus.put(turnoutStr, TurnoutState.DIVERGENT)
 	}
 
 }
