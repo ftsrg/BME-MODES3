@@ -9,14 +9,17 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 abstract class AbstractComponent {
 	
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) MessagingService mms = new MessagingService
+	@Accessors(PROTECTED_GETTER, PACKAGE_SETTER) MessagingService mms
 	
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) ITransport transport = new ZMQTransport
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) IMessageDispatcher dispatcher = new ProtobufMessageDispatcher
+	@Accessors(PROTECTED_GETTER, PACKAGE_SETTER) ITransport transport
+	@Accessors(PROTECTED_GETTER, PACKAGE_SETTER) IMessageDispatcher dispatcher
 	
-	def void init(){
+	def void init() {	
 		onInit();
 		start();
+		
+		mms ?: new MessagingService
+		transport ?: new ZMQTransport  
 	}
 	
 	def void onInit();
