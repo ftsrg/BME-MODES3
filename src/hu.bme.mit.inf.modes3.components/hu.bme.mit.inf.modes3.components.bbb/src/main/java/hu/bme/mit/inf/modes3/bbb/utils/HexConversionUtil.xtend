@@ -13,6 +13,8 @@ class HexConversionUtil {
 
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) static val Map<Integer, String> intToStrConversionCache = new TreeMap
 
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) static val Map<String, Integer> strToIntConversionCache = new TreeMap
+
 	/**
 	 * Convert the parameter number to HEX String.
 	 * 
@@ -35,6 +37,10 @@ class HexConversionUtil {
 	 * @return the integer representation of the HEX String
 	 */
 	def static fromString(String str) {
-		Integer.decode(str)
+		if(!strToIntConversionCache.containsKey(str)){
+			val number = Integer.decode(str)
+			strToIntConversionCache.put(str, number)
+		}
+		strToIntConversionCache.get(str)
 	}
 }

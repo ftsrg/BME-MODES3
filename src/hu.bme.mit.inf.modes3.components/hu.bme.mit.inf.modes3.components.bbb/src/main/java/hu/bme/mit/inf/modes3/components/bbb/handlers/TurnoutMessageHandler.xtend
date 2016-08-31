@@ -4,8 +4,7 @@ import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
-import hu.bme.mit.inf.modes3.components.controller.state.TrackElementStateSender
-import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElementStateSender
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * The message handler of turnout related commands received on the subscribed
@@ -17,31 +16,16 @@ import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElemen
 class TurnoutMessageHandler implements ITurnoutCommandListener {
 
 	// the actuator that can access the referred turnout
-	val turnoutController = new ExpanderTurnoutController
-
-	// segment state sender to the network
-	var ITrackElementStateSender trackElementStateSender
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderTurnoutController turnoutController
 
 	// to receive commands from the network
-	var ITrackElementCommandCallback commandCallback
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITrackElementCommandCallback commandCallback
 
-	new(ITrackElementStateSender _trackElementStateSender, ITrackElementCommandCallback _commandCallback) {
-		trackElementStateSender = _trackElementStateSender
+	new(ITrackElementCommandCallback _commandCallback, ExpanderTurnoutController _turnoutController) {
+		turnoutController = _turnoutController
 		commandCallback = _commandCallback
-
+		
 		commandCallback.turnoutCommandListener = this
-	}
-
-	/**
-	 * If the embedded controller manages the referred turnout, then its status will be queried and sent back.
-	 * 
-	 * @param turnoutId the turnout's ID whose status should be queried
-	 */
-	private def handleGetTurnoutStatus(int turnoutId) {
-		if (turnoutController.controllerManagesTurnout(turnoutId)) {
-			val turnoutStatus = turnoutController.getTurnoutStatus(turnoutId)
-			trackElementStateSender.sendTurnoutState(turnoutId, turnoutStatus)
-		}
 	}
 
 	/**

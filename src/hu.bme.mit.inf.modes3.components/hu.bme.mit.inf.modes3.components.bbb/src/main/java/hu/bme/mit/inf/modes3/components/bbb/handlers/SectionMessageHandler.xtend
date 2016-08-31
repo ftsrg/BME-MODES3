@@ -4,7 +4,7 @@ import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
-import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElementStateSender
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * The message handler of section related commands received on the subscribed
@@ -14,34 +14,19 @@ import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElemen
  * 
  * @author benedekh, hegyibalint
  */
-public class SectionsMessageHandler implements ISegmentCommandListener {
+public class SectionMessageHandler implements ISegmentCommandListener {
 
 	// the actuator that can access the referred section
-	val sectionController = new ExpanderSectionController
-
-	// segment state sender to the network
-	var ITrackElementStateSender trackElementStateSender
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderSectionController sectionController
 
 	// to receive commands from the network
-	var ITrackElementCommandCallback commandCallback
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITrackElementCommandCallback commandCallback
 
-	new(ITrackElementStateSender _trackElementStateSender, ITrackElementCommandCallback _commandCallback) {
-		trackElementStateSender = _trackElementStateSender
+	new(ITrackElementCommandCallback _commandCallback, ExpanderSectionController _sectionController) {
+		sectionController = _sectionController
 		commandCallback = _commandCallback
-
+		
 		commandCallback.segmentCommandListener = this
-	}
-
-	/**
-	 * If the embedded controller manages the referred section, then its status will be queried and sent back.
-	 * 
-	 * @param sectionId the section's ID whose status should be queried
-	 */
-	private def handleGetSectionStatus(int sectionId) {
-		if (sectionController.controllerManagesSection(sectionId)) {
-			val sectionStatus = sectionController.getSectionStatus(sectionId)
-			trackElementStateSender.sendSegmentState(sectionId, sectionStatus)
-		}
 	}
 
 	/**
