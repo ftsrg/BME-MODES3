@@ -5,8 +5,15 @@ install: false
 script:
   - cd src
   - ./gradlew build
-branches: 
-  only: 
+branches:
+  only:
     - gen3-arch
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 notifications:
   slack: ftsrg:WZdZQP5KHhnxklapMmjNEe3I
