@@ -3,24 +3,6 @@ apply plugin: 'org.xtext.xtend'
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.21'
-	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
 	compile project(':hu.bme.mit.inf.modes3.messaging:hu.bme.mit.inf.modes3.messaging.mms')
 	compile project(':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.zeromq')
-
-	testCompile 'junit:junit:4.12'
-	testCompile "org.mockito:mockito-core:2.+"
-}
-
-sourceSets {
-	main {
-		java.srcDirs = ['src/main/java', 'src/main/xtext-gen']
-		resources.srcDirs = ['src/main/resources', 'src/main/xtext-gen']
-		xtendOutputDir = 'src/main/xtend-gen'
-	}
-	test {
-		java.srcDirs = ['src/test/java', 'src/test/xtext-gen']
-		resources.srcDirs = ['src/test/resources', 'src/test/xtext-gen']
-		xtendOutputDir = 'src/test/xtend-gen'
-	}
 }
