@@ -6,6 +6,7 @@ import hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCa
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
 import hu.bme.mit.inf.modes3.components.controller.state.TrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
+import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
 
 /**
  * The message handler of section related commands received on the subscribed
@@ -43,9 +44,9 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 			// TODO logging
 			val sectionStatus = sectionController.getSectionStatus(sectionId)
 			var state = if (sectionStatus == SectionStatus.ENABLED)
-					SegmentStateValue.ENABLED
+					SegmentState.ENABLED
 				else
-					SegmentStateValue.DISABLED
+					SegmentState.DISABLED
 			trackElementStateSender.sendSegmentState(sectionId, state)
 		}
 	}
@@ -59,7 +60,7 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 		if (sectionController.controllerManagesSection(sectionId)) {
 			// TODO logging
 			sectionController.enableSection(sectionId);
-			trackElementStateSender.sendSegmentState(sectionId, SegmentStateValue.ENABLED)
+			trackElementStateSender.sendSegmentState(sectionId, SegmentState.ENABLED)
 		}
 	}
 
@@ -72,14 +73,14 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 		if (sectionController.controllerManagesSection(sectionId)) {
 			// TODO logging
 			sectionController.disableSection(sectionId);
-			trackElementStateSender.sendSegmentState(sectionId, SegmentStateValue.DISABLED)
+			trackElementStateSender.sendSegmentState(sectionId, SegmentState.DISABLED)
 		}
 	}
 
-	override onSegmentCommand(int id, SegmentStateValue state) {
+	override onSegmentCommand(int id, SegmentState state) {
 		switch (state) {
-			case SegmentStateValue.ENABLED: handleLineEnable(id)
-			case SegmentStateValue.DISABLED: handleLineDisable(id)
+			case SegmentState.ENABLED: handleLineEnable(id)
+			case SegmentState.DISABLED: handleLineDisable(id)
 			default: return
 		}
 	}
