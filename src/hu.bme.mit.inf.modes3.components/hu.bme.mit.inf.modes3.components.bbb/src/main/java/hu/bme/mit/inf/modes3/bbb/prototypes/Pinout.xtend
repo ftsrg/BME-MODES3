@@ -33,7 +33,7 @@ class Pinout {
 			val reader = new JsonReader(isr)
 			val JsonObject pinout = gson.fromJson(reader, JsonObject)
 			gson.fromJson(pinout, Pinout)
-		} finally{
+		} finally {
 			isr?.close
 		}
 	}
