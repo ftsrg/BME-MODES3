@@ -10,7 +10,7 @@ class ZMQTransport implements ITransport {
 	var ZMQ.Socket pub
 	var ZMQ.Socket sub
 	
-	override connect(TransportConfiguration config) {
+	override connect() {
 		pub = ctx.socket(ZMQ.PUB)
 	}
 	
