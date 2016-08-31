@@ -51,7 +51,6 @@ class TurnoutMessageHandler implements ITurnoutCommandListener {
 	private def handleSetTurnoutStraight(int turnoutId) {
 		if (turnoutController.controllerManagesSection(turnoutId)) {
 			turnoutController.setTurnoutStraight(turnoutId)
-			trackElementStateSender.sendTurnoutState(turnoutId, TurnoutState.STRAIGHT)
 		}
 	}
 
@@ -63,7 +62,6 @@ class TurnoutMessageHandler implements ITurnoutCommandListener {
 	private def handleSetTurnoutDivergent(int turnoutId) {
 		if (turnoutController.controllerManagesSection(turnoutId)) {
 			turnoutController.setTurnoutDivergent(turnoutId)
-			trackElementStateSender.sendTurnoutState(turnoutId, TurnoutState.DIVERGENT)
 		}
 	}
 

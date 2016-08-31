@@ -52,7 +52,6 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 	private def handleLineEnable(int sectionId) {
 		if (sectionController.controllerManagesSection(sectionId)) {
 			sectionController.enableSection(sectionId)
-			trackElementStateSender.sendSegmentState(sectionId, SegmentState.ENABLED)
 		}
 	}
 
@@ -64,7 +63,6 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 	private def handleLineDisable(int sectionId) {
 		if (sectionController.controllerManagesSection(sectionId)) {
 			sectionController.disableSection(sectionId)
-			trackElementStateSender.sendSegmentState(sectionId, SegmentState.DISABLED)
 		}
 	}
 

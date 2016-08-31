@@ -23,20 +23,14 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 
 	@Accessors(PRIVATE_GETTER, PRIVATE_SETTER) val Logger logger = LoggerFactory.getLogger(ExpanderTurnoutController)
 
-	/**
-	 * The turnout direction (status) updater thread, that always refreshes the
-	 * turnout's status.
-	 */
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Thread turnoutDirectionUpdater
+	// IO map for the input pins (to get turnout direction)
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ioMap = new HashMap<String, DigitalInput>(4)
 
 	// the actual embedded controller which manages the turnout
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var ExpanderControllerConfiguration controllerConf
 
 	// the latest turnout statuses (straight / divergent), based on turnout ID
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutState> latestTurnoutStatus
-
-	// the former (not the latest) turnout statuses (straight / divergent), based on turnout ID
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutState> formerTurnoutStatus
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutState> turnoutStatus
 
 	new() {
 		try {
@@ -45,23 +39,15 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 			logger.error(ex.message, ex)
 		}
 
-		latestTurnoutStatus = new ConcurrentHashMap
-		formerTurnoutStatus = new ConcurrentHashMap
+		turnoutStatus = new ConcurrentHashMap
 
-		for (String to : controllerConf.getAllTurnout) {
-			val defaultDirection = TurnoutState.STRAIGHT
-			latestTurnoutStatus.put(to, defaultDirection)
-			formerTurnoutStatus.put(to, defaultDirection)
+		// initialize digital input pins for the turnout direction
+		for (to : controllerConf.getAllTurnout) {
+			val pins = controllerConf.getTurnoutExpander(to)
+			ioMap.put(pins.get(0), board.getPin(pins.get(0)).^as(DigitalInput))
+			ioMap.put(pins.get(1), board.getPin(pins.get(1)).^as(DigitalInput))
 		}
 
-		// turnout direction updater
-		turnoutDirectionUpdater = new Thread(new Runnable() {
-			override run() {
-				updateTurnoutDirection
-			}
-		})
-
-		turnoutDirectionUpdater.start
 	}
 
 	override controllerManagesSection(int sectionId) {
@@ -81,7 +67,21 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 	}
 
 	override protected onGetTurnoutStatus(int turnoutId) {
-		latestTurnoutStatus.get(HexConversionUtil.fromNumber(turnoutId))
+		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
+		val pins = controllerConf.getTurnoutExpander(turnoutStr)
+
+		// decide direction
+		var TurnoutState direction = null
+		if (ioMap.get(pins.get(0)).read() == Signal.High) {
+			direction = TurnoutState.STRAIGHT
+		}
+		if (ioMap.get(pins.get(1)).read() == Signal.High) {
+			direction = TurnoutState.DIVERGENT
+		}
+
+		// update stored direction
+		turnoutStatus.put(turnoutStr, direction)
+		direction
 	}
 
 	override controllerManagesTurnout(int turnoutId) {
@@ -94,55 +94,6 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 
 	override protected onSetTurnoutDivergent(int turnoutId) {
 		// TODO implement
-	}
-
-	/**
-	 * @return the most recent turnout status information
-	 */
-	def getTurnoutsWithStatus() {
-		latestTurnoutStatus.entrySet
-	}
-
-	/**
-	 * Automatically refreshes the managed turnouts statuses
-	 * (latestTurnoutStatus), if they have been changed since the last check
-	 * (formerTurnoutStatus).
-	 */
-	private def updateTurnoutDirection() {
-		val ioMap = new HashMap<String, DigitalInput>(4)
-
-		for (String to : controllerConf.getAllTurnout) {
-			val pins = controllerConf.getTurnoutExpander(to)
-			ioMap.put(pins.get(0), board.getPin(pins.get(0)).^as(DigitalInput))
-			ioMap.put(pins.get(1), board.getPin(pins.get(1)).^as(DigitalInput))
-		}
-
-		while (!Thread.interrupted) {
-			for (String to : controllerConf.getAllTurnout) {
-				val pins = controllerConf.getTurnoutExpander(to)
-
-				if (ioMap.get(pins.get(0)).read() == Signal.High) {
-					latestTurnoutStatus.put(to, TurnoutState.STRAIGHT)
-				}
-				if (ioMap.get(pins.get(1)).read() == Signal.High) {
-					latestTurnoutStatus.put(to, TurnoutState.DIVERGENT)
-				}
-
-				val latest = latestTurnoutStatus.get(to)
-				val former = formerTurnoutStatus.get(to)
-
-				if (latest != former) {
-					formerTurnoutStatus.put(to, latest)
-				}
-			}
-
-			try {
-				Thread.sleep(25)
-			} catch (InterruptedException e) {
-				logger.error(e.message, e)
-				Thread.currentThread().interrupt
-			}
-		}
 	}
 
 }

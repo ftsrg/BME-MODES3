@@ -19,7 +19,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class Pinout {
 
 	// the pinout header addresses of the BeagleBone Black embedded controller.
-	@Accessors var Map<String, String[]> headers
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, String[]> headers
 
 	/**
 	 * @return the pinout header configuration
@@ -36,5 +36,9 @@ class Pinout {
 		} finally {
 			isr?.close
 		}
+	}
+	
+	def getHeaderPins(String headerName){
+		headers.get(headerName)
 	}
 }
