@@ -23,13 +23,13 @@ class Setting {
 	 * Stores the managed turnouts ID [key], and the pinout header value through
 	 * that turnout's status (divergent/straight) is measurable.
 	 */
-	@Accessors var Map<String, Integer> turnouts
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, Integer> turnouts
 
 	/**
 	 * Stores the managed sections ID [key], and the pinout header value through
 	 * that sections are controllable.
 	 */
-	@Accessors var Map<String, Integer> sections
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, Integer> sections
 
 	/**
 	 * The deserialized configuration of the pinout headers, based on the
@@ -74,5 +74,22 @@ class Setting {
 	 */
 	def containsSection(int sectionId) {
 		sections.containsKey(HexConversionUtil.fromNumber(sectionId))
+	}
+	
+	def getTurnoutNames(){
+		turnouts.keySet
+	}
+	
+	def getSectionNames(){
+		sections.keySet
+	}
+	
+	
+	def getTurnoutPinoutHeaderValue(String turnout){
+		turnouts.get(turnout)
+	}
+	
+	def getSectionPinoutHeaderValue(String section){
+		sections.get(section)
 	}
 }

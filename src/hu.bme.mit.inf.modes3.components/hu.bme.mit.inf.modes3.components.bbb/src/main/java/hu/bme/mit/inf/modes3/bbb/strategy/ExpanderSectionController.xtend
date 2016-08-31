@@ -35,7 +35,8 @@ class ExpanderSectionController extends AbstractControllerStrategy implements IC
 		}
 
 		sectionStatus = new ConcurrentHashMap
-		for (String sec : controllerConf.getAllSection) {
+		// enable all sections
+		for (sec : controllerConf.getAllSection) {
 			onEnableSection(HexConversionUtil.fromString(sec))
 		}
 	}
