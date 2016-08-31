@@ -2,14 +2,14 @@ package hu.bme.mit.inf.modes3.components.controller.command
 
 import hu.bme.mit.inf.modes3.components.common.ProtobufAbstractComponent
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
+import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
 import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
-import org.eclipse.xtend.lib.annotations.Accessors
 
-class TrackElementCommandCallback extends ProtobufAbstractComponent {
-	@Accessors(PUBLIC_SETTER) var  ISegmentCommandListener segmentCommandListener
-	@Accessors(PUBLIC_SETTER) var ITurnoutCommandListener turnoutCommandListener
+class TrackElementCommandCallback extends ProtobufAbstractComponent implements ITrackElementCommandCallback {
+	var  ISegmentCommandListener segmentCommandListener
+	var ITurnoutCommandListener turnoutCommandListener
 
 	override onInit() {
 		val segmentCommandListener = new SegmentCommandClient(this) 
@@ -25,6 +25,14 @@ class TrackElementCommandCallback extends ProtobufAbstractComponent {
 
 	def onTurnoutCommand(int id, TurnoutState state) {
 		turnoutCommandListener?.onTurnoutCommand(id, state)
+	}
+	
+	override setSegmentCommandListener(ISegmentCommandListener listener) {
+		segmentCommandListener = listener
+	}
+	
+	override setTurnoutCommandListener(ITurnoutCommandListener listener) {
+		turnoutCommandListener = listener
 	}
 
 }
