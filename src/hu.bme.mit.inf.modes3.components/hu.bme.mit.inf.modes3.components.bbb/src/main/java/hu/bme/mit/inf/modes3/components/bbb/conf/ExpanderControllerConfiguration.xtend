@@ -26,11 +26,11 @@ class ExpanderControllerConfiguration implements IControllerConfiguration {
 	 * @throws Exception if TURNOUT_ID is not a valid environmental variable
 	 */
 	new() {
-		val env = System.getenv();
+		val env = System.getenv
 		if (!env.containsKey("TURNOUT_ID")) {
-			throw new RuntimeException("There is no TURNOUT_ID environmental variable defined");
+			throw new RuntimeException("There is no TURNOUT_ID environmental variable defined")
 		}
-		val controllerID = HexConversionUtil.fromString(env.get("TURNOUT_ID"));
+		val controllerID = HexConversionUtil.fromString(env.get("TURNOUT_ID"))
 
 		pinout = Pinout.loadPinoutConfig();
 		setting = Setting.loadPinoutConfig(controllerID);
@@ -58,21 +58,11 @@ class ExpanderControllerConfiguration implements IControllerConfiguration {
 		setting.sections.keySet
 	}
 
-	/**
-	 * 
-	 * @param sectionId
-	 * @return 
-	 */
 	def getSectionExpander(int sectionId) {
 		val expander = setting.sections.get(HexConversionUtil.fromNumber(sectionId))
 		pinout.headers.get(String.valueOf(expander))
 	}
 
-	/**
-	 * 
-	 * @param turnoutId
-	 * @return 
-	 */
 	def getTurnoutExpander(String turnoutId) {
 		val expander = setting.turnouts.get(turnoutId)
 		pinout.headers.get(String.valueOf(expander))

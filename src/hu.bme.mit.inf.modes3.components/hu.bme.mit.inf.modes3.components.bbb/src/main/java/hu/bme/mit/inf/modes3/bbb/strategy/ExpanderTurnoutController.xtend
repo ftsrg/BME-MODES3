@@ -10,6 +10,8 @@ import java.util.HashMap
 import java.util.Map
 import java.util.concurrent.ConcurrentHashMap
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * The turnout controller part of the embedded controller. Through it the
@@ -18,6 +20,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author hegyibalint, benedekh
  */
 class ExpanderTurnoutController extends AbstractControllerStrategy implements IControllerConfiguration {
+
+	@Accessors(PRIVATE_GETTER, PRIVATE_SETTER) val Logger logger = LoggerFactory.getLogger(ExpanderTurnoutController)
 
 	/**
 	 * The turnout direction (status) updater thread, that always refreshes the
@@ -38,7 +42,7 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 		try {
 			controllerConf = new ExpanderControllerConfiguration
 		} catch (Exception ex) {
-			// TODO
+			logger.error(ex.message, ex)
 		}
 
 		latestTurnoutStatus = new ConcurrentHashMap
@@ -48,21 +52,35 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 			val defaultDirection = TurnoutState.STRAIGHT
 			latestTurnoutStatus.put(to, defaultDirection)
 			formerTurnoutStatus.put(to, defaultDirection)
-		// TODO publish turnout status
-		// publishTurnoutStatus(to, defaultDirection)
 		}
 
 		// turnout direction updater
 		turnoutDirectionUpdater = new Thread(new Runnable() {
 			override run() {
-				updateTurnoutDirection()
+				updateTurnoutDirection
 			}
 		})
 
-		turnoutDirectionUpdater.start()
+		turnoutDirectionUpdater.start
 	}
 
-	override onGetTurnoutStatus(int turnoutId) {
+	override controllerManagesSection(int sectionId) {
+		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
+	}
+
+	override protected onGetSectionStatus(int sectionId) {
+		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
+	}
+
+	override protected onEnableSection(int sectionId) {
+		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
+	}
+
+	override protected onDisableSection(int sectionId) {
+		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
+	}
+
+	override protected onGetTurnoutStatus(int turnoutId) {
 		latestTurnoutStatus.get(HexConversionUtil.fromNumber(turnoutId))
 	}
 
@@ -70,20 +88,12 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 		controllerConf.controllerManagesTurnout(turnoutId)
 	}
 
-	override onGetSectionStatus(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
+	override protected onSetTurnoutStraight(int turnoutId) {
+		// TODO implement
 	}
 
-	override onEnableSection(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
-	}
-
-	override onDisableSection(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
-	}
-
-	override controllerManagesSection(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
+	override protected onSetTurnoutDivergent(int turnoutId) {
+		// TODO implement
 	}
 
 	/**
@@ -101,7 +111,7 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 	private def updateTurnoutDirection() {
 		val ioMap = new HashMap<String, DigitalInput>(4)
 
-		for (String to : controllerConf.getAllTurnout){
+		for (String to : controllerConf.getAllTurnout) {
 			val pins = controllerConf.getTurnoutExpander(to)
 			ioMap.put(pins.get(0), board.getPin(pins.get(0)).^as(DigitalInput))
 			ioMap.put(pins.get(1), board.getPin(pins.get(1)).^as(DigitalInput))
@@ -123,15 +133,13 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 
 				if (latest != former) {
 					formerTurnoutStatus.put(to, latest)
-				// TODO publish turnout status
-				// publishTurnoutStatus(to, latest)
 				}
 			}
 
 			try {
 				Thread.sleep(25)
 			} catch (InterruptedException e) {
-				// TODO
+				logger.error(e.message, e)
 				Thread.currentThread().interrupt
 			}
 		}

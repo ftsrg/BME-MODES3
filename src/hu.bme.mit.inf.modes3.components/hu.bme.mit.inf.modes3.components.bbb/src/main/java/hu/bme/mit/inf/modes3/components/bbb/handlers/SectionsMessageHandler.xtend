@@ -39,7 +39,6 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 	 */
 	private def handleGetSectionStatus(int sectionId) {
 		if (sectionController.controllerManagesSection(sectionId)) {
-			// TODO logging
 			val sectionStatus = sectionController.getSectionStatus(sectionId)
 			trackElementStateSender.sendSegmentState(sectionId, sectionStatus)
 		}
@@ -52,8 +51,7 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 	 */
 	private def handleLineEnable(int sectionId) {
 		if (sectionController.controllerManagesSection(sectionId)) {
-			// TODO logging
-			sectionController.enableSection(sectionId);
+			sectionController.enableSection(sectionId)
 			trackElementStateSender.sendSegmentState(sectionId, SegmentState.ENABLED)
 		}
 	}
@@ -65,8 +63,7 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 	 */
 	private def handleLineDisable(int sectionId) {
 		if (sectionController.controllerManagesSection(sectionId)) {
-			// TODO logging
-			sectionController.disableSection(sectionId);
+			sectionController.disableSection(sectionId)
 			trackElementStateSender.sendSegmentState(sectionId, SegmentState.DISABLED)
 		}
 	}
