@@ -24,7 +24,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
 
-class ProtobufMessageDispatcher implements MessageDispatcher {
+class ProtobufMessageDispatcher implements IMessageDispatcher {
 
 	// SIGNALS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainCurrentSpeedOrBuilder> trainCurrentSpeedHandler

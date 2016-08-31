@@ -6,8 +6,6 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
 	compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
 	compile 'com.google.code.gson:gson:2.7'
-
-	testCompile 'junit:junit:4.12'
 }
 
 sourceSets {

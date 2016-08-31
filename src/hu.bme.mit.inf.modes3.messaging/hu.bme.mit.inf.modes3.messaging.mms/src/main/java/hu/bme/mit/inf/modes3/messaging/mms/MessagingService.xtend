@@ -1,14 +1,14 @@
 package hu.bme.mit.inf.modes3.messaging.mms
 
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.MessageDispatcher
-import hu.bme.mit.inf.modes3.transports.common.Transport
+import hu.bme.mit.inf.modes3.transports.common.ITransport
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 
 class MessagingService {
 
-	Transport transport
-	MessageDispatcher dispatcher
+	ITransport transport
+	IMessageDispatcher dispatcher
 
-	def start(Transport _transport, MessageDispatcher _dispatcher) {
+	def start(ITransport _transport, IMessageDispatcher _dispatcher) {
 		this.transport = _transport
 		this.dispatcher = _dispatcher
 		
