@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.components.bbb.notifiers
 
-import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.bbb.utils.HexConversionUtil
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
+import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElementStateSender
 import org.eclipse.xtend.lib.annotations.Accessors
 

@@ -1,9 +1,9 @@
-package hu.bme.mit.inf.modes3.bbb.prototypes;
+package hu.bme.mit.inf.modes3.components.bbb.prototypes;
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
-import hu.bme.mit.inf.modes3.bbb.utils.HexConversionUtil
+import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import java.io.InputStreamReader
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -23,13 +23,13 @@ class Setting {
 	 * Stores the managed turnouts ID [key], and the pinout header value through
 	 * that turnout's status (divergent/straight) is measurable.
 	 */
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, Integer> turnouts
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, Integer> turnouts
 
 	/**
 	 * Stores the managed sections ID [key], and the pinout header value through
 	 * that sections are controllable.
 	 */
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, Integer> sections
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, Integer> sections
 
 	/**
 	 * The deserialized configuration of the pinout headers, based on the

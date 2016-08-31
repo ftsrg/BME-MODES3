@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.handlers;
 
-import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderSectionController
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState

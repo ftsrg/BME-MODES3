@@ -1,8 +1,8 @@
-package hu.bme.mit.inf.modes3.bbb.strategy;
+package hu.bme.mit.inf.modes3.components.bbb.strategy;
 
-import hu.bme.mit.inf.modes3.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
+import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
 import io.silverspoon.bulldog.core.Signal
 import java.util.concurrent.ConcurrentHashMap
@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory
  */
 class ExpanderSectionController extends AbstractControllerStrategy implements IControllerConfiguration {
 
-	@Accessors(PRIVATE_GETTER, PRIVATE_SETTER) val Logger logger = LoggerFactory.getLogger(ExpanderSectionController)
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger = LoggerFactory.getLogger(ExpanderSectionController)
 
 	// the actual embedded controller which manages the sections
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var ExpanderControllerConfiguration controllerConf;
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var ExpanderControllerConfiguration controllerConf;
 
 	// the sections statuses based on the section ID
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var ConcurrentMap<String, SegmentState> sectionStatus;
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var ConcurrentMap<String, SegmentState> sectionStatus;
 
 	new() {
 		try {
