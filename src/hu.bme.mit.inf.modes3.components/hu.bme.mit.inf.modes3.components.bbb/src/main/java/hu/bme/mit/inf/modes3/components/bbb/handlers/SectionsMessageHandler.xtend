@@ -1,12 +1,10 @@
 package hu.bme.mit.inf.modes3.components.bbb.handlers;
 
 import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderSectionController
-import hu.bme.mit.inf.modes3.bbb.utils.SectionStatus
 import hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ISegmentCommandListener
-import hu.bme.mit.inf.modes3.components.controller.state.TrackElementStateSender
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
+import hu.bme.mit.inf.modes3.components.controller.state.TrackElementStateSender
 
 /**
  * The message handler of section related commands received on the subscribed
@@ -43,11 +41,7 @@ public class SectionsMessageHandler implements ISegmentCommandListener {
 		if (sectionController.controllerManagesSection(sectionId)) {
 			// TODO logging
 			val sectionStatus = sectionController.getSectionStatus(sectionId)
-			var state = if (sectionStatus == SectionStatus.ENABLED)
-					SegmentState.ENABLED
-				else
-					SegmentState.DISABLED
-			trackElementStateSender.sendSegmentState(sectionId, state)
+			trackElementStateSender.sendSegmentState(sectionId, sectionStatus)
 		}
 	}
 

@@ -1,11 +1,7 @@
 package hu.bme.mit.inf.modes3.components.bbb.handlers;
 
 import hu.bme.mit.inf.modes3.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.bbb.utils.TurnoutStatus
-import hu.bme.mit.inf.modes3.components.controller.command.TrackElementCommandCallback
 import hu.bme.mit.inf.modes3.components.controller.state.TrackElementStateSender
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
-import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
 
 /**
  * The message handler of turnout related commands received on the subscribed
@@ -35,11 +31,7 @@ class TurnoutMessageHandler {
 		if (turnoutController.controllerManagesTurnout(turnoutId)) {
 			// TODO logging
 			val turnoutStatus = turnoutController.getTurnoutStatus(turnoutId)
-			val status = if (turnoutStatus == TurnoutStatus.STRAIGHT)
-					TurnoutState.STRAIGHT
-				else
-					TurnoutState.DIVERGENT
-			trackElementStateSender.sendTurnoutState(turnoutId, status)
+			trackElementStateSender.sendTurnoutState(turnoutId, turnoutStatus)
 		}
 	}
 

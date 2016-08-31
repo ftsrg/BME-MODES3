@@ -1,9 +1,9 @@
 package hu.bme.mit.inf.modes3.bbb.strategy;
 
 import hu.bme.mit.inf.modes3.bbb.utils.HexConversionUtil
-import hu.bme.mit.inf.modes3.bbb.utils.TurnoutStatus
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
+import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
 import io.silverspoon.bulldog.core.Signal
 import io.silverspoon.bulldog.core.gpio.DigitalInput
 import java.util.HashMap
@@ -29,10 +29,10 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var ExpanderControllerConfiguration controllerConf
 
 	// the latest turnout statuses (straight / divergent), based on turnout ID
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutStatus> latestTurnoutStatus
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutState> latestTurnoutStatus
 
 	// the former (not the latest) turnout statuses (straight / divergent), based on turnout ID
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutStatus> formerTurnoutStatus
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var Map<String, TurnoutState> formerTurnoutStatus
 
 	new() {
 		try {
@@ -45,7 +45,7 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 		formerTurnoutStatus = new ConcurrentHashMap
 
 		for (String to : controllerConf.getAllTurnout) {
-			val defaultDirection = TurnoutStatus.STRAIGHT
+			val defaultDirection = TurnoutState.STRAIGHT
 			latestTurnoutStatus.put(to, defaultDirection)
 			formerTurnoutStatus.put(to, defaultDirection)
 		// TODO publish turnout status
@@ -112,10 +112,10 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 				val pins = controllerConf.getTurnoutExpander(to)
 
 				if (ioMap.get(pins.get(0)).read() == Signal.High) {
-					latestTurnoutStatus.put(to, TurnoutStatus.STRAIGHT)
+					latestTurnoutStatus.put(to, TurnoutState.STRAIGHT)
 				}
 				if (ioMap.get(pins.get(1)).read() == Signal.High) {
-					latestTurnoutStatus.put(to, TurnoutStatus.DIVERGENT)
+					latestTurnoutStatus.put(to, TurnoutState.DIVERGENT)
 				}
 
 				val latest = latestTurnoutStatus.get(to)

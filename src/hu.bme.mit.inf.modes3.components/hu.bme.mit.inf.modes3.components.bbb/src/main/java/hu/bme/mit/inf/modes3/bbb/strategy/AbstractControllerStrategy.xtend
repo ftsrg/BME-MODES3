@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.bbb.strategy;
 
-import hu.bme.mit.inf.modes3.bbb.utils.SectionStatus
-import hu.bme.mit.inf.modes3.bbb.utils.TurnoutStatus
+import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
+import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
 import io.silverspoon.bulldog.core.Signal
 import io.silverspoon.bulldog.core.gpio.DigitalInput
 import io.silverspoon.bulldog.core.gpio.DigitalOutput
@@ -111,7 +111,7 @@ abstract class AbstractControllerStrategy {
      * @param turnoutId the ID of the turnout whose status should be queried
      * @return the status (straight / divergent) of the respective turnout
      */
-    protected def TurnoutStatus onGetTurnoutStatus(int turnoutId)
+    protected def TurnoutState onGetTurnoutStatus(int turnoutId)
 
     /**
      * The platform specific implementation of querying section status (enabled
@@ -120,7 +120,7 @@ abstract class AbstractControllerStrategy {
      * @param sectionId the ID of the section whose status should be queried
      * @return the status (enabled / disabled) of the respective section
      */
-    protected def SectionStatus onGetSectionStatus(int sectionId)
+    protected def SegmentState onGetSectionStatus(int sectionId)
 
     /**
      * The platform specific implementation of enabling the section.
