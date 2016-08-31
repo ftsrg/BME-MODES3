@@ -26,7 +26,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy
 
-class ProtobufMessageDispatcher implements MessageDispatcher {
+class ProtobufMessageDispatcher implements IMessageDispatcher {
 
 	// SIGNALS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainCurrentSpeedOrBuilder> trainCurrentSpeedHandler

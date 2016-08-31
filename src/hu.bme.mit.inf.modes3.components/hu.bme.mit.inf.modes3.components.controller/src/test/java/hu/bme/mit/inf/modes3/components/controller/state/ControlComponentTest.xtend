@@ -4,10 +4,9 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 
-import static org.mockito.Mockito.*
-
 class ControlComponentTest {
 
+	@Mock 
 	private TrackElementStateRegistry elementStateRegistry;
 
 
@@ -18,19 +17,24 @@ class ControlComponentTest {
 	@Test
 	def void testSegmentState() {
 		// Arrange
+		
+		
 		// Act
-		elementStateRegistry.getSegmentState(1)
 
-	// Assert
+
+		// Assert
+		
 	}
 
 	@Test
 	def void testTurnoutState() {
 		// Arrange
-		// Act
-		elementStateRegistry.getTurnoutState(2)
 
-	// Assert
+
+		// Act
+
+
+		// Assert
 	}
 
 }
