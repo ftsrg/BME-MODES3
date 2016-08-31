@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RailRoadModel:RailRoadModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:RailRoadModel="http://hu.bme.mit.inf.safetylogic.railroadmodel">
+  <sections xsi:type="RailRoadModel:Turnout" id="14" top="15" straight="12" divergent="11"/>
+  <sections xsi:type="RailRoadModel:Turnout" id="21" top="17" straight="23" divergent="22"/>
+  <sections xsi:type="RailRoadModel:Turnout" id="9" top="8" straight="11" divergent="10"/>
+  <sections xsi:type="RailRoadModel:Turnout" id="3" top="2" straight="4" divergent="5"/>
+  <sections xsi:type="RailRoadModel:Turnout" id="25" top="20" straight="26" divergent="32"/>
+  <sections xsi:type="RailRoadModel:Turnout" id="32" top="30" straight="19" divergent="25"/>
+  <sections xsi:type="RailRoadModel:Turnout" id="28" top="29" straight="31" divergent="30"/>
+  <sections xsi:type="RailRoadModel:Segment" id="15" connectedTo="24 14"/>
+  <sections xsi:type="RailRoadModel:Segment" id="24" connectedTo="29 15"/>
+  <sections xsi:type="RailRoadModel:Segment" id="29" connectedTo="24 28"/>
+  <sections xsi:type="RailRoadModel:Segment" id="12" connectedTo="1 14"/>
+  <sections xsi:type="RailRoadModel:Segment" id="1" connectedTo="12 2"/>
+  <sections xsi:type="RailRoadModel:Segment" id="2" connectedTo="1 3"/>
+  <sections xsi:type="RailRoadModel:Segment" id="4" connectedTo="3 6"/>
+  <sections xsi:type="RailRoadModel:Segment" id="6" connectedTo="4 18"/>
+  <sections xsi:type="RailRoadModel:Segment" id="10" connectedTo="17 9"/>
+  <sections xsi:type="RailRoadModel:Segment" id="18" connectedTo="6 31"/>
+  <sections xsi:type="RailRoadModel:Segment" id="31" connectedTo="18 28"/>
+  <sections xsi:type="RailRoadModel:Segment" id="17" connectedTo="21 10"/>
+  <sections xsi:type="RailRoadModel:Segment" id="22" connectedTo="21"/>
+  <sections xsi:type="RailRoadModel:Segment" id="23" connectedTo="27 21"/>
+  <sections xsi:type="RailRoadModel:Segment" id="27" connectedTo="23 26"/>
+  <sections xsi:type="RailRoadModel:Segment" id="26" connectedTo="27 25"/>
+  <sections xsi:type="RailRoadModel:Segment" id="20" connectedTo="25 13"/>
+  <sections xsi:type="RailRoadModel:Segment" id="13" connectedTo="20 8"/>
+  <sections xsi:type="RailRoadModel:Segment" id="8" connectedTo="13 9"/>
+  <sections xsi:type="RailRoadModel:Segment" id="5" connectedTo="7 3"/>
+  <sections xsi:type="RailRoadModel:Segment" id="7" connectedTo="5 19"/>
+  <sections xsi:type="RailRoadModel:Segment" id="19" connectedTo="7 32"/>
+  <sections xsi:type="RailRoadModel:Segment" id="30" connectedTo="32 28"/>
+  <sections xsi:type="RailRoadModel:Segment" id="11" connectedTo="9 14"/>
+</RailRoadModel:RailRoadModel>

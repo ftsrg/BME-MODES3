@@ -11,8 +11,9 @@ import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITurnoutStat
 import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITurnoutStateListener
 import java.util.concurrent.ConcurrentHashMap
 import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElementStateRegistry
 
-class TrackElementStateRegistry {
+class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	val segments = new ConcurrentHashMap<Integer, SegmentState>
 	val turnouts = new ConcurrentHashMap<Integer, TurnoutState>
 	val occupancy = new ConcurrentHashMap<Integer, SegmentOccupancy>
@@ -23,7 +24,7 @@ class TrackElementStateRegistry {
 
 		override onSegmentState(int id, SegmentState state) {
 			if(segments.get(id) != state) {
-				segmentStateChangeListener.onSegmentStateChange(id, segments.get(id), state)
+				segmentStateChangeListener?.onSegmentStateChange(id, segments.get(id), state)
 				segments.put(id, state)
 			}
 		}
@@ -32,7 +33,7 @@ class TrackElementStateRegistry {
 
 		override onTurnoutState(int id, TurnoutState state) {
 			if(turnouts.get(id) != state) {
-				turnoutStateChangeListener.onTurnoutStateChange(id, turnouts.get(id), state)
+				turnoutStateChangeListener?.onTurnoutStateChange(id, turnouts.get(id), state)
 				turnouts.put(id, state)
 			}
 		}
@@ -40,20 +41,16 @@ class TrackElementStateRegistry {
 	}, new ISegmentOccupancyListener() {
 		override onSegmentOccupancy(int id, SegmentOccupancy state) {
 			if(occupancy.get(id) != state) {
-				segmentOccupancyChangeListener.onSegmentOccupancyChange(id, occupancy.get(id), state)
+				segmentOccupancyChangeListener?.onSegmentOccupancyChange(id, occupancy.get(id), state)
 				occupancy.put(id, state)
 			}
 		}
 
 	})
 
-	new(ISegmentStateChangeListener segmentStateChangeListener, ITurnoutStateChangeListener turnoutChangeListener, ISegmentOccupancyChangeListener segmentOccupancyChangeListener) {
-		this.segmentStateChangeListener = segmentStateChangeListener
-		this.turnoutStateChangeListener = turnoutChangeListener
-		this.segmentOccupancyChangeListener = segmentOccupancyChangeListener
-	}
+	new(){}
 
-	def getSegmentState(int id) {
+	override getSegmentState(int id) {
 		if(segments.get(id) == null) {
 			// TODO send msg to query the current state
 			synchronized(segments) {
@@ -65,7 +62,7 @@ class TrackElementStateRegistry {
 		segments.get(id)
 	}
 
-	def getTurnoutState(int id) {
+	override getTurnoutState(int id) {
 		if(turnouts.get(id) == null) {
 			// TODO send msg to query the current state
 			synchronized(turnouts) {
@@ -75,6 +72,18 @@ class TrackElementStateRegistry {
 			}
 		}
 		turnouts.get(id)
+	}
+
+	override getSegmentOccupancy(int id) {
+		if(occupancy.get(id) == null) {
+			// TODO send msg to query the current state
+			synchronized(occupancy) {
+				if(occupancy.get(id) == null) {
+					occupancy.put(id, SegmentOccupancy.OCCUPIED)
+				}
+			}
+		}
+		occupancy.get(id)
 	}
 
 }

@@ -7,17 +7,20 @@ import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
 import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ISegmentOccupancyListener
 import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ISegmentStateListener
 import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITurnoutStateListener
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class TrackElementStateCallback extends ProtobufAbstractComponent{
-	var ISegmentStateListener segmentStateListener
-	var ITurnoutStateListener turnoutStateListener
-	var ISegmentOccupancyListener segmentOccupancyListener
-
+	@Accessors(PROTECTED_GETTER, PUBLIC_SETTER) var ISegmentStateListener segmentStateListener
+	@Accessors(PROTECTED_GETTER, PUBLIC_SETTER) var ITurnoutStateListener turnoutStateListener
+	@Accessors(PROTECTED_GETTER, PUBLIC_SETTER) var ISegmentOccupancyListener segmentOccupancyListener
+	
 	new(ISegmentStateListener segmentStateListener, ITurnoutStateListener turnoutStateListener, ISegmentOccupancyListener segmentOccupancyListener) {
 		this.segmentStateListener = segmentStateListener
 		this.turnoutStateListener = turnoutStateListener
 		this.segmentOccupancyListener = segmentOccupancyListener
 	}
+	
+	new(){}
 
 	override onInit() {
 		val segmentStateClient = new SegmentStateClient(this)
@@ -30,14 +33,14 @@ class TrackElementStateCallback extends ProtobufAbstractComponent{
 	}
 	
 	def onSegmentState(int id, SegmentState state){
-		segmentStateListener.onSegmentState(id, state)
+		segmentStateListener?.onSegmentState(id, state)
 	}
 	
 	def onTurnoutState(int id, TurnoutState state){
-		turnoutStateListener.onTurnoutState(id, state)
+		turnoutStateListener?.onTurnoutState(id, state)
 	}
 	
 	def onSegmentOccupancy(int id, SegmentOccupancy state){
-		segmentOccupancyListener.onSegmentOccupancy(id, state)
+		segmentOccupancyListener?.onSegmentOccupancy(id, state)
 	}
 }

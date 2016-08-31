@@ -1,9 +1,8 @@
 package hu.bme.mit.inf.modes3.components.bbb.conf;
 
-import hu.bme.mit.inf.modes3.bbb.prototypes.Pinout
-import hu.bme.mit.inf.modes3.bbb.prototypes.Setting
-import hu.bme.mit.inf.modes3.bbb.utils.HexConversionUtil
-import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
+import hu.bme.mit.inf.modes3.components.bbb.prototypes.Pinout
+import hu.bme.mit.inf.modes3.components.bbb.prototypes.Setting
+import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -32,8 +31,8 @@ class ExpanderControllerConfiguration implements IControllerConfiguration {
 		}
 		val controllerID = HexConversionUtil.fromString(env.get("TURNOUT_ID"))
 
-		pinout = Pinout.loadPinoutConfig();
-		setting = Setting.loadPinoutConfig(controllerID);
+		pinout = Pinout.loadPinoutConfig
+		setting = Setting.loadPinoutConfig(controllerID)
 	}
 
 	override controllerManagesTurnout(int turnoutId) {
@@ -48,24 +47,24 @@ class ExpanderControllerConfiguration implements IControllerConfiguration {
 	 * @return the managed turnouts ID as String
 	 */
 	def getAllTurnout() {
-		setting.turnouts.keySet
+		setting.turnoutNames
 	}
 
 	/**
 	 * @return the managed sections ID as String
 	 */
 	def getAllSection() {
-		setting.sections.keySet
+		setting.sectionNames
 	}
 
 	def getSectionExpander(int sectionId) {
-		val expander = setting.sections.get(HexConversionUtil.fromNumber(sectionId))
-		pinout.headers.get(String.valueOf(expander))
+		val expander = setting.getSectionPinoutHeaderValue(HexConversionUtil.fromNumber(sectionId))
+		pinout.getHeaderPins(String.valueOf(expander))
 	}
 
 	def getTurnoutExpander(String turnoutId) {
-		val expander = setting.turnouts.get(turnoutId)
-		pinout.headers.get(String.valueOf(expander))
+		val expander = setting.getTurnoutPinoutHeaderValue(turnoutId)
+		pinout.getHeaderPins(String.valueOf(expander))
 	}
 
 }
