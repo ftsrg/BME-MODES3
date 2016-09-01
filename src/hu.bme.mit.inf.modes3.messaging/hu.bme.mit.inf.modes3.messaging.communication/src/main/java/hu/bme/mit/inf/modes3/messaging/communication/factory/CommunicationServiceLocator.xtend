@@ -11,21 +11,27 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElem
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.ITransport
-import hu.bme.mit.inf.modes3.transports.zeromq.ZMQTransport
 
-//@Data
 class CommunicationServiceLocator {
 	
-	val MessagingService mms =  new MessagingService
-	val ITransport transport = new ZMQTransport 
-	val ProtobufMessageDispatcher dispatcher = new ProtobufMessageDispatcher
-	val tess = new TrackElementStateSender(mms)
-	val tec = new TrackElementCommander(mms)
-	val tecc  = new TrackElementCommandCallback(dispatcher)
-	val tsr =  new TrackElementStateRegistry(dispatcher)
-	
-	new(){
-		mms.start(transport, dispatcher)		
+	val MessagingService mms 
+	val ITransport transport
+	val ProtobufMessageDispatcher dispatcher 
+	val TrackElementStateSender tess
+	val TrackElementCommander tec
+	val TrackElementCommandCallback tecc
+	val TrackElementStateRegistry tsr 
+		
+	new(CommunicationStack stack) {
+		mms = stack.mms
+		transport = stack.transport
+		dispatcher = stack.dispatcher
+		mms.start(transport, dispatcher)
+		
+		tess = new TrackElementStateSender(mms)		
+		tec = new TrackElementCommander(mms)
+		tecc  = new TrackElementCommandCallback(dispatcher)
+		tsr =  new TrackElementStateRegistry(dispatcher)
 	}
 	
 	def ITrackElementStateSender getTrackElementStateSender(){
