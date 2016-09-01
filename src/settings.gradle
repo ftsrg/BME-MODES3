@@ -30,9 +30,9 @@ include ':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.zero
 include ':hu.bme.mit.inf.modes3.components'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.bbb'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.common'
+
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.sample'
-
-
+include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.util'
 
 /*
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.event'
