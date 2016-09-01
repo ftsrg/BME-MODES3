@@ -1,9 +1,9 @@
 package hu.bme.mit.inf.modes3.components.bbb.handlers;
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITrackElementCommandCallback
-import hu.bme.mit.inf.modes3.components.controller.command.interfaces.ITurnoutCommandListener
-import hu.bme.mit.inf.modes3.components.controller.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommandCallback
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
