@@ -32,7 +32,6 @@ include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.bbb'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.common'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.sample'
 
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.controller'
 
 
 /*

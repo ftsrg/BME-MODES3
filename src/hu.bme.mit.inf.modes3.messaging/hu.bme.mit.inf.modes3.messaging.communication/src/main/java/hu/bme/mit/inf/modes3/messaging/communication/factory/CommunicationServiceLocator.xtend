@@ -13,6 +13,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.ITransport
 import hu.bme.mit.inf.modes3.transports.zeromq.ZMQTransport
 
+//@Data
 class CommunicationServiceLocator {
 	
 	val MessagingService mms =  new MessagingService
