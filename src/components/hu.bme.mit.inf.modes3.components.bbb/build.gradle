@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	compile 'io.silverspoon:bulldog-devices:0.2.1'
+	compile ('io.silverspoon:bulldog-board-beagleboneblack:0.2.1') {
+		exclude module: 'bulldog-linux-native-beagleboneblack'
+	}
+	compile 'com.google.code.gson:gson:2.7'
+	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+}
