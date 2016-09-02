@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
 install: false
 script:
-  - cd src
+  - cd src/java
   - ./gradlew build
 branches:
   only:
