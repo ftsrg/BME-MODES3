@@ -34,11 +34,6 @@ include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.comm
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.sample'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.util'
 
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model'
-//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.event'
-//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model.edit'
-//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model.editor'
-//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.patterns'
-
+include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model'
 
 // TODO: Add components
