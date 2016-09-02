@@ -19,22 +19,36 @@ class ZMQIntegrationTests {
 		val endpoints = TransportEndpoints.loadConfig(TransportEndpoints.ActiveConfiguration.INTEGRATION_LOCAL)
 		
 		val tc1 = new TransportConfiguration(
-			new TransportEndpoint('127.0.0.1', 1001), 
+			new TransportEndpoint('127.0.0.1', 9001), 
 			endpoints
 		)
 		val tc2 = new TransportConfiguration(
-			new TransportEndpoint('127.0.0.1', 1002), 
+			new TransportEndpoint('127.0.0.1', 9002), 
 			endpoints
 		)
 		
 		val zmq1 = new ZMQTransport(tc1)
-		val zmq2 = new ZMQTransport(tc1)
+		val zmq2 = new ZMQTransport(tc2)
 		
 		
 		// Act
 		
-		zmq1.connect
-		zmq2.connect
+		val t1 = new Thread(new Runnable {
+			override run() {
+				zmq1.connect
+			}
+		})
+		t1.start
+		
+		val t2 = new Thread(new Runnable {
+			override run() {
+				zmq2.connect
+			}
+		})
+		t2.start
+		
+		t1.join
+		t2.join
 		
 		zmq1.sendMessage(message.bytes)
 		val received = new String(zmq2.receiveMessage)

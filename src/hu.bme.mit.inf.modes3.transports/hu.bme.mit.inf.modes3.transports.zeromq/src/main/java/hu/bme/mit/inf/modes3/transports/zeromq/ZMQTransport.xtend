@@ -32,13 +32,16 @@ class ZMQTransport extends Transport {
 		
 		
 		var remoteCoreEndpointCount = config.allEndpoints.core.values.fold(0, [count, next | count + next.size]) - 1
+		
 		while(remoteCoreEndpointCount != 0) {
 			val event = ZMQ.Event.recv(monitor)
 			println(event.address + ' ' + event.event + ' ' + event.value)
-			if (event == ZMQ.EVENT_CONNECTED) {
+			if (event.event.bitwiseAnd(ZMQ.EVENT_CONNECTED) != 0) {
 				remoteCoreEndpointCount--
 			}
 		}
+		
+		println("ZMQ Net is ready")
 	}
 	
 	override receiveMessage() {
