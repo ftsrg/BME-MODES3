@@ -2,7 +2,7 @@ package hu.bme.mit.inf.modes3.components.bbb.notifiers
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
-import hu.bme.mit.inf.modes3.components.controller.state.interfaces.ITrackElementStateSender
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import org.eclipse.xtend.lib.annotations.Accessors
 
 class TurnoutStateNotifier implements Runnable {

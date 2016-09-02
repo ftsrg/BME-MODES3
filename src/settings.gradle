@@ -20,6 +20,8 @@ rootProject.name = 'hu.bme.mit.inf.modes3'
 
 include ':hu.bme.mit.inf.modes3.messaging'
 include ':hu.bme.mit.inf.modes3.messaging:hu.bme.mit.inf.modes3.messaging.mms'
+include ':hu.bme.mit.inf.modes3.messaging:hu.bme.mit.inf.modes3.messaging.communication'
+
 
 include ':hu.bme.mit.inf.modes3.transports'
 include ':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.common'
@@ -28,18 +30,15 @@ include ':hu.bme.mit.inf.modes3.transports:hu.bme.mit.inf.modes3.transports.zero
 include ':hu.bme.mit.inf.modes3.components'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.bbb'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.common'
+
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.sample'
+include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.util'
 
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.controller'
-
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.controller'
-
-/*
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.event'
 include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model'
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model.edit'
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model.editor'
-include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.patterns'
-*/
+//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.event'
+//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model.edit'
+//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.model.editor'
+//include ':hu.bme.mit.inf.modes3.components:hu.bme.mit.inf.modes3.components.safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.patterns'
+
 
 // TODO: Add components

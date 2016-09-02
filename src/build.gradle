@@ -6,7 +6,8 @@ plugins {
 subprojects {
 	repositories {
 		jcenter()
-		mavenCentral()
+        mavenCentral()
+		maven { url "https://repo.eclipse.org/content/groups/viatra2" }
 	}
 	
 	plugins.withType(JavaPlugin) {
@@ -15,7 +16,7 @@ subprojects {
 			compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
 			
 			testCompile 'junit:junit:4.12'
-			testCompile "org.mockito:mockito-core:2.+"
+			testCompile "org.mockito:mockito-core:1.+"
 		}
 	}
 	

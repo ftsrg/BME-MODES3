@@ -3,7 +3,7 @@ package hu.bme.mit.inf.modes3.components.bbb.strategy;
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
-import hu.bme.mit.inf.modes3.components.controller.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import io.silverspoon.bulldog.core.Signal
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
