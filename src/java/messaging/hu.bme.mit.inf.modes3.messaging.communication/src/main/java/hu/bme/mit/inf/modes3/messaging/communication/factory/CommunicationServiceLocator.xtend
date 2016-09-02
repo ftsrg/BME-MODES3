@@ -10,12 +10,12 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElem
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
-import hu.bme.mit.inf.modes3.transports.common.ITransport
+import hu.bme.mit.inf.modes3.transports.common.Transport
 
 class CommunicationServiceLocator {
 	
 	val MessagingService mms 
-	val ITransport transport
+	val Transport transport
 	val ProtobufMessageDispatcher dispatcher 
 	val TrackElementStateSender tess
 	val TrackElementCommander tec
@@ -24,7 +24,7 @@ class CommunicationServiceLocator {
 		
 	new(CommunicationStack stack) {
 		mms = stack.mms
-		transport = stack.transport
+		transport = null// TODO stack.transport
 		dispatcher = stack.dispatcher
 		mms.start(transport, dispatcher)
 		
