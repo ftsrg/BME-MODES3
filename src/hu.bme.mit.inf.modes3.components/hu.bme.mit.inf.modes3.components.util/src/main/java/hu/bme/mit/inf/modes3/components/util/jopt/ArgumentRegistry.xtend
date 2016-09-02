@@ -124,11 +124,11 @@ public class ArgumentRegistry {
 		if (parsed.has(argument)) {
 			try {
 				val ArgumentAcceptingOptionSpec<String> castedArgument = getAs(argument)
-				return parsed.valueOf(castedArgument)
+				return parsed.valueOf(castedArgument).trim
 			} catch (OptionException ex) {
 				throw new ClassCastException(ex.message)
 			} catch (ClassCastException ex) {
-				throw new IOException("Please use a string for the " + name + " parameter.")
+				throw new IllegalArgumentException("Please use a string for the " + name + " argument's parameter value.")
 			}
 		}
 	}
@@ -154,7 +154,7 @@ public class ArgumentRegistry {
 			} catch (OptionException ex) {
 				throw new ClassCastException(ex.message)
 			} catch (ClassCastException ex) {
-				throw new IOException("Please use an integer for the " + name + " parameter.")
+				throw new IllegalArgumentException("Please use an integer for the " + name + " argument's parameter value.")
 			}
 		}
 	}

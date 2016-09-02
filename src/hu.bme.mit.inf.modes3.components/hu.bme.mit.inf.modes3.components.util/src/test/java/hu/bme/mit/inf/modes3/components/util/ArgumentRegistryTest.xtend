@@ -3,9 +3,11 @@ package hu.bme.mit.inf.modes3.components.util
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptor
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import java.io.ByteArrayOutputStream
-import java.util.function.Function
+import java.util.Arrays
+import java.util.HashSet
 import java.util.stream.Collectors
 import java.util.stream.Stream
+import joptsimple.OptionException
 import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.theories.DataPoints
@@ -121,6 +123,160 @@ class ArgumentRegistryTest {
 		// Assert
 		val outputString = outputStream?.toString("UTF-8")
 		assertTrue(outputString.contains(expectedLine))
+	}
+
+	/**
+	 * Parses the String[] array that contains the arguments which were set by the user.
+	 */
+	@Test
+	def void parseArgumentsTest() {
+		// Arrange
+		val firstArgument = new ArgumentDescriptor("f", "first argument with one parameter", String)
+		val secondArgument = new ArgumentDescriptor("se", "second argument without parameter")
+		val argumentsSetByCommandLine = #["-f", "firstParam", "--se"]
+
+		// Act
+		registry.registerArgumentWithOptions(firstArgument)
+		registry.registerArgumentWithoutOptions(secondArgument)
+		registry.parseArguments(argumentsSetByCommandLine)
+
+		// Assert
+		assertTrue(true)
+	}
+
+	@Test(expected=OptionException)
+	def void parseArgumentsWithUnexpectedArgumentTest() {
+		// Arrange
+		// contains an unexpected argument, because no argument is registered in the registry
+		val argumentsSetByCommandLine = #["-u"]
+
+		// Act
+		registry.parseArguments(argumentsSetByCommandLine)
+	}
+
+	@Test(expected=OptionException)
+	def void parseArgumentsArgumentMissingParameter() {
+		// Arrange
+		val argument = new ArgumentDescriptor("a", "argument with parameter", String)
+		val argumentsSetByCommandLine = #["-a"]
+
+		// Act
+		registry.registerArgumentWithOptions(argument)
+		registry.parseArguments(argumentsSetByCommandLine)
+	}
+
+	@Test
+	def void requiredArgumentsAreSetByUser() {
+		// Arrange
+		val firstArgument = new ArgumentDescriptor("f", "first argument with one parameter", String)
+		val secondArgument = new ArgumentDescriptor("se", "second argument without parameter")
+		val mandatoryArguments = new HashSet<String>(Arrays.asList("f", "se"))
+		val argumentsSetByCommandLine = #["-f", "firstParam", "--se"]
+
+		// Act
+		registry.registerArgumentWithOptions(firstArgument)
+		registry.registerArgumentWithoutOptions(secondArgument)
+		registry.parseArguments(argumentsSetByCommandLine)
+		val requiredArgumentsAreSetByTheUser = registry.hasMandatoryArguments(mandatoryArguments)
+
+		// Assert
+		assertTrue(requiredArgumentsAreSetByTheUser)
+	}
+
+	@Test
+	def void noMandatoryArgumentIsSetByUser() {
+		// Arrange
+		val firstArgument = new ArgumentDescriptor("m", "mandatory argument with one parameter", String)
+		val mandatoryArgument = new HashSet<String>(Arrays.asList("m"))
+		val argumentsSetByCommandLine = #[]
+
+		// Act
+		registry.registerArgumentWithOptions(firstArgument)
+		registry.parseArguments(argumentsSetByCommandLine)
+		val requiredArgumentsAreSetByTheUser = registry.hasMandatoryArguments(mandatoryArgument)
+
+		// Assert
+		assertFalse(requiredArgumentsAreSetByTheUser)
+	}
+
+	@Test
+	def void mandatoryArgumentIsNotSetByUser() {
+		// Arrange
+		val firstArgument = new ArgumentDescriptor("f", "first argument with one parameter", String)
+		val secondArgument = new ArgumentDescriptor("se", "second argument without parameter")
+		val mandatoryArguments = new HashSet<String>(Arrays.asList("f", "se"))
+		val argumentsSetByCommandLine = #["-f", "firstParam"]
+
+		// Act
+		registry.registerArgumentWithOptions(firstArgument)
+		registry.registerArgumentWithoutOptions(secondArgument)
+		registry.parseArguments(argumentsSetByCommandLine)
+		val requiredArgumentsAreSetByTheUser = registry.hasMandatoryArguments(mandatoryArguments)
+
+		// Assert
+		assertFalse(requiredArgumentsAreSetByTheUser)
+	}
+
+	@Test
+	def void getStringArgumentParameterValue() {
+		// Arrange
+		val argumentName = "a"
+		val argument = new ArgumentDescriptor(argumentName, "argument with string parameter", String)
+		val expectedParameterValue = "helloworld"
+		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
+
+		// Act
+		registry.registerArgumentWithOptions(argument)
+		registry.parseArguments(argumentSetByCommandLine)
+		val parameterValue = registry.getParameterStringValue(argumentName)
+
+		// Assert
+		assertEquals(expectedParameterValue, parameterValue)
+	}
+
+	@Test
+	def void getIntegerArgumentParameterValue() {
+		// Arrange
+		val argumentName = "a"
+		val argument = new ArgumentDescriptor(argumentName, "argument with integer parameter", Integer)
+		val expectedParameterValue = "42"
+		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
+
+		// Act
+		registry.registerArgumentWithOptions(argument)
+		registry.parseArguments(argumentSetByCommandLine)
+		val parameterValue = registry.getParameterIntegerValue(argumentName)
+
+		// Assert
+		assertEquals(Integer.valueOf(expectedParameterValue), parameterValue)
+	}
+
+	@Test(expected=IllegalArgumentException)
+	def void getIntegerParameterAsString() {
+		// Arrange
+		val argumentName = "a"
+		val argument = new ArgumentDescriptor(argumentName, "argument with integer parameter", Integer)
+		val expectedParameterValue = "42"
+		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
+
+		// Act
+		registry.registerArgumentWithOptions(argument)
+		registry.parseArguments(argumentSetByCommandLine)
+		registry.getParameterStringValue(argumentName)
+	}
+
+	@Test(expected=IllegalArgumentException)
+	def void getStringParameterAsString() {
+		// Arrange
+		val argumentName = "a"
+		val argument = new ArgumentDescriptor(argumentName, "argument with string parameter", String)
+		val expectedParameterValue = "helloworld"
+		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
+
+		// Act
+		registry.registerArgumentWithOptions(argument)
+		registry.parseArguments(argumentSetByCommandLine)
+		registry.getParameterIntegerValue(argumentName)
 	}
 
 }
