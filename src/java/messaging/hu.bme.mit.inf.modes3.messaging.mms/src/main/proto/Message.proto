@@ -10,6 +10,9 @@ import "TrainReferenceSpeedCommand.proto";
 import "TurnoutCommand.proto";
 import "TurnoutState.proto";
 import "SegmentOccupancy.proto";
+import "YakinduReleaseTo.proto";
+import "YakinduReserveResultTo.proto";
+import "YakinduReserveTo.proto";
 
 option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
 option java_multiple_files = true;
@@ -28,6 +31,9 @@ message Message {
 		TURNOUT_COMMAND = 9;
 		TURNOUT_STATE = 10;
 		SEGMENT_OCCUPANCY = 11;
+		YAKINDU_RELEASE_TO = 12;
+		YAKINDU_RESERVE_RESULT_TO = 13;
+		YAKINDU_RESERVE_TO = 14;
 	}
 
 	MessageType type = 1;
@@ -42,4 +48,7 @@ message Message {
 	TurnoutCommand turnoutCommand = 9;
 	TurnoutState turnoutState = 10;
 	SegmentOccupancy segmentOccupancy = 11;
+	YakinduReleaseTo yakinduReleaseTo = 12;
+	YakinduReserveResultTo yakinduReserveResultTo = 13;
+	YakinduReserveTo yakinduReserveTo = 14;
 }
