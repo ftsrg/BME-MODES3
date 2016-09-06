@@ -7,8 +7,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * The message handler of section related commands received on the subscribed
- * topic. This class transmits the received section commands to the actual
+ * This class transmits the received section commands to the actual
  * actuators, so the respective sections can be managed (enabled / disabled) or
  * theirs statuses can be queried.
  * 
@@ -25,7 +24,7 @@ public class SectionMessageHandler implements ISegmentCommandListener {
 	new(ITrackElementCommandCallback _commandCallback, ExpanderSectionController _sectionController) {
 		sectionController = _sectionController
 		commandCallback = _commandCallback
-		
+
 		commandCallback.segmentCommandListener = this
 	}
 
