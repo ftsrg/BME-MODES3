@@ -12,6 +12,7 @@ before_script:
   - git lfs pull
 script:
   - cd src/java
+  - ./gradlew wrapper
   - ./gradlew build
 branches:
   only:
