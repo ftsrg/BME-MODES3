@@ -7,8 +7,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * The message handler of turnout related commands received on the subscribed
- * topic. This class transmits the received turnout commands to the actual
+ * This class transmits the received turnout commands to the actual
  * actuators, so the respective turnouts statuses can be queried.
  * 
  * @author benedekh, hegyibalint
@@ -24,7 +23,7 @@ class TurnoutMessageHandler implements ITurnoutCommandListener {
 	new(ITrackElementCommandCallback _commandCallback, ExpanderTurnoutController _turnoutController) {
 		turnoutController = _turnoutController
 		commandCallback = _commandCallback
-		
+
 		commandCallback.turnoutCommandListener = this
 	}
 

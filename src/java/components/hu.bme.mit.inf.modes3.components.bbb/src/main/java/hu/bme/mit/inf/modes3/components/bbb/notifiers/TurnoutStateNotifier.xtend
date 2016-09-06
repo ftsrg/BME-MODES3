@@ -5,6 +5,13 @@ import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import org.eclipse.xtend.lib.annotations.Accessors
 
+/**
+ * Implements a runnable which frequently polls the turnouts status 
+ * (STRAIGHT or DIVERGENT) and transfers this to the network so that 
+ * everyone who is subscribed can receive it.
+ * 
+ * @author benedekh
+ */
 class TurnoutStateNotifier implements Runnable {
 
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val SLEEP_MS_BETWEEN_POLLINGS = 50

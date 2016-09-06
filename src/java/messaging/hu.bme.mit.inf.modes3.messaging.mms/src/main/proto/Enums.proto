@@ -22,3 +22,9 @@ enum SegmentOccupancyValue {
 	FREE = 0;
 	OCCUPIED = 1;
 }
+
+enum YakinduConnectionDirection {
+	LEFT = 0;
+	RIGHT = 1;
+	BOTTOM = 2;
+}
