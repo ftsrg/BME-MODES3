@@ -4,6 +4,8 @@ import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * Implements a runnable which frequently polls the sections status 
@@ -13,6 +15,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author benedekh
  */
 class SectionStateNotifier implements Runnable {
+
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger = LoggerFactory.getLogger(SectionStateNotifier)
 
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val SLEEP_MS_BETWEEN_POLLINGS = 50
 
@@ -29,12 +33,17 @@ class SectionStateNotifier implements Runnable {
 
 	override run() {
 		while (!Thread.interrupted) {
-			for (sectionStr : sectionController.managedSections) {
-				val sectionId = HexConversionUtil.fromString(sectionStr)
-				val sectionStatus = sectionController.getSectionStatus(sectionId)
-				trackElementStateSender.sendSegmentState(sectionId, sectionStatus)
+			try {
+				for (sectionStr : sectionController.managedSections) {
+					val sectionId = HexConversionUtil.fromString(sectionStr)
+					val sectionStatus = sectionController.getSectionStatus(sectionId)
+					trackElementStateSender.sendSegmentState(sectionId, sectionStatus)
+				}
+				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
+			} catch (InterruptedException ex) {
+				logger.error(ex.message, ex)
+				Thread.currentThread.interrupt
 			}
-			Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
 		}
 	}
 
