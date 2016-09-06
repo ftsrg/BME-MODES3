@@ -8,45 +8,39 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateRegi
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
-import hu.bme.mit.inf.modes3.transports.common.Transport
 
-class CommunicationServiceLocator {
-	
-	val MessagingService mms 
-	val Transport transport
-	val ProtobufMessageDispatcher dispatcher 
+class TrackCommunicationServiceLocator {
+
+	val CommunicationStack stack
+
 	val TrackElementStateSender tess
 	val TrackElementCommander tec
 	val TrackElementCommandCallback tecc
-	val TrackElementStateRegistry tsr 
-		
-	new(CommunicationStack stack) {
-		mms = stack.mms
-		transport = stack.transport
-		dispatcher = stack.dispatcher
-		mms.start(transport, dispatcher)
-		
-		tess = new TrackElementStateSender(mms)		
-		tec = new TrackElementCommander(mms)
-		tecc  = new TrackElementCommandCallback(dispatcher)
-		tsr =  new TrackElementStateRegistry(dispatcher)
+	val TrackElementStateRegistry tsr
+
+	new(CommunicationStack _stack) {
+		stack = _stack
+		stack.start
+
+		tess = new TrackElementStateSender(stack.mms)
+		tec = new TrackElementCommander(stack.mms)
+		tecc = new TrackElementCommandCallback(stack.dispatcher)
+		tsr = new TrackElementStateRegistry(stack.dispatcher)
 	}
-	
-	def ITrackElementStateSender getTrackElementStateSender(){
+
+	def ITrackElementStateSender getTrackElementStateSender() {
 		return tess
 	}
-	
-	def ITrackElementCommander getTrackElementCommander(){
+
+	def ITrackElementCommander getTrackElementCommander() {
 		return tec
 	}
-	
-	def ITrackElementCommandCallback getTrackElementCommandCallback(){
+
+	def ITrackElementCommandCallback getTrackElementCommandCallback() {
 		return tecc
 	}
-	
-	def ITrackElementStateRegistry getTrackElementStateRegistry(){
+
+	def ITrackElementStateRegistry getTrackElementStateRegistry() {
 		return tsr
 	}
 }
