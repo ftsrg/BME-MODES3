@@ -29,7 +29,7 @@ class Pinout {
 		val gson = new Gson
 		var InputStreamReader isr = null
 		try {
-			isr = new InputStreamReader(Pinout.getClassLoader().getResourceAsStream("conf/pinouts.json"))
+			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("conf/pinouts.json"))
 			val reader = new JsonReader(isr)
 			val JsonObject pinout = gson.fromJson(reader, JsonObject)
 			gson.fromJson(pinout, Pinout)
@@ -37,8 +37,8 @@ class Pinout {
 			isr?.close
 		}
 	}
-	
-	def getHeaderPins(String headerName){
+
+	def getHeaderPins(String headerName) {
 		headers.get(headerName)
 	}
 }
