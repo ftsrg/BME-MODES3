@@ -3,8 +3,14 @@ package hu.bme.mit.inf.modes3.messaging.communication.enums
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class EnumTransformator {
+
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(EnumTransformator)
+
 	def static SegmentOccupancyValue toSpecific(SegmentOccupancy state) {
 		switch (state) {
 			case FREE: SegmentOccupancyValue.FREE
@@ -28,25 +34,40 @@ class EnumTransformator {
 
 	def static SegmentOccupancy toGeneral(SegmentOccupancyValue state) {
 		switch (state) {
-			case FREE: SegmentOccupancy.FREE
-			case OCCUPIED: SegmentOccupancy.OCCUPIED
-			case UNRECOGNIZED: SegmentOccupancy.OCCUPIED // TODO log
+			case FREE:
+				SegmentOccupancy.FREE
+			case OCCUPIED:
+				SegmentOccupancy.OCCUPIED
+			case UNRECOGNIZED: {
+				logger.warn("SegmentOccupancyValue is UNRECOGNIZED, default SegmentOccupancy.OCCUPIED is used instead")
+				SegmentOccupancy.OCCUPIED
+			}
 		}
 	}
 
 	def static SegmentState toGeneral(SegmentStateValue state) {
 		switch (state) {
-			case ENABLED: SegmentState.ENABLED
-			case DISABLED: SegmentState.DISABLED
-			case UNRECOGNIZED: SegmentState.ENABLED //TODO log
+			case ENABLED:
+				SegmentState.ENABLED
+			case DISABLED:
+				SegmentState.DISABLED
+			case UNRECOGNIZED: {
+				logger.warn("SegmentStateValue is UNRECOGNIZED, default SegmentState.ENABLED is used instead")
+				SegmentState.ENABLED
+			}
 		}
 	}
 
 	def static TurnoutState toGeneral(TurnoutStateValue state) {
 		switch (state) {
-			case DIVERGENT: TurnoutState.DIVERGENT
-			case STRAIGHT: TurnoutState.STRAIGHT
-			case UNRECOGNIZED: TurnoutState.STRAIGHT // TODO log
+			case DIVERGENT:
+				TurnoutState.DIVERGENT
+			case STRAIGHT:
+				TurnoutState.STRAIGHT
+			case UNRECOGNIZED: {
+				logger.warn("TurnoutStateValue is UNRECOGNIZED, default TurnoutState.STRAIGHT is used instead")
+				TurnoutState.STRAIGHT
+			}
 		}
 	}
 }

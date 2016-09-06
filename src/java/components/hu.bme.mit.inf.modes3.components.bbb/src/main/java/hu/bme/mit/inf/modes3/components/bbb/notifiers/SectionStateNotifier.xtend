@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory
  */
 class SectionStateNotifier implements Runnable {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger = LoggerFactory.getLogger(SectionStateNotifier)
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(SectionStateNotifier)
 
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val SLEEP_MS_BETWEEN_POLLINGS = 50
 

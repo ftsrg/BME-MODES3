@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory
  */
 class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger = LoggerFactory.getLogger(
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		TurnoutStateChangeNotifier)
 
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<String, TurnoutState> latestTurnoutStates

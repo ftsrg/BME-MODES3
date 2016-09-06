@@ -24,7 +24,7 @@ class CommunicationServiceLocator {
 		
 	new(CommunicationStack stack) {
 		mms = stack.mms
-		transport = null// TODO stack.transport
+		transport = stack.transport
 		dispatcher = stack.dispatcher
 		mms.start(transport, dispatcher)
 		
