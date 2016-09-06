@@ -33,7 +33,7 @@ class TurnoutMessageHandler implements ITurnoutCommandListener {
 	 * @param turnoutId the turnout's ID that should be straight
 	 */
 	private def handleSetTurnoutStraight(int turnoutId) {
-		if (turnoutController.controllerManagesSection(turnoutId)) {
+		if (turnoutController.controllerManagesTurnout(turnoutId)) {
 			turnoutController.setTurnoutStraight(turnoutId)
 		}
 	}
@@ -44,7 +44,7 @@ class TurnoutMessageHandler implements ITurnoutCommandListener {
 	 * @param turnoutId the turnout's ID that should be divergent
 	 */
 	private def handleSetTurnoutDivergent(int turnoutId) {
-		if (turnoutController.controllerManagesSection(turnoutId)) {
+		if (turnoutController.controllerManagesTurnout(turnoutId)) {
 			turnoutController.setTurnoutDivergent(turnoutId)
 		}
 	}

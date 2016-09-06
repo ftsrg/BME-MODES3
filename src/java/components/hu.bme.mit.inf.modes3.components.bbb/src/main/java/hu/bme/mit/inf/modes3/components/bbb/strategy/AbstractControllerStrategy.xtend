@@ -7,6 +7,8 @@ import io.silverspoon.bulldog.core.gpio.DigitalInput
 import io.silverspoon.bulldog.core.gpio.DigitalOutput
 import io.silverspoon.bulldog.core.platform.Board
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 import static io.silverspoon.bulldog.core.platform.Platform.createBoard
 import static io.silverspoon.bulldog.core.util.BulldogUtil.sleepMs
@@ -20,8 +22,18 @@ import static io.silverspoon.bulldog.core.util.BulldogUtil.sleepMs
  */
 abstract class AbstractControllerStrategy {
 
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
+		AbstractControllerStrategy)
+
 	// Detect the board we are running on
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) static val Board board = createBoard
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) static var Board board = {
+		try {
+			createBoard
+		} catch (Exception ex) {
+			logger.error(ex.message, ex)
+			null
+		}
+	}
 
 	// sleep time after setting the pin value
 	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) static val SLEEP_MS_AFTER_SETTING_PIN = 0
