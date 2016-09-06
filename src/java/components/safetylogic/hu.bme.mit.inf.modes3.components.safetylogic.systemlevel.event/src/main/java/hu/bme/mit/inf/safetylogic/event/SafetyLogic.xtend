@@ -12,6 +12,7 @@ import java.io.PrintWriter
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
 
 class SafetyLogic {
 
@@ -41,11 +42,11 @@ class SafetyLogic {
 	}
 
 	private def print(TrainCutsTurnoutMatch match) {
-		'''CUT: «match.offender.id» «match.victim.id»'''
+		'''CUT: «(match.offender as Train).id» «(match.victim as Train).id»''' //TODO viatra ticket
 	}
 
 	private def print(TrainHitsAnotherTrainMatch match) {
-		'''HIT: «match.offender.id» «match.victim.id»'''
+		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»''' //TODO viatra ticket
 	}
 
 	def start() {
@@ -89,9 +90,9 @@ class SafetyLogic {
 													}
 
 													train1.currentlyOn = train1Position
-													train1.previouslyOn = train1Previous
+													train1.previouslyOn = train1Previous as RailRoadElement //TODO Viatra ticket
 													train2.currentlyOn = train2Position
-													train2.previouslyOn = train2Previous
+													train2.previouslyOn = train2Previous as RailRoadElement 
 
 													writer.println(
 														'''test #«testNmbr++»	«turnout1State.boolAsInt» «turnout2State.boolAsInt

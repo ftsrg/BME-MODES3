@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
 
 class ModelUtil {
 
@@ -45,9 +46,9 @@ class ModelUtil {
 		// get all matches of the pattern
 		matcher.getAllMatches().forEach [
 			val path = RailRoadModelFactory.eINSTANCE.createPath
-			path.via = it.middle
-			path.from = it.one
-			path.to = it.other
+			path.via = it.middle as RailRoadElement //TODO Viatra-ticket
+			path.from = it.one as RailRoadElement
+			path.to = it.other as RailRoadElement
 			paths.add(path)
 		]
 
