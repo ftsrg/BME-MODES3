@@ -1,10 +1,10 @@
 package hu.bme.mit.inf.modes3.safetylogic.sc.network.handler
 
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
-import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseToOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder
 import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirectionTransformator
 
-class IYakinduRelaseToHandler implements MessageHandler<YakinduReleaseToOrBuilder> {
+class YakinduReserveToHandler implements MessageHandler<YakinduReserveToOrBuilder> {
 
 	private var IYakinduMessageHandler handler
 
@@ -12,8 +12,8 @@ class IYakinduRelaseToHandler implements MessageHandler<YakinduReleaseToOrBuilde
 		handler = _handler
 	}
 
-	override handleMessage(YakinduReleaseToOrBuilder message) {
-		handler.releaseTo(message.targetID,
+	override handleMessage(YakinduReserveToOrBuilder message) {
+		handler.reserveTo(message.targetID,
 			ConnectionDirectionTransformator.toInternalDirection(message.direction))
 	}
 
