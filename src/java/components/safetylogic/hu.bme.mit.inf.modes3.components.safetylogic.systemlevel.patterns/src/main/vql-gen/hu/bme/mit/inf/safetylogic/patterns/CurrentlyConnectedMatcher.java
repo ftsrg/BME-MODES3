@@ -33,7 +33,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * pattern currentlyConnected(This : RailRoadElement, connectedTo : RailRoadElement) = {
  * 	Segment(This);
  * 	Segment.connectedTo(This, connectedTo);
- * } or {
+ * } or { 
  * 	Turnout(This);
  * 	Turnout.currentlyDivergent(This, true);  
  * 	Turnout.top(This, connectedTo);

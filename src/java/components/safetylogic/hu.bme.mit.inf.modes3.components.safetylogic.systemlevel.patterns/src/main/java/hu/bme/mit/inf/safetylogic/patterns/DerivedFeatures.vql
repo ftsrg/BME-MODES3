@@ -1,12 +1,12 @@
 package hu.bme.mit.inf.safetylogic.patterns
 
-import "http://hu.bme.mit.inf.safetylogic.railroadmodel" 
+import "http://hu.bme.mit.inf.safetylogic.railroadmodel"  
 
 //TODO @QueryBasedFeature(feature = "currentlyConnected")
 pattern currentlyConnected(This : RailRoadElement, connectedTo : RailRoadElement) = {
 	Segment(This);
 	Segment.connectedTo(This, connectedTo);
-} or {
+} or { 
 	Turnout(This);
 	Turnout.currentlyDivergent(This, true);  
 	Turnout.top(This, connectedTo);
