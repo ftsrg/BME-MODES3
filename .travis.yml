@@ -1,6 +1,13 @@
 language: java
 jdk:
   - oraclejdk8
+branches:
+  only:
+    - gen3-arch
+addons:
+  apt:
+    packages:
+      - libzmq3-dev
 before_install:
   - mkdir -p $HOME/bin
   - wget https://github.com/github/git-lfs/releases/download/v1.4.1/git-lfs-linux-amd64-1.4.1.tar.gz
@@ -8,15 +15,13 @@ before_install:
   - mv git-lfs-1.4.1/git-lfs $HOME/git-lfs
   - export PATH=$PATH:$HOME/
 install: false
-before_script: 
+before_script:
   - git lfs pull
 script:
   - cd src/java
   - ./gradlew wrapper
-  - ./gradlew build
-branches:
-  only:
-    - gen3-arch
+  - ./gradlew assemble
+  - ./gradlew check
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/

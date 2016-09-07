@@ -12,4 +12,5 @@ abstract class Transport {
 	def void connect();
 	def byte[] receiveMessage();
 	def void sendMessage(byte[] message);
+	def void close();
 }
