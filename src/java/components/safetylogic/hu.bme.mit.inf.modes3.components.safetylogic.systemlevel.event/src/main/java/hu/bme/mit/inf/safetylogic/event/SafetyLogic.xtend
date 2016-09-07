@@ -13,10 +13,23 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
+import hu.bme.mit.inf.modes3.components.common.AbstractCommunicationComponent
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 
-class SafetyLogic {
+class SafetyLogic extends AbstractCommunicationComponent {
 
 	protected var ViatraQueryEngine engine;
+	protected var newTrainId = 999
+	val TrackCommunicationServiceLocator trackCommunication;
+	new(){
+		trackCommunication = new TrackCommunicationServiceLocator(super.communication)
+	}
+	 
 	def setup(Resource modelResource) {
 		engine = ViatraQueryEngine.on(new EMFScope(modelResource))
 	}
@@ -48,8 +61,60 @@ class SafetyLogic {
 	private def print(TrainHitsAnotherTrainMatch match) {
 		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»''' //TODO viatra ticket
 	}
+	
+	def start(){
+		val resource = ModelUtil.loadModel()
+		setup(resource);
+		val model = ModelUtil.getModelFromResource(resource)
+		trackCommunication.trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener(){
+			//FIXME by my current informations, i think this algorithm wont work when the train changes from ccw to cw or the other way around. Or at least it does lose some information which it shouldn't
+			//XXX move this to a class, and create unit tests.
+			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+				if(newValue == SegmentOccupancy.OCCUPIED){
+					val changedSection = model.sections.findFirst[it.id == id]
+					val possibleTrainPositions = getCurrentlyConnected(changedSection)
+					val train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
+					if(train == null){ //There is not even a train nearby
+						model.trains.add(RailRoadModelFactory.eINSTANCE.createTrain => [it.id = newTrainId++])
+					}
+					train.previouslyOn = train.currentlyOn
+					train.currentlyOn = changedSection
+				} else if (newValue == SegmentOccupancy.FREE){
+					val train = model.trains.findFirst[it.currentlyOn.id == id]
+					if(train != null){
+						model.trains.remove(train)
+					}
+				}
+				refreshSafetyLogicState
+			}
+			
+		}
+		
+		trackCommunication.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener(){
+			
+			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
+				(model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				refreshSafetyLogicState
+			}
+		}
+		
 
-	def start() {
+			
+	}
+	
+	def refreshSafetyLogicState(){
+		//TODO enable all sections
+		
+		cuts.forEach[
+			trackCommunication.trackElementCommander.sendSegmentCommand((victim as Train).currentlyOn.id, SegmentState.DISABLED) //TODO viatra ticket
+		]
+		
+		hits.forEach[
+			trackCommunication.trackElementCommander.sendSegmentCommand((victim as Train).currentlyOn.id, SegmentState.DISABLED) //TODO viatra ticket			
+		]
+	}
+
+	def exhaustiveTest() { //XXX find a use-case for this
 		println("Testing started...")
 
 		val resource = ModelUtil.loadModel()
@@ -79,10 +144,6 @@ class SafetyLogic {
 										for (train1Previous : train1Position.currentlyConnected) {
 											for (train2Position : model.sections.filter[it.id != train1Position.id]) {
 												for (train2Previous : train2Position.currentlyConnected) {
-//													val train1Position = model.sections.findFirst[id == 24]
-//													val train1Previous = model.sections.findFirst[id == 15]
-//													val train2Position = model.sections.findFirst[id == 29]
-//													val train2Previous = model.sections.findFirst[id == 28]
 													val currentTurnouts = #[turnout1State, turnout2State, turnout3State, turnout4State, turnout5State, turnout6State, turnout7State]
 													for (var i = 0; i != 6; i++) {
 														val ii = i;
