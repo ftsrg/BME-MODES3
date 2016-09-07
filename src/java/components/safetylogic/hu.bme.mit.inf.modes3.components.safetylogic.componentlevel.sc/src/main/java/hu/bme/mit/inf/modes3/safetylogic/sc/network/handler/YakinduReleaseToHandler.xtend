@@ -4,7 +4,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseToOrBuilder
 import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirectionTransformator
 
-class YakinduRelaseToHandler implements MessageHandler<YakinduReleaseToOrBuilder> {
+class YakinduReleaseToHandler implements MessageHandler<YakinduReleaseToOrBuilder> {
 
 	private var IYakinduMessageHandler handler
 
