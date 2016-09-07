@@ -8,6 +8,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateRegi
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 
 class TrackCommunicationServiceLocator {
 
@@ -24,8 +25,8 @@ class TrackCommunicationServiceLocator {
 
 		tess = new TrackElementStateSender(stack.mms)
 		tec = new TrackElementCommander(stack.mms)
-		tecc = new TrackElementCommandCallback(stack.dispatcher)
-		tsr = new TrackElementStateRegistry(stack.dispatcher)
+		tecc = new TrackElementCommandCallback(stack.dispatcher as ProtobufMessageDispatcher)
+		tsr = new TrackElementStateRegistry(stack.dispatcher as ProtobufMessageDispatcher)
 	}
 
 	def ITrackElementStateSender getTrackElementStateSender() {
