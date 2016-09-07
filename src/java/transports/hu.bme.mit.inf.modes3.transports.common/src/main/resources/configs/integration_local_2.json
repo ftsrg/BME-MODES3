@@ -1,0 +1,14 @@
+{
+	"core": [
+		{
+			"addr": "127.0.0.1",
+			"id": "integration_test_component1",
+			"port": 9001
+		},
+		{
+			"addr": "127.0.0.1",
+			"id": "integration_test_component2",
+			"port": 9002
+		}
+	]
+}

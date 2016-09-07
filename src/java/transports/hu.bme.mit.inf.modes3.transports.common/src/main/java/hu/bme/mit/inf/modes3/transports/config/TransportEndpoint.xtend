@@ -4,6 +4,7 @@ import org.eclipse.xtend.lib.annotations.Data
 
 @Data
 class TransportEndpoint {
+	String addr;
 	String id;
-	Integer port;	
+	Integer port;
 }
