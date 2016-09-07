@@ -7,6 +7,8 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElem
 import java.util.Map
 import java.util.TreeMap
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * Implements a runnable which frequently polls the turnouts status 
@@ -20,6 +22,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author benedekh
  */
 class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
+
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
+		TurnoutStateChangeNotifier)
 
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<String, TurnoutState> latestTurnoutStates
 
@@ -36,15 +41,20 @@ class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
 
 	override run() {
 		while (!Thread.interrupted) {
-			for (turnoutStr : turnoutController.managedTurnouts) {
-				val turnoutId = HexConversionUtil.fromString(turnoutStr)
-				val status = turnoutController.getTurnoutStatus(turnoutId)
-				if (latestTurnoutStates.get(turnoutStr) != status) {
-					latestTurnoutStates.put(turnoutStr, status)
-					trackElementStateSender.sendTurnoutState(turnoutId, status)
+			try {
+				for (turnoutStr : turnoutController.managedTurnouts) {
+					val turnoutId = HexConversionUtil.fromString(turnoutStr)
+					val status = turnoutController.getTurnoutStatus(turnoutId)
+					if (latestTurnoutStates.get(turnoutStr) != status) {
+						latestTurnoutStates.put(turnoutStr, status)
+						trackElementStateSender.sendTurnoutState(turnoutId, status)
+					}
 				}
+				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
+			} catch (InterruptedException ex) {
+				logger.error(ex.message, ex)
+				Thread.currentThread.interrupt
 			}
-			Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
 		}
 	}
 

@@ -8,6 +8,10 @@ import org.eclipse.xtend.lib.annotations.Data
 @Data
 class CommunicationStack {
 	val MessagingService mms =  new MessagingService
-	val Transport transport = null // TODO = new ZMQTransport 
+	val Transport transport = null  // TODO = new ZMQTransport 
 	val ProtobufMessageDispatcher dispatcher = new ProtobufMessageDispatcher
+	
+	def start(){
+		mms.start(transport, dispatcher)
+	}
 }

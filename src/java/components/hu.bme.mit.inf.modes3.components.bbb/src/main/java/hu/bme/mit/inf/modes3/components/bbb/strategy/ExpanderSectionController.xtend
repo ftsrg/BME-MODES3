@@ -19,7 +19,8 @@ import org.slf4j.LoggerFactory
  */
 class ExpanderSectionController extends AbstractControllerStrategy implements IControllerConfiguration {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger = LoggerFactory.getLogger(ExpanderSectionController)
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
+		ExpanderSectionController)
 
 	// the actual embedded controller which manages the sections
 	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var ExpanderControllerConfiguration controllerConf;
@@ -40,11 +41,11 @@ class ExpanderSectionController extends AbstractControllerStrategy implements IC
 			onEnableSection(HexConversionUtil.fromString(sec))
 		}
 	}
-	
-	def getManagedSections(){
+
+	def getManagedSections() {
 		controllerConf.allSection
 	}
-	
+
 	override onGetSectionStatus(int sectionId) {
 		sectionStatus.get(HexConversionUtil.fromNumber(sectionId))
 	}

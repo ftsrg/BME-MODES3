@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory
  */
 public class ArgumentRegistry {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger = LoggerFactory.getLogger(
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		ArgumentRegistry)
 
 	// stores the registered arguments with optons (key: name, value: argumentObj)
@@ -128,7 +128,8 @@ public class ArgumentRegistry {
 			} catch (OptionException ex) {
 				throw new ClassCastException(ex.message)
 			} catch (ClassCastException ex) {
-				throw new IllegalArgumentException("Please use a string for the " + name + " argument's parameter value.")
+				throw new IllegalArgumentException("Please use a string for the " + name +
+					" argument's parameter value.")
 			}
 		}
 	}
@@ -154,7 +155,8 @@ public class ArgumentRegistry {
 			} catch (OptionException ex) {
 				throw new ClassCastException(ex.message)
 			} catch (ClassCastException ex) {
-				throw new IllegalArgumentException("Please use an integer for the " + name + " argument's parameter value.")
+				throw new IllegalArgumentException("Please use an integer for the " + name +
+					" argument's parameter value.")
 			}
 		}
 	}

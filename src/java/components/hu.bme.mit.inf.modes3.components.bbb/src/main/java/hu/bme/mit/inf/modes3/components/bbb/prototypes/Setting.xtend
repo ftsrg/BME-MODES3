@@ -44,10 +44,10 @@ class Setting {
 		val gson = new Gson
 		var InputStreamReader isr = null
 		try {
-			isr = new InputStreamReader(Pinout.getClassLoader().getResourceAsStream("conf/settings.json"))
+			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("conf/settings.json"))
 			val reader = new JsonReader(isr)
 			var JsonObject settings = gson.fromJson(reader, JsonObject)
-			settings = settings.get("settings").getAsJsonObject
+			settings = settings.get("settings").asJsonObject
 			gson.fromJson(settings.get(HexConversionUtil.fromNumber(id)), Setting)
 		} finally {
 			isr?.close
@@ -75,21 +75,20 @@ class Setting {
 	def containsSection(int sectionId) {
 		sections.containsKey(HexConversionUtil.fromNumber(sectionId))
 	}
-	
-	def getTurnoutNames(){
+
+	def getTurnoutNames() {
 		turnouts.keySet
 	}
-	
-	def getSectionNames(){
+
+	def getSectionNames() {
 		sections.keySet
 	}
-	
-	
-	def getTurnoutPinoutHeaderValue(String turnout){
+
+	def getTurnoutPinoutHeaderValue(String turnout) {
 		turnouts.get(turnout)
 	}
-	
-	def getSectionPinoutHeaderValue(String section){
+
+	def getSectionPinoutHeaderValue(String section) {
 		sections.get(section)
 	}
 }
