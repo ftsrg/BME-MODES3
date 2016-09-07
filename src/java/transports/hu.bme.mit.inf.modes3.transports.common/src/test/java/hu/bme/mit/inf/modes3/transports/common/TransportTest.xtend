@@ -9,10 +9,6 @@ class TransportTest {
 	
 	@Test
 	def void testTransportConfiguration() {
-		val tc = new TransportConfiguration(
-			new TransportEndpoint('127.0.0.1', 2312), 
-			TransportEndpoints.loadConfig(TransportEndpoints.ActiveConfiguration.INTEGRATION)
-		)
-		print(tc)
+		return
 	}
 }
