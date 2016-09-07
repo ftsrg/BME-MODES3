@@ -7,7 +7,7 @@ branches:
 addons:
   apt:
     packages:
-      - libzmq-dev
+      - libzmq3-dev
 before_install:
   - mkdir -p $HOME/bin
   - wget https://github.com/github/git-lfs/releases/download/v1.4.1/git-lfs-linux-amd64-1.4.1.tar.gz
