@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.safetylogic.sc.network
 
 import com.google.protobuf.GeneratedMessageV3
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseTo
@@ -12,7 +12,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
 
-class YakinduNetworkMessageDispatcher extends ProtobufMessageDispatcher {
+class YakinduNetworkMessageDispatcher implements IMessageDispatcher {
 
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<YakinduReleaseToOrBuilder> releaseToHandler;
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<YakinduReserveToOrBuilder> reserveToHandler;
