@@ -3,6 +3,11 @@ plugins {
 	id "com.google.protobuf" version "0.8.0" apply false
 }
 
+
+tasks.withType(Test) {
+	systemProperty "java.library.path", "/usr/local/lib"
+}
+
 subprojects {
 	repositories {
 		jcenter()
