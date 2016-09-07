@@ -6,3 +6,7 @@ dependencies {
 	compile 'org.zeromq:jzmq:3.1.0'
 	compile project(':transports:hu.bme.mit.inf.modes3.transports.common')
 }
+
+test {
+	systemProperty "java.library.path", "/usr/local/lib"
+}
