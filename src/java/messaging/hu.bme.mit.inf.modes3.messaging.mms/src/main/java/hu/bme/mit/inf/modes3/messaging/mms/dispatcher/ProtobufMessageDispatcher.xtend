@@ -3,9 +3,10 @@ package hu.bme.mit.inf.modes3.messaging.mms.dispatcher
 import com.google.protobuf.GeneratedMessageV3
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
-import hu.bme.mit.inf.modes3.messaging.mms.messages.Message.MessageType
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainCurrentSegment
@@ -23,8 +24,6 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
@@ -44,7 +43,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 
 	override dispatchMessage(byte[] raw_message) {
 		val message = Message.parseFrom(raw_message)
-		switch (message.type as MessageType) {
+		switch (message.type) {
 			case Message.MessageType.SEGMENT_COMMAND: segmentCommandHandler?.handleMessage(message.segmentCommand)
 			case Message.MessageType.SEGMENT_STATE: segmentStateHandler?.handleMessage(message.segmentState)
 			case Message.MessageType.TRAIN_CURRENT_SEGMENT: trainCurrentSegmentHandler?.handleMessage(message.trainCurrentSegment)
