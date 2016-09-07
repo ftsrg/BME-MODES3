@@ -5,5 +5,5 @@ Bundle-SymbolicName: hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.pa
 Bundle-Version: 1.0.0.qualifier
 Export-Package: hu.bme.mit.inf.safetylogic.patterns,
  hu.bme.mit.inf.safetylogic.patterns.util
-Require-Bundle: hu.bme.mit.inf.safetylogic.model
+Require-Bundle: hu.bme.mit.inf.safetylogic.model;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

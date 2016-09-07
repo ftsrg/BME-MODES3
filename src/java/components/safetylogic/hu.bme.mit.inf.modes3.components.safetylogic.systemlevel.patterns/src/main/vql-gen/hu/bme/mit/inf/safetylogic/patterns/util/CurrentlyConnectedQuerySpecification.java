@@ -147,7 +147,7 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		   new ExportedParameter(body, var_This, "This"),
       		   new ExportedParameter(body, var_connectedTo, "connectedTo")
       		));
-      		// 	Turnout(This)
+      		//  	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
       		// 	Turnout.currentlyDivergent(This, true)
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
