@@ -4,7 +4,6 @@ import com.google.protobuf.GeneratedMessageV3
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
-import hu.bme.mit.inf.modes3.messaging.mms.messages.Message.MessageType
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseTo
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseToOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo
@@ -21,7 +20,7 @@ class YakinduNetworkMessageDispatcher extends ProtobufMessageDispatcher {
 
 	override dispatchMessage(byte[] rawMessage) {
 		val message = Message.parseFrom(rawMessage)
-		switch (message.type as MessageType) {
+		switch (message.type) {
 			case YAKINDU_RELEASE_TO: releaseToHandler?.handleMessage(message.yakinduReleaseTo)
 			case YAKINDU_RESERVE_RESULT_TO: reserveResultToHandler?.handleMessage(message.yakinduReserveResultTo)
 			case YAKINDU_RESERVE_TO: reserveToHandler?.handleMessage(message.yakinduReserveTo)

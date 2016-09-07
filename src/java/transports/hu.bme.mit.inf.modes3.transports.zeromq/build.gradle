@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem;
+
 apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 
@@ -8,5 +10,10 @@ dependencies {
 }
 
 test {
-	systemProperty "java.library.path", "/usr/local/lib"
+	if (OperatingSystem.current().isMacOsX()) {
+		systemProperty "java.library.path", "/usr/local/lib"
+	}
+	if (OperatingSystem.current().isLinux()) {
+		systemProperty "java.library.path", "/usr/lib/x86_64-linux-gnu"
+	}
 }
