@@ -13,7 +13,6 @@ import org.junit.Assert
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
-import org.junit.After
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
@@ -39,7 +38,6 @@ class CommunicationTest {
 					gotMsg.bool = true
 				}
 			}
-
 		}
 
 		locator.trackElementCommander.sendSegmentCommand(1, SegmentState.DISABLED)
@@ -93,12 +91,11 @@ class CommunicationTest {
 		Assert.assertEquals(true, gotMsg.bool)
 		Assert.assertEquals(locator.trackElementStateRegistry.getTurnoutState(1), TurnoutState.STRAIGHT)
 	}
-	
-		@Test
-		def void sendOccupancyStateTest() {
+
+	@Test
+	def void sendOccupancyStateTest() {
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener() {
 
-			
 			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
 				if (id == 1 && newValue == SegmentOccupancy.OCCUPIED) {
 					gotMsg.bool = true
@@ -109,6 +106,11 @@ class CommunicationTest {
 		Thread.sleep(waitTime)
 		Assert.assertEquals(true, gotMsg.bool)
 		Assert.assertEquals(locator.trackElementStateRegistry.getSegmentOccupancy(1), SegmentOccupancy.OCCUPIED)
+	}
+
+	@Test
+	def void send(){
+		
 	}
 
 	static class ModifiableBool {
