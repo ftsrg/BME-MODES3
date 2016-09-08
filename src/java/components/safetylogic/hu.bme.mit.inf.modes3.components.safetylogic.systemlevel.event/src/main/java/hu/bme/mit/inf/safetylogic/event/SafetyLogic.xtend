@@ -20,16 +20,25 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 
 class SafetyLogic extends AbstractCommunicationComponent {
 
 	protected var ViatraQueryEngine engine;
 	protected var newTrainId = 999
+	public var RailRoadModel model //TODO accessors
 	val TrackCommunicationServiceLocator trackCommunication;
-	new(){
+
+	new() {
 		trackCommunication = new TrackCommunicationServiceLocator(super.communication)
 	}
-	 
+
+	new(CommunicationStack stack) {
+		trackCommunication = new TrackCommunicationServiceLocator(stack)
+	}
+
 	def setup(Resource modelResource) {
 		engine = ViatraQueryEngine.on(new EMFScope(modelResource))
 	}
@@ -47,7 +56,7 @@ class SafetyLogic extends AbstractCommunicationComponent {
 	}
 
 	private def boolAsInt(Boolean b) {
-		if(b) {
+		if (b) {
 			1
 		} else {
 			0
@@ -55,66 +64,72 @@ class SafetyLogic extends AbstractCommunicationComponent {
 	}
 
 	private def print(TrainCutsTurnoutMatch match) {
-		'''CUT: «(match.offender as Train).id» «(match.victim as Train).id»''' //TODO viatra ticket
+		'''CUT: «(match.offender as Train).id» «(match.victim as Train).id»''' // TODO viatra ticket
 	}
 
 	private def print(TrainHitsAnotherTrainMatch match) {
-		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»''' //TODO viatra ticket
+		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»''' // TODO viatra ticket
 	}
-	
-	def start(){
+
+	def start() {
 		val resource = ModelUtil.loadModel()
 		setup(resource);
-		val model = ModelUtil.getModelFromResource(resource)
-		trackCommunication.trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener(){
-			//FIXME by my current informations, i think this algorithm wont work when the train changes from ccw to cw or the other way around. Or at least it does lose some information which it shouldn't
-			//XXX move this to a class, and create unit tests.
+		model = ModelUtil.getModelFromResource(resource)
+		trackCommunication.
+			trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener() {
+			// FIXME by my current informations, i think this algorithm wont work when the train changes from ccw to cw or the other way around. Or at least it does lose some information which it shouldn't
+			// XXX move this to a class, and create unit tests.
 			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
-				if(newValue == SegmentOccupancy.OCCUPIED){
+				if (newValue == SegmentOccupancy.OCCUPIED) {
 					val changedSection = model.sections.findFirst[it.id == id]
 					val possibleTrainPositions = getCurrentlyConnected(changedSection)
 					val train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
-					if(train == null){ //There is not even a train nearby
+					if (train == null) { // There is not even a train nearby
 						model.trains.add(RailRoadModelFactory.eINSTANCE.createTrain => [it.id = newTrainId++])
 					}
 					train.previouslyOn = train.currentlyOn
 					train.currentlyOn = changedSection
-				} else if (newValue == SegmentOccupancy.FREE){
+				} else if (newValue == SegmentOccupancy.FREE) {
 					val train = model.trains.findFirst[it.currentlyOn.id == id]
-					if(train != null){
+					if (train != null) {
 						model.trains.remove(train)
 					}
 				}
 				refreshSafetyLogicState
 			}
-			
+
 		}
-		
-		trackCommunication.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener(){
-			
+
+		trackCommunication.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
+
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-				(model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				(model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue ==
+					TurnoutState.DIVERGENT)
 				refreshSafetyLogicState
 			}
 		}
-		
 
-			
-	}
-	
-	def refreshSafetyLogicState(){
-		//TODO enable all sections
-		
-		cuts.forEach[
-			trackCommunication.trackElementCommander.sendSegmentCommand((victim as Train).currentlyOn.id, SegmentState.DISABLED) //TODO viatra ticket
-		]
-		
-		hits.forEach[
-			trackCommunication.trackElementCommander.sendSegmentCommand((victim as Train).currentlyOn.id, SegmentState.DISABLED) //TODO viatra ticket			
-		]
 	}
 
-	def exhaustiveTest() { //XXX find a use-case for this
+	def refreshSafetyLogicState() {
+		// TODO enable all sections
+		cuts.forEach [ cut |
+			(model.sections.findFirst[id == (cut.victim as Train).currentlyOn.id] as Segment).isEnabled = false //TODO viatra ticket
+		]
+
+		hits.forEach [ hit |
+			(model.sections.findFirst[id == (hit.victim as Train).currentlyOn.id] as Segment).isEnabled = false //TODO viatra ticket
+		]
+
+		model.sections.filter[it instanceof Segment].map[it as Segment].forEach [
+			if(isEnabled == false) 
+				trackCommunication.trackElementCommander.sendSegmentCommand(it.id, SegmentState.DISABLED) 
+			else 
+				trackCommunication.trackElementCommander.sendSegmentCommand(it.id, SegmentState.ENABLED)
+		]
+	}  
+
+	def exhaustiveTest() { // XXX find a use-case for this
 		println("Testing started...")
 
 		val resource = ModelUtil.loadModel()
@@ -144,24 +159,24 @@ class SafetyLogic extends AbstractCommunicationComponent {
 										for (train1Previous : train1Position.currentlyConnected) {
 											for (train2Position : model.sections.filter[it.id != train1Position.id]) {
 												for (train2Previous : train2Position.currentlyConnected) {
-													val currentTurnouts = #[turnout1State, turnout2State, turnout3State, turnout4State, turnout5State, turnout6State, turnout7State]
+													val currentTurnouts = #[turnout1State, turnout2State, turnout3State,
+														turnout4State, turnout5State, turnout6State, turnout7State]
 													for (var i = 0; i != 6; i++) {
 														val ii = i;
-														(model.sections.findFirst[id == turnouts.get(ii)] as Turnout).currentlyDivergent = currentTurnouts.get(i)
+														(model.sections.
+															findFirst[id == turnouts.get(ii)] as Turnout).currentlyDivergent = currentTurnouts.
+															get(i)
 													}
 
 													train1.currentlyOn = train1Position
-													train1.previouslyOn = train1Previous as RailRoadElement //TODO Viatra ticket
+													train1.previouslyOn = train1Previous as RailRoadElement // TODO Viatra ticket
 													train2.currentlyOn = train2Position
-													train2.previouslyOn = train2Previous as RailRoadElement 
+													train2.previouslyOn = train2Previous as RailRoadElement
 
-													writer.println(
-														'''test #«testNmbr++»	«turnout1State.boolAsInt» «turnout2State.boolAsInt
-														» «turnout3State.boolAsInt» «turnout4State.boolAsInt» «turnout5State.boolAsInt
-														» «turnout6State.boolAsInt» «turnout7State.boolAsInt» «
-														train1.currentlyOn.id» «train1.previouslyOn.id» «train2.currentlyOn.id» «train2.previouslyOn.id
-														» «FOR cut : cuts»«cut.print»«ENDFOR»	«FOR hit : hits»«hit.print»«ENDFOR»'''
-													)
+													writer.
+														println(
+															'''test #«testNmbr++»	«turnout1State.boolAsInt» «turnout2State.boolAsInt» «turnout3State.boolAsInt» «turnout4State.boolAsInt» «turnout5State.boolAsInt» «turnout6State.boolAsInt» «turnout7State.boolAsInt» «train1.currentlyOn.id» «train1.previouslyOn.id» «train2.currentlyOn.id» «train2.previouslyOn.id» «FOR cut : cuts»«cut.print»«ENDFOR»	«FOR hit : hits»«hit.print»«ENDFOR»'''
+														)
 												}
 											}
 										}

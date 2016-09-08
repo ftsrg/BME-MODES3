@@ -21,10 +21,7 @@ class ModelUtil {
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel", new XMIResourceFactoryImpl());
 
 		val resourceSet = new ResourceSetImpl();
-		val resource = resourceSet.createResource(URI.createURI("instance.railroadmodel"));
-		val stream = ModelUtil.getResourceAsStream("/instance.railroadmodel")
-		resource.load(stream, Collections.emptyMap)
-		resource
+		resourceSet.getResource(URI.createURI("instance.railroadmodel"),true);
 	}
 
 	def static loadModel() {
