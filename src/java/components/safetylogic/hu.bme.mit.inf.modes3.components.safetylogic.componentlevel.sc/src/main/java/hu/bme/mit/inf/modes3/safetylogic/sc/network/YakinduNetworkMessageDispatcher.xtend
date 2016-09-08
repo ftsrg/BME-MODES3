@@ -4,6 +4,7 @@ import com.google.protobuf.GeneratedMessageV3
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
+import hu.bme.mit.inf.modes3.messaging.mms.messages.MessageType
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseTo
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseToOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo
@@ -38,21 +39,21 @@ class YakinduNetworkMessageDispatcher implements IMessageDispatcher {
 
 	def dispatch byte[] internalConvertMessageToRaw(YakinduReleaseTo _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.YAKINDU_RELEASE_TO
+		message.type = MessageType.YAKINDU_RELEASE_TO
 		message.yakinduReleaseTo = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(YakinduReserveTo _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.YAKINDU_RESERVE_TO
+		message.type = MessageType.YAKINDU_RESERVE_TO
 		message.yakinduReserveTo = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(YakinduReserveResultTo _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.YAKINDU_RESERVE_RESULT_TO
+		message.type = MessageType.YAKINDU_RESERVE_RESULT_TO
 		message.yakinduReserveResultTo = _message
 		message.build.toByteArray
 	}

@@ -5,6 +5,7 @@ plugins {
 
 subprojects {
 	repositories {
+		jcenter()
         mavenCentral()
 		maven { url "https://repo.eclipse.org/content/groups/viatra2" }
 	}
@@ -12,6 +13,7 @@ subprojects {
 	plugins.withType(JavaPlugin) {
 		dependencies {
 			compile 'org.slf4j:slf4j-api:1.7.21'
+			compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
 
 			testCompile 'junit:junit:4.12'
 			testCompile "org.mockito:mockito-core:1.10.19"
@@ -19,10 +21,6 @@ subprojects {
 	}
 
 	plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
-		dependencies {
-			compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.10.0'
-		}
-
 		sourceSets {
 			main {
 				java.srcDirs = ['src/main/java', 'src/main/xtext-gen']

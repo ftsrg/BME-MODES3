@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.modes3.safetylogic.sc.snippet
 
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
+import hu.bme.mit.inf.modes3.messaging.mms.messages.MessageType
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseTo
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo
@@ -97,7 +98,7 @@ class Component1Tests {
 		]).build
 
 		val message = Message.newBuilder
-		message.type = Message.MessageType.YAKINDU_RESERVE_TO
+		message.type = MessageType.YAKINDU_RESERVE_TO
 		message.yakinduReserveTo = messageContent
 		message.build.toByteArray
 	}
@@ -149,7 +150,7 @@ class Component1Tests {
 		]).build
 
 		val message = Message.newBuilder
-		message.type = Message.MessageType.YAKINDU_RESERVE_RESULT_TO
+		message.type = MessageType.YAKINDU_RESERVE_RESULT_TO
 		message.yakinduReserveResultTo = messageContent
 		message.build.toByteArray
 	}
@@ -198,7 +199,7 @@ class Component1Tests {
 		]).build
 
 		val message = Message.newBuilder
-		message.type = Message.MessageType.YAKINDU_RELEASE_TO
+		message.type = MessageType.YAKINDU_RELEASE_TO
 		message.yakinduReleaseTo = messageContent
 		message.build.toByteArray
 	}
