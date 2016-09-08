@@ -14,6 +14,9 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnout
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
 import org.junit.After
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 
 class CommunicationTest {
 	var TrackCommunicationServiceLocator locator
@@ -25,12 +28,6 @@ class CommunicationTest {
 		locator = new TrackCommunicationServiceLocator(
 			new CommunicationStack(new MessagingService, new LocalTransport, new ProtobufMessageDispatcher))
 		gotMsg = new ModifiableBool => [bool = false]
-	}
-
-	@After
-	def void after() {
-		Thread.sleep(waitTime)
-		Assert.assertEquals(true, gotMsg.bool)
 	}
 
 	@Test
@@ -46,6 +43,8 @@ class CommunicationTest {
 		}
 
 		locator.trackElementCommander.sendSegmentCommand(1, SegmentState.DISABLED)
+		Thread.sleep(waitTime)
+		Assert.assertEquals(true, gotMsg.bool)
 	}
 
 	@Test
@@ -60,6 +59,8 @@ class CommunicationTest {
 
 		}
 		locator.trackElementCommander.sendTurnoutCommand(1, TurnoutState.STRAIGHT)
+		Thread.sleep(waitTime)
+		Assert.assertEquals(true, gotMsg.bool)
 	}
 
 	@Test
@@ -72,11 +73,45 @@ class CommunicationTest {
 			}
 		}
 		locator.trackElementStateSender.sendSegmentState(1, SegmentState.ENABLED)
+		Thread.sleep(waitTime)
+		Assert.assertEquals(true, gotMsg.bool)
+		Assert.assertEquals(locator.trackElementStateRegistry.getSegmentState(1), SegmentState.ENABLED)
 	}
 
+	@Test
+	def void sendTurnoutStateTest() {
+		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
+			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
+				if (id == 1 && newValue == TurnoutState.STRAIGHT) {
+					gotMsg.bool = true
+				}
+			}
+		}
+		locator.trackElementStateSender.sendTurnoutState(1, TurnoutState.STRAIGHT)
+		Thread.sleep(waitTime)
+		Assert.assertEquals(true, gotMsg.bool)
+		Assert.assertEquals(locator.trackElementStateRegistry.getTurnoutState(1), TurnoutState.STRAIGHT)
+	}
+	
+		@Test
+		def void sendOccupancyStateTest() {
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener() {
+
+			
+			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+				if (id == 1 && newValue == SegmentOccupancy.OCCUPIED) {
+					gotMsg.bool = true
+				}
+			}
+		}
+		locator.trackElementStateSender.sendSegmentOccupation(1, SegmentOccupancy.OCCUPIED)
+		Thread.sleep(waitTime)
+		Assert.assertEquals(true, gotMsg.bool)
+		Assert.assertEquals(locator.trackElementStateRegistry.getSegmentOccupancy(1), SegmentOccupancy.OCCUPIED)
+	}
 
 	static class ModifiableBool {
-		var boolean bool;
+		var public boolean bool;
 	}
 }
