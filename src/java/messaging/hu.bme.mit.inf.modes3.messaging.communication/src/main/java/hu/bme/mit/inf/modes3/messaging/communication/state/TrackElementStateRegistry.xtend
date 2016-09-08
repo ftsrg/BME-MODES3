@@ -23,7 +23,11 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISegmentStateChangeListener segmentStateChangeListener
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISegmentOccupancyChangeListener segmentOccupancyChangeListener
 	@Accessors(#[PACKAGE_GETTER,
-		PACKAGE_SETTER]) TrackElementStateCallback trackElementStateCallback = new TrackElementStateCallback(
+		PACKAGE_SETTER]) TrackElementStateCallback trackElementStateCallback
+
+	new(ProtobufMessageDispatcher dispatcher) {
+		this.dispatcher = dispatcher
+		trackElementStateCallback = new TrackElementStateCallback(
 		dispatcher,
 		new ISegmentStateListener() {
 
@@ -52,9 +56,6 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 		}
 
 	})
-
-	new(ProtobufMessageDispatcher dispatcher) {
-		this.dispatcher = dispatcher
 	}
 
 	override getSegmentState(int id) {
