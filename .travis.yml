@@ -20,9 +20,8 @@ before_script:
 script:
   - cd src/java
   - ./gradlew wrapper
-  #- ./gradlew assemble --stacktrace
-  #- ./gradlew check --stacktrace
-  - ./gradlew build -x test
+  - ./gradlew build -x test || ./gradlew build -x test || ./gradlew build -x test
+  - ./gradlew check 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
