@@ -4,20 +4,20 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduConnectionDirection
 
 class ConnectionDirectionTransformator {
 
-	static def toInternalDirection(YakinduConnectionDirection direction) {
+	static def ConnectionDirection toInternalDirection(YakinduConnectionDirection direction) {
 		switch (direction) {
-			case LEFT: return ConnectionDirection.LEFT
-			case RIGHT: return ConnectionDirection.RIGHT
-			case BOTTOM: return ConnectionDirection.BOTTOM
-			default: null
+			case YakinduConnectionDirection.LEFT: return ConnectionDirection.LEFT
+			case YakinduConnectionDirection.RIGHT: return ConnectionDirection.RIGHT
+			case YakinduConnectionDirection.BOTTOM: return ConnectionDirection.BOTTOM
+			default: return null
 		}
 	}
 
-	static def toProtobufDirection(ConnectionDirection direction) {
+	static def YakinduConnectionDirection toProtobufDirection(ConnectionDirection direction) {
 		switch (direction) {
-			case LEFT: return YakinduConnectionDirection.LEFT
-			case RIGHT: return YakinduConnectionDirection.RIGHT
-			case BOTTOM: return YakinduConnectionDirection.BOTTOM
+			case ConnectionDirection.LEFT: return YakinduConnectionDirection.LEFT
+			case ConnectionDirection.RIGHT: return YakinduConnectionDirection.RIGHT
+			case ConnectionDirection.BOTTOM: return YakinduConnectionDirection.BOTTOM
 		}
 	}
 }
