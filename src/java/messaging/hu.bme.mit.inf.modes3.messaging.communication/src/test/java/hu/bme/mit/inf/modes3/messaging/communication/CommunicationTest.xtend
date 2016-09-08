@@ -10,6 +10,8 @@ import org.junit.Before
 import org.junit.Test
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
 import org.junit.Assert
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 
 class CommunicationTest {
 	var TrackCommunicationServiceLocator locator
@@ -36,6 +38,24 @@ class CommunicationTest {
 		locator.trackElementCommander.sendSegmentCommand(1, SegmentState.DISABLED)
 		Thread.sleep(100)
 		Assert.assertEquals(true,gotMsg.bool)
+	}
+	
+	@Test
+	def void sendTurnoutCommandTest(){
+		val gotMsg = new ModifiableBool => [bool = false]
+		locator.trackElementCommandCallback.turnoutCommandListener = new ITurnoutCommandListener(){
+			
+			override onTurnoutCommand(int id, TurnoutState state) {
+				if(id == 1 && state == TurnoutState.STRAIGHT){
+					gotMsg.bool = true
+				}
+			}
+			
+		}
+		
+		locator.trackElementCommander.sendTurnoutCommand(1, TurnoutState.STRAIGHT)
+		Thread.sleep(50)
+		Assert.assertEquals(true,gotMsg.bool)		
 	}
 
 	static class ModifiableBool {
