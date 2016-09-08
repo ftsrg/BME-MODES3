@@ -3,7 +3,7 @@ package hu.bme.mit.inf.modes3.messaging.mms.dispatcher
 import com.google.protobuf.GeneratedMessageV3
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
-import hu.bme.mit.inf.modes3.messaging.mms.messages.Message.MessageType
+import hu.bme.mit.inf.modes3.messaging.mms.messages.MessageType
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy
@@ -45,16 +45,16 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	override dispatchMessage(byte[] raw_message) {
 		val message = Message.parseFrom(raw_message)
 		switch (message.type as MessageType) {
-			case Message.MessageType.SEGMENT_COMMAND: segmentCommandHandler?.handleMessage(message.segmentCommand)
-			case Message.MessageType.SEGMENT_STATE: segmentStateHandler?.handleMessage(message.segmentState)
-			case Message.MessageType.TRAIN_CURRENT_SEGMENT: trainCurrentSegmentHandler?.handleMessage(message.trainCurrentSegment)
-			case Message.MessageType.TRAIN_CURRENT_SPEED: trainCurrentSpeedHandler?.handleMessage(message.trainCurrentSpeed)
-			case Message.MessageType.TRAIN_FUNCTION_COMMAND: trainFunctionCommandHandler?.handleMessage(message.trainFunctionCommand)
-			case Message.MessageType.TRAIN_REFERENCE_SPEED: trainReferenceSpeedHandler?.handleMessage(message.trainReferenceSpeed)
-			case Message.MessageType.TRAIN_REFERENCE_SPEED_COMMAND: trainReferenceSpeedCommandHandler?.handleMessage(message.trainReferenceSpeedCommand)
-			case Message.MessageType.TURNOUT_COMMAND: turnoutCommandHandler?.handleMessage(message.turnoutCommand)
-			case Message.MessageType.TURNOUT_STATE: turnoutStateHandler?.handleMessage(message.turnoutState)
-			case Message.MessageType.SEGMENT_OCCUPANCY: segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
+			case MessageType.SEGMENT_COMMAND: segmentCommandHandler?.handleMessage(message.segmentCommand)
+			case MessageType.SEGMENT_STATE: segmentStateHandler?.handleMessage(message.segmentState)
+			case MessageType.TRAIN_CURRENT_SEGMENT: trainCurrentSegmentHandler?.handleMessage(message.trainCurrentSegment)
+			case MessageType.TRAIN_CURRENT_SPEED: trainCurrentSpeedHandler?.handleMessage(message.trainCurrentSpeed)
+			case MessageType.TRAIN_FUNCTION_COMMAND: trainFunctionCommandHandler?.handleMessage(message.trainFunctionCommand)
+			case MessageType.TRAIN_REFERENCE_SPEED: trainReferenceSpeedHandler?.handleMessage(message.trainReferenceSpeed)
+			case MessageType.TRAIN_REFERENCE_SPEED_COMMAND: trainReferenceSpeedCommandHandler?.handleMessage(message.trainReferenceSpeedCommand)
+			case MessageType.TURNOUT_COMMAND: turnoutCommandHandler?.handleMessage(message.turnoutCommand)
+			case MessageType.TURNOUT_STATE: turnoutStateHandler?.handleMessage(message.turnoutState)
+			case MessageType.SEGMENT_OCCUPANCY: segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
 			default: return
 		}
 	}
@@ -69,70 +69,70 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 
 	def dispatch byte[] internalConvertMessageToRaw(SegmentCommand _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.SEGMENT_COMMAND
+		message.type = MessageType.SEGMENT_COMMAND
 		message.segmentCommand = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(SegmentState _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.SEGMENT_STATE
+		message.type = MessageType.SEGMENT_STATE
 		message.segmentState = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(TrainCurrentSegment _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.TRAIN_CURRENT_SPEED
+		message.type = MessageType.TRAIN_CURRENT_SPEED
 		message.trainCurrentSegment = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(TrainCurrentSpeed _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.TRAIN_CURRENT_SPEED
+		message.type = MessageType.TRAIN_CURRENT_SPEED
 		message.trainCurrentSpeed = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(TrainFunctionCommand _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.TRAIN_FUNCTION_COMMAND
+		message.type = MessageType.TRAIN_FUNCTION_COMMAND
 		message.trainFunctionCommand = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(TrainReferenceSpeed _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.TRAIN_REFERENCE_SPEED
+		message.type = MessageType.TRAIN_REFERENCE_SPEED
 		message.trainReferenceSpeed = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(TrainReferenceSpeedCommand _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.TRAIN_REFERENCE_SPEED_COMMAND
+		message.type = MessageType.TRAIN_REFERENCE_SPEED_COMMAND
 		message.trainReferenceSpeedCommand = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(TurnoutCommand _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.TURNOUT_COMMAND
+		message.type = MessageType.TURNOUT_COMMAND
 		message.turnoutCommand = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(TurnoutState _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.TURNOUT_STATE
+		message.type = MessageType.TURNOUT_STATE
 		message.turnoutState = _message
 		message.build.toByteArray
 	}
 
 	def dispatch byte[] internalConvertMessageToRaw(SegmentOccupancy _message) {
 		val message = Message.newBuilder
-		message.type = Message.MessageType.SEGMENT_OCCUPANCY
+		message.type = MessageType.SEGMENT_OCCUPANCY
 		message.segmentOccupancy = _message
 		message.build.toByteArray
 	}

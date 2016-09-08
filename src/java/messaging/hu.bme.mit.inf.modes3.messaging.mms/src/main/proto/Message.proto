@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+import "Enums.proto";
 import "SegmentCommand.proto";
 import "SegmentState.proto";
 import "TrainCurrentSegment.proto";
@@ -18,24 +19,6 @@ option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
 option java_multiple_files = true;
 
 message Message {
-	enum MessageType {
-		NULL = 0;
-		SEGMENT_COMMAND = 1;
-		SEGMENT_STATE = 2;
-		TRAIN_CURRENT_SEGMENT = 3;
-		TRAIN_CURRENT_SPEED = 4;
-		TRAIN_DIRECTION_COMMAND = 5;
-		TRAIN_FUNCTION_COMMAND = 6;
-		TRAIN_REFERENCE_SPEED = 7;
-		TRAIN_REFERENCE_SPEED_COMMAND = 8;
-		TURNOUT_COMMAND = 9;
-		TURNOUT_STATE = 10;
-		SEGMENT_OCCUPANCY = 11;
-		YAKINDU_RELEASE_TO = 12;
-		YAKINDU_RESERVE_RESULT_TO = 13;
-		YAKINDU_RESERVE_TO = 14;
-	}
-
 	MessageType type = 1;
 
 	SegmentCommand segmentCommand = 2;
