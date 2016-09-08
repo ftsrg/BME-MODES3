@@ -22,7 +22,7 @@ script:
   - ./gradlew wrapper
   - ./gradlew build -x test || ./gradlew build -x test || ./gradlew build -x test
   - ./gradlew check 
-  before_cache:
+before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
