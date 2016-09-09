@@ -4,22 +4,13 @@ jdk:
 branches:
   only:
     - gen3-arch
-addons:
-  apt:
-    packages:
-      - libzmq3-dev
 before_install:
-  - mkdir -p $HOME/bin
   - wget https://github.com/github/git-lfs/releases/download/v1.4.1/git-lfs-linux-amd64-1.4.1.tar.gz
-  - tar xvfz git-lfs-linux-amd64-1.4.1.tar.gz
-  - mv git-lfs-1.4.1/git-lfs $HOME/git-lfs
-  - export PATH=$PATH:$HOME/
-install: false
+  - ./git-lfs-1.4.1/install
 before_script:
   - git lfs pull
 script:
   - cd src/java
-  - dpkg-query -L libzmq3-dev:amd64
   - ./gradlew clean assemble
   - ./gradlew check
 before_cache:

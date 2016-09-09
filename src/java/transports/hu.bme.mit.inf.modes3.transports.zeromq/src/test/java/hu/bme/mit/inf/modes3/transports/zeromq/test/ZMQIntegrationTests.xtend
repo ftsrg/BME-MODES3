@@ -24,7 +24,7 @@ class ZMQSenderRunner implements Runnable {
 		val zmq = new ZMQTransport(this.config)
 
 		zmq.connect
-		Thread.sleep(250)
+		Thread.sleep(10)
 		zmq.sendMessage(message.bytes)
 		println('Message sent')
 		zmq.close
