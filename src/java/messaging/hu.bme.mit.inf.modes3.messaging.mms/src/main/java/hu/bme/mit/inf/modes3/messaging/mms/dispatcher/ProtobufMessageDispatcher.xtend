@@ -25,8 +25,13 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
+
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
+		ProtobufMessageDispatcher)
 
 	// SIGNALS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainCurrentSpeedOrBuilder> trainCurrentSpeedHandler
@@ -43,26 +48,41 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentCommandOrBuilder> segmentCommandHandler
 
 	override dispatchMessage(byte[] raw_message) {
-		val message = Message.parseFrom(raw_message)
-		switch (message.type as MessageType) {
-			case MessageType.SEGMENT_COMMAND: segmentCommandHandler?.handleMessage(message.segmentCommand)
-			case MessageType.SEGMENT_STATE: segmentStateHandler?.handleMessage(message.segmentState)
-			case MessageType.TRAIN_CURRENT_SEGMENT: trainCurrentSegmentHandler?.handleMessage(message.trainCurrentSegment)
-			case MessageType.TRAIN_CURRENT_SPEED: trainCurrentSpeedHandler?.handleMessage(message.trainCurrentSpeed)
-			case MessageType.TRAIN_FUNCTION_COMMAND: trainFunctionCommandHandler?.handleMessage(message.trainFunctionCommand)
-			case MessageType.TRAIN_REFERENCE_SPEED: trainReferenceSpeedHandler?.handleMessage(message.trainReferenceSpeed)
-			case MessageType.TRAIN_REFERENCE_SPEED_COMMAND: trainReferenceSpeedCommandHandler?.handleMessage(message.trainReferenceSpeedCommand)
-			case MessageType.TURNOUT_COMMAND: turnoutCommandHandler?.handleMessage(message.turnoutCommand)
-			case MessageType.TURNOUT_STATE: turnoutStateHandler?.handleMessage(message.turnoutState)
-			case MessageType.SEGMENT_OCCUPANCY: segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
-			default: return
+		try {
+			val message = Message.parseFrom(raw_message)
+			switch (message.type as MessageType) {
+				case MessageType.SEGMENT_COMMAND:
+					segmentCommandHandler?.handleMessage(message.segmentCommand)
+				case MessageType.SEGMENT_STATE:
+					segmentStateHandler?.handleMessage(message.segmentState)
+				case MessageType.TRAIN_CURRENT_SEGMENT:
+					trainCurrentSegmentHandler?.handleMessage(message.trainCurrentSegment)
+				case MessageType.TRAIN_CURRENT_SPEED:
+					trainCurrentSpeedHandler?.handleMessage(message.trainCurrentSpeed)
+				case MessageType.TRAIN_FUNCTION_COMMAND:
+					trainFunctionCommandHandler?.handleMessage(message.trainFunctionCommand)
+				case MessageType.TRAIN_REFERENCE_SPEED:
+					trainReferenceSpeedHandler?.handleMessage(message.trainReferenceSpeed)
+				case MessageType.TRAIN_REFERENCE_SPEED_COMMAND:
+					trainReferenceSpeedCommandHandler?.handleMessage(message.trainReferenceSpeedCommand)
+				case MessageType.TURNOUT_COMMAND:
+					turnoutCommandHandler?.handleMessage(message.turnoutCommand)
+				case MessageType.TURNOUT_STATE:
+					turnoutStateHandler?.handleMessage(message.turnoutState)
+				case MessageType.SEGMENT_OCCUPANCY:
+					segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
+				default:
+					return
+			}
+		} catch (Exception e) {
+			logger.error(e.message, e)
 		}
 	}
 
 	override convertMessageToRaw(Object _message) throws IllegalArgumentException {
 		try {
 			internalConvertMessageToRaw(_message as GeneratedMessageV3);
-		} catch(ClassCastException e) {
+		} catch (ClassCastException e) {
 			throw new IllegalArgumentException(e.message, e)
 		}
 	}
