@@ -19,11 +19,15 @@ before_script:
   - git lfs pull
 script:
   - cd src/java
-  - ./gradlew wrapper
-  - ./gradlew build -x test || ./gradlew build -x test || ./gradlew build -x test
+  - dpkg-query -L libzmq3-dev:amd64
+  - ./gradlew clean assemble
   - ./gradlew check
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
+    - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
 notifications:
   slack: ftsrg:WZdZQP5KHhnxklapMmjNEe3I
