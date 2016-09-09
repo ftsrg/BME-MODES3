@@ -5,7 +5,7 @@ branches:
   only:
     - gen3-arch
 before_install:
-  - curl https://github.com/github/git-lfs/releases/download/v1.4.1/git-lfs-linux-amd64-1.4.1.tar.gz | tar xvz
+  - curl -L https://github.com/github/git-lfs/releases/download/v1.4.1/git-lfs-linux-amd64-1.4.1.tar.gz | tar xvz
   - ./git-lfs-1.4.1/install.sh
 before_script:
   - git lfs pull
