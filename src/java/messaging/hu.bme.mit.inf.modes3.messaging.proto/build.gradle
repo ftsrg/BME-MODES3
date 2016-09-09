@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+apply plugin: 'com.google.protobuf'
+
+dependencies {
+	compile 'com.google.protobuf:protobuf-java:3.0.0'
+	compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+}
+
+protobuf {
+	protoc {
+		artifact = 'com.google.protobuf:protoc:3.0.0'
+	}
+	generatedFilesBaseDir = "$projectDir/src/"
+}
