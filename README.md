@@ -19,15 +19,13 @@ Modules stored in the repository:
 | Logical Components  |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
 | Web-based Dashboard | src/js/modes3-dashboard | | hegyibalint, zsoltmazlo
-| Codes for the BBBs  | src/java/components/hu.bme.mit.inf.modes3.components.bbb/ | | benedekh
+| Codes for the BBBs  | src/java/components/hu.bme.mit.inf.modes3.components.bbb/ | Implementation of the platform-specific actuator code of disabling and enabling sections and setting turnout directions for the BeagleBone Black embedded units. | benedekh
 | Common Components | src/java/components/hu.bme.mit.inf.modes3.components.common | Common codes and helpers for all components| hegyibalint, baloghlaszlo, benedekh
 | Sample Component | src/java/components/hu.bme.mit.inf.modes3.components.sample | A sample component which can be linked to a tutorial | hegyibalint, baloghlaszlo, benedekh
-| TODO Beni | src/java/components/hu.bme.mit.inf.modes3.components.util | | benedekh |
+| Utility classes for components | src/java/components/hu.bme.mit.inf.modes3.components.util | Utility classes that can be used by every component. E.g. handling command-line arguments in Java (jOpt encapsulated). | benedekh |
 | System level safety logic | src/java/components/safetylogic/hu.bme.mit.inf.modes3.components.safetylogic.event | System level safety logic with a runtime EMF model and using VIATRA-Queries TODO english | baloghlaszlo
-| Component level safety logic | src/java/components/safetylogic/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc | Component level safetylogic with Yakindu statecharts | benedekh |
+| Component level safety logic | src/java/components/safetylogic/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc | Component level safetylogic by Yakindu statecharts | benedekh |
 | High-level API designed for communication with the railroad system | src/java/messaging/hu.bme.mit.inf.modes3.messaging.communication | Communication technology independent API designed for further use in the components | baloghlaszlo | 
 | | src/java/messaging/hu.bme.mit.inf.modes3.messaging.communication | | hegyibalint |
 | | src/java/transports/hu.bme.mit.inf.modes3.transports.common | | hegyibalint |
 | | src/java/transports/hu.bme.mit.inf.modes3.transports.zeromq | | hegyibalint |
-
-
