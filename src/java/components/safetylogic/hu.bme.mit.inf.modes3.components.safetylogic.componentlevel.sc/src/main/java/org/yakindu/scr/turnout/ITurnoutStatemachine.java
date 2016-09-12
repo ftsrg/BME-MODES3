@@ -49,13 +49,13 @@ public interface ITurnoutStatemachine extends IStatemachine {
 
 		public boolean isRaisedReleaseBottom();
 
-		public long getId();
+		public int getId();
 
-		public void setId(long value);
+		public void setId(int value);
 
-		public long getCount();
+		public int getCount();
 
-		public void setCount(long value);
+		public void setCount(int value);
 
 		public List<SCITurnoutListener> getListeners();
 

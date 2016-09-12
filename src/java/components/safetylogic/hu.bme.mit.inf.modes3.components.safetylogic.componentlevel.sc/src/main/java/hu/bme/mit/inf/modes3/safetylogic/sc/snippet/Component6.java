@@ -3,23 +3,23 @@ package hu.bme.mit.inf.modes3.safetylogic.sc.snippet;
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine.SCITurnoutListener;
 
-public class Component2 {
+public class Component6 {
 
-	private SectionComponent S18 = new SectionComponent();
+	private SectionComponent S27 = new SectionComponent();
 
-	private SectionComponent S24 = new SectionComponent();
+	private TurnoutComponent T6 = new TurnoutComponent();
 
-	private SectionComponent S31 = new SectionComponent();
+	private SectionComponent S17 = new SectionComponent();
 
-	private SectionComponent S29 = new SectionComponent();
+	private SectionComponent S23 = new SectionComponent();
 
-	private TurnoutComponent T2 = new TurnoutComponent();
+	private SectionComponent S22 = new SectionComponent();
 
-	public Component2() {
-		S18.getSCISectionListeners().add(new SCISectionListener() {
+	public Component6() {
+		S27.getSCISectionListeners().add(new SCISectionListener() {
 			@Override
 			public void onReserveLeftRaised() {
-				S31.raiseReserveFromRight();
+				S23.raiseReserveFromRight();
 			}
 
 			@Override
@@ -28,7 +28,7 @@ public class Component2 {
 
 			@Override
 			public void onReserveResultToLeftRaised(boolean value) {
-				S31.raiseReserveResult(value);
+				S23.raiseReserveResult(value);
 			}
 
 			@Override
@@ -37,7 +37,7 @@ public class Component2 {
 
 			@Override
 			public void onReleaseLeftRaised() {
-				S31.raiseRelease();
+				S23.raiseRelease();
 			}
 
 			@Override
@@ -49,179 +49,179 @@ public class Component2 {
 			}
 		});
 
-		S24.getSCISectionListeners().add(new SCISectionListener() {
+		T6.getSCITurnoutListeners().add(new SCITurnoutListener() {
 			@Override
 			public void onReserveLeftRaised() {
+				S23.raiseReserveFromLeft();
 			}
 
 			@Override
 			public void onReserveRightRaised() {
-				S29.raiseReserveFromLeft();
-			}
-
-			@Override
-			public void onReserveResultToLeftRaised(boolean value) {
-			}
-
-			@Override
-			public void onReserveResultToRightRaised(boolean value) {
-				S29.raiseReserveResult(value);
-			}
-
-			@Override
-			public void onReleaseLeftRaised() {
-			}
-
-			@Override
-			public void onReleaseRightRaised() {
-				S29.raiseRelease();
-			}
-
-			@Override
-			public void onStopRaised() {
-			}
-		});
-
-		S31.getSCISectionListeners().add(new SCISectionListener() {
-			@Override
-			public void onReserveLeftRaised() {
-				T2.raiseReserveFromLeft();
-			}
-
-			@Override
-			public void onReserveRightRaised() {
-				S18.raiseReserveFromLeft();
-			}
-
-			@Override
-			public void onReserveResultToLeftRaised(boolean value) {
-				T2.raiseReserveResultFromLeft(value);
-			}
-
-			@Override
-			public void onReserveResultToRightRaised(boolean value) {
-				S18.raiseReserveResult(value);
-			}
-
-			@Override
-			public void onReleaseLeftRaised() {
-				T2.raiseReleaseFromLeft();
-			}
-
-			@Override
-			public void onReleaseRightRaised() {
-				S18.raiseRelease();
-			}
-
-			@Override
-			public void onStopRaised() {
-			}
-		});
-
-		S29.getSCISectionListeners().add(new SCISectionListener() {
-			@Override
-			public void onReserveLeftRaised() {
-				S24.raiseReserveFromRight();
-			}
-
-			@Override
-			public void onReserveRightRaised() {
-				T2.raiseReserveFromRight();
-			}
-
-			@Override
-			public void onReserveResultToLeftRaised(boolean value) {
-				S24.raiseReserveResult(value);
-			}
-
-			@Override
-			public void onReserveResultToRightRaised(boolean value) {
-				T2.raiseReserveResultFromRight(value);
-			}
-
-			@Override
-			public void onReleaseLeftRaised() {
-				S24.raiseRelease();
-			}
-
-			@Override
-			public void onReleaseRightRaised() {
-				T2.raiseReleaseFromRight();
-			}
-
-			@Override
-			public void onStopRaised() {
-			}
-		});
-
-		T2.getSCITurnoutListeners().add(new SCITurnoutListener() {
-			@Override
-			public void onReserveLeftRaised() {
-				S31.raiseReserveFromLeft();
-			}
-
-			@Override
-			public void onReserveRightRaised() {
-				S29.raiseReserveFromRight();
+				S17.raiseReserveFromRight();
 			}
 
 			@Override
 			public void onReserveBottomRaised() {
+				S22.raiseReserveFromLeft();
 			}
 
 			@Override
 			public void onReserveResultToLeftRaised(boolean value) {
-				S31.raiseReserveResult(value);
+				S23.raiseReserveResult(value);
 			}
 
 			@Override
 			public void onReserveResultToRightRaised(boolean value) {
-				S29.raiseReserveResult(value);
+				S17.raiseReserveResult(value);
 			}
 
 			@Override
 			public void onReserveResultToBottomRaised(boolean value) {
+				S22.raiseReserveResult(value);
 			}
 
 			@Override
 			public void onReleaseLeftRaised() {
-				S31.raiseRelease();
+				S23.raiseRelease();
 			}
 
 			@Override
 			public void onReleaseRightRaised() {
-				S29.raiseRelease();
+				S17.raiseRelease();
 			}
 
 			@Override
 			public void onReleaseBottomRaised() {
+				S22.raiseRelease();
+			}
+		});
+
+		S17.getSCISectionListeners().add(new SCISectionListener() {
+			@Override
+			public void onReserveLeftRaised() {
+			}
+
+			@Override
+			public void onReserveRightRaised() {
+				T6.raiseReserveFromRight();
+			}
+
+			@Override
+			public void onReserveResultToLeftRaised(boolean value) {
+			}
+
+			@Override
+			public void onReserveResultToRightRaised(boolean value) {
+				T6.raiseReserveResultFromRight(value);
+			}
+
+			@Override
+			public void onReleaseLeftRaised() {
+			}
+
+			@Override
+			public void onReleaseRightRaised() {
+				T6.raiseReleaseFromRight();
+			}
+
+			@Override
+			public void onStopRaised() {
+			}
+		});
+
+		S23.getSCISectionListeners().add(new SCISectionListener() {
+			@Override
+			public void onReserveLeftRaised() {
+				T6.raiseReserveFromLeft();
+			}
+
+			@Override
+			public void onReserveRightRaised() {
+				S27.raiseReserveFromLeft();
+			}
+
+			@Override
+			public void onReserveResultToLeftRaised(boolean value) {
+				T6.raiseReserveResultFromLeft(value);
+			}
+
+			@Override
+			public void onReserveResultToRightRaised(boolean value) {
+				S27.raiseReserveResult(value);
+			}
+
+			@Override
+			public void onReleaseLeftRaised() {
+				T6.raiseReleaseFromLeft();
+			}
+
+			@Override
+			public void onReleaseRightRaised() {
+				S27.raiseRelease();
+			}
+
+			@Override
+			public void onStopRaised() {
+			}
+		});
+
+		S22.getSCISectionListeners().add(new SCISectionListener() {
+			@Override
+			public void onReserveLeftRaised() {
+				T6.raiseReserveFromBottom();
+			}
+
+			@Override
+			public void onReserveRightRaised() {
+			}
+
+			@Override
+			public void onReserveResultToLeftRaised(boolean value) {
+				T6.raiseReserveResultFromBottom(value);
+			}
+
+			@Override
+			public void onReserveResultToRightRaised(boolean value) {
+			}
+
+			@Override
+			public void onReleaseLeftRaised() {
+				T6.raiseReleaseFromBottom();
+			}
+
+			@Override
+			public void onReleaseRightRaised() {
+			}
+
+			@Override
+			public void onStopRaised() {
 			}
 		});
 	}
 
-	public SectionComponent getS18() {
-		return S18;
+	public SectionComponent getS27() {
+		return S27;
 	}
 
-	public SectionComponent getS24() {
-		return S24;
+	public TurnoutComponent getT6() {
+		return T6;
 	}
 
-	public SectionComponent getS31() {
-		return S31;
+	public SectionComponent getS17() {
+		return S17;
 	}
 
-	public SectionComponent getS29() {
-		return S29;
+	public SectionComponent getS23() {
+		return S23;
 	}
 
-	public TurnoutComponent getT2() {
-		return T2;
+	public SectionComponent getS22() {
+		return S22;
 	}
 
 	private boolean areAllEventQueuesEmpty() {
-		return S18.isEventQueueEmpty() && S24.isEventQueueEmpty() && S31.isEventQueueEmpty() && S29.isEventQueueEmpty()
-				&& T2.isEventQueueEmpty();
+		return S27.isEventQueueEmpty() && T6.isEventQueueEmpty() && S17.isEventQueueEmpty() && S23.isEventQueueEmpty()
+				&& S22.isEventQueueEmpty();
 	}
 
 	public void runFullCycle() {
@@ -231,15 +231,15 @@ public class Component2 {
 	}
 
 	public void runOneCycle() {
-		S18.changeEventQueue();
-		S24.changeEventQueue();
-		S31.changeEventQueue();
-		S29.changeEventQueue();
-		T2.changeEventQueue();
-		S18.runCycle();
-		S24.runCycle();
-		S31.runCycle();
-		S29.runCycle();
-		T2.runCycle();
+		S27.changeEventQueue();
+		T6.changeEventQueue();
+		S17.changeEventQueue();
+		S23.changeEventQueue();
+		S22.changeEventQueue();
+		S27.runCycle();
+		T6.runCycle();
+		S17.runCycle();
+		S23.runCycle();
+		S22.runCycle();
 	}
 }

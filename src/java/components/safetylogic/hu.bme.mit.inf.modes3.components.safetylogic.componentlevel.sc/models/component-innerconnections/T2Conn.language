@@ -1,0 +1,99 @@
+section sectionComponent {
+	interface {
+		reserveFromLeft : IN reserveFromLeft
+		reserveFromRight : IN reserveFromRight
+		// Ez az üzenet vagy a jobb vagy a bal oldali section-ről jön, és azt jelzi, hogy sikerült-e a lefoglalás (aurába betétel), egy boolean változóban jelzi
+		reserveResult : IN reserveResult
+		// Ez az üzenet jelzi, hogy a vonat elment a mellette lévő section-ről, így ez a section kikerült az aurából
+		release : IN release
+		// Ezzel az üzenettel kell jelezni a section-nek, hogy a vonat ténylegesen, fizikailag ráment
+		occupy : IN occupy
+		// Ezzel az üzenettel kell jelezni a section-nek, hogy a vonat fizikailag elhagyta a section-t
+		unoccupy : IN unoccupy
+		// Reset a felhasználótól, Stop állapotban lévő szakaszon lévő vonatot lehet vele újraindítani
+		reset : IN reset
+		// A reserveFromLeft és reserveFromRight párja, ezek az események hívják meg a megfelelő in eseményt
+		reserveLeft : OUT reserveLeft
+		reserveRight : OUT reserveRight
+		// A reserveResult párja, a section ebben az eseményben jelez vissza, hogy sikerült-e a lefoglalás
+		reserveResultToLeft : OUT reserveResultToLeft
+		reserveResultToRight : OUT reserveResultToRight
+		// A release párja, a section ezzel az eseménnyel szabadítja fel az aurából a baloldali vagy jobboldali section-t.
+		releaseLeft : OUT releaseLeft
+		releaseRight : OUT releaseRight
+		// Ezzel jelez a section, hogy a rajta lévő vonatnak meg kell állnia
+		stop : OUT stop  
+	}
+}
+
+turnout turnoutComponent {
+	interface {
+		// Ezzel lehet a váltót a másik állapotába vinni
+		switch : IN switch
+		// Az alábbi események megfelelnek a section-ök eseményeinek. Az a különbség, hogy a turnout 3 irányba képes kommunikálni, míg a section csak 2-be.
+		reserveFromLeft : IN reserveFromLeft
+		reserveFromRight : IN reserveFromRight
+		reserveFromBottom : IN reserveFromBottom
+
+		reserveResultFromLeft : IN reserveResultFromLeft
+		reserveResultFromRight : IN reserveResultFromRight
+		reserveResultFromBottom : IN reserveResultFromBottom
+
+		releaseFromLeft : IN releaseFromLeft
+		releaseFromRight : IN releaseFromRight
+		releaseFromBottom : IN releaseFromBottom
+
+		reserveLeft : OUT reserveLeft
+		reserveRight : OUT reserveRight
+		reserveBottom : OUT reserveBottom
+
+		reserveResultToLeft : OUT reserveResultToLeft
+		reserveResultToRight : OUT reserveResultToRight
+		reserveResultToBottom : OUT reserveResultToBottom
+
+		releaseLeft : OUT releaseLeft
+		releaseRight : OUT releaseRight
+		releaseBottom : OUT releaseBottom
+		
+	}
+}
+
+turnoutComponent T2
+sectionComponent S24
+sectionComponent S29
+sectionComponent S31
+sectionComponent S18
+
+channels {
+	// T2.right = S29 (to be consistent it would be left, but turnout connects bottom-right when it is divergent)
+	// T2.left = S31 (to be consistent it would be right, but turnout connects bottom-right when it is divergent)
+	// T2.bottom = remote section
+	
+	[S24.reserveRight] -> [S29.reserveFromLeft]
+	[S24.reserveResultToRight] -> [S29.reserveResult]
+	[S24.releaseRight] -> [S29.release]
+	[S29.reserveLeft] -> [S24.reserveFromRight]
+	[S29.reserveResultToLeft] -> [S24.reserveResult]
+	[S29.releaseLeft] -> [S24.release]
+	
+	[S29.reserveRight] -> [T2.reserveFromRight]
+	[S29.reserveResultToRight] -> [T2.reserveResultFromRight]
+	[S29.releaseRight] -> [T2.releaseFromRight]
+	[T2.reserveRight] -> [S29.reserveFromRight]
+	[T2.reserveResultToRight] -> [S29.reserveResult]
+	[T2.releaseRight] -> [S29.release]
+	
+	[S31.reserveLeft] -> [T2.reserveFromLeft]
+	[S31.reserveResultToLeft] -> [T2.reserveResultFromLeft]
+	[S31.releaseLeft] -> [T2.releaseFromLeft]
+	[T2.reserveLeft] -> [S31.reserveFromLeft]
+	[T2.reserveResultToLeft] -> [S31.reserveResult]
+	[T2.releaseLeft] -> [S31.release]
+	
+	[S31.reserveRight] -> [S18.reserveFromLeft]
+	[S31.reserveResultToRight] -> [S18.reserveResult]
+	[S31.releaseRight] -> [S18.release]
+	[S18.reserveLeft] -> [S31.reserveFromRight]
+	[S18.reserveResultToLeft] -> [S31.reserveResult]
+	[S18.releaseLeft] -> [S31.release]
+}

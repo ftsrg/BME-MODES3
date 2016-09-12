@@ -175,33 +175,33 @@ public class SectionStatemachine implements ISectionStatemachine {
 			}
 		}
 
-		private long id;
+		private int id;
 
-		public long getId() {
+		public int getId() {
 			return id;
 		}
 
-		public void setId(long value) {
+		public void setId(int value) {
 			this.id = value;
 		}
 
-		private long timeout;
+		private int timeout;
 
-		public long getTimeout() {
+		public int getTimeout() {
 			return timeout;
 		}
 
-		public void setTimeout(long value) {
+		public void setTimeout(int value) {
 			this.timeout = value;
 		}
 
-		private long dir;
+		private int dir;
 
-		public long getDir() {
+		public int getDir() {
 			return dir;
 		}
 
-		public void setDir(long value) {
+		public void setDir(int value) {
 			this.dir = value;
 		}
 
@@ -230,11 +230,11 @@ public class SectionStatemachine implements ISectionStatemachine {
 
 	protected class SCIDirectionImpl implements SCIDirection {
 
-		public long getLEFT() {
+		public int getLEFT() {
 			return lEFT;
 		}
 
-		public long getRIGHT() {
+		public int getRIGHT() {
 			return rIGHT;
 		}
 
@@ -289,11 +289,65 @@ public class SectionStatemachine implements ISectionStatemachine {
 		if (timer == null) {
 			throw new IllegalStateException("timer not set.");
 		}
-		enterSequence_main_region_default();
+		sCISection.setDir(sCIDirection.rIGHT);
+
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_Free;
 	}
 
 	public void exit() {
-		exitSequence_main_region();
+		switch (stateVector[0]) {
+		case main_region_Free:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+			break;
+
+		case main_region_NotFree_notFree_Stop:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			sCISection.raiseReleaseLeft();
+
+			sCISection.raiseReleaseRight();
+			break;
+
+		case main_region_NotFree_notFree_WaitingForResponse:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			timer.unsetTimer(this, 0);
+			break;
+
+		case main_region_NotFree_notFree_Occupied:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+			break;
+
+		case main_region_NotFree_notFree_Reserved:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+			break;
+
+		case main_region_NotFree_notFree_WaitForFirstResponse:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+			break;
+
+		case main_region_NotFree_notFree_WaitForSecondResponse:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			timer.unsetTimer(this, 1);
+			break;
+
+		case main_region_NotFree_notFree_BeforeFirstReserve:
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -391,512 +445,38 @@ public class SectionStatemachine implements ISectionStatemachine {
 		return sCIDirection;
 	}
 
-	private boolean check_main_region_Free_tr0_tr0() {
-		return sCISection.occupy;
-	}
-
-	private boolean check_main_region_Free_tr1_tr1() {
-		return sCISection.reserveFromLeft;
-	}
-
-	private boolean check_main_region_Free_tr2_tr2() {
-		return sCISection.reserveFromRight;
-	}
-
-	private boolean check_main_region_NotFree_lr0_lr0() {
-		return sCISection.reserveFromLeft;
-	}
-
-	private boolean check_main_region_NotFree_lr1_lr1() {
-		return sCISection.reserveFromRight;
-	}
-
-	private boolean check_main_region_NotFree_notFree_Stop_tr0_tr0() {
-		return sCISection.unoccupy;
-	}
-
-	private boolean check_main_region_NotFree_notFree_Stop_tr1_tr1() {
-		return sCISection.reset;
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitingForResponse_tr0_tr0() {
-		return (sCISection.reserveResult) && (sCISection.getReserveResultValue() == false);
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitingForResponse_tr1_tr1() {
-		return (sCISection.reserveResult) && (sCISection.getReserveResultValue() == true);
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitingForResponse_tr2_tr2() {
-		return timeEvents[0];
-	}
-
-	private boolean check_main_region_NotFree_notFree_Occupied_tr0_tr0() {
-		return sCISection.release;
-	}
-
-	private boolean check_main_region_NotFree_notFree_Occupied_tr1_tr1() {
-		return sCISection.unoccupy;
-	}
-
-	private boolean check_main_region_NotFree_notFree_Reserved_tr0_tr0() {
-		return sCISection.occupy;
-	}
-
-	private boolean check_main_region_NotFree_notFree_Reserved_tr1_tr1() {
-		return sCISection.release;
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitForFirstResponse_tr0_tr0() {
-		return (sCISection.reserveResult) && (sCISection.getReserveResultValue() == false);
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitForFirstResponse_tr1_tr1() {
-		return (sCISection.reserveResult) && (sCISection.getReserveResultValue() == true);
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitForSecondResponse_tr0_tr0() {
-		return (sCISection.reserveResult) && (sCISection.getReserveResultValue() == false);
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitForSecondResponse_tr1_tr1() {
-		return (sCISection.reserveResult) && (sCISection.getReserveResultValue() == true);
-	}
-
-	private boolean check_main_region_NotFree_notFree_WaitForSecondResponse_tr2_tr2() {
-		return timeEvents[1];
-	}
-
-	private boolean check_main_region_NotFree_notFree_BeforeFirstReserve_tr0_tr0() {
-		return true;
-	}
-
-	private boolean check_main_region_NotFree_notFree__choice_0_tr0_tr0() {
-		return sCISection.dir == sCIDirection.lEFT;
-	}
-
-	private boolean check_main_region_NotFree_notFree__choice_0_tr1_tr1() {
-		return sCISection.dir == sCIDirection.rIGHT;
-	}
-
-	private boolean check_main_region_NotFree_notFree__choice_1_tr0_tr0() {
-		return sCISection.dir == sCIDirection.lEFT;
-	}
-
-	private boolean check_main_region_NotFree_notFree__choice_1_tr1_tr1() {
-		return sCISection.dir == sCIDirection.rIGHT;
-	}
-
-	private void effect_main_region_Free_tr0() {
-		exitSequence_main_region_Free();
-
-		sCISection.raiseReserveLeft();
-
-		enterSequence_main_region_NotFree_notFree_WaitForFirstResponse_default();
-	}
-
-	private void effect_main_region_Free_tr1() {
-		exitSequence_main_region_Free();
-
-		sCISection.raiseReserveResultToLeft(true);
-
-		sCISection.setDir(sCIDirection.rIGHT);
-
-		enterSequence_main_region_NotFree_default();
-	}
-
-	private void effect_main_region_Free_tr2() {
-		exitSequence_main_region_Free();
-
-		sCISection.raiseReserveResultToRight(true);
-
-		sCISection.setDir(sCIDirection.lEFT);
-
-		enterSequence_main_region_NotFree_default();
-	}
-
-	private void effect_main_region_NotFree_lr0_lr0() {
-		sCISection.raiseReserveResultToLeft(false);
-	}
-
-	private void effect_main_region_NotFree_lr1_lr1() {
-		sCISection.raiseReserveResultToRight(false);
-	}
-
-	private void effect_main_region_NotFree_notFree_Stop_tr0() {
-		exitSequence_main_region_NotFree();
-
-		enterSequence_main_region_Free_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_Stop_tr1() {
-		exitSequence_main_region_NotFree_notFree_Stop();
-
-		enterSequence_main_region_NotFree_notFree_BeforeFirstReserve_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitingForResponse_tr0() {
-		exitSequence_main_region_NotFree_notFree_WaitingForResponse();
-
-		sCISection.raiseStop();
-
-		enterSequence_main_region_NotFree_notFree_Stop_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitingForResponse_tr1() {
-		exitSequence_main_region_NotFree_notFree_WaitingForResponse();
-
-		enterSequence_main_region_NotFree_notFree_Occupied_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitingForResponse_tr2() {
-		exitSequence_main_region_NotFree_notFree_WaitingForResponse();
-
-		react_main_region_NotFree_notFree__choice_1();
-	}
-
-	private void effect_main_region_NotFree_notFree_Occupied_tr0() {
-		exitSequence_main_region_NotFree();
-
-		sCISection.raiseReleaseLeft();
-
-		sCISection.raiseReleaseRight();
-
-		enterSequence_main_region_Free_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_Occupied_tr1() {
-		exitSequence_main_region_NotFree_notFree_Occupied();
-
-		react_main_region_NotFree_notFree__choice_0();
-	}
-
-	private void effect_main_region_NotFree_notFree_Reserved_tr0() {
-		exitSequence_main_region_NotFree_notFree_Reserved();
-
-		react_main_region_NotFree_notFree__choice_1();
-	}
-
-	private void effect_main_region_NotFree_notFree_Reserved_tr1() {
-		exitSequence_main_region_NotFree();
-
-		enterSequence_main_region_Free_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitForFirstResponse_tr0() {
-		exitSequence_main_region_NotFree_notFree_WaitForFirstResponse();
-
-		enterSequence_main_region_NotFree_notFree_Stop_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitForFirstResponse_tr1() {
-		exitSequence_main_region_NotFree_notFree_WaitForFirstResponse();
-
-		sCISection.raiseReserveRight();
-
-		enterSequence_main_region_NotFree_notFree_WaitForSecondResponse_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitForSecondResponse_tr0() {
-		exitSequence_main_region_NotFree_notFree_WaitForSecondResponse();
-
-		enterSequence_main_region_NotFree_notFree_Stop_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitForSecondResponse_tr1() {
-		exitSequence_main_region_NotFree_notFree_WaitForSecondResponse();
-
-		enterSequence_main_region_NotFree_notFree_Occupied_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_WaitForSecondResponse_tr2() {
-		exitSequence_main_region_NotFree_notFree_WaitForSecondResponse();
-
-		sCISection.raiseReserveLeft();
-
-		enterSequence_main_region_NotFree_notFree_WaitForFirstResponse_default();
-	}
-
-	private void effect_main_region_NotFree_notFree_BeforeFirstReserve_tr0() {
-		exitSequence_main_region_NotFree_notFree_BeforeFirstReserve();
-
-		sCISection.raiseReserveLeft();
-
-		enterSequence_main_region_NotFree_notFree_WaitForFirstResponse_default();
-	}
-
-	private void effect_main_region_NotFree_notFree__choice_0_tr0() {
-		sCISection.raiseReleaseRight();
-
-		enterSequence_main_region_NotFree_notFree_Reserved_default();
-	}
-
-	private void effect_main_region_NotFree_notFree__choice_0_tr1() {
-		sCISection.raiseReleaseLeft();
-
-		enterSequence_main_region_NotFree_notFree_Reserved_default();
-	}
-
-	private void effect_main_region_NotFree_notFree__choice_1_tr0() {
-		sCISection.raiseReserveLeft();
-
-		enterSequence_main_region_NotFree_notFree_WaitingForResponse_default();
-	}
-
-	private void effect_main_region_NotFree_notFree__choice_1_tr1() {
-		sCISection.raiseReserveRight();
-
-		enterSequence_main_region_NotFree_notFree_WaitingForResponse_default();
-	}
-
-	/* Entry action for state 'Free'. */
-	private void entryAction_main_region_Free() {
-		sCISection.setDir(sCIDirection.rIGHT);
-	}
-
-	/* Entry action for state 'WaitingForResponse'. */
-	private void entryAction_main_region_NotFree_notFree_WaitingForResponse() {
-
-		timer.setTimer(this, 0, sCISection.timeout, false);
-	}
-
-	/* Entry action for state 'WaitForSecondResponse'. */
-	private void entryAction_main_region_NotFree_notFree_WaitForSecondResponse() {
-
-		timer.setTimer(this, 1, sCISection.timeout, false);
-	}
-
-	/* Exit action for state 'Stop'. */
-	private void exitAction_main_region_NotFree_notFree_Stop() {
-		sCISection.raiseReleaseLeft();
-
-		sCISection.raiseReleaseRight();
-	}
-
-	/* Exit action for state 'WaitingForResponse'. */
-	private void exitAction_main_region_NotFree_notFree_WaitingForResponse() {
-		timer.unsetTimer(this, 0);
-	}
-
-	/* Exit action for state 'WaitForSecondResponse'. */
-	private void exitAction_main_region_NotFree_notFree_WaitForSecondResponse() {
-		timer.unsetTimer(this, 1);
-	}
-
-	/* 'default' enter sequence for state Free */
-	private void enterSequence_main_region_Free_default() {
-		entryAction_main_region_Free();
-
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Free;
-	}
-
-	/* 'default' enter sequence for state NotFree */
-	private void enterSequence_main_region_NotFree_default() {
-		enterSequence_main_region_NotFree_notFree_default();
-	}
-
-	/* 'default' enter sequence for state Stop */
-	private void enterSequence_main_region_NotFree_notFree_Stop_default() {
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_Stop;
-	}
-
-	/* 'default' enter sequence for state WaitingForResponse */
-	private void enterSequence_main_region_NotFree_notFree_WaitingForResponse_default() {
-		entryAction_main_region_NotFree_notFree_WaitingForResponse();
-
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_WaitingForResponse;
-	}
-
-	/* 'default' enter sequence for state Occupied */
-	private void enterSequence_main_region_NotFree_notFree_Occupied_default() {
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_Occupied;
-	}
-
-	/* 'default' enter sequence for state Reserved */
-	private void enterSequence_main_region_NotFree_notFree_Reserved_default() {
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_Reserved;
-	}
-
-	/* 'default' enter sequence for state WaitForFirstResponse */
-	private void enterSequence_main_region_NotFree_notFree_WaitForFirstResponse_default() {
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_WaitForFirstResponse;
-	}
-
-	/* 'default' enter sequence for state WaitForSecondResponse */
-	private void enterSequence_main_region_NotFree_notFree_WaitForSecondResponse_default() {
-		entryAction_main_region_NotFree_notFree_WaitForSecondResponse();
-
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_WaitForSecondResponse;
-	}
-
-	/* 'default' enter sequence for state BeforeFirstReserve */
-	private void enterSequence_main_region_NotFree_notFree_BeforeFirstReserve_default() {
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_BeforeFirstReserve;
-	}
-
-	/* 'default' enter sequence for region main region */
-	private void enterSequence_main_region_default() {
-		react_main_region__entry_Default();
-	}
-
-	/* 'default' enter sequence for region notFree */
-	private void enterSequence_main_region_NotFree_notFree_default() {
-		react_main_region_NotFree_notFree__entry_Default();
-	}
-
-	/* Default exit sequence for state Free */
-	private void exitSequence_main_region_Free() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-
-	/* Default exit sequence for state NotFree */
-	private void exitSequence_main_region_NotFree() {
-		exitSequence_main_region_NotFree_notFree();
-	}
-
-	/* Default exit sequence for state Stop */
-	private void exitSequence_main_region_NotFree_notFree_Stop() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-
-		exitAction_main_region_NotFree_notFree_Stop();
-	}
-
-	/* Default exit sequence for state WaitingForResponse */
-	private void exitSequence_main_region_NotFree_notFree_WaitingForResponse() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-
-		exitAction_main_region_NotFree_notFree_WaitingForResponse();
-	}
-
-	/* Default exit sequence for state Occupied */
-	private void exitSequence_main_region_NotFree_notFree_Occupied() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-
-	/* Default exit sequence for state Reserved */
-	private void exitSequence_main_region_NotFree_notFree_Reserved() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-
-	/* Default exit sequence for state WaitForFirstResponse */
-	private void exitSequence_main_region_NotFree_notFree_WaitForFirstResponse() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-
-	/* Default exit sequence for state WaitForSecondResponse */
-	private void exitSequence_main_region_NotFree_notFree_WaitForSecondResponse() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-
-		exitAction_main_region_NotFree_notFree_WaitForSecondResponse();
-	}
-
-	/* Default exit sequence for state BeforeFirstReserve */
-	private void exitSequence_main_region_NotFree_notFree_BeforeFirstReserve() {
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-	}
-
-	/* Default exit sequence for region main region */
-	private void exitSequence_main_region() {
-		switch (stateVector[0]) {
-		case main_region_Free:
-			exitSequence_main_region_Free();
-			break;
-
-		case main_region_NotFree_notFree_Stop:
-			exitSequence_main_region_NotFree_notFree_Stop();
-			break;
-
-		case main_region_NotFree_notFree_WaitingForResponse:
-			exitSequence_main_region_NotFree_notFree_WaitingForResponse();
-			break;
-
-		case main_region_NotFree_notFree_Occupied:
-			exitSequence_main_region_NotFree_notFree_Occupied();
-			break;
-
-		case main_region_NotFree_notFree_Reserved:
-			exitSequence_main_region_NotFree_notFree_Reserved();
-			break;
-
-		case main_region_NotFree_notFree_WaitForFirstResponse:
-			exitSequence_main_region_NotFree_notFree_WaitForFirstResponse();
-			break;
-
-		case main_region_NotFree_notFree_WaitForSecondResponse:
-			exitSequence_main_region_NotFree_notFree_WaitForSecondResponse();
-			break;
-
-		case main_region_NotFree_notFree_BeforeFirstReserve:
-			exitSequence_main_region_NotFree_notFree_BeforeFirstReserve();
-			break;
-
-		default:
-			break;
-		}
-	}
-
-	/* Default exit sequence for region notFree */
-	private void exitSequence_main_region_NotFree_notFree() {
-		switch (stateVector[0]) {
-		case main_region_NotFree_notFree_Stop:
-			exitSequence_main_region_NotFree_notFree_Stop();
-			break;
-
-		case main_region_NotFree_notFree_WaitingForResponse:
-			exitSequence_main_region_NotFree_notFree_WaitingForResponse();
-			break;
-
-		case main_region_NotFree_notFree_Occupied:
-			exitSequence_main_region_NotFree_notFree_Occupied();
-			break;
-
-		case main_region_NotFree_notFree_Reserved:
-			exitSequence_main_region_NotFree_notFree_Reserved();
-			break;
-
-		case main_region_NotFree_notFree_WaitForFirstResponse:
-			exitSequence_main_region_NotFree_notFree_WaitForFirstResponse();
-			break;
-
-		case main_region_NotFree_notFree_WaitForSecondResponse:
-			exitSequence_main_region_NotFree_notFree_WaitForSecondResponse();
-			break;
-
-		case main_region_NotFree_notFree_BeforeFirstReserve:
-			exitSequence_main_region_NotFree_notFree_BeforeFirstReserve();
-			break;
-
-		default:
-			break;
-		}
-	}
-
 	/* The reactions of state Free. */
 	private void react_main_region_Free() {
-		if (check_main_region_Free_tr0_tr0()) {
-			effect_main_region_Free_tr0();
+		if (sCISection.occupy) {
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			sCISection.raiseReserveLeft();
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_NotFree_notFree_WaitForFirstResponse;
 		} else {
-			if (check_main_region_Free_tr1_tr1()) {
-				effect_main_region_Free_tr1();
+			if (sCISection.reserveFromLeft) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				sCISection.raiseReserveResultToLeft(true);
+
+				sCISection.setDir(sCIDirection.rIGHT);
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_NotFree_notFree_Reserved;
 			} else {
-				if (check_main_region_Free_tr2_tr2()) {
-					effect_main_region_Free_tr2();
+				if (sCISection.reserveFromRight) {
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					sCISection.raiseReserveResultToRight(true);
+
+					sCISection.setDir(sCIDirection.lEFT);
+
+					nextStateIndex = 0;
+					stateVector[0] = State.main_region_NotFree_notFree_Reserved;
 				}
 			}
 		}
@@ -904,41 +484,119 @@ public class SectionStatemachine implements ISectionStatemachine {
 
 	/* The reactions of state Stop. */
 	private void react_main_region_NotFree_notFree_Stop() {
-		if (check_main_region_NotFree_lr0_lr0()) {
-			effect_main_region_NotFree_lr0_lr0();
+		if (sCISection.reserveFromLeft) {
+			sCISection.raiseReserveResultToLeft(false);
 		}
 
-		if (check_main_region_NotFree_lr1_lr1()) {
-			effect_main_region_NotFree_lr1_lr1();
+		if (sCISection.reserveFromRight) {
+			sCISection.raiseReserveResultToRight(false);
 		}
 
-		if (check_main_region_NotFree_notFree_Stop_tr0_tr0()) {
-			effect_main_region_NotFree_notFree_Stop_tr0();
+		if (sCISection.unoccupy) {
+			switch (stateVector[0]) {
+			case main_region_NotFree_notFree_Stop:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				sCISection.raiseReleaseLeft();
+
+				sCISection.raiseReleaseRight();
+				break;
+
+			case main_region_NotFree_notFree_WaitingForResponse:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				timer.unsetTimer(this, 0);
+				break;
+
+			case main_region_NotFree_notFree_Occupied:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			case main_region_NotFree_notFree_Reserved:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			case main_region_NotFree_notFree_WaitForFirstResponse:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			case main_region_NotFree_notFree_WaitForSecondResponse:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				timer.unsetTimer(this, 1);
+				break;
+
+			case main_region_NotFree_notFree_BeforeFirstReserve:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			default:
+				break;
+			}
+
+			sCISection.setDir(sCIDirection.rIGHT);
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_Free;
 		} else {
-			if (check_main_region_NotFree_notFree_Stop_tr1_tr1()) {
-				effect_main_region_NotFree_notFree_Stop_tr1();
+			if (sCISection.reset) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				sCISection.raiseReleaseLeft();
+
+				sCISection.raiseReleaseRight();
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_NotFree_notFree_BeforeFirstReserve;
 			}
 		}
 	}
 
 	/* The reactions of state WaitingForResponse. */
 	private void react_main_region_NotFree_notFree_WaitingForResponse() {
-		if (check_main_region_NotFree_lr0_lr0()) {
-			effect_main_region_NotFree_lr0_lr0();
+		if (sCISection.reserveFromLeft) {
+			sCISection.raiseReserveResultToLeft(false);
 		}
 
-		if (check_main_region_NotFree_lr1_lr1()) {
-			effect_main_region_NotFree_lr1_lr1();
+		if (sCISection.reserveFromRight) {
+			sCISection.raiseReserveResultToRight(false);
 		}
 
-		if (check_main_region_NotFree_notFree_WaitingForResponse_tr0_tr0()) {
-			effect_main_region_NotFree_notFree_WaitingForResponse_tr0();
+		if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == false)) {
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			timer.unsetTimer(this, 0);
+
+			sCISection.raiseStop();
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_NotFree_notFree_Stop;
 		} else {
-			if (check_main_region_NotFree_notFree_WaitingForResponse_tr1_tr1()) {
-				effect_main_region_NotFree_notFree_WaitingForResponse_tr1();
+			if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == true)) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				timer.unsetTimer(this, 0);
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_NotFree_notFree_Occupied;
 			} else {
-				if (check_main_region_NotFree_notFree_WaitingForResponse_tr2_tr2()) {
-					effect_main_region_NotFree_notFree_WaitingForResponse_tr2();
+				if (timeEvents[0]) {
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					timer.unsetTimer(this, 0);
+
+					react_main_region_NotFree_notFree__choice_1();
 				}
 			}
 		}
@@ -946,79 +604,223 @@ public class SectionStatemachine implements ISectionStatemachine {
 
 	/* The reactions of state Occupied. */
 	private void react_main_region_NotFree_notFree_Occupied() {
-		if (check_main_region_NotFree_lr0_lr0()) {
-			effect_main_region_NotFree_lr0_lr0();
+		if (sCISection.reserveFromLeft) {
+			sCISection.raiseReserveResultToLeft(false);
 		}
 
-		if (check_main_region_NotFree_lr1_lr1()) {
-			effect_main_region_NotFree_lr1_lr1();
+		if (sCISection.reserveFromRight) {
+			sCISection.raiseReserveResultToRight(false);
 		}
 
-		if (check_main_region_NotFree_notFree_Occupied_tr0_tr0()) {
-			effect_main_region_NotFree_notFree_Occupied_tr0();
+		if (sCISection.release) {
+			switch (stateVector[0]) {
+			case main_region_NotFree_notFree_Stop:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				sCISection.raiseReleaseLeft();
+
+				sCISection.raiseReleaseRight();
+				break;
+
+			case main_region_NotFree_notFree_WaitingForResponse:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				timer.unsetTimer(this, 0);
+				break;
+
+			case main_region_NotFree_notFree_Occupied:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			case main_region_NotFree_notFree_Reserved:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			case main_region_NotFree_notFree_WaitForFirstResponse:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			case main_region_NotFree_notFree_WaitForSecondResponse:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				timer.unsetTimer(this, 1);
+				break;
+
+			case main_region_NotFree_notFree_BeforeFirstReserve:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			default:
+				break;
+			}
+
+			sCISection.raiseReleaseLeft();
+
+			sCISection.raiseReleaseRight();
+
+			sCISection.setDir(sCIDirection.rIGHT);
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_Free;
 		} else {
-			if (check_main_region_NotFree_notFree_Occupied_tr1_tr1()) {
-				effect_main_region_NotFree_notFree_Occupied_tr1();
+			if (sCISection.unoccupy) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				react_main_region_NotFree_notFree__choice_0();
 			}
 		}
 	}
 
 	/* The reactions of state Reserved. */
 	private void react_main_region_NotFree_notFree_Reserved() {
-		if (check_main_region_NotFree_lr0_lr0()) {
-			effect_main_region_NotFree_lr0_lr0();
+		if (sCISection.reserveFromLeft) {
+			sCISection.raiseReserveResultToLeft(false);
 		}
 
-		if (check_main_region_NotFree_lr1_lr1()) {
-			effect_main_region_NotFree_lr1_lr1();
+		if (sCISection.reserveFromRight) {
+			sCISection.raiseReserveResultToRight(false);
 		}
 
-		if (check_main_region_NotFree_notFree_Reserved_tr0_tr0()) {
-			effect_main_region_NotFree_notFree_Reserved_tr0();
+		if (sCISection.occupy) {
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			react_main_region_NotFree_notFree__choice_1();
 		} else {
-			if (check_main_region_NotFree_notFree_Reserved_tr1_tr1()) {
-				effect_main_region_NotFree_notFree_Reserved_tr1();
+			if (sCISection.release) {
+				switch (stateVector[0]) {
+				case main_region_NotFree_notFree_Stop:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					sCISection.raiseReleaseLeft();
+
+					sCISection.raiseReleaseRight();
+					break;
+
+				case main_region_NotFree_notFree_WaitingForResponse:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					timer.unsetTimer(this, 0);
+					break;
+
+				case main_region_NotFree_notFree_Occupied:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+					break;
+
+				case main_region_NotFree_notFree_Reserved:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+					break;
+
+				case main_region_NotFree_notFree_WaitForFirstResponse:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+					break;
+
+				case main_region_NotFree_notFree_WaitForSecondResponse:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					timer.unsetTimer(this, 1);
+					break;
+
+				case main_region_NotFree_notFree_BeforeFirstReserve:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+					break;
+
+				default:
+					break;
+				}
+
+				sCISection.setDir(sCIDirection.rIGHT);
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_Free;
 			}
 		}
 	}
 
 	/* The reactions of state WaitForFirstResponse. */
 	private void react_main_region_NotFree_notFree_WaitForFirstResponse() {
-		if (check_main_region_NotFree_lr0_lr0()) {
-			effect_main_region_NotFree_lr0_lr0();
+		if (sCISection.reserveFromLeft) {
+			sCISection.raiseReserveResultToLeft(false);
 		}
 
-		if (check_main_region_NotFree_lr1_lr1()) {
-			effect_main_region_NotFree_lr1_lr1();
+		if (sCISection.reserveFromRight) {
+			sCISection.raiseReserveResultToRight(false);
 		}
 
-		if (check_main_region_NotFree_notFree_WaitForFirstResponse_tr0_tr0()) {
-			effect_main_region_NotFree_notFree_WaitForFirstResponse_tr0();
+		if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == false)) {
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_NotFree_notFree_Stop;
 		} else {
-			if (check_main_region_NotFree_notFree_WaitForFirstResponse_tr1_tr1()) {
-				effect_main_region_NotFree_notFree_WaitForFirstResponse_tr1();
+			if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == true)) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				sCISection.raiseReserveRight();
+
+				timer.setTimer(this, 1, sCISection.timeout, false);
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_NotFree_notFree_WaitForSecondResponse;
 			}
 		}
 	}
 
 	/* The reactions of state WaitForSecondResponse. */
 	private void react_main_region_NotFree_notFree_WaitForSecondResponse() {
-		if (check_main_region_NotFree_lr0_lr0()) {
-			effect_main_region_NotFree_lr0_lr0();
+		if (sCISection.reserveFromLeft) {
+			sCISection.raiseReserveResultToLeft(false);
 		}
 
-		if (check_main_region_NotFree_lr1_lr1()) {
-			effect_main_region_NotFree_lr1_lr1();
+		if (sCISection.reserveFromRight) {
+			sCISection.raiseReserveResultToRight(false);
 		}
 
-		if (check_main_region_NotFree_notFree_WaitForSecondResponse_tr0_tr0()) {
-			effect_main_region_NotFree_notFree_WaitForSecondResponse_tr0();
+		if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == false)) {
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			timer.unsetTimer(this, 1);
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_NotFree_notFree_Stop;
 		} else {
-			if (check_main_region_NotFree_notFree_WaitForSecondResponse_tr1_tr1()) {
-				effect_main_region_NotFree_notFree_WaitForSecondResponse_tr1();
+			if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == true)) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				timer.unsetTimer(this, 1);
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_NotFree_notFree_Occupied;
 			} else {
-				if (check_main_region_NotFree_notFree_WaitForSecondResponse_tr2_tr2()) {
-					effect_main_region_NotFree_notFree_WaitForSecondResponse_tr2();
+				if (timeEvents[1]) {
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					timer.unsetTimer(this, 1);
+
+					sCISection.raiseReserveLeft();
+
+					nextStateIndex = 0;
+					stateVector[0] = State.main_region_NotFree_notFree_WaitForFirstResponse;
 				}
 			}
 		}
@@ -1026,47 +828,59 @@ public class SectionStatemachine implements ISectionStatemachine {
 
 	/* The reactions of state BeforeFirstReserve. */
 	private void react_main_region_NotFree_notFree_BeforeFirstReserve() {
-		if (check_main_region_NotFree_lr0_lr0()) {
-			effect_main_region_NotFree_lr0_lr0();
+		if (sCISection.reserveFromLeft) {
+			sCISection.raiseReserveResultToLeft(false);
 		}
 
-		if (check_main_region_NotFree_lr1_lr1()) {
-			effect_main_region_NotFree_lr1_lr1();
+		if (sCISection.reserveFromRight) {
+			sCISection.raiseReserveResultToRight(false);
 		}
 
-		effect_main_region_NotFree_notFree_BeforeFirstReserve_tr0();
+		nextStateIndex = 0;
+		stateVector[0] = State.$NullState$;
+
+		sCISection.raiseReserveLeft();
+
+		nextStateIndex = 0;
+		stateVector[0] = State.main_region_NotFree_notFree_WaitForFirstResponse;
 	}
 
 	/* The reactions of state null. */
 	private void react_main_region_NotFree_notFree__choice_0() {
-		if (check_main_region_NotFree_notFree__choice_0_tr0_tr0()) {
-			effect_main_region_NotFree_notFree__choice_0_tr0();
+		if (sCISection.dir == sCIDirection.lEFT) {
+			sCISection.raiseReleaseRight();
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_NotFree_notFree_Reserved;
 		} else {
-			if (check_main_region_NotFree_notFree__choice_0_tr1_tr1()) {
-				effect_main_region_NotFree_notFree__choice_0_tr1();
+			if (sCISection.dir == sCIDirection.rIGHT) {
+				sCISection.raiseReleaseLeft();
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_NotFree_notFree_Reserved;
 			}
 		}
 	}
 
 	/* The reactions of state null. */
 	private void react_main_region_NotFree_notFree__choice_1() {
-		if (check_main_region_NotFree_notFree__choice_1_tr0_tr0()) {
-			effect_main_region_NotFree_notFree__choice_1_tr0();
+		if (sCISection.dir == sCIDirection.lEFT) {
+			sCISection.raiseReserveLeft();
+
+			timer.setTimer(this, 0, sCISection.timeout, false);
+
+			nextStateIndex = 0;
+			stateVector[0] = State.main_region_NotFree_notFree_WaitingForResponse;
 		} else {
-			if (check_main_region_NotFree_notFree__choice_1_tr1_tr1()) {
-				effect_main_region_NotFree_notFree__choice_1_tr1();
+			if (sCISection.dir == sCIDirection.rIGHT) {
+				sCISection.raiseReserveRight();
+
+				timer.setTimer(this, 0, sCISection.timeout, false);
+
+				nextStateIndex = 0;
+				stateVector[0] = State.main_region_NotFree_notFree_WaitingForResponse;
 			}
 		}
-	}
-
-	/* Default react sequence for initial entry */
-	private void react_main_region__entry_Default() {
-		enterSequence_main_region_Free_default();
-	}
-
-	/* Default react sequence for initial entry */
-	private void react_main_region_NotFree_notFree__entry_Default() {
-		enterSequence_main_region_NotFree_notFree_Reserved_default();
 	}
 
 	public void runCycle() {

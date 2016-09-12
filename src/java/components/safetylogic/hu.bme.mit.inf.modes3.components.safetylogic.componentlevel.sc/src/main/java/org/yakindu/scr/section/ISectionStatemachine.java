@@ -38,17 +38,17 @@ public interface ISectionStatemachine extends ITimerCallback, IStatemachine {
 
 		public boolean isRaisedStop();
 
-		public long getId();
+		public int getId();
 
-		public void setId(long value);
+		public void setId(int value);
 
-		public long getTimeout();
+		public int getTimeout();
 
-		public void setTimeout(long value);
+		public void setTimeout(int value);
 
-		public long getDir();
+		public int getDir();
 
-		public void setDir(long value);
+		public void setDir(int value);
 
 		public List<SCISectionListener> getListeners();
 
@@ -73,12 +73,12 @@ public interface ISectionStatemachine extends ITimerCallback, IStatemachine {
 	public SCISection getSCISection();
 
 	public interface SCIDirection {
-		public static final long lEFT = 0;
-		public static final long rIGHT = 1;
+		public static final int lEFT = 0;
+		public static final int rIGHT = 1;
 
-		public long getLEFT();
+		public int getLEFT();
 
-		public long getRIGHT();
+		public int getRIGHT();
 
 	}
 

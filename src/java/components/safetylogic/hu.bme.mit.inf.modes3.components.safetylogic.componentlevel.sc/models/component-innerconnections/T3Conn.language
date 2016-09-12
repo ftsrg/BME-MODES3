@@ -1,0 +1,111 @@
+section sectionComponent {
+	interface {
+		reserveFromLeft : IN reserveFromLeft
+		reserveFromRight : IN reserveFromRight
+		// Ez az üzenet vagy a jobb vagy a bal oldali section-ről jön, és azt jelzi, hogy sikerült-e a lefoglalás (aurába betétel), egy boolean változóban jelzi
+		reserveResult : IN reserveResult
+		// Ez az üzenet jelzi, hogy a vonat elment a mellette lévő section-ről, így ez a section kikerült az aurából
+		release : IN release
+		// Ezzel az üzenettel kell jelezni a section-nek, hogy a vonat ténylegesen, fizikailag ráment
+		occupy : IN occupy
+		// Ezzel az üzenettel kell jelezni a section-nek, hogy a vonat fizikailag elhagyta a section-t
+		unoccupy : IN unoccupy
+		// Reset a felhasználótól, Stop állapotban lévő szakaszon lévő vonatot lehet vele újraindítani
+		reset : IN reset
+		// A reserveFromLeft és reserveFromRight párja, ezek az események hívják meg a megfelelő in eseményt
+		reserveLeft : OUT reserveLeft
+		reserveRight : OUT reserveRight
+		// A reserveResult párja, a section ebben az eseményben jelez vissza, hogy sikerült-e a lefoglalás
+		reserveResultToLeft : OUT reserveResultToLeft
+		reserveResultToRight : OUT reserveResultToRight
+		// A release párja, a section ezzel az eseménnyel szabadítja fel az aurából a baloldali vagy jobboldali section-t.
+		releaseLeft : OUT releaseLeft
+		releaseRight : OUT releaseRight
+		// Ezzel jelez a section, hogy a rajta lévő vonatnak meg kell állnia
+		stop : OUT stop  
+	}
+}
+
+turnout turnoutComponent {
+	interface {
+		// Ezzel lehet a váltót a másik állapotába vinni
+		switch : IN switch
+		// Az alábbi események megfelelnek a section-ök eseményeinek. Az a különbség, hogy a turnout 3 irányba képes kommunikálni, míg a section csak 2-be.
+		reserveFromLeft : IN reserveFromLeft
+		reserveFromRight : IN reserveFromRight
+		reserveFromBottom : IN reserveFromBottom
+
+		reserveResultFromLeft : IN reserveResultFromLeft
+		reserveResultFromRight : IN reserveResultFromRight
+		reserveResultFromBottom : IN reserveResultFromBottom
+
+		releaseFromLeft : IN releaseFromLeft
+		releaseFromRight : IN releaseFromRight
+		releaseFromBottom : IN releaseFromBottom
+
+		reserveLeft : OUT reserveLeft
+		reserveRight : OUT reserveRight
+		reserveBottom : OUT reserveBottom
+
+		reserveResultToLeft : OUT reserveResultToLeft
+		reserveResultToRight : OUT reserveResultToRight
+		reserveResultToBottom : OUT reserveResultToBottom
+
+		releaseLeft : OUT releaseLeft
+		releaseRight : OUT releaseRight
+		releaseBottom : OUT releaseBottom
+		
+	}
+}
+
+turnoutComponent T3_1
+turnoutComponent T3_2
+sectionComponent S20
+sectionComponent S26
+sectionComponent S19
+sectionComponent S30
+
+channels {
+	// T3_2.right = S30 (to be consistent it would be left, but turnout connects bottom-right when it is divergent)
+	// T3_2.left = S19 (to be consistent it would be right, but turnout connects bottom-right when it is divergent)
+	// T3_2.bottom = T3_1
+	
+	// T3_1.right = S20 (to be consistent it would be left, but turnout connects bottom-right when it is divergent)
+	// T3_1.left = S26 (to be consistent it would be right, but turnout connects bottom-right when it is divergent)
+	// T3_1.bottom = T3_2
+	
+	[S30.releaseRight] -> [T3_2.releaseFromRight]
+	[S30.reserveRight] -> [T3_2.reserveFromRight]
+	[S30.reserveResultToRight] -> [T3_2.reserveResultFromRight]
+	[T3_2.releaseRight] -> [S30.release]
+	[T3_2.reserveRight] -> [S30.reserveFromRight]
+	[T3_2.reserveResultToRight] -> [S30.reserveResult]
+	
+	[S19.releaseLeft] -> [T3_2.releaseFromLeft]
+	[S19.reserveLeft] -> [T3_2.reserveFromLeft]
+	[S19.reserveResultToLeft] -> [T3_2.reserveResultFromLeft]
+	[T3_2.releaseLeft] -> [S19.release]
+	[T3_2.reserveLeft] -> [S19.reserveFromLeft]
+	[T3_2.reserveResultToLeft] -> [S19.reserveResult]
+	
+	[T3_2.releaseBottom] -> [T3_1.releaseFromBottom]
+	[T3_2.reserveBottom] -> [T3_1.reserveFromBottom]
+	[T3_2.reserveResultToBottom] -> [T3_1.reserveResultFromBottom]
+	[T3_1.releaseBottom] -> [T3_2.releaseFromBottom]
+	[T3_1.reserveBottom] -> [T3_2.reserveFromBottom]
+	[T3_1.reserveResultToBottom] -> [T3_2.reserveResultFromBottom]
+	
+	[S26.releaseRight] -> [T3_1.releaseFromLeft]
+	[S26.reserveRight] -> [T3_1.reserveFromLeft]
+	[S26.reserveResultToRight] -> [T3_1.reserveResultFromLeft]
+	[T3_1.releaseLeft] -> [S26.release]
+	[T3_1.reserveLeft] -> [S26.reserveFromRight]
+	[T3_1.reserveResultToLeft] -> [S26.reserveResult]
+	
+	[S20.releaseLeft] -> [T3_1.releaseFromRight]
+	[S20.reserveLeft] -> [T3_1.reserveFromRight]
+	[S20.reserveResultToLeft] -> [T3_1.reserveResultFromRight]
+	[T3_1.releaseRight] -> [S20.release]
+	[T3_1.reserveRight] -> [S20.reserveFromLeft]
+	[T3_1.reserveResultToRight] -> [S20.reserveResult]
+}

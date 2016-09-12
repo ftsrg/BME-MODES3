@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="ASCII"?>
+<hu.bme.mit.inf.ttmc.statechart:StatechartSpecification xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hu.bme.mit.inf.ttmc.constraint="http://www.inf.mit.bme.hu/ttmc/constraint/Model" xmlns:hu.bme.mit.inf.ttmc.statechart="http://www.inf.mit.bme.hu/ttmc/statechart/Model" name="turnout">
+  <signalDeclarations name="switch"/>
+  <signalDeclarations name="reserveResultToRight">
+    <parameterDeclarations name="reserveResultToRightValue">
+      <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+    </parameterDeclarations>
+  </signalDeclarations>
+  <signalDeclarations name="releaseFromBottom"/>
+  <signalDeclarations name="reserveResultFromLeft">
+    <parameterDeclarations name="reserveResultFromLeftValue">
+      <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+    </parameterDeclarations>
+  </signalDeclarations>
+  <signalDeclarations name="reserveResultFromRight">
+    <parameterDeclarations name="reserveResultFromRightValue">
+      <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+    </parameterDeclarations>
+  </signalDeclarations>
+  <signalDeclarations name="releaseFromLeft"/>
+  <signalDeclarations name="reserveFromRight"/>
+  <signalDeclarations name="reserveResultFromBottom">
+    <parameterDeclarations name="reserveResultFromBottomValue">
+      <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+    </parameterDeclarations>
+  </signalDeclarations>
+  <signalDeclarations name="releaseLeft"/>
+  <signalDeclarations name="releaseBottom"/>
+  <signalDeclarations name="reserveResultToBottom">
+    <parameterDeclarations name="reserveResultToBottomValue">
+      <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+    </parameterDeclarations>
+  </signalDeclarations>
+  <signalDeclarations name="reserveRight"/>
+  <signalDeclarations name="releaseFromRight"/>
+  <signalDeclarations name="reserveFromLeft"/>
+  <signalDeclarations name="reserveResultToLeft">
+    <parameterDeclarations name="reserveResultToLeftValue">
+      <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+    </parameterDeclarations>
+  </signalDeclarations>
+  <signalDeclarations name="reserveBottom"/>
+  <signalDeclarations name="reserveFromBottom"/>
+  <signalDeclarations name="reserveLeft"/>
+  <signalDeclarations name="releaseRight"/>
+  <statechartDeclarations name="turnoutDeclaration">
+    <statechart xsi:type="hu.bme.mit.inf.ttmc.statechart:StatechartDefinition">
+      <variableDeclarations name="id">
+        <type xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerTypeDefinition"/>
+      </variableDeclarations>
+      <variableDeclarations name="count">
+        <type xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerTypeDefinition"/>
+      </variableDeclarations>
+      <regions name="main_region">
+        <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="Divergent">
+          <regions name="listening_to_bottom">
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:InitialState" name="Entry"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="Waiting"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="ReservationFromBottom"/>
+          </regions>
+          <regions name="listening_to_right">
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:InitialState" name="Entry"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="ReservationFromRight"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="Waiting"/>
+          </regions>
+          <regions name="localReactionRegion1">
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:InitialState" name="Entry"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="LocalReactionState"/>
+          </regions>
+        </stateNodes>
+        <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="Straight">
+          <regions name="listening_to_left">
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:InitialState" name="Entry"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="ReservationFromLeft"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="Waiting"/>
+          </regions>
+          <regions name="listening_to_right">
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:InitialState" name="Entry"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="ReservationFromRight"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="Waiting"/>
+          </regions>
+          <regions name="localReactionRegion0">
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:InitialState" name="Entry"/>
+            <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:State" name="LocalReactionState"/>
+          </regions>
+        </stateNodes>
+        <stateNodes xsi:type="hu.bme.mit.inf.ttmc.statechart:InitialState" name="Entry"/>
+      </regions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.0" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1"/>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2">
+        <parameterDeclarations name="reserveResultFromLeftValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.3">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.1/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.1/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.1">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.0" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.2"/>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1">
+        <parameterDeclarations name="reserveResultFromRightValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.4">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.3/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.3/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.10">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.6"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.15"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:AddExpression">
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.0"/>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="0"/>
+        </guard>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.0"/>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="0"/>
+        </guard>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.2">
+        <parameterDeclarations name="reserveResultFromRightValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.4">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.7/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.7/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.14">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.2">
+        <parameterDeclarations name="reserveResultFromBottomValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.7">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.8/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.8/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.1">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.13"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.11"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:AddExpression">
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.6"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:AddExpression">
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.17"/>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1"/>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.0" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2"/>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2">
+        <parameterDeclarations name="reserveResultFromLeftValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.3">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.13/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.13/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.1">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.2">
+        <parameterDeclarations name="reserveResultFromBottomValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.7">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.14/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.14/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.1">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1">
+        <parameterDeclarations name="reserveResultFromRightValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.4">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.15/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.15/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.10">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.0" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.2"/>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.2">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.16"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:AddExpression">
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <operands xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.11"/>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.2">
+        <parameterDeclarations name="reserveResultFromRightValue">
+          <type xsi:type="hu.bme.mit.inf.ttmc.constraint:BooleanTypeDefinition"/>
+        </parameterDeclarations>
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.4">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.18/@parameterDeclarations.0"/>
+        </trigger>
+        <guard xsi:type="hu.bme.mit.inf.ttmc.constraint:EqualityExpression">
+          <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@transitions.18/@parameterDeclarations.0"/>
+          <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </guard>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.14">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:TrueExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.2/@stateNodes.0" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.2/@stateNodes.1"/>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.2/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.2/@stateNodes.1">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.16"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.10">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.12"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.8"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:SubtractExpression">
+            <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.1/@regions.0/@stateNodes.2">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.5"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.18"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:SubtractExpression">
+            <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.2/@stateNodes.0" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.2/@stateNodes.1"/>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.2/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.2/@stateNodes.1">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.13"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.14">
+          <parameters xsi:type="hu.bme.mit.inf.ttmc.constraint:FalseExpression"/>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.2"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.18"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:SubtractExpression">
+            <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+      </transitions>
+      <transitions sourceState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.2" targetState="//@statechartDeclarations.0/@statechart/@regions.0/@stateNodes.0/@regions.1/@stateNodes.2">
+        <trigger xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalEvent" signalDeclaration="//@signalDeclarations.12"/>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:AssignmentAction">
+          <lhs xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+          <rhs xsi:type="hu.bme.mit.inf.ttmc.constraint:SubtractExpression">
+            <leftOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:ReferenceExpression" declaration="//@statechartDeclarations.0/@statechart/@variableDeclarations.1"/>
+            <rightOperand xsi:type="hu.bme.mit.inf.ttmc.constraint:IntegerLiteralExpression" value="1"/>
+          </rhs>
+        </effects>
+        <effects xsi:type="hu.bme.mit.inf.ttmc.statechart:SignalAction" signalDeclaration="//@signalDeclarations.9"/>
+      </transitions>
+    </statechart>
+  </statechartDeclarations>
+</hu.bme.mit.inf.ttmc.statechart:StatechartSpecification>

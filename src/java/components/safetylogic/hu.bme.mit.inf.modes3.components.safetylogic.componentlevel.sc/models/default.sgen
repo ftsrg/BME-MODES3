@@ -1,0 +1,72 @@
+GeneratorModel for yakindu::java {
+
+	statechart section {
+
+		feature Outlet {
+			targetProject = "hu.bme.mit.inf.modes3"
+			targetFolder = "src"
+			libraryTargetFolder = "src"
+		}
+
+		feature FunctionInlining {
+			inlineChoices = true
+			inlineEnterRegion = true
+			inlineEnterSequences = true
+			inlineEntries = true
+			inlineEntryActions = true
+			inlineExitActions = true
+			inlineExitRegion = true
+			inlineExitSequences = true
+			inlineReactions = true
+		}
+
+		feature GeneralFeatures {
+			InterfaceObserverSupport = true
+			UseJavaIntForInteger = true
+			TimerService = true
+		}
+
+		feature RunnableWrapper {
+		/** 
+		 *	since yakindu 2.7 or 2.6 it automatically generates the 
+		 *	syncrhonzied (thread-safe) wrapper  too
+		 **/
+		}
+
+	}
+
+	statechart turnout {
+
+		feature Outlet {
+			targetProject = "hu.bme.mit.inf.modes3"
+			targetFolder = "src"
+			libraryTargetFolder = "src"
+		}
+
+		feature FunctionInlining {
+			inlineChoices = true
+			inlineEnterRegion = true
+			inlineEnterSequences = true
+			inlineEntries = true
+			inlineEntryActions = true
+			inlineExitActions = true
+			inlineExitRegion = true
+			inlineExitSequences = true
+			inlineReactions = true
+		}
+
+		feature GeneralFeatures {
+			InterfaceObserverSupport = true
+			UseJavaIntForInteger = true
+			TimerService = true
+		}
+
+		feature RunnableWrapper {
+		/** 
+		 *	since yakindu 2.7 or 2.6 it automatically generates the 
+		 *	syncrhonzied (thread-safe) wrapper  too
+		 **/
+		}
+
+	}
+}
