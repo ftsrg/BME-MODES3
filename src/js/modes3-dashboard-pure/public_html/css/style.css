@@ -1,0 +1,124 @@
+/* 
+    Created on : Sep 12, 2016, 11:05:40 AM
+    Author     : zsoltmazlo
+*/
+
+/* reset boxmodel */
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+}
+
+/* insert roboto as custom font */
+@font-face {
+    font-family: Canaro;
+    src: url('./fonts/Canaro/Rene Bieder - Canaro Thin.otf');
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: inherit;
+}
+
+
+#page {
+    width: 100%;
+    height: inherit;
+    display: block;
+    margin: 0;
+    position: relative;
+}
+
+/*
+ * tab controls and tab content
+ */
+
+#tab-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: inline-block;
+    border-bottom: 3px solid #1e2141;
+}
+
+#tab-controls:after {
+    clear: both;
+}
+
+#tab-controls .tab-control-item {
+    display: inline-block;
+    float: left;
+    padding: 12px 24px;
+    margin: 0 3px 0 0;
+    color: #FFF;
+    background-color: #767676;
+    font-family: Canaro;
+}
+
+#tab-controls .tab-control-item.active {
+    background-color: #1e2141;
+}
+
+#tab-content {
+    padding-top: 46px;
+    width: 100%;
+    height: 100%;
+}
+
+/*
+ * layout control tab
+ */
+#layout-tab {
+    width: 100%;
+    display: block;
+    background-color: #1e2141;
+    height: 100%;
+    position: relative;
+}
+
+#layout-tab:after {
+    clear: both;
+}
+
+#layout-tab #layout-control {
+    margin-right: 300px;
+    display: block;
+}
+
+#layout-tab #layout-control svg {
+    width: 100%;
+}
+
+#layout-tab #train-control {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 300px;
+    display: block;
+    height: 100%;
+    color: #FFF;
+}
+
+/* optimalization for raspberry pi display */
+@media only screen and (max-width: 800px) {
+    #layout-tab #layout-control {
+        margin-right: 0;
+    }
+
+    #tab-controls .tab-control-item {
+        padding: 6px 6px;
+    }
+}
+
+/*
+ * devices tab
+ */
+#devices-tab {
+    display: none;
+}

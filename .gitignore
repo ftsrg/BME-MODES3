@@ -20,3 +20,4 @@ Thumbs.db
 /target/
 /hu.bme.mit.inf.master.mqtt.soc/dist/
 /hu.bme.mit.inf.master.mqtt.soc/build/
+/src/js/modes3-dashboard-pure/nbproject/private/
