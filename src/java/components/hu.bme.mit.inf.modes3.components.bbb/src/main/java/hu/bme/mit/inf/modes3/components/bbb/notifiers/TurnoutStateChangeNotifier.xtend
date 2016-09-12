@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory
  * 
  * @author benedekh
  */
-class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
+package class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		TurnoutStateChangeNotifier)

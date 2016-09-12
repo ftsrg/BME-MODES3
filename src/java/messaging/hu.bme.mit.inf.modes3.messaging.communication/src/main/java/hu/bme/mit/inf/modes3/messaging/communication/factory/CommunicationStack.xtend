@@ -5,6 +5,9 @@ import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.Transport
 import org.eclipse.xtend.lib.annotations.Data
+import hu.bme.mit.inf.modes3.transports.common.LocalTransport
+import hu.bme.mit.inf.modes3.transports.zeromq.ZMQTransport
+import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 
 @Data
 class CommunicationStack {
@@ -13,13 +16,13 @@ class CommunicationStack {
 	val IMessageDispatcher dispatcher
 	
 
-	new() {
+	protected new() {
 		mms = new MessagingService
 		transport = null // TODO = new ZMQTransport 
 		dispatcher = new ProtobufMessageDispatcher
 	}
 	
-	new(MessagingService mms, Transport transport, IMessageDispatcher dispatcher){
+	protected new(MessagingService mms, Transport transport, IMessageDispatcher dispatcher){
 		this.mms = mms
 		this.transport = transport
 		this.dispatcher = dispatcher
@@ -28,5 +31,13 @@ class CommunicationStack {
 
 	def start() {
 		mms.start(transport, dispatcher)
+	}
+	
+	def static createLocalStack(){
+		return new CommunicationStack(new MessagingService, new LocalTransport, new ProtobufMessageDispatcher)
+	}
+	
+	def static createProtobufStack(){
+		return new CommunicationStack(new MessagingService, new ZMQTransport(TransportConfiguration::createDefaultTransportConfiguration), new ProtobufMessageDispatcher)
 	}
 }

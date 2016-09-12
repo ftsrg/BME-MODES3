@@ -7,13 +7,10 @@ import org.slf4j.LoggerFactory
 
 abstract class AbstractCommunicationComponent {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(AbstractCommunicationComponent)
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
+		AbstractCommunicationComponent)
 
 	protected val CommunicationStack communication
-
-	new() {
-		communication = new CommunicationStack
-	}
 
 	new(CommunicationStack stack) {
 		communication = stack

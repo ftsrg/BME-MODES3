@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory
  * 
  * @author benedekh
  */
-class SectionStateNotifier implements Runnable {
+package class SectionStateNotifier implements Runnable {
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(SectionStateNotifier)
 

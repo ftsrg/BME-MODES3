@@ -25,7 +25,7 @@ class CommunicationTest {
 	@Before
 	def void init() {
 		locator = new TrackCommunicationServiceLocator(
-			new CommunicationStack(new MessagingService, new LocalTransport, new ProtobufMessageDispatcher))
+			CommunicationStack::createLocalStack)
 		gotMsg = new ModifiableBool => [bool = false]
 	}
 

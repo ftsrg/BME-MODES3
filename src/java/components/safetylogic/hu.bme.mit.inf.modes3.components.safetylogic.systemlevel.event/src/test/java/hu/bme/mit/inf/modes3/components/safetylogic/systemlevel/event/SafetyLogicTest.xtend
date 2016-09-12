@@ -4,27 +4,22 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
-import hu.bme.mit.inf.modes3.transports.common.LocalTransport
 import hu.bme.mit.inf.safetylogic.event.SafetyLogic
-import org.junit.Before
-import org.junit.Test
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class SafetyLogicTest {
 	
 	MessagingService mms
-	LocalTransport transport
-	ProtobufMessageDispatcher dispatcher
 	SafetyLogic sl
 	
 	@Before
 	def init() {
-		mms = new MessagingService
-		transport = new LocalTransport
-		dispatcher = new  ProtobufMessageDispatcher
-		sl = new SafetyLogic(new CommunicationStack(mms, transport, dispatcher))
+		val stack = CommunicationStack::createLocalStack
+		mms = stack.mms
+		sl = new SafetyLogic(stack)
 		sl.start();
 	}
 	

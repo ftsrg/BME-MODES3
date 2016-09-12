@@ -13,7 +13,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author benedekh, hegyibalint
  */
-public class SectionMessageHandler implements ISegmentCommandListener {
+package class SectionMessageHandler implements ISegmentCommandListener {
 
 	// the actuator that can access the referred section
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderSectionController sectionController

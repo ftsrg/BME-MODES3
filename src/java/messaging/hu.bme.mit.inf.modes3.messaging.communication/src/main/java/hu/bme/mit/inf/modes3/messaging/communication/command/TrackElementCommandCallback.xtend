@@ -12,11 +12,11 @@ class TrackElementCommandCallback implements ITrackElementCommandCallback {
 	var ITurnoutCommandListener turnoutCommandListener
 
 	new(ProtobufMessageDispatcher dispatcher) {
-		val segmentCommandListener = new SegmentCommandClient(this) 
-		val turnoutCommandListener = new TurnoutCommandClient(this)
+		val segmentCommandClient = new SegmentCommandClient(this) 
+		val turnoutCommandClient = new TurnoutCommandClient(this)
 
-		dispatcher.segmentCommandHandler = segmentCommandListener
-		dispatcher.turnoutCommandHandler = turnoutCommandListener
+		dispatcher.segmentCommandHandler = segmentCommandClient
+		dispatcher.turnoutCommandHandler = turnoutCommandClient
 	}
 
 	def onSegmentCommand(int id, SegmentState state) {
