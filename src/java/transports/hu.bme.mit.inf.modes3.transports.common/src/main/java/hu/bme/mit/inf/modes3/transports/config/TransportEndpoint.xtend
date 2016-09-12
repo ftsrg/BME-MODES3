@@ -6,5 +6,6 @@ import org.eclipse.xtend.lib.annotations.Data
 class TransportEndpoint {
 	String addr;
 	String id;
-	Integer port;
+	Integer pubPort;
+	Integer repPort;
 }

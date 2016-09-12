@@ -24,7 +24,6 @@ class ZMQSenderRunner implements Runnable {
 		val zmq = new ZMQTransport(this.config)
 
 		zmq.connect
-		Thread.sleep(10)
 		zmq.sendMessage(message.bytes)
 		println('Message sent')
 		zmq.close
@@ -52,6 +51,7 @@ class ZMQReceiverRunner implements Runnable {
 		val zmq = new ZMQTransport(this.config)
 
 		zmq.connect
+		//Thread.sleep(250)
 		while(receiveCount > 0) {
 			println('Receiving message')
 			received.add(new String(zmq.receiveMessage))
@@ -130,10 +130,10 @@ class ZMQIntegrationTests {
 		// Act
 		val t1 = new Thread(new ZMQSenderRunner(tc1, message))
 		t1.start
-
+		
 		val t2 = new Thread(new ZMQReceiverRunner(tc2, received))
 		t2.start
-
+		
 		val t3 = new Thread(new ZMQReceiverRunner(tc3, received))
 		t3.start
 
