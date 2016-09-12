@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory
  * 
  * @author benedekh
  */
-class SectionStateChangeNotifier extends SectionStateNotifier {
+package class SectionStateChangeNotifier extends SectionStateNotifier {
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		SectionStateChangeNotifier)

@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory
  * 
  * @author benedekh
  */
-class TurnoutStateNotifier implements Runnable {
+package class TurnoutStateNotifier implements Runnable {
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		TurnoutStateNotifier)
