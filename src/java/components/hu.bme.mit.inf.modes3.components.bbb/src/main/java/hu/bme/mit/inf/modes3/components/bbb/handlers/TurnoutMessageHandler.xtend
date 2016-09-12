@@ -13,7 +13,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author benedekh, hegyibalint
  */
 class TurnoutMessageHandler implements ITurnoutCommandListener {
-
 	// the actuator that can access the referred turnout
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderTurnoutController turnoutController
 

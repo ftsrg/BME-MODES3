@@ -11,9 +11,9 @@ abstract class AbstractCommunicationComponent {
 
 	protected val CommunicationStack communication
 
-	new() {
-		communication = new CommunicationStack
-	}
+//	new() {
+//		communication = new CommunicationStack
+//	}
 
 	new(CommunicationStack stack) {
 		communication = stack
