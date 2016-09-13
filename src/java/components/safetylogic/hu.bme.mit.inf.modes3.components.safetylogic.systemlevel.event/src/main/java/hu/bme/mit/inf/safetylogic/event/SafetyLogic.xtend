@@ -31,10 +31,6 @@ class SafetyLogic extends AbstractCommunicationComponent {
 	public var RailRoadModel model //TODO accessors
 	val TrackCommunicationServiceLocator trackCommunication;
 
-//	new() {
-//		trackCommunication = new TrackCommunicationServiceLocator(super.communication)
-//	}
-
 	new(CommunicationStack stack) {
 		super(stack)
 		trackCommunication = new TrackCommunicationServiceLocator(stack)
