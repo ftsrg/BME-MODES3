@@ -29,7 +29,7 @@ class BBBComponent extends AbstractCommunicationComponent {
 	new(CommunicationStack stack, StateNotifierType notifierType, ExpanderSectionController sectionController,
 		ExpanderTurnoutController turnoutController) {
 		super(stack)
-		commandDispatcher = new TrackElementCommandDispatcher(stack)
+		commandDispatcher = new TrackElementCommandDispatcher(stack, sectionController, turnoutController)
 		switch (notifierType) {
 			case STATE_NOTIFIER:
 				stateNotifier = new TrackElementStateNotifier(stack, sectionController, turnoutController)
