@@ -4,8 +4,8 @@ import hu.bme.mit.inf.modes3.components.bbb.handlers.TrackElementCommandHandler
 import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateNotifier
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
-import hu.bme.mit.inf.modes3.components.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 
 /**
  * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
@@ -14,7 +14,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
  * 
  * @author benedekh
  */
-class BBBComponent extends AbstractCommunicationComponent {
+class BBBComponent extends AbstractRailRoadCommunicationComponent {
 	//TODO refactor this class with AbstractRailRoadCommunicationComponent
 
 	// to handle track element commands
