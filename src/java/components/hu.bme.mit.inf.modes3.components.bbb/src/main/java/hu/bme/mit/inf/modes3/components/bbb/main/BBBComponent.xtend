@@ -28,10 +28,10 @@ class BBBComponent extends AbstractCommunicationComponent {
 		stateNotifier = new TrackElementStateNotifier(stackForStateNotifier)
 	}
 
-	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
-		super(stack)
-		commandDispatcher = new TrackElementCommandHandler(stack, sectionController, turnoutController)
-		stateNotifier = new TrackElementStateNotifier(stack, sectionController, turnoutController)
+	new(CommunicationStack stackForCommandDispatcher, CommunicationStack stackForStateNotifier, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
+		super(null)
+		commandDispatcher = new TrackElementCommandHandler(stackForCommandDispatcher, sectionController, turnoutController)
+		stateNotifier = new TrackElementStateNotifier(stackForStateNotifier, sectionController, turnoutController)
 	}
 
 	protected new(CommunicationStack stackForCommandDispatcher, TrackElementStateNotifier _stateNotifier) {
