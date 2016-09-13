@@ -1,53 +1,60 @@
 package hu.bme.mit.inf.modes3.components.bbb.main
 
-import hu.bme.mit.inf.modes3.components.bbb.handlers.TrackElementCommandDispatcher
-import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateChangeNotifier
+import hu.bme.mit.inf.modes3.components.bbb.handlers.TrackElementCommandHandler
 import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateNotifier
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.components.bbb.utils.StateNotifierType
 import hu.bme.mit.inf.modes3.components.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 
+/**
+ * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
+ * Command processor = handling section enable/disable, turnout set straight/divergent commands which were received over the network<br>
+ * State sender = send section/turnout state events to the network.
+ * 
+ * @author benedekh
+ */
 class BBBComponent extends AbstractCommunicationComponent {
 
-	protected val TrackElementCommandDispatcher commandDispatcher
+	// to handle track element commands
+	protected val TrackElementCommandHandler commandDispatcher
 
+	// to send track element states
 	protected var TrackElementStateNotifier stateNotifier
 
-	protected var TrackElementStateChangeNotifier stateChangeNotifier
-
-	protected var Thread stateNotifierThread
-	protected var Thread stateChangeNotifierThread
-
-	new(CommunicationStack stack, StateNotifierType notifierType) {
+	new(CommunicationStack stack) {
 		super(stack)
-		commandDispatcher = new TrackElementCommandDispatcher(stack)
-		switch (notifierType) {
-			case STATE_NOTIFIER: stateNotifier = new TrackElementStateNotifier(stack)
-			case STATE_CHANGE_NOTIFIER: stateChangeNotifier = new TrackElementStateChangeNotifier(stack)
-		}
+		commandDispatcher = new TrackElementCommandHandler(stack)
+		stateNotifier = new TrackElementStateNotifier(stack)
 	}
 
-	new(CommunicationStack stack, StateNotifierType notifierType, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
+	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
 		super(stack)
-		commandDispatcher = new TrackElementCommandDispatcher(stack, sectionController, turnoutController)
-		switch (notifierType) {
-			case STATE_NOTIFIER:
-				stateNotifier = new TrackElementStateNotifier(stack, sectionController, turnoutController)
-			case STATE_CHANGE_NOTIFIER:
-				stateChangeNotifier = new TrackElementStateChangeNotifier(stack, sectionController, turnoutController)
-		}
+		commandDispatcher = new TrackElementCommandHandler(stack, sectionController, turnoutController)
+		stateNotifier = new TrackElementStateNotifier(stack, sectionController, turnoutController)
+	}
+
+	protected new(CommunicationStack stack, TrackElementStateNotifier _stateNotifier) {
+		super(stack)
+		commandDispatcher = new TrackElementCommandHandler(stack)
+		stateNotifier = _stateNotifier
+	}
+
+	protected new(CommunicationStack stack, TrackElementStateNotifier _stateNotifier, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
+		super(stack)
+		commandDispatcher = new TrackElementCommandHandler(stack, sectionController, turnoutController)
+		stateNotifier = _stateNotifier
 	}
 
 	override run() {
 		stateNotifier?.start
-		stateChangeNotifier?.start
 	}
-	
-	def interrupt(){
+
+	/**
+	 * Stop internal threads.
+	 */
+	def interrupt() {
 		stateNotifier?.interrupt
-		stateChangeNotifier?.interrupt
 	}
 
 }

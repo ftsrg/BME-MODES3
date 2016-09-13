@@ -2,7 +2,6 @@ package hu.bme.mit.inf.modes3.components.bbb.main
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.components.bbb.utils.StateNotifierType
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
@@ -27,8 +26,6 @@ class BBBSectionStateNotifierNetworkIntegrationTest {
 
 	@Mock
 	var ISegmentStateChangeListener changeListenerMock
-	
-	val StateNotifierType defaultNotifierType = StateNotifierType.STATE_NOTIFIER
 
 	// used for sending messages over the network
 	var TrackCommunicationServiceLocator communicationService
@@ -62,7 +59,7 @@ class BBBSectionStateNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -87,7 +84,7 @@ class BBBSectionStateNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start

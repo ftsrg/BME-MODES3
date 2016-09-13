@@ -8,18 +8,29 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * Encapsulates a SectionStateNotifier along with a TurnoutStateNotifier so that instantiating
+ * this class can send status information about the sections and turnouts to the network.
+ * 
+ * @author benedekh
+ */
 class TrackElementStateNotifier {
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(TrackElementStateNotifier)
 
+	// the message handlers are registered into this service locator that encapsulates the CommunicationStack
 	protected val TrackCommunicationServiceLocator serviceLocator
 
+	// notifier which polls the sections states regularly
 	protected var SectionStateNotifier sectionStateNotifier
 
+	// notifier which polls the turnouts states regularly
 	protected var TurnoutStateNotifier turnoutStateNotifier
 
+	// thread that runs the section notifier
 	protected var Thread sectionStateNotifierThread
 
+	// thread that runs the turnout notifier
 	protected var Thread turnoutStateNotifierThread
 
 	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
@@ -32,6 +43,9 @@ class TrackElementStateNotifier {
 		this(stack, new ExpanderSectionController, new ExpanderTurnoutController)
 	}
 
+	/**
+	 * Starts the section and turnout state notifier threads.
+	 */
 	def start() {
 		sectionStateNotifierThread = new Thread(sectionStateNotifier)
 		sectionStateNotifierThread.start
@@ -40,11 +54,17 @@ class TrackElementStateNotifier {
 		turnoutStateNotifierThread.start
 	}
 
+	/**
+	 * Stops the section and turnout state notifier threads.
+	 */
 	def interrupt() {
 		interruptThread(sectionStateNotifierThread)
 		interruptThread(turnoutStateNotifierThread)
 	}
 
+	/**
+	 * Stops the referred thread.
+	 */
 	private def interruptThread(Thread thread) {
 		try {
 			thread.interrupt

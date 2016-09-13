@@ -2,7 +2,6 @@ package hu.bme.mit.inf.modes3.components.bbb.main
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.components.bbb.utils.StateNotifierType
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
@@ -23,7 +22,7 @@ import org.mockito.stubbing.Answer
 @RunWith(Theories)
 class BBBTurnoutStateChangeNotifierNetworkIntegrationTest {
 
-	var BBBComponent componentUnderTest
+	var BBBComponentWithStateChangeNotifier componentUnderTest
 
 	@Mock
 	var ExpanderTurnoutController expander
@@ -33,8 +32,6 @@ class BBBTurnoutStateChangeNotifierNetworkIntegrationTest {
 
 	@Mock
 	var ITurnoutStateChangeListener changeListenerMock
-
-	val StateNotifierType defaultNotifierType = StateNotifierType.STATE_CHANGE_NOTIFIER
 
 	// used for sending messages over the network
 	var TrackCommunicationServiceLocator communicationService
@@ -92,7 +89,7 @@ class BBBTurnoutStateChangeNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -117,7 +114,7 @@ class BBBTurnoutStateChangeNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -137,7 +134,7 @@ class BBBTurnoutStateChangeNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		new Thread(componentUnderTest).start

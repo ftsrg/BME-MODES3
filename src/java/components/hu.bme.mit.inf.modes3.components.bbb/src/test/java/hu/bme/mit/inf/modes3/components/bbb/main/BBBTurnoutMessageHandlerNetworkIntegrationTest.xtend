@@ -40,7 +40,7 @@ class BBBTurnoutMessageHandlerNetworkIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -58,7 +58,7 @@ class BBBTurnoutMessageHandlerNetworkIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -76,7 +76,7 @@ class BBBTurnoutMessageHandlerNetworkIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
@@ -94,7 +94,7 @@ class BBBTurnoutMessageHandlerNetworkIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)

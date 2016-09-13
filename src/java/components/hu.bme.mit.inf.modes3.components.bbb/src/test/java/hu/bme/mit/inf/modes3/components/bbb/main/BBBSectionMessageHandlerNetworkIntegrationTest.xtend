@@ -2,7 +2,6 @@ package hu.bme.mit.inf.modes3.components.bbb.main
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.components.bbb.utils.StateNotifierType
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
@@ -21,9 +20,6 @@ class BBBSectionMessageHandlerNetworkIntegrationTest {
 	@Mock
 	var ExpanderTurnoutController neverUsedInTests
 
-	// not used in tests either
-	val StateNotifierType defaultNotifierType = null
-
 	// used for sending messages over the network
 	var TrackCommunicationServiceLocator communicationService
 
@@ -41,7 +37,7 @@ class BBBSectionMessageHandlerNetworkIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -60,7 +56,7 @@ class BBBSectionMessageHandlerNetworkIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -79,7 +75,7 @@ class BBBSectionMessageHandlerNetworkIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)
@@ -98,7 +94,7 @@ class BBBSectionMessageHandlerNetworkIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, defaultNotifierType, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)
