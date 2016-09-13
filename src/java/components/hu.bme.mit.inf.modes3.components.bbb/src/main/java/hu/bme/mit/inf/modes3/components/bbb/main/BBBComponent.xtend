@@ -1,3 +1,5 @@
+package hu.bme.mit.inf.modes3.components.bbb.main
+
 import hu.bme.mit.inf.modes3.components.bbb.handlers.TrackElementCommandDispatcher
 import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateChangeNotifier
 import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateNotifier
