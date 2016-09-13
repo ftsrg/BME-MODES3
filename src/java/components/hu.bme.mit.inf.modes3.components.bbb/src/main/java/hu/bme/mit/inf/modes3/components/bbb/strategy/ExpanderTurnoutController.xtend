@@ -8,7 +8,6 @@ import io.silverspoon.bulldog.core.gpio.DigitalInput
 import java.util.HashMap
 import java.util.Map
 import java.util.concurrent.ConcurrentHashMap
-import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -18,24 +17,28 @@ import org.slf4j.LoggerFactory
  * 
  * @author hegyibalint, benedekh
  */
-class ExpanderTurnoutController extends AbstractControllerStrategy implements ITurnoutControllerStrategy {
+class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
-		ExpanderTurnoutController)
+	private static val Logger logger = LoggerFactory.getLogger(ExpanderTurnoutController)
 
 	// IO map for the input pins (to get turnout direction)
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) val ioMap = new HashMap<String, DigitalInput>(4)
+	protected val ioMap = new HashMap<String, DigitalInput>(4)
 
 	// the actual embedded controller which manages the turnout
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var ExpanderControllerConfiguration controllerConf
+	protected var ExpanderControllerConfiguration controllerConf
 
 	// the latest turnout statuses (straight / divergent), based on turnout ID
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, TurnoutState> turnoutStatus
+	protected var Map<String, TurnoutState> turnoutStatus
 
-	new() {
+	// thread-safe wrapper for the BBB board
+	protected var BoardWrapper board
+
+	new(BoardWrapper boardWrapper) {
+		board = boardWrapper
+
 		try {
 			controllerConf = new ExpanderControllerConfiguration
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 		}
 
@@ -44,39 +47,26 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IT
 		// initialize digital input pins for the turnout direction
 		for (to : controllerConf.getAllTurnout) {
 			val pins = controllerConf.getTurnoutExpander(to)
-			ioMap.put(pins.get(0), board.getPin(pins.get(0)).^as(DigitalInput))
-			ioMap.put(pins.get(1), board.getPin(pins.get(1)).^as(DigitalInput))
+			ioMap.put(pins.get(0), board.getPinAsDigitalInput(pins.get(0)))
+			ioMap.put(pins.get(1), board.getPinAsDigitalInput(pins.get(1)))
 		}
 
-	}
-
-
-	override protected onGetSectionStatus(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
-	}
-
-	override protected onEnableSection(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
-	}
-
-	override protected onDisableSection(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
 	}
 
 	override getManagedTurnouts() {
 		controllerConf.allTurnout
 	}
 
-	override protected onGetTurnoutStatus(int turnoutId) {
+	override getTurnoutStatus(int turnoutId) {
 		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
 		val pins = controllerConf.getTurnoutExpander(turnoutStr)
 
 		// decide direction
 		var TurnoutState direction = null
-		if (ioMap.get(pins.get(0)).read() == Signal.High) {
+		if(ioMap.get(pins.get(0)).read() == Signal.High) {
 			direction = TurnoutState.STRAIGHT
 		}
-		if (ioMap.get(pins.get(1)).read() == Signal.High) {
+		if(ioMap.get(pins.get(1)).read() == Signal.High) {
 			direction = TurnoutState.DIVERGENT
 		}
 
@@ -89,14 +79,14 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IT
 		controllerConf.controllerManagesTurnout(turnoutId)
 	}
 
-	override protected onSetTurnoutStraight(int turnoutId) {
+	override setTurnoutStraight(int turnoutId) {
 		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
 		val pins = controllerConf.getTurnoutExpander(turnoutStr)
 		// TODO implement
 		turnoutStatus.put(turnoutStr, TurnoutState.STRAIGHT)
 	}
 
-	override protected onSetTurnoutDivergent(int turnoutId) {
+	override setTurnoutDivergent(int turnoutId) {
 		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
 		val pins = controllerConf.getTurnoutExpander(turnoutStr)
 		// TODO implement

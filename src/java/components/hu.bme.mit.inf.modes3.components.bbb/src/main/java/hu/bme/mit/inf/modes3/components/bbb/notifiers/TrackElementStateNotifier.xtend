@@ -1,14 +1,13 @@
 package hu.bme.mit.inf.modes3.components.bbb.notifiers
 
+import hu.bme.mit.inf.modes3.components.bbb.strategy.BoardWrapper
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
-import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * Encapsulates a SectionStateNotifier along with a TurnoutStateNotifier so that instantiating
@@ -18,10 +17,7 @@ import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
  */
 class TrackElementStateNotifier {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(TrackElementStateNotifier)
-
-	// the message handlers are registered into this service locator that encapsulates the CommunicationStack
-	protected val TrackCommunicationServiceLocator serviceLocator
+	private static val Logger logger = LoggerFactory.getLogger(TrackElementStateNotifier)
 
 	// notifier which polls the sections states regularly
 	protected var SectionStateNotifier sectionStateNotifier
@@ -36,14 +32,14 @@ class TrackElementStateNotifier {
 	protected var Thread turnoutStateNotifierThread
 
 	new(TrackCommunicationServiceLocator locator, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
-		
-		serviceLocator = locator
-		sectionStateNotifier = new SectionStateNotifier(serviceLocator.trackElementStateSender, sectionController)
-		turnoutStateNotifier = new TurnoutStateNotifier(serviceLocator.trackElementStateSender, turnoutController)
+		sectionStateNotifier = new SectionStateNotifier(locator.trackElementStateSender, sectionController)
+		turnoutStateNotifier = new TurnoutStateNotifier(locator.trackElementStateSender, turnoutController)
 	}
 
 	new(TrackCommunicationServiceLocator locator) {
-		this(locator, new ExpanderSectionController, new ExpanderTurnoutController)
+		val board = new BoardWrapper
+		sectionStateNotifier = new SectionStateNotifier(locator.trackElementStateSender, new ExpanderSectionController(board))
+		turnoutStateNotifier = new TurnoutStateNotifier(locator.trackElementStateSender, new ExpanderTurnoutController(board))
 	}
 
 	/**

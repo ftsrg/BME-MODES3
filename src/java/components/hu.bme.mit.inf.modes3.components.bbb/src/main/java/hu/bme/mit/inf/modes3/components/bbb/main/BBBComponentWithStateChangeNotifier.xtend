@@ -17,13 +17,13 @@ import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComp
 class BBBComponentWithStateChangeNotifier extends BBBComponent {
 
 	new(CommunicationStack stack) {
-		super(stack)//, new TrackElementStateChangeNotifier(super.locator))
-		this.stateNotifier = new TrackElementStateChangeNotifier(super.locator)
+		super(stack)
+		stateNotifier = new TrackElementStateChangeNotifier(locator)
 	}
 
 	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
 		super(stack, sectionController, turnoutController)
-		this.stateNotifier = new TrackElementStateChangeNotifier(super.locator, sectionController, turnoutController)
+		stateNotifier = new TrackElementStateChangeNotifier(locator, sectionController, turnoutController)
 	}
 
 }

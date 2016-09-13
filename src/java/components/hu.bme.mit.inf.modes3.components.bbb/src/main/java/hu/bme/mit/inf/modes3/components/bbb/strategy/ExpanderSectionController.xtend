@@ -6,7 +6,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import io.silverspoon.bulldog.core.Signal
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
-import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -16,28 +15,32 @@ import org.slf4j.LoggerFactory
  * 
  * @author hegyibalint, benedekh
  */
-class ExpanderSectionController extends AbstractControllerStrategy implements ISegmentControllerStrategy { //TODO refactor this extend @benedekh
+class ExpanderSectionController implements ISegmentControllerStrategy {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
-		ExpanderSectionController)
+	private static val Logger logger = LoggerFactory.getLogger(ExpanderSectionController)
 
 	// the actual embedded controller which manages the sections
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var ExpanderControllerConfiguration controllerConf;
+	protected var ExpanderControllerConfiguration controllerConf
 
 	// the sections statuses based on the section ID
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var ConcurrentMap<String, SegmentState> sectionStatus;
+	protected var ConcurrentMap<String, SegmentState> sectionStatus
 
-	new() {
+	// thread-safe wrapper for the BBB board
+	protected var BoardWrapper board
+
+	new(BoardWrapper boardWrapper) {
+		board = boardWrapper
+
 		try {
 			controllerConf = new ExpanderControllerConfiguration
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 		}
 
 		sectionStatus = new ConcurrentHashMap
 		// enable all sections
 		for (sec : controllerConf.getAllSection) {
-			onEnableSection(HexConversionUtil.fromString(sec))
+			enableSection(HexConversionUtil.fromString(sec))
 		}
 	}
 
@@ -45,42 +48,30 @@ class ExpanderSectionController extends AbstractControllerStrategy implements IS
 		controllerConf.allSection
 	}
 
-	override onGetSectionStatus(int sectionId) {
+	override getSectionStatus(int sectionId) {
 		sectionStatus.get(HexConversionUtil.fromNumber(sectionId))
 	}
 
-	override onEnableSection(int sectionId) {
+	override enableSection(int sectionId) {
 		val sectionExpander = controllerConf.getSectionExpander(sectionId);
-		this.setPinLevel(sectionExpander.get(0), Signal.High)
-		this.setPinLevel(sectionExpander.get(1), Signal.High)
-		this.setPinLevel(sectionExpander.get(2), Signal.High)
-		this.setPinLevel(sectionExpander.get(3), Signal.High)
+		board.setPinLevel(sectionExpander.get(0), Signal.High)
+		board.setPinLevel(sectionExpander.get(1), Signal.High)
+		board.setPinLevel(sectionExpander.get(2), Signal.High)
+		board.setPinLevel(sectionExpander.get(3), Signal.High)
 		sectionStatus.put(HexConversionUtil.fromNumber(sectionId), SegmentState.ENABLED)
 	}
 
-	override onDisableSection(int sectionId) {
+	override disableSection(int sectionId) {
 		val sectionExpander = controllerConf.getSectionExpander(sectionId)
-		this.setPinLevel(sectionExpander.get(0), Signal.Low)
-		this.setPinLevel(sectionExpander.get(1), Signal.Low)
-		this.setPinLevel(sectionExpander.get(2), Signal.Low)
-		this.setPinLevel(sectionExpander.get(3), Signal.Low)
+		board.setPinLevel(sectionExpander.get(0), Signal.Low)
+		board.setPinLevel(sectionExpander.get(1), Signal.Low)
+		board.setPinLevel(sectionExpander.get(2), Signal.Low)
+		board.setPinLevel(sectionExpander.get(3), Signal.Low)
 		sectionStatus.put(HexConversionUtil.fromNumber(sectionId), SegmentState.DISABLED)
 	}
 
 	override controllerManagesSection(int sectionId) {
 		controllerConf.controllerManagesSection(sectionId)
 	}
-	
-	override protected onGetTurnoutStatus(int turnoutId) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
-	
-	override protected onSetTurnoutStraight(int turnoutId) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
-	
-	override protected onSetTurnoutDivergent(int turnoutId) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
-	
+
 }

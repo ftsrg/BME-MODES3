@@ -4,10 +4,8 @@ import hu.bme.mit.inf.modes3.components.bbb.handlers.TrackElementCommandHandler
 import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateNotifier
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
-import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 
 /**
  * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
@@ -17,8 +15,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author benedekh
  */
 class BBBComponent extends AbstractRailRoadCommunicationComponent {
-
-	@Accessors(PROTECTED_GETTER) val TrackCommunicationServiceLocator locator = super.locator
 
 	// to handle track element commands
 	protected val TrackElementCommandHandler commandDispatcher
@@ -36,18 +32,6 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent {
 		super(stack)
 		commandDispatcher = new TrackElementCommandHandler(locator, sectionController, turnoutController)
 		stateNotifier = new TrackElementStateNotifier(locator, sectionController, turnoutController)
-	}
-
-	protected new(CommunicationStack stackForCommandDispatcher, TrackElementStateNotifier _stateNotifier) {
-		super(stackForCommandDispatcher)
-		commandDispatcher = new TrackElementCommandHandler(locator)
-		stateNotifier = _stateNotifier
-	}
-
-	protected new(CommunicationStack stack, TrackElementStateNotifier _stateNotifier, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
-		super(stack)
-		commandDispatcher = new TrackElementCommandHandler(locator, sectionController, turnoutController)
-		stateNotifier = _stateNotifier
 	}
 
 	override run() {
