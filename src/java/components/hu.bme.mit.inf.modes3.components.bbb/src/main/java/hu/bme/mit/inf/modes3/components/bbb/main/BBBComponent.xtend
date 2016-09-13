@@ -15,6 +15,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
  * @author benedekh
  */
 class BBBComponent extends AbstractCommunicationComponent {
+	//TODO refactor this class with AbstractRailRoadCommunicationComponent
 
 	// to handle track element commands
 	protected val TrackElementCommandHandler commandDispatcher
