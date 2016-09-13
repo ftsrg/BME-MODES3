@@ -1,29 +1,26 @@
 package hu.bme.mit.inf.modes3.components.sample
 
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
-import hu.bme.mit.inf.modes3.components.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 
-class SampleComponent extends AbstractCommunicationComponent {
+class SampleComponent extends AbstractRailRoadCommunicationComponent {
 
 	val knownSegments = 1 ..< 10
-	val TrackCommunicationServiceLocator trackCommunication
 
 	new(CommunicationStack communicationStack) {
 		super(communicationStack)
-		trackCommunication = new TrackCommunicationServiceLocator(super.communication)
 	}
 
 	def turnOffAll() {
 		for (i : knownSegments) {
-			trackCommunication.trackElementCommander.sendSegmentCommand(i, SegmentState.DISABLED)
+			locator.trackElementCommander.sendSegmentCommand(i, SegmentState.DISABLED)
 		}
 	}
 
 	def getStateOfAll() {
 		for (i : knownSegments) {
-			processState(trackCommunication.trackElementStateRegistry.getSegmentState(i), i)
+			processState(locator.trackElementStateRegistry.getSegmentState(i), i)
 		}
 	}
 
