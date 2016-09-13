@@ -5,10 +5,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 
 class PhyicalEnvironmentSimulation {
 	val model = ModelUtil.loadModel
-	
-	new(CommunicationStack communicationStack){
-		
-	}
+
 	
 	
 }
