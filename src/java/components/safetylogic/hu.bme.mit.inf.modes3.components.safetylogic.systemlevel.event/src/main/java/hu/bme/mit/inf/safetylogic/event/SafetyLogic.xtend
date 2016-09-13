@@ -23,17 +23,16 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
+import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 
-class SafetyLogic extends AbstractCommunicationComponent {
+class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 
 	protected var ViatraQueryEngine engine;
 	protected var newTrainId = 999
 	public var RailRoadModel model //TODO accessors
-	val TrackCommunicationServiceLocator trackCommunication;
 
 	new(CommunicationStack stack) {
 		super(stack)
-		trackCommunication = new TrackCommunicationServiceLocator(stack)
 	}
 
 	def setup(Resource modelResource) {
@@ -72,8 +71,7 @@ class SafetyLogic extends AbstractCommunicationComponent {
 		val resource = ModelUtil.loadModel()
 		setup(resource);
 		model = ModelUtil.getModelFromResource(resource)
-		trackCommunication.
-			trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener() {
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener() {
 			// FIXME by my current informations, i think this algorithm wont work when the train changes from ccw to cw or the other way around. Or at least it does lose some information which it shouldn't
 			// XXX move this to a class, and create unit tests.
 			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
@@ -97,7 +95,7 @@ class SafetyLogic extends AbstractCommunicationComponent {
 
 		}
 
-		trackCommunication.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
+		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
 				(model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue ==
@@ -120,9 +118,9 @@ class SafetyLogic extends AbstractCommunicationComponent {
 
 		model.sections.filter[it instanceof Segment].map[it as Segment].forEach [
 			if(isEnabled == false) 
-				trackCommunication.trackElementCommander.sendSegmentCommand(it.id, SegmentState.DISABLED) 
+				locator.trackElementCommander.sendSegmentCommand(it.id, SegmentState.DISABLED) 
 			else 
-				trackCommunication.trackElementCommander.sendSegmentCommand(it.id, SegmentState.ENABLED)
+				locator.trackElementCommander.sendSegmentCommand(it.id, SegmentState.ENABLED)
 		]
 	}  
 
