@@ -29,8 +29,8 @@ class SectionStateChangeNotifierTest {
 	/** returns the other possible value of SegmentState */
 	private def getNegatedSegmentState(SegmentState state) {
 		switch (state) {
-			case SegmentState.ENABLED: SegmentState.DISABLED
-			case SegmentState.DISABLED: SegmentState.ENABLED
+			case ENABLED: SegmentState.DISABLED
+			case DISABLED: SegmentState.ENABLED
 		}
 	}
 

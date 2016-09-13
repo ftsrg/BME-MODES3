@@ -56,7 +56,7 @@ class SectionMessageHandlerTest {
 
 		// Assert
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesSection(sectionId)
-		Mockito.verify(expander, Mockito.never()).enableSection(sectionId)
+		Mockito.verify(expander, Mockito.never).enableSection(sectionId)
 	}
 
 	@Test
@@ -94,7 +94,7 @@ class SectionMessageHandlerTest {
 
 		// Assert
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesSection(sectionId)
-		Mockito.verify(expander, Mockito.never()).disableSection(sectionId)
+		Mockito.verify(expander, Mockito.never).disableSection(sectionId)
 	}
 
 	@Test
@@ -111,9 +111,9 @@ class SectionMessageHandlerTest {
 		handler.onSegmentCommand(sectionId, null)
 
 		// Assert
-		Mockito.verify(expander, Mockito.never()).enableSection(sectionId)
-		Mockito.verify(expander, Mockito.never()).disableSection(sectionId)
-		Mockito.verify(expander, Mockito.never()).controllerManagesSection(sectionId)
+		Mockito.verify(expander, Mockito.never).enableSection(sectionId)
+		Mockito.verify(expander, Mockito.never).disableSection(sectionId)
+		Mockito.verify(expander, Mockito.never).controllerManagesSection(sectionId)
 	}
 
 }

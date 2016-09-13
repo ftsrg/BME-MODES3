@@ -56,7 +56,7 @@ class TurnoutMessageHandlerTest {
 
 		// Assert
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesTurnout(turnoutId)
-		Mockito.verify(expander, Mockito.never()).setTurnoutStraight(turnoutId)
+		Mockito.verify(expander, Mockito.never).setTurnoutStraight(turnoutId)
 	}
 
 	@Test
@@ -94,7 +94,7 @@ class TurnoutMessageHandlerTest {
 
 		// Assert
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesTurnout(turnoutId)
-		Mockito.verify(expander, Mockito.never()).setTurnoutDivergent(turnoutId)
+		Mockito.verify(expander, Mockito.never).setTurnoutDivergent(turnoutId)
 	}
 
 	@Test
@@ -111,9 +111,9 @@ class TurnoutMessageHandlerTest {
 		handler.onTurnoutCommand(turnoutId, null)
 
 		// Assert
-		Mockito.verify(expander, Mockito.never()).setTurnoutStraight(turnoutId)
-		Mockito.verify(expander, Mockito.never()).setTurnoutDivergent(turnoutId)
-		Mockito.verify(expander, Mockito.never()).controllerManagesTurnout(turnoutId)
+		Mockito.verify(expander, Mockito.never).setTurnoutStraight(turnoutId)
+		Mockito.verify(expander, Mockito.never).setTurnoutDivergent(turnoutId)
+		Mockito.verify(expander, Mockito.never).controllerManagesTurnout(turnoutId)
 	}
 
 }
