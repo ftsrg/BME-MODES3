@@ -61,7 +61,7 @@ class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -86,7 +86,7 @@ class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		new Thread(componentUnderTest).start

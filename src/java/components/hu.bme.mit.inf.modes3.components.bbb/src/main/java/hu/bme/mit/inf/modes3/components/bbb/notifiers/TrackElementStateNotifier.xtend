@@ -35,15 +35,15 @@ class TrackElementStateNotifier {
 	// thread that runs the turnout notifier
 	protected var Thread turnoutStateNotifierThread
 
-	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
+	new(TrackCommunicationServiceLocator locator, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
 		
-		serviceLocator = new TrackCommunicationServiceLocator(stack)
+		serviceLocator = locator
 		sectionStateNotifier = new SectionStateNotifier(serviceLocator.trackElementStateSender, sectionController)
 		turnoutStateNotifier = new TurnoutStateNotifier(serviceLocator.trackElementStateSender, turnoutController)
 	}
 
-	new(CommunicationStack stack) {
-		this(stack, new ExpanderSectionController, new ExpanderTurnoutController)
+	new(TrackCommunicationServiceLocator locator) {
+		this(locator, new ExpanderSectionController, new ExpanderTurnoutController)
 	}
 
 	/**

@@ -37,7 +37,7 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -56,7 +56,7 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -75,7 +75,7 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)
@@ -94,7 +94,7 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
 		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)

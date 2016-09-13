@@ -6,6 +6,8 @@ import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
@@ -15,7 +17,8 @@ import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComp
  * @author benedekh
  */
 class BBBComponent extends AbstractRailRoadCommunicationComponent {
-	//TODO refactor this class with AbstractRailRoadCommunicationComponent
+
+	@Accessors(PROTECTED_GETTER) val TrackCommunicationServiceLocator locator = super.locator
 
 	// to handle track element commands
 	protected val TrackElementCommandHandler commandDispatcher
@@ -23,27 +26,27 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent {
 	// to send track element states
 	protected var TrackElementStateNotifier stateNotifier
 
-	new(CommunicationStack stackForCommandDispatcher, CommunicationStack stackForStateNotifier) {
-		super(null)
-		commandDispatcher = new TrackElementCommandHandler(stackForCommandDispatcher)
-		stateNotifier = new TrackElementStateNotifier(stackForStateNotifier)
+	new(CommunicationStack stack) {
+		super(stack)
+		commandDispatcher = new TrackElementCommandHandler(locator)
+		stateNotifier = new TrackElementStateNotifier(locator)
 	}
 
-	new(CommunicationStack stackForCommandDispatcher, CommunicationStack stackForStateNotifier, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
-		super(null)
-		commandDispatcher = new TrackElementCommandHandler(stackForCommandDispatcher, sectionController, turnoutController)
-		stateNotifier = new TrackElementStateNotifier(stackForStateNotifier, sectionController, turnoutController)
+	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
+		super(stack)
+		commandDispatcher = new TrackElementCommandHandler(locator, sectionController, turnoutController)
+		stateNotifier = new TrackElementStateNotifier(locator, sectionController, turnoutController)
 	}
 
 	protected new(CommunicationStack stackForCommandDispatcher, TrackElementStateNotifier _stateNotifier) {
-		super(null)
-		commandDispatcher = new TrackElementCommandHandler(stackForCommandDispatcher)
+		super(stackForCommandDispatcher)
+		commandDispatcher = new TrackElementCommandHandler(locator)
 		stateNotifier = _stateNotifier
 	}
 
 	protected new(CommunicationStack stack, TrackElementStateNotifier _stateNotifier, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
 		super(stack)
-		commandDispatcher = new TrackElementCommandHandler(stack, sectionController, turnoutController)
+		commandDispatcher = new TrackElementCommandHandler(locator, sectionController, turnoutController)
 		stateNotifier = _stateNotifier
 	}
 

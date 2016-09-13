@@ -4,6 +4,8 @@ import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateChangeNot
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
+import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 
 /**
  * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
@@ -14,12 +16,14 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
  */
 class BBBComponentWithStateChangeNotifier extends BBBComponent {
 
-	new(CommunicationStack stackForCommandDispatcher, CommunicationStack stackForStateNotifier) {
-		super(stackForCommandDispatcher, new TrackElementStateChangeNotifier(stackForStateNotifier))
+	new(CommunicationStack stack) {
+		super(stack)//, new TrackElementStateChangeNotifier(super.locator))
+		this.stateNotifier = new TrackElementStateChangeNotifier(super.locator)
 	}
 
-	new(CommunicationStack stackForCommandDispatcher, CommunicationStack stackForStateNotifier, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
-		super(stackForCommandDispatcher, new TrackElementStateChangeNotifier(stackForStateNotifier, sectionController, turnoutController), sectionController, turnoutController)
+	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
+		super(stack, sectionController, turnoutController)
+		this.stateNotifier = new TrackElementStateChangeNotifier(super.locator, sectionController, turnoutController)
 	}
 
 }

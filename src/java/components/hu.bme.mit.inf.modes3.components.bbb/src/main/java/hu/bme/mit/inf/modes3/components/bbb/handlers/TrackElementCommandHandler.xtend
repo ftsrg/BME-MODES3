@@ -25,14 +25,14 @@ class TrackElementCommandHandler {
 	// handler of the turnout messages
 	@Accessors(PRIVATE_GETTER, PRIVATE_SETTER) val TurnoutMessageHandler turnoutMessageHandler
 
-	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
-		serviceLocator = new TrackCommunicationServiceLocator(stack)
-		sectionMessageHandler = new SectionMessageHandler(serviceLocator.trackElementCommandCallback, sectionController)
-		turnoutMessageHandler = new TurnoutMessageHandler(serviceLocator.trackElementCommandCallback, turnoutController)
+	new(TrackCommunicationServiceLocator locator, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
+		serviceLocator = locator
+		sectionMessageHandler = new SectionMessageHandler(locator.trackElementCommandCallback, sectionController)
+		turnoutMessageHandler = new TurnoutMessageHandler(locator.trackElementCommandCallback, turnoutController)
 	}
 
-	new(CommunicationStack stack) {
-		this(stack, new ExpanderSectionController, new ExpanderTurnoutController)
+	new(TrackCommunicationServiceLocator locator) {
+		this(locator, new ExpanderSectionController, new ExpanderTurnoutController)
 	}
 
 }
