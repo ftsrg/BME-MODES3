@@ -13,8 +13,6 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
-import hu.bme.mit.inf.modes3.components.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
