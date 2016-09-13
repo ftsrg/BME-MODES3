@@ -11,7 +11,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 
-class BBBComponentSectionMessageHandlerNetworkIntegrationTest {
+class BBBSectionMessageHandlerNetworkIntegrationTest {
 
 	var BBBComponent componentUnderTest
 
@@ -47,7 +47,7 @@ class BBBComponentSectionMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesSection(sectionId)
 		Mockito.verify(expander, Mockito.times(1)).enableSection(sectionId)
 	}
@@ -66,9 +66,9 @@ class BBBComponentSectionMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesSection(sectionId)
-		Mockito.verify(expander, Mockito.never()).enableSection(sectionId)
+		Mockito.verify(expander, Mockito.never).enableSection(sectionId)
 	}
 
 	@Test
@@ -85,7 +85,7 @@ class BBBComponentSectionMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesSection(sectionId)
 		Mockito.verify(expander, Mockito.times(1)).disableSection(sectionId)
 	}
@@ -104,8 +104,8 @@ class BBBComponentSectionMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesSection(sectionId)
-		Mockito.verify(expander, Mockito.never()).disableSection(sectionId)
+		Mockito.verify(expander, Mockito.never).disableSection(sectionId)
 	}
 }

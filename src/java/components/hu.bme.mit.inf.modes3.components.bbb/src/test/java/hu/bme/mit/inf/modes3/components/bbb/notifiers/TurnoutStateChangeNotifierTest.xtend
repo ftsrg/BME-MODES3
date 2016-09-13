@@ -29,8 +29,8 @@ class TurnoutStateChangeNotifierTest {
 	/** returns the other possible value of TurnoutState */
 	private def getNegatedTurnoutState(TurnoutState state) {
 		switch (state) {
-			case TurnoutState.STRAIGHT: TurnoutState.DIVERGENT
-			case TurnoutState.DIVERGENT: TurnoutState.STRAIGHT
+			case STRAIGHT: TurnoutState.DIVERGENT
+			case DIVERGENT: TurnoutState.STRAIGHT
 		}
 	}
 
@@ -100,7 +100,7 @@ class TurnoutStateChangeNotifierTest {
 	}
 
 	@Test
-	def void withoutSegmentsReportsNothing() {
+	def void withoutTurnoutsReportsNothing() {
 		// Arrange
 		// initialize mocks
 		controller = Mockito.mock(ExpanderTurnoutController)

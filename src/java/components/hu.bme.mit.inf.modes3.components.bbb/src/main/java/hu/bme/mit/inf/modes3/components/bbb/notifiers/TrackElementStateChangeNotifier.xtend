@@ -8,7 +8,7 @@ class TrackElementStateChangeNotifier extends TrackElementStateNotifier {
 
 	new(CommunicationStack stack, ExpanderSectionController sectionController,
 		ExpanderTurnoutController turnoutController) {
-		super(stack)
+		super(stack, sectionController, turnoutController)
 		sectionStateNotifier = new SectionStateChangeNotifier(serviceLocator.trackElementStateSender, sectionController)
 		turnoutStateNotifier = new TurnoutStateChangeNotifier(serviceLocator.trackElementStateSender, turnoutController)
 	}

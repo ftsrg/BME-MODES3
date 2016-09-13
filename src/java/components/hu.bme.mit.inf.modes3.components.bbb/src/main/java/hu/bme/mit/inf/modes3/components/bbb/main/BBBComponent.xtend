@@ -17,6 +17,9 @@ class BBBComponent extends AbstractCommunicationComponent {
 
 	protected var TrackElementStateChangeNotifier stateChangeNotifier
 
+	protected var Thread stateNotifierThread
+	protected var Thread stateChangeNotifierThread
+
 	new(CommunicationStack stack, StateNotifierType notifierType) {
 		super(stack)
 		commandDispatcher = new TrackElementCommandDispatcher(stack)
@@ -26,8 +29,7 @@ class BBBComponent extends AbstractCommunicationComponent {
 		}
 	}
 
-	new(CommunicationStack stack, StateNotifierType notifierType, ExpanderSectionController sectionController,
-		ExpanderTurnoutController turnoutController) {
+	new(CommunicationStack stack, StateNotifierType notifierType, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
 		super(stack)
 		commandDispatcher = new TrackElementCommandDispatcher(stack, sectionController, turnoutController)
 		switch (notifierType) {
@@ -41,6 +43,11 @@ class BBBComponent extends AbstractCommunicationComponent {
 	override run() {
 		stateNotifier?.start
 		stateChangeNotifier?.start
+	}
+	
+	def interrupt(){
+		stateNotifier?.interrupt
+		stateChangeNotifier?.interrupt
 	}
 
 }

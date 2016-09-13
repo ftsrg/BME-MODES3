@@ -11,7 +11,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 
-class BBBComponentTurnoutMessageHandlerNetworkIntegrationTest {
+class BBBTurnoutMessageHandlerNetworkIntegrationTest {
 
 	var BBBComponent componentUnderTest
 
@@ -46,7 +46,7 @@ class BBBComponentTurnoutMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesTurnout(turnoutId)
 		Mockito.verify(expander, Mockito.times(1)).setTurnoutStraight(turnoutId)
 	}
@@ -64,9 +64,9 @@ class BBBComponentTurnoutMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesTurnout(turnoutId)
-		Mockito.verify(expander, Mockito.never()).setTurnoutStraight(turnoutId)
+		Mockito.verify(expander, Mockito.never).setTurnoutStraight(turnoutId)
 	}
 
 	@Test
@@ -82,7 +82,7 @@ class BBBComponentTurnoutMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesTurnout(turnoutId)
 		Mockito.verify(expander, Mockito.times(1)).setTurnoutDivergent(turnoutId)
 	}
@@ -100,8 +100,8 @@ class BBBComponentTurnoutMessageHandlerNetworkIntegrationTest {
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
 
 		// Assert
-		Thread.sleep(50) // so that inner threads can handle transferred messages
+		Thread.sleep(50) // so that internal threads can handle transferred messages
 		Mockito.verify(expander, Mockito.times(1)).controllerManagesTurnout(turnoutId)
-		Mockito.verify(expander, Mockito.never()).setTurnoutDivergent(turnoutId)
+		Mockito.verify(expander, Mockito.never).setTurnoutDivergent(turnoutId)
 	}
 }
