@@ -5,6 +5,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegment
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 
 /**
  * This class transmits the received section commands to the actual
@@ -16,12 +17,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
 package class SectionMessageHandler implements ISegmentCommandListener {
 
 	// the actuator that can access the referred section
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderSectionController sectionController
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ISegmentControllerStrategy sectionController
 
 	// to receive commands from the network
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITrackElementCommandCallback commandCallback
 
-	new(ITrackElementCommandCallback _commandCallback, ExpanderSectionController _sectionController) {
+	new(ITrackElementCommandCallback _commandCallback, ISegmentControllerStrategy _sectionController) {
 		sectionController = _sectionController
 		commandCallback = _commandCallback
 

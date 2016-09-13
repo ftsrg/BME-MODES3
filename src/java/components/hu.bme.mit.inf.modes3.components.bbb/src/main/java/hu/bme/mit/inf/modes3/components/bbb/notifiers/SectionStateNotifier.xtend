@@ -6,6 +6,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElem
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 
 /**
  * Implements a runnable which frequently polls the sections status 
@@ -21,12 +22,12 @@ package class SectionStateNotifier implements Runnable {
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val SLEEP_MS_BETWEEN_POLLINGS = 50
 
 	// the actuator that can access the referred section
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderSectionController sectionController
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ISegmentControllerStrategy sectionController
 
 	// send section state on the network
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITrackElementStateSender trackElementStateSender
 
-	new(ITrackElementStateSender _trackElementStateSender, ExpanderSectionController _sectionController) {
+	new(ITrackElementStateSender _trackElementStateSender, ISegmentControllerStrategy _sectionController) {
 		trackElementStateSender = _trackElementStateSender
 		sectionController = _sectionController
 	}

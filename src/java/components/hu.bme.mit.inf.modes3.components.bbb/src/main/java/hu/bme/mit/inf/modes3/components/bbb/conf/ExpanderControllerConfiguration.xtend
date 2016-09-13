@@ -10,7 +10,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * 
  * @author hegyibalint
  */
-class ExpanderControllerConfiguration implements IControllerConfiguration {
+class ExpanderControllerConfiguration {
 
 	// the pinout header configuration
 	@Accessors(PACKAGE_GETTER, PACKAGE_SETTER) var Pinout pinout
@@ -35,11 +35,11 @@ class ExpanderControllerConfiguration implements IControllerConfiguration {
 		setting = Setting.loadPinoutConfig(controllerID)
 	}
 
-	override controllerManagesTurnout(int turnoutId) {
+	def controllerManagesTurnout(int turnoutId) {
 		setting.containsTurnout(turnoutId)
 	}
 
-	override controllerManagesSection(int sectionId) {
+	def controllerManagesSection(int sectionId) {
 		setting.containsSection(sectionId)
 	}
 

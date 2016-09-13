@@ -20,7 +20,8 @@ import static io.silverspoon.bulldog.core.util.BulldogUtil.sleepMs
  * 
  * @author benedekh
  */
-abstract class AbstractControllerStrategy {
+abstract class AbstractControllerStrategy //implements ISegmentControllerStrategy, ITurnoutControllerStrategy  
+{
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		AbstractControllerStrategy)

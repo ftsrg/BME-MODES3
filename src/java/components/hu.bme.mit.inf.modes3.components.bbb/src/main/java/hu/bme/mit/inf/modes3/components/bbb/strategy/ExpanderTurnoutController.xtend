@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.strategy;
 
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
-import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import io.silverspoon.bulldog.core.Signal
@@ -19,7 +18,7 @@ import org.slf4j.LoggerFactory
  * 
  * @author hegyibalint, benedekh
  */
-class ExpanderTurnoutController extends AbstractControllerStrategy implements IControllerConfiguration {
+class ExpanderTurnoutController extends AbstractControllerStrategy implements ITurnoutControllerStrategy {
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		ExpanderTurnoutController)
@@ -51,9 +50,6 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 
 	}
 
-	override controllerManagesSection(int sectionId) {
-		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
-	}
 
 	override protected onGetSectionStatus(int sectionId) {
 		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
@@ -67,7 +63,7 @@ class ExpanderTurnoutController extends AbstractControllerStrategy implements IC
 		throw new UnsupportedOperationException("ExpanderTurnoutController does not support section operations")
 	}
 
-	def getManagedTurnouts() {
+	override getManagedTurnouts() {
 		controllerConf.allTurnout
 	}
 

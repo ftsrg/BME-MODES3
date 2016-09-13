@@ -2,8 +2,8 @@ package hu.bme.mit.inf.modes3.components.bbb.main
 
 import hu.bme.mit.inf.modes3.components.bbb.handlers.TrackElementCommandHandler
 import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateNotifier
-import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
-import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.components.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 
@@ -28,7 +28,7 @@ class BBBComponent extends AbstractCommunicationComponent {
 		stateNotifier = new TrackElementStateNotifier(stack)
 	}
 
-	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
+	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
 		super(stack)
 		commandDispatcher = new TrackElementCommandHandler(stack, sectionController, turnoutController)
 		stateNotifier = new TrackElementStateNotifier(stack, sectionController, turnoutController)
@@ -40,7 +40,7 @@ class BBBComponent extends AbstractCommunicationComponent {
 		stateNotifier = _stateNotifier
 	}
 
-	protected new(CommunicationStack stack, TrackElementStateNotifier _stateNotifier, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
+	protected new(CommunicationStack stack, TrackElementStateNotifier _stateNotifier, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
 		super(stack)
 		commandDispatcher = new TrackElementCommandHandler(stack, sectionController, turnoutController)
 		stateNotifier = _stateNotifier

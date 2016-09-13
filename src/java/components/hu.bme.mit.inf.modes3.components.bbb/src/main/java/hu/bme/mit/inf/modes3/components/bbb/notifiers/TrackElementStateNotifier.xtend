@@ -7,6 +7,8 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationS
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 
 /**
  * Encapsulates a SectionStateNotifier along with a TurnoutStateNotifier so that instantiating
@@ -33,7 +35,8 @@ class TrackElementStateNotifier {
 	// thread that runs the turnout notifier
 	protected var Thread turnoutStateNotifierThread
 
-	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
+	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
+		
 		serviceLocator = new TrackCommunicationServiceLocator(stack)
 		sectionStateNotifier = new SectionStateNotifier(serviceLocator.trackElementStateSender, sectionController)
 		turnoutStateNotifier = new TurnoutStateNotifier(serviceLocator.trackElementStateSender, turnoutController)

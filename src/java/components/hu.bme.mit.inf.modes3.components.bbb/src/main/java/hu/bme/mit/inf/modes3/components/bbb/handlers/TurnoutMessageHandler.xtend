@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.handlers;
 
-import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
@@ -14,12 +14,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 package class TurnoutMessageHandler implements ITurnoutCommandListener {
 	// the actuator that can access the referred turnout
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderTurnoutController turnoutController
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITurnoutControllerStrategy turnoutController
 
 	// to receive commands from the network
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITrackElementCommandCallback commandCallback
 
-	new(ITrackElementCommandCallback _commandCallback, ExpanderTurnoutController _turnoutController) {
+	new(ITrackElementCommandCallback _commandCallback, ITurnoutControllerStrategy _turnoutController) {
 		turnoutController = _turnoutController
 		commandCallback = _commandCallback
 

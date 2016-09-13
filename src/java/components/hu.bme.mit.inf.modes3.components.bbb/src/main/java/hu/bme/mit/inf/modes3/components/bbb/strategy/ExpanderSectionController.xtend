@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.strategy;
 
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
-import hu.bme.mit.inf.modes3.components.bbb.conf.IControllerConfiguration
 import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import io.silverspoon.bulldog.core.Signal
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory
  * 
  * @author hegyibalint, benedekh
  */
-class ExpanderSectionController extends AbstractControllerStrategy implements IControllerConfiguration {
+class ExpanderSectionController extends AbstractControllerStrategy implements ISegmentControllerStrategy { //TODO refactor this extend @benedekh
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		ExpanderSectionController)
@@ -42,7 +41,7 @@ class ExpanderSectionController extends AbstractControllerStrategy implements IC
 		}
 	}
 
-	def getManagedSections() {
+	override getManagedSections() {
 		controllerConf.allSection
 	}
 
@@ -71,21 +70,17 @@ class ExpanderSectionController extends AbstractControllerStrategy implements IC
 	override controllerManagesSection(int sectionId) {
 		controllerConf.controllerManagesSection(sectionId)
 	}
-
-	override controllerManagesTurnout(int turnoutId) {
-		throw new UnsupportedOperationException("ExpanderSectionController does not support turnout operations")
+	
+	override protected onGetTurnoutStatus(int turnoutId) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
-
-	override onGetTurnoutStatus(int turnoutId) {
-		throw new UnsupportedOperationException("ExpanderSectionController does not support turnout operations")
-	}
-
+	
 	override protected onSetTurnoutStraight(int turnoutId) {
-		throw new UnsupportedOperationException("ExpanderSectionController does not support turnout operations")
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
-
+	
 	override protected onSetTurnoutDivergent(int turnoutId) {
-		throw new UnsupportedOperationException("ExpanderSectionController does not support turnout operations")
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
-
+	
 }

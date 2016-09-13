@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.notifiers
 
-import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
+import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -22,12 +22,12 @@ package class TurnoutStateNotifier implements Runnable {
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val SLEEP_MS_BETWEEN_POLLINGS = 50
 
 	// the actuator that can access the referred turnout
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ExpanderTurnoutController turnoutController
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITurnoutControllerStrategy turnoutController
 
 	// send turnout state on the network
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITrackElementStateSender trackElementStateSender
 
-	new(ITrackElementStateSender _trackElementStateSender, ExpanderTurnoutController _turnoutController) {
+	new(ITrackElementStateSender _trackElementStateSender, ITurnoutControllerStrategy _turnoutController) {
 		trackElementStateSender = _trackElementStateSender
 		turnoutController = _turnoutController
 	}
