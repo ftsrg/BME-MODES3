@@ -15,7 +15,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 
-class BBBTurnoutStateNotifierNetworkIntegrationTest {
+class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 
 	var BBBComponent componentUnderTest
 
@@ -61,7 +61,7 @@ class BBBTurnoutStateNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -86,7 +86,7 @@ class BBBTurnoutStateNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, neverUsedInTests, expander)
 
 		// Act
 		new Thread(componentUnderTest).start
