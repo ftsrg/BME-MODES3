@@ -13,6 +13,7 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
 import java.util.HashSet
 import org.junit.Test
+import org.junit.Assert
 
 class IntegrationTest {
 	val sl = new SafetyLogic(CommunicationStack::createLocalStack)
@@ -38,7 +39,9 @@ class IntegrationTest {
 			(model.sections.findFirst[id == sectionId] as Segment).isEnabled = false
 		}
 		override getSectionStatus(int sectionId) {
-			if((model.sections.findFirst[id == sectionId] as Segment).isEnabled) SegmentState.ENABLED else SegmentState.DISABLED
+			val railRoadElementWithSectionId = model.sections.findFirst[id == sectionId]
+			if(railRoadElementWithSectionId instanceof Turnout) return SegmentState.ENABLED //TODO error handling like this should be a must have
+			if((railRoadElementWithSectionId as Segment).isEnabled) SegmentState.ENABLED else SegmentState.DISABLED
 		}
 		}, new ITurnoutControllerStrategy(){
 			override getTurnoutStatus(int turnoutId) {
@@ -65,5 +68,8 @@ class IntegrationTest {
 		arduinoThread.start
 		
 		Thread.sleep(1000)
+		
+		Assert.assertEquals(false, (model.sections.findFirst[id == 24] as Segment).isEnabled)
+		Assert.assertEquals(false, (model.sections.findFirst[id == 29] as Segment).isEnabled)
 	}
 }
