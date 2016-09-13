@@ -34,6 +34,7 @@ class SegmentOccupancyReaderMock extends AbstractCommunicationComponent {
 	}
 	
 	def update(){
+		println('updated')
 		val occupiedSections =  model.trains.map[it.currentlyOn.id]
 		val changedSections = model.sections.filter[occupiedSections.contains(id) == isOccupied.get(id)]
 		changedSections.forEach[
