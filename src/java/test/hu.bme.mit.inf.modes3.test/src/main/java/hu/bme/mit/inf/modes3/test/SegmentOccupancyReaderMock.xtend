@@ -1,24 +1,21 @@
 package hu.bme.mit.inf.modes3.test
 
-import hu.bme.mit.inf.modes3.components.common.AbstractCommunicationComponent
+import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
-import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
 import java.util.HashMap
 import org.eclipse.emf.common.notify.Notification
 import org.eclipse.emf.common.notify.impl.AdapterImpl
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 
-class SegmentOccupancyReaderMock extends AbstractCommunicationComponent {
+class SegmentOccupancyReaderMock extends AbstractRailRoadCommunicationComponent {
 	
 	val RailRoadModel model
-	val TrackCommunicationServiceLocator locator
 	val isOccupied = new HashMap<Integer, Boolean> 
 	
 	new(CommunicationStack stack, RailRoadModel model){
 		super(stack)
 		this.model = model
-		locator = new TrackCommunicationServiceLocator(stack)
 		model.sections.forEach[isOccupied.put(id, false)]
 	}
 	
