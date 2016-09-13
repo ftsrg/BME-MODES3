@@ -14,12 +14,12 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
  */
 class BBBComponentWithStateChangeNotifier extends BBBComponent {
 
-	new(CommunicationStack stack) {
-		super(stack, new TrackElementStateChangeNotifier(stack))
+	new(CommunicationStack stackForCommandDispatcher, CommunicationStack stackForStateNotifier) {
+		super(stackForCommandDispatcher, new TrackElementStateChangeNotifier(stackForStateNotifier))
 	}
 
-	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
-		super(stack, new TrackElementStateChangeNotifier(stack, sectionController, turnoutController), sectionController, turnoutController)
+	new(CommunicationStack stackForCommandDispatcher, CommunicationStack stackForStateNotifier, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
+		super(stackForCommandDispatcher, new TrackElementStateChangeNotifier(stackForStateNotifier, sectionController, turnoutController), sectionController, turnoutController)
 	}
 
 }

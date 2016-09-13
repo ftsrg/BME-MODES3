@@ -20,7 +20,7 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 
 @RunWith(Theories)
-class BBBSectionStateChangeNotifierNetworkIntegrationTest {
+class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 
 	var BBBComponentWithStateChangeNotifier componentUnderTest
 
@@ -89,7 +89,7 @@ class BBBSectionStateChangeNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -114,7 +114,7 @@ class BBBSectionStateChangeNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -134,7 +134,7 @@ class BBBSectionStateChangeNotifierNetworkIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, CommunicationStack::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start
