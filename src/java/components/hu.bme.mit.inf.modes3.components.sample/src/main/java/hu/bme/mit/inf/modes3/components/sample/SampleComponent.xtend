@@ -32,5 +32,12 @@ class SampleComponent extends AbstractCommunicationComponent {
 			'''Segment #«id» is «switch(state){case ENABLED: 'Enabled' case DISABLED: "Disabled"}»'''
 		)
 	}
+	
+	
+	//The 'main' method of the sample component
+	override run() {
+		turnOffAll
+		
+	}
 
 }

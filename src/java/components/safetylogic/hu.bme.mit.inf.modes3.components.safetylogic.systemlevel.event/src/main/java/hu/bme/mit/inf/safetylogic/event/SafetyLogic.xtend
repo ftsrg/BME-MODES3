@@ -72,7 +72,7 @@ class SafetyLogic extends AbstractCommunicationComponent {
 		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»''' // TODO viatra ticket
 	}
 
-	def start() {
+	override void run() {
 		val resource = ModelUtil.loadModel()
 		setup(resource);
 		model = ModelUtil.getModelFromResource(resource)

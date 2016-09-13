@@ -20,7 +20,7 @@ class SafetyLogicTest {
 		val stack = CommunicationStack::createLocalStack
 		mms = stack.mms
 		sl = new SafetyLogic(stack)
-		sl.start();
+		sl.run(); // The component will run on the main thread
 	}
 	
 	

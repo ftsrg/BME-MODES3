@@ -6,7 +6,7 @@ class Main {
 
 	public static def void main(String[] args) {
 		val sl = new SafetyLogic(CommunicationStack::createProtobufStack)
-		sl.start();
+		sl.run(); //The component will run on the main thread
 	}
 
 }

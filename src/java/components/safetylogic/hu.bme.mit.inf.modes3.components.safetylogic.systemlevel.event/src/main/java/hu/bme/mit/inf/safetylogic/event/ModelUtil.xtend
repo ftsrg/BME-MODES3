@@ -4,7 +4,6 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelPackage
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatcher
-import java.util.Collections
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl

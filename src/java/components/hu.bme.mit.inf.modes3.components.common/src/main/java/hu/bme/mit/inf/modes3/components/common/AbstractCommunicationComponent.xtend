@@ -5,7 +5,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-abstract class AbstractCommunicationComponent {
+abstract class AbstractCommunicationComponent implements Runnable {
 
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		AbstractCommunicationComponent)
