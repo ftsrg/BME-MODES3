@@ -4,10 +4,10 @@ import org.eclipse.xtend.lib.annotations.Data
 
 @Data
 class TransportConfiguration {
-	TransportEndpoint localEndpoint;
+	TransportEndpoint localEndpoint; //TODO remove the local endpoint from the configuration.
 	TransportEndpoints allEndpoints;
 	
-	static def TransportConfiguration createDefaultTransportConfiguration(){
+	static def TransportConfiguration createProductionTransportConfiguration(){
 		throw new UnsupportedOperationException //TODO implement this somehow
 	}
 }
