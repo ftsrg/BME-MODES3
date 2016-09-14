@@ -65,7 +65,7 @@ class ZMQReceiverRunner implements Runnable {
 
 class ZMQIntegrationTests {
 
-	@Test(timeout=1000)
+	@Test(timeout=10000)
 	def void oneSenderOneReceiver() {
 
 		// Arrange
@@ -102,7 +102,7 @@ class ZMQIntegrationTests {
 		assertEquals(message, received.get(0));
 	}
 
-	@Test(timeout=1000)
+	@Test(timeout=10000)
 	def void oneSenderTwoReceiver() {
 
 		// Arrange
@@ -147,7 +147,7 @@ class ZMQIntegrationTests {
 		assertEquals(message, received.get(1));
 	}
 
-	@Test(timeout=1000)
+	@Test(timeout=10000)
 	def void twoSenderOneReceiver() {
 
 		// Arrange
