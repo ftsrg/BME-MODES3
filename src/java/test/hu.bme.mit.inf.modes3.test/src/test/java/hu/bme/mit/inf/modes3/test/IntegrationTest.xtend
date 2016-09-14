@@ -62,6 +62,10 @@ class IntegrationTest {
 
 
 	@Test def void integrationTest() {
+		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
+		
+		Assert.assertEquals(true, (model.sections.findFirst[id == 24] as Segment).isEnabled)
+		Assert.assertEquals(true, (model.sections.findFirst[id == 29] as Segment).isEnabled)
 		slThread.start
 		bbbThread.start
 		physicalThread.start
