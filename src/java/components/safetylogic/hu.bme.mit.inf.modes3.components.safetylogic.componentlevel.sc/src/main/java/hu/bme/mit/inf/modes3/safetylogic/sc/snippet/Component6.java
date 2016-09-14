@@ -3,19 +3,29 @@ package hu.bme.mit.inf.modes3.safetylogic.sc.snippet;
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine.SCITurnoutListener;
 
-public class Component6 {
+import hu.bme.mit.inf.modes3.safetylogic.sc.network.handler.IYakinduMessageHandler;
+import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirection;
 
-	private SectionComponent S27 = new SectionComponent();
+public class Component6 extends AbstractYakinduStatechartComponent {
 
-	private TurnoutComponent T6 = new TurnoutComponent();
+	private SectionComponent S27 = new SectionComponent(27);
 
-	private SectionComponent S17 = new SectionComponent();
+	private TurnoutComponent T6 = new TurnoutComponent(21);
 
-	private SectionComponent S23 = new SectionComponent();
+	private SectionComponent S17 = new SectionComponent(17);
 
-	private SectionComponent S22 = new SectionComponent();
+	private SectionComponent S23 = new SectionComponent(23);
 
-	public Component6() {
+	private SectionComponent S22 = new SectionComponent(22);
+
+	private RemoteElement S10;
+	private RemoteElement S26;
+
+	public Component6(IYakinduMessageHandler networkAdapter) {
+		setupIds();
+		S10 = new RemoteElement(10, ConnectionDirection.RIGHT, networkAdapter);
+		S26 = new RemoteElement(26, ConnectionDirection.LEFT, networkAdapter);
+
 		S27.getSCISectionListeners().add(new SCISectionListener() {
 			@Override
 			public void onReserveLeftRaised() {
@@ -24,6 +34,7 @@ public class Component6 {
 
 			@Override
 			public void onReserveRightRaised() {
+				S26.reserveToRemote();
 			}
 
 			@Override
@@ -33,6 +44,7 @@ public class Component6 {
 
 			@Override
 			public void onReserveResultToRightRaised(boolean value) {
+				S26.reserveResultToRemote(value);
 			}
 
 			@Override
@@ -42,6 +54,7 @@ public class Component6 {
 
 			@Override
 			public void onReleaseRightRaised() {
+				S26.releaseToRemote();
 			}
 
 			@Override
@@ -99,6 +112,7 @@ public class Component6 {
 		S17.getSCISectionListeners().add(new SCISectionListener() {
 			@Override
 			public void onReserveLeftRaised() {
+				S10.reserveToRemote();
 			}
 
 			@Override
@@ -108,6 +122,7 @@ public class Component6 {
 
 			@Override
 			public void onReserveResultToLeftRaised(boolean value) {
+				S10.reserveResultToRemote(value);
 			}
 
 			@Override
@@ -117,6 +132,7 @@ public class Component6 {
 
 			@Override
 			public void onReleaseLeftRaised() {
+				S10.releaseToRemote();
 			}
 
 			@Override
@@ -173,6 +189,7 @@ public class Component6 {
 
 			@Override
 			public void onReserveRightRaised() {
+				// connects to nothing
 			}
 
 			@Override
@@ -182,6 +199,7 @@ public class Component6 {
 
 			@Override
 			public void onReserveResultToRightRaised(boolean value) {
+				// connects to nothing
 			}
 
 			@Override
@@ -191,32 +209,13 @@ public class Component6 {
 
 			@Override
 			public void onReleaseRightRaised() {
+				// connects to nothing
 			}
 
 			@Override
 			public void onStopRaised() {
 			}
 		});
-	}
-
-	public SectionComponent getS27() {
-		return S27;
-	}
-
-	public TurnoutComponent getT6() {
-		return T6;
-	}
-
-	public SectionComponent getS17() {
-		return S17;
-	}
-
-	public SectionComponent getS23() {
-		return S23;
-	}
-
-	public SectionComponent getS22() {
-		return S22;
 	}
 
 	private boolean areAllEventQueuesEmpty() {
@@ -241,5 +240,14 @@ public class Component6 {
 		S17.runCycle();
 		S23.runCycle();
 		S22.runCycle();
+	}
+
+	@Override
+	protected void setupIds() {
+		ids.put(T6.getId(), T6);
+		ids.put(S27.getId(), S27);
+		ids.put(S17.getId(), S17);
+		ids.put(S23.getId(), S23);
+		ids.put(S22.getId(), S22);
 	}
 }

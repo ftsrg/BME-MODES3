@@ -3,23 +3,35 @@ package hu.bme.mit.inf.modes3.safetylogic.sc.snippet;
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine.SCITurnoutListener;
 
-public class Component4 {
+import hu.bme.mit.inf.modes3.safetylogic.sc.network.handler.IYakinduMessageHandler;
+import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirection;
 
-	private SectionComponent S2 = new SectionComponent();
+public class Component4 extends AbstractYakinduStatechartComponent {
 
-	private SectionComponent S4 = new SectionComponent();
+	private SectionComponent S2 = new SectionComponent(2);
 
-	private SectionComponent S7 = new SectionComponent();
+	private SectionComponent S4 = new SectionComponent(4);
 
-	private SectionComponent S5 = new SectionComponent();
+	private SectionComponent S7 = new SectionComponent(7);
 
-	private SectionComponent S6 = new SectionComponent();
+	private SectionComponent S5 = new SectionComponent(5);
 
-	private SectionComponent S1 = new SectionComponent();
+	private SectionComponent S6 = new SectionComponent(6);
 
-	private TurnoutComponent T4 = new TurnoutComponent();
+	private SectionComponent S1 = new SectionComponent(1);
 
-	public Component4() {
+	private TurnoutComponent T4 = new TurnoutComponent(3);
+	
+	private RemoteElement S19;
+	private RemoteElement S18;
+	private RemoteElement S12;
+
+	public Component4(IYakinduMessageHandler networkAdapter) {
+		setupIds();
+		S19 = new RemoteElement(19, ConnectionDirection.RIGHT, networkAdapter);
+		S18 = new RemoteElement(18, ConnectionDirection.RIGHT, networkAdapter);
+		S12 = new RemoteElement(12, ConnectionDirection.LEFT, networkAdapter);
+		
 		S2.getSCISectionListeners().add(new SCISectionListener() {
 			@Override
 			public void onReserveLeftRaised() {
@@ -95,6 +107,7 @@ public class Component4 {
 		S7.getSCISectionListeners().add(new SCISectionListener() {
 			@Override
 			public void onReserveLeftRaised() {
+				S19.reserveToRemote();
 			}
 
 			@Override
@@ -104,6 +117,7 @@ public class Component4 {
 
 			@Override
 			public void onReserveResultToLeftRaised(boolean value) {
+				S19.reserveResultToRemote(value);
 			}
 
 			@Override
@@ -113,6 +127,7 @@ public class Component4 {
 
 			@Override
 			public void onReleaseLeftRaised() {
+				S19.releaseToRemote();
 			}
 
 			@Override
@@ -164,6 +179,7 @@ public class Component4 {
 		S6.getSCISectionListeners().add(new SCISectionListener() {
 			@Override
 			public void onReserveLeftRaised() {
+				S18.reserveToRemote();
 			}
 
 			@Override
@@ -173,6 +189,7 @@ public class Component4 {
 
 			@Override
 			public void onReserveResultToLeftRaised(boolean value) {
+				S18.reserveResultToRemote(value);
 			}
 
 			@Override
@@ -182,6 +199,7 @@ public class Component4 {
 
 			@Override
 			public void onReleaseLeftRaised() {
+				S18.releaseToRemote();
 			}
 
 			@Override
@@ -202,6 +220,7 @@ public class Component4 {
 
 			@Override
 			public void onReserveRightRaised() {
+				S12.reserveToRemote();
 			}
 
 			@Override
@@ -211,6 +230,7 @@ public class Component4 {
 
 			@Override
 			public void onReserveResultToRightRaised(boolean value) {
+				S12.reserveResultToRemote(value);
 			}
 
 			@Override
@@ -220,6 +240,7 @@ public class Component4 {
 
 			@Override
 			public void onReleaseRightRaised() {
+				S12.releaseToRemote();
 			}
 
 			@Override
@@ -275,34 +296,6 @@ public class Component4 {
 		});
 	}
 
-	public SectionComponent getS2() {
-		return S2;
-	}
-
-	public SectionComponent getS4() {
-		return S4;
-	}
-
-	public SectionComponent getS7() {
-		return S7;
-	}
-
-	public SectionComponent getS5() {
-		return S5;
-	}
-
-	public SectionComponent getS6() {
-		return S6;
-	}
-
-	public SectionComponent getS1() {
-		return S1;
-	}
-
-	public TurnoutComponent getT4() {
-		return T4;
-	}
-
 	private boolean areAllEventQueuesEmpty() {
 		return S2.isEventQueueEmpty() && S4.isEventQueueEmpty() && S7.isEventQueueEmpty() && S5.isEventQueueEmpty()
 				&& S6.isEventQueueEmpty() && S1.isEventQueueEmpty() && T4.isEventQueueEmpty();
@@ -329,5 +322,15 @@ public class Component4 {
 		S6.runCycle();
 		S1.runCycle();
 		T4.runCycle();
+	}
+
+	@Override
+	protected void setupIds() {
+		ids.put(T4.getId(), T4);
+		ids.put(S2.getId(), S2);
+		ids.put(S4.getId(), S4);
+		ids.put(S7.getId(), S7);
+		ids.put(S5.getId(), S5);
+		ids.put(S6.getId(), S6);
 	}
 }

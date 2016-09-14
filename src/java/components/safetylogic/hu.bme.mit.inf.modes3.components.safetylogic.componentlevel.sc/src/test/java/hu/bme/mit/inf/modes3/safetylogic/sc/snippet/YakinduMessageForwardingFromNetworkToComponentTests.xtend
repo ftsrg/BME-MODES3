@@ -22,11 +22,8 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 
-/**
- * YakinduMessageForwardingFromNetworkToComponentTests
- */
 @RunWith(Theories)
-class Component1Tests {
+class YakinduMessageForwardingFromNetworkToComponentTests {
 
 	/****************************************************************************************************
 	 * helper class, used by the @Theory tests

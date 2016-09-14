@@ -3,11 +3,14 @@ package hu.bme.mit.inf.modes3.safetylogic.sc.snippet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yakindu.scr.TimerService;
-import org.yakindu.scr.section.SectionStatemachine;
+import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener;
 import org.yakindu.scr.section.SectionStatemachine.State;
+import org.yakindu.scr.section.SynchronizedSectionStatemachine;
 
 interface SectionComponentInterface {
 
@@ -27,20 +30,28 @@ interface SectionComponentInterface {
 }
 
 public class SectionComponent implements SectionComponentInterface {
+
+	private static final Logger logger = LoggerFactory.getLogger(SectionComponent.class);
+
 	// The wrapped Yakindu statemachine
-	private SectionStatemachine sectionStatemachine = new SectionStatemachine();
+	private SynchronizedSectionStatemachine sectionStatemachine = new SynchronizedSectionStatemachine();
 
 	// Indicates which queue is active in this synchronization turn
 	private boolean chooseList = true;
 	// Event queues for the synchronization of statecharts
-	private Queue<Message> eventQueue1 = new LinkedList<Message>();
-	private Queue<Message> eventQueue2 = new LinkedList<Message>();
+	private Queue<Message> eventQueue1 = new ConcurrentLinkedQueue<>();
+	private Queue<Message> eventQueue2 = new ConcurrentLinkedQueue<>();
 
-	public SectionComponent() {
+	public SectionComponent(int id) {
 		// Initializing and entering the wrapped statemachine
+		sectionStatemachine.getSCISection().setId(id);
 		sectionStatemachine.setTimer(new TimerService());
 		sectionStatemachine.init();
 		sectionStatemachine.enter();
+	}
+	
+	public int getId(){
+		return sectionStatemachine.getSCISection().getId();
 	}
 
 	void changeEventQueue() {
@@ -88,8 +99,17 @@ public class SectionComponent implements SectionComponentInterface {
 			case "reserveFromRight":
 				sectionStatemachine.getSCISection().raiseReserveFromRight();
 				break;
+			case "trainDirection":
+				if (event.getValue() instanceof TrainDirection) {
+					TrainDirection direction = (TrainDirection) event.getValue();
+					if (direction.value == 0 || direction.value == 1) {
+						sectionStatemachine.getSCISection().setDir(direction.value);
+					} else {
+						logger.error("Direction can be either LEFT(0) or RIGHT(1), not " + direction);
+					}
+				}
 			default:
-				throw new IllegalArgumentException("No such event!");
+				logger.error("No such event! " + event.getEvent());
 			}
 		}
 		sectionStatemachine.runCycle();
@@ -121,6 +141,10 @@ public class SectionComponent implements SectionComponentInterface {
 
 	public void raiseReset() {
 		getInsertQueue().add(new Message("reset", null));
+	}
+
+	public void setTrainDirection(TrainDirection direction) {
+		getInsertQueue().add(new Message("trainDirection", direction));
 	}
 
 	List<SCISectionListener> getSCISectionListeners() {

@@ -1,11 +1,11 @@
 package hu.bme.mit.inf.modes3.safetylogic.sc.snippet;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.yakindu.scr.turnout.ITurnoutStatemachine.SCITurnoutListener;
-import org.yakindu.scr.turnout.TurnoutStatemachine;
+import org.yakindu.scr.turnout.SynchronizedTurnoutStatemachine;
 import org.yakindu.scr.turnout.TurnoutStatemachine.State;
 
 interface TurnoutComponentInterface {
@@ -33,18 +33,23 @@ interface TurnoutComponentInterface {
 
 public class TurnoutComponent implements TurnoutComponentInterface {
 	// The wrapped Yakindu statemachine
-	private TurnoutStatemachine turnoutStatemachine = new TurnoutStatemachine();
+	private SynchronizedTurnoutStatemachine turnoutStatemachine = new SynchronizedTurnoutStatemachine();
 
 	// Indicates which queue is active in this synchronization turn
 	private boolean chooseList = true;
 	// Event queues for the synchronization of statecharts
-	private Queue<Message> eventQueue1 = new LinkedList<Message>();
-	private Queue<Message> eventQueue2 = new LinkedList<Message>();
+	private Queue<Message> eventQueue1 = new ConcurrentLinkedQueue<>();
+	private Queue<Message> eventQueue2 = new ConcurrentLinkedQueue<>();
 
-	public TurnoutComponent() {
+	public TurnoutComponent(int id) {
 		// Initializing and entering the wrapped statemachine
+		turnoutStatemachine.getSCITurnout().setId(id);
 		turnoutStatemachine.init();
 		turnoutStatemachine.enter();
+	}
+	
+	public int getId(){
+		return turnoutStatemachine.getSCITurnout().getId();
 	}
 
 	void changeEventQueue() {

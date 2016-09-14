@@ -3,64 +3,32 @@ package hu.bme.mit.inf.modes3.safetylogic.sc.snippet;
 import hu.bme.mit.inf.modes3.safetylogic.sc.network.handler.IYakinduMessageHandler;
 import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirection;
 
-public class RemoteElement implements IYakinduMessageHandler {
+public class RemoteElement {
 
-	private int id;
+	// the LOCAL's id used for sensing the occupation of the referred element
+	protected int id;
 
-	private ConnectionDirection localDirection;
+	// the REMOTE can reach the LOCAL from this direction
+	protected ConnectionDirection remoteDirection;
 
-	private ConnectionDirection remoteDirection;
+	// forwards calls to the network
+	protected IYakinduMessageHandler adapter;
 
-	private IYakinduMessageHandler adapter;
-
-	public RemoteElement(int id, ConnectionDirection localDirection, ConnectionDirection remoteDirection) {
+	public RemoteElement(int id, ConnectionDirection remoteDirection, IYakinduMessageHandler adapter) {
 		this.id = id;
-		this.localDirection = localDirection;
 		this.remoteDirection = remoteDirection;
-		// adapter initialization
-	}
-
-	public void setAdapter(IYakinduMessageHandler adapter) {
 		this.adapter = adapter;
 	}
 
-	public int getId() {
-		return id;
+	public void reserveToRemote() {
+		adapter.reserveTo(id, remoteDirection);
 	}
 
-	public ConnectionDirection getLocalDirection() {
-		return localDirection;
+	public void releaseToRemote() {
+		adapter.releaseTo(id, remoteDirection);
 	}
 
-	public ConnectionDirection getRemoteDirection() {
-		return remoteDirection;
+	public void reserveResultToRemote(boolean result) {
+		adapter.reserveResultTo(id, remoteDirection, result);
 	}
-
-	@Override
-	public void reserveTo(int targetID, ConnectionDirection direction) {
-		if (direction == localDirection) {
-			adapter.reserveTo(targetID, remoteDirection);
-		} else {
-			throw new IllegalArgumentException("The reserve is from the wrong direction: " + direction);
-		}
-	}
-
-	@Override
-	public void releaseTo(int targetID, ConnectionDirection direction) {
-		if (direction == localDirection) {
-			adapter.releaseTo(targetID, remoteDirection);
-		} else {
-			throw new IllegalArgumentException("The release is from the wrong direction: " + direction);
-		}
-	}
-
-	@Override
-	public void reserveResultTo(int targetID, ConnectionDirection direction, boolean result) {
-		if (direction == localDirection) {
-			adapter.reserveResultTo(targetID, remoteDirection, result);
-		} else {
-			throw new IllegalArgumentException("The reserve result is from the wrong direction: " + direction);
-		}
-	}
-
 }
