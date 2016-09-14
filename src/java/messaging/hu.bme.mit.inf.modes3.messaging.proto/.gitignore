@@ -1,3 +1,6 @@
+# Ignore generated java code in this project
+/src/main/java
+
 # Gradle
 # ------
 .gradle
@@ -35,15 +38,8 @@ atlassian-ide-plugin.xml
 
 # NetBeans
 # --------
-**/.nb-gradle
-**/.nb-gradle-properties
-**/nbproject/private
-**/build/
-**/nbbuild/
-**/dist/
-**/nbdist/
-**/nbactions.xml
-**/nb-configuration.xml
+.nb-gradle
+.nb-gradle-properties
 
 # Vim
 # ---
