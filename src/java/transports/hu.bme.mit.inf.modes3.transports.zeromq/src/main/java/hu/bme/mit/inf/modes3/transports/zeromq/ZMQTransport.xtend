@@ -38,8 +38,8 @@ class ZMQTransport extends Transport {
 
 		sub = ctx.socket(ZMQ.SUB)
 		this.config.allEndpoints.core.filter[endpoint | endpoint != config.localEndpoint].forEach [ endpoint |
-			sub.connect('''tcp://«endpoint.addr»:«endpoint.pubPort»''')
 			sub.subscribe(#[])
+			sub.connect('''tcp://«endpoint.addr»:«endpoint.pubPort»''')
 			
 			val req = ctx.socket(ZMQ.REQ);
 			println('''Connecting to SYN: «endpoint.addr»:«endpoint.repPort»''')
