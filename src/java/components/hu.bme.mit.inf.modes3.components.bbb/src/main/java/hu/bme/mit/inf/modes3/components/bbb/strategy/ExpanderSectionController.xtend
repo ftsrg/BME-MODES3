@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.strategy;
 
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
-import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import io.silverspoon.bulldog.core.Signal
 import java.util.concurrent.ConcurrentHashMap
@@ -23,7 +22,7 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 	protected var ExpanderControllerConfiguration controllerConf
 
 	// the sections statuses based on the section ID
-	protected var ConcurrentMap<String, SegmentState> sectionStatus
+	protected var ConcurrentMap<Integer, SegmentState> sectionStatus
 
 	// thread-safe wrapper for the BBB board
 	protected var BoardWrapper board
@@ -40,16 +39,16 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 		sectionStatus = new ConcurrentHashMap
 		// enable all sections
 		for (sec : controllerConf.getAllSection) {
-			enableSection(HexConversionUtil.fromString(sec))
+			enableSection(Integer.valueOf(sec))
 		}
 	}
 
 	override getManagedSections() {
-		controllerConf.allSection
+		controllerConf.allSection.map[sectionStr | Integer.valueOf(sectionStr)].toSet
 	}
 
 	override getSectionStatus(int sectionId) {
-		sectionStatus.get(HexConversionUtil.fromNumber(sectionId))
+		sectionStatus.get(sectionId)
 	}
 
 	override enableSection(int sectionId) {
@@ -58,7 +57,7 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 		board.setPinLevel(sectionExpander.get(1), Signal.High)
 		board.setPinLevel(sectionExpander.get(2), Signal.High)
 		board.setPinLevel(sectionExpander.get(3), Signal.High)
-		sectionStatus.put(HexConversionUtil.fromNumber(sectionId), SegmentState.ENABLED)
+		sectionStatus.put(sectionId, SegmentState.ENABLED)
 	}
 
 	override disableSection(int sectionId) {
@@ -67,7 +66,7 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 		board.setPinLevel(sectionExpander.get(1), Signal.Low)
 		board.setPinLevel(sectionExpander.get(2), Signal.Low)
 		board.setPinLevel(sectionExpander.get(3), Signal.Low)
-		sectionStatus.put(HexConversionUtil.fromNumber(sectionId), SegmentState.DISABLED)
+		sectionStatus.put(sectionId, SegmentState.DISABLED)
 	}
 
 	override controllerManagesSection(int sectionId) {

@@ -39,7 +39,7 @@ interface ISegmentControllerStrategy {
 	def boolean controllerManagesSection(int sectionId)
 	
 	
-	def Set<String> getManagedSections()
+	def Set<Integer> getManagedSections()
 }
 
 interface ITurnoutControllerStrategy {
@@ -76,5 +76,5 @@ interface ITurnoutControllerStrategy {
 	 */
 	def boolean controllerManagesTurnout(int turnoutId)
 	
-	def Set<String> getManagedTurnouts()
+	def Set<Integer> getManagedTurnouts()
 }

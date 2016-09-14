@@ -7,7 +7,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackF
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import java.util.Collections
-import java.util.HashSet
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -46,10 +45,9 @@ class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 	@Test
 	def void straightOrDivergentDirectionsAreSentForTwoTurnouts() {
 		// Arrange		
-		val turnoutIDs = #["42", "43"]
-		val turnoutIDset = new HashSet<String>
-		turnoutIDset.addAll(turnoutIDs)
-		val turnoutStatuses = #{"42" -> TurnoutState.STRAIGHT, "43" -> TurnoutState.DIVERGENT}
+		val turnoutIDs = #[42, 43]
+		val turnoutIDset = #{turnoutIDs.get(0), turnoutIDs.get(1)}
+		val turnoutStatuses = #{turnoutIDs.get(0) -> TurnoutState.STRAIGHT, turnoutIDs.get(1) -> TurnoutState.DIVERGENT}
 
 		// initialize mocks
 		expander = Mockito.mock(ExpanderTurnoutController)

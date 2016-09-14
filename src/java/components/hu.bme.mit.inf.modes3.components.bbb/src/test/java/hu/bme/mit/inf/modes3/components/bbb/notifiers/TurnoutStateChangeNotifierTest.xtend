@@ -39,7 +39,7 @@ class TurnoutStateChangeNotifierTest {
 		/** Theory -> see http://junit.sourceforge.net/doc/ReleaseNotes4.4.html Theories section */
 		// Arrange
 		val turnoutID = 42
-		val turnoutIDset = #{turnoutID.toString}
+		val turnoutIDset = #{turnoutID}
 		// to simulate segment state change
 		val negatedState = getNegatedTurnoutState(initialState)
 
@@ -79,7 +79,7 @@ class TurnoutStateChangeNotifierTest {
 	def void noReportWhenStateIsNotChanged(TurnoutState initialState) {
 		// Arrange
 		val turnoutID = 42
-		val turnoutIDset = #{turnoutID.toString}
+		val turnoutIDset = #{turnoutID}
 
 		// set mocks
 		controller = Mockito.mock(ExpanderTurnoutController)

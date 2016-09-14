@@ -19,7 +19,7 @@ class SectionStateNotifierTest {
 	@Test
 	def void enabledOrDisabledStatesAreSentForTwoSegments() {
 		// Arrange		
-		val sectionIDs = #["42", "43"]
+		val sectionIDs = #[42, 43]
 		val sectionIDset = #{sectionIDs.get(0), sectionIDs.get(1)}
 		val sectionStatuses = #{sectionIDs.get(0) -> SegmentState.ENABLED, sectionIDs.get(1) -> SegmentState.DISABLED}
 

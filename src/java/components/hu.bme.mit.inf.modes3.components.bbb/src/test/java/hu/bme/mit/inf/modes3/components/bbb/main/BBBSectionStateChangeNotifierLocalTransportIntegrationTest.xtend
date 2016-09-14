@@ -64,7 +64,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 		/** Theory -> see http://junit.sourceforge.net/doc/ReleaseNotes4.4.html Theories section */
 		// Arrange
 		val sectionID = 42
-		val sectionIDset = #{sectionID.toString}
+		val sectionIDset = #{sectionID}
 		// to simulate segment state change
 		val negatedState = getNegatedSegmentState(initialState)
 
@@ -104,7 +104,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 	def void noReportWhenStateIsNotChanged(SegmentState initialState) {
 		// Arrange
 		val sectionID = 42
-		val sectionIDset = #{sectionID.toString}
+		val sectionIDset = #{sectionID}
 
 		// set mocks
 		expander = Mockito.mock(ExpanderSectionController)

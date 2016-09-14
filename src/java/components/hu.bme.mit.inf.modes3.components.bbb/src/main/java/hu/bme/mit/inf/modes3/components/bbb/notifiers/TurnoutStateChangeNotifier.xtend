@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.notifiers
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
-import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import java.util.Map
@@ -26,27 +25,25 @@ package class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
 	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
 		TurnoutStateChangeNotifier)
 
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<String, TurnoutState> latestTurnoutStates
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<Integer, TurnoutState> latestTurnoutStates
 
 	new(ITrackElementStateSender _trackElementStateSender, ExpanderTurnoutController _turnoutController) {
 		super(_trackElementStateSender, _turnoutController)
 
 		latestTurnoutStates = new TreeMap
-		for (turnoutStr : turnoutController.managedTurnouts) {
-			val turnoutId = HexConversionUtil.fromString(turnoutStr)
+		for (turnoutId : turnoutController.managedTurnouts) {
 			val status = turnoutController.getTurnoutStatus(turnoutId)
-			latestTurnoutStates.put(turnoutStr, status)
+			latestTurnoutStates.put(turnoutId, status)
 		}
 	}
 
 	override run() {
 		while (!Thread.interrupted) {
 			try {
-				for (turnoutStr : turnoutController.managedTurnouts) {
-					val turnoutId = HexConversionUtil.fromString(turnoutStr)
+				for (turnoutId : turnoutController.managedTurnouts) {
 					val status = turnoutController.getTurnoutStatus(turnoutId)
-					if (latestTurnoutStates.get(turnoutStr) != status) {
-						latestTurnoutStates.put(turnoutStr, status)
+					if (latestTurnoutStates.get(turnoutId) != status) {
+						latestTurnoutStates.put(turnoutId, status)
 						trackElementStateSender.sendTurnoutState(turnoutId, status)
 					}
 				}

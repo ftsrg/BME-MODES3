@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.strategy;
 
 import hu.bme.mit.inf.modes3.components.bbb.conf.ExpanderControllerConfiguration
-import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import io.silverspoon.bulldog.core.Signal
 import io.silverspoon.bulldog.core.gpio.DigitalInput
@@ -28,7 +27,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	protected var ExpanderControllerConfiguration controllerConf
 
 	// the latest turnout statuses (straight / divergent), based on turnout ID
-	protected var Map<String, TurnoutState> turnoutStatus
+	protected var Map<Integer, TurnoutState> turnoutStatus
 
 	// thread-safe wrapper for the BBB board
 	protected var BoardWrapper board
@@ -46,7 +45,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 
 		// initialize digital input pins for the turnout direction
 		for (to : controllerConf.getAllTurnout) {
-			val pins = controllerConf.getTurnoutExpander(to)
+			val pins = controllerConf.getTurnoutExpander(Integer.valueOf(to))
 			ioMap.put(pins.get(0), board.getPinAsDigitalInput(pins.get(0)))
 			ioMap.put(pins.get(1), board.getPinAsDigitalInput(pins.get(1)))
 		}
@@ -54,12 +53,11 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override getManagedTurnouts() {
-		controllerConf.allTurnout
+		controllerConf.allTurnout.map[turnoutStr|Integer.valueOf(turnoutStr)].toSet
 	}
 
 	override getTurnoutStatus(int turnoutId) {
-		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
-		val pins = controllerConf.getTurnoutExpander(turnoutStr)
+		val pins = controllerConf.getTurnoutExpander(turnoutId)
 
 		// decide direction
 		var TurnoutState direction = null
@@ -71,7 +69,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 		}
 
 		// update stored direction
-		turnoutStatus.put(turnoutStr, direction)
+		turnoutStatus.put(turnoutId, direction)
 		direction
 	}
 
@@ -80,17 +78,15 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override setTurnoutStraight(int turnoutId) {
-		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
-		val pins = controllerConf.getTurnoutExpander(turnoutStr)
+		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
-		turnoutStatus.put(turnoutStr, TurnoutState.STRAIGHT)
+		turnoutStatus.put(turnoutId, TurnoutState.STRAIGHT)
 	}
 
 	override setTurnoutDivergent(int turnoutId) {
-		val turnoutStr = HexConversionUtil.fromNumber(turnoutId)
-		val pins = controllerConf.getTurnoutExpander(turnoutStr)
+		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
-		turnoutStatus.put(turnoutStr, TurnoutState.DIVERGENT)
+		turnoutStatus.put(turnoutId, TurnoutState.DIVERGENT)
 	}
 
 }

@@ -1,23 +1,84 @@
-# OS generated files #
-######################
+# Gradle
+# ------
+.gradle
+**/.gradle
+**/build
+**/buildSrc/build
+**/subprojects/*/build
+**/subprojects/docs/src/samples/*/*/build
+**/subprojects/internal-android-performance-testing/build-android-libs
+
+# IDEA
+# ----
+.idea
+.shelf
+**/*.iml
+**/*.ipr
+**/*.iws
+**/buildSrc/*.iml
+**/buildSrc/*.ipr
+**/buildSrc/*.iws
+**/buildSrc/out
+**/out
+**/subprojects/*/*.iml
+**/subprojects/*/out
+
+# Eclipse
+# -------
+*.classpath
+*.project
+*.settings
+**/bin
+**/xtend-gen
+**/subprojects/*/bin
+atlassian-ide-plugin.xml
+
+# NetBeans
+# --------
+**/.nb-gradle
+**/.nb-gradle-properties
+**/nbproject/private
+**/build/
+**/nbbuild/
+**/dist/
+**/nbdist/
+**/nbactions.xml
+**/nb-configuration.xml
+
+# Vim
+# ---
+*.sw[op]
+
+# Emacs
+# -----
+*~
+
+# Textmate
+# --------
+.textmate
+
+# Sublime Text
+# ------------
+*.sublime-*
+
+# jEnv
+# ----
+.java-version
+
+# OS X
+# ----
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
 
-# XCode files #
-###############
-*.xcodeproj
+# HPROF
+# -----
+*.hprof
 
-# Generated sources and binaries #
-##################################
-/bin/
-/xtend-gen/
-/src-gen/
-/target/
-/hu.bme.mit.inf.master.mqtt.soc/dist/
-/hu.bme.mit.inf.master.mqtt.soc/build/
-/src/js/modes3-dashboard-pure/nbproject/private/
+# Work dirs
+# ---------
+**/incoming-distributions
+**/intTestHomeDir
+
+# Logs
+# ----
+**/*.log
+
