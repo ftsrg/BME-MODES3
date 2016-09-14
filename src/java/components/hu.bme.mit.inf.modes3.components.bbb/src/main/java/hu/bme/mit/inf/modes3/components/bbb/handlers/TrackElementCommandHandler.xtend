@@ -16,10 +16,10 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationS
 class TrackElementCommandHandler {
 
 	// handler of the section messages
-	private val SectionMessageHandler sectionMessageHandler
+	protected val SectionMessageHandler sectionMessageHandler
 
 	// handler of the turnout messages
-	private val TurnoutMessageHandler turnoutMessageHandler
+	protected val TurnoutMessageHandler turnoutMessageHandler
 
 	new(TrackCommunicationServiceLocator locator, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
 		sectionMessageHandler = new SectionMessageHandler(locator.trackElementCommandCallback, sectionController)

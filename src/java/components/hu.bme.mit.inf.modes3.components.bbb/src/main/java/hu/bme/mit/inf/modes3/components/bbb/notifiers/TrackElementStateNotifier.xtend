@@ -41,6 +41,11 @@ class TrackElementStateNotifier {
 		sectionStateNotifier = new SectionStateNotifier(locator.trackElementStateSender, new ExpanderSectionController(board))
 		turnoutStateNotifier = new TurnoutStateNotifier(locator.trackElementStateSender, new ExpanderTurnoutController(board))
 	}
+	
+	protected new(SectionStateNotifier _sectionStateNotifier, TurnoutStateNotifier _turnoutStateNotifier){
+		sectionStateNotifier = _sectionStateNotifier
+		turnoutStateNotifier = _turnoutStateNotifier
+	}
 
 	/**
 	 * Starts the section and turnout state notifier threads.

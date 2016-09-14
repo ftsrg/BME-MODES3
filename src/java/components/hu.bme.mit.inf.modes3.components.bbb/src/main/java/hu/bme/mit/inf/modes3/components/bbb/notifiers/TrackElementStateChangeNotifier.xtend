@@ -14,12 +14,10 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationS
 class TrackElementStateChangeNotifier extends TrackElementStateNotifier {
 
 	new(TrackCommunicationServiceLocator locator, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
-		super(locator, sectionController, turnoutController)
-		sectionStateNotifier = new SectionStateChangeNotifier(locator.trackElementStateSender, sectionController)
-		turnoutStateNotifier = new TurnoutStateChangeNotifier(locator.trackElementStateSender, turnoutController)
+		super(new SectionStateChangeNotifier(locator.trackElementStateSender, sectionController), new TurnoutStateChangeNotifier(locator.trackElementStateSender, turnoutController))
 	}
-	
-	private new(TrackCommunicationServiceLocator locator, BoardWrapper board){
+
+	private new(TrackCommunicationServiceLocator locator, BoardWrapper board) {
 		this(locator, new ExpanderSectionController(board), new ExpanderTurnoutController(board))
 	}
 

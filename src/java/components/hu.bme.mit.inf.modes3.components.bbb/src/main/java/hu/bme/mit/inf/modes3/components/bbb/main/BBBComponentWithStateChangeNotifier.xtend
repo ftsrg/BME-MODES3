@@ -4,8 +4,6 @@ import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateChangeNot
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
-import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
-import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 
 /**
  * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
