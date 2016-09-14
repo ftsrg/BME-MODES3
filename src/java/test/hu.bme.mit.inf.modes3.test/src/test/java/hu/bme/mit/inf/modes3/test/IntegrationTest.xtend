@@ -27,7 +27,7 @@ class IntegrationTest {
 
 	val bbbThread = new Thread(new BBBComponent(CommunicationStack::createLocalStack, new ISegmentControllerStrategy(){
 		override getManagedSections() {
-			new HashSet<String> => [addAll(model.sections.map[id.toString])]
+			new HashSet<Integer> => [addAll(model.sections.map[id])]
 		}
 		override controllerManagesSection(int sectionId) {
 			true
@@ -57,7 +57,7 @@ class IntegrationTest {
 				true
 			}
 			override getManagedTurnouts() {
-				new HashSet<String> => [addAll(model.sections.filter[it instanceof Turnout].map[id].map[toString])]
+				new HashSet<Integer> => [addAll(model.sections.filter[it instanceof Turnout].map[id])]
 			}}))
 
 
