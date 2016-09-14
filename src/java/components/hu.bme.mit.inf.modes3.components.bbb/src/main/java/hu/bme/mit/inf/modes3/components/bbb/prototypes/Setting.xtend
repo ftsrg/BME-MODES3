@@ -3,7 +3,6 @@ package hu.bme.mit.inf.modes3.components.bbb.prototypes;
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
-import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import java.io.InputStreamReader
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -48,7 +47,7 @@ class Setting {
 			val reader = new JsonReader(isr)
 			var JsonObject settings = gson.fromJson(reader, JsonObject)
 			settings = settings.get("settings").asJsonObject
-			gson.fromJson(settings.get(HexConversionUtil.fromNumber(id)), Setting)
+			gson.fromJson(settings.get(String.valueOf(id)), Setting)
 		} finally {
 			isr?.close
 		}
@@ -62,7 +61,7 @@ class Setting {
 	 * controller
 	 */
 	def containsTurnout(int turnoutId) {
-		turnouts.containsKey(HexConversionUtil.fromNumber(turnoutId))
+		turnouts.containsKey(turnoutId)
 	}
 
 	/**
@@ -73,7 +72,7 @@ class Setting {
 	 * controller
 	 */
 	def containsSection(int sectionId) {
-		sections.containsKey(HexConversionUtil.fromNumber(sectionId))
+		sections.containsKey(sectionId)
 	}
 
 	def getTurnoutNames() {
@@ -84,11 +83,11 @@ class Setting {
 		sections.keySet
 	}
 
-	def getTurnoutPinoutHeaderValue(String turnout) {
-		turnouts.get(turnout)
+	def getTurnoutPinoutHeaderValue(int turnout) {
+		turnouts.get(String.valueOf(turnout))
 	}
 
-	def getSectionPinoutHeaderValue(String section) {
-		sections.get(section)
+	def getSectionPinoutHeaderValue(int section) {
+		sections.get(String.valueOf(section))
 	}
 }

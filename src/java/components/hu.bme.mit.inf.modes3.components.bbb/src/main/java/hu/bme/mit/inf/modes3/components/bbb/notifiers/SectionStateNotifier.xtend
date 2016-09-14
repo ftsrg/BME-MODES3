@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.notifiers
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
-import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.Logger
@@ -34,8 +33,7 @@ package class SectionStateNotifier implements Runnable {
 	override run() {
 		while (!Thread.interrupted) {
 			try {
-				for (sectionStr : sectionController.managedSections) {
-					val sectionId = HexConversionUtil.fromString(sectionStr)
+				for (sectionId : sectionController.managedSections) {
 					val sectionStatus = sectionController.getSectionStatus(sectionId)
 					trackElementStateSender.sendSegmentState(sectionId, sectionStatus)
 				}

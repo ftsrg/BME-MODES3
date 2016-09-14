@@ -2,7 +2,6 @@ package hu.bme.mit.inf.modes3.components.bbb.conf;
 
 import hu.bme.mit.inf.modes3.components.bbb.prototypes.Pinout
 import hu.bme.mit.inf.modes3.components.bbb.prototypes.Setting
-import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -29,7 +28,7 @@ class ExpanderControllerConfiguration {
 		if (!env.containsKey("TURNOUT_ID")) {
 			throw new RuntimeException("There is no TURNOUT_ID environmental variable defined")
 		}
-		val controllerID = HexConversionUtil.fromString(env.get("TURNOUT_ID"))
+		val controllerID = Integer.valueOf(env.get("TURNOUT_ID"))
 
 		pinout = Pinout.loadPinoutConfig
 		setting = Setting.loadPinoutConfig(controllerID)
@@ -58,11 +57,11 @@ class ExpanderControllerConfiguration {
 	}
 
 	def getSectionExpander(int sectionId) {
-		val expander = setting.getSectionPinoutHeaderValue(HexConversionUtil.fromNumber(sectionId))
+		val expander = setting.getSectionPinoutHeaderValue(sectionId)
 		pinout.getHeaderPins(String.valueOf(expander))
 	}
 
-	def getTurnoutExpander(String turnoutId) {
+	def getTurnoutExpander(int turnoutId) {
 		val expander = setting.getTurnoutPinoutHeaderValue(turnoutId)
 		pinout.getHeaderPins(String.valueOf(expander))
 	}

@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb.notifiers
 
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
-import hu.bme.mit.inf.modes3.components.bbb.utils.HexConversionUtil
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import java.util.Map
@@ -23,35 +22,32 @@ import org.slf4j.LoggerFactory
  */
 package class SectionStateChangeNotifier extends SectionStateNotifier {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
-		SectionStateChangeNotifier)
+	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(SectionStateChangeNotifier)
 
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<String, SegmentState> latestSectionStates
+	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<Integer, SegmentState> latestSectionStates
 
 	new(ITrackElementStateSender _trackElementStateSender, ExpanderSectionController _sectionController) {
 		super(_trackElementStateSender, _sectionController)
 
 		latestSectionStates = new TreeMap
-		for (sectionStr : sectionController.managedSections) {
-			val sectionId = HexConversionUtil.fromString(sectionStr)
+		for (sectionId : sectionController.managedSections) {
 			val status = sectionController.getSectionStatus(sectionId)
-			latestSectionStates.put(sectionStr, status)
+			latestSectionStates.put(sectionId, status)
 		}
 	}
 
 	override run() {
-		while (!Thread.interrupted) {
+		while(!Thread.interrupted) {
 			try {
-				for (sectionStr : sectionController.managedSections) {
-					val sectionId = HexConversionUtil.fromString(sectionStr)
+				for (sectionId : sectionController.managedSections) {
 					val status = sectionController.getSectionStatus(sectionId)
-					if (latestSectionStates.get(sectionStr) != status) {
-						latestSectionStates.put(sectionStr, status)
+					if(latestSectionStates.get(sectionId) != status) {
+						latestSectionStates.put(sectionId, status)
 						trackElementStateSender.sendSegmentState(sectionId, status)
 					}
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
-			} catch (InterruptedException ex) {
+			} catch(InterruptedException ex) {
 				logger.error(ex.message, ex)
 				Thread.currentThread.interrupt
 			}

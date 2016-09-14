@@ -4,7 +4,6 @@ import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import java.util.Collections
-import java.util.HashSet
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -20,10 +19,9 @@ class TurnoutStateNotifierTest {
 	@Test
 	def void straightOrDivergentDirectionsAreSentForTwoTurnouts() {
 		// Arrange		
-		val turnoutIDs = #["42", "43"]
-		val turnoutIDset = new HashSet<String>
-		turnoutIDset.addAll(turnoutIDs)
-		val turnoutStatuses = #{"42" -> TurnoutState.STRAIGHT, "43" -> TurnoutState.DIVERGENT}
+		val turnoutIDs = #[42, 43]
+		val turnoutIDset = #{turnoutIDs.get(0), turnoutIDs.get(1)}
+		val turnoutStatuses = #{turnoutIDs.get(0) -> TurnoutState.STRAIGHT, turnoutIDs.get(1) -> TurnoutState.DIVERGENT}
 
 		// initialize mocks
 		controller = Mockito.mock(ExpanderTurnoutController)
