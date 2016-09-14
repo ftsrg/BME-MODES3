@@ -32,12 +32,5 @@ class CommunicationStack {
 	def start() {
 		mms.start(transport, dispatcher)
 	}
-	
-	def static createLocalStack(){
-		return new CommunicationStack(new MessagingService, new LocalTransport, new ProtobufMessageDispatcher)
-	}
-	
-	def static createProtobufStack(){
-		return new CommunicationStack(new MessagingService, new ZMQTransport(TransportConfiguration::createDefaultTransportConfiguration), new ProtobufMessageDispatcher)
-	}
+
 }

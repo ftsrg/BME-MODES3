@@ -5,27 +5,27 @@ import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.safetylogic.event.ModelUtil
 import hu.bme.mit.inf.safetylogic.event.SafetyLogic
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
 import java.util.HashSet
-import org.junit.Test
 import org.junit.Assert
+import org.junit.Test
 
 class IntegrationTest {
-	val sl = new SafetyLogic(CommunicationStack::createLocalStack)
+	val sl = new SafetyLogic(CommunicationStackFactory::createLocalStack)
 	val slThread = new Thread(sl)
 
 	val RailRoadModel model = ModelUtil.getModelFromResource(ModelUtil.loadModel)
 
 	val physicalThread = new Thread( new PhyicalEnvironmentSimulation(model))
 	
-	val arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStack::createLocalStack, model))
+	val arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model))
 
-	val bbbThread = new Thread(new BBBComponent(CommunicationStack::createLocalStack, new ISegmentControllerStrategy(){
+	val bbbThread = new Thread(new BBBComponent(CommunicationStackFactory::createLocalStack, new ISegmentControllerStrategy(){
 		override getManagedSections() {
 			new HashSet<String> => [addAll(model.sections.map[id.toString])]
 		}

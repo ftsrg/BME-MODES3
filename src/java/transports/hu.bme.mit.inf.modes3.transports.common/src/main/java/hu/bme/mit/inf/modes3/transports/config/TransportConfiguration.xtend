@@ -6,9 +6,5 @@ import org.eclipse.xtend.lib.annotations.Data
 class TransportConfiguration {
 	TransportEndpoint localEndpoint;
 	TransportEndpoints allEndpoints;
-	
-	static def TransportConfiguration createDefaultTransportConfiguration(){
-		throw new UnsupportedOperationException //TODO implement this somehow
-	}
 }
 

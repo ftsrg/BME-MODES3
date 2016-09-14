@@ -3,7 +3,7 @@ package hu.bme.mit.inf.modes3.components.bbb.main
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
 import java.util.Collections
@@ -50,7 +50,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 	@Before
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderTurnoutController)
-		communicationService = new TrackCommunicationServiceLocator(CommunicationStack::createLocalStack)
+		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack)
 	}
 
 	@After
@@ -89,7 +89,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -114,7 +114,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -134,7 +134,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStack::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
 
 		// Act
 		new Thread(componentUnderTest).start
