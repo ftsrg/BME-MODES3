@@ -15,13 +15,6 @@ class CommunicationStack {
 	val Transport transport	
 	val IMessageDispatcher dispatcher
 	
-
-	protected new() {
-		mms = new MessagingService
-		transport = null // TODO = new ZMQTransport 
-		dispatcher = new ProtobufMessageDispatcher
-	}
-	
 	protected new(MessagingService mms, Transport transport, IMessageDispatcher dispatcher){
 		this.mms = mms
 		this.transport = transport
@@ -38,6 +31,6 @@ class CommunicationStack {
 	}
 	
 	def static createProtobufStack(){
-		return new CommunicationStack(new MessagingService, new ZMQTransport(TransportConfiguration::createDefaultTransportConfiguration), new ProtobufMessageDispatcher)
+		return new CommunicationStack(new MessagingService, new ZMQTransport(TransportConfiguration::createProductionTransportConfiguration), new ProtobufMessageDispatcher)
 	}
 }
