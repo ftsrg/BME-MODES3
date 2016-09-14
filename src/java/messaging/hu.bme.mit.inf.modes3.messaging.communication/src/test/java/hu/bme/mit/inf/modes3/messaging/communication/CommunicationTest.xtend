@@ -1,21 +1,18 @@
 package hu.bme.mit.inf.modes3.messaging.communication
 
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
-import hu.bme.mit.inf.modes3.transports.common.LocalTransport
-import org.junit.Before
-import org.junit.Test
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
-import org.junit.Assert
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 
 class CommunicationTest {
 	var TrackCommunicationServiceLocator locator

@@ -27,7 +27,11 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 
 	protected var ViatraQueryEngine engine;
 	protected var newTrainId = 999
-	public var RailRoadModel model //TODO accessors
+	protected var RailRoadModel model //TODO accessors
+	
+	def getSegment(int segmentId){
+		model.sections.findFirst[id == segmentId]
+	}
 
 	new(CommunicationStack stack) {
 		super(stack)

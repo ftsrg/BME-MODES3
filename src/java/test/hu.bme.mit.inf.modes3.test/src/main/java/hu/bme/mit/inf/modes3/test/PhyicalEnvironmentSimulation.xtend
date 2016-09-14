@@ -14,13 +14,21 @@ class PhyicalEnvironmentSimulation implements Runnable {
 	}
 	
 	override run() {
-		createTrain(model, 24, 1000)
-		createTrain(model, 25, 2000)
+		//TODO this should be read from a config file or something like that.
+		val train1 = model.createTrain(15, 1000)
+		Thread.sleep(50)
 		
-		for(i : (1 ..< 1000)){
-			
-			Thread.sleep(50) //TODO sleep?
-		}
+		train1.currentlyOn = model.sections.findFirst[id == 24]
+		Thread.sleep(50)
+		
+		
+		val train2 = model.createTrain(28, 2000)
+		Thread.sleep(50)
+		
+		train2.currentlyOn = model.sections.findFirst[id == 29]
+		
+		
+
 	}
 
 	
