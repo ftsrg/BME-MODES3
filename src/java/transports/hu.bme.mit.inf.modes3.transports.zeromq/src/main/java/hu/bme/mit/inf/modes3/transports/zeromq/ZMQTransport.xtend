@@ -20,36 +20,13 @@ class ZMQTransport extends Transport {
 		pub = ctx.socket(ZMQ.PUB)
 		pub.bind('''tcp://*:«config.localEndpoint.pubPort»''')
 
-		val repThread = new Thread(new Runnable {
-			override run() {
-				val rep = ctx.socket(ZMQ.REP);
-				rep.bind('''tcp://*:«config.localEndpoint.repPort»''')
-				var endpointCount = config.allEndpoints.core.size - 1
-				while(endpointCount > 0) {
-					rep.recv()
-					rep.send(#[])
-
-					endpointCount--;
-				}
-				rep.close
-			}
-		})
-		repThread.start
-
 		sub = ctx.socket(ZMQ.SUB)
+		sub.subscribe(#[])
 		this.config.allEndpoints.core.filter[endpoint | endpoint != config.localEndpoint].forEach [ endpoint |
 			sub.connect('''tcp://«endpoint.addr»:«endpoint.pubPort»''')
-			sub.subscribe(#[])
-			
-			val req = ctx.socket(ZMQ.REQ);
-			println('''Connecting to SYN: «endpoint.addr»:«endpoint.repPort»''')
-			req.connect('''tcp://«endpoint.addr»:«endpoint.repPort»''')
-			req.send(#[])
-			req.recv
-			req.close
 		]
 		
-		repThread.join
+		Thread.sleep(250)
 
 		println("ZMQ Net is ready")
 	}

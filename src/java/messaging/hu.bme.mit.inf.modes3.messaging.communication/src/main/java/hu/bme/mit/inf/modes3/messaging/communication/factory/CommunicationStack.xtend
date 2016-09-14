@@ -12,25 +12,17 @@ import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 @Data
 class CommunicationStack {
 	val MessagingService mms
-	val Transport transport	
+	val Transport transport
 	val IMessageDispatcher dispatcher
-	
+
 	protected new(MessagingService mms, Transport transport, IMessageDispatcher dispatcher){
 		this.mms = mms
 		this.transport = transport
 		this.dispatcher = dispatcher
-		
+
 	}
 
 	def start() {
 		mms.start(transport, dispatcher)
-	}
-	
-	def static createLocalStack(){
-		return new CommunicationStack(new MessagingService, new LocalTransport, new ProtobufMessageDispatcher)
-	}
-	
-	def static createProtobufStack(){
-		return new CommunicationStack(new MessagingService, new ZMQTransport(TransportConfiguration::createProductionTransportConfiguration), new ProtobufMessageDispatcher)
 	}
 }

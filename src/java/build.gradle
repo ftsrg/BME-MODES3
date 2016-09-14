@@ -12,7 +12,7 @@ subprojects {
 	plugins.withType(JavaPlugin) {
 		sourceCompatibility = 1.8
 		targetCompatibility = 1.8
-		
+
 		dependencies {
 			compile 'org.slf4j:slf4j-api:1.7.21'
 			compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'

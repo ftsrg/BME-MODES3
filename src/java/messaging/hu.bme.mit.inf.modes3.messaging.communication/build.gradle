@@ -3,5 +3,6 @@ apply plugin: 'org.xtext.xtend'
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
 	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.mms')
 }
