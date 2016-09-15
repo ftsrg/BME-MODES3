@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated model -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="hu.bme.mit.inf.safetylogic.model.RailRoadModel.presentation.RailRoadModelModelWizardID"
+            name="%_UI_RailRoadModelModelWizard_label"
+            class="hu.bme.mit.inf.safetylogic.model.RailRoadModel.presentation.RailRoadModelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/RailRoadModelModelFile.gif">
+         <description>%_UI_RailRoadModelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated model -->
+      <editor
+            id="hu.bme.mit.inf.safetylogic.model.RailRoadModel.presentation.RailRoadModelEditorID"
+            name="%_UI_RailRoadModelEditor_label"
+            icon="icons/full/obj16/RailRoadModelModelFile.gif"
+            extensions="railroadmodel"
+            class="hu.bme.mit.inf.safetylogic.model.RailRoadModel.presentation.RailRoadModelEditor"
+            contributorClass="hu.bme.mit.inf.safetylogic.model.RailRoadModel.presentation.RailRoadModelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>
