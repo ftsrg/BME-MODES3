@@ -77,17 +77,18 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 			// FIXME by my current informations, i think this algorithm wont work when the train changes from ccw to cw or the other way around. Or at least it does lose some information which it shouldn't
 			// XXX move this to a class, and create unit tests.
 			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+				val enabledTrains = model.trains.filter[if(it.currentlyOn instanceof Segment) (currentlyOn as Segment).isEnabled else true]
 				if (newValue == SegmentOccupancy.OCCUPIED) {
 					val changedSection = model.sections.findFirst[it.id == id]
 					val possibleTrainPositions = getCurrentlyConnected(changedSection)
-					val train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
+					val train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
 					if (train == null) { // There is not even a train nearby
 						model.trains.add(RailRoadModelFactory.eINSTANCE.createTrain => [it.id = newTrainId++])
 					}
 					train.previouslyOn = train.currentlyOn
 					train.currentlyOn = changedSection
 				} else if (newValue == SegmentOccupancy.FREE) {
-					val train = model.trains.findFirst[it.currentlyOn.id == id]
+					val train = enabledTrains.findFirst[it.currentlyOn.id == id]
 					if (train != null) {
 						model.trains.remove(train)
 					}
