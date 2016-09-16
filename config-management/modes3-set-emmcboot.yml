@@ -1,0 +1,11 @@
+---
+- name: Set emmcboot
+  hosts: modes3-pi
+  remote_user: pi
+  sudo: yes
+
+  tasks:
+      - name: Remove symbolic links
+        file: path="/bbb/tftp/pxelinux.cfg/01-{{item.value.mac}}" state=absent
+        with_dict: "{{masters}}"
+

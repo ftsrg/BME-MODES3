@@ -1,0 +1,13 @@
+---
+- name: Configure nagios on pi
+  hosts: modes3-pi
+  remote_user: pi
+  sudo: yes
+
+  tasks:
+      - name: Host configuration
+        template:
+          src="files/host_configuration_template"
+          dest="/usr/local/nagios/etc/servers/{{item.key}}.cfg"
+        with_dict: "{{ masters }}"
+

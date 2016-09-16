@@ -1,0 +1,19 @@
+---
+- name: Deploy Oracle Java
+  hosts: modes3-bbb
+  remote_user: debian
+  sudo: yes
+
+  tasks:
+      - name: Install packages
+        apt: name={{item}} state=installed
+        with_items:
+             - nagios-plugins
+             - nagios-nrpe-server
+        register: package_install
+
+      - name: Edit nrpe config
+        replace: dest=/etc/nagios/nrpe.cfg regexp="(?<=^my_address\W).*$" replace={{ansible_hostname}}
+        replace: dest=/etc/nagios/nrpe.cfg regexp="(?<=^allowed_hosts\W).*$" replace=192.168.1.2(?<=^command\Wcheck_hda1\W\W).*$
+        replace: dest=/etc/nagios/nrpe.cfg regexp="(?<=^my_address\W).*$" replace={{ansible_hostname}}
+
