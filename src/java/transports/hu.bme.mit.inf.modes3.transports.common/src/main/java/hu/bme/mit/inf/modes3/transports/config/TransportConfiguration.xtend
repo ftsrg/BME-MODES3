@@ -4,7 +4,7 @@ import org.eclipse.xtend.lib.annotations.Data
 
 @Data
 class TransportConfiguration {
-	TransportEndpoint localEndpoint; //TODO remove the local endpoint from the configuration.
+	TransportEndpoint localEndpoint;
 	TransportEndpoints allEndpoints;
 }
 
