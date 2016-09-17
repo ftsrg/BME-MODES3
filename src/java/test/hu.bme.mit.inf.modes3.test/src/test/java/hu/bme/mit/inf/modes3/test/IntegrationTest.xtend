@@ -23,10 +23,11 @@ class IntegrationTest {
 		physicalThread = new Thread(new PhyicalEnvironmentSimulation(model))
 		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model))
 		bbbThread =  new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model))
+		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
 	}
 
 	@Test def void integrationTest() {
-		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
+
 
 		Assert.assertEquals(true, (model.sections.findFirst[id == 24] as Segment).isEnabled)
 		Assert.assertEquals(true, (model.sections.findFirst[id == 29] as Segment).isEnabled)
@@ -35,7 +36,7 @@ class IntegrationTest {
 		physicalThread.start
 		arduinoThread.start
 
-		Thread.sleep(1000)
+		Thread.sleep(3000)
 
 		Assert.assertEquals(false, (model.sections.findFirst[id == 24] as Segment).isEnabled)
 		Assert.assertEquals(false, (model.sections.findFirst[id == 29] as Segment).isEnabled)
