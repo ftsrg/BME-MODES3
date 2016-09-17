@@ -110,7 +110,6 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 	}
 
 	def refreshSafetyLogicState() {
-		// TODO enable all sections
 		cuts.forEach [ cut |
 			(model.sections.findFirst[id == (cut.victim as Train).currentlyOn.id] as Segment).isEnabled = false //TODO viatra ticket
 		]

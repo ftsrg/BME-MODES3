@@ -29,7 +29,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 
  * <p>Original source:
  * <code><pre>
- * //TODO {@literal @}QueryBasedFeature(feature = "currentlyConnected")
+ * //XXX {@literal @}QueryBasedFeature(feature = "currentlyConnected")
  * pattern currentlyConnected(This : RailRoadElement, connectedTo : RailRoadElement) = {
  * 	Segment(This);
  * 	Segment.connectedTo(This, connectedTo);
