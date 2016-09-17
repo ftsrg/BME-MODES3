@@ -27,15 +27,13 @@ class IntegrationTest {
 	}
 
 	@Test def void integrationTest() {
-
-
 		Assert.assertEquals(true, (model.sections.findFirst[id == 24] as Segment).isEnabled)
 		Assert.assertEquals(true, (model.sections.findFirst[id == 29] as Segment).isEnabled)
+		
 		slThread.start
 		bbbThread.start
 		physicalThread.start
 		arduinoThread.start
-
 		Thread.sleep(3000)
 
 		Assert.assertEquals(false, (model.sections.findFirst[id == 24] as Segment).isEnabled)
