@@ -8,9 +8,9 @@ import java.util.Map
 
 class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationComponent {
 
-	S88CommunicationReader reader
+	IS88CommunicationReader reader
 
-	new(CommunicationStack stack, S88CommunicationReader reader) {
+	new(CommunicationStack stack, IS88CommunicationReader reader) {
 		super(stack)
 		this.reader = reader
 	}
@@ -39,6 +39,7 @@ class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationCompon
 	 * @return the occupancy vector as a Map<Integer, SegmentOccupancy>
 	 */
 	private def parseMsg(byte[] byteVector) {
+		//That masking with 0xff is necessary because java doesn't have unsigned chars (so the sign bits messes up shifting)
 		val int occupancy = (byteVector.get(3).bitwiseAnd(0xff) << 24).bitwiseOr(byteVector.get(2).bitwiseAnd(0xff) << 16).bitwiseOr(byteVector.get(1).bitwiseAnd(0xff) << 8).bitwiseOr(byteVector.get(0).bitwiseAnd(0xff))
 		val map = new HashMap<Integer, SegmentOccupancy>
 		for (i : 0 ..< 31) {

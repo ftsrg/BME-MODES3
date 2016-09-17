@@ -7,18 +7,13 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationS
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import java.util.HashMap
-import java.util.ArrayList
 
 public class SegmentOccupancyQueryComponentTest {
 	var SectionOccupancyQueryComponent uut
 	
 	@Before
 	def void before(){
-		uut = new SectionOccupancyQueryComponent(CommunicationStackFactory::createLocalStack, new S88CommunicationReader(){
-			override read() {
-				newByteArrayOfSize(4) => [set(0, 0xAA as byte); set(1, 0xAA as byte); set(2, 0xAA as byte); set(3, 0xAA as byte);  ]
-			}
-		})
+		uut = new SectionOccupancyQueryComponent(CommunicationStackFactory::createLocalStack, new TestS88CommunicationReader)
 	}
 	
 	@Test
@@ -36,6 +31,8 @@ public class SegmentOccupancyQueryComponentTest {
 		map.forEach[id, state | 
 			println('''ID: «id» Occupancy «IF state == SegmentOccupancy.FREE» FREE «ELSE» OCCUPIED «ENDIF»''')
 		]
+		
+		//FIXME add asserts when we have a slightest clue about the bitorder
 		
 		
 	}
