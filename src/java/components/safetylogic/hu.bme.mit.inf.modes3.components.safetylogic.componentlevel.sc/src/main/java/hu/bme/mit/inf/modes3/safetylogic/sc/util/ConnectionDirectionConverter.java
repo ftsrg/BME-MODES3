@@ -2,7 +2,7 @@ package hu.bme.mit.inf.modes3.safetylogic.sc.util;
 
 import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduConnectionDirection;
 
-public class ConnectionDirectionTransformator {
+public class ConnectionDirectionConverter {
 
 	public static ConnectionDirection toInternalDirection(YakinduConnectionDirection direction) {
 		switch (direction) {

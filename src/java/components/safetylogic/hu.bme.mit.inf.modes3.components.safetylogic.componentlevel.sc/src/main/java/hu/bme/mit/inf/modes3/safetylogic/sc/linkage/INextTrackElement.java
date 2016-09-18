@@ -1,6 +1,6 @@
-package hu.bme.mit.inf.modes3.safetylogic.sc.integration;
+package hu.bme.mit.inf.modes3.safetylogic.sc.linkage;
 
-public interface IReservationProtocol {
+public interface INextTrackElement {
 
 	void raiseReserveFrom(int value);
 

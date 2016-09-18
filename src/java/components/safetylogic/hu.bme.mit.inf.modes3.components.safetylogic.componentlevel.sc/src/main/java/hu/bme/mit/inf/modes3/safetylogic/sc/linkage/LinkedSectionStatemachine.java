@@ -1,16 +1,17 @@
-package hu.bme.mit.inf.modes3.safetylogic.sc.integration;
+package hu.bme.mit.inf.modes3.safetylogic.sc.linkage;
 
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.section.ISectionStatemachine.SCIProtocolListener;
 
 import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirection;
 
-public class SectionElement implements SCIProtocolListener, IReservationProtocol {
+public class LinkedSectionStatemachine implements SCIProtocolListener, INextTrackElement {
 
 	protected ISectionStatemachine statemachine;
-	protected NextTrackElementInReservationProtocol nextTrackElement;
 
-	public SectionElement(ISectionStatemachine statemachine, NextTrackElementInReservationProtocol nextTrackElement) {
+	protected NextTrackElement nextTrackElement;
+
+	public LinkedSectionStatemachine(ISectionStatemachine statemachine, NextTrackElement nextTrackElement) {
 		this.statemachine = statemachine;
 		this.nextTrackElement = nextTrackElement;
 
@@ -21,7 +22,7 @@ public class SectionElement implements SCIProtocolListener, IReservationProtocol
 	public void onReserveToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
 		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseReserveFrom(nextTrackElement.itSeeUsFrom.getValueInYakindu());
+			nextTrackElement.raiseReserveFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
 		}
 	}
 
@@ -29,7 +30,7 @@ public class SectionElement implements SCIProtocolListener, IReservationProtocol
 	public void onCanGoToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
 		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseCanGoFrom(nextTrackElement.itSeeUsFrom.getValueInYakindu());
+			nextTrackElement.raiseCanGoFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
 		}
 	}
 
@@ -37,7 +38,7 @@ public class SectionElement implements SCIProtocolListener, IReservationProtocol
 	public void onCannotGoToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
 		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseCannotGoFrom(nextTrackElement.itSeeUsFrom.getValueInYakindu());
+			nextTrackElement.raiseCannotGoFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
 		}
 	}
 
@@ -45,7 +46,7 @@ public class SectionElement implements SCIProtocolListener, IReservationProtocol
 	public void onReleaseToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
 		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseReleaseFrom(nextTrackElement.itSeeUsFrom.getValueInYakindu());
+			nextTrackElement.raiseReleaseFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
 		}
 	}
 

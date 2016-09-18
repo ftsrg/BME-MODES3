@@ -1,21 +1,21 @@
-package hu.bme.mit.inf.modes3.safetylogic.sc.integration;
+package hu.bme.mit.inf.modes3.safetylogic.sc.linkage;
 
 import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirection;
 
-public class NextTrackElementInReservationProtocol implements IReservationProtocol {
+public class NextTrackElement implements INextTrackElement {
 
-	protected IReservationProtocol nextTrackElement;
+	protected INextTrackElement nextTrackElement;
 
 	// from the perspective of the track element who owns the next track element
 	protected ConnectionDirection weSeeItFrom;
 
 	// from the perspective of the next track element
-	protected ConnectionDirection itSeeUsFrom;
+	protected ConnectionDirection itReceivesOurMessagesFrom;
 
-	public NextTrackElementInReservationProtocol(IReservationProtocol nextTrackElement, ConnectionDirection weSeeItFrom, ConnectionDirection itSeeUsFrom) {
+	public NextTrackElement(INextTrackElement nextTrackElement, ConnectionDirection weSeeItFrom, ConnectionDirection itReceivesOurMessagesFrom) {
 		this.nextTrackElement = nextTrackElement;
 		this.weSeeItFrom = weSeeItFrom;
-		this.itSeeUsFrom = itSeeUsFrom;
+		this.itReceivesOurMessagesFrom = itReceivesOurMessagesFrom;
 	}
 
 	@Override
