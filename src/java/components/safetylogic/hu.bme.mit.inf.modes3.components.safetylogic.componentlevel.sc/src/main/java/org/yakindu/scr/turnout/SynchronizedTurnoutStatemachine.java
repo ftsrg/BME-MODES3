@@ -25,161 +25,19 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 	 */
 	protected class SynchronizedSCITurnout implements SCITurnout {
 
-		public List<SCITurnoutListener> getListeners() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().getListeners();
-			}
-		}
-
-		public void raiseSwitch() {
+		public void raiseTurnoutStraight() {
 
 			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseSwitch();
+				statemachine.getSCITurnout().raiseTurnoutStraight();
 				statemachine.runCycle();
 			}
 		}
 
-		public void raiseReserveFromLeft() {
+		public void raiseTurnoutDivergent() {
 
 			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReserveFromLeft();
+				statemachine.getSCITurnout().raiseTurnoutDivergent();
 				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReserveFromRight() {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReserveFromRight();
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReserveFromBottom() {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReserveFromBottom();
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReserveResultFromLeft(final boolean value) {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReserveResultFromLeft(value);
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReserveResultFromRight(final boolean value) {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReserveResultFromRight(value);
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReserveResultFromBottom(final boolean value) {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReserveResultFromBottom(value);
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReleaseFromLeft() {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReleaseFromLeft();
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReleaseFromRight() {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReleaseFromRight();
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReleaseFromBottom() {
-
-			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseReleaseFromBottom();
-				statemachine.runCycle();
-			}
-		}
-
-		public boolean isRaisedReserveLeft() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReserveLeft();
-			}
-		}
-
-		public boolean isRaisedReserveRight() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReserveRight();
-			}
-		}
-
-		public boolean isRaisedReserveBottom() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReserveBottom();
-			}
-		}
-
-		public boolean isRaisedReserveResultToLeft() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReserveResultToLeft();
-			}
-		}
-
-		public boolean getReserveResultToLeftValue() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().getReserveResultToLeftValue();
-			}
-		}
-
-		public boolean isRaisedReserveResultToRight() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReserveResultToRight();
-			}
-		}
-
-		public boolean getReserveResultToRightValue() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().getReserveResultToRightValue();
-			}
-		}
-
-		public boolean isRaisedReserveResultToBottom() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReserveResultToBottom();
-			}
-		}
-
-		public boolean getReserveResultToBottomValue() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().getReserveResultToBottomValue();
-			}
-		}
-
-		public boolean isRaisedReleaseLeft() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReleaseLeft();
-			}
-		}
-
-		public boolean isRaisedReleaseRight() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReleaseRight();
-			}
-		}
-
-		public boolean isRaisedReleaseBottom() {
-			synchronized (statemachine) {
-				return statemachine.getSCITurnout().isRaisedReleaseBottom();
 			}
 		}
 
@@ -195,28 +53,183 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 			}
 		}
 
-		public int getCount() {
+	};
+
+	protected SCITurnout sCITurnout;
+
+	/**
+	 * Interface object for SCIProtocol
+	 */
+	protected class SynchronizedSCIProtocol implements SCIProtocol {
+
+		public List<SCIProtocolListener> getListeners() {
 			synchronized (statemachine) {
-				return statemachine.getSCITurnout().getCount();
+				return statemachine.getSCIProtocol().getListeners();
 			}
 		}
 
-		public void setCount(final int value) {
+		public void raiseReserveFrom(final int value) {
+
 			synchronized (statemachine) {
-				statemachine.getSCITurnout().setCount(value);
+				statemachine.getSCIProtocol().raiseReserveFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseCanGoFrom(final int value) {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseCanGoFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseCannotGoFrom(final int value) {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseCannotGoFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseReleaseFrom(final int value) {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseReleaseFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public boolean isRaisedReserveTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedReserveTo();
+			}
+		}
+
+		public int getReserveToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getReserveToValue();
+			}
+		}
+
+		public boolean isRaisedCanGoTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedCanGoTo();
+			}
+		}
+
+		public int getCanGoToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getCanGoToValue();
+			}
+		}
+
+		public boolean isRaisedCannotGoTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedCannotGoTo();
+			}
+		}
+
+		public int getCannotGoToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getCannotGoToValue();
+			}
+		}
+
+		public boolean isRaisedReleaseTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedReleaseTo();
+			}
+		}
+
+		public int getReleaseToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getReleaseToValue();
+			}
+		}
+	};
+
+	protected SCIProtocol sCIProtocol;
+
+	/**
+	 * Interface object for SCITrain
+	 */
+	protected class SynchronizedSCITrain implements SCITrain {
+
+		public void raiseOccupy() {
+
+			synchronized (statemachine) {
+				statemachine.getSCITrain().raiseOccupy();
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseUnoccupy() {
+
+			synchronized (statemachine) {
+				statemachine.getSCITrain().raiseUnoccupy();
+				statemachine.runCycle();
 			}
 		}
 
 	};
 
-	protected SCITurnout sCITurnout;
+	protected SCITrain sCITrain;
+
+	/**
+	 * Interface object for SCIDirection
+	 */
+	protected class SynchronizedSCIDirection implements SCIDirection {
+
+		public int getTOP() {
+			synchronized (statemachine) {
+				return statemachine.getSCIDirection().getTOP();
+			}
+		}
+
+		public int getSTRAIGHT() {
+			synchronized (statemachine) {
+				return statemachine.getSCIDirection().getSTRAIGHT();
+			}
+		}
+
+		public int getDIVERGENT() {
+			synchronized (statemachine) {
+				return statemachine.getSCIDirection().getDIVERGENT();
+			}
+		}
+
+		public int getUNSPECIFIED() {
+			synchronized (statemachine) {
+				return statemachine.getSCIDirection().getUNSPECIFIED();
+			}
+		}
+
+	};
+
+	protected SCIDirection sCIDirection;
 
 	public SynchronizedTurnoutStatemachine() {
 		sCITurnout = new SynchronizedSCITurnout();
+		sCIProtocol = new SynchronizedSCIProtocol();
+		sCITrain = new SynchronizedSCITrain();
+		sCIDirection = new SynchronizedSCIDirection();
 	}
 
 	public synchronized SCITurnout getSCITurnout() {
 		return sCITurnout;
+	}
+
+	public synchronized SCIProtocol getSCIProtocol() {
+		return sCIProtocol;
+	}
+
+	public synchronized SCITrain getSCITrain() {
+		return sCITrain;
+	}
+
+	public synchronized SCIDirection getSCIDirection() {
+		return sCIDirection;
 	}
 
 	/**

@@ -25,139 +25,132 @@ public class TurnoutStatemachineRunnable extends SynchronizedTurnoutStatemachine
 	 * Interface object for SCITurnout
 	 */
 	protected SCITurnout sCITurnout = new SynchronizedSCITurnout() {
-		public void raiseSwitch() {
+		public void raiseTurnoutStraight() {
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseSwitch();
+						statemachine.getSCITurnout().raiseTurnoutStraight();
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
-		public void raiseReserveFromLeft() {
+		public void raiseTurnoutDivergent() {
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReserveFromLeft();
+						statemachine.getSCITurnout().raiseTurnoutDivergent();
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
-		public void raiseReserveFromRight() {
-			eventQueue.add(new Runnable() {
+	};
 
-				@Override
-				public void run() {
-					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReserveFromRight();
-						statemachine.runCycle();
-					}
-				}
-			});
-		}
-
-		public void raiseReserveFromBottom() {
-			eventQueue.add(new Runnable() {
-
-				@Override
-				public void run() {
-					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReserveFromBottom();
-						statemachine.runCycle();
-					}
-				}
-			});
-		}
-
-		public void raiseReserveResultFromLeft(final boolean value) {
+	/**
+	 * Interface object for SCIProtocol
+	 */
+	protected SCIProtocol sCIProtocol = new SynchronizedSCIProtocol() {
+		public void raiseReserveFrom(final int value) {
 
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReserveResultFromLeft(value);
+						statemachine.getSCIProtocol().raiseReserveFrom(value);
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
-		public void raiseReserveResultFromRight(final boolean value) {
+		public void raiseCanGoFrom(final int value) {
 
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReserveResultFromRight(value);
+						statemachine.getSCIProtocol().raiseCanGoFrom(value);
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
-		public void raiseReserveResultFromBottom(final boolean value) {
+		public void raiseCannotGoFrom(final int value) {
 
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReserveResultFromBottom(value);
+						statemachine.getSCIProtocol().raiseCannotGoFrom(value);
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
-		public void raiseReleaseFromLeft() {
+		public void raiseReleaseFrom(final int value) {
+
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReleaseFromLeft();
+						statemachine.getSCIProtocol().raiseReleaseFrom(value);
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
-		public void raiseReleaseFromRight() {
+	};
+
+	/**
+	 * Interface object for SCITrain
+	 */
+	protected SCITrain sCITrain = new SynchronizedSCITrain() {
+		public void raiseOccupy() {
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReleaseFromRight();
+						statemachine.getSCITrain().raiseOccupy();
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
-		public void raiseReleaseFromBottom() {
+		public void raiseUnoccupy() {
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCITurnout().raiseReleaseFromBottom();
+						statemachine.getSCITrain().raiseUnoccupy();
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
+	};
+
+	/**
+	 * Interface object for SCIDirection
+	 */
+	protected SCIDirection sCIDirection = new SynchronizedSCIDirection() {
 	};
 
 	/**

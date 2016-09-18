@@ -2,83 +2,103 @@ package org.yakindu.scr.section;
 
 import java.util.List;
 import org.yakindu.scr.IStatemachine;
-import org.yakindu.scr.ITimerCallback;
 
-public interface ISectionStatemachine extends ITimerCallback, IStatemachine {
+public interface ISectionStatemachine extends IStatemachine {
 	public interface SCISection {
-		public void raiseReserveFromLeft();
+		public boolean isRaisedEnableSection();
 
-		public void raiseReserveFromRight();
+		public int getEnableSectionValue();
 
-		public void raiseReserveResult(boolean value);
+		public boolean isRaisedDisableSection();
 
-		public void raiseOccupy();
-
-		public void raiseUnoccupy();
-
-		public void raiseReset();
-
-		public void raiseRelease();
-
-		public boolean isRaisedReserveLeft();
-
-		public boolean isRaisedReserveRight();
-
-		public boolean isRaisedReserveResultToLeft();
-
-		public boolean getReserveResultToLeftValue();
-
-		public boolean isRaisedReserveResultToRight();
-
-		public boolean getReserveResultToRightValue();
-
-		public boolean isRaisedReleaseLeft();
-
-		public boolean isRaisedReleaseRight();
-
-		public boolean isRaisedStop();
+		public int getDisableSectionValue();
 
 		public int getId();
 
 		public void setId(int value);
 
-		public int getTimeout();
+		public int getLatestReserveDirection();
 
-		public void setTimeout(int value);
+		public void setLatestReserveDirection(int value);
 
-		public int getDir();
+		public int getNegatedReserveDirection();
 
-		public void setDir(int value);
+		public void setNegatedReserveDirection(int value);
 
 		public List<SCISectionListener> getListeners();
 
 	}
 
 	public interface SCISectionListener {
-		public void onReserveLeftRaised();
+		public void onEnableSectionRaised(int value);
 
-		public void onReserveRightRaised();
-
-		public void onReserveResultToLeftRaised(boolean value);
-
-		public void onReserveResultToRightRaised(boolean value);
-
-		public void onReleaseLeftRaised();
-
-		public void onReleaseRightRaised();
-
-		public void onStopRaised();
+		public void onDisableSectionRaised(int value);
 	}
 
 	public SCISection getSCISection();
 
+	public interface SCIProtocol {
+		public void raiseReserveFrom(int value);
+
+		public void raiseCanGoFrom(int value);
+
+		public void raiseCannotGoFrom(int value);
+
+		public void raiseReleaseFrom(int value);
+
+		public void raiseRestartProtocol();
+
+		public boolean isRaisedReserveTo();
+
+		public int getReserveToValue();
+
+		public boolean isRaisedCanGoTo();
+
+		public int getCanGoToValue();
+
+		public boolean isRaisedCannotGoTo();
+
+		public int getCannotGoToValue();
+
+		public boolean isRaisedReleaseTo();
+
+		public int getReleaseToValue();
+
+		public List<SCIProtocolListener> getListeners();
+
+	}
+
+	public interface SCIProtocolListener {
+		public void onReserveToRaised(int value);
+
+		public void onCanGoToRaised(int value);
+
+		public void onCannotGoToRaised(int value);
+
+		public void onReleaseToRaised(int value);
+	}
+
+	public SCIProtocol getSCIProtocol();
+
+	public interface SCITrain {
+		public void raiseOccupy();
+
+		public void raiseUnoccupy();
+
+	}
+
+	public SCITrain getSCITrain();
+
 	public interface SCIDirection {
-		public static final int lEFT = 0;
-		public static final int rIGHT = 1;
+		public static final int cW = 0;
+		public static final int cCW = 1;
+		public static final int uNSPECIFIED = 2;
 
-		public int getLEFT();
+		public int getCW();
 
-		public int getRIGHT();
+		public int getCCW();
+
+		public int getUNSPECIFIED();
 
 	}
 

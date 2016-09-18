@@ -25,53 +25,94 @@ public class SectionStatemachineRunnable extends SynchronizedSectionStatemachine
 	 * Interface object for SCISection
 	 */
 	protected SCISection sCISection = new SynchronizedSCISection() {
-		public void raiseReserveFromLeft() {
-			eventQueue.add(new Runnable() {
+	};
 
-				@Override
-				public void run() {
-					synchronized (statemachine) {
-						statemachine.getSCISection().raiseReserveFromLeft();
-						statemachine.runCycle();
-					}
-				}
-			});
-		}
-
-		public void raiseReserveFromRight() {
-			eventQueue.add(new Runnable() {
-
-				@Override
-				public void run() {
-					synchronized (statemachine) {
-						statemachine.getSCISection().raiseReserveFromRight();
-						statemachine.runCycle();
-					}
-				}
-			});
-		}
-
-		public void raiseReserveResult(final boolean value) {
+	/**
+	 * Interface object for SCIProtocol
+	 */
+	protected SCIProtocol sCIProtocol = new SynchronizedSCIProtocol() {
+		public void raiseReserveFrom(final int value) {
 
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCISection().raiseReserveResult(value);
+						statemachine.getSCIProtocol().raiseReserveFrom(value);
 						statemachine.runCycle();
 					}
 				}
 			});
 		}
 
+		public void raiseCanGoFrom(final int value) {
+
+			eventQueue.add(new Runnable() {
+
+				@Override
+				public void run() {
+					synchronized (statemachine) {
+						statemachine.getSCIProtocol().raiseCanGoFrom(value);
+						statemachine.runCycle();
+					}
+				}
+			});
+		}
+
+		public void raiseCannotGoFrom(final int value) {
+
+			eventQueue.add(new Runnable() {
+
+				@Override
+				public void run() {
+					synchronized (statemachine) {
+						statemachine.getSCIProtocol().raiseCannotGoFrom(value);
+						statemachine.runCycle();
+					}
+				}
+			});
+		}
+
+		public void raiseReleaseFrom(final int value) {
+
+			eventQueue.add(new Runnable() {
+
+				@Override
+				public void run() {
+					synchronized (statemachine) {
+						statemachine.getSCIProtocol().raiseReleaseFrom(value);
+						statemachine.runCycle();
+					}
+				}
+			});
+		}
+
+		public void raiseRestartProtocol() {
+			eventQueue.add(new Runnable() {
+
+				@Override
+				public void run() {
+					synchronized (statemachine) {
+						statemachine.getSCIProtocol().raiseRestartProtocol();
+						statemachine.runCycle();
+					}
+				}
+			});
+		}
+
+	};
+
+	/**
+	 * Interface object for SCITrain
+	 */
+	protected SCITrain sCITrain = new SynchronizedSCITrain() {
 		public void raiseOccupy() {
 			eventQueue.add(new Runnable() {
 
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCISection().raiseOccupy();
+						statemachine.getSCITrain().raiseOccupy();
 						statemachine.runCycle();
 					}
 				}
@@ -84,33 +125,7 @@ public class SectionStatemachineRunnable extends SynchronizedSectionStatemachine
 				@Override
 				public void run() {
 					synchronized (statemachine) {
-						statemachine.getSCISection().raiseUnoccupy();
-						statemachine.runCycle();
-					}
-				}
-			});
-		}
-
-		public void raiseReset() {
-			eventQueue.add(new Runnable() {
-
-				@Override
-				public void run() {
-					synchronized (statemachine) {
-						statemachine.getSCISection().raiseReset();
-						statemachine.runCycle();
-					}
-				}
-			});
-		}
-
-		public void raiseRelease() {
-			eventQueue.add(new Runnable() {
-
-				@Override
-				public void run() {
-					synchronized (statemachine) {
-						statemachine.getSCISection().raiseRelease();
+						statemachine.getSCITrain().raiseUnoccupy();
 						statemachine.runCycle();
 					}
 				}
@@ -124,19 +139,6 @@ public class SectionStatemachineRunnable extends SynchronizedSectionStatemachine
 	 */
 	protected SCIDirection sCIDirection = new SynchronizedSCIDirection() {
 	};
-
-	public void timeElapsed(final int eventID) {
-		eventQueue.add(new Runnable() {
-
-			@Override
-			public void run() {
-				synchronized (statemachine) {
-					statemachine.timeElapsed(eventID);
-					statemachine.runCycle();
-				}
-			}
-		});
-	}
 
 	/**
 	 * This method will start the main execution loop for the state machine.
