@@ -6,26 +6,35 @@ public class ConnectionDirectionTransformator {
 
 	public static ConnectionDirection toInternalDirection(YakinduConnectionDirection direction) {
 		switch (direction) {
-		case LEFT:
-			return ConnectionDirection.LEFT;
-		case RIGHT:
-			return ConnectionDirection.RIGHT;
-		case BOTTOM:
-			return ConnectionDirection.BOTTOM;
+		case Y_TOP:
+			return ConnectionDirection.TOP;
+		case Y_STRAIGHT:
+			return ConnectionDirection.STRAIGHT;
+		case Y_DIVERGENT:
+			return ConnectionDirection.TOP;
+		case CW:
+			return ConnectionDirection.CW;
+		case CCW:
+			return ConnectionDirection.CCW;
 		default:
-			return null;
+			return ConnectionDirection.UNSPECIFIED;
 		}
 	}
 
 	public static YakinduConnectionDirection toProtobufDirection(ConnectionDirection direction) {
 		switch (direction) {
-		case LEFT:
-			return YakinduConnectionDirection.LEFT;
-		case RIGHT:
-			return YakinduConnectionDirection.RIGHT;
-		case BOTTOM:
-			return YakinduConnectionDirection.BOTTOM;
+		case TOP:
+			return YakinduConnectionDirection.Y_TOP;
+		case STRAIGHT:
+			return YakinduConnectionDirection.Y_STRAIGHT;
+		case DIVERGENT:
+			return YakinduConnectionDirection.Y_DIVERGENT;
+		case CW:
+			return YakinduConnectionDirection.CW;
+		case CCW:
+			return YakinduConnectionDirection.CCW;
+		default:
+			return YakinduConnectionDirection.UNRECOGNIZED;
 		}
-		return null;
 	}
 }

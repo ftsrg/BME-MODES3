@@ -68,18 +68,18 @@ public interface ITurnoutStatemachine extends IStatemachine {
 	public SCITrain getSCITrain();
 
 	public interface SCIDirection {
-		public static final int tOP = 0;
-		public static final int sTRAIGHT = 1;
-		public static final int dIVERGENT = 2;
-		public static final int uNSPECIFIED = 3;
+		public static final int uNSPECIFIED = 2;
+		public static final int tOP = 3;
+		public static final int sTRAIGHT = 4;
+		public static final int dIVERGENT = 5;
+
+		public int getUNSPECIFIED();
 
 		public int getTOP();
 
 		public int getSTRAIGHT();
 
 		public int getDIVERGENT();
-
-		public int getUNSPECIFIED();
 
 	}
 

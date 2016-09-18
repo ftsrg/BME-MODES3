@@ -42,7 +42,9 @@ enum SegmentOccupancyValue {
 }
 
 enum YakinduConnectionDirection {
-	LEFT = 0;
-	RIGHT = 1;
-	BOTTOM = 2;
+	CW = 0;
+	CCW = 1;
+	Y_TOP = 2;
+	Y_DIVERGENT = 3;
+	Y_STRAIGHT = 4;
 }
