@@ -29,7 +29,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 
  * <p>Original source:
  * <code><pre>
- * //TODO {@literal @}QueryBasedFeature(feature = "viablePaths")
+ * //XXX {@literal @}QueryBasedFeature(feature = "viablePaths")
  * pattern viablePaths(This : RailRoadElement, path : Path) = {
  * 	Segment(This);
  * 	Segment.connectedTo(This, connected1);

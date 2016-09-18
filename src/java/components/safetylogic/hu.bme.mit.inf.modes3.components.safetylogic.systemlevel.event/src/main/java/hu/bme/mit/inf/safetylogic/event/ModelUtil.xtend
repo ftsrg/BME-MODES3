@@ -42,7 +42,7 @@ class ModelUtil {
 		// get all matches of the pattern
 		matcher.getAllMatches().forEach [
 			val path = RailRoadModelFactory.eINSTANCE.createPath
-			path.via = it.middle as RailRoadElement //TODO Viatra-ticket
+			path.via = it.middle as RailRoadElement
 			path.from = it.one as RailRoadElement
 			path.to = it.other as RailRoadElement
 			paths.add(path)

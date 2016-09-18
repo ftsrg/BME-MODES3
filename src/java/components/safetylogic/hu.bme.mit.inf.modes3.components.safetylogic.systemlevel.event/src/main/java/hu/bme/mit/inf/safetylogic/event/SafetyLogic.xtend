@@ -27,7 +27,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 
 	protected var ViatraQueryEngine engine;
 	protected var newTrainId = 999
-	protected var RailRoadModel model //TODO accessors
+	protected var RailRoadModel model
 	
 	def getSegment(int segmentId){
 		model.sections.findFirst[id == segmentId]
@@ -62,11 +62,11 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 	}
 
 	private def print(TrainCutsTurnoutMatch match) {
-		'''CUT: «(match.offender as Train).id» «(match.victim as Train).id»''' // TODO viatra ticket
+		'''CUT: «(match.offender as Train).id» «(match.victim as Train).id»'''
 	}
 
 	private def print(TrainHitsAnotherTrainMatch match) {
-		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»''' // TODO viatra ticket
+		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»'''
 	}
 
 	override void run() {
@@ -110,13 +110,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 	}
 
 	def refreshSafetyLogicState() {
-		// TODO enable all sections
 		cuts.forEach [ cut |
-			(model.sections.findFirst[id == (cut.victim as Train).currentlyOn.id] as Segment).isEnabled = false //TODO viatra ticket
+			(model.sections.findFirst[id == (cut.victim as Train).currentlyOn.id] as Segment).isEnabled = false
 		]
 
 		hits.forEach [ hit |
-			(model.sections.findFirst[id == (hit.victim as Train).currentlyOn.id] as Segment).isEnabled = false //TODO viatra ticket
+			(model.sections.findFirst[id == (hit.victim as Train).currentlyOn.id] as Segment).isEnabled = false
 		]
 
 		model.sections.filter[it instanceof Segment].map[it as Segment].forEach [
@@ -167,7 +166,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent {
 													}
 
 													train1.currentlyOn = train1Position
-													train1.previouslyOn = train1Previous as RailRoadElement // TODO Viatra ticket
+													train1.previouslyOn = train1Previous as RailRoadElement
 													train2.currentlyOn = train2Position
 													train2.previouslyOn = train2Previous as RailRoadElement
 

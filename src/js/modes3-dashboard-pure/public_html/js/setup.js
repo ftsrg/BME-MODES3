@@ -4,24 +4,33 @@
  * and open the template in the editor.
  */
 
-color = "#F00"
+var segments = [];
 
-function test() {
-    s = $('#layout').find("#s30").attr('style');
+var turnouts = [];
 
-    var sPatt = /stroke:[^;]*/i;
+var locomotives = [];
 
-    s = s.replace(sPatt, 'stroke:' + color);
-
-    if (color === "#F00") {
-        color = "#1e2141";
-    } else {
-        color = "#F00";
+$(document).ready(function () {
+    
+    // setup segment objects
+    for( var s in settings.segments ) {
+        segments[new SectionControllerClass(settings.segments[s])];
     }
-    $('#layout').find('#s30').attr('style', s);
-    setTimeout(test, 500);
-}
+    
+    // setup turnout objects
+    for( var t in settings.turnouts ) {
+        turnouts[new TurnoutControllerClass(settings.turnouts[t])];
+    }
+    
+    // setup locomotive objects
+    for( var l in settings.locomotives ) {
+        locomotives[new LocomotiveControllerClass(settings.locomotives[l])];
+    }
+    
+    // setup event handler for control trains button
+    $('#train-control-button').bind('click', function() {
+        $("#train-control").toggleClass('active');
+        $("#train-control-button").toggleClass('active');
+    });
 
-setTimeout(test, 500);
-
-
+});

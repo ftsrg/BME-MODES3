@@ -1,0 +1,10 @@
+---
+- name: Set nfsboot
+  hosts: modes3-pi
+  remote_user: pi
+  sudo: yes
+
+  tasks:
+      - name: Create symbolic links
+        file: src="/bbb/tftp/pxelinux.cfg/u-boot_image_deploy_config" dest="/bbb/tftp/pxelinux.cfg/01-{{item.value.mac}}" state=link
+        with_dict: "{{masters}}"

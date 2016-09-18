@@ -1,0 +1,8 @@
+---
+- name: test book
+  hosts: modes3-bbb
+  remote_user: debian
+  tasks:
+   - name: Ping bbb
+     ping:
+

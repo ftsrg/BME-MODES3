@@ -1,0 +1,28 @@
+---
+#Elvégzi egy jar fájl service-ként való telepítését. A telepítendő service-ket a group_vars mappa megfelelő nevű fájljában lehet megadni.
+#A hostokon a destination directory-nek léteznie kell. A /master direktory létezését ez a playbook garantálja.
+- name: Basic configuration
+  hosts: modes3-bbb
+  remote_user: debian
+  sudo: yes
+  tasks:
+      - name: Ensures /master dir exists
+        file: path=/master state=directory
+
+      - name: Installing JAR files
+        copy: src={{ item.value.jar_src }} dest={{ item.value.jar_dest }}
+        with_dict: "{{ service_args }}"
+
+      - name: Add service
+        template: 
+          src={{item.value.template}}  
+          dest="/etc/init.d/{{ item.key }}"
+          mode=0755
+        with_dict: "{{ service_args }}"
+
+      - name: Register service
+        shell: update-rc.d {{item.key}} defaults
+        with_dict: "{{ service_args }}"
+
+      - name: Restart services
+        service: name=master state=restarted

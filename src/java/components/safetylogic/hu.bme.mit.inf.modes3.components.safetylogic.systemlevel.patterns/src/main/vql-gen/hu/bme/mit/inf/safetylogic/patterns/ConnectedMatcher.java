@@ -29,7 +29,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 
  * <p>Original source:
  * <code><pre>
- * //TODO {@literal @}QueryBasedFeature(feature = "connected")//, source = This, target = connectedTo, kind = "many")
+ * //XXX {@literal @}QueryBasedFeature(feature = "connected")//, source = This, target = connectedTo, kind = "many")
  * pattern connected(This : RailRoadElement, connectedTo : RailRoadElement) = {
  * 	Segment(This);
  * 	Segment.connectedTo(This, connectedTo);
