@@ -61,13 +61,17 @@ public enum MessageType
    */
   YAKINDU_RELEASE_TO(12),
   /**
-   * <code>YAKINDU_RESERVE_RESULT_TO = 13;</code>
+   * <code>YAKINDU_CAN_GO_TO = 13;</code>
    */
-  YAKINDU_RESERVE_RESULT_TO(13),
+  YAKINDU_CAN_GO_TO(13),
   /**
-   * <code>YAKINDU_RESERVE_TO = 14;</code>
+   * <code>YAKINDU_CANNOT_GO_TO = 14;</code>
    */
-  YAKINDU_RESERVE_TO(14),
+  YAKINDU_CANNOT_GO_TO(14),
+  /**
+   * <code>YAKINDU_RESERVE_TO = 15;</code>
+   */
+  YAKINDU_RESERVE_TO(15),
   UNRECOGNIZED(-1),
   ;
 
@@ -124,13 +128,17 @@ public enum MessageType
    */
   public static final int YAKINDU_RELEASE_TO_VALUE = 12;
   /**
-   * <code>YAKINDU_RESERVE_RESULT_TO = 13;</code>
+   * <code>YAKINDU_CAN_GO_TO = 13;</code>
    */
-  public static final int YAKINDU_RESERVE_RESULT_TO_VALUE = 13;
+  public static final int YAKINDU_CAN_GO_TO_VALUE = 13;
   /**
-   * <code>YAKINDU_RESERVE_TO = 14;</code>
+   * <code>YAKINDU_CANNOT_GO_TO = 14;</code>
    */
-  public static final int YAKINDU_RESERVE_TO_VALUE = 14;
+  public static final int YAKINDU_CANNOT_GO_TO_VALUE = 14;
+  /**
+   * <code>YAKINDU_RESERVE_TO = 15;</code>
+   */
+  public static final int YAKINDU_RESERVE_TO_VALUE = 15;
 
 
   public final int getNumber() {
@@ -164,8 +172,9 @@ public enum MessageType
       case 10: return TURNOUT_STATE;
       case 11: return SEGMENT_OCCUPANCY;
       case 12: return YAKINDU_RELEASE_TO;
-      case 13: return YAKINDU_RESERVE_RESULT_TO;
-      case 14: return YAKINDU_RESERVE_TO;
+      case 13: return YAKINDU_CAN_GO_TO;
+      case 14: return YAKINDU_CANNOT_GO_TO;
+      case 15: return YAKINDU_RESERVE_TO;
       default: return null;
     }
   }

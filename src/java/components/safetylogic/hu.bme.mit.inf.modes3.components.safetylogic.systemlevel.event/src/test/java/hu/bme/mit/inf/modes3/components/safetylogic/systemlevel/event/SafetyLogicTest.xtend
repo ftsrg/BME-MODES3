@@ -9,6 +9,7 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.helpers.NOPLoggerFactory
 
 class SafetyLogicTest {
 	
@@ -19,7 +20,7 @@ class SafetyLogicTest {
 	def init() {
 		val stack = CommunicationStackFactory::createLocalStack
 		mms = stack.mms
-		sl = new SafetyLogic(stack)
+		sl = new SafetyLogic(stack, new NOPLoggerFactory)
 		sl.run(); // The component will run on the main thread
 	}
 	
@@ -34,8 +35,8 @@ class SafetyLogicTest {
 			sendSegmentOccupation(29, SegmentOccupancy.OCCUPIED)
 		]
 		
-		Assert.assertEquals((sl.getSegment(24) as Segment).isEnabled,false)
-		Assert.assertEquals((sl.getSegment(29) as Segment).isEnabled,false)
+		Assert.assertEquals((sl.model.getSegment(24) as Segment).isEnabled,false)
+		Assert.assertEquals((sl.model.getSegment(29) as Segment).isEnabled,false)
 		
 		
 	}

@@ -10,6 +10,7 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
 import java.util.HashSet
+import org.slf4j.helpers.NOPLoggerFactory
 
 class BBBModelComponent extends BBBComponent {
 	new(CommunicationStack stack, RailRoadModel model) {
@@ -55,7 +56,7 @@ class BBBModelComponent extends BBBComponent {
 			override getManagedTurnouts() {
 				new HashSet<Integer> => [addAll(model.sections.filter[it instanceof Turnout].map[id])]
 			}
-		})
+		}, new NOPLoggerFactory)
 	}
 
 }

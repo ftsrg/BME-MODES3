@@ -118,7 +118,7 @@ public  final class YakinduReleaseTo extends
     if (targetID_ != 0) {
       output.writeUInt32(1, targetID_);
     }
-    if (direction_ != hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduConnectionDirection.LEFT.getNumber()) {
+    if (direction_ != hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduConnectionDirection.CW.getNumber()) {
       output.writeEnum(2, direction_);
     }
   }
@@ -132,7 +132,7 @@ public  final class YakinduReleaseTo extends
       size += com.google.protobuf.CodedOutputStream
         .computeUInt32Size(1, targetID_);
     }
-    if (direction_ != hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduConnectionDirection.LEFT.getNumber()) {
+    if (direction_ != hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduConnectionDirection.CW.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(2, direction_);
     }
