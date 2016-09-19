@@ -1,0 +1,17 @@
+A1angleBegDeg=90
+A1steptime[1]=13
+A1steptime[2]=14
+A2steptime[1]=5
+A2steptime[2]=11
+A2steptime[3]=17
+A2steptime[4]=17
+A3steptime[1]=8
+A3steptime[2]=20
+A1angleStepDeg[1]=90
+A1angleStepDeg[2]=0
+A2angleStepDeg[1]=18
+A2angleStepDeg[2]=-8
+A2angleStepDeg[3]=18
+A2angleStepDeg[4]=0
+A3angleStepDeg[1]=90
+A3angleStepDeg[2]=0

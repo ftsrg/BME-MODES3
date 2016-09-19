@@ -1,0 +1,37 @@
+model hook2
+  parameter Real sizeMulti = 0.01;
+  parameter Real density = 7000;
+  Modelica.Mechanics.MultiBody.Parts.FixedTranslation fixedTranslation1(r = {0, 1, 2} * sizeMulti) annotation(Placement(visible = true, transformation(origin = {48, -58}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Parts.Body body1(m = 0.00001 * density, r_CM = {0, 0, 0}) annotation(Placement(visible = true, transformation(origin = {78, 64}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Mechanics.MultiBody.Joints.Assemblies.JointRRR jointRRR1(rRod1_ia = {0, 0, 2} * sizeMulti, rRod2_ib = {0, 1, 0} * sizeMulti, phi_offset = 90, phi_guess = 90, n_a = {1, 0, 0}) annotation(Placement(visible = true, transformation(origin = {102, -12}, extent = {{-30, -30}, {30, 30}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Joints.Revolute revolute1(w(start = 0), phi(start = 0), useAxisFlange = true, n = {1, 0, 0}) annotation(Placement(visible = true, transformation(origin = {0, -34}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Mechanics.MultiBody.Parts.FixedTranslation fixedTranslation2(r = {0, 0, 0.7071} * sizeMulti) annotation(Placement(visible = true, transformation(origin = {46, -12}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Parts.Body body2(m = 0.00001 * density, r_CM = {0, 0, 0}) annotation(Placement(visible = true, transformation(origin = {-72, 60}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Mechanics.MultiBody.Parts.FixedTranslation fixedTranslation4(r = {0, 0, -0.7071} * sizeMulti) annotation(Placement(visible = true, transformation(origin = {-36, -12}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Joints.Assemblies.JointRRR jointRRR2(rRod1_ia = {0, 0, -2} * sizeMulti, rRod2_ib = {0, 1, 0} * sizeMulti, phi_offset = -90, phi_guess = -90, n_a = {1, 0, 0}) annotation(Placement(visible = true, transformation(origin = {-96, -12}, extent = {{-30, 30}, {30, -30}}, rotation = 180)));
+  Modelica.Mechanics.MultiBody.Parts.BodyCylinder bodyCylinder1(r = {0, 2, 0} * sizeMulti, diameter = 10 * sizeMulti, density = density) annotation(Placement(visible = true, transformation(origin = {102, 46}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Mechanics.MultiBody.Parts.BodyCylinder bodyCylinder3(r = {0, 2, 0} * sizeMulti, diameter = 10 * sizeMulti, density = density) annotation(Placement(visible = true, transformation(origin = {-96, 42}, extent = {{-10, -10}, {10, 10}}, rotation = 90)));
+  Modelica.Mechanics.Rotational.Interfaces.Flange_a flange_a annotation(Placement(visible = true, transformation(origin = {-36, -34}, extent = {{-10, -10}, {10, 10}}, rotation = 0), iconTransformation(origin = {55, 91}, extent = {{-29, -29}, {29, 29}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Parts.FixedTranslation fixedTranslation3(r = {0, 1, -2} * sizeMulti) annotation(Placement(visible = true, transformation(origin = {-38, -58}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Parts.BodyCylinder bodyCylinder4(r = {0, 1.8012, -2.399} * sizeMulti, density = density, diameter = 10 * sizeMulti) annotation(Placement(visible = true, transformation(origin = {-126, 72}, extent = {{10, -10}, {-10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Parts.BodyCylinder bodyCylinder2(r = {0, 1.8012, 2.399} * sizeMulti, diameter = 10 * sizeMulti, density = density) annotation(Placement(visible = true, transformation(origin = {126, 70}, extent = {{-10, -10}, {10, 10}}, rotation = 0)));
+  Modelica.Mechanics.MultiBody.Interfaces.Frame_a frame_a annotation(Placement(visible = true, transformation(origin = {0, -90}, extent = {{-16, -16}, {16, 16}}, rotation = 0), iconTransformation(origin = {-75, 95}, extent = {{-31, -31}, {31, 31}}, rotation = 0)));
+equation
+  connect(frame_a, revolute1.frame_a) annotation(Line(points = {{0, -90}, {0, -44}}));
+  connect(fixedTranslation1.frame_a, frame_a) annotation(Line(points = {{38, -58}, {0, -58}, {0, -90}}, color = {95, 95, 95}));
+  connect(fixedTranslation3.frame_a, frame_a) annotation(Line(points = {{-28, -58}, {0, -58}, {0, -90}}, color = {95, 95, 95}));
+  connect(bodyCylinder1.frame_b, bodyCylinder2.frame_a) annotation(Line(points = {{102, 56}, {102, 70}, {116, 70}}, color = {95, 95, 95}));
+  connect(bodyCylinder3.frame_b, bodyCylinder4.frame_a) annotation(Line(points = {{-96, 52}, {-96, 72}, {-116, 72}}, color = {95, 95, 95}));
+  connect(fixedTranslation3.frame_b, jointRRR2.frame_b) annotation(Line(points = {{-48, -58}, {-148, -58}, {-148, -12}, {-126, -12}}, color = {95, 95, 95}));
+  connect(revolute1.axis, flange_a) annotation(Line(points = {{-10, -34}, {-36, -34}, {-36, -28}, {-36, -28}, {-36, -28}}));
+  connect(jointRRR2.frame_im, bodyCylinder3.frame_a) annotation(Line(points = {{-96, 18}, {-96, 32}}, color = {95, 95, 95}));
+  connect(jointRRR1.frame_im, bodyCylinder1.frame_a) annotation(Line(points = {{102, 18}, {102, 36}}, color = {95, 95, 95}));
+  connect(body2.frame_a, jointRRR2.frame_ia) annotation(Line(points = {{-72, 50}, {-72, 18}}, color = {95, 95, 95}));
+  connect(fixedTranslation4.frame_b, jointRRR2.frame_a) annotation(Line(points = {{-46, -12}, {-66, -12}}, color = {95, 95, 95}));
+  connect(revolute1.frame_b, fixedTranslation4.frame_a) annotation(Line(points = {{0, -24}, {0, -12}, {-26, -12}}, color = {95, 95, 95}));
+  connect(revolute1.frame_b, fixedTranslation2.frame_a) annotation(Line(points = {{0, -24}, {0, -12}, {36, -12}}, color = {95, 95, 95}));
+  connect(fixedTranslation2.frame_b, jointRRR1.frame_a) annotation(Line(points = {{56, -12}, {72, -12}}, color = {95, 95, 95}));
+  connect(body1.frame_a, jointRRR1.frame_ia) annotation(Line(points = {{78, 54}, {78, 18}}, color = {95, 95, 95}));
+  connect(fixedTranslation1.frame_b, jointRRR1.frame_b) annotation(Line(points = {{58, -58}, {110, -58}, {110, -58}, {162, -58}, {162, -12}, {132, -12}}, color = {95, 95, 95}));
+  annotation(Diagram(coordinateSystem(extent = {{-200, -100}, {200, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})), Icon(coordinateSystem(extent = {{-200, -100}, {200, 100}}, preserveAspectRatio = true, initialScale = 0.1, grid = {2, 2})));
+end hook2;

@@ -1,0 +1,22 @@
+cd();
+loadFile("lego/axistransformer.mo");
+loadFile("lego/axisInitOffset.mo");
+loadFile("lego/ControlBusOne.mo");
+loadFile("lego/hook2.mo");
+loadFile("lego/legorobot.mo");
+loadFile("lego/Mechanics.mo");
+loadFile("lego/pathPlanningOne.mo");
+loadFile("lego/pathPlanninTo3Motors.mo");
+loadFile("lego/PathToAxisControlBus.mo");
+loadFile("lego/signalgen.mo");
+loadFile("lego/stategraph.mo");
+loadModel(Modelica);
+simulate(legorobot, simflags="-overrideFile=lego/startValues.txt"); getErrorString(); 
+plot({controlBus.axisControlBus1.angle ,controlBus.axisControlBus2.angle, controlBus.axisControlBus3.angle, controlBus.axisControlBus4.angle });
+
+//Linux
+//omc lego/sim_legorobot.mos
+
+//Windows
+//cd("C:\\share\\modelica")
+//runScript("lego\\sim_legorobot.mos")
