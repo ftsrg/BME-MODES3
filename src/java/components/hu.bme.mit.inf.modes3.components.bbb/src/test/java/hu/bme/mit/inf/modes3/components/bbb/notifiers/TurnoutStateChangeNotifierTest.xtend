@@ -13,6 +13,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
+import org.slf4j.helpers.NOPLoggerFactory
 
 @RunWith(Theories)
 class TurnoutStateChangeNotifierTest {
@@ -53,7 +54,7 @@ class TurnoutStateChangeNotifierTest {
 			override answer(InvocationOnMock invocation) throws Throwable {
 				count++
 
-				if (count == 1) {
+				if(count == 1) {
 					initialState
 				} else {
 					negatedState
@@ -61,7 +62,7 @@ class TurnoutStateChangeNotifierTest {
 			}
 		})
 		stateSender = Mockito.mock(ITrackElementStateSender)
-		notifier = new TurnoutStateChangeNotifier(stateSender, controller)
+		notifier = new TurnoutStateChangeNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)
@@ -86,7 +87,7 @@ class TurnoutStateChangeNotifierTest {
 		Mockito.when(controller.managedTurnouts).thenReturn(turnoutIDset)
 		Mockito.when(controller.getTurnoutStatus(turnoutID)).thenReturn(initialState)
 		stateSender = Mockito.mock(ITrackElementStateSender)
-		notifier = new TurnoutStateChangeNotifier(stateSender, controller)
+		notifier = new TurnoutStateChangeNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)
@@ -108,7 +109,7 @@ class TurnoutStateChangeNotifierTest {
 		stateSender = Mockito.mock(ITrackElementStateSender)
 
 		// create unit under test
-		notifier = new TurnoutStateChangeNotifier(stateSender, controller)
+		notifier = new TurnoutStateChangeNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)

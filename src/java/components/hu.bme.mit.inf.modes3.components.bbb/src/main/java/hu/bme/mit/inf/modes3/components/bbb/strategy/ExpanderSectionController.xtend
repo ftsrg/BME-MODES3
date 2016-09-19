@@ -5,8 +5,9 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import io.silverspoon.bulldog.core.Signal
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 /**
  * The section controller part of the embedded controller. Through it the
@@ -16,7 +17,7 @@ import org.slf4j.LoggerFactory
  */
 class ExpanderSectionController implements ISegmentControllerStrategy {
 
-	private static val Logger logger = LoggerFactory.getLogger(ExpanderSectionController)
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	// the actual embedded controller which manages the sections
 	protected var ExpanderControllerConfiguration controllerConf
@@ -27,7 +28,9 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 	// thread-safe wrapper for the BBB board
 	protected var BoardWrapper board
 
-	new(BoardWrapper boardWrapper) {
+	new(BoardWrapper boardWrapper, ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.class.name)
+		
 		board = boardWrapper
 
 		try {

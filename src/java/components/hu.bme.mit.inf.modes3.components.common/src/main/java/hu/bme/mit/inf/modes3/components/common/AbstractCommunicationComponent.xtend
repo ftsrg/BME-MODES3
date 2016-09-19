@@ -7,7 +7,7 @@ import org.slf4j.Logger
 
 abstract class AbstractCommunicationComponent implements Runnable {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) val Logger logger
+	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
 	protected val CommunicationStack communication
 

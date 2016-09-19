@@ -37,7 +37,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack,neverUsedInTests,  expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -55,7 +55,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack,neverUsedInTests,  expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -73,7 +73,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack,neverUsedInTests,  expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
@@ -91,7 +91,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack,neverUsedInTests,  expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)

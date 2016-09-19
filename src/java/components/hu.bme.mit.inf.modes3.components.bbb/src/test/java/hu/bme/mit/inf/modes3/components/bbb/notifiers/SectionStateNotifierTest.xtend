@@ -7,6 +7,7 @@ import java.util.Collections
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 class SectionStateNotifierTest {
 
@@ -32,7 +33,7 @@ class SectionStateNotifierTest {
 		stateSender = Mockito.mock(ITrackElementStateSender)
 
 		// create unit under test
-		notifier = new SectionStateNotifier(stateSender, controller)
+		notifier = new SectionStateNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)
@@ -43,8 +44,7 @@ class SectionStateNotifierTest {
 
 		// Assert
 		for (id : sectionIDs) {
-			Mockito.verify(stateSender, Mockito.atLeastOnce).sendSegmentState(Integer.valueOf(id),
-				sectionStatuses.get(id))
+			Mockito.verify(stateSender, Mockito.atLeastOnce).sendSegmentState(Integer.valueOf(id), sectionStatuses.get(id))
 		}
 	}
 
@@ -57,7 +57,7 @@ class SectionStateNotifierTest {
 		stateSender = Mockito.mock(ITrackElementStateSender)
 
 		// create unit under test
-		notifier = new SectionStateNotifier(stateSender, controller)
+		notifier = new SectionStateNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)

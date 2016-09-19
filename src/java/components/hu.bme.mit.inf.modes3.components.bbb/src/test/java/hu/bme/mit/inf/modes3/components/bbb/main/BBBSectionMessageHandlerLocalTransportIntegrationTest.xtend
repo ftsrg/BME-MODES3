@@ -28,7 +28,6 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderTurnoutController)
 		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack)
-		
 	}
 
 	@Test

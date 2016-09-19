@@ -17,12 +17,12 @@ class BBBComponentWithStateChangeNotifier extends BBBComponent {
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
-		stateNotifier = new TrackElementStateChangeNotifier(locator)
+		stateNotifier = new TrackElementStateChangeNotifier(locator, factory)
 	}
 
 	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController, ILoggerFactory factory) {
 		super(stack, sectionController, turnoutController, factory)
-		stateNotifier = new TrackElementStateChangeNotifier(locator, sectionController, turnoutController)
+		stateNotifier = new TrackElementStateChangeNotifier(locator, sectionController, turnoutController, factory)
 	}
 
 }

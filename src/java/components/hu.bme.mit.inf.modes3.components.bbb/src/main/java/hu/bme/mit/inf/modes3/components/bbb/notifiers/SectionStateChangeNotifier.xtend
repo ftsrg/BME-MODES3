@@ -6,8 +6,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElem
 import java.util.Map
 import java.util.TreeMap
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.ILoggerFactory
 
 /**
  * Implements a runnable which frequently polls the sections status 
@@ -22,12 +21,10 @@ import org.slf4j.LoggerFactory
  */
 package class SectionStateChangeNotifier extends SectionStateNotifier {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(SectionStateChangeNotifier)
-
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<Integer, SegmentState> latestSectionStates
 
-	new(ITrackElementStateSender _trackElementStateSender, ExpanderSectionController _sectionController) {
-		super(_trackElementStateSender, _sectionController)
+	new(ITrackElementStateSender _trackElementStateSender, ExpanderSectionController _sectionController, ILoggerFactory factory) {
+		super(_trackElementStateSender, _sectionController, factory)
 
 		latestSectionStates = new TreeMap
 		for (sectionId : sectionController.managedSections) {

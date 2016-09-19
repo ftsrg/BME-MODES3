@@ -96,7 +96,7 @@ class BBBTurnoutStateChangeNotifierLocalTransportIntegrationTest {
 		new Thread(componentUnderTest).start
 
 		// Assert
-		Thread.sleep(150) // so that internal threads can handle transferred messages
+		Thread.sleep(200) // so that internal threads can handle transferred messages
 		Mockito.verify(changeListenerMock, Mockito.times(1)).onTurnoutStateChange(turnoutID, null, negatedState)
 		Mockito.verify(changeListenerMock, Mockito.never).onTurnoutStateChange(turnoutID, null, initialState)
 	}
