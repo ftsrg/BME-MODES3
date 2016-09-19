@@ -6,6 +6,7 @@ import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
+import org.slf4j.ILoggerFactory
 
 /**
  * Encapsulates a SectionMessageHandler along with a TurnoutMessageHandler so that instantiating
@@ -26,10 +27,10 @@ class TrackElementCommandHandler {
 		turnoutMessageHandler = new TurnoutMessageHandler(locator.trackElementCommandCallback, turnoutController)
 	}
 
-	new(TrackCommunicationServiceLocator locator) {
-		val board = new BoardWrapper
-		sectionMessageHandler = new SectionMessageHandler(locator.trackElementCommandCallback, new ExpanderSectionController(board))
-		turnoutMessageHandler = new TurnoutMessageHandler(locator.trackElementCommandCallback, new ExpanderTurnoutController(board))
+	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
+		val board = new BoardWrapper(factory)
+		sectionMessageHandler = new SectionMessageHandler(locator.trackElementCommandCallback, new ExpanderSectionController(board, factory))
+		turnoutMessageHandler = new TurnoutMessageHandler(locator.trackElementCommandCallback, new ExpanderTurnoutController(board, factory))
 	}
 
 }

@@ -25,7 +25,7 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent {
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
-		commandDispatcher = new TrackElementCommandHandler(locator)
+		commandDispatcher = new TrackElementCommandHandler(locator, factory)
 		stateNotifier = new TrackElementStateNotifier(locator, factory)
 	}
 
