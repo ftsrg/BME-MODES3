@@ -8,10 +8,11 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.helpers.NOPLoggerFactory
 
 class IntegrationTest {
-	val sl = new SafetyLogic(CommunicationStackFactory::createLocalStack)
-	val slThread = new Thread(sl)
+	var SafetyLogic sl
+	var Thread slThread
 
 	var RailRoadModel model
 	var Thread physicalThread
@@ -19,9 +20,12 @@ class IntegrationTest {
 	var Thread bbbThread
 	
 	@Before def void before(){
+		 sl = new SafetyLogic(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory())
+		 slThread = new Thread(sl)
+		 
 		model = ModelUtil.getModelFromResource(ModelUtil.loadModel)
 		physicalThread = new Thread(new PhyicalEnvironmentSimulation(model))
-		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model))
+		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model, new NOPLoggerFactory))
 		bbbThread =  new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model))
 		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
 	}

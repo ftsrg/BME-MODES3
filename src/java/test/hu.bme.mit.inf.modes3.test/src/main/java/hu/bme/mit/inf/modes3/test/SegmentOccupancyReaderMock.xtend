@@ -7,14 +7,15 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
 import java.util.HashMap
 import org.eclipse.emf.common.notify.Notification
 import org.eclipse.emf.common.notify.impl.AdapterImpl
+import org.slf4j.ILoggerFactory
 
 class SegmentOccupancyReaderMock extends AbstractRailRoadCommunicationComponent {
 	
 	val RailRoadModel model
 	val isOccupied = new HashMap<Integer, Boolean> 
 	
-	new(CommunicationStack stack, RailRoadModel model){
-		super(stack)
+	new(CommunicationStack stack, RailRoadModel model, ILoggerFactory factory){
+		super(stack, factory)
 		this.model = model
 		model.sections.forEach[isOccupied.put(id, false)]
 	}

@@ -7,13 +7,14 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationS
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import java.util.HashMap
+import org.slf4j.helpers.NOPLoggerFactory
 
 public class SegmentOccupancyQueryComponentTest {
 	var SectionOccupancyQueryComponent uut
 	
 	@Before
 	def void before(){
-		uut = new SectionOccupancyQueryComponent(CommunicationStackFactory::createLocalStack, new TestS88CommunicationReader)
+		uut = new SectionOccupancyQueryComponent(CommunicationStackFactory::createLocalStack, new TestS88CommunicationReader, new NOPLoggerFactory)
 	}
 	
 	@Test

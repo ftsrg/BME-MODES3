@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 class BBBSectionStateNotifierLocalTransportIntegrationTest {
 
@@ -59,7 +60,7 @@ class BBBSectionStateNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -84,7 +85,7 @@ class BBBSectionStateNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start

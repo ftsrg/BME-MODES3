@@ -18,6 +18,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
+import org.slf4j.helpers.NOPLoggerFactory
 
 @RunWith(Theories)
 class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
@@ -51,6 +52,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderTurnoutController)
 		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack)
+		
 	}
 
 	@After
@@ -89,8 +91,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
-
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 		// Act
 		new Thread(componentUnderTest).start
 
@@ -114,8 +115,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
-
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 		// Act
 		new Thread(componentUnderTest).start
 
@@ -134,8 +134,7 @@ class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.segmentStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
-
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 		// Act
 		new Thread(componentUnderTest).start
 

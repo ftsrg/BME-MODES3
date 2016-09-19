@@ -3,13 +3,14 @@ package hu.bme.mit.inf.modes3.components.sample
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
+import org.slf4j.ILoggerFactory
 
 class SampleComponent extends AbstractRailRoadCommunicationComponent {
 
 	val knownSegments = 1 ..< 10
 
-	new(CommunicationStack communicationStack) {
-		super(communicationStack)
+	new(CommunicationStack communicationStack, ILoggerFactory factory) {
+		super(communicationStack, factory)
 	}
 
 	def turnOffAll() {

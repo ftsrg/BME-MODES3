@@ -9,13 +9,14 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
 	@Accessors(PUBLIC_GETTER) protected ModelUtil model //XXX IModelInteractor should be the static type
 
-	new(CommunicationStack stack) {
-		super(stack)
+	new(CommunicationStack stack, ILoggerFactory factory) {
+		super(stack, factory)
 		model = new ModelUtil
 	}
 
