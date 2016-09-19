@@ -9,6 +9,8 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
+import org.slf4j.LoggerFactory
+import org.slf4j.ILoggerFactory
 
 class IntegrationTest {
 	var SafetyLogic sl
@@ -18,30 +20,38 @@ class IntegrationTest {
 	var Thread physicalThread
 	var Thread arduinoThread
 	var Thread bbbThread
-	
-	@Before def void before(){
-		 sl = new SafetyLogic(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory())
-		 slThread = new Thread(sl)
-		 
+
+	@Before def void before() {
+		sl = new SafetyLogic(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory())
+		slThread = new Thread(sl)
+
 		model = ModelUtil.getModelFromResource(ModelUtil.loadModel)
 		physicalThread = new Thread(new PhyicalEnvironmentSimulation(model))
 		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model, new NOPLoggerFactory))
-		bbbThread =  new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model))
+		bbbThread = new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model, new NOPLoggerFactory))
 		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
 	}
 
 	@Test def void integrationTest() {
-		Assert.assertEquals(true, (model.sections.findFirst[id == 24] as Segment).isEnabled)
-		Assert.assertEquals(true, (model.sections.findFirst[id == 29] as Segment).isEnabled)
-		
+		synchronized(model) {
+
+			Assert.assertEquals(true, (model.sections.findFirst[id == 24] as Segment).isEnabled)
+			Assert.assertEquals(true, (model.sections.findFirst[id == 29] as Segment).isEnabled)
+		}
 		slThread.start
 		bbbThread.start
 		physicalThread.start
 		arduinoThread.start
-		Thread.sleep(3000)
+		synchronized(model) {
+//			model.sections.filter[it instanceof Segment].map[it as Segment].filter[!isEnabled].forEach[print(id + '\t')]
+		}
 
-		Assert.assertEquals(false, (model.sections.findFirst[id == 24] as Segment).isEnabled)
-		Assert.assertEquals(false, (model.sections.findFirst[id == 29] as Segment).isEnabled)
+		Thread.sleep(3000)
+	
+		synchronized(model) {
+//			model.sections.filter[it instanceof Segment].map[it as Segment].filter[!isEnabled].forEach[print(id + '\t')]
+			Assert.assertEquals(false, (model.sections.findFirst[id == 24] as Segment).isEnabled)
+			Assert.assertEquals(false, (model.sections.findFirst[id == 29] as Segment).isEnabled)
+		}
 	}
 }
-

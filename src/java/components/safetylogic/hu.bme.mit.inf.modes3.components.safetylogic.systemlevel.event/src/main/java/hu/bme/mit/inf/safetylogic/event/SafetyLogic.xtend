@@ -22,7 +22,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		logger.info('Construction started')
 		model = new ModelUtil
 		logger.info('Construction finished')
-		
+		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first
 	}
 
 	override void run() {
@@ -39,13 +39,16 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	def public void refreshSafetyLogicState() {
 		logger.info('''Refreshing state: #of cuts «model.cuts.size», #of hits «model.hits.size»''')
-		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] //Enable all sections virtually first
+		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first
+
 		model.cuts.forEach [ cut |
+//			println('''CUT: victim on «(cut.victim as RailRoadElement).id» cuts «(cut.offender as Train).currentlyOn.id»''')
 			logger.info('''CUT: victim on «(cut.victim as RailRoadElement).id» cuts «(cut.offender as Train).currentlyOn.id»''')
 			(model.model.sections.findFirst[id == (cut.offender as Train).currentlyOn.id] as Segment).isEnabled = false //disable the trains which cut sections
 		]
 
 		model.hits.forEach [ hit |
+//			println('''HIT: offender on «(hit.offender as Train).currentlyOn.id», victim on «(hit.victim as Train).currentlyOn.id»''')
 			logger.info('''HIT: offender on «(hit.offender as Train).currentlyOn.id», victim on «(hit.victim as Train).currentlyOn.id»''')
 			(model.model.sections.findFirst[id == (hit.offender as Train).currentlyOn.id] as Segment).isEnabled = false //disable the trains which hit another
 		]
