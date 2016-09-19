@@ -10,17 +10,23 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
 	@Accessors(PUBLIC_GETTER) protected ModelUtil model //XXX IModelInteractor should be the static type
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
+
 		super(stack, factory)
+		logger.info('Construction started')
 		model = new ModelUtil
+		logger.info('Construction finished')
+		
 	}
 
 	override void run() {
+		this.logger.info("Running started...")
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
@@ -32,12 +38,16 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	def public void refreshSafetyLogicState() {
+		logger.info('''Refreshing state: #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] //Enable all sections virtually first
 		model.cuts.forEach [ cut |
-			(model.model.sections.findFirst[id == (cut.victim as Train).currentlyOn.id] as Segment).isEnabled = false
+			logger.info('''CUT: victim on «(cut.victim as RailRoadElement).id» cuts «(cut.offender as Train).currentlyOn.id»''')
+			(model.model.sections.findFirst[id == (cut.offender as Train).currentlyOn.id] as Segment).isEnabled = false //disable the trains which cut sections
 		]
 
 		model.hits.forEach [ hit |
-			(model.model.sections.findFirst[id == (hit.victim as Train).currentlyOn.id] as Segment).isEnabled = false
+			logger.info('''HIT: offender on «(hit.offender as Train).currentlyOn.id», victim on «(hit.victim as Train).currentlyOn.id»''')
+			(model.model.sections.findFirst[id == (hit.offender as Train).currentlyOn.id] as Segment).isEnabled = false //disable the trains which hit another
 		]
 
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach [
