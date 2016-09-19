@@ -9,32 +9,48 @@ package hu.bme.mit.inf.modes3.messaging.mms.messages;
 public enum YakinduConnectionDirection
     implements com.google.protobuf.ProtocolMessageEnum {
   /**
-   * <code>LEFT = 0;</code>
+   * <code>CW = 0;</code>
    */
-  LEFT(0),
+  CW(0),
   /**
-   * <code>RIGHT = 1;</code>
+   * <code>CCW = 1;</code>
    */
-  RIGHT(1),
+  CCW(1),
   /**
-   * <code>BOTTOM = 2;</code>
+   * <code>Y_TOP = 2;</code>
    */
-  BOTTOM(2),
+  Y_TOP(2),
+  /**
+   * <code>Y_DIVERGENT = 3;</code>
+   */
+  Y_DIVERGENT(3),
+  /**
+   * <code>Y_STRAIGHT = 4;</code>
+   */
+  Y_STRAIGHT(4),
   UNRECOGNIZED(-1),
   ;
 
   /**
-   * <code>LEFT = 0;</code>
+   * <code>CW = 0;</code>
    */
-  public static final int LEFT_VALUE = 0;
+  public static final int CW_VALUE = 0;
   /**
-   * <code>RIGHT = 1;</code>
+   * <code>CCW = 1;</code>
    */
-  public static final int RIGHT_VALUE = 1;
+  public static final int CCW_VALUE = 1;
   /**
-   * <code>BOTTOM = 2;</code>
+   * <code>Y_TOP = 2;</code>
    */
-  public static final int BOTTOM_VALUE = 2;
+  public static final int Y_TOP_VALUE = 2;
+  /**
+   * <code>Y_DIVERGENT = 3;</code>
+   */
+  public static final int Y_DIVERGENT_VALUE = 3;
+  /**
+   * <code>Y_STRAIGHT = 4;</code>
+   */
+  public static final int Y_STRAIGHT_VALUE = 4;
 
 
   public final int getNumber() {
@@ -55,9 +71,11 @@ public enum YakinduConnectionDirection
 
   public static YakinduConnectionDirection forNumber(int value) {
     switch (value) {
-      case 0: return LEFT;
-      case 1: return RIGHT;
-      case 2: return BOTTOM;
+      case 0: return CW;
+      case 1: return CCW;
+      case 2: return Y_TOP;
+      case 3: return Y_DIVERGENT;
+      case 4: return Y_STRAIGHT;
       default: return null;
     }
   }
