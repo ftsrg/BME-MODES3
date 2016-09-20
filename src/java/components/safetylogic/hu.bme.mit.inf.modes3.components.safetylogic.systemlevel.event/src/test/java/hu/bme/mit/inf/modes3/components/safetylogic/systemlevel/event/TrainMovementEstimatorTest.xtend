@@ -9,6 +9,7 @@ import org.junit.Test
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
 import org.junit.Assert
 import org.junit.Ignore
+import org.slf4j.helpers.NOPLoggerFactory
 
 class TrainMovementEstimatorTest {
 	var TrainMovementEstimator estimator
@@ -22,7 +23,7 @@ class TrainMovementEstimatorTest {
 				override onUpdate() {
 					// Left blank intentionally
 				}
-			}
+			}, (new NOPLoggerFactory).getLogger('TrainMovementEstimator')
 		)
 	}
 

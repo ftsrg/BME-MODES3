@@ -33,7 +33,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener {
 		} else if(newValue == SegmentOccupancy.FREE) {
 			val train = enabledTrains.findFirst[it.currentlyOn.id == id]
 			if(train != null) { // The train has been removed manually
-				logger.info('''Old train removed from «train.currentlyOn.id»''')
+				logger.info('''Old train removed from «train.id»''')
 				model.removeTrain(train)
 			}
 		}

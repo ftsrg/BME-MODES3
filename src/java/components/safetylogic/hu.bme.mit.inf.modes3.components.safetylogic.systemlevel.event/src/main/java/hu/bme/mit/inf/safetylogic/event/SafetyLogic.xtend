@@ -51,7 +51,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	override void run() {
 		this.logger.info("Running started...")
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this)
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, logger)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
