@@ -1,6 +1,6 @@
 {
 	"core": {
-		"bbb1.modes3.intra" : [
+		"t1.modes3.intra" : [
 			{
 				"id": "component_safety_logic",
 				"port": 1001
@@ -14,7 +14,7 @@
 				"port": 1003
 			}
 		],
-		"bbb2.modes3.intra" : [
+		"t2.modes3.intra" : [
 			{
 				"id": "component_safety_logic",
 				"port": 1001
@@ -28,7 +28,7 @@
 				"port": 1003
 			}
 		],
-		"bbb3.modes3.intra" : [
+		"t3.modes3.intra" : [
 			{
 				"id": "component_safety_logic",
 				"port": 1001
@@ -42,7 +42,7 @@
 				"port": 1003
 			}
 		],
-		"bbb4.modes3.intra" : [
+		"t4.modes3.intra" : [
 			{
 				"id": "component_safety_logic",
 				"port": 1001
@@ -56,7 +56,7 @@
 				"port": 1003
 			}
 		],
-		"bbb5.modes3.intra" : [
+		"t5.modes3.intra" : [
 			{
 				"id": "component_safety_logic",
 				"port": 1001
@@ -70,7 +70,7 @@
 				"port": 1003
 			}
 		],
-		"bbb6.modes3.intra" : [
+		"t6.modes3.intra" : [
 			{
 				"id": "component_safety_logic",
 				"port": 1001
@@ -84,7 +84,7 @@
 				"port": 1003
 			}
 		],
-		"raspi.modes3.intra" : [
+		"root.modes3.intra" : [
 			{
 				"id": "section_occupancy",
 				"port": 1001

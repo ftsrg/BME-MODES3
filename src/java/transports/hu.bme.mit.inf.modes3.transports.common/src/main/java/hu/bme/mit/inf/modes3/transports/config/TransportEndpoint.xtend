@@ -7,5 +7,4 @@ class TransportEndpoint {
 	String addr;
 	String id;
 	Integer pubPort;
-	Integer repPort;
 }

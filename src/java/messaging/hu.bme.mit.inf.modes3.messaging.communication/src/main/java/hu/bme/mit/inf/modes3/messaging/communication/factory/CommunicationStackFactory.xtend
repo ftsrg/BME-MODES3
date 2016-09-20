@@ -19,7 +19,15 @@ class CommunicationStackFactory {
 		)
 	}
 
-	def static createProtobufStack(ArgumentRegistry argumentRegistry) {
+	def static createZeroMQProtobufStack(TransportConfiguration config) {
+		return new CommunicationStack(
+			new MessagingService, 
+			new ZMQTransport(config), 
+			new ProtobufMessageDispatcher
+		)
+	}
+
+	def static createZeroMQProtobufStack(ArgumentRegistry argumentRegistry) {
 		return new CommunicationStack(
 			new MessagingService, 
 			new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry)), 

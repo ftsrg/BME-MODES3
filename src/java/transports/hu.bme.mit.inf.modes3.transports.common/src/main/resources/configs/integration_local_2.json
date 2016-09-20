@@ -3,14 +3,12 @@
 		{
 			"addr": "127.0.0.1",
 			"id": "integration_test_component1",
-			"pubPort": 9001,
-			"repPort": 9901
+			"pubPort": 9001
 		},
 		{
 			"addr": "127.0.0.1",
 			"id": "integration_test_component2",
-			"pubPort": 9002,
-			"repPort": 9902
+			"pubPort": 9002
 		}
 	]
 }
