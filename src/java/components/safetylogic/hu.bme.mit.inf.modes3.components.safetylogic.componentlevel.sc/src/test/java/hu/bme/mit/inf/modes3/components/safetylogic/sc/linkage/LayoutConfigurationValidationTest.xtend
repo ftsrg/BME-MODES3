@@ -9,9 +9,12 @@ import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirection
 import java.util.List
 import java.util.Map
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mockito
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.turnout.ITurnoutStatemachine
 
@@ -25,6 +28,13 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine
  @Ignore
 class LayoutConfigurationValidationTest {
 
+	var Logger logger
+
+	@Before
+	def void setup() {
+		logger = LoggerFactory.getLogger(LayoutConfigurationValidationTest)
+	}
+
 	@Test
 	def test() {
 		val layout = LayoutConfigurationLoader.loadLayoutConfiguration("conf/layout.json")
@@ -33,10 +43,10 @@ class LayoutConfigurationValidationTest {
 			{
 				val comp = LayoutConfigurationLoader.getLayoutConfigurationForComponent(layout, component.componentName)
 
-				println()
-				println()
-				println("Validating component configuration: " + component.componentName)
-				println()
+				logger.info("")
+				logger.info("")
+				logger.info("Validating component configuration: " + component.componentName)
+				logger.info("")
 
 				val fact = new YakinduStatechartComponentFactory
 				fact.initializeSectionAndTurnoutStatecharts(comp, null, Mockito.mock(YakinduHandlerHolder))
@@ -58,11 +68,11 @@ class LayoutConfigurationValidationTest {
 	}
 
 	protected def void validateTurnoutConfigurations(List<TurnoutConfiguration> turnoutConfigurations, Map<Integer, ITurnoutStatemachine> localTurnouts) {
-		println("Validating turnout configurations")
+		logger.info("Validating turnout configurations")
 
 		turnoutConfigurations.forEach [ turnoutConf |
 			{
-				println("Turnout " + turnoutConf.occupancyId)
+				logger.info("Turnout " + turnoutConf.occupancyId)
 
 				val localTurnout = localTurnouts.get(turnoutConf.occupancyId)
 				val sciProtocolListeners = localTurnout.getSCIProtocol.listeners
@@ -74,15 +84,15 @@ class LayoutConfigurationValidationTest {
 						val weSeeItFrom = ntew.weSeeItFrom
 						val itReceivesOurMessagesFrom = ntew.itReceivesOurMessagesFrom
 						if(weSeeItFrom.equals(ConnectionDirection.DIVERGENT)) {
-							println("Connects from " + ConnectionDirection.DIVERGENT + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
+							logger.info("Connects from " + ConnectionDirection.DIVERGENT + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
 								turnoutStmtWrap.nextTrackElement.nextTrackElement.class.simpleName)
 							Assert.assertEquals(turnoutConf.divergent.itReceivesOurMessagesFrom, itReceivesOurMessagesFrom)
 						} else if(weSeeItFrom.equals(ConnectionDirection.STRAIGHT)) {
-							println("Connects from " + ConnectionDirection.STRAIGHT + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
+							logger.info("Connects from " + ConnectionDirection.STRAIGHT + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
 								turnoutStmtWrap.nextTrackElement.nextTrackElement.class.simpleName)
 							Assert.assertEquals(turnoutConf.straight.itReceivesOurMessagesFrom, itReceivesOurMessagesFrom)
 						} else if(weSeeItFrom.equals(ConnectionDirection.TOP)) {
-							println("Connects from " + ConnectionDirection.TOP + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
+							logger.info("Connects from " + ConnectionDirection.TOP + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
 								turnoutStmtWrap.nextTrackElement.nextTrackElement.class.simpleName)
 							Assert.assertEquals(turnoutConf.top.itReceivesOurMessagesFrom, itReceivesOurMessagesFrom)
 						}
@@ -93,11 +103,11 @@ class LayoutConfigurationValidationTest {
 	}
 
 	protected def void validateSectionConfigurations(List<SectionConfiguration> sectionConfigurations, Map<Integer, ISectionStatemachine> localSections) {
-		println("Validating section configurations")
+		logger.info("Validating section configurations")
 
 		sectionConfigurations.forEach [ sectionConf |
 			{
-				println("Section " + sectionConf.occupancyId)
+				logger.info("Section " + sectionConf.occupancyId)
 
 				val localSection = localSections.get(sectionConf.occupancyId)
 				val sciSectionListeners = localSection.getSCISection.listeners
@@ -113,11 +123,11 @@ class LayoutConfigurationValidationTest {
 						val weSeeItFrom = ntew.weSeeItFrom
 						val itReceivesOurMessagesFrom = ntew.itReceivesOurMessagesFrom
 						if(weSeeItFrom.equals(ConnectionDirection.CW)) {
-							println("Connects from " + ConnectionDirection.CW + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
+							logger.info("Connects from " + ConnectionDirection.CW + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
 								sectionStmtWrap.nextTrackElement.nextTrackElement.class.simpleName)
 							Assert.assertEquals(sectionConf.cw.itReceivesOurMessagesFrom, itReceivesOurMessagesFrom)
 						} else if(weSeeItFrom.equals(ConnectionDirection.CCW)) {
-							println("Connects from " + ConnectionDirection.CCW + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
+							logger.info("Connects from " + ConnectionDirection.CCW + "; It receives our messages from " + itReceivesOurMessagesFrom + "; target type " +
 								sectionStmtWrap.nextTrackElement.nextTrackElement.class.simpleName)
 							Assert.assertEquals(sectionConf.ccw.itReceivesOurMessagesFrom, itReceivesOurMessagesFrom)
 						}
