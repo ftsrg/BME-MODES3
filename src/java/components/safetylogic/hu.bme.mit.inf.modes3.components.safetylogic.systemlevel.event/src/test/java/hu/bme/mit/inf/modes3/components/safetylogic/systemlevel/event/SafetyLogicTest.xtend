@@ -34,6 +34,10 @@ class SafetyLogicTest {
 			sendSegmentOccupation(28, SegmentOccupancy.OCCUPIED)
 			sendSegmentOccupation(29, SegmentOccupancy.OCCUPIED)
 		]
+
+		
+		Thread.sleep(1000)
+		
 		
 		Assert.assertEquals((sl.model.getSegment(24) as Segment).isEnabled,false)
 		Assert.assertEquals((sl.model.getSegment(29) as Segment).isEnabled,false)
