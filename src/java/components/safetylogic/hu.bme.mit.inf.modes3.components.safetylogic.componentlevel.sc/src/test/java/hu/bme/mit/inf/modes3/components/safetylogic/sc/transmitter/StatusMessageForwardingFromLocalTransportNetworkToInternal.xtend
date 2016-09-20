@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.safetylogic.sc
+package hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter
 
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter.TrackElementStatusToInternalTransmitter
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
