@@ -84,10 +84,11 @@ class StatusMessageForwardingFromLocalTransportNetworkToInternal {
 	 ****************************************************************************************************/
 	@Before
 	def void init() {
-		val service = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
-		unitUnderTest = new TrackElementStatusToInternalTransmitter(service.trackElementStateRegistry)
+		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		unitUnderTest = new TrackElementStatusToInternalTransmitter(receiverStack.trackElementStateRegistry)
 
-		stateSender = service.trackElementStateSender
+		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		stateSender = senderStack.trackElementStateSender
 
 		// create mocks
 		val sectionStatemachineMock = Mockito.mock(ISectionStatemachine)
