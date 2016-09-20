@@ -6,6 +6,8 @@ import com.google.gson.stream.JsonReader
 import java.io.InputStreamReader
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
 /**
  * Stores the actual pinout header configuration of the respective
@@ -17,6 +19,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author hegyibalint
  */
 class Setting {
+
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) static var Logger logger
 
 	/**
 	 * Stores the managed turnouts ID [key], and the pinout header value through
@@ -39,17 +43,24 @@ class Setting {
 	 * @return the pinout configuration
 	 * @throws Exception
 	 */
-	static def Setting loadPinoutConfig(int id) throws Exception {
+	static def Setting loadPinoutConfig(int id, ILoggerFactory factory) {
+		logger = factory.getLogger(Pinout.name)
+
 		val gson = new Gson
 		var InputStreamReader isr = null
+		var JsonReader reader = null
 		try {
 			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("conf/settings.json"))
-			val reader = new JsonReader(isr)
+			reader = new JsonReader(isr)
 			var JsonObject settings = gson.fromJson(reader, JsonObject)
 			settings = settings.get("settings").asJsonObject
 			gson.fromJson(settings.get(String.valueOf(id)), Setting)
+		} catch(Exception ex){
+			logger.error(ex.message, ex)
+			throw ex
 		} finally {
 			isr?.close
+			reader?.close
 		}
 	}
 

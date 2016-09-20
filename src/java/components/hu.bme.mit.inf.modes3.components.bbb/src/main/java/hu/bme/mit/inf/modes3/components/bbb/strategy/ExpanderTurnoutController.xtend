@@ -35,11 +35,11 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 
 	new(BoardWrapper boardWrapper, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
-		
+
 		board = boardWrapper
 
 		try {
-			controllerConf = new ExpanderControllerConfiguration
+			controllerConf = new ExpanderControllerConfiguration(factory)
 		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 		}
@@ -60,6 +60,8 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override getTurnoutStatus(int turnoutId) {
+		logger.info('''Reading turnout ''' + turnoutId + ''''s physical direction.''')
+
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 
 		// decide direction
@@ -81,12 +83,16 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override setTurnoutStraight(int turnoutId) {
+		logger.info('''Set turnout ''' + turnoutId + ''' straight physically.''')
+
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
 		turnoutStatus.put(turnoutId, TurnoutState.STRAIGHT)
 	}
 
 	override setTurnoutDivergent(int turnoutId) {
+		logger.info('''Set turnout ''' + turnoutId + ''' divergent physically.''')
+
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
 		turnoutStatus.put(turnoutId, TurnoutState.DIVERGENT)

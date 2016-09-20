@@ -34,6 +34,8 @@ package class SectionStateChangeNotifier extends SectionStateNotifier {
 	}
 
 	override run() {
+		logger.info('''SectionStateChangeNotifier started''')
+
 		while(!Thread.interrupted) {
 			try {
 				for (sectionId : sectionController.managedSections) {
@@ -41,6 +43,8 @@ package class SectionStateChangeNotifier extends SectionStateNotifier {
 					if(latestSectionStates.get(sectionId) != status) {
 						latestSectionStates.put(sectionId, status)
 						trackElementStateSender.sendSegmentState(sectionId, status)
+
+						logger.info('''Section ''' + sectionId + ''''s status ''' + status + ''' is sent.''')
 					}
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)

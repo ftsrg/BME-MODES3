@@ -3,6 +3,8 @@ package hu.bme.mit.inf.modes3.components.bbb.conf;
 import hu.bme.mit.inf.modes3.components.bbb.prototypes.Pinout
 import hu.bme.mit.inf.modes3.components.bbb.prototypes.Setting
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
 /**
  * API for the embedded controller.
@@ -10,6 +12,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author hegyibalint
  */
 class ExpanderControllerConfiguration {
+
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	// the pinout header configuration
 	@Accessors(PACKAGE_GETTER, PACKAGE_SETTER) var Pinout pinout
@@ -23,15 +27,19 @@ class ExpanderControllerConfiguration {
 	 * 
 	 * @throws Exception if TURNOUT_ID is not a valid environmental variable
 	 */
-	new() {
+	new(ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.class.name)
+
 		val env = System.getenv
-		if (!env.containsKey("TURNOUT_ID")) {
-			throw new RuntimeException("There is no TURNOUT_ID environmental variable defined")
+		if(!env.containsKey("TURNOUT_ID")) {
+			val ex = new Exception('''There is no TURNOUT_ID environmental variable defined''')
+			logger.error(ex.message, ex)
+			throw ex
 		}
 		val controllerID = Integer.valueOf(env.get("TURNOUT_ID"))
 
-		pinout = Pinout.loadPinoutConfig
-		setting = Setting.loadPinoutConfig(controllerID)
+		pinout = Pinout.loadPinoutConfig(factory)
+		setting = Setting.loadPinoutConfig(controllerID, factory)
 	}
 
 	def controllerManagesTurnout(int turnoutId) {

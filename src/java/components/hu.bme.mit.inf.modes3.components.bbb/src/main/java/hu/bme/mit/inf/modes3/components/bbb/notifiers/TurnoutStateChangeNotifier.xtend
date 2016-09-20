@@ -34,6 +34,8 @@ package class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
 	}
 
 	override run() {
+		logger.info('''TurnoutStateChangeNotifier started''')
+
 		while(!Thread.interrupted) {
 			try {
 				for (turnoutId : turnoutController.managedTurnouts) {
@@ -41,6 +43,8 @@ package class TurnoutStateChangeNotifier extends TurnoutStateNotifier {
 					if(latestTurnoutStates.get(turnoutId) != status) {
 						latestTurnoutStates.put(turnoutId, status)
 						trackElementStateSender.sendTurnoutState(turnoutId, status)
+						
+						logger.info('''Turnout ''' + turnoutId + ''''s status ''' + status + ''' is sent.''')
 					}
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)

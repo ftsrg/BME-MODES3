@@ -60,9 +60,11 @@ class TrackElementStateNotifier {
 	def start() {
 		sectionStateNotifierThread = new Thread(sectionStateNotifier)
 		sectionStateNotifierThread.start
+		logger.info('''SectionState[Change]Notifier thread started''')
 
 		turnoutStateNotifierThread = new Thread(turnoutStateNotifier)
 		turnoutStateNotifierThread.start
+		logger.info('''TurnoutState[Change]Notifier thread started''')
 	}
 
 	/**
@@ -70,7 +72,10 @@ class TrackElementStateNotifier {
 	 */
 	def interrupt() {
 		interruptThread(sectionStateNotifierThread)
+		logger.info('''SectionState[Change]Notifier thread interrupted''')
+
 		interruptThread(turnoutStateNotifierThread)
+		logger.info('''TurnoutState[Change]Notifier thread interrupted''')
 	}
 
 	/**

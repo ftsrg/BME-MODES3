@@ -59,6 +59,8 @@ class BoardWrapper {
 	 * @param level HIGH or LOW
 	 */
 	synchronized def setPinLevel(String pin, Signal level) {
+		logger.info('''Setting pin ''' + pin + ''' level ''' + level)
+
 		val output = board?.getPin(pin).^as(DigitalOutput)
 		output?.applySignal(level);
 	}
@@ -76,7 +78,7 @@ class BoardWrapper {
 	 * @return level of the pin: HIGH or LOW
 	 */
 	synchronized def getPinLevel(String pin) {
-		val input = board?.getPin(pin).^as(DigitalInput);
+		val input = board?.getPin(pin).^as(DigitalInput)
 		input?.read
 	}
 
