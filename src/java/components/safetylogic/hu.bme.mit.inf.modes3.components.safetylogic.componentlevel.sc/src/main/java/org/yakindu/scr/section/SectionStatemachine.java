@@ -550,7 +550,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 				}
 
 				if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() != sCISection.latestReserveDirection)) {
-					sCIProtocol.raiseCanGoTo(sCISection.negatedReserveDirection);
+					sCIProtocol.raiseCannotGoTo(sCISection.negatedReserveDirection);
 				}
 			}
 		}
