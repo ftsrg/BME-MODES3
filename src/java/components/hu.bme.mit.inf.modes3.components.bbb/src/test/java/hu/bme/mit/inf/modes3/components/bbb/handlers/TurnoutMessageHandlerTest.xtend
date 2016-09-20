@@ -7,6 +7,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 class TurnoutMessageHandlerTest {
 
@@ -30,7 +31,7 @@ class TurnoutMessageHandlerTest {
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onTurnoutCommand(int turnoutId, TurnoutState state))
-		handler = new TurnoutMessageHandler(neverUsedInTests, expander)
+		handler = new TurnoutMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -49,7 +50,7 @@ class TurnoutMessageHandlerTest {
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onTurnoutCommand(int turnoutId, TurnoutState state))
-		handler = new TurnoutMessageHandler(neverUsedInTests, expander)
+		handler = new TurnoutMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -68,7 +69,7 @@ class TurnoutMessageHandlerTest {
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onTurnoutCommand(int turnoutId, TurnoutState state))
-		handler = new TurnoutMessageHandler(neverUsedInTests, expander)
+		handler = new TurnoutMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
@@ -87,7 +88,7 @@ class TurnoutMessageHandlerTest {
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onTurnoutCommand(int turnoutId, TurnoutState state))
-		handler = new TurnoutMessageHandler(neverUsedInTests, expander)
+		handler = new TurnoutMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
@@ -105,7 +106,7 @@ class TurnoutMessageHandlerTest {
 		expander = Mockito.mock(ExpanderTurnoutController)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onTurnoutCommand(int turnoutId, TurnoutState state))
-		handler = new TurnoutMessageHandler(neverUsedInTests, expander)
+		handler = new TurnoutMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onTurnoutCommand(turnoutId, null)
