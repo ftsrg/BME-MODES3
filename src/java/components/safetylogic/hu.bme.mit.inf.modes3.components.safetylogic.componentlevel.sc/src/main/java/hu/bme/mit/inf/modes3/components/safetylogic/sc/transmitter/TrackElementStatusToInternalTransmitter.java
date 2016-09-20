@@ -8,18 +8,18 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState;
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener;
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry;
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener;
 
-public class TrackElementStatusToInternalTransmitter {
+public class TrackElementStatusToInternalTransmitter implements ISegmentOccupancyChangeListener, ITurnoutStateChangeListener {
 
 	protected final Map<Integer, ISectionStatemachine> localSections = new TreeMap<>();
 	protected final Map<Integer, ITurnoutStatemachine> localTurnouts = new TreeMap<>();
 
-	protected final ITrackElementStateRegistry trackElementStateProvider;
-	protected final Thread internalThread = new TrackElementStatusTransmitterThread();
-
 	public TrackElementStatusToInternalTransmitter(ITrackElementStateRegistry stateProvider) {
-		this.trackElementStateProvider = stateProvider;
+		stateProvider.setSegmentOccupancyChangeListener(this);
+		stateProvider.setTurnoutStateChangeListener(this);
 	}
 
 	public void registerSectionStatemachine(int id, ISectionStatemachine statemachine) {
@@ -30,83 +30,44 @@ public class TrackElementStatusToInternalTransmitter {
 		localTurnouts.put(id, statemachine);
 	}
 
-	public void start() {
-		internalThread.start();
+	@Override
+	public void onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
+		if (localTurnouts.containsKey(id)) {
+			ITurnoutStatemachine sm = localTurnouts.get(id);
+			switch (newValue) {
+			case STRAIGHT:
+				sm.getSCITurnout().raiseTurnoutStraight();
+				break;
+			case DIVERGENT:
+				sm.getSCITurnout().raiseTurnoutDivergent();
+				break;
+			}
+		}
 	}
 
-	public void interrupt() {
-		internalThread.interrupt();
-	}
-
-	private class TrackElementStatusTransmitterThread extends Thread {
-
-		private static final int SLEEP_TIME = 50;
-
-		@Override
-		public void run() {
-			while (!Thread.interrupted()) {
-				try {
-					pollSectionOccupancies();
-					pollTurnoutOccupancies();
-
-					pollTurnoutDirections();
-					restartProtocolForSections();
-
-					Thread.sleep(SLEEP_TIME);
-				} catch (InterruptedException ex) {
-					Thread.currentThread().interrupt();
-				}
+	@Override
+	public void onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+		if (localTurnouts.containsKey(id)) {
+			ITurnoutStatemachine sm = localTurnouts.get(id);
+			switch (newValue) {
+			case FREE:
+				sm.getSCITrain().raiseUnoccupy();
+				break;
+			case OCCUPIED:
+				sm.getSCITrain().raiseOccupy();
+				break;
+			}
+		} else if (localSections.containsKey(id)) {
+			ISectionStatemachine sm = localSections.get(id);
+			switch (newValue) {
+			case FREE:
+				sm.getSCITrain().raiseUnoccupy();
+				break;
+			case OCCUPIED:
+				sm.getSCITrain().raiseOccupy();
+				break;
 			}
 		}
-
-		private void pollSectionOccupancies() {
-			for (Map.Entry<Integer, ISectionStatemachine> sectionEntry : localSections.entrySet()) {
-				SegmentOccupancy sectionOccupancy = trackElementStateProvider.getSegmentOccupancy(sectionEntry.getKey());
-				switch (sectionOccupancy) {
-				case FREE:
-					sectionEntry.getValue().getSCITrain().raiseUnoccupy();
-					break;
-				case OCCUPIED:
-					sectionEntry.getValue().getSCITrain().raiseOccupy();
-					break;
-				}
-			}
-		}
-
-		private void pollTurnoutOccupancies() {
-			for (Map.Entry<Integer, ITurnoutStatemachine> turnoutEntry : localTurnouts.entrySet()) {
-				SegmentOccupancy turnoutOccupancy = trackElementStateProvider.getSegmentOccupancy(turnoutEntry.getKey());
-				switch (turnoutOccupancy) {
-				case FREE:
-					turnoutEntry.getValue().getSCITrain().raiseUnoccupy();
-					break;
-				case OCCUPIED:
-					turnoutEntry.getValue().getSCITrain().raiseOccupy();
-					break;
-				}
-			}
-		}
-
-		private void pollTurnoutDirections() {
-			for (Map.Entry<Integer, ITurnoutStatemachine> turnoutEntry : localTurnouts.entrySet()) {
-				TurnoutState turnoutState = trackElementStateProvider.getTurnoutState(turnoutEntry.getKey());
-				switch (turnoutState) {
-				case STRAIGHT:
-					turnoutEntry.getValue().getSCITurnout().raiseTurnoutStraight();
-					break;
-				case DIVERGENT:
-					turnoutEntry.getValue().getSCITurnout().raiseTurnoutDivergent();
-					break;
-				}
-			}
-		}
-
-		private void restartProtocolForSections() {
-			for (Map.Entry<Integer, ISectionStatemachine> sectionEntry : localSections.entrySet()) {
-				sectionEntry.getValue().getSCIProtocol().raiseRestartProtocol();
-			}
-		}
-
 	}
 
 }

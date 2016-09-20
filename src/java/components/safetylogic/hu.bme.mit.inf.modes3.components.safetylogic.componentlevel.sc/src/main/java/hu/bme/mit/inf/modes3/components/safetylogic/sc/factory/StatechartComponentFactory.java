@@ -14,12 +14,13 @@ import hu.bme.mit.inf.modes3.components.safetylogic.sc.conf.gson.SectionConfigur
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.conf.gson.TurnoutConfiguration;
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.network.YakinduMessageBridgeToInternal;
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.network.handler.YakinduHandlerHolder;
+import hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter.ProtocolPeriodicRestarterRunnable;
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter.SectionCommandToExternalTransmitter;
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter.TrackElementStatusToInternalTransmitter;
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander;
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry;
 
-public class YakinduStatechartComponentFactory {
+public class StatechartComponentFactory {
 
 	private Map<Integer, ITurnoutStatemachine> localTurnouts = new TreeMap<>();
 	private Map<Integer, ISectionStatemachine> localSections = new TreeMap<>();
@@ -121,6 +122,15 @@ public class YakinduStatechartComponentFactory {
 		localSections.entrySet().stream().forEach(sectionEntry -> transmitter.registerSectionStatemachine(sectionEntry.getKey(), sectionEntry.getValue()));
 
 		return transmitter;
+	}
+
+	/**
+	 * Creates a runnable which periodically fires the restartProtocol events to the section statecharts.
+	 */
+	public ProtocolPeriodicRestarterRunnable createPeriodicProtocolRestarter() {
+		ProtocolPeriodicRestarterRunnable runnable = new ProtocolPeriodicRestarterRunnable();
+		localSections.entrySet().stream().forEach(sectionEntry -> runnable.registerSectionStatemachine(sectionEntry.getKey(), sectionEntry.getValue()));
+		return runnable;
 	}
 
 }
