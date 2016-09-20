@@ -17,8 +17,9 @@ enum MessageType {
 	TURNOUT_STATE = 10;
 	SEGMENT_OCCUPANCY = 11;
 	YAKINDU_RELEASE_TO = 12;
-	YAKINDU_RESERVE_RESULT_TO = 13;
-	YAKINDU_RESERVE_TO = 14;
+	YAKINDU_CAN_GO_TO = 13;
+	YAKINDU_CANNOT_GO_TO = 14;
+	YAKINDU_RESERVE_TO = 15;
 }
 
 enum SegmentStateValue {
@@ -42,7 +43,9 @@ enum SegmentOccupancyValue {
 }
 
 enum YakinduConnectionDirection {
-	LEFT = 0;
-	RIGHT = 1;
-	BOTTOM = 2;
+	CW = 0;
+	CCW = 1;
+	Y_TOP = 2;
+	Y_DIVERGENT = 3;
+	Y_STRAIGHT = 4;
 }

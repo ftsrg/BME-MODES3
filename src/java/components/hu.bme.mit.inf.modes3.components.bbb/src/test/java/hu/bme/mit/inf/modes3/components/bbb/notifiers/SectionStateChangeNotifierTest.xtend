@@ -13,6 +13,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
+import org.slf4j.helpers.NOPLoggerFactory
 
 @RunWith(Theories)
 class SectionStateChangeNotifierTest {
@@ -53,7 +54,7 @@ class SectionStateChangeNotifierTest {
 			override answer(InvocationOnMock invocation) throws Throwable {
 				count++
 
-				if (count == 1) {
+				if(count == 1) {
 					initialState
 				} else {
 					negatedState
@@ -61,7 +62,7 @@ class SectionStateChangeNotifierTest {
 			}
 		})
 		stateSender = Mockito.mock(ITrackElementStateSender)
-		notifier = new SectionStateChangeNotifier(stateSender, controller)
+		notifier = new SectionStateChangeNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)
@@ -86,7 +87,7 @@ class SectionStateChangeNotifierTest {
 		Mockito.when(controller.managedSections).thenReturn(sectionIDset)
 		Mockito.when(controller.getSectionStatus(sectionID)).thenReturn(initialState)
 		stateSender = Mockito.mock(ITrackElementStateSender)
-		notifier = new SectionStateChangeNotifier(stateSender, controller)
+		notifier = new SectionStateChangeNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)
@@ -108,7 +109,7 @@ class SectionStateChangeNotifierTest {
 		stateSender = Mockito.mock(ITrackElementStateSender)
 
 		// create unit under test
-		notifier = new SectionStateChangeNotifier(stateSender, controller)
+		notifier = new SectionStateChangeNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)

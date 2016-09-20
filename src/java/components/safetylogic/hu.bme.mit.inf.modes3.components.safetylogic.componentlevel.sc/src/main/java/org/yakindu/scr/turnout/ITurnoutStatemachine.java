@@ -5,82 +5,84 @@ import org.yakindu.scr.IStatemachine;
 
 public interface ITurnoutStatemachine extends IStatemachine {
 	public interface SCITurnout {
-		public void raiseSwitch();
+		public void raiseTurnoutStraight();
 
-		public void raiseReserveFromLeft();
-
-		public void raiseReserveFromRight();
-
-		public void raiseReserveFromBottom();
-
-		public void raiseReserveResultFromLeft(boolean value);
-
-		public void raiseReserveResultFromRight(boolean value);
-
-		public void raiseReserveResultFromBottom(boolean value);
-
-		public void raiseReleaseFromLeft();
-
-		public void raiseReleaseFromRight();
-
-		public void raiseReleaseFromBottom();
-
-		public boolean isRaisedReserveLeft();
-
-		public boolean isRaisedReserveRight();
-
-		public boolean isRaisedReserveBottom();
-
-		public boolean isRaisedReserveResultToLeft();
-
-		public boolean getReserveResultToLeftValue();
-
-		public boolean isRaisedReserveResultToRight();
-
-		public boolean getReserveResultToRightValue();
-
-		public boolean isRaisedReserveResultToBottom();
-
-		public boolean getReserveResultToBottomValue();
-
-		public boolean isRaisedReleaseLeft();
-
-		public boolean isRaisedReleaseRight();
-
-		public boolean isRaisedReleaseBottom();
+		public void raiseTurnoutDivergent();
 
 		public int getId();
 
 		public void setId(int value);
 
-		public int getCount();
-
-		public void setCount(int value);
-
-		public List<SCITurnoutListener> getListeners();
-
-	}
-
-	public interface SCITurnoutListener {
-		public void onReserveLeftRaised();
-
-		public void onReserveRightRaised();
-
-		public void onReserveBottomRaised();
-
-		public void onReserveResultToLeftRaised(boolean value);
-
-		public void onReserveResultToRightRaised(boolean value);
-
-		public void onReserveResultToBottomRaised(boolean value);
-
-		public void onReleaseLeftRaised();
-
-		public void onReleaseRightRaised();
-
-		public void onReleaseBottomRaised();
 	}
 
 	public SCITurnout getSCITurnout();
+
+	public interface SCIProtocol {
+		public void raiseReserveFrom(int value);
+
+		public void raiseCanGoFrom(int value);
+
+		public void raiseCannotGoFrom(int value);
+
+		public void raiseReleaseFrom(int value);
+
+		public boolean isRaisedReserveTo();
+
+		public int getReserveToValue();
+
+		public boolean isRaisedCanGoTo();
+
+		public int getCanGoToValue();
+
+		public boolean isRaisedCannotGoTo();
+
+		public int getCannotGoToValue();
+
+		public boolean isRaisedReleaseTo();
+
+		public int getReleaseToValue();
+
+		public List<SCIProtocolListener> getListeners();
+
+	}
+
+	public interface SCIProtocolListener {
+		public void onReserveToRaised(int value);
+
+		public void onCanGoToRaised(int value);
+
+		public void onCannotGoToRaised(int value);
+
+		public void onReleaseToRaised(int value);
+	}
+
+	public SCIProtocol getSCIProtocol();
+
+	public interface SCITrain {
+		public void raiseOccupy();
+
+		public void raiseUnoccupy();
+
+	}
+
+	public SCITrain getSCITrain();
+
+	public interface SCIDirection {
+		public static final int uNSPECIFIED = 2;
+		public static final int tOP = 3;
+		public static final int sTRAIGHT = 4;
+		public static final int dIVERGENT = 5;
+
+		public int getUNSPECIFIED();
+
+		public int getTOP();
+
+		public int getSTRAIGHT();
+
+		public int getDIVERGENT();
+
+	}
+
+	public SCIDirection getSCIDirection();
 
 }

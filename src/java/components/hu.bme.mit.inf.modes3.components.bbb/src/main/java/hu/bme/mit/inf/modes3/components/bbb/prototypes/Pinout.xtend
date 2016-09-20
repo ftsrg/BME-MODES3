@@ -6,6 +6,8 @@ import com.google.gson.stream.JsonReader
 import java.io.InputStreamReader
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
 /**
  * Stores the pinout header addresses of the BeagleBone Black embedded
@@ -18,6 +20,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class Pinout {
 
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) static var Logger logger
+
 	// the pinout header addresses of the BeagleBone Black embedded controller.
 	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, String[]> headers
 
@@ -25,16 +29,23 @@ class Pinout {
 	 * @return the pinout header configuration
 	 * @throws Exception if an error happens
 	 */
-	static def Pinout loadPinoutConfig() {
+	static def Pinout loadPinoutConfig(ILoggerFactory factory) {
+		logger = factory.getLogger(Pinout.name)
+
 		val gson = new Gson
 		var InputStreamReader isr = null
+		var JsonReader reader = null
 		try {
 			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("conf/pinouts.json"))
-			val reader = new JsonReader(isr)
+			reader = new JsonReader(isr)
 			val JsonObject pinout = gson.fromJson(reader, JsonObject)
 			gson.fromJson(pinout, Pinout)
+		} catch(Exception ex) {
+			logger.error(ex.message, ex)
+			throw ex
 		} finally {
 			isr?.close
+			reader?.close
 		}
 	}
 

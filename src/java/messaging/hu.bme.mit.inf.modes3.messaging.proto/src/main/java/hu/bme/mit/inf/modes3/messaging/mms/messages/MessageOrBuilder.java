@@ -160,28 +160,41 @@ public interface MessageOrBuilder extends
   hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseToOrBuilder getYakinduReleaseToOrBuilder();
 
   /**
-   * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+   * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
    */
-  boolean hasYakinduReserveResultTo();
+  boolean hasYakinduCanGoTo();
   /**
-   * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+   * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo getYakinduReserveResultTo();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo getYakinduCanGoTo();
   /**
-   * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+   * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
    */
-  hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOrBuilder getYakinduReserveResultToOrBuilder();
+  hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOrBuilder getYakinduCanGoToOrBuilder();
 
   /**
-   * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+   * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+   */
+  boolean hasYakinduCannotGoTo();
+  /**
+   * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+   */
+  hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo getYakinduCannotGoTo();
+  /**
+   * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+   */
+  hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOrBuilder getYakinduCannotGoToOrBuilder();
+
+  /**
+   * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
    */
   boolean hasYakinduReserveTo();
   /**
-   * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+   * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
    */
   hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo getYakinduReserveTo();
   /**
-   * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+   * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
    */
   hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder getYakinduReserveToOrBuilder();
 }

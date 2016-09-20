@@ -13,6 +13,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutSt
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.helpers.NOPLoggerFactory
 
 class CommunicationTest {
 	var TrackCommunicationServiceLocator locator
@@ -21,8 +22,7 @@ class CommunicationTest {
 
 	@Before
 	def void init() {
-		locator = new TrackCommunicationServiceLocator(
-			CommunicationStackFactory::createLocalStack)
+		locator = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
 		gotMsg = new ModifiableBool => [bool = false]
 	}
 

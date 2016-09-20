@@ -193,19 +193,32 @@ public  final class Message extends
             break;
           }
           case 106: {
-            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.Builder subBuilder = null;
-            if (yakinduReserveResultTo_ != null) {
-              subBuilder = yakinduReserveResultTo_.toBuilder();
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.Builder subBuilder = null;
+            if (yakinduCanGoTo_ != null) {
+              subBuilder = yakinduCanGoTo_.toBuilder();
             }
-            yakinduReserveResultTo_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.parser(), extensionRegistry);
+            yakinduCanGoTo_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.parser(), extensionRegistry);
             if (subBuilder != null) {
-              subBuilder.mergeFrom(yakinduReserveResultTo_);
-              yakinduReserveResultTo_ = subBuilder.buildPartial();
+              subBuilder.mergeFrom(yakinduCanGoTo_);
+              yakinduCanGoTo_ = subBuilder.buildPartial();
             }
 
             break;
           }
           case 114: {
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.Builder subBuilder = null;
+            if (yakinduCannotGoTo_ != null) {
+              subBuilder = yakinduCannotGoTo_.toBuilder();
+            }
+            yakinduCannotGoTo_ = input.readMessage(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(yakinduCannotGoTo_);
+              yakinduCannotGoTo_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
+          case 122: {
             hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo.Builder subBuilder = null;
             if (yakinduReserveTo_ != null) {
               subBuilder = yakinduReserveTo_.toBuilder();
@@ -488,43 +501,64 @@ public  final class Message extends
     return getYakinduReleaseTo();
   }
 
-  public static final int YAKINDURESERVERESULTTO_FIELD_NUMBER = 13;
-  private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo yakinduReserveResultTo_;
+  public static final int YAKINDUCANGOTO_FIELD_NUMBER = 13;
+  private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo yakinduCanGoTo_;
   /**
-   * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+   * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
    */
-  public boolean hasYakinduReserveResultTo() {
-    return yakinduReserveResultTo_ != null;
+  public boolean hasYakinduCanGoTo() {
+    return yakinduCanGoTo_ != null;
   }
   /**
-   * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+   * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo getYakinduReserveResultTo() {
-    return yakinduReserveResultTo_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.getDefaultInstance() : yakinduReserveResultTo_;
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo getYakinduCanGoTo() {
+    return yakinduCanGoTo_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.getDefaultInstance() : yakinduCanGoTo_;
   }
   /**
-   * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+   * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
    */
-  public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOrBuilder getYakinduReserveResultToOrBuilder() {
-    return getYakinduReserveResultTo();
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOrBuilder getYakinduCanGoToOrBuilder() {
+    return getYakinduCanGoTo();
   }
 
-  public static final int YAKINDURESERVETO_FIELD_NUMBER = 14;
+  public static final int YAKINDUCANNOTGOTO_FIELD_NUMBER = 14;
+  private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo yakinduCannotGoTo_;
+  /**
+   * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+   */
+  public boolean hasYakinduCannotGoTo() {
+    return yakinduCannotGoTo_ != null;
+  }
+  /**
+   * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+   */
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo getYakinduCannotGoTo() {
+    return yakinduCannotGoTo_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.getDefaultInstance() : yakinduCannotGoTo_;
+  }
+  /**
+   * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+   */
+  public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOrBuilder getYakinduCannotGoToOrBuilder() {
+    return getYakinduCannotGoTo();
+  }
+
+  public static final int YAKINDURESERVETO_FIELD_NUMBER = 15;
   private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo yakinduReserveTo_;
   /**
-   * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+   * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
    */
   public boolean hasYakinduReserveTo() {
     return yakinduReserveTo_ != null;
   }
   /**
-   * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+   * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo getYakinduReserveTo() {
     return yakinduReserveTo_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo.getDefaultInstance() : yakinduReserveTo_;
   }
   /**
-   * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+   * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
    */
   public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder getYakinduReserveToOrBuilder() {
     return getYakinduReserveTo();
@@ -578,11 +612,14 @@ public  final class Message extends
     if (yakinduReleaseTo_ != null) {
       output.writeMessage(12, getYakinduReleaseTo());
     }
-    if (yakinduReserveResultTo_ != null) {
-      output.writeMessage(13, getYakinduReserveResultTo());
+    if (yakinduCanGoTo_ != null) {
+      output.writeMessage(13, getYakinduCanGoTo());
+    }
+    if (yakinduCannotGoTo_ != null) {
+      output.writeMessage(14, getYakinduCannotGoTo());
     }
     if (yakinduReserveTo_ != null) {
-      output.writeMessage(14, getYakinduReserveTo());
+      output.writeMessage(15, getYakinduReserveTo());
     }
   }
 
@@ -639,13 +676,17 @@ public  final class Message extends
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(12, getYakinduReleaseTo());
     }
-    if (yakinduReserveResultTo_ != null) {
+    if (yakinduCanGoTo_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(13, getYakinduReserveResultTo());
+        .computeMessageSize(13, getYakinduCanGoTo());
+    }
+    if (yakinduCannotGoTo_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(14, getYakinduCannotGoTo());
     }
     if (yakinduReserveTo_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(14, getYakinduReserveTo());
+        .computeMessageSize(15, getYakinduReserveTo());
     }
     memoizedSize = size;
     return size;
@@ -719,10 +760,15 @@ public  final class Message extends
       result = result && getYakinduReleaseTo()
           .equals(other.getYakinduReleaseTo());
     }
-    result = result && (hasYakinduReserveResultTo() == other.hasYakinduReserveResultTo());
-    if (hasYakinduReserveResultTo()) {
-      result = result && getYakinduReserveResultTo()
-          .equals(other.getYakinduReserveResultTo());
+    result = result && (hasYakinduCanGoTo() == other.hasYakinduCanGoTo());
+    if (hasYakinduCanGoTo()) {
+      result = result && getYakinduCanGoTo()
+          .equals(other.getYakinduCanGoTo());
+    }
+    result = result && (hasYakinduCannotGoTo() == other.hasYakinduCannotGoTo());
+    if (hasYakinduCannotGoTo()) {
+      result = result && getYakinduCannotGoTo()
+          .equals(other.getYakinduCannotGoTo());
     }
     result = result && (hasYakinduReserveTo() == other.hasYakinduReserveTo());
     if (hasYakinduReserveTo()) {
@@ -785,9 +831,13 @@ public  final class Message extends
       hash = (37 * hash) + YAKINDURELEASETO_FIELD_NUMBER;
       hash = (53 * hash) + getYakinduReleaseTo().hashCode();
     }
-    if (hasYakinduReserveResultTo()) {
-      hash = (37 * hash) + YAKINDURESERVERESULTTO_FIELD_NUMBER;
-      hash = (53 * hash) + getYakinduReserveResultTo().hashCode();
+    if (hasYakinduCanGoTo()) {
+      hash = (37 * hash) + YAKINDUCANGOTO_FIELD_NUMBER;
+      hash = (53 * hash) + getYakinduCanGoTo().hashCode();
+    }
+    if (hasYakinduCannotGoTo()) {
+      hash = (37 * hash) + YAKINDUCANNOTGOTO_FIELD_NUMBER;
+      hash = (53 * hash) + getYakinduCannotGoTo().hashCode();
     }
     if (hasYakinduReserveTo()) {
       hash = (37 * hash) + YAKINDURESERVETO_FIELD_NUMBER;
@@ -979,11 +1029,17 @@ public  final class Message extends
         yakinduReleaseTo_ = null;
         yakinduReleaseToBuilder_ = null;
       }
-      if (yakinduReserveResultToBuilder_ == null) {
-        yakinduReserveResultTo_ = null;
+      if (yakinduCanGoToBuilder_ == null) {
+        yakinduCanGoTo_ = null;
       } else {
-        yakinduReserveResultTo_ = null;
-        yakinduReserveResultToBuilder_ = null;
+        yakinduCanGoTo_ = null;
+        yakinduCanGoToBuilder_ = null;
+      }
+      if (yakinduCannotGoToBuilder_ == null) {
+        yakinduCannotGoTo_ = null;
+      } else {
+        yakinduCannotGoTo_ = null;
+        yakinduCannotGoToBuilder_ = null;
       }
       if (yakinduReserveToBuilder_ == null) {
         yakinduReserveTo_ = null;
@@ -1069,10 +1125,15 @@ public  final class Message extends
       } else {
         result.yakinduReleaseTo_ = yakinduReleaseToBuilder_.build();
       }
-      if (yakinduReserveResultToBuilder_ == null) {
-        result.yakinduReserveResultTo_ = yakinduReserveResultTo_;
+      if (yakinduCanGoToBuilder_ == null) {
+        result.yakinduCanGoTo_ = yakinduCanGoTo_;
       } else {
-        result.yakinduReserveResultTo_ = yakinduReserveResultToBuilder_.build();
+        result.yakinduCanGoTo_ = yakinduCanGoToBuilder_.build();
+      }
+      if (yakinduCannotGoToBuilder_ == null) {
+        result.yakinduCannotGoTo_ = yakinduCannotGoTo_;
+      } else {
+        result.yakinduCannotGoTo_ = yakinduCannotGoToBuilder_.build();
       }
       if (yakinduReserveToBuilder_ == null) {
         result.yakinduReserveTo_ = yakinduReserveTo_;
@@ -1156,8 +1217,11 @@ public  final class Message extends
       if (other.hasYakinduReleaseTo()) {
         mergeYakinduReleaseTo(other.getYakinduReleaseTo());
       }
-      if (other.hasYakinduReserveResultTo()) {
-        mergeYakinduReserveResultTo(other.getYakinduReserveResultTo());
+      if (other.hasYakinduCanGoTo()) {
+        mergeYakinduCanGoTo(other.getYakinduCanGoTo());
+      }
+      if (other.hasYakinduCannotGoTo()) {
+        mergeYakinduCannotGoTo(other.getYakinduCannotGoTo());
       }
       if (other.hasYakinduReserveTo()) {
         mergeYakinduReserveTo(other.getYakinduReserveTo());
@@ -2519,134 +2583,251 @@ public  final class Message extends
       return yakinduReleaseToBuilder_;
     }
 
-    private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo yakinduReserveResultTo_ = null;
+    private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo yakinduCanGoTo_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOrBuilder> yakinduReserveResultToBuilder_;
+        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOrBuilder> yakinduCanGoToBuilder_;
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public boolean hasYakinduReserveResultTo() {
-      return yakinduReserveResultToBuilder_ != null || yakinduReserveResultTo_ != null;
+    public boolean hasYakinduCanGoTo() {
+      return yakinduCanGoToBuilder_ != null || yakinduCanGoTo_ != null;
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo getYakinduReserveResultTo() {
-      if (yakinduReserveResultToBuilder_ == null) {
-        return yakinduReserveResultTo_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.getDefaultInstance() : yakinduReserveResultTo_;
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo getYakinduCanGoTo() {
+      if (yakinduCanGoToBuilder_ == null) {
+        return yakinduCanGoTo_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.getDefaultInstance() : yakinduCanGoTo_;
       } else {
-        return yakinduReserveResultToBuilder_.getMessage();
+        return yakinduCanGoToBuilder_.getMessage();
       }
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public Builder setYakinduReserveResultTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo value) {
-      if (yakinduReserveResultToBuilder_ == null) {
+    public Builder setYakinduCanGoTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo value) {
+      if (yakinduCanGoToBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        yakinduReserveResultTo_ = value;
+        yakinduCanGoTo_ = value;
         onChanged();
       } else {
-        yakinduReserveResultToBuilder_.setMessage(value);
+        yakinduCanGoToBuilder_.setMessage(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public Builder setYakinduReserveResultTo(
-        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.Builder builderForValue) {
-      if (yakinduReserveResultToBuilder_ == null) {
-        yakinduReserveResultTo_ = builderForValue.build();
+    public Builder setYakinduCanGoTo(
+        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.Builder builderForValue) {
+      if (yakinduCanGoToBuilder_ == null) {
+        yakinduCanGoTo_ = builderForValue.build();
         onChanged();
       } else {
-        yakinduReserveResultToBuilder_.setMessage(builderForValue.build());
+        yakinduCanGoToBuilder_.setMessage(builderForValue.build());
       }
 
       return this;
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public Builder mergeYakinduReserveResultTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo value) {
-      if (yakinduReserveResultToBuilder_ == null) {
-        if (yakinduReserveResultTo_ != null) {
-          yakinduReserveResultTo_ =
-            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.newBuilder(yakinduReserveResultTo_).mergeFrom(value).buildPartial();
+    public Builder mergeYakinduCanGoTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo value) {
+      if (yakinduCanGoToBuilder_ == null) {
+        if (yakinduCanGoTo_ != null) {
+          yakinduCanGoTo_ =
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.newBuilder(yakinduCanGoTo_).mergeFrom(value).buildPartial();
         } else {
-          yakinduReserveResultTo_ = value;
+          yakinduCanGoTo_ = value;
         }
         onChanged();
       } else {
-        yakinduReserveResultToBuilder_.mergeFrom(value);
+        yakinduCanGoToBuilder_.mergeFrom(value);
       }
 
       return this;
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public Builder clearYakinduReserveResultTo() {
-      if (yakinduReserveResultToBuilder_ == null) {
-        yakinduReserveResultTo_ = null;
+    public Builder clearYakinduCanGoTo() {
+      if (yakinduCanGoToBuilder_ == null) {
+        yakinduCanGoTo_ = null;
         onChanged();
       } else {
-        yakinduReserveResultTo_ = null;
-        yakinduReserveResultToBuilder_ = null;
+        yakinduCanGoTo_ = null;
+        yakinduCanGoToBuilder_ = null;
       }
 
       return this;
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.Builder getYakinduReserveResultToBuilder() {
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.Builder getYakinduCanGoToBuilder() {
       
       onChanged();
-      return getYakinduReserveResultToFieldBuilder().getBuilder();
+      return getYakinduCanGoToFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
-    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOrBuilder getYakinduReserveResultToOrBuilder() {
-      if (yakinduReserveResultToBuilder_ != null) {
-        return yakinduReserveResultToBuilder_.getMessageOrBuilder();
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOrBuilder getYakinduCanGoToOrBuilder() {
+      if (yakinduCanGoToBuilder_ != null) {
+        return yakinduCanGoToBuilder_.getMessageOrBuilder();
       } else {
-        return yakinduReserveResultTo_ == null ?
-            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.getDefaultInstance() : yakinduReserveResultTo_;
+        return yakinduCanGoTo_ == null ?
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.getDefaultInstance() : yakinduCanGoTo_;
       }
     }
     /**
-     * <code>optional .YakinduReserveResultTo yakinduReserveResultTo = 13;</code>
+     * <code>optional .YakinduCanGoTo yakinduCanGoTo = 13;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOrBuilder> 
-        getYakinduReserveResultToFieldBuilder() {
-      if (yakinduReserveResultToBuilder_ == null) {
-        yakinduReserveResultToBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOrBuilder>(
-                getYakinduReserveResultTo(),
+        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOrBuilder> 
+        getYakinduCanGoToFieldBuilder() {
+      if (yakinduCanGoToBuilder_ == null) {
+        yakinduCanGoToBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOrBuilder>(
+                getYakinduCanGoTo(),
                 getParentForChildren(),
                 isClean());
-        yakinduReserveResultTo_ = null;
+        yakinduCanGoTo_ = null;
       }
-      return yakinduReserveResultToBuilder_;
+      return yakinduCanGoToBuilder_;
+    }
+
+    private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo yakinduCannotGoTo_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOrBuilder> yakinduCannotGoToBuilder_;
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public boolean hasYakinduCannotGoTo() {
+      return yakinduCannotGoToBuilder_ != null || yakinduCannotGoTo_ != null;
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo getYakinduCannotGoTo() {
+      if (yakinduCannotGoToBuilder_ == null) {
+        return yakinduCannotGoTo_ == null ? hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.getDefaultInstance() : yakinduCannotGoTo_;
+      } else {
+        return yakinduCannotGoToBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public Builder setYakinduCannotGoTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo value) {
+      if (yakinduCannotGoToBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        yakinduCannotGoTo_ = value;
+        onChanged();
+      } else {
+        yakinduCannotGoToBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public Builder setYakinduCannotGoTo(
+        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.Builder builderForValue) {
+      if (yakinduCannotGoToBuilder_ == null) {
+        yakinduCannotGoTo_ = builderForValue.build();
+        onChanged();
+      } else {
+        yakinduCannotGoToBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public Builder mergeYakinduCannotGoTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo value) {
+      if (yakinduCannotGoToBuilder_ == null) {
+        if (yakinduCannotGoTo_ != null) {
+          yakinduCannotGoTo_ =
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.newBuilder(yakinduCannotGoTo_).mergeFrom(value).buildPartial();
+        } else {
+          yakinduCannotGoTo_ = value;
+        }
+        onChanged();
+      } else {
+        yakinduCannotGoToBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public Builder clearYakinduCannotGoTo() {
+      if (yakinduCannotGoToBuilder_ == null) {
+        yakinduCannotGoTo_ = null;
+        onChanged();
+      } else {
+        yakinduCannotGoTo_ = null;
+        yakinduCannotGoToBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.Builder getYakinduCannotGoToBuilder() {
+      
+      onChanged();
+      return getYakinduCannotGoToFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOrBuilder getYakinduCannotGoToOrBuilder() {
+      if (yakinduCannotGoToBuilder_ != null) {
+        return yakinduCannotGoToBuilder_.getMessageOrBuilder();
+      } else {
+        return yakinduCannotGoTo_ == null ?
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.getDefaultInstance() : yakinduCannotGoTo_;
+      }
+    }
+    /**
+     * <code>optional .YakinduCannotGoTo yakinduCannotGoTo = 14;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOrBuilder> 
+        getYakinduCannotGoToFieldBuilder() {
+      if (yakinduCannotGoToBuilder_ == null) {
+        yakinduCannotGoToBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOrBuilder>(
+                getYakinduCannotGoTo(),
+                getParentForChildren(),
+                isClean());
+        yakinduCannotGoTo_ = null;
+      }
+      return yakinduCannotGoToBuilder_;
     }
 
     private hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo yakinduReserveTo_ = null;
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder> yakinduReserveToBuilder_;
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public boolean hasYakinduReserveTo() {
       return yakinduReserveToBuilder_ != null || yakinduReserveTo_ != null;
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo getYakinduReserveTo() {
       if (yakinduReserveToBuilder_ == null) {
@@ -2656,7 +2837,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public Builder setYakinduReserveTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo value) {
       if (yakinduReserveToBuilder_ == null) {
@@ -2672,7 +2853,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public Builder setYakinduReserveTo(
         hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo.Builder builderForValue) {
@@ -2686,7 +2867,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public Builder mergeYakinduReserveTo(hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo value) {
       if (yakinduReserveToBuilder_ == null) {
@@ -2704,7 +2885,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public Builder clearYakinduReserveTo() {
       if (yakinduReserveToBuilder_ == null) {
@@ -2718,7 +2899,7 @@ public  final class Message extends
       return this;
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo.Builder getYakinduReserveToBuilder() {
       
@@ -2726,7 +2907,7 @@ public  final class Message extends
       return getYakinduReserveToFieldBuilder().getBuilder();
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     public hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder getYakinduReserveToOrBuilder() {
       if (yakinduReserveToBuilder_ != null) {
@@ -2737,7 +2918,7 @@ public  final class Message extends
       }
     }
     /**
-     * <code>optional .YakinduReserveTo yakinduReserveTo = 14;</code>
+     * <code>optional .YakinduReserveTo yakinduReserveTo = 15;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveTo.Builder, hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder> 

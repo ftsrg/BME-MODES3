@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 
@@ -33,7 +34,7 @@ class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 	@Before
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderSectionController)
-		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack)
+		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
 	}
 
 	@After
@@ -59,7 +60,7 @@ class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -84,7 +85,7 @@ class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start

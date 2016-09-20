@@ -9,6 +9,9 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.helpers.NOPLoggerFactory
+import java.util.List
+import org.slf4j.helpers.NOPLogger
 
 class SafetyLogicTest {
 	
@@ -19,24 +22,36 @@ class SafetyLogicTest {
 	def init() {
 		val stack = CommunicationStackFactory::createLocalStack
 		mms = stack.mms
-		sl = new SafetyLogic(stack)
+		sl = new SafetyLogic(stack, new NOPLoggerFactory)
 		sl.run(); // The component will run on the main thread
 	}
 	
 	
 	@Test
 	def void safetyLogicRegressionTest(){
-		new TrackElementStateSender(mms) => [
+		new TrackElementStateSender(mms, (new NOPLoggerFactory).getLogger('')) => [
 			sendSegmentOccupation(15, SegmentOccupancy.OCCUPIED)
 			sendSegmentOccupation(24, SegmentOccupancy.OCCUPIED)
 			
 			sendSegmentOccupation(28, SegmentOccupancy.OCCUPIED)
 			sendSegmentOccupation(29, SegmentOccupancy.OCCUPIED)
 		]
-		
-		Assert.assertEquals((sl.getSegment(24) as Segment).isEnabled,false)
-		Assert.assertEquals((sl.getSegment(29) as Segment).isEnabled,false)
-		
-		
+
+		Thread.sleep(1000)
+		assertOnlyBlocked(#[24,29])		
 	}
+	
+	def assertOnlyBlocked(List<Integer> integers) {
+		sl.model.model.sections.forEach[
+			if(it instanceof Segment){
+				if(integers.contains(it.id)){
+					Assert.assertEquals(false, it.isIsEnabled)
+				} else {
+					Assert.assertEquals(true, it.isIsEnabled)
+				}			
+			}
+		]
+	
+	}
+	
 }

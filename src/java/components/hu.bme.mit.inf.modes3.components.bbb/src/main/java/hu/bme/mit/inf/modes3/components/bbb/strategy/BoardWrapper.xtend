@@ -4,8 +4,9 @@ import io.silverspoon.bulldog.core.Signal
 import io.silverspoon.bulldog.core.gpio.DigitalInput
 import io.silverspoon.bulldog.core.gpio.DigitalOutput
 import io.silverspoon.bulldog.core.platform.Board
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 import static io.silverspoon.bulldog.core.platform.Platform.createBoard
 
@@ -16,11 +17,13 @@ import static io.silverspoon.bulldog.core.platform.Platform.createBoard
  */
 class BoardWrapper {
 
-	private static val Logger logger = LoggerFactory.getLogger(BoardWrapper)
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	protected var Board board
 
-	new() {
+	new(ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.class.name)
+
 		try {
 			board = createBoard
 		} catch(Exception ex) {
@@ -28,8 +31,9 @@ class BoardWrapper {
 		}
 	}
 
-	new(Board _board) {
-		board = _board
+	new(Board board, ILoggerFactory factory) {
+		this.board = board
+		this.logger = factory.getLogger(this.class.name)
 	}
 
 	/**
@@ -55,6 +59,8 @@ class BoardWrapper {
 	 * @param level HIGH or LOW
 	 */
 	synchronized def setPinLevel(String pin, Signal level) {
+		logger.info('''Setting pin «pin» level «level»''')
+
 		val output = board?.getPin(pin).^as(DigitalOutput)
 		output?.applySignal(level);
 	}
@@ -72,7 +78,7 @@ class BoardWrapper {
 	 * @return level of the pin: HIGH or LOW
 	 */
 	synchronized def getPinLevel(String pin) {
-		val input = board?.getPin(pin).^as(DigitalInput);
+		val input = board?.getPin(pin).^as(DigitalInput)
 		input?.read
 	}
 

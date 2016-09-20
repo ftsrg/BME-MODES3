@@ -9,6 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 
@@ -26,7 +27,7 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 	@Before
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderTurnoutController)
-		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack)
+		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
 	}
 
 	@Test
@@ -36,8 +37,8 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
-		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
+		// create component
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -55,8 +56,8 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
-		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
+		// create component
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -74,8 +75,8 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
-		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
+		// create component
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)
@@ -93,8 +94,8 @@ class BBBSectionMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderSectionController)
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
-		// create component under test
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests)
+		// create component
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, expander, neverUsedInTests, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendSegmentCommand(sectionId, SegmentState.DISABLED)

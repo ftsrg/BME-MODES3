@@ -18,6 +18,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
+import org.slf4j.helpers.NOPLoggerFactory
 
 @RunWith(Theories)
 class BBBTurnoutStateChangeNotifierLocalTransportIntegrationTest {
@@ -50,7 +51,7 @@ class BBBTurnoutStateChangeNotifierLocalTransportIntegrationTest {
 	@Before
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderSectionController)
-		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack)
+		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
 	}
 
 	@After
@@ -89,13 +90,13 @@ class BBBTurnoutStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start
 
 		// Assert
-		Thread.sleep(150) // so that internal threads can handle transferred messages
+		Thread.sleep(200) // so that internal threads can handle transferred messages
 		Mockito.verify(changeListenerMock, Mockito.times(1)).onTurnoutStateChange(turnoutID, null, negatedState)
 		Mockito.verify(changeListenerMock, Mockito.never).onTurnoutStateChange(turnoutID, null, initialState)
 	}
@@ -114,7 +115,7 @@ class BBBTurnoutStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -134,7 +135,7 @@ class BBBTurnoutStateChangeNotifierLocalTransportIntegrationTest {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander)
+		componentUnderTest = new BBBComponentWithStateChangeNotifier(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start

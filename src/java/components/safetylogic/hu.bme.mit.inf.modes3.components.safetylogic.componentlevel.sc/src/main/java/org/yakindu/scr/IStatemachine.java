@@ -21,21 +21,19 @@ public interface IStatemachine {
 	public void exit();
 
 	/**
-	 * Checks whether the state machine is active. A state machine is active if
-	 * it has been entered. It is inactive if it has not been entered at all or
-	 * if it has been exited.
+	 * Checks whether the state machine is active. 
+	 * A state machine is active if it has been entered. It is inactive if it has not been entered at all or if it has been exited.
 	 */
 	public boolean isActive();
 
 	/**
-	 * Checks whether all active states are final. If there are no active states
-	 * then the state machine is considered being incative. In this case this
-	 * method returns <code>false</code>.
+	 * Checks whether all active states are final. 
+	 * If there are no active states then the state machine is considered being incative. In this case this method returns <code>false</code>.
 	 */
 	public boolean isFinal();
 
 	/**
-	 * Start a run-to-completion cycle.
-	 */
+	* Start a run-to-completion cycle.
+	*/
 	public void runCycle();
 }

@@ -2,8 +2,6 @@ package org.yakindu.scr.section;
 
 import java.util.List;
 
-import org.yakindu.scr.ITimer;
-import org.yakindu.scr.ITimerCallback;
 import org.yakindu.scr.section.SectionStatemachine.State;
 
 /**
@@ -33,113 +31,27 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 			}
 		}
 
-		public void raiseReserveFromLeft() {
-
+		public boolean isRaisedEnableSection() {
 			synchronized (statemachine) {
-				statemachine.getSCISection().raiseReserveFromLeft();
-				statemachine.runCycle();
+				return statemachine.getSCISection().isRaisedEnableSection();
 			}
 		}
 
-		public void raiseReserveFromRight() {
-
+		public int getEnableSectionValue() {
 			synchronized (statemachine) {
-				statemachine.getSCISection().raiseReserveFromRight();
-				statemachine.runCycle();
+				return statemachine.getSCISection().getEnableSectionValue();
 			}
 		}
 
-		public void raiseReserveResult(final boolean value) {
-
+		public boolean isRaisedDisableSection() {
 			synchronized (statemachine) {
-				statemachine.getSCISection().raiseReserveResult(value);
-				statemachine.runCycle();
+				return statemachine.getSCISection().isRaisedDisableSection();
 			}
 		}
 
-		public void raiseOccupy() {
-
+		public int getDisableSectionValue() {
 			synchronized (statemachine) {
-				statemachine.getSCISection().raiseOccupy();
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseUnoccupy() {
-
-			synchronized (statemachine) {
-				statemachine.getSCISection().raiseUnoccupy();
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseReset() {
-
-			synchronized (statemachine) {
-				statemachine.getSCISection().raiseReset();
-				statemachine.runCycle();
-			}
-		}
-
-		public void raiseRelease() {
-
-			synchronized (statemachine) {
-				statemachine.getSCISection().raiseRelease();
-				statemachine.runCycle();
-			}
-		}
-
-		public boolean isRaisedReserveLeft() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().isRaisedReserveLeft();
-			}
-		}
-
-		public boolean isRaisedReserveRight() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().isRaisedReserveRight();
-			}
-		}
-
-		public boolean isRaisedReserveResultToLeft() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().isRaisedReserveResultToLeft();
-			}
-		}
-
-		public boolean getReserveResultToLeftValue() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().getReserveResultToLeftValue();
-			}
-		}
-
-		public boolean isRaisedReserveResultToRight() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().isRaisedReserveResultToRight();
-			}
-		}
-
-		public boolean getReserveResultToRightValue() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().getReserveResultToRightValue();
-			}
-		}
-
-		public boolean isRaisedReleaseLeft() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().isRaisedReleaseLeft();
-			}
-		}
-
-		public boolean isRaisedReleaseRight() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().isRaisedReleaseRight();
-			}
-		}
-
-		public boolean isRaisedStop() {
-			synchronized (statemachine) {
-				return statemachine.getSCISection().isRaisedStop();
+				return statemachine.getSCISection().getDisableSectionValue();
 			}
 		}
 
@@ -155,27 +67,27 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 			}
 		}
 
-		public int getTimeout() {
+		public int getLatestReserveDirection() {
 			synchronized (statemachine) {
-				return statemachine.getSCISection().getTimeout();
+				return statemachine.getSCISection().getLatestReserveDirection();
 			}
 		}
 
-		public void setTimeout(final int value) {
+		public void setLatestReserveDirection(final int value) {
 			synchronized (statemachine) {
-				statemachine.getSCISection().setTimeout(value);
+				statemachine.getSCISection().setLatestReserveDirection(value);
 			}
 		}
 
-		public int getDir() {
+		public int getNegatedReserveDirection() {
 			synchronized (statemachine) {
-				return statemachine.getSCISection().getDir();
+				return statemachine.getSCISection().getNegatedReserveDirection();
 			}
 		}
 
-		public void setDir(final int value) {
+		public void setNegatedReserveDirection(final int value) {
 			synchronized (statemachine) {
-				statemachine.getSCISection().setDir(value);
+				statemachine.getSCISection().setNegatedReserveDirection(value);
 			}
 		}
 
@@ -184,19 +96,152 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 	protected SCISection sCISection;
 
 	/**
+	 * Interface object for SCIProtocol
+	 */
+	protected class SynchronizedSCIProtocol implements SCIProtocol {
+
+		public List<SCIProtocolListener> getListeners() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getListeners();
+			}
+		}
+
+		public void raiseReserveFrom(final int value) {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseReserveFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseCanGoFrom(final int value) {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseCanGoFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseCannotGoFrom(final int value) {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseCannotGoFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseReleaseFrom(final int value) {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseReleaseFrom(value);
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseRestartProtocol() {
+
+			synchronized (statemachine) {
+				statemachine.getSCIProtocol().raiseRestartProtocol();
+				statemachine.runCycle();
+			}
+		}
+
+		public boolean isRaisedReserveTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedReserveTo();
+			}
+		}
+
+		public int getReserveToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getReserveToValue();
+			}
+		}
+
+		public boolean isRaisedCanGoTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedCanGoTo();
+			}
+		}
+
+		public int getCanGoToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getCanGoToValue();
+			}
+		}
+
+		public boolean isRaisedCannotGoTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedCannotGoTo();
+			}
+		}
+
+		public int getCannotGoToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getCannotGoToValue();
+			}
+		}
+
+		public boolean isRaisedReleaseTo() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().isRaisedReleaseTo();
+			}
+		}
+
+		public int getReleaseToValue() {
+			synchronized (statemachine) {
+				return statemachine.getSCIProtocol().getReleaseToValue();
+			}
+		}
+	};
+
+	protected SCIProtocol sCIProtocol;
+
+	/**
+	 * Interface object for SCITrain
+	 */
+	protected class SynchronizedSCITrain implements SCITrain {
+
+		public void raiseOccupy() {
+
+			synchronized (statemachine) {
+				statemachine.getSCITrain().raiseOccupy();
+				statemachine.runCycle();
+			}
+		}
+
+		public void raiseUnoccupy() {
+
+			synchronized (statemachine) {
+				statemachine.getSCITrain().raiseUnoccupy();
+				statemachine.runCycle();
+			}
+		}
+
+	};
+
+	protected SCITrain sCITrain;
+
+	/**
 	 * Interface object for SCIDirection
 	 */
 	protected class SynchronizedSCIDirection implements SCIDirection {
 
-		public int getLEFT() {
+		public int getCW() {
 			synchronized (statemachine) {
-				return statemachine.getSCIDirection().getLEFT();
+				return statemachine.getSCIDirection().getCW();
 			}
 		}
 
-		public int getRIGHT() {
+		public int getCCW() {
 			synchronized (statemachine) {
-				return statemachine.getSCIDirection().getRIGHT();
+				return statemachine.getSCIDirection().getCCW();
+			}
+		}
+
+		public int getUNSPECIFIED() {
+			synchronized (statemachine) {
+				return statemachine.getSCIDirection().getUNSPECIFIED();
 			}
 		}
 
@@ -206,6 +251,8 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 
 	public SynchronizedSectionStatemachine() {
 		sCISection = new SynchronizedSCISection();
+		sCIProtocol = new SynchronizedSCIProtocol();
+		sCITrain = new SynchronizedSCITrain();
 		sCIDirection = new SynchronizedSCIDirection();
 	}
 
@@ -213,61 +260,16 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 		return sCISection;
 	}
 
+	public synchronized SCIProtocol getSCIProtocol() {
+		return sCIProtocol;
+	}
+
+	public synchronized SCITrain getSCITrain() {
+		return sCITrain;
+	}
+
 	public synchronized SCIDirection getSCIDirection() {
 		return sCIDirection;
-	}
-
-	/*
-	 * ================ TIME EVENT HANDLING ================
-	 * 
-	 * /** An external timer instance is required.
-	 */
-	protected ITimer externalTimer;
-
-	/**
-	 * Internally we use a timer proxy that queues time events together with
-	 * other input events.
-	 */
-	protected ITimer timerProxy = new ITimer() {
-		/** Simply delegate to external timer with a modified callback. */
-		@Override
-		public void setTimer(ITimerCallback callback, int eventID, long time, boolean isPeriodic) {
-			externalTimer.setTimer(SynchronizedSectionStatemachine.this, eventID, time, isPeriodic);
-		}
-
-		@Override
-		public void unsetTimer(ITimerCallback callback, int eventID) {
-			externalTimer.unsetTimer(SynchronizedSectionStatemachine.this, eventID);
-		}
-	};
-
-	/**
-	 * Set the {@link ITimer} for the state machine. It must be set externally
-	 * on a timed state machine before a run cycle can be correct executed.
-	 * 
-	 * @param timer
-	 */
-	public void setTimer(ITimer timer) {
-		synchronized (statemachine) {
-			this.externalTimer = timer;
-			/* the wrapped state machine uses timer proxy as timer */
-			statemachine.setTimer(timerProxy);
-		}
-	}
-
-	/**
-	 * Returns the currently used timer.
-	 * 
-	 * @return {@link ITimer}
-	 */
-	public ITimer getTimer() {
-		return externalTimer;
-	}
-
-	public void timeElapsed(int eventID) {
-		synchronized (statemachine) {
-			statemachine.timeElapsed(eventID);
-		}
 	}
 
 	/**

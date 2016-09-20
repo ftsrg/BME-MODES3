@@ -7,6 +7,7 @@ import java.util.Collections
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 class TurnoutStateNotifierTest {
 
@@ -32,7 +33,7 @@ class TurnoutStateNotifierTest {
 		stateSender = Mockito.mock(ITrackElementStateSender)
 
 		// create unit under test
-		notifier = new TurnoutStateNotifier(stateSender, controller)
+		notifier = new TurnoutStateNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)
@@ -43,8 +44,7 @@ class TurnoutStateNotifierTest {
 
 		// Assert
 		for (id : turnoutIDs) {
-			Mockito.verify(stateSender, Mockito.atLeastOnce).sendTurnoutState(Integer.valueOf(id),
-				turnoutStatuses.get(id))
+			Mockito.verify(stateSender, Mockito.atLeastOnce).sendTurnoutState(Integer.valueOf(id), turnoutStatuses.get(id))
 		}
 	}
 
@@ -57,7 +57,7 @@ class TurnoutStateNotifierTest {
 		stateSender = Mockito.mock(ITrackElementStateSender)
 
 		// create unit under test
-		notifier = new TurnoutStateNotifier(stateSender, controller)
+		notifier = new TurnoutStateNotifier(stateSender, controller, new NOPLoggerFactory)
 
 		// Act
 		val thread = new Thread(notifier)

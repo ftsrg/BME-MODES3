@@ -35,26 +35,27 @@ public final class MessageOuterClass {
       "erenceSpeed.proto\032 TrainReferenceSpeedCo" +
       "mmand.proto\032\024TurnoutCommand.proto\032\022Turno" +
       "utState.proto\032\026SegmentOccupancy.proto\032\026Y" +
-      "akinduReleaseTo.proto\032\034YakinduReserveRes" +
-      "ultTo.proto\032\026YakinduReserveTo.proto\"\214\005\n\007" +
-      "Message\022\032\n\004type\030\001 \001(\0162\014.MessageType\022\'\n\016s",
-      "egmentCommand\030\002 \001(\0132\017.SegmentCommand\022#\n\014" +
-      "segmentState\030\003 \001(\0132\r.SegmentState\0221\n\023tra" +
-      "inCurrentSegment\030\004 \001(\0132\024.TrainCurrentSeg" +
-      "ment\022-\n\021trainCurrentSpeed\030\005 \001(\0132\022.TrainC" +
-      "urrentSpeed\0223\n\024trainFunctionCommand\030\006 \001(" +
-      "\0132\025.TrainFunctionCommand\0221\n\023trainReferen" +
-      "ceSpeed\030\007 \001(\0132\024.TrainReferenceSpeed\022?\n\032t" +
-      "rainReferenceSpeedCommand\030\010 \001(\0132\033.TrainR" +
-      "eferenceSpeedCommand\022\'\n\016turnoutCommand\030\t" +
-      " \001(\0132\017.TurnoutCommand\022#\n\014turnoutState\030\n ",
-      "\001(\0132\r.TurnoutState\022+\n\020segmentOccupancy\030\013" +
-      " \001(\0132\021.SegmentOccupancy\022+\n\020yakinduReleas" +
-      "eTo\030\014 \001(\0132\021.YakinduReleaseTo\0227\n\026yakinduR" +
-      "eserveResultTo\030\r \001(\0132\027.YakinduReserveRes" +
-      "ultTo\022+\n\020yakinduReserveTo\030\016 \001(\0132\021.Yakind" +
-      "uReserveToB0\n,hu.bme.mit.inf.modes3.mess" +
-      "aging.mms.messagesP\001b\006proto3"
+      "akinduReleaseTo.proto\032\024YakinduCanGoTo.pr" +
+      "oto\032\027YakinduCannotGoTo.proto\032\026YakinduRes" +
+      "erveTo.proto\"\253\005\n\007Message\022\032\n\004type\030\001 \001(\0162\014",
+      ".MessageType\022\'\n\016segmentCommand\030\002 \001(\0132\017.S" +
+      "egmentCommand\022#\n\014segmentState\030\003 \001(\0132\r.Se" +
+      "gmentState\0221\n\023trainCurrentSegment\030\004 \001(\0132" +
+      "\024.TrainCurrentSegment\022-\n\021trainCurrentSpe" +
+      "ed\030\005 \001(\0132\022.TrainCurrentSpeed\0223\n\024trainFun" +
+      "ctionCommand\030\006 \001(\0132\025.TrainFunctionComman" +
+      "d\0221\n\023trainReferenceSpeed\030\007 \001(\0132\024.TrainRe" +
+      "ferenceSpeed\022?\n\032trainReferenceSpeedComma" +
+      "nd\030\010 \001(\0132\033.TrainReferenceSpeedCommand\022\'\n" +
+      "\016turnoutCommand\030\t \001(\0132\017.TurnoutCommand\022#",
+      "\n\014turnoutState\030\n \001(\0132\r.TurnoutState\022+\n\020s" +
+      "egmentOccupancy\030\013 \001(\0132\021.SegmentOccupancy" +
+      "\022+\n\020yakinduReleaseTo\030\014 \001(\0132\021.YakinduRele" +
+      "aseTo\022\'\n\016yakinduCanGoTo\030\r \001(\0132\017.YakinduC" +
+      "anGoTo\022-\n\021yakinduCannotGoTo\030\016 \001(\0132\022.Yaki" +
+      "nduCannotGoTo\022+\n\020yakinduReserveTo\030\017 \001(\0132" +
+      "\021.YakinduReserveToB0\n,hu.bme.mit.inf.mod" +
+      "es3.messaging.mms.messagesP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -79,7 +80,8 @@ public final class MessageOuterClass {
           hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOuterClass.getDescriptor(),
           hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOuterClass.getDescriptor(),
           hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseToOuterClass.getDescriptor(),
-          hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOuterClass.getDescriptor(),
+          hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOuterClass.getDescriptor(),
+          hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOuterClass.getDescriptor(),
           hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOuterClass.getDescriptor(),
         }, assigner);
     internal_static_Message_descriptor =
@@ -87,7 +89,7 @@ public final class MessageOuterClass {
     internal_static_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Message_descriptor,
-        new java.lang.String[] { "Type", "SegmentCommand", "SegmentState", "TrainCurrentSegment", "TrainCurrentSpeed", "TrainFunctionCommand", "TrainReferenceSpeed", "TrainReferenceSpeedCommand", "TurnoutCommand", "TurnoutState", "SegmentOccupancy", "YakinduReleaseTo", "YakinduReserveResultTo", "YakinduReserveTo", });
+        new java.lang.String[] { "Type", "SegmentCommand", "SegmentState", "TrainCurrentSegment", "TrainCurrentSpeed", "TrainFunctionCommand", "TrainReferenceSpeed", "TrainReferenceSpeedCommand", "TurnoutCommand", "TurnoutState", "SegmentOccupancy", "YakinduReleaseTo", "YakinduCanGoTo", "YakinduCannotGoTo", "YakinduReserveTo", });
     hu.bme.mit.inf.modes3.messaging.mms.messages.Enums.getDescriptor();
     hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommandOuterClass.getDescriptor();
     hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOuterClass.getDescriptor();
@@ -100,7 +102,8 @@ public final class MessageOuterClass {
     hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOuterClass.getDescriptor();
     hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOuterClass.getDescriptor();
     hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReleaseToOuterClass.getDescriptor();
-    hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveResultToOuterClass.getDescriptor();
+    hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCanGoToOuterClass.getDescriptor();
+    hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduCannotGoToOuterClass.getDescriptor();
     hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOuterClass.getDescriptor();
   }
 

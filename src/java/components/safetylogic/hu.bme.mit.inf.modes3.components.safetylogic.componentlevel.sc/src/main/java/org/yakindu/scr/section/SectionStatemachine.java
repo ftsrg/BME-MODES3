@@ -2,7 +2,6 @@ package org.yakindu.scr.section;
 
 import java.util.LinkedList;
 import java.util.List;
-import org.yakindu.scr.ITimer;
 
 public class SectionStatemachine implements ISectionStatemachine {
 
@@ -14,32 +13,272 @@ public class SectionStatemachine implements ISectionStatemachine {
 			return listeners;
 		}
 
-		private boolean reserveFromLeft;
+		private boolean enableSection;
 
-		public void raiseReserveFromLeft() {
-			reserveFromLeft = true;
+		private int enableSectionValue;
+
+		public boolean isRaisedEnableSection() {
+			return enableSection;
 		}
 
-		private boolean reserveFromRight;
-
-		public void raiseReserveFromRight() {
-			reserveFromRight = true;
+		protected void raiseEnableSection(int value) {
+			enableSection = true;
+			enableSectionValue = value;
+			for (SCISectionListener listener : listeners) {
+				listener.onEnableSectionRaised(value);
+			}
 		}
 
-		private boolean reserveResult;
-
-		private boolean reserveResultValue;
-
-		public void raiseReserveResult(boolean value) {
-			reserveResult = true;
-			reserveResultValue = value;
+		public int getEnableSectionValue() {
+			if (!enableSection)
+				throw new IllegalStateException("Illegal event value access. Event EnableSection is not raised!");
+			return enableSectionValue;
 		}
 
-		protected boolean getReserveResultValue() {
-			if (!reserveResult)
-				throw new IllegalStateException("Illegal event value access. Event ReserveResult is not raised!");
-			return reserveResultValue;
+		private boolean disableSection;
+
+		private int disableSectionValue;
+
+		public boolean isRaisedDisableSection() {
+			return disableSection;
 		}
+
+		protected void raiseDisableSection(int value) {
+			disableSection = true;
+			disableSectionValue = value;
+			for (SCISectionListener listener : listeners) {
+				listener.onDisableSectionRaised(value);
+			}
+		}
+
+		public int getDisableSectionValue() {
+			if (!disableSection)
+				throw new IllegalStateException("Illegal event value access. Event DisableSection is not raised!");
+			return disableSectionValue;
+		}
+
+		private int id;
+
+		public int getId() {
+			return id;
+		}
+
+		public void setId(int value) {
+			this.id = value;
+		}
+
+		private int latestReserveDirection;
+
+		public int getLatestReserveDirection() {
+			return latestReserveDirection;
+		}
+
+		public void setLatestReserveDirection(int value) {
+			this.latestReserveDirection = value;
+		}
+
+		private int negatedReserveDirection;
+
+		public int getNegatedReserveDirection() {
+			return negatedReserveDirection;
+		}
+
+		public void setNegatedReserveDirection(int value) {
+			this.negatedReserveDirection = value;
+		}
+
+		protected void clearEvents() {
+		}
+
+		protected void clearOutEvents() {
+			enableSection = false;
+			disableSection = false;
+		}
+	}
+
+	protected SCISectionImpl sCISection;
+
+	protected class SCIProtocolImpl implements SCIProtocol {
+
+		private List<SCIProtocolListener> listeners = new LinkedList<SCIProtocolListener>();
+
+		public List<SCIProtocolListener> getListeners() {
+			return listeners;
+		}
+
+		private boolean reserveFrom;
+
+		private int reserveFromValue;
+
+		public void raiseReserveFrom(int value) {
+			reserveFrom = true;
+			reserveFromValue = value;
+		}
+
+		protected int getReserveFromValue() {
+			if (!reserveFrom)
+				throw new IllegalStateException("Illegal event value access. Event ReserveFrom is not raised!");
+			return reserveFromValue;
+		}
+
+		private boolean canGoFrom;
+
+		private int canGoFromValue;
+
+		public void raiseCanGoFrom(int value) {
+			canGoFrom = true;
+			canGoFromValue = value;
+		}
+
+		protected int getCanGoFromValue() {
+			if (!canGoFrom)
+				throw new IllegalStateException("Illegal event value access. Event CanGoFrom is not raised!");
+			return canGoFromValue;
+		}
+
+		private boolean cannotGoFrom;
+
+		private int cannotGoFromValue;
+
+		public void raiseCannotGoFrom(int value) {
+			cannotGoFrom = true;
+			cannotGoFromValue = value;
+		}
+
+		protected int getCannotGoFromValue() {
+			if (!cannotGoFrom)
+				throw new IllegalStateException("Illegal event value access. Event CannotGoFrom is not raised!");
+			return cannotGoFromValue;
+		}
+
+		private boolean releaseFrom;
+
+		private int releaseFromValue;
+
+		public void raiseReleaseFrom(int value) {
+			releaseFrom = true;
+			releaseFromValue = value;
+		}
+
+		protected int getReleaseFromValue() {
+			if (!releaseFrom)
+				throw new IllegalStateException("Illegal event value access. Event ReleaseFrom is not raised!");
+			return releaseFromValue;
+		}
+
+		private boolean restartProtocol;
+
+		public void raiseRestartProtocol() {
+			restartProtocol = true;
+		}
+
+		private boolean reserveTo;
+
+		private int reserveToValue;
+
+		public boolean isRaisedReserveTo() {
+			return reserveTo;
+		}
+
+		protected void raiseReserveTo(int value) {
+			reserveTo = true;
+			reserveToValue = value;
+			for (SCIProtocolListener listener : listeners) {
+				listener.onReserveToRaised(value);
+			}
+		}
+
+		public int getReserveToValue() {
+			if (!reserveTo)
+				throw new IllegalStateException("Illegal event value access. Event ReserveTo is not raised!");
+			return reserveToValue;
+		}
+
+		private boolean canGoTo;
+
+		private int canGoToValue;
+
+		public boolean isRaisedCanGoTo() {
+			return canGoTo;
+		}
+
+		protected void raiseCanGoTo(int value) {
+			canGoTo = true;
+			canGoToValue = value;
+			for (SCIProtocolListener listener : listeners) {
+				listener.onCanGoToRaised(value);
+			}
+		}
+
+		public int getCanGoToValue() {
+			if (!canGoTo)
+				throw new IllegalStateException("Illegal event value access. Event CanGoTo is not raised!");
+			return canGoToValue;
+		}
+
+		private boolean cannotGoTo;
+
+		private int cannotGoToValue;
+
+		public boolean isRaisedCannotGoTo() {
+			return cannotGoTo;
+		}
+
+		protected void raiseCannotGoTo(int value) {
+			cannotGoTo = true;
+			cannotGoToValue = value;
+			for (SCIProtocolListener listener : listeners) {
+				listener.onCannotGoToRaised(value);
+			}
+		}
+
+		public int getCannotGoToValue() {
+			if (!cannotGoTo)
+				throw new IllegalStateException("Illegal event value access. Event CannotGoTo is not raised!");
+			return cannotGoToValue;
+		}
+
+		private boolean releaseTo;
+
+		private int releaseToValue;
+
+		public boolean isRaisedReleaseTo() {
+			return releaseTo;
+		}
+
+		protected void raiseReleaseTo(int value) {
+			releaseTo = true;
+			releaseToValue = value;
+			for (SCIProtocolListener listener : listeners) {
+				listener.onReleaseToRaised(value);
+			}
+		}
+
+		public int getReleaseToValue() {
+			if (!releaseTo)
+				throw new IllegalStateException("Illegal event value access. Event ReleaseTo is not raised!");
+			return releaseToValue;
+		}
+
+		protected void clearEvents() {
+			reserveFrom = false;
+			canGoFrom = false;
+			cannotGoFrom = false;
+			releaseFrom = false;
+			restartProtocol = false;
+		}
+
+		protected void clearOutEvents() {
+			reserveTo = false;
+			canGoTo = false;
+			cannotGoTo = false;
+			releaseTo = false;
+		}
+	}
+
+	protected SCIProtocolImpl sCIProtocol;
+
+	protected class SCITrainImpl implements SCITrain {
 
 		private boolean occupy;
 
@@ -53,189 +292,27 @@ public class SectionStatemachine implements ISectionStatemachine {
 			unoccupy = true;
 		}
 
-		private boolean reset;
-
-		public void raiseReset() {
-			reset = true;
-		}
-
-		private boolean release;
-
-		public void raiseRelease() {
-			release = true;
-		}
-
-		private boolean reserveLeft;
-
-		public boolean isRaisedReserveLeft() {
-			return reserveLeft;
-		}
-
-		protected void raiseReserveLeft() {
-			reserveLeft = true;
-			for (SCISectionListener listener : listeners) {
-				listener.onReserveLeftRaised();
-			}
-		}
-
-		private boolean reserveRight;
-
-		public boolean isRaisedReserveRight() {
-			return reserveRight;
-		}
-
-		protected void raiseReserveRight() {
-			reserveRight = true;
-			for (SCISectionListener listener : listeners) {
-				listener.onReserveRightRaised();
-			}
-		}
-
-		private boolean reserveResultToLeft;
-
-		private boolean reserveResultToLeftValue;
-
-		public boolean isRaisedReserveResultToLeft() {
-			return reserveResultToLeft;
-		}
-
-		protected void raiseReserveResultToLeft(boolean value) {
-			reserveResultToLeft = true;
-			reserveResultToLeftValue = value;
-			for (SCISectionListener listener : listeners) {
-				listener.onReserveResultToLeftRaised(value);
-			}
-		}
-
-		public boolean getReserveResultToLeftValue() {
-			if (!reserveResultToLeft)
-				throw new IllegalStateException("Illegal event value access. Event ReserveResultToLeft is not raised!");
-			return reserveResultToLeftValue;
-		}
-
-		private boolean reserveResultToRight;
-
-		private boolean reserveResultToRightValue;
-
-		public boolean isRaisedReserveResultToRight() {
-			return reserveResultToRight;
-		}
-
-		protected void raiseReserveResultToRight(boolean value) {
-			reserveResultToRight = true;
-			reserveResultToRightValue = value;
-			for (SCISectionListener listener : listeners) {
-				listener.onReserveResultToRightRaised(value);
-			}
-		}
-
-		public boolean getReserveResultToRightValue() {
-			if (!reserveResultToRight)
-				throw new IllegalStateException(
-						"Illegal event value access. Event ReserveResultToRight is not raised!");
-			return reserveResultToRightValue;
-		}
-
-		private boolean releaseLeft;
-
-		public boolean isRaisedReleaseLeft() {
-			return releaseLeft;
-		}
-
-		protected void raiseReleaseLeft() {
-			releaseLeft = true;
-			for (SCISectionListener listener : listeners) {
-				listener.onReleaseLeftRaised();
-			}
-		}
-
-		private boolean releaseRight;
-
-		public boolean isRaisedReleaseRight() {
-			return releaseRight;
-		}
-
-		protected void raiseReleaseRight() {
-			releaseRight = true;
-			for (SCISectionListener listener : listeners) {
-				listener.onReleaseRightRaised();
-			}
-		}
-
-		private boolean stop;
-
-		public boolean isRaisedStop() {
-			return stop;
-		}
-
-		protected void raiseStop() {
-			stop = true;
-			for (SCISectionListener listener : listeners) {
-				listener.onStopRaised();
-			}
-		}
-
-		private int id;
-
-		public int getId() {
-			return id;
-		}
-
-		public void setId(int value) {
-			this.id = value;
-		}
-
-		private int timeout;
-
-		public int getTimeout() {
-			return timeout;
-		}
-
-		public void setTimeout(int value) {
-			this.timeout = value;
-		}
-
-		private int dir;
-
-		public int getDir() {
-			return dir;
-		}
-
-		public void setDir(int value) {
-			this.dir = value;
-		}
-
 		protected void clearEvents() {
-			reserveFromLeft = false;
-			reserveFromRight = false;
-			reserveResult = false;
 			occupy = false;
 			unoccupy = false;
-			reset = false;
-			release = false;
 		}
 
-		protected void clearOutEvents() {
-			reserveLeft = false;
-			reserveRight = false;
-			reserveResultToLeft = false;
-			reserveResultToRight = false;
-			releaseLeft = false;
-			releaseRight = false;
-			stop = false;
-		}
 	}
 
-	protected SCISectionImpl sCISection;
+	protected SCITrainImpl sCITrain;
 
 	protected class SCIDirectionImpl implements SCIDirection {
 
-		public int getLEFT() {
-			return lEFT;
+		public int getCW() {
+			return cW;
 		}
 
-		public int getRIGHT() {
-			return rIGHT;
+		public int getCCW() {
+			return cCW;
+		}
+
+		public int getUNSPECIFIED() {
+			return uNSPECIFIED;
 		}
 
 	}
@@ -245,28 +322,23 @@ public class SectionStatemachine implements ISectionStatemachine {
 	private boolean initialized = false;
 
 	public enum State {
-		main_region_Free, main_region_NotFree, main_region_NotFree_notFree_Stop, main_region_NotFree_notFree_WaitingForResponse, main_region_NotFree_notFree_Occupied, main_region_NotFree_notFree_Reserved, main_region_NotFree_notFree_WaitForFirstResponse, main_region_NotFree_notFree_WaitForSecondResponse, main_region_NotFree_notFree_BeforeFirstReserve, $NullState$
+		_1_Free, _1_Reserved, _1_Occupied, _1_Stop, _1_Locking_protocol, _1_Locking_protocol_inner_region_WaitForFirstResponse, _1_Locking_protocol_inner_region_WaitForSecondResponse, $NullState$
 	};
 
 	private final State[] stateVector = new State[1];
 
 	private int nextStateIndex;
 
-	private ITimer timer;
-
-	private final boolean[] timeEvents = new boolean[2];
-
 	public SectionStatemachine() {
 
 		sCISection = new SCISectionImpl();
+		sCIProtocol = new SCIProtocolImpl();
+		sCITrain = new SCITrainImpl();
 		sCIDirection = new SCIDirectionImpl();
 	}
 
 	public void init() {
 		this.initialized = true;
-		if (timer == null) {
-			throw new IllegalStateException("timer not set.");
-		}
 		for (int i = 0; i < 1; i++) {
 			stateVector[i] = State.$NullState$;
 		}
@@ -276,71 +348,53 @@ public class SectionStatemachine implements ISectionStatemachine {
 
 		sCISection.setId(0);
 
-		sCISection.setTimeout(10);
+		sCISection.setLatestReserveDirection(0);
 
-		sCISection.setDir(sCIDirection.rIGHT);
+		sCISection.setNegatedReserveDirection(0);
 	}
 
 	public void enter() {
 		if (!initialized)
-			throw new IllegalStateException(
-					"The state machine needs to be initialized first by calling the init() function.");
+			throw new IllegalStateException("The state machine needs to be initialized first by calling the init() function.");
 
-		if (timer == null) {
-			throw new IllegalStateException("timer not set.");
-		}
-		sCISection.setDir(sCIDirection.rIGHT);
+		sCISection.raiseEnableSection(sCISection.id);
+
+		sCISection.setLatestReserveDirection(sCIDirection.uNSPECIFIED);
+
+		sCISection.setNegatedReserveDirection(sCIDirection.uNSPECIFIED);
 
 		nextStateIndex = 0;
-		stateVector[0] = State.main_region_Free;
+		stateVector[0] = State._1_Free;
 	}
 
 	public void exit() {
 		switch (stateVector[0]) {
-		case main_region_Free:
+		case _1_Free:
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
 			break;
 
-		case main_region_NotFree_notFree_Stop:
-			nextStateIndex = 0;
-			stateVector[0] = State.$NullState$;
-
-			sCISection.raiseReleaseLeft();
-
-			sCISection.raiseReleaseRight();
-			break;
-
-		case main_region_NotFree_notFree_WaitingForResponse:
-			nextStateIndex = 0;
-			stateVector[0] = State.$NullState$;
-
-			timer.unsetTimer(this, 0);
-			break;
-
-		case main_region_NotFree_notFree_Occupied:
+		case _1_Reserved:
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
 			break;
 
-		case main_region_NotFree_notFree_Reserved:
+		case _1_Occupied:
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
 			break;
 
-		case main_region_NotFree_notFree_WaitForFirstResponse:
+		case _1_Stop:
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
 			break;
 
-		case main_region_NotFree_notFree_WaitForSecondResponse:
+		case _1_Locking_protocol_inner_region_WaitForFirstResponse:
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
-
-			timer.unsetTimer(this, 1);
 			break;
 
-		case main_region_NotFree_notFree_BeforeFirstReserve:
+		case _1_Locking_protocol_inner_region_WaitForSecondResponse:
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
 			break;
@@ -372,10 +426,9 @@ public class SectionStatemachine implements ISectionStatemachine {
 	 */
 	protected void clearEvents() {
 		sCISection.clearEvents();
+		sCIProtocol.clearEvents();
+		sCITrain.clearEvents();
 
-		for (int i = 0; i < timeEvents.length; i++) {
-			timeEvents[i] = false;
-		}
 	}
 
 	/**
@@ -383,6 +436,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	 */
 	protected void clearOutEvents() {
 		sCISection.clearOutEvents();
+		sCIProtocol.clearOutEvents();
 	}
 
 	/**
@@ -390,55 +444,36 @@ public class SectionStatemachine implements ISectionStatemachine {
 	 */
 	public boolean isStateActive(State state) {
 		switch (state) {
-		case main_region_Free:
-			return stateVector[0] == State.main_region_Free;
-		case main_region_NotFree:
-			return stateVector[0].ordinal() >= State.main_region_NotFree.ordinal()
-					&& stateVector[0].ordinal() <= State.main_region_NotFree_notFree_BeforeFirstReserve.ordinal();
-		case main_region_NotFree_notFree_Stop:
-			return stateVector[0] == State.main_region_NotFree_notFree_Stop;
-		case main_region_NotFree_notFree_WaitingForResponse:
-			return stateVector[0] == State.main_region_NotFree_notFree_WaitingForResponse;
-		case main_region_NotFree_notFree_Occupied:
-			return stateVector[0] == State.main_region_NotFree_notFree_Occupied;
-		case main_region_NotFree_notFree_Reserved:
-			return stateVector[0] == State.main_region_NotFree_notFree_Reserved;
-		case main_region_NotFree_notFree_WaitForFirstResponse:
-			return stateVector[0] == State.main_region_NotFree_notFree_WaitForFirstResponse;
-		case main_region_NotFree_notFree_WaitForSecondResponse:
-			return stateVector[0] == State.main_region_NotFree_notFree_WaitForSecondResponse;
-		case main_region_NotFree_notFree_BeforeFirstReserve:
-			return stateVector[0] == State.main_region_NotFree_notFree_BeforeFirstReserve;
+		case _1_Free:
+			return stateVector[0] == State._1_Free;
+		case _1_Reserved:
+			return stateVector[0] == State._1_Reserved;
+		case _1_Occupied:
+			return stateVector[0] == State._1_Occupied;
+		case _1_Stop:
+			return stateVector[0] == State._1_Stop;
+		case _1_Locking_protocol:
+			return stateVector[0].ordinal() >= State._1_Locking_protocol.ordinal()
+					&& stateVector[0].ordinal() <= State._1_Locking_protocol_inner_region_WaitForSecondResponse.ordinal();
+		case _1_Locking_protocol_inner_region_WaitForFirstResponse:
+			return stateVector[0] == State._1_Locking_protocol_inner_region_WaitForFirstResponse;
+		case _1_Locking_protocol_inner_region_WaitForSecondResponse:
+			return stateVector[0] == State._1_Locking_protocol_inner_region_WaitForSecondResponse;
 		default:
 			return false;
 		}
 	}
 
-	/**
-	 * Set the {@link ITimer} for the state machine. It must be set externally
-	 * on a timed state machine before a run cycle can be correct executed.
-	 * 
-	 * @param timer
-	 */
-	public void setTimer(ITimer timer) {
-		this.timer = timer;
-	}
-
-	/**
-	 * Returns the currently used timer.
-	 * 
-	 * @return {@link ITimer}
-	 */
-	public ITimer getTimer() {
-		return timer;
-	}
-
-	public void timeElapsed(int eventID) {
-		timeEvents[eventID] = true;
-	}
-
 	public SCISection getSCISection() {
 		return sCISection;
+	}
+
+	public SCIProtocol getSCIProtocol() {
+		return sCIProtocol;
+	}
+
+	public SCITrain getSCITrain() {
+		return sCITrain;
 	}
 
 	public SCIDirection getSCIDirection() {
@@ -446,213 +481,207 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 
 	/* The reactions of state Free. */
-	private void react_main_region_Free() {
-		if (sCISection.occupy) {
+	private void react__1_Free() {
+		if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cW)) {
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
 
-			sCISection.raiseReserveLeft();
+			sCIProtocol.raiseCanGoTo(sCIDirection.cCW);
+
+			sCISection.setLatestReserveDirection(sCIDirection.cW);
+
+			sCISection.setNegatedReserveDirection(sCIDirection.cCW);
 
 			nextStateIndex = 0;
-			stateVector[0] = State.main_region_NotFree_notFree_WaitForFirstResponse;
+			stateVector[0] = State._1_Reserved;
 		} else {
-			if (sCISection.reserveFromLeft) {
+			if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cCW)) {
 				nextStateIndex = 0;
 				stateVector[0] = State.$NullState$;
 
-				sCISection.raiseReserveResultToLeft(true);
+				sCIProtocol.raiseCanGoTo(sCIDirection.cW);
 
-				sCISection.setDir(sCIDirection.rIGHT);
+				sCISection.setLatestReserveDirection(sCIDirection.cCW);
+
+				sCISection.setNegatedReserveDirection(sCIDirection.cW);
 
 				nextStateIndex = 0;
-				stateVector[0] = State.main_region_NotFree_notFree_Reserved;
+				stateVector[0] = State._1_Reserved;
 			} else {
-				if (sCISection.reserveFromRight) {
+				if (sCITrain.occupy) {
 					nextStateIndex = 0;
 					stateVector[0] = State.$NullState$;
 
-					sCISection.raiseReserveResultToRight(true);
-
-					sCISection.setDir(sCIDirection.lEFT);
+					sCIProtocol.raiseReserveTo(sCIDirection.cCW);
 
 					nextStateIndex = 0;
-					stateVector[0] = State.main_region_NotFree_notFree_Reserved;
+					stateVector[0] = State._1_Locking_protocol_inner_region_WaitForFirstResponse;
 				}
 			}
 		}
 	}
 
-	/* The reactions of state Stop. */
-	private void react_main_region_NotFree_notFree_Stop() {
-		if (sCISection.reserveFromLeft) {
-			sCISection.raiseReserveResultToLeft(false);
-		}
-
-		if (sCISection.reserveFromRight) {
-			sCISection.raiseReserveResultToRight(false);
-		}
-
-		if (sCISection.unoccupy) {
-			switch (stateVector[0]) {
-			case main_region_NotFree_notFree_Stop:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				sCISection.raiseReleaseLeft();
-
-				sCISection.raiseReleaseRight();
-				break;
-
-			case main_region_NotFree_notFree_WaitingForResponse:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				timer.unsetTimer(this, 0);
-				break;
-
-			case main_region_NotFree_notFree_Occupied:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-				break;
-
-			case main_region_NotFree_notFree_Reserved:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-				break;
-
-			case main_region_NotFree_notFree_WaitForFirstResponse:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-				break;
-
-			case main_region_NotFree_notFree_WaitForSecondResponse:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				timer.unsetTimer(this, 1);
-				break;
-
-			case main_region_NotFree_notFree_BeforeFirstReserve:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-				break;
-
-			default:
-				break;
-			}
-
-			sCISection.setDir(sCIDirection.rIGHT);
-
-			nextStateIndex = 0;
-			stateVector[0] = State.main_region_Free;
-		} else {
-			if (sCISection.reset) {
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				sCISection.raiseReleaseLeft();
-
-				sCISection.raiseReleaseRight();
-
-				nextStateIndex = 0;
-				stateVector[0] = State.main_region_NotFree_notFree_BeforeFirstReserve;
-			}
-		}
-	}
-
-	/* The reactions of state WaitingForResponse. */
-	private void react_main_region_NotFree_notFree_WaitingForResponse() {
-		if (sCISection.reserveFromLeft) {
-			sCISection.raiseReserveResultToLeft(false);
-		}
-
-		if (sCISection.reserveFromRight) {
-			sCISection.raiseReserveResultToRight(false);
-		}
-
-		if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == false)) {
+	/* The reactions of state Reserved. */
+	private void react__1_Reserved() {
+		if (sCITrain.occupy) {
 			nextStateIndex = 0;
 			stateVector[0] = State.$NullState$;
 
-			timer.unsetTimer(this, 0);
-
-			sCISection.raiseStop();
+			sCIProtocol.raiseReserveTo(sCIDirection.cCW);
 
 			nextStateIndex = 0;
-			stateVector[0] = State.main_region_NotFree_notFree_Stop;
+			stateVector[0] = State._1_Locking_protocol_inner_region_WaitForFirstResponse;
 		} else {
-			if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == true)) {
+			if ((sCIProtocol.releaseFrom) && (sCIProtocol.getReleaseFromValue() == sCISection.latestReserveDirection)) {
 				nextStateIndex = 0;
 				stateVector[0] = State.$NullState$;
 
-				timer.unsetTimer(this, 0);
+				sCISection.raiseEnableSection(sCISection.id);
+
+				sCISection.setLatestReserveDirection(sCIDirection.uNSPECIFIED);
+
+				sCISection.setNegatedReserveDirection(sCIDirection.uNSPECIFIED);
 
 				nextStateIndex = 0;
-				stateVector[0] = State.main_region_NotFree_notFree_Occupied;
+				stateVector[0] = State._1_Free;
 			} else {
-				if (timeEvents[0]) {
-					nextStateIndex = 0;
-					stateVector[0] = State.$NullState$;
+				if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCISection.latestReserveDirection)) {
+					sCIProtocol.raiseCanGoTo(sCISection.negatedReserveDirection);
+				}
 
-					timer.unsetTimer(this, 0);
-
-					react_main_region_NotFree_notFree__choice_1();
+				if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() != sCISection.latestReserveDirection)) {
+					sCIProtocol.raiseCannotGoTo(sCISection.negatedReserveDirection);
 				}
 			}
 		}
 	}
 
 	/* The reactions of state Occupied. */
-	private void react_main_region_NotFree_notFree_Occupied() {
-		if (sCISection.reserveFromLeft) {
-			sCISection.raiseReserveResultToLeft(false);
-		}
+	private void react__1_Occupied() {
+		if (sCITrain.unoccupy) {
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
 
-		if (sCISection.reserveFromRight) {
-			sCISection.raiseReserveResultToRight(false);
-		}
+			sCIProtocol.raiseReleaseTo(sCIDirection.cW);
 
-		if (sCISection.release) {
+			sCIProtocol.raiseReleaseTo(sCIDirection.cCW);
+
+			sCISection.raiseEnableSection(sCISection.id);
+
+			sCISection.setLatestReserveDirection(sCIDirection.uNSPECIFIED);
+
+			sCISection.setNegatedReserveDirection(sCIDirection.uNSPECIFIED);
+
+			nextStateIndex = 0;
+			stateVector[0] = State._1_Free;
+		} else {
+			if ((sCIProtocol.cannotGoFrom) && (sCIProtocol.getCannotGoFromValue() == sCIDirection.cCW)) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				sCISection.raiseDisableSection(sCISection.id);
+
+				nextStateIndex = 0;
+				stateVector[0] = State._1_Stop;
+			} else {
+				if ((sCIProtocol.cannotGoFrom) && (sCIProtocol.getCannotGoFromValue() == sCIDirection.cW)) {
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					sCISection.raiseDisableSection(sCISection.id);
+
+					nextStateIndex = 0;
+					stateVector[0] = State._1_Stop;
+				} else {
+					if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cCW)) {
+						sCIProtocol.raiseCanGoTo(sCIDirection.cW);
+					}
+
+					if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cW)) {
+						sCIProtocol.raiseCanGoTo(sCIDirection.cCW);
+					}
+
+					if ((sCIProtocol.releaseFrom) && (sCIProtocol.getReleaseFromValue() == sCIDirection.cCW)) {
+						sCIProtocol.raiseReserveTo(sCIDirection.cW);
+					}
+
+					if ((sCIProtocol.releaseFrom) && (sCIProtocol.getReleaseFromValue() == sCIDirection.cW)) {
+						sCIProtocol.raiseReserveTo(sCIDirection.cCW);
+					}
+				}
+			}
+		}
+	}
+
+	/* The reactions of state Stop. */
+	private void react__1_Stop() {
+		if (sCITrain.unoccupy) {
+			nextStateIndex = 0;
+			stateVector[0] = State.$NullState$;
+
+			sCIProtocol.raiseReleaseTo(sCIDirection.cW);
+
+			sCIProtocol.raiseReleaseTo(sCIDirection.cCW);
+
+			sCISection.raiseEnableSection(sCISection.id);
+
+			sCISection.setLatestReserveDirection(sCIDirection.uNSPECIFIED);
+
+			sCISection.setNegatedReserveDirection(sCIDirection.uNSPECIFIED);
+
+			nextStateIndex = 0;
+			stateVector[0] = State._1_Free;
+		} else {
+			if ((sCIProtocol.releaseFrom) && (sCIProtocol.getReleaseFromValue() == sCIDirection.cCW)) {
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+
+				sCIProtocol.raiseReserveTo(sCIDirection.cCW);
+
+				nextStateIndex = 0;
+				stateVector[0] = State._1_Locking_protocol_inner_region_WaitForFirstResponse;
+			} else {
+				if ((sCIProtocol.releaseFrom) && (sCIProtocol.getReleaseFromValue() == sCIDirection.cW)) {
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+
+					sCIProtocol.raiseReserveTo(sCIDirection.cCW);
+
+					nextStateIndex = 0;
+					stateVector[0] = State._1_Locking_protocol_inner_region_WaitForFirstResponse;
+				} else {
+					if (sCIProtocol.restartProtocol) {
+						nextStateIndex = 0;
+						stateVector[0] = State.$NullState$;
+
+						sCIProtocol.raiseReserveTo(sCIDirection.cCW);
+
+						nextStateIndex = 0;
+						stateVector[0] = State._1_Locking_protocol_inner_region_WaitForFirstResponse;
+					} else {
+						if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cCW)) {
+							sCIProtocol.raiseCannotGoTo(sCIDirection.cW);
+						}
+
+						if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cW)) {
+							sCIProtocol.raiseCannotGoTo(sCIDirection.cCW);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/* The reactions of state WaitForFirstResponse. */
+	private void react__1_Locking_protocol_inner_region_WaitForFirstResponse() {
+		if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cCW)) {
 			switch (stateVector[0]) {
-			case main_region_NotFree_notFree_Stop:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				sCISection.raiseReleaseLeft();
-
-				sCISection.raiseReleaseRight();
-				break;
-
-			case main_region_NotFree_notFree_WaitingForResponse:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				timer.unsetTimer(this, 0);
-				break;
-
-			case main_region_NotFree_notFree_Occupied:
+			case _1_Locking_protocol_inner_region_WaitForFirstResponse:
 				nextStateIndex = 0;
 				stateVector[0] = State.$NullState$;
 				break;
 
-			case main_region_NotFree_notFree_Reserved:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-				break;
-
-			case main_region_NotFree_notFree_WaitForFirstResponse:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-				break;
-
-			case main_region_NotFree_notFree_WaitForSecondResponse:
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				timer.unsetTimer(this, 1);
-				break;
-
-			case main_region_NotFree_notFree_BeforeFirstReserve:
+			case _1_Locking_protocol_inner_region_WaitForSecondResponse:
 				nextStateIndex = 0;
 				stateVector[0] = State.$NullState$;
 				break;
@@ -661,81 +690,21 @@ public class SectionStatemachine implements ISectionStatemachine {
 				break;
 			}
 
-			sCISection.raiseReleaseLeft();
+			sCIProtocol.raiseCannotGoTo(sCIDirection.cW);
 
-			sCISection.raiseReleaseRight();
-
-			sCISection.setDir(sCIDirection.rIGHT);
+			sCISection.raiseDisableSection(sCISection.id);
 
 			nextStateIndex = 0;
-			stateVector[0] = State.main_region_Free;
+			stateVector[0] = State._1_Stop;
 		} else {
-			if (sCISection.unoccupy) {
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				react_main_region_NotFree_notFree__choice_0();
-			}
-		}
-	}
-
-	/* The reactions of state Reserved. */
-	private void react_main_region_NotFree_notFree_Reserved() {
-		if (sCISection.reserveFromLeft) {
-			sCISection.raiseReserveResultToLeft(false);
-		}
-
-		if (sCISection.reserveFromRight) {
-			sCISection.raiseReserveResultToRight(false);
-		}
-
-		if (sCISection.occupy) {
-			nextStateIndex = 0;
-			stateVector[0] = State.$NullState$;
-
-			react_main_region_NotFree_notFree__choice_1();
-		} else {
-			if (sCISection.release) {
+			if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cW)) {
 				switch (stateVector[0]) {
-				case main_region_NotFree_notFree_Stop:
-					nextStateIndex = 0;
-					stateVector[0] = State.$NullState$;
-
-					sCISection.raiseReleaseLeft();
-
-					sCISection.raiseReleaseRight();
-					break;
-
-				case main_region_NotFree_notFree_WaitingForResponse:
-					nextStateIndex = 0;
-					stateVector[0] = State.$NullState$;
-
-					timer.unsetTimer(this, 0);
-					break;
-
-				case main_region_NotFree_notFree_Occupied:
+				case _1_Locking_protocol_inner_region_WaitForFirstResponse:
 					nextStateIndex = 0;
 					stateVector[0] = State.$NullState$;
 					break;
 
-				case main_region_NotFree_notFree_Reserved:
-					nextStateIndex = 0;
-					stateVector[0] = State.$NullState$;
-					break;
-
-				case main_region_NotFree_notFree_WaitForFirstResponse:
-					nextStateIndex = 0;
-					stateVector[0] = State.$NullState$;
-					break;
-
-				case main_region_NotFree_notFree_WaitForSecondResponse:
-					nextStateIndex = 0;
-					stateVector[0] = State.$NullState$;
-
-					timer.unsetTimer(this, 1);
-					break;
-
-				case main_region_NotFree_notFree_BeforeFirstReserve:
+				case _1_Locking_protocol_inner_region_WaitForSecondResponse:
 					nextStateIndex = 0;
 					stateVector[0] = State.$NullState$;
 					break;
@@ -744,178 +713,171 @@ public class SectionStatemachine implements ISectionStatemachine {
 					break;
 				}
 
-				sCISection.setDir(sCIDirection.rIGHT);
+				sCIProtocol.raiseCannotGoTo(sCIDirection.cCW);
+
+				sCISection.raiseDisableSection(sCISection.id);
 
 				nextStateIndex = 0;
-				stateVector[0] = State.main_region_Free;
-			}
-		}
-	}
-
-	/* The reactions of state WaitForFirstResponse. */
-	private void react_main_region_NotFree_notFree_WaitForFirstResponse() {
-		if (sCISection.reserveFromLeft) {
-			sCISection.raiseReserveResultToLeft(false);
-		}
-
-		if (sCISection.reserveFromRight) {
-			sCISection.raiseReserveResultToRight(false);
-		}
-
-		if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == false)) {
-			nextStateIndex = 0;
-			stateVector[0] = State.$NullState$;
-
-			nextStateIndex = 0;
-			stateVector[0] = State.main_region_NotFree_notFree_Stop;
-		} else {
-			if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == true)) {
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				sCISection.raiseReserveRight();
-
-				timer.setTimer(this, 1, sCISection.timeout, false);
-
-				nextStateIndex = 0;
-				stateVector[0] = State.main_region_NotFree_notFree_WaitForSecondResponse;
-			}
-		}
-	}
-
-	/* The reactions of state WaitForSecondResponse. */
-	private void react_main_region_NotFree_notFree_WaitForSecondResponse() {
-		if (sCISection.reserveFromLeft) {
-			sCISection.raiseReserveResultToLeft(false);
-		}
-
-		if (sCISection.reserveFromRight) {
-			sCISection.raiseReserveResultToRight(false);
-		}
-
-		if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == false)) {
-			nextStateIndex = 0;
-			stateVector[0] = State.$NullState$;
-
-			timer.unsetTimer(this, 1);
-
-			nextStateIndex = 0;
-			stateVector[0] = State.main_region_NotFree_notFree_Stop;
-		} else {
-			if ((sCISection.reserveResult) && (sCISection.getReserveResultValue() == true)) {
-				nextStateIndex = 0;
-				stateVector[0] = State.$NullState$;
-
-				timer.unsetTimer(this, 1);
-
-				nextStateIndex = 0;
-				stateVector[0] = State.main_region_NotFree_notFree_Occupied;
+				stateVector[0] = State._1_Stop;
 			} else {
-				if (timeEvents[1]) {
+				if ((sCIProtocol.canGoFrom) && (sCIProtocol.getCanGoFromValue() == sCIDirection.cW)) {
 					nextStateIndex = 0;
 					stateVector[0] = State.$NullState$;
 
-					timer.unsetTimer(this, 1);
-
-					sCISection.raiseReserveLeft();
+					sCIProtocol.raiseReserveTo(sCIDirection.cW);
 
 					nextStateIndex = 0;
-					stateVector[0] = State.main_region_NotFree_notFree_WaitForFirstResponse;
+					stateVector[0] = State._1_Locking_protocol_inner_region_WaitForSecondResponse;
+				} else {
+					if ((sCIProtocol.cannotGoFrom) && (sCIProtocol.getCannotGoFromValue() == sCIDirection.cW)) {
+						switch (stateVector[0]) {
+						case _1_Locking_protocol_inner_region_WaitForFirstResponse:
+							nextStateIndex = 0;
+							stateVector[0] = State.$NullState$;
+							break;
+
+						case _1_Locking_protocol_inner_region_WaitForSecondResponse:
+							nextStateIndex = 0;
+							stateVector[0] = State.$NullState$;
+							break;
+
+						default:
+							break;
+						}
+
+						sCIProtocol.raiseReserveTo(sCIDirection.cW);
+
+						sCISection.raiseDisableSection(sCISection.id);
+
+						nextStateIndex = 0;
+						stateVector[0] = State._1_Stop;
+					}
 				}
 			}
 		}
 	}
 
-	/* The reactions of state BeforeFirstReserve. */
-	private void react_main_region_NotFree_notFree_BeforeFirstReserve() {
-		if (sCISection.reserveFromLeft) {
-			sCISection.raiseReserveResultToLeft(false);
-		}
-
-		if (sCISection.reserveFromRight) {
-			sCISection.raiseReserveResultToRight(false);
-		}
-
-		nextStateIndex = 0;
-		stateVector[0] = State.$NullState$;
-
-		sCISection.raiseReserveLeft();
-
-		nextStateIndex = 0;
-		stateVector[0] = State.main_region_NotFree_notFree_WaitForFirstResponse;
-	}
-
-	/* The reactions of state null. */
-	private void react_main_region_NotFree_notFree__choice_0() {
-		if (sCISection.dir == sCIDirection.lEFT) {
-			sCISection.raiseReleaseRight();
-
-			nextStateIndex = 0;
-			stateVector[0] = State.main_region_NotFree_notFree_Reserved;
-		} else {
-			if (sCISection.dir == sCIDirection.rIGHT) {
-				sCISection.raiseReleaseLeft();
-
+	/* The reactions of state WaitForSecondResponse. */
+	private void react__1_Locking_protocol_inner_region_WaitForSecondResponse() {
+		if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cCW)) {
+			switch (stateVector[0]) {
+			case _1_Locking_protocol_inner_region_WaitForFirstResponse:
 				nextStateIndex = 0;
-				stateVector[0] = State.main_region_NotFree_notFree_Reserved;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			case _1_Locking_protocol_inner_region_WaitForSecondResponse:
+				nextStateIndex = 0;
+				stateVector[0] = State.$NullState$;
+				break;
+
+			default:
+				break;
 			}
-		}
-	}
 
-	/* The reactions of state null. */
-	private void react_main_region_NotFree_notFree__choice_1() {
-		if (sCISection.dir == sCIDirection.lEFT) {
-			sCISection.raiseReserveLeft();
+			sCIProtocol.raiseCannotGoTo(sCIDirection.cW);
 
-			timer.setTimer(this, 0, sCISection.timeout, false);
+			sCISection.raiseDisableSection(sCISection.id);
 
 			nextStateIndex = 0;
-			stateVector[0] = State.main_region_NotFree_notFree_WaitingForResponse;
+			stateVector[0] = State._1_Stop;
 		} else {
-			if (sCISection.dir == sCIDirection.rIGHT) {
-				sCISection.raiseReserveRight();
+			if ((sCIProtocol.reserveFrom) && (sCIProtocol.getReserveFromValue() == sCIDirection.cW)) {
+				switch (stateVector[0]) {
+				case _1_Locking_protocol_inner_region_WaitForFirstResponse:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+					break;
 
-				timer.setTimer(this, 0, sCISection.timeout, false);
+				case _1_Locking_protocol_inner_region_WaitForSecondResponse:
+					nextStateIndex = 0;
+					stateVector[0] = State.$NullState$;
+					break;
+
+				default:
+					break;
+				}
+
+				sCIProtocol.raiseCannotGoTo(sCIDirection.cCW);
+
+				sCISection.raiseDisableSection(sCISection.id);
 
 				nextStateIndex = 0;
-				stateVector[0] = State.main_region_NotFree_notFree_WaitingForResponse;
+				stateVector[0] = State._1_Stop;
+			} else {
+				if ((sCIProtocol.canGoFrom) && (sCIProtocol.getCanGoFromValue() == sCIDirection.cCW)) {
+					switch (stateVector[0]) {
+					case _1_Locking_protocol_inner_region_WaitForFirstResponse:
+						nextStateIndex = 0;
+						stateVector[0] = State.$NullState$;
+						break;
+
+					case _1_Locking_protocol_inner_region_WaitForSecondResponse:
+						nextStateIndex = 0;
+						stateVector[0] = State.$NullState$;
+						break;
+
+					default:
+						break;
+					}
+
+					sCISection.raiseEnableSection(sCISection.id);
+
+					nextStateIndex = 0;
+					stateVector[0] = State._1_Occupied;
+				} else {
+					if ((sCIProtocol.cannotGoFrom) && (sCIProtocol.getCannotGoFromValue() == sCIDirection.cCW)) {
+						switch (stateVector[0]) {
+						case _1_Locking_protocol_inner_region_WaitForFirstResponse:
+							nextStateIndex = 0;
+							stateVector[0] = State.$NullState$;
+							break;
+
+						case _1_Locking_protocol_inner_region_WaitForSecondResponse:
+							nextStateIndex = 0;
+							stateVector[0] = State.$NullState$;
+							break;
+
+						default:
+							break;
+						}
+
+						sCISection.raiseDisableSection(sCISection.id);
+
+						nextStateIndex = 0;
+						stateVector[0] = State._1_Stop;
+					}
+				}
 			}
 		}
 	}
 
 	public void runCycle() {
 		if (!initialized)
-			throw new IllegalStateException(
-					"The state machine needs to be initialized first by calling the init() function.");
+			throw new IllegalStateException("The state machine needs to be initialized first by calling the init() function.");
 
 		clearOutEvents();
 
 		for (nextStateIndex = 0; nextStateIndex < stateVector.length; nextStateIndex++) {
 
 			switch (stateVector[nextStateIndex]) {
-			case main_region_Free:
-				react_main_region_Free();
+			case _1_Free:
+				react__1_Free();
 				break;
-			case main_region_NotFree_notFree_Stop:
-				react_main_region_NotFree_notFree_Stop();
+			case _1_Reserved:
+				react__1_Reserved();
 				break;
-			case main_region_NotFree_notFree_WaitingForResponse:
-				react_main_region_NotFree_notFree_WaitingForResponse();
+			case _1_Occupied:
+				react__1_Occupied();
 				break;
-			case main_region_NotFree_notFree_Occupied:
-				react_main_region_NotFree_notFree_Occupied();
+			case _1_Stop:
+				react__1_Stop();
 				break;
-			case main_region_NotFree_notFree_Reserved:
-				react_main_region_NotFree_notFree_Reserved();
+			case _1_Locking_protocol_inner_region_WaitForFirstResponse:
+				react__1_Locking_protocol_inner_region_WaitForFirstResponse();
 				break;
-			case main_region_NotFree_notFree_WaitForFirstResponse:
-				react_main_region_NotFree_notFree_WaitForFirstResponse();
-				break;
-			case main_region_NotFree_notFree_WaitForSecondResponse:
-				react_main_region_NotFree_notFree_WaitForSecondResponse();
-				break;
-			case main_region_NotFree_notFree_BeforeFirstReserve:
-				react_main_region_NotFree_notFree_BeforeFirstReserve();
+			case _1_Locking_protocol_inner_region_WaitForSecondResponse:
+				react__1_Locking_protocol_inner_region_WaitForSecondResponse();
 				break;
 			default:
 				// $NullState$

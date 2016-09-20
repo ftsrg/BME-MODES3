@@ -23,7 +23,7 @@ public final class Enums {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\013Enums.proto*\370\002\n\013MessageType\022\010\n\004NULL\020\000\022" +
+      "\n\013Enums.proto*\212\003\n\013MessageType\022\010\n\004NULL\020\000\022" +
       "\023\n\017SEGMENT_COMMAND\020\001\022\021\n\rSEGMENT_STATE\020\002\022" +
       "\031\n\025TRAIN_CURRENT_SEGMENT\020\003\022\027\n\023TRAIN_CURR" +
       "ENT_SPEED\020\004\022\033\n\027TRAIN_DIRECTION_COMMAND\020\005" +
@@ -31,16 +31,17 @@ public final class Enums {
       "FERENCE_SPEED\020\007\022!\n\035TRAIN_REFERENCE_SPEED" +
       "_COMMAND\020\010\022\023\n\017TURNOUT_COMMAND\020\t\022\021\n\rTURNO" +
       "UT_STATE\020\n\022\025\n\021SEGMENT_OCCUPANCY\020\013\022\026\n\022YAK" +
-      "INDU_RELEASE_TO\020\014\022\035\n\031YAKINDU_RESERVE_RES" +
-      "ULT_TO\020\r\022\026\n\022YAKINDU_RESERVE_TO\020\016*.\n\021Segm",
-      "entStateValue\022\014\n\010DISABLED\020\000\022\013\n\007ENABLED\020\001" +
-      "*0\n\023TrainDirectionValue\022\013\n\007FORWARD\020\000\022\014\n\010" +
-      "BACKWARD\020\001*0\n\021TurnoutStateValue\022\014\n\010STRAI" +
-      "GHT\020\000\022\r\n\tDIVERGENT\020\001*/\n\025SegmentOccupancy" +
-      "Value\022\010\n\004FREE\020\000\022\014\n\010OCCUPIED\020\001*=\n\032Yakindu" +
-      "ConnectionDirection\022\010\n\004LEFT\020\000\022\t\n\005RIGHT\020\001" +
-      "\022\n\n\006BOTTOM\020\002B0\n,hu.bme.mit.inf.modes3.me" +
-      "ssaging.mms.messagesP\001b\006proto3"
+      "INDU_RELEASE_TO\020\014\022\025\n\021YAKINDU_CAN_GO_TO\020\r" +
+      "\022\030\n\024YAKINDU_CANNOT_GO_TO\020\016\022\026\n\022YAKINDU_RE",
+      "SERVE_TO\020\017*.\n\021SegmentStateValue\022\014\n\010DISAB" +
+      "LED\020\000\022\013\n\007ENABLED\020\001*0\n\023TrainDirectionValu" +
+      "e\022\013\n\007FORWARD\020\000\022\014\n\010BACKWARD\020\001*0\n\021TurnoutS" +
+      "tateValue\022\014\n\010STRAIGHT\020\000\022\r\n\tDIVERGENT\020\001*/" +
+      "\n\025SegmentOccupancyValue\022\010\n\004FREE\020\000\022\014\n\010OCC" +
+      "UPIED\020\001*Y\n\032YakinduConnectionDirection\022\006\n" +
+      "\002CW\020\000\022\007\n\003CCW\020\001\022\t\n\005Y_TOP\020\002\022\017\n\013Y_DIVERGENT" +
+      "\020\003\022\016\n\nY_STRAIGHT\020\004B0\n,hu.bme.mit.inf.mod" +
+      "es3.messaging.mms.messagesP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
