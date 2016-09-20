@@ -7,7 +7,7 @@ plugins {
 
 sonarqube {
 	properties {
-		property "sonar.exclusions", "messaging/hu.bme.mit.inf.modes3.messaging.proto/**"
+		property "sonar.projectName", "MoDeS3"
 	}
 }
 
