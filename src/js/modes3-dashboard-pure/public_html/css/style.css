@@ -91,6 +91,7 @@ body {
 }
 
 #layout-tab #layout-control {
+    z-index: 12;
     margin-right: 300px;
     display: block;
 }
@@ -110,7 +111,7 @@ body {
     color: #FFF;
     transition: all 0.5s;
     z-index: 3;
-    background-color: #1e2141;
+    background-color: #CCC;
 }
 
 #layout-tab #train-control.active {

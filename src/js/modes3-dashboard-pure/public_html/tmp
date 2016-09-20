@@ -1,0 +1,61 @@
+<animate
+            id="transformx"
+            xlink:href="#position"
+            dur="10.001s"
+            begin="click"
+            fill="freeze"
+            attributeType="XML"
+            attributeName="cx"
+            to="0"/><!--
+        
+-->        <animate
+            id="transformy"
+            xlink:href="#position"
+            dur="10.001s"
+            begin="transformx.begin"
+            fill="freeze"
+            attributeType="XML"
+            attributeName="cy"
+            to="0"/>
+        
+        <animateMotion
+            xlink:href="#position"
+            dur="10s"
+            begin="transformy.end"
+            fill="freeze"
+            path="m 1842.5195,527.24719 -3.8945,0 C 1605.7289,522.49451 1360.963,580.34638 1088.6364,728.20602 864.55296,858.52944 681.52546,1037.3735 544.93826,1271.1016"        />
+
+
+
+<g
+       transform="translate(-4236.0175,1305.5697)"
+       id="l01">
+      <path
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:21.25984192;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         d="m 4625.0244,-1008.2634 59.605,0.1892 285.263,100.88768 -285.7614,100.9181 -59.7037,0.1522 z"
+         id="backward" />
+      <path
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:21.25984192;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         d="m 4612.7867,-1008.2634 -59.605,0.1892 -285.263,100.88768 285.7614,100.9181 59.7037,0.1522 z"
+         id="forward" />
+      <circle
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:31.88976288;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         id="position"
+         cx="4619.2207"
+         cy="-907.40875"
+         r="100.91698" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:150px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         x="4735.0444"
+         y="-1152.2821"
+         id="name"><tspan
+             x="4735.0444"
+             y="-1152.2821"
+             style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:150px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;writing-mode:lr-tb;text-anchor:start"
+             id="tspan7191">Taurus MÁV 1216</tspan></text>
+      <path
+         style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#1e2141;stroke-width:21.25984192;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+         d="m 4620.6876,-916.6263 -0.1046,-109.4159 121.2882,-93.673 1220.9691,0"
+         id="path10901-0" />
+    </g>

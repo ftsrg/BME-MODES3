@@ -12,10 +12,11 @@
  * 
  */
 
-function SectionControllerClass(sectionID) {
+function SectionControllerClass(sectionSettings) {
     // setting up instance variables
-    this.sectionID = sectionID;
-    this.svgElem = $('#layout').find("#s" + zeroPad(sectionID, 2));
+    this.sectionID = sectionSettings.id;
+    this.sectionDirection = sectionSettings.direction;
+    this.svgElem = $('#layout').find("#s" + zeroPad(this.sectionID, 2));
 
     // initialy section will be undefined
     setTrackElementColor(this.svgElem, settings.undefinedStateTrackElementColor);
