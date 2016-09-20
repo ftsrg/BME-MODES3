@@ -60,7 +60,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override getTurnoutStatus(int turnoutId) {
-		logger.info('''Reading turnout ''' + turnoutId + ''''s physical direction.''')
+		logger.info('''Reading turnout «turnoutId»'s physical direction.''')
 
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 
@@ -83,7 +83,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override setTurnoutStraight(int turnoutId) {
-		logger.info('''Set turnout ''' + turnoutId + ''' straight physically.''')
+		logger.info('''Set turnout «turnoutId» straight physically.''')
 
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
@@ -91,7 +91,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override setTurnoutDivergent(int turnoutId) {
-		logger.info('''Set turnout ''' + turnoutId + ''' divergent physically.''')
+		logger.info('''Set turnout «turnoutId» divergent physically.''')
 
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement

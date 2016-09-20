@@ -52,8 +52,8 @@ package class SectionMessageHandler implements ISegmentCommandListener {
 	}
 
 	override onSegmentCommand(int id, SegmentState state) {
-		logger.info('''Segment ''' + id + ''' command ''' + state + ''' received.''')
-		
+		logger.info('''Segment «id» command «state» received.''')
+
 		switch (state) {
 			case SegmentState.ENABLED: handleLineEnable(id)
 			case SegmentState.DISABLED: handleLineDisable(id)

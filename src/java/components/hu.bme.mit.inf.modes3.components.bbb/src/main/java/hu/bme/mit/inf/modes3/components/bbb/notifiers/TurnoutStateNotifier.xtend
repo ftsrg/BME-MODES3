@@ -41,7 +41,7 @@ package class TurnoutStateNotifier implements Runnable {
 					val turnoutStatus = turnoutController.getTurnoutStatus(turnoutId)
 					trackElementStateSender.sendTurnoutState(turnoutId, turnoutStatus)
 
-					logger.info('''Turnout ''' + turnoutId + ''''s status ''' + turnoutStatus + ''' is sent.''')
+					logger.info('''Turnout «turnoutId»'s status «turnoutStatus» is sent.''')
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
 			} catch(InterruptedException ex) {

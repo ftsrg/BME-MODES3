@@ -55,7 +55,7 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 	}
 
 	override enableSection(int sectionId) {
-		logger.info('''Enable ''' + sectionId + ''' physically.''')
+		logger.info('''Enable section «sectionId» physically.''')
 
 		val sectionExpander = controllerConf.getSectionExpander(sectionId);
 		board.setPinLevel(sectionExpander.get(0), Signal.High)
@@ -67,7 +67,7 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 	}
 
 	override disableSection(int sectionId) {
-		logger.info('''Disable ''' + sectionId + ''' physically.''')
+		logger.info('''Disable section «sectionId» physically.''')
 
 		val sectionExpander = controllerConf.getSectionExpander(sectionId)
 		board.setPinLevel(sectionExpander.get(0), Signal.Low)

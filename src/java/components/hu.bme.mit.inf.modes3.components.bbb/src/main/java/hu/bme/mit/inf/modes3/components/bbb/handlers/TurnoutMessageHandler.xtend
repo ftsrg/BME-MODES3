@@ -51,7 +51,7 @@ package class TurnoutMessageHandler implements ITurnoutCommandListener {
 	}
 
 	override onTurnoutCommand(int turnoutId, TurnoutState state) {
-		logger.info('''Turnout ''' + turnoutId + ''' command ''' + state + ''' received.''')
+		logger.info('''Turnout «turnoutId» command «state» received.''')
 
 		switch (state) {
 			case TurnoutState.STRAIGHT: handleSetTurnoutStraight(turnoutId)

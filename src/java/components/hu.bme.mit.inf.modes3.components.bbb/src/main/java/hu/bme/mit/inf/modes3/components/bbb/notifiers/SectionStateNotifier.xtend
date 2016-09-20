@@ -41,7 +41,7 @@ package class SectionStateNotifier implements Runnable {
 					val sectionStatus = sectionController.getSectionStatus(sectionId)
 					trackElementStateSender.sendSegmentState(sectionId, sectionStatus)
 					
-					logger.info('''Section ''' + sectionId + ''''s status ''' + sectionStatus + ''' is sent.''')
+					logger.info('''Section «sectionId»'s status «sectionStatus» is sent.''')
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
 			} catch(InterruptedException ex) {

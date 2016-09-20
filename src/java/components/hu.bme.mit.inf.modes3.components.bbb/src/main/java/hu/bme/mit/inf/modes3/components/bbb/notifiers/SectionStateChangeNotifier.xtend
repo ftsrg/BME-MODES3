@@ -44,7 +44,7 @@ package class SectionStateChangeNotifier extends SectionStateNotifier {
 						latestSectionStates.put(sectionId, status)
 						trackElementStateSender.sendSegmentState(sectionId, status)
 
-						logger.info('''Section ''' + sectionId + ''''s status ''' + status + ''' is sent.''')
+						logger.info('''Section «sectionId»'s status «status» is sent.''')
 					}
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
