@@ -1,31 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MoDeS3 Dashboard</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="css/style.css"/>
-        <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
-        <script type="text/javascript" src="js/jquery.svgstyle.min.js"></script>
-        <script type="text/javascript" src="js/config.js"></script>
-        <script type="text/javascript" src="js/utils.js"></script>
-        <script type="text/javascript" src="js/class/section.js"></script>
-        <script type="text/javascript" src="js/class/turnout.js"></script>
-        <script type="text/javascript" src="js/class/locomotive.js"></script>
-        <script type="text/javascript" src="js/setup.js"></script>
-    </head>
-    <body>
-        <div id="page">
-            <div id="tab-controls">
-                <a id="layout-tab-header" class="tab-control-item active">Layout</a>
-                <a id="devices-tab-header" class="tab-control-item">Devices</a>
-            </div>
-            <div id="tab-content">
-                <div id="layout-tab" class="tab-content-item">
-                    <div id="train-control-button">Control<br />trains</div>
-                    <div id="layout-control">
-                        
-                        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -35,8 +8,10 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    version="1.1"
-   id="layout"
-   viewBox="0 0 8858.2677 4960.63">
+   id="svg2"
+   viewBox="0 0 8858.2677 4960.63"
+   height="1400mm"
+   width="2500mm">
   <defs
      id="defs4">
     <linearGradient
@@ -1546,25 +1521,3 @@
        xlink:href="#position" />
   </g>
 </svg>
-                        
-                        
-                        <!---
-
-
-SVG CONTENT ENDS HERE
-
-
-
---->
-                    </div>
-                    <div id="train-control">
-                       
-                    </div>
-                </div>
-                <div id="devices-tab" class="tab-content-item">
-                    TODO
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
