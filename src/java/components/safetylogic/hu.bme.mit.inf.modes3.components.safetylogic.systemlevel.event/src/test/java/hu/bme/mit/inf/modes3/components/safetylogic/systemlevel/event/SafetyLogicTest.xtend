@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
 import java.util.List
+import org.slf4j.helpers.NOPLogger
 
 class SafetyLogicTest {
 	
@@ -28,7 +29,7 @@ class SafetyLogicTest {
 	
 	@Test
 	def void safetyLogicRegressionTest(){
-		new TrackElementStateSender(mms) => [
+		new TrackElementStateSender(mms, (new NOPLoggerFactory).getLogger('')) => [
 			sendSegmentOccupation(15, SegmentOccupancy.OCCUPIED)
 			sendSegmentOccupation(24, SegmentOccupancy.OCCUPIED)
 			

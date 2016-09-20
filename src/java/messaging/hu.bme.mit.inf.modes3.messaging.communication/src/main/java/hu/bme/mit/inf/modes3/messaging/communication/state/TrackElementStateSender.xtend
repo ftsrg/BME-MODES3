@@ -6,10 +6,11 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
+import org.slf4j.Logger
 
 class TrackElementStateSender implements ITrackElementStateSender {
 	var MessagingService mms
-	new(MessagingService mms){
+	new(MessagingService mms, Logger logger){
 		this.mms = mms
 	}
 	

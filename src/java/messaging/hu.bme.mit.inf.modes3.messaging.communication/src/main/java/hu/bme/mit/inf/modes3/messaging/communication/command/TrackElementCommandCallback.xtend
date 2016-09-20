@@ -6,12 +6,13 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnout
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import org.slf4j.Logger
 
 class TrackElementCommandCallback implements ITrackElementCommandCallback {
 	var  ISegmentCommandListener segmentCommandListener
 	var ITurnoutCommandListener turnoutCommandListener
 
-	new(ProtobufMessageDispatcher dispatcher) {
+	new(ProtobufMessageDispatcher dispatcher, Logger logger) {
 		val segmentCommandClient = new SegmentCommandClient(this) 
 		val turnoutCommandClient = new TurnoutCommandClient(this)
 

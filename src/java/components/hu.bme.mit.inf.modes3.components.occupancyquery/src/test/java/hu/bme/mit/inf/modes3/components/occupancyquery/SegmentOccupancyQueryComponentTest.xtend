@@ -20,7 +20,7 @@ public class SegmentOccupancyQueryComponentTest {
 	@Test
 	def void segmentOccupancyQueryComponentTest(){
 		val map = new HashMap<Integer, SegmentOccupancy>
-		new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack) => [
+		new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger('')) => [
 			trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener(){
 				override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
 					map.put(id, newValue)

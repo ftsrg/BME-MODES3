@@ -13,6 +13,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutSt
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import java.util.concurrent.ConcurrentHashMap
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.Logger
 
 class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	val segments = new ConcurrentHashMap<Integer, SegmentState>
@@ -24,7 +25,7 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISegmentOccupancyChangeListener segmentOccupancyChangeListener
 	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) TrackElementStateCallback trackElementStateCallback
 
-	new(ProtobufMessageDispatcher dispatcher) {
+	new(ProtobufMessageDispatcher dispatcher, Logger logger) {
 		this.dispatcher = dispatcher
 		trackElementStateCallback = new TrackElementStateCallback(dispatcher, new ISegmentStateListener() {
 
