@@ -16,9 +16,12 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener {
 		this.logger = logger
 	}
 	
+	private def print(SegmentOccupancy value){
+		if(value == SegmentOccupancy.FREE) 'FREE' else 'OCCUPIED'
+	}
 	
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
-		logger.info('''Segment occupancy changed on «id»''')
+		logger.info('''Segment occupancy changed on «id» from «oldValue.print» to «newValue.print»''')
 		val enabledTrains = model.getEnabledTrains
 		if(newValue == SegmentOccupancy.OCCUPIED) {
 			val changedSection = model.getSegment(id)
@@ -27,6 +30,8 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener {
 			if(train == null) { // There is not even a train nearby, so it must have been put there recently
 				train = model.addNewTrain
 				logger.info('''New train estimated on «changedSection.id»''')
+			} else {
+				logger.info('''Train moved from «train.currentlyOn.id» to «changedSection.id»''')
 			}
 			train.previouslyOn = train.currentlyOn
 			train.currentlyOn = changedSection
