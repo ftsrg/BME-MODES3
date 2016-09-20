@@ -36,9 +36,6 @@ class TrainMovementEstimatorTest {
 	@Test
 	def void trainMovementEstimatorTest() {
 		
-		modelUtil.getCurrentlyConnected(modelUtil.getSegment(1)).map[it as RailRoadElement].map[id].forEach[print(it + ' ')] println()
-		modelUtil.getCurrentlyConnected(modelUtil.getSegment(12)).map[it as RailRoadElement].map[id].forEach[print(it + ' ')]
-		println('-------------------------------------------------')
 		Assert.assertEquals(0, modelUtil.model.trains.size)
 		
 		estimator.onSegmentOccupancyChange(1, SegmentOccupancy.FREE, SegmentOccupancy.OCCUPIED)
