@@ -13,3 +13,7 @@ protobuf {
 	}
 	generatedFilesBaseDir = "$projectDir/src/"
 }
+
+sonarqube {
+	skipProject = true
+}

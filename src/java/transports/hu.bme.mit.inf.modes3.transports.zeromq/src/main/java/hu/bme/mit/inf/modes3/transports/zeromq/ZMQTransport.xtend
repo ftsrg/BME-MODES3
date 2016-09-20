@@ -29,7 +29,7 @@ class ZMQTransport extends Transport {
 	 * Connect to the endpoints 
 	 */
 	override connect() {
-		ctx = ZMQ.context(1);
+		ctx = ZMQ.context(2);
 
 		pub = ctx.socket(ZMQ.PUB)
 		pub.bind('''tcp://*:«config.localEndpoint.pubPort»''')
@@ -49,7 +49,6 @@ class ZMQTransport extends Transport {
 		 * http://zguide.zeromq.org/page:all#Getting-the-Message-Out 
 		 */
 		Thread.sleep(250)
-
 		println("ZMQ Net is ready")
 	}
 

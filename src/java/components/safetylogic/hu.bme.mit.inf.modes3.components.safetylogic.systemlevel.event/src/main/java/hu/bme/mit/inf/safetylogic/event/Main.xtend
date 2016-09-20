@@ -11,7 +11,7 @@ class Main {
 		registry.registerArgumentWithOptions(new ArgumentDescriptor<String>("cid", "The ID of the component"))
 		registry.parseArguments(args);
 		
-		val sl = new SafetyLogic(CommunicationStackFactory::createProtobufStack(registry))
+		val sl = new SafetyLogic(CommunicationStackFactory::createZeroMQProtobufStack(registry))
 		sl.run(); //The component will run on the main thread
 	}
 

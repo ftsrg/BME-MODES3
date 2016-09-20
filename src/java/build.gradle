@@ -1,15 +1,25 @@
 plugins {
 	id "org.xtext.xtend" version "1.0.12" apply false
 	id "com.google.protobuf" version "0.8.0" apply false
+	
+	id "org.sonarqube" version "2.1-rc3"
+}
+
+sonarqube {
+	properties {
+		property "sonar.exclusions", "messaging/hu.bme.mit.inf.modes3.messaging.proto/**"
+	}
 }
 
 subprojects {
 	repositories {
         mavenCentral()
 		maven { url "https://repo.eclipse.org/content/groups/viatra2" }
+		maven { url "https://plugins.gradle.org/m2/" }
 	}
 
 	plugins.withType(JavaPlugin) {
+
 		sourceCompatibility = 1.8
 		targetCompatibility = 1.8
 

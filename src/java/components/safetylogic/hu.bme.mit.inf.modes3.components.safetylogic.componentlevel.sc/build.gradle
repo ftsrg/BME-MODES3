@@ -5,3 +5,9 @@ apply plugin: 'org.xtext.xtend'
 dependencies {
 	compile project(':components:hu.bme.mit.inf.modes3.components.common')
 }
+
+sonarqube {
+	properties {
+		property "sonar.exclusions", "src/main/java/org/yakindu/scr/**"
+    }
+}
