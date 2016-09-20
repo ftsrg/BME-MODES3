@@ -10,6 +10,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
+import java.util.List
 
 class SafetyLogicTest {
 	
@@ -35,13 +36,21 @@ class SafetyLogicTest {
 			sendSegmentOccupation(29, SegmentOccupancy.OCCUPIED)
 		]
 
-		
 		Thread.sleep(1000)
-		
-		
-		Assert.assertEquals((sl.model.getSegment(24) as Segment).isEnabled,false)
-		Assert.assertEquals((sl.model.getSegment(29) as Segment).isEnabled,false)
-		
-		
+		assertOnlyBlocked(#[24,29])		
 	}
+	
+	def assertOnlyBlocked(List<Integer> integers) {
+		sl.model.model.sections.forEach[
+			if(it instanceof Segment){
+				if(integers.contains(it.id)){
+					Assert.assertEquals(false, it.isIsEnabled)
+				} else {
+					Assert.assertEquals(true, it.isIsEnabled)
+				}			
+			}
+		]
+	
+	}
+	
 }
