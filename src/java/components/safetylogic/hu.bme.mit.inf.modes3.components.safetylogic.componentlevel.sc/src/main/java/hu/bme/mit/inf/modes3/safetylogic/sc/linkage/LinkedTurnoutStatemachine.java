@@ -9,9 +9,9 @@ public class LinkedTurnoutStatemachine implements SCIProtocolListener, INextTrac
 
 	protected ITurnoutStatemachine statemachine;
 
-	protected NextTrackElement nextTrackElement;
+	protected NextTrackElementWrapper nextTrackElement;
 
-	public LinkedTurnoutStatemachine(ITurnoutStatemachine statemachine, NextTrackElement nextTrackElement) {
+	public LinkedTurnoutStatemachine(ITurnoutStatemachine statemachine, NextTrackElementWrapper nextTrackElement) {
 		this.statemachine = statemachine;
 		this.nextTrackElement = nextTrackElement;
 
@@ -21,32 +21,32 @@ public class LinkedTurnoutStatemachine implements SCIProtocolListener, INextTrac
 	@Override
 	public void onReserveToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
-		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseReserveFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
+		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom())) {
+			nextTrackElement.raiseReserveFrom(nextTrackElement.itReceivesOurMessagesFrom().getValueInYakindu());
 		}
 	}
 
 	@Override
 	public void onCanGoToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
-		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseCanGoFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
+		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom())) {
+			nextTrackElement.raiseCanGoFrom(nextTrackElement.itReceivesOurMessagesFrom().getValueInYakindu());
 		}
 	}
 
 	@Override
 	public void onCannotGoToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
-		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseCannotGoFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
+		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom())) {
+			nextTrackElement.raiseCannotGoFrom(nextTrackElement.itReceivesOurMessagesFrom().getValueInYakindu());
 		}
 	}
 
 	@Override
 	public void onReleaseToRaised(int value) {
 		ConnectionDirection direction = ConnectionDirection.getDirectionByValue(value);
-		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom)) {
-			nextTrackElement.raiseReleaseFrom(nextTrackElement.itReceivesOurMessagesFrom.getValueInYakindu());
+		if (direction != null && direction.equals(nextTrackElement.weSeeItFrom())) {
+			nextTrackElement.raiseReleaseFrom(nextTrackElement.itReceivesOurMessagesFrom().getValueInYakindu());
 		}
 	}
 

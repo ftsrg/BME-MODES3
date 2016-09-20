@@ -1,8 +1,6 @@
-package hu.bme.mit.inf.modes3.safetylogic.sc.conf;
+package hu.bme.mit.inf.modes3.safetylogic.sc.conf.gson;
 
 public class TurnoutConfiguration {
-
-	protected String name;
 
 	protected int occupancyId;
 
@@ -12,17 +10,12 @@ public class TurnoutConfiguration {
 
 	protected ConnectingTrackElementConfiguration top;
 
-	public TurnoutConfiguration(String name, int occupancyId, ConnectingTrackElementConfiguration straight, ConnectingTrackElementConfiguration divergent,
+	public TurnoutConfiguration(int occupancyId, ConnectingTrackElementConfiguration straight, ConnectingTrackElementConfiguration divergent,
 			ConnectingTrackElementConfiguration top) {
-		this.name = name;
 		this.occupancyId = occupancyId;
 		this.straight = straight;
 		this.divergent = divergent;
 		this.top = top;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getOccupancyId() {

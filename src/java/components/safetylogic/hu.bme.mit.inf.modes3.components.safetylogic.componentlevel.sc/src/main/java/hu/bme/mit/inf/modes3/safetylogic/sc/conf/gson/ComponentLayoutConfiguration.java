@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.safetylogic.sc.conf;
+package hu.bme.mit.inf.modes3.safetylogic.sc.conf.gson;
 
 import java.util.Arrays;
 import java.util.List;
