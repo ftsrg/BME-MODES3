@@ -9,8 +9,6 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
-import org.slf4j.LoggerFactory
-import org.slf4j.ILoggerFactory
 
 class IntegrationTest {
 	var SafetyLogic sl

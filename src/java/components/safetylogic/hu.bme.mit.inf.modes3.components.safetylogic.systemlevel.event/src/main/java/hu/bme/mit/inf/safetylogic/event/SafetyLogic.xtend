@@ -24,6 +24,30 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		logger.info('Construction finished')
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first
 	}
+	
+	def void initRailRoad(){
+		val sleepTimes = 200
+		val turnouts = model.model.sections.filter[it instanceof Turnout].map[it as Turnout]
+		turnouts.forEach[
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
+		]
+		Thread.sleep(sleepTimes)
+		turnouts.forEach[
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
+		]
+		Thread.sleep(sleepTimes)
+		
+		val segments = model.model.sections.filter[it instanceof Segment].map[it as Segment]
+		segments.forEach[
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
+		]
+		Thread.sleep(sleepTimes)
+		segments.forEach[
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
+		]
+		Thread.sleep(sleepTimes)
+		
+	}
 
 	override void run() {
 		this.logger.info("Running started...")
@@ -35,20 +59,25 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 				refreshSafetyLogicState
 			}
 		}
+		
+		initRailRoad()
 	}
 
 	def public void refreshSafetyLogicState() {
+		println('''Refreshing state: #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		println('''Imaginary trains amount : «model.model.trains.size»''')
+		println('''The trains are on: «FOR train : model.model.trains» «train.currentlyOn.id» «ENDFOR»''')
 		logger.info('''Refreshing state: #of cuts «model.cuts.size», #of hits «model.hits.size»''')
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first
 
 		model.cuts.forEach [ cut |
-//			println('''CUT: victim on «(cut.victim as RailRoadElement).id» cuts «(cut.offender as Train).currentlyOn.id»''')
+			println('''CUT: victim on «(cut.victim as RailRoadElement).id» cuts «(cut.offender as Train).currentlyOn.id»''')
 			logger.info('''CUT: victim on «(cut.victim as RailRoadElement).id» cuts «(cut.offender as Train).currentlyOn.id»''')
 			(model.model.sections.findFirst[id == (cut.offender as Train).currentlyOn.id] as Segment).isEnabled = false //disable the trains which cut sections
 		]
 
 		model.hits.forEach [ hit |
-//			println('''HIT: offender on «(hit.offender as Train).currentlyOn.id», victim on «(hit.victim as Train).currentlyOn.id»''')
+			println('''HIT: offender on «(hit.offender as Train).currentlyOn.id», victim on «(hit.victim as Train).currentlyOn.id»''')
 			logger.info('''HIT: offender on «(hit.offender as Train).currentlyOn.id», victim on «(hit.victim as Train).currentlyOn.id»''')
 			(model.model.sections.findFirst[id == (hit.offender as Train).currentlyOn.id] as Segment).isEnabled = false //disable the trains which hit another
 		]

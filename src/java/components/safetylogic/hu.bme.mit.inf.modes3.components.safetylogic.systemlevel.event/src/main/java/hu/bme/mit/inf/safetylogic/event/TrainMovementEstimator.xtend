@@ -15,7 +15,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener {
 	
 	
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
-//		println('segmentoccupancychanged on ' + id)
+		println('segmentoccupancychanged on ' + id)
 		val enabledTrains = model.getEnabledTrains
 		if(newValue == SegmentOccupancy.OCCUPIED) {
 			val changedSection = model.getSegment(id)
@@ -23,6 +23,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener {
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
 			if(train == null) { // There is not even a train nearby, so it must have been put there recently
 				train = model.addNewTrain
+				println('>>>I estimated a new train on ' + changedSection.id)
 			}
 			train.previouslyOn = train.currentlyOn
 			train.currentlyOn = changedSection

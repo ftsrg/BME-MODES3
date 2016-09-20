@@ -17,7 +17,7 @@ class SegmentOccupancyReaderMock extends AbstractRailRoadCommunicationComponent 
 	new(CommunicationStack stack, RailRoadModel model, ILoggerFactory factory) {
 		super(stack, factory)
 		this.model = model
-		model.sections.forEach[isOccupied.put(id, false)]
+		model.sections.forEach[isOccupied.put(it.id, false)]
 	}
 
 	override run() {
@@ -35,8 +35,14 @@ class SegmentOccupancyReaderMock extends AbstractRailRoadCommunicationComponent 
 	def update() {
 		synchronized(model) {
 			val occupiedSections = model.trains.map[it.currentlyOn.id]
-			val changedSections = model.sections.filter[occupiedSections.contains(id) == isOccupied.get(id)]
-			changedSections.forEach [
+			val changedSections = model.sections.filter[occupiedSections.contains(it.id) != isOccupied.get(it.id)]
+			changedSections.filter[isOccupied.get(id) == false /* Free -> Occupied change*/ ].forEach [
+				val currentyOccupied = !isOccupied.get(id)
+				isOccupied.put(id, currentyOccupied)
+				locator.trackElementStateSender.sendSegmentOccupation(id, if(currentyOccupied) SegmentOccupancy.OCCUPIED else SegmentOccupancy.FREE)
+			]
+
+			changedSections.filter[isOccupied.get(id) == true /* Occupied -> free change */ ].forEach [
 				val currentyOccupied = !isOccupied.get(id)
 				isOccupied.put(id, currentyOccupied)
 				locator.trackElementStateSender.sendSegmentOccupation(id, if(currentyOccupied) SegmentOccupancy.OCCUPIED else SegmentOccupancy.FREE)
