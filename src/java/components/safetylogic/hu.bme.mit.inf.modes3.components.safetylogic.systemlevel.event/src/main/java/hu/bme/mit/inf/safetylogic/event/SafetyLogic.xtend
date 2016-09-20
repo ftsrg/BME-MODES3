@@ -22,7 +22,6 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		logger.info('Construction started')
 		model = new ModelUtil
 		logger.info('Construction finished')
-		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first
 	}
 	
 	def void initRailRoad(){

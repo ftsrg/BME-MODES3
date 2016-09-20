@@ -28,6 +28,7 @@ class ModelUtil implements IModelInteractor {
 		resource = loadModel
 		model = resource.modelFromResource
 		engine = ViatraQueryEngine.on(new EMFScope(resource))
+		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[it.isEnabled = true]
 	}
 
 	def override getEnabledTrains(){
