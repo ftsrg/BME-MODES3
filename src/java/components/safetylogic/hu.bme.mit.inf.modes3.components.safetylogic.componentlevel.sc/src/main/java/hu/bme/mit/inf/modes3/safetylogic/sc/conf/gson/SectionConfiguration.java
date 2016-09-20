@@ -1,8 +1,6 @@
-package hu.bme.mit.inf.modes3.safetylogic.sc.conf;
+package hu.bme.mit.inf.modes3.safetylogic.sc.conf.gson;
 
 public class SectionConfiguration {
-
-	protected String name;
 
 	protected int occupancyId;
 
@@ -10,15 +8,10 @@ public class SectionConfiguration {
 
 	protected ConnectingTrackElementConfiguration ccw;
 
-	public SectionConfiguration(String name, int occupancyId, ConnectingTrackElementConfiguration cw, ConnectingTrackElementConfiguration ccw) {
-		this.name = name;
+	public SectionConfiguration(int occupancyId, ConnectingTrackElementConfiguration cw, ConnectingTrackElementConfiguration ccw) {
 		this.occupancyId = occupancyId;
 		this.cw = cw;
 		this.ccw = ccw;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getOccupancyId() {

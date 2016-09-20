@@ -1,20 +1,20 @@
-package hu.bme.mit.inf.modes3.safetylogic.sc.conf;
+package hu.bme.mit.inf.modes3.safetylogic.sc.conf.gson;
 
 import hu.bme.mit.inf.modes3.safetylogic.sc.util.ConnectionDirection;
 
 public class ConnectingTrackElementConfiguration {
 
-	protected String targetId;
+	protected int occupancyId;
 
 	protected ConnectionDirection itReceivesOurMessagesFrom;
 
-	public ConnectingTrackElementConfiguration(String targetId, ConnectionDirection itReceivesOurMessagesFrom) {
-		this.targetId = targetId;
+	public ConnectingTrackElementConfiguration(int occupancyId, ConnectionDirection itReceivesOurMessagesFrom) {
+		this.occupancyId = occupancyId;
 		this.itReceivesOurMessagesFrom = itReceivesOurMessagesFrom;
 	}
 
-	public String getTargetId() {
-		return targetId;
+	public int getId() {
+		return occupancyId;
 	}
 
 	public ConnectionDirection getItReceivesOurMessagesFrom() {
