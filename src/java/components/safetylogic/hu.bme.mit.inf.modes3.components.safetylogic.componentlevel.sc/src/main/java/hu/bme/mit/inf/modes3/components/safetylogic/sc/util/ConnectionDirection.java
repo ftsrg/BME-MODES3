@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
-public enum ConnectionDirection implements Comparable<ConnectionDirection> {
+public enum ConnectionDirection {
 
 	CW(0), CCW(1), TOP(3), STRAIGHT(4), DIVERGENT(5), UNSPECIFIED(2);
 

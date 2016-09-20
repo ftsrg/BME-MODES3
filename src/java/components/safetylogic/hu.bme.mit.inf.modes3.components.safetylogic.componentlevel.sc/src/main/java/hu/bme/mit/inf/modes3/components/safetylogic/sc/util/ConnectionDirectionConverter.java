@@ -11,7 +11,7 @@ public class ConnectionDirectionConverter {
 		case Y_STRAIGHT:
 			return ConnectionDirection.STRAIGHT;
 		case Y_DIVERGENT:
-			return ConnectionDirection.TOP;
+			return ConnectionDirection.DIVERGENT;
 		case CW:
 			return ConnectionDirection.CW;
 		case CCW:
