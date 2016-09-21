@@ -85,7 +85,7 @@ class StatusMessageForwardingFromLocalTransportNetworkToInternal {
 	@Before
 	def void init() {
 		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
-		unitUnderTest = new TrackElementStatusToInternalTransmitter(receiverStack.trackElementStateRegistry)
+		unitUnderTest = new TrackElementStatusToInternalTransmitter(receiverStack.trackElementStateRegistry, new NOPLoggerFactory)
 
 		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 		stateSender = senderStack.trackElementStateSender

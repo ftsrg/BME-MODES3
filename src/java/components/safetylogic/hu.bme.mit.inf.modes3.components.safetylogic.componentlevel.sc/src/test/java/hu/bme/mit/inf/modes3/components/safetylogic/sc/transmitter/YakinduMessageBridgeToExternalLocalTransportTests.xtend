@@ -56,10 +56,10 @@ class YakinduMessageBridgeToExternalLocalTransportTests {
 		val senderStack = YakinduCommunicationStackFactory::createLocalStack(new NOPLoggerFactory)
 		senderStack.start
 
-		unitUnderTest = new YakinduMessageBridgeToExternal(senderStack.mms)
+		unitUnderTest = new YakinduMessageBridgeToExternal(senderStack.mms, new NOPLoggerFactory)
 
 		// create receiver communication stack
-		receiverDispatcher = new YakinduMessageDispatcher
+		receiverDispatcher = new YakinduMessageDispatcher(new NOPLoggerFactory)
 		val receiverStack = YakinduCommunicationStackFactory::createLocalStack(receiverDispatcher, new NOPLoggerFactory)
 		receiverStack.start
 	}

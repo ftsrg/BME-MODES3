@@ -3,6 +3,8 @@ package hu.bme.mit.inf.modes3.components.safetylogic.sc.factory;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
@@ -19,6 +21,9 @@ import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirection;
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirectionHolder;
 
 class SectionStatechartConfigurationInitializer {
+	
+	protected final Logger logger;
+	private final ILoggerFactory factory;
 
 	private Map<Integer, ITurnoutStatemachine> localTurnouts;
 	private Map<Integer, ISectionStatemachine> localSections;
@@ -28,11 +33,13 @@ class SectionStatechartConfigurationInitializer {
 	private YakinduHandlerHolder remoteTrackElementHandlers;
 
 	SectionStatechartConfigurationInitializer(Map<Integer, ITurnoutStatemachine> localTurnouts, Map<Integer, ISectionStatemachine> localSections,
-			List<SectionConfiguration> sectionConfigurations, YakinduHandlerHolder remoteTrackElementHandlers) {
+			List<SectionConfiguration> sectionConfigurations, YakinduHandlerHolder remoteTrackElementHandlers, ILoggerFactory factory) {
 		this.localTurnouts = localTurnouts;
 		this.localSections = localSections;
 		this.sectionConfigurations = sectionConfigurations;
 		this.remoteTrackElementHandlers = remoteTrackElementHandlers;
+		this.factory = factory;
+		this.logger = factory.getLogger(this.getClass().getName());
 	}
 
 	/**
@@ -40,6 +47,8 @@ class SectionStatechartConfigurationInitializer {
 	 */
 	void connectSectionsToNeighbours() {
 		if (sectionConfigurations != null) {
+			logger.info("Connection sections to their neighbours started.");
+			
 			sectionConfigurations.stream().forEach(sectionConfiguration -> {
 				ISectionStatemachine localSection = localSections.get(sectionConfiguration.getOccupancyId());
 
@@ -63,6 +72,8 @@ class SectionStatechartConfigurationInitializer {
 					connectSectionToTrackElementConnectingFromDirection(localSection, targetId, directions);
 				}
 			});
+			
+			logger.info("Connection sections to their neighbours finished.");
 		}
 	}
 
@@ -86,7 +97,7 @@ class SectionStatechartConfigurationInitializer {
 	 */
 	private void connectLocalSectionToLocalSection(ISectionStatemachine localSection, ISectionStatemachine targetSection,
 			ConnectionDirectionHolder directions) {
-		INextTrackElement nextStatemachine = new LinkedSectionStatemachine(targetSection, new NullableNextTrackElement());
+		INextTrackElement nextStatemachine = new LinkedSectionStatemachine(targetSection, new NullableNextTrackElement(factory), factory);
 		connectNextTrackElementViaWrapperToLocalSection(localSection, nextStatemachine, directions);
 	}
 
@@ -95,7 +106,7 @@ class SectionStatechartConfigurationInitializer {
 	 */
 	private void connectLocalSectionToLocalTurnout(ISectionStatemachine localSection, ITurnoutStatemachine targetTurnout,
 			ConnectionDirectionHolder directions) {
-		INextTrackElement nextStatemachine = new LinkedTurnoutStatemachine(targetTurnout, new NullableNextTrackElement());
+		INextTrackElement nextStatemachine = new LinkedTurnoutStatemachine(targetTurnout, new NullableNextTrackElement(factory), factory);
 		connectNextTrackElementViaWrapperToLocalSection(localSection, nextStatemachine, directions);
 	}
 
@@ -107,7 +118,7 @@ class SectionStatechartConfigurationInitializer {
 			YakinduHandlerHolder handlersForRemoteTrackElements) {
 		INextTrackElement nextStatemachine = new RemoteTrackElement(targetId, handlersForRemoteTrackElements.getReleaseToSender(),
 				handlersForRemoteTrackElements.getReserveToSender(), handlersForRemoteTrackElements.getCanGoToSender(),
-				handlersForRemoteTrackElements.getCannotGoToSender());
+				handlersForRemoteTrackElements.getCannotGoToSender(), factory);
 
 		connectNextTrackElementViaWrapperToLocalSection(localSection, nextStatemachine, directions);
 	}
@@ -117,7 +128,7 @@ class SectionStatechartConfigurationInitializer {
 	 */
 	private void connectNextTrackElementViaWrapperToLocalSection(ISectionStatemachine localSection, INextTrackElement nextTrackElement,
 			ConnectionDirectionHolder directions) {
-		NextTrackElementWrapper nextStatemachineWrapper = new NextTrackElementWrapper(nextTrackElement, directions);
-		new LinkedSectionStatemachine(localSection, nextStatemachineWrapper);
+		NextTrackElementWrapper nextStatemachineWrapper = new NextTrackElementWrapper(nextTrackElement, directions, factory);
+		new LinkedSectionStatemachine(localSection, nextStatemachineWrapper, factory);
 	}
 }

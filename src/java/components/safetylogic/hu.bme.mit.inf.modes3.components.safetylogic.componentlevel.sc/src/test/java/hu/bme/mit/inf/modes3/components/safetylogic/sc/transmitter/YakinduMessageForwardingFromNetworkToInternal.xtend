@@ -23,6 +23,7 @@ import org.junit.experimental.theories.Theory
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.turnout.ITurnoutStatemachine
 
@@ -70,10 +71,10 @@ class YakinduMessageForwardingFromNetworkToInternal {
 	 ****************************************************************************************************/
 	@Before
 	def void init() {
-		unitUnderTest = new YakinduMessageBridgeToInternal
+		unitUnderTest = new YakinduMessageBridgeToInternal(new NOPLoggerFactory)
 
 		// register the network message handlers
-		messageDispatcher = new YakinduMessageDispatcher
+		messageDispatcher = new YakinduMessageDispatcher(new NOPLoggerFactory)
 		messageDispatcher.releaseToHandler = new YakinduReleaseToHandler(unitUnderTest)
 		messageDispatcher.reserveToHandler = new YakinduReserveToHandler(unitUnderTest)
 		messageDispatcher.canGoToHandler = new YakinduCanGoToHandler(unitUnderTest)

@@ -1,12 +1,14 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.sc.linkage;
 
+import org.slf4j.ILoggerFactory;
+
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirection;
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirectionHolder;
 
 public class NullableNextTrackElement extends NextTrackElementWrapper {
 
-	public NullableNextTrackElement() {
-		super(new ConnectionDirectionHolder(ConnectionDirection.UNSPECIFIED, ConnectionDirection.UNSPECIFIED));
+	public NullableNextTrackElement(ILoggerFactory factory) {
+		super(new ConnectionDirectionHolder(ConnectionDirection.UNSPECIFIED, ConnectionDirection.UNSPECIFIED), factory);
 		super.nextTrackElement = this;
 	}
 

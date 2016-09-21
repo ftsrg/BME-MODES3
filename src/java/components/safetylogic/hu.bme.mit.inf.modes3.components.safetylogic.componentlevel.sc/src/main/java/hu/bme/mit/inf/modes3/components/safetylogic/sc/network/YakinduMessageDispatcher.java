@@ -2,8 +2,8 @@ package hu.bme.mit.inf.modes3.components.safetylogic.sc.network;
 
 import java.util.Arrays;
 
+import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.google.protobuf.GeneratedMessageV3;
 
@@ -22,12 +22,16 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.YakinduReserveToOrBuilder;
 
 public class YakinduMessageDispatcher implements IMessageDispatcher {
 
-	private static final Logger logger = LoggerFactory.getLogger(YakinduMessageDispatcher.class);
+	protected final Logger logger;
 
 	protected MessageHandler<YakinduReleaseToOrBuilder> releaseToHandler;
 	protected MessageHandler<YakinduReserveToOrBuilder> reserveToHandler;
 	protected MessageHandler<YakinduCanGoToOrBuilder> canGoToHandler;
 	protected MessageHandler<YakinduCannotGoToOrBuilder> cannotGoToHandler;
+
+	public YakinduMessageDispatcher(ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.getClass().getName());
+	}
 
 	@Override
 	public void dispatchMessage(byte[] rawMessage) {
@@ -36,21 +40,25 @@ public class YakinduMessageDispatcher implements IMessageDispatcher {
 			switch (message.getType()) {
 			case YAKINDU_RELEASE_TO:
 				if (releaseToHandler != null) {
+					logger.debug(message.getType() + " message forwarded to handler.");
 					releaseToHandler.handleMessage(message.getYakinduReleaseTo());
 				}
 				break;
 			case YAKINDU_CAN_GO_TO:
 				if (canGoToHandler != null) {
+					logger.debug(message.getType() + " message forwarded to handler.");
 					canGoToHandler.handleMessage(message.getYakinduCanGoTo());
 				}
 				break;
 			case YAKINDU_CANNOT_GO_TO:
 				if (cannotGoToHandler != null) {
+					logger.debug(message.getType() + " message forwarded to handler.");
 					cannotGoToHandler.handleMessage(message.getYakinduCannotGoTo());
 				}
 				break;
 			case YAKINDU_RESERVE_TO:
 				if (reserveToHandler != null) {
+					logger.debug(message.getType() + " message forwarded to handler.");
 					reserveToHandler.handleMessage(message.getYakinduReserveTo());
 				}
 				break;

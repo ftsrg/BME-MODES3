@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.section.SynchronizedSectionStatemachine;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
@@ -21,6 +23,9 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackEl
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry;
 
 public class StatechartComponentFactory {
+	
+	protected final Logger logger;
+	private final ILoggerFactory factory;
 
 	private Map<Integer, ITurnoutStatemachine> localTurnouts = new TreeMap<>();
 	private Map<Integer, ISectionStatemachine> localSections = new TreeMap<>();
@@ -34,6 +39,11 @@ public class StatechartComponentFactory {
 	public Map<Integer, ISectionStatemachine> getLocalSections() {
 		return localSections;
 	}
+	
+	public StatechartComponentFactory(ILoggerFactory factory){
+		this.factory = factory;
+		this.logger = factory.getLogger(this.getClass().getName());
+	}
 
 	/**
 	 * @param componentLayout
@@ -45,6 +55,8 @@ public class StatechartComponentFactory {
 	 */
 	public void initializeSectionAndTurnoutStatecharts(ComponentLayoutConfiguration componentLayout, ITrackElementCommander trackElementCommander,
 			YakinduHandlerHolder remoteTrackElementHandlers) {
+		logger.debug("Section and turnout initialization started.");
+		
 		List<TurnoutConfiguration> turnoutConfigurations = componentLayout.getTurnouts();
 		List<SectionConfiguration> sectionConfigurations = componentLayout.getSections();
 
@@ -53,12 +65,14 @@ public class StatechartComponentFactory {
 		generateLocalTurnoutStatecharts(turnoutConfigurations);
 
 		SectionStatechartConfigurationInitializer sectionFactory = new SectionStatechartConfigurationInitializer(localTurnouts, localSections,
-				sectionConfigurations, remoteTrackElementHandlers);
+				sectionConfigurations, remoteTrackElementHandlers, factory);
 		TurnoutStatechartsFactory turnoutFactory = new TurnoutStatechartsFactory(localTurnouts, localSections, turnoutConfigurations,
-				remoteTrackElementHandlers);
+				remoteTrackElementHandlers, factory);
 
 		turnoutFactory.connectTurnoutsToNeighbours();
 		sectionFactory.connectSectionsToNeighbours();
+		
+		logger.debug("Section and turnout initialization finished.");
 	}
 
 	private void clearCache() {
@@ -71,6 +85,8 @@ public class StatechartComponentFactory {
 	 */
 	private void generateLocalSectionStatecharts(List<SectionConfiguration> sectionConfigurations, ITrackElementCommander trackElementCommander) {
 		if (sectionConfigurations != null) {
+			logger.debug("Generating local section statecharts started.");
+			
 			sectionConfigurations.stream().forEach(section -> {
 				ISectionStatemachine sm = new SynchronizedSectionStatemachine();
 				int id = section.getOccupancyId();
@@ -79,10 +95,12 @@ public class StatechartComponentFactory {
 				/**
 				 * register the track element command handler so that section statechart can send enable/disable section command over the network
 				 */
-				new SectionCommandToExternalTransmitter(sm, trackElementCommander);
+				new SectionCommandToExternalTransmitter(sm, trackElementCommander, factory);
 
 				localSections.put(id, sm);
 			});
+			
+			logger.debug("Generating local section statecharts finished.");
 		}
 	}
 
@@ -91,12 +109,16 @@ public class StatechartComponentFactory {
 	 */
 	private void generateLocalTurnoutStatecharts(List<TurnoutConfiguration> turnoutConfigurations) {
 		if (turnoutConfigurations != null) {
+			logger.debug("Generating local turnout statecharts started.");
+			
 			turnoutConfigurations.stream().forEach(turnout -> {
 				int id = turnout.getOccupancyId();
 				ITurnoutStatemachine sm = new SynchronizedTurnoutStatemachine();
 				sm.getSCITurnout().setId(id);
 				localTurnouts.put(id, sm);
 			});
+			
+			logger.debug("Generating local turnout statecharts finished.");
 		}
 	}
 
@@ -104,10 +126,14 @@ public class StatechartComponentFactory {
 	 * Bridge for the yakindu statecharts to accept messages from the network.
 	 */
 	public YakinduMessageBridgeToInternal createMessageBridge() {
-		YakinduMessageBridgeToInternal messageBridge = new YakinduMessageBridgeToInternal();
+		logger.debug("Creating YakinduMessageBridgeToInternal started.");
+		
+		YakinduMessageBridgeToInternal messageBridge = new YakinduMessageBridgeToInternal(factory);
 
 		localTurnouts.entrySet().stream().forEach(turnoutEntry -> messageBridge.registerTurnoutStatemachine(turnoutEntry.getKey(), turnoutEntry.getValue()));
 		localSections.entrySet().stream().forEach(sectionEntry -> messageBridge.registerSectionStatemachine(sectionEntry.getKey(), sectionEntry.getValue()));
+		
+		logger.debug("Creating YakinduMessageBridgeToInternal finished.");
 
 		return messageBridge;
 	}
@@ -116,10 +142,14 @@ public class StatechartComponentFactory {
 	 * Bridge for the yakindu statecharts to accept section/turnout status information from the track.
 	 */
 	public TrackElementStatusToInternalTransmitter createTrackElementStatusTransmitter(ITrackElementStateRegistry stateProvider) {
-		TrackElementStatusToInternalTransmitter transmitter = new TrackElementStatusToInternalTransmitter(stateProvider);
+		logger.debug("Creating TrackElementStatusToInternalTransmitter started.");
+		
+		TrackElementStatusToInternalTransmitter transmitter = new TrackElementStatusToInternalTransmitter(stateProvider, factory);
 
 		localTurnouts.entrySet().stream().forEach(turnoutEntry -> transmitter.registerTurnoutStatemachine(turnoutEntry.getKey(), turnoutEntry.getValue()));
 		localSections.entrySet().stream().forEach(sectionEntry -> transmitter.registerSectionStatemachine(sectionEntry.getKey(), sectionEntry.getValue()));
+		
+		logger.debug("Creating TrackElementStatusToInternalTransmitter finished.");
 
 		return transmitter;
 	}
@@ -128,8 +158,10 @@ public class StatechartComponentFactory {
 	 * Creates a runnable which periodically fires the restartProtocol events to the section statecharts.
 	 */
 	public ProtocolPeriodicRestarterRunnable createPeriodicProtocolRestarter() {
+		logger.debug("Creating ProtocolPeriodicRestarterRunnable started.");
 		ProtocolPeriodicRestarterRunnable runnable = new ProtocolPeriodicRestarterRunnable();
 		localSections.entrySet().stream().forEach(sectionEntry -> runnable.registerSectionStatemachine(sectionEntry.getKey(), sectionEntry.getValue()));
+		logger.debug("Creating ProtocolPeriodicRestarterRunnable finished.");
 		return runnable;
 	}
 

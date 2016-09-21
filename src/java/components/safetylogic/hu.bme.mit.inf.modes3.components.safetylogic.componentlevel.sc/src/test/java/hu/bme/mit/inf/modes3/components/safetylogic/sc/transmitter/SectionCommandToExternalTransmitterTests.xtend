@@ -36,7 +36,7 @@ class SectionCommandToExternalTransmitterTests {
 		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 
 		// register mock and track element commander
-		unitUnderTest = new SectionCommandToExternalTransmitter(notUsedInTests, senderStack.trackElementCommander)
+		unitUnderTest = new SectionCommandToExternalTransmitter(notUsedInTests, senderStack.trackElementCommander, new NOPLoggerFactory)
 
 		// create receiver mock
 		receiverMock = Mockito.mock(ISegmentCommandListener)

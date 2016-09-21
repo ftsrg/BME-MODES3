@@ -13,8 +13,9 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mockito
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.helpers.NOPLogger
+import org.slf4j.helpers.NOPLoggerFactory
 import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.turnout.ITurnoutStatemachine
 
@@ -28,11 +29,13 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine
 @Ignore
 class LayoutConfigurationValidationTest {
 
+	var ILoggerFactory factory
 	var Logger logger
 
 	@Before
 	def void setup() {
-		logger = NOPLogger.NOP_LOGGER
+		factory = new NOPLoggerFactory
+		logger = factory.getLogger(this.class.name)
 	}
 
 	@Test
@@ -48,7 +51,7 @@ class LayoutConfigurationValidationTest {
 				logger.info('''Validating component configuration: «component.componentName»''')
 				logger.info('')
 
-				val fact = new StatechartComponentFactory
+				val fact = new StatechartComponentFactory(factory)
 				fact.initializeSectionAndTurnoutStatecharts(comp, null, Mockito.mock(YakinduHandlerHolder))
 
 				val turnoutConfigurations = comp.turnouts

@@ -3,6 +3,8 @@ package hu.bme.mit.inf.modes3.components.safetylogic.sc.factory;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.Logger;
 import org.yakindu.scr.section.ISectionStatemachine;
 import org.yakindu.scr.turnout.ITurnoutStatemachine;
 
@@ -20,6 +22,9 @@ import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirectionH
 
 class TurnoutStatechartsFactory {
 
+	protected final Logger logger;
+	private final ILoggerFactory factory;
+
 	private Map<Integer, ITurnoutStatemachine> localTurnouts;
 	private Map<Integer, ISectionStatemachine> localSections;
 
@@ -28,11 +33,13 @@ class TurnoutStatechartsFactory {
 	private YakinduHandlerHolder remoteTrackElementHandlers;
 
 	TurnoutStatechartsFactory(Map<Integer, ITurnoutStatemachine> localTurnouts, Map<Integer, ISectionStatemachine> localSections,
-			List<TurnoutConfiguration> turnoutConfigurations, YakinduHandlerHolder remoteTrackElementHandlers) {
+			List<TurnoutConfiguration> turnoutConfigurations, YakinduHandlerHolder remoteTrackElementHandlers, ILoggerFactory factory) {
 		this.localTurnouts = localTurnouts;
 		this.localSections = localSections;
 		this.turnoutConfigurations = turnoutConfigurations;
 		this.remoteTrackElementHandlers = remoteTrackElementHandlers;
+		this.factory = factory;
+		this.logger = factory.getLogger(this.getClass().getName());
 	}
 
 	/**
@@ -40,6 +47,8 @@ class TurnoutStatechartsFactory {
 	 */
 	void connectTurnoutsToNeighbours() {
 		if (turnoutConfigurations != null) {
+			logger.debug("Connection turnouts to their neighbours started.");
+
 			turnoutConfigurations.stream().forEach(turnoutConfiguration -> {
 				ITurnoutStatemachine localTurnout = localTurnouts.get(turnoutConfiguration.getOccupancyId());
 
@@ -73,6 +82,8 @@ class TurnoutStatechartsFactory {
 					connectTurnoutToTrackElementConnectingFromDirection(localTurnout, targetId, directions);
 				}
 			});
+
+			logger.debug("Connection turnouts to their neighbours finished.");
 		}
 	}
 
@@ -96,7 +107,7 @@ class TurnoutStatechartsFactory {
 	 */
 	private void connectLocalTurnoutToLocalTurnout(ITurnoutStatemachine localTurnout, ITurnoutStatemachine targetTurnout,
 			ConnectionDirectionHolder directions) {
-		INextTrackElement nextStatemachine = new LinkedTurnoutStatemachine(targetTurnout, new NullableNextTrackElement());
+		INextTrackElement nextStatemachine = new LinkedTurnoutStatemachine(targetTurnout, new NullableNextTrackElement(factory), factory);
 		connectNextTrackElementViaWrapperToLocalTurnout(localTurnout, nextStatemachine, directions);
 	}
 
@@ -105,7 +116,7 @@ class TurnoutStatechartsFactory {
 	 */
 	private void connectLocalTurnoutToLocalSection(ITurnoutStatemachine localTurnout, ISectionStatemachine targetSection,
 			ConnectionDirectionHolder directions) {
-		INextTrackElement nextStatemachine = new LinkedSectionStatemachine(targetSection, new NullableNextTrackElement());
+		INextTrackElement nextStatemachine = new LinkedSectionStatemachine(targetSection, new NullableNextTrackElement(factory), factory);
 		connectNextTrackElementViaWrapperToLocalTurnout(localTurnout, nextStatemachine, directions);
 	}
 
@@ -117,7 +128,7 @@ class TurnoutStatechartsFactory {
 			YakinduHandlerHolder handlersForRemoteTrackElements) {
 		INextTrackElement nextStatemachine = new RemoteTrackElement(targetId, handlersForRemoteTrackElements.getReleaseToSender(),
 				handlersForRemoteTrackElements.getReserveToSender(), handlersForRemoteTrackElements.getCanGoToSender(),
-				handlersForRemoteTrackElements.getCannotGoToSender());
+				handlersForRemoteTrackElements.getCannotGoToSender(), factory);
 
 		connectNextTrackElementViaWrapperToLocalTurnout(localTurnout, nextStatemachine, directions);
 	}
@@ -127,7 +138,7 @@ class TurnoutStatechartsFactory {
 	 */
 	private void connectNextTrackElementViaWrapperToLocalTurnout(ITurnoutStatemachine localTurnout, INextTrackElement nextTrackElement,
 			ConnectionDirectionHolder directions) {
-		NextTrackElementWrapper nextStatemachineWrapper = new NextTrackElementWrapper(nextTrackElement, directions);
-		new LinkedTurnoutStatemachine(localTurnout, nextStatemachineWrapper);
+		NextTrackElementWrapper nextStatemachineWrapper = new NextTrackElementWrapper(nextTrackElement, directions, factory);
+		new LinkedTurnoutStatemachine(localTurnout, nextStatemachineWrapper, factory);
 	}
 }
