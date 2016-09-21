@@ -2,6 +2,7 @@ package hu.bme.mit.inf.modes3.messaging.mms
 
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.Transport
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
 class MessagingService {
@@ -11,9 +12,9 @@ class MessagingService {
 
 	Transport transport
 	IMessageDispatcher dispatcher
-	
-	new(Logger logger){
-		this.logger = logger
+
+	new(ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.class.name)
 	}
 
 	def start(Transport _transport, IMessageDispatcher _dispatcher) {
@@ -42,11 +43,11 @@ class MessagingService {
 		}
 
 		override run() {
-			while (!Thread.currentThread.isInterrupted) {
+			while(!Thread.currentThread.isInterrupted) {
 				try {
 					val rawMessage = transport.receiveMessage
 					this.dispatcher.dispatchMessage(rawMessage)
-				} catch (Exception e) {
+				} catch(Exception e) {
 					logger.error(e.message, e)
 				// This catch is left blank intentionally
 				}

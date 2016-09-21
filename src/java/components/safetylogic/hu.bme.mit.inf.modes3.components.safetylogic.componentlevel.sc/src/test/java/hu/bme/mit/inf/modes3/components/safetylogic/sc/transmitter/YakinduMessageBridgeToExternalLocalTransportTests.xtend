@@ -19,6 +19,7 @@ import org.junit.experimental.theories.Theories
 import org.junit.experimental.theories.Theory
 import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 @RunWith(Theories)
 class YakinduMessageBridgeToExternalLocalTransportTests {
@@ -52,14 +53,14 @@ class YakinduMessageBridgeToExternalLocalTransportTests {
 	@Before
 	def void init() {
 		// create sender communication stack
-		val senderStack = YakinduCommunicationStackFactory::createLocalStack
+		val senderStack = YakinduCommunicationStackFactory::createLocalStack(new NOPLoggerFactory)
 		senderStack.start
 
 		unitUnderTest = new YakinduMessageBridgeToExternal(senderStack.mms)
 
 		// create receiver communication stack
 		receiverDispatcher = new YakinduMessageDispatcher
-		val receiverStack = YakinduCommunicationStackFactory::createLocalStack(receiverDispatcher)
+		val receiverStack = YakinduCommunicationStackFactory::createLocalStack(receiverDispatcher, new NOPLoggerFactory)
 		receiverStack.start
 	}
 
