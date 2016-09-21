@@ -6,12 +6,11 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSend
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.safetylogic.event.SafetyLogic
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
+import java.util.List
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
-import java.util.List
-import org.slf4j.helpers.NOPLogger
 
 class SafetyLogicTest {
 

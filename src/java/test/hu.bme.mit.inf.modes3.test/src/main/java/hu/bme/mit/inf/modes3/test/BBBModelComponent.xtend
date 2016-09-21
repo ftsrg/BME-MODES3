@@ -10,7 +10,6 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
 import java.util.HashSet
-import org.slf4j.helpers.NOPLoggerFactory
 import org.slf4j.ILoggerFactory
 
 class BBBModelComponent extends BBBComponent {
