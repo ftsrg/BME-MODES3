@@ -40,7 +40,7 @@ class LayoutConfigurationValidationTest {
 
 	@Test
 	def test() {
-		val layout = LayoutConfigurationLoader.loadLayoutConfiguration('''conf/layout.json''')
+		val layout = LayoutConfigurationLoader.loadLayoutConfiguration
 
 		layout.components.forEach [ component |
 			{

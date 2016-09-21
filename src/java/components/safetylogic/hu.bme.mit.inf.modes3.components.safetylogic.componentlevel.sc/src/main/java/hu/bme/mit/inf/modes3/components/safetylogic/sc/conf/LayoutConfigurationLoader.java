@@ -23,8 +23,8 @@ public class LayoutConfigurationLoader {
 		logger = factory.getLogger(LayoutConfigurationLoader.class.getName());
 	}
 
-	public static LayoutConfiguration loadLayoutConfiguration(String pathInResources) throws IOException {
-		try (InputStreamReader isr = new InputStreamReader(LayoutConfigurationLoader.class.getClassLoader().getResourceAsStream(pathInResources));
+	public static LayoutConfiguration loadLayoutConfiguration() throws IOException {
+		try (InputStreamReader isr = new InputStreamReader(LayoutConfigurationLoader.class.getClassLoader().getResourceAsStream("conf/layout.json"));
 				JsonReader reader = new JsonReader(isr)) {
 			return new Gson().fromJson(reader, LayoutConfiguration.class);
 		}
