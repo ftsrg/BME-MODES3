@@ -37,6 +37,7 @@ class StatusMessageForwardingFromLocalTransportNetworkToInternal {
 
 	@Mock
 	var ITurnoutStatemachine.SCITrain turnoutStatemachineSCITrainMock
+	@Mock
 	var ITurnoutStatemachine.SCITurnout turnoutStatemachineSCITurnoutMock
 	static val turnoutStatemachineId = 15
 

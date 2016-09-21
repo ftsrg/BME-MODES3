@@ -35,17 +35,25 @@ public class YakinduMessageDispatcher implements IMessageDispatcher {
 			Message message = Message.parseFrom(rawMessage);
 			switch (message.getType()) {
 			case YAKINDU_RELEASE_TO:
-				if (releaseToHandler != null)
+				if (releaseToHandler != null) {
 					releaseToHandler.handleMessage(message.getYakinduReleaseTo());
+				}
+				break;
 			case YAKINDU_CAN_GO_TO:
-				if (canGoToHandler != null)
+				if (canGoToHandler != null) {
 					canGoToHandler.handleMessage(message.getYakinduCanGoTo());
+				}
+				break;
 			case YAKINDU_CANNOT_GO_TO:
-				if (cannotGoToHandler != null)
+				if (cannotGoToHandler != null) {
 					cannotGoToHandler.handleMessage(message.getYakinduCannotGoTo());
+				}
+				break;
 			case YAKINDU_RESERVE_TO:
-				if (reserveToHandler != null)
+				if (reserveToHandler != null) {
 					reserveToHandler.handleMessage(message.getYakinduReserveTo());
+				}
+				break;
 			default:
 				return;
 			}
