@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 
 class EnumTransformator {
 
-	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger = LoggerFactory.getLogger(EnumTransformator)
+	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger = LoggerFactory.getLogger(EnumTransformator.name)
 
 	def static setLogger(ILoggerFactory factory) {
 		logger = factory.getLogger(EnumTransformator.name)
