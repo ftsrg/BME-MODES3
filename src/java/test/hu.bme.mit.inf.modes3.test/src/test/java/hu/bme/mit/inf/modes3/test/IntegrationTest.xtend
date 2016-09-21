@@ -1,10 +1,10 @@
 package hu.bme.mit.inf.modes3.test
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.safetylogic.event.ModelUtil
 import hu.bme.mit.inf.safetylogic.event.SafetyLogic
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
