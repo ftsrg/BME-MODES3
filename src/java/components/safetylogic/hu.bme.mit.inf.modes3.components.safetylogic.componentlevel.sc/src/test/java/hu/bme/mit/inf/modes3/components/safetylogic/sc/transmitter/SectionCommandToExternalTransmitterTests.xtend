@@ -33,7 +33,7 @@ class SectionCommandToExternalTransmitterTests {
 		Mockito.when(sciSectionMock.listeners).thenReturn(new ArrayList<SCISectionListener>)
 
 		// stack used for sending messages over the network
-		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 
 		// register mock and track element commander
 		unitUnderTest = new SectionCommandToExternalTransmitter(notUsedInTests, senderStack.trackElementCommander)
@@ -46,7 +46,7 @@ class SectionCommandToExternalTransmitterTests {
 	def void enableSection() {
 		// Arrange
 		val targetID = 12
-		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 
 		receiverStack.trackElementCommandCallback.segmentCommandListener = receiverMock
 
@@ -62,7 +62,7 @@ class SectionCommandToExternalTransmitterTests {
 	def void disableSection() {
 		// Arrange
 		val targetID = 12
-		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 		receiverStack.trackElementCommandCallback.segmentCommandListener = receiverMock
 
 		// Act

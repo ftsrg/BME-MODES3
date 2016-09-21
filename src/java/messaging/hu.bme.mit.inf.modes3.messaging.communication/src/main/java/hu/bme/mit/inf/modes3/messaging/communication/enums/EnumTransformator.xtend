@@ -4,12 +4,17 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 class EnumTransformator {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(EnumTransformator)
+	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger = LoggerFactory.getLogger(EnumTransformator)
+
+	def static setLogger(ILoggerFactory factory) {
+		logger = factory.getLogger(EnumTransformator.name)
+	}
 
 	def static SegmentOccupancyValue toSpecific(SegmentOccupancy state) {
 		switch (state) {

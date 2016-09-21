@@ -25,13 +25,12 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
-		ProtobufMessageDispatcher)
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	// SIGNALS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainCurrentSpeedOrBuilder> trainCurrentSpeedHandler
@@ -46,6 +45,10 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainFunctionCommandOrBuilder> trainFunctionCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TurnoutCommandOrBuilder> turnoutCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentCommandOrBuilder> segmentCommandHandler
+
+	new(ILoggerFactory factory) {
+		logger = factory.getLogger(this.class.name)
+	}
 
 	override dispatchMessage(byte[] raw_message) {
 		try {
@@ -74,7 +77,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 				default:
 					return
 			}
-		} catch (Exception e) {
+		} catch(Exception e) {
 			logger.error(e.message, e)
 		}
 	}
@@ -82,7 +85,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	override convertMessageToRaw(Object _message) throws IllegalArgumentException {
 		try {
 			internalConvertMessageToRaw(_message as GeneratedMessageV3);
-		} catch (ClassCastException e) {
+		} catch(ClassCastException e) {
 			throw new IllegalArgumentException(e.message, e)
 		}
 	}

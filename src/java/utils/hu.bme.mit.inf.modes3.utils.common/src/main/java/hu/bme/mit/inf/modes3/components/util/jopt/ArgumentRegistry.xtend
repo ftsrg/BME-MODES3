@@ -11,8 +11,8 @@ import joptsimple.OptionException
 import joptsimple.OptionParser
 import joptsimple.OptionSet
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 /**
  * A registry which stores the different command-line arguments, that can have
@@ -35,8 +35,7 @@ import org.slf4j.LoggerFactory
  */
 public class ArgumentRegistry {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
-		ArgumentRegistry)
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	// stores the registered arguments with optons (key: name, value: argumentObj)
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<String, ArgumentAcceptingOptionSpec<?>> registrar = new HashMap
@@ -50,6 +49,10 @@ public class ArgumentRegistry {
 	// parsed arguments
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var OptionSet parsed
 
+	new(ILoggerFactory factory){
+		this.logger = factory.getLogger(this.class.name)
+	}
+
 	/**
 	 * Registers a new argument with options, that means the argument accepts
 	 * parameters.
@@ -58,8 +61,7 @@ public class ArgumentRegistry {
 	 */
 	def void registerArgumentWithOptions(ArgumentDescriptor<?> descriptor) {
 		val name = descriptor.name
-		val ArgumentAcceptingOptionSpec<?> argument = parser.accepts(name, descriptor.description).withRequiredArg.
-			ofType(descriptor.type)
+		val ArgumentAcceptingOptionSpec<?> argument = parser.accepts(name, descriptor.description).withRequiredArg.ofType(descriptor.type)
 		registrar.put(name, argument)
 	}
 
@@ -83,7 +85,7 @@ public class ArgumentRegistry {
 	def void printHelp(OutputStream target) {
 		try {
 			parser.printHelpOn(target)
-		} catch (IOException ex) {
+		} catch(IOException ex) {
 			logger.error(ex.message, ex)
 		}
 	}
@@ -121,15 +123,14 @@ public class ArgumentRegistry {
 	def getParameterStringValue(String name) throws IOException {
 		val ArgumentAcceptingOptionSpec<?> argument = registrar.get(name)
 
-		if (parsed.has(argument)) {
+		if(parsed.has(argument)) {
 			try {
 				val ArgumentAcceptingOptionSpec<String> castedArgument = getAs(argument)
 				return parsed.valueOf(castedArgument).trim
-			} catch (OptionException ex) {
+			} catch(OptionException ex) {
 				throw new ClassCastException(ex.message)
-			} catch (ClassCastException ex) {
-				throw new IllegalArgumentException("Please use a string for the " + name +
-					" argument's parameter value.")
+			} catch(ClassCastException ex) {
+				throw new IllegalArgumentException("Please use a string for the " + name + " argument's parameter value.")
 			}
 		}
 	}
@@ -148,15 +149,14 @@ public class ArgumentRegistry {
 	def getParameterIntegerValue(String name) throws IOException {
 		val ArgumentAcceptingOptionSpec<?> argument = registrar.get(name)
 
-		if (parsed.has(argument)) {
+		if(parsed.has(argument)) {
 			try {
 				val ArgumentAcceptingOptionSpec<Integer> castedArgument = getAs(argument)
 				return parsed.valueOf(castedArgument)
-			} catch (OptionException ex) {
+			} catch(OptionException ex) {
 				throw new ClassCastException(ex.message)
-			} catch (ClassCastException ex) {
-				throw new IllegalArgumentException("Please use an integer for the " + name +
-					" argument's parameter value.")
+			} catch(ClassCastException ex) {
+				throw new IllegalArgumentException("Please use an integer for the " + name + " argument's parameter value.")
 			}
 		}
 	}
@@ -168,8 +168,7 @@ public class ArgumentRegistry {
 	 * @param argument the object to be converted
 	 * @return the referred object converted to a T type object.
 	 */
-	private def <T> ArgumentAcceptingOptionSpec<T> getAs(
-		ArgumentAcceptingOptionSpec<?> argument) throws ClassCastException {
+	private def <T> ArgumentAcceptingOptionSpec<T> getAs(ArgumentAcceptingOptionSpec<?> argument) throws ClassCastException {
 		(argument as Object) as ArgumentAcceptingOptionSpec<T>
 	}
 }

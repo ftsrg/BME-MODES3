@@ -14,6 +14,7 @@ import org.junit.experimental.theories.DataPoints
 import org.junit.experimental.theories.Theories
 import org.junit.experimental.theories.Theory
 import org.junit.runner.RunWith
+import org.slf4j.helpers.NOPLoggerFactory
 
 import static org.junit.Assert.*
 
@@ -27,7 +28,7 @@ class ArgumentRegistryTest {
 
 	@Before
 	def void init() {
-		registry = new ArgumentRegistry
+		registry = new ArgumentRegistry(new NOPLoggerFactory)
 	}
 
 	@Test

@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter
 
-import hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter.TrackElementStatusToInternalTransmitter
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
@@ -85,10 +84,10 @@ class StatusMessageForwardingFromLocalTransportNetworkToInternal {
 	 ****************************************************************************************************/
 	@Before
 	def void init() {
-		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 		unitUnderTest = new TrackElementStatusToInternalTransmitter(receiverStack.trackElementStateRegistry)
 
-		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 		stateSender = senderStack.trackElementStateSender
 
 		// create mocks

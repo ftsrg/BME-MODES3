@@ -11,6 +11,6 @@ abstract class AbstractRailRoadCommunicationComponent extends AbstractCommunicat
 	
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
-		locator = new TrackCommunicationServiceLocator(stack, logger)
+		locator = new TrackCommunicationServiceLocator(stack, factory)
 	}
 }

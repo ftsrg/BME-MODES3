@@ -9,9 +9,13 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSend
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
 class TrackCommunicationServiceLocator {
+
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	val CommunicationStack stack
 
@@ -19,17 +23,16 @@ class TrackCommunicationServiceLocator {
 	val TrackElementCommander tec
 	val TrackElementCommandCallback tecc
 	val TrackElementStateRegistry tsr
-	val Logger logger
 
-	new(CommunicationStack _stack,Logger logger) {
-		this.logger = logger
+	new(CommunicationStack _stack, ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.class.name)
 		stack = _stack
 		stack.start
 
-		tess = new TrackElementStateSender(stack.mms, logger)
-		tec = new TrackElementCommander(stack.mms, logger)
-		tecc = new TrackElementCommandCallback(stack.dispatcher as ProtobufMessageDispatcher, logger)
-		tsr = new TrackElementStateRegistry(stack.dispatcher as ProtobufMessageDispatcher, logger)
+		tess = new TrackElementStateSender(stack.mms, factory)
+		tec = new TrackElementCommander(stack.mms, factory)
+		tecc = new TrackElementCommandCallback(stack.dispatcher as ProtobufMessageDispatcher, factory)
+		tsr = new TrackElementStateRegistry(stack.dispatcher as ProtobufMessageDispatcher, factory)
 	}
 
 	def ITrackElementStateSender getTrackElementStateSender() {

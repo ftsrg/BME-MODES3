@@ -14,10 +14,10 @@ import java.util.List
 import org.slf4j.helpers.NOPLogger
 
 class SafetyLogicTest {
-	
+
 	MessagingService mms
 	SafetyLogic sl
-	
+
 	@Before
 	def init() {
 		val stack = CommunicationStackFactory::createLocalStack
@@ -25,33 +25,32 @@ class SafetyLogicTest {
 		sl = new SafetyLogic(stack, new NOPLoggerFactory)
 		sl.run(); // The component will run on the main thread
 	}
-	
-	
+
 	@Test
-	def void safetyLogicRegressionTest(){
-		new TrackElementStateSender(mms, (new NOPLoggerFactory).getLogger('')) => [
+	def void safetyLogicRegressionTest() {
+		new TrackElementStateSender(mms, new NOPLoggerFactory) => [
 			sendSegmentOccupation(15, SegmentOccupancy.OCCUPIED)
 			sendSegmentOccupation(24, SegmentOccupancy.OCCUPIED)
-			
+
 			sendSegmentOccupation(28, SegmentOccupancy.OCCUPIED)
 			sendSegmentOccupation(29, SegmentOccupancy.OCCUPIED)
 		]
 
 		Thread.sleep(1000)
-		assertOnlyBlocked(#[24,29])		
+		assertOnlyBlocked(#[24, 29])
 	}
-	
+
 	def assertOnlyBlocked(List<Integer> integers) {
-		sl.model.model.sections.forEach[
-			if(it instanceof Segment){
-				if(integers.contains(it.id)){
+		sl.model.model.sections.forEach [
+			if(it instanceof Segment) {
+				if(integers.contains(it.id)) {
 					Assert.assertEquals(false, it.isIsEnabled)
 				} else {
 					Assert.assertEquals(true, it.isIsEnabled)
-				}			
+				}
 			}
 		]
-	
+
 	}
-	
+
 }

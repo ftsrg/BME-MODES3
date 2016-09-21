@@ -15,10 +15,12 @@ import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
 	@Accessors(PUBLIC_GETTER) protected ModelUtil model //XXX IModelInteractor should be the static type
+	
+	private ILoggerFactory factory
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
-
 		super(stack, factory)
+		this.factory = factory
 		logger.info('Construction started')
 		model = new ModelUtil
 		logger.info('Construction finished')
@@ -50,7 +52,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	override void run() {
 		this.logger.info("Running started...")
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, logger)
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {

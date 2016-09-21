@@ -4,7 +4,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.safetylogic.event.INotifiable
 import hu.bme.mit.inf.safetylogic.event.ModelUtil
 import hu.bme.mit.inf.safetylogic.event.TrainMovementEstimator
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -23,7 +22,8 @@ class TrainMovementEstimatorTest {
 				override onUpdate() {
 					// Left blank intentionally
 				}
-			}, (new SimpleLoggerFactory).getLogger('TrainMovementEstimator')
+			},
+			new SimpleLoggerFactory
 		)
 	}
 
@@ -35,28 +35,27 @@ class TrainMovementEstimatorTest {
 
 	@Test
 	def void trainMovementEstimatorTest() {
-		
+
 		Assert.assertEquals(0, modelUtil.model.trains.size)
-		
+
 		estimator.onSegmentOccupancyChange(1, SegmentOccupancy.FREE, SegmentOccupancy.OCCUPIED)
 		Assert.assertEquals(1, modelUtil.model.trains.size)
 		Assert.assertEquals(1, modelUtil.model.trains.head.currentlyOn.id)
-		
-		
+
 		move(1, 12)
 		Thread.sleep(500)
 		Assert.assertEquals(1, modelUtil.model.trains.size)
 		Assert.assertEquals(12, modelUtil.model.trains.head.currentlyOn.id)
-		
+
 		move(12, 14)
 		Assert.assertEquals(1, modelUtil.model.trains.size)
 		Assert.assertEquals(14, modelUtil.model.trains.head.currentlyOn.id)
-		
+
 		move(14, 15)
 		Assert.assertEquals(1, modelUtil.model.trains.size)
 		Assert.assertEquals(15, modelUtil.model.trains.head.currentlyOn.id)
 
-		move(15, 24)		
+		move(15, 24)
 		Assert.assertEquals(1, modelUtil.model.trains.size)
 		Assert.assertEquals(24, modelUtil.model.trains.head.currentlyOn.id)
 	}

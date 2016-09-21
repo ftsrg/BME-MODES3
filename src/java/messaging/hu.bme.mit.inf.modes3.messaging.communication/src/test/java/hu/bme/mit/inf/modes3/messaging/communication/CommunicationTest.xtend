@@ -22,7 +22,7 @@ class CommunicationTest {
 
 	@Before
 	def void init() {
-		locator = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, (new NOPLoggerFactory).getLogger(''))
+		locator = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
 		gotMsg = new ModifiableBool => [bool = false]
 	}
 
@@ -31,7 +31,7 @@ class CommunicationTest {
 		locator.trackElementCommandCallback.segmentCommandListener = new ISegmentCommandListener() {
 
 			override onSegmentCommand(int id, SegmentState state) {
-				if (id == 1 && state == SegmentState.DISABLED) {
+				if(id == 1 && state == SegmentState.DISABLED) {
 					gotMsg.bool = true
 				}
 			}
@@ -47,7 +47,7 @@ class CommunicationTest {
 		locator.trackElementCommandCallback.turnoutCommandListener = new ITurnoutCommandListener() {
 
 			override onTurnoutCommand(int id, TurnoutState state) {
-				if (id == 1 && state == TurnoutState.STRAIGHT) {
+				if(id == 1 && state == TurnoutState.STRAIGHT) {
 					gotMsg.bool = true
 				}
 			}
@@ -62,7 +62,7 @@ class CommunicationTest {
 	def void sendSegmentStateTest() {
 		locator.trackElementStateRegistry.segmentStateChangeListener = new ISegmentStateChangeListener() {
 			override onSegmentStateChange(int id, SegmentState oldValue, SegmentState newValue) {
-				if (id == 1 && newValue == SegmentState.ENABLED) {
+				if(id == 1 && newValue == SegmentState.ENABLED) {
 					gotMsg.bool = true
 				}
 			}
@@ -78,7 +78,7 @@ class CommunicationTest {
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-				if (id == 1 && newValue == TurnoutState.STRAIGHT) {
+				if(id == 1 && newValue == TurnoutState.STRAIGHT) {
 					gotMsg.bool = true
 				}
 			}
@@ -94,7 +94,7 @@ class CommunicationTest {
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener() {
 
 			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
-				if (id == 1 && newValue == SegmentOccupancy.OCCUPIED) {
+				if(id == 1 && newValue == SegmentOccupancy.OCCUPIED) {
 					gotMsg.bool = true
 				}
 			}
@@ -106,8 +106,7 @@ class CommunicationTest {
 	}
 
 	@Test
-	def void send(){
-		
+	def void send() {
 	}
 
 	static class ModifiableBool {

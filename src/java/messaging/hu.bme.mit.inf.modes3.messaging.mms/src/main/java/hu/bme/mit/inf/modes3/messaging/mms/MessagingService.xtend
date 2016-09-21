@@ -2,12 +2,13 @@ package hu.bme.mit.inf.modes3.messaging.mms
 
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.Transport
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
 class MessagingService {
 
-	val Logger logger
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 	Thread dispatchThread
 
 	Transport transport
@@ -24,7 +25,6 @@ class MessagingService {
 		this.transport.connect()
 		dispatchThread = new Thread(new DispatchThread(transport, dispatcher, logger))
 		dispatchThread.start
-
 	}
 
 	def sendMessage(Object message) throws IllegalArgumentException {

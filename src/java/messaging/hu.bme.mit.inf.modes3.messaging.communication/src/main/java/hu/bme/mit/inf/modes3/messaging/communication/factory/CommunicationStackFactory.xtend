@@ -6,32 +6,32 @@ import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.LocalTransport
 import hu.bme.mit.inf.modes3.transports.config.loaders.ArgumentBasedTransportConfigurationLoader
 import hu.bme.mit.inf.modes3.transports.zeromq.ZMQTransport
-import org.slf4j.Logger
+import org.slf4j.ILoggerFactory
 import org.slf4j.helpers.NOPLoggerFactory
 
 class CommunicationStackFactory {
 
-	def static createLocalStack(Logger logger) {
+	def static createLocalStack(ILoggerFactory factory) {
 		return new CommunicationStack(
-			new MessagingService(logger), 
-			new LocalTransport, 
-			new ProtobufMessageDispatcher
-		)
-	}
-	
-	def static createLocalStack(){
-		return new CommunicationStack(
-			new MessagingService((new NOPLoggerFactory).getLogger('')),
+			new MessagingService(factory),
 			new LocalTransport,
-			new ProtobufMessageDispatcher
+			new ProtobufMessageDispatcher(factory)
 		)
 	}
 
-	def static createProtobufStack(ArgumentRegistry argumentRegistry, Logger logger) {
+	def static createLocalStack() {
 		return new CommunicationStack(
-			new MessagingService(logger), 
-			new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry)), 
-			new ProtobufMessageDispatcher
+			new MessagingService(new NOPLoggerFactory),
+			new LocalTransport,
+			new ProtobufMessageDispatcher(new NOPLoggerFactory)
+		)
+	}
+
+	def static createProtobufStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
+		return new CommunicationStack(
+			new MessagingService(factory),
+			new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry)),
+			new ProtobufMessageDispatcher(factory)
 		)
 	}
 
