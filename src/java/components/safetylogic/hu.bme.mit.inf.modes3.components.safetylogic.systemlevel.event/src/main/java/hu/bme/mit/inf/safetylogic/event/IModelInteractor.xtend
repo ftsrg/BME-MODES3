@@ -1,14 +1,13 @@
 package hu.bme.mit.inf.safetylogic.event
 
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import java.util.Set
-import org.eclipse.emf.ecore.EObject
 
 interface IModelInteractor {
 	def Iterable<Train> getEnabledTrains()
 	def Train addNewTrain()
 	def RailRoadElement getSegment(int id)
 	def void removeTrain(Train t)
-	def Set<EObject> getCurrentlyConnected(RailRoadElement element)
+	def Set<RailRoadElement> getCurrentlyConnected(RailRoadElement element)
 }

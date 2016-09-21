@@ -3,8 +3,8 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatch;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 
 /**
@@ -22,7 +22,7 @@ public abstract class ThreeConnectedRailRoadPartsProcessor implements IMatchProc
    * @param pOther the value of pattern parameter other in the currently processed match
    * 
    */
-  public abstract void process(final EObject pOne, final EObject pMiddle, final EObject pOther);
+  public abstract void process(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther);
   
   @Override
   public void process(final ThreeConnectedRailRoadPartsMatch match) {

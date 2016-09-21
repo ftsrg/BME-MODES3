@@ -3,13 +3,14 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
 import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatch;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainCutsTurnoutQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
@@ -86,7 +87,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return matches represented as a TrainCutsTurnoutMatch object.
    * 
    */
-  public Collection<TrainCutsTurnoutMatch> getAllMatches(final EObject pOffender, final EObject pVictim) {
+  public Collection<TrainCutsTurnoutMatch> getAllMatches(final Train pOffender, final RailRoadElement pVictim) {
     return rawGetAllMatches(new Object[]{pOffender, pVictim});
   }
   
@@ -98,7 +99,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return a match represented as a TrainCutsTurnoutMatch object, or null if no match is found.
    * 
    */
-  public TrainCutsTurnoutMatch getOneArbitraryMatch(final EObject pOffender, final EObject pVictim) {
+  public TrainCutsTurnoutMatch getOneArbitraryMatch(final Train pOffender, final RailRoadElement pVictim) {
     return rawGetOneArbitraryMatch(new Object[]{pOffender, pVictim});
   }
   
@@ -110,7 +111,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return true if the input is a valid (partial) match of the pattern.
    * 
    */
-  public boolean hasMatch(final EObject pOffender, final EObject pVictim) {
+  public boolean hasMatch(final Train pOffender, final RailRoadElement pVictim) {
     return rawHasMatch(new Object[]{pOffender, pVictim});
   }
   
@@ -121,7 +122,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the number of pattern matches found.
    * 
    */
-  public int countMatches(final EObject pOffender, final EObject pVictim) {
+  public int countMatches(final Train pOffender, final RailRoadElement pVictim) {
     return rawCountMatches(new Object[]{pOffender, pVictim});
   }
   
@@ -132,7 +133,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @param processor the action that will process each pattern match.
    * 
    */
-  public void forEachMatch(final EObject pOffender, final EObject pVictim, final IMatchProcessor<? super TrainCutsTurnoutMatch> processor) {
+  public void forEachMatch(final Train pOffender, final RailRoadElement pVictim, final IMatchProcessor<? super TrainCutsTurnoutMatch> processor) {
     rawForEachMatch(new Object[]{pOffender, pVictim}, processor);
   }
   
@@ -145,7 +146,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
    * 
    */
-  public boolean forOneArbitraryMatch(final EObject pOffender, final EObject pVictim, final IMatchProcessor<? super TrainCutsTurnoutMatch> processor) {
+  public boolean forOneArbitraryMatch(final Train pOffender, final RailRoadElement pVictim, final IMatchProcessor<? super TrainCutsTurnoutMatch> processor) {
     return rawForOneArbitraryMatch(new Object[]{pOffender, pVictim}, processor);
   }
   
@@ -158,7 +159,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the (partial) match object.
    * 
    */
-  public TrainCutsTurnoutMatch newMatch(final EObject pOffender, final EObject pVictim) {
+  public TrainCutsTurnoutMatch newMatch(final Train pOffender, final RailRoadElement pVictim) {
     return TrainCutsTurnoutMatch.newMatch(pOffender, pVictim);
   }
   
@@ -167,8 +168,8 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfOffender(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<Train> rawAccumulateAllValuesOfOffender(final Object[] parameters) {
+    Set<Train> results = new HashSet<Train>();
     rawAccumulateAllValues(POSITION_OFFENDER, parameters, results);
     return results;
   }
@@ -178,7 +179,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfOffender() {
+  public Set<Train> getAllValuesOfOffender() {
     return rawAccumulateAllValuesOfOffender(emptyArray());
   }
   
@@ -187,7 +188,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfOffender(final TrainCutsTurnoutMatch partialMatch) {
+  public Set<Train> getAllValuesOfOffender(final TrainCutsTurnoutMatch partialMatch) {
     return rawAccumulateAllValuesOfOffender(partialMatch.toArray());
   }
   
@@ -196,7 +197,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfOffender(final EObject pVictim) {
+  public Set<Train> getAllValuesOfOffender(final RailRoadElement pVictim) {
     return rawAccumulateAllValuesOfOffender(new Object[]{
     null, 
     pVictim
@@ -208,8 +209,8 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfVictim(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfVictim(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_VICTIM, parameters, results);
     return results;
   }
@@ -219,7 +220,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfVictim() {
+  public Set<RailRoadElement> getAllValuesOfVictim() {
     return rawAccumulateAllValuesOfVictim(emptyArray());
   }
   
@@ -228,7 +229,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfVictim(final TrainCutsTurnoutMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfVictim(final TrainCutsTurnoutMatch partialMatch) {
     return rawAccumulateAllValuesOfVictim(partialMatch.toArray());
   }
   
@@ -237,7 +238,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfVictim(final EObject pOffender) {
+  public Set<RailRoadElement> getAllValuesOfVictim(final Train pOffender) {
     return rawAccumulateAllValuesOfVictim(new Object[]{
     pOffender, 
     null
@@ -247,7 +248,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
   @Override
   protected TrainCutsTurnoutMatch tupleToMatch(final Tuple t) {
     try {
-    	return TrainCutsTurnoutMatch.newMatch((EObject) t.get(POSITION_OFFENDER), (EObject) t.get(POSITION_VICTIM));
+    	return TrainCutsTurnoutMatch.newMatch((Train) t.get(POSITION_OFFENDER), (RailRoadElement) t.get(POSITION_VICTIM));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -257,7 +258,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
   @Override
   protected TrainCutsTurnoutMatch arrayToMatch(final Object[] match) {
     try {
-    	return TrainCutsTurnoutMatch.newMatch((EObject) match[POSITION_OFFENDER], (EObject) match[POSITION_VICTIM]);
+    	return TrainCutsTurnoutMatch.newMatch((Train) match[POSITION_OFFENDER], (RailRoadElement) match[POSITION_VICTIM]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -267,7 +268,7 @@ public class TrainCutsTurnoutMatcher extends BaseMatcher<TrainCutsTurnoutMatch> 
   @Override
   protected TrainCutsTurnoutMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TrainCutsTurnoutMatch.newMutableMatch((EObject) match[POSITION_OFFENDER], (EObject) match[POSITION_VICTIM]);
+    	return TrainCutsTurnoutMatch.newMutableMatch((Train) match[POSITION_OFFENDER], (RailRoadElement) match[POSITION_VICTIM]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
