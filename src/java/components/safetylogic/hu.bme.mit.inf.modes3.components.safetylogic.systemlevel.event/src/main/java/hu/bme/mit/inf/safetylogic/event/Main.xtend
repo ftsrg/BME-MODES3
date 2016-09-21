@@ -10,7 +10,7 @@ class Main {
 
 	public static def void main(String[] args) {
 		val registry = new ArgumentRegistry(new SimpleLoggerFactory)
-		registry.registerArgumentWithOptions(new ArgumentDescriptor<String>("cid", "The ID of the component"))
+		registry.registerArgumentWithOptions(new ArgumentDescriptor<String>("cid", "The ID of the component", String))
 		registry.parseArguments(args);
 
 		val sl = new SafetyLogic(CommunicationStackFactory::createProtobufStack(registry, new SimpleLoggerFactory), LoggerFactory.ILoggerFactory)
