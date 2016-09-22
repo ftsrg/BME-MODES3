@@ -8,7 +8,7 @@ class ArgumentBasedTransportConfigurationLoader {
 	static def TransportConfiguration loadConfiguration(ArgumentRegistry registry) {
 		
 		
-		return null
+		throw new UnsupportedOperationException()
 	}
 	
 }
