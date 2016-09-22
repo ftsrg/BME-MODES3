@@ -25,7 +25,7 @@ import org.slf4j.helpers.NOPLoggerFactory
  * YakinduMessageBridgeToExternalLocalTransportTests
  */
 @RunWith(Theories)
-class YakinduMessageExternalTests {
+class YakinduMessageExternalMQTTTranport {
 
 	var YakinduMessageBridgeToExternal unitUnderTest
 
@@ -56,14 +56,14 @@ class YakinduMessageExternalTests {
 	@Before
 	def void init() {
 		// create sender communication stack
-		val senderStack = YakinduCommunicationStackFactory::createLocalStack(new NOPLoggerFactory)
+		val senderStack = YakinduCommunicationStackFactory::createLocalMQTTStack(new NOPLoggerFactory)
 		senderStack.start
 
 		unitUnderTest = new YakinduMessageBridgeToExternal(senderStack.mms, new NOPLoggerFactory)
 
 		// create receiver communication stack
 		receiverDispatcher = new YakinduMessageDispatcher(new NOPLoggerFactory)
-		val receiverStack = YakinduCommunicationStackFactory::createLocalStack(receiverDispatcher, new NOPLoggerFactory)
+		val receiverStack = YakinduCommunicationStackFactory::createLocalMQTTStackFromDispatcher(receiverDispatcher, new NOPLoggerFactory)
 		receiverStack.start
 	}
 

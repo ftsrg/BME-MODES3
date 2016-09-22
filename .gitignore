@@ -1,3 +1,9 @@
+# Moquette
+# --------
+**/moquette_store.mapdb
+**/moquette_store.mapdb.p
+**/moquette_store.mapdb.t
+
 # Gradle
 # ------
 .gradle

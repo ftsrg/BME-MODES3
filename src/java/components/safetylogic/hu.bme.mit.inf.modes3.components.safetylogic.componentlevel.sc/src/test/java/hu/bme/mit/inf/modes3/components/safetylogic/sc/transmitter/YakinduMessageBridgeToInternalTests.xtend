@@ -28,7 +28,7 @@ import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.turnout.ITurnoutStatemachine
 
 @RunWith(Theories)
-class YakinduMessageForwardingFromNetworkToInternal {
+class YakinduMessageBridgeToInternalTests {
 
 	/****************************************************************************************************
 	 * fields: unit under test, mocks and classes for simulating message receive over the network

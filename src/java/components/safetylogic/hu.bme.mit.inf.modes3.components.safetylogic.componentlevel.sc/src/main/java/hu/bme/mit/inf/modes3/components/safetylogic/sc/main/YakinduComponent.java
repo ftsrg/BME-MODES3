@@ -98,7 +98,7 @@ public class YakinduComponent extends AbstractCommunicationComponent {
 
 		// 1 stack for incoming yakindu messages
 		if (argumentRegistryForProtobuf != null) {
-			incomingYakinduStack = YakinduCommunicationStackFactory.createProtobufStack(argumentRegistryForProtobuf, incomingMessageDispatcher, loggerFactory);
+			incomingYakinduStack = YakinduCommunicationStackFactory.createProtobufStackFromDispatcher(argumentRegistryForProtobuf, incomingMessageDispatcher, loggerFactory);
 		} else {
 			incomingYakinduStack = YakinduCommunicationStackFactory.createLocalStack(loggerFactory);
 		}

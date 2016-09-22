@@ -11,7 +11,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
-class BBBSectionMessageHandlerLocalTransportIntegrationTest {
+class SectionMessageHandlerLocalTransportTests {
 
 	var BBBComponent componentUnderTest
 
