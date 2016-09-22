@@ -14,7 +14,7 @@
 /* insert roboto as custom font */
 @font-face {
     font-family: Canaro;
-    src: url('./fonts/Canaro/Rene Bieder - Canaro Thin.otf');
+    src: url('/fonts/Canaro/Canaro-Thin.otf');
 }
 
 html {

@@ -6,70 +6,259 @@
 
 var settings = {
     viewBox: [0, 0, 8858, 4960],
-    activeTrackElementColor: "#1e2141",
-    inactiveTrackElementColor: "#F44336",
-    undefinedStateTrackElementColor: "#CCCCCC",
-    activeTurnoutBranchColor: "#1e2141",
-    inactiveTurnoutBranchColor: "#CCCCCC",
-    undefinedStateTurnoutBranchColor: "#CCCCCC",
-    activeTurnoutBranchOpacity: 1,
-    inactiveTurnoutBranchOpacity: 0,
-//    segments: [1, 2, 4, 5, 6, 7, 8, 10,
-//        11, 12, 13, 15, 17, 18, 19, 20,
-//        22, 23, 24, 26, 27, 29, 30, 31
-//    ],
+    segment: {
+        activeColor: "#1e2141",
+        inactiveColor: "#F44336",
+        undefinedStateColor: "#CCCCCC"
+    },
+    turnout: {
+        activeControlColor: "#1e2141",
+        inactiveControlColor: "#CCCCCC",
+        undefinedControlColor: "#CCCCCC",
+        activeBranchOpacity: 1,
+        inactiveBranchOpacity: 0
+    },
     segments: [
         {
-            id: 1,
-            direction: 'CCW'},
-        {id: 2,
-            direction: 'CCW'},
-        {id: 4,
-            direction: 'CCW'},
-        {id: 5,
-            direction: 'CCW'},
-        {id: 6,
-            direction: 'CCW'},
-        {id: 7,
-            direction: 'CCW'},
-        {id: 8,
-            direction: 'CCW'},
-        {id: 10,
-            direction: 'CCW'},
-        {id: 11,
-            direction: 'CCW'},
-        {id: 12,
-            direction: 'CCW'},
-        {id: 13,
-            direction: 'CCW'},
-        {id: 15,
-            direction: 'CCW'},
-        {id: 17,
-            direction: 'CCW'},
-        {id: 18,
-            direction: 'CCW'},
-        {id: 19,
-            direction: 'CCW'},
-        {id: 20,
-            direction: 'CCW'},
-        {id: 22,
-            direction: 'CCW'},
-        {id: 23,
-            direction: 'CCW'},
-        {id: 24,
-            direction: 'CW'},
-        {id: 26,
-            direction: 'CCW'},
-        {id: 27,
-            direction: 'CCW'},
-        {id: 29,
-            direction: 'CW'},
-        {id: 30,
-            direction: 'CCW'},
-        {id: 31,
-            direction: 'CCW'},
+            id: "s01",
+            length: 442,
+            connections: ["s12", "s02"],
+        },
+        {
+            id: "s02",
+            length: 453,
+            connections: ["s01", "t04"],
+        },
+        {
+            id: "s04",
+            length: 548,
+            connections: ["t04-str", "s06"],
+        },
+        {
+            id: "s05",
+            length: 548,
+            connections: ["t04-div", "s07"],
+        },
+        {
+            id: "s06",
+            length: 595,
+            connections: ["s04", "s18"],
+        },
+        {
+            id: "s07",
+            length: 595,
+            connections: ["s05", "s19"],
+        },
+        {
+            id: "s08",
+            length: 543,
+            connections: ["t05", "s13"],
+        },
+        {
+            id: "s10",
+            length: 491,
+            connections: ["s17", "t05-div"],
+        },
+        {
+            id: "s11",
+            length: 686,
+            connections: ["t01-div", "t05-str"],
+        },
+        {
+            id: "s12",
+            length: 459,
+            connections: ["t01-str", "s01"],
+        },
+        {
+            id: "s13",
+            length: 590,
+            connections: ["s08", "s20"],
+        },
+        {
+            id: "s15",
+            length: 526,
+            connections: ["s24", "t01"],
+        },
+        {
+            id: "s17",
+            length: 481,
+            connections: ["t06", "s10"],
+        },
+        {
+            id: "s18",
+            length: 655,
+            connections: ["s06", "s31"],
+        },
+        {
+            id: "s19",
+            length: 522,
+            connections: ["s07", "t03b-str"],
+        },
+        {
+            id: "s20",
+            length: 292,
+            connections: ["s13", "t03a"],
+        },
+        {
+            id: "s22",
+            length: 788,
+            connections: [null, "t06-div"],
+        },
+        {
+            id: "s23",
+            length: 537,
+            connections: ["s27", "t06-str"],
+        },
+        {
+            id: "s24",
+            length: 584,
+            connections: ["s29", "s15"],
+        },
+        {
+            id: "s26",
+            length: 515,
+            connections: ["t03a-str", "s27"],
+        },
+        {
+            id: "s27",
+            length: 503,
+            connections: ["s26", "s23"],
+        },
+        {
+            id: "s29",
+            length: 547,
+            connections: ["t02", "s24"],
+        },
+        {
+            id: "s30",
+            length: 442,
+            connections: ["t03b", "t02-div"],
+        },
+        {
+            id: "s31",
+            length: 549,
+            connections: ["s18", "t02-str"],
+        }
     ],
-    turnouts: [1, 2, "3a", "3b", 4, 5, 6],
+    turnouts: [
+        {
+            id: "t01",
+            
+            div: {
+                id: "t01-div",
+                length: 237,
+                connections: ["s15", "s11"]
+            },
+            
+            str: {
+                id: "t01-str",
+                length: 239,
+                connections: ["s15", "s12"]
+            }
+        },
+        {
+            id: "t02",
+            
+            div: {
+                id: "t02-div",
+                length: 220,
+                connections: ["s30", "s29"]
+            },
+            
+            str: {
+                id: "t02-str",
+                length: 284,
+                connections: ["s31", "s29"]
+            }
+        },
+        {
+            id: "t03a",
+            
+            div: {
+                id: "t03a-div",
+                length: 237,
+                connections: ["s20", "t03b-div"]
+            },
+            
+            str: {
+                id: "t03a-str",
+                length: 239,
+                connections: ["s20", "s26"]
+            }
+        },
+        {
+            id: "t03b",
+            
+            div: {
+                id: "t03b-div",
+                length: 237,
+                connections: ["t03a-div", "s30"]
+            },
+            
+            str: {
+                id: "t03b-str",
+                length: 239,
+                connections: ["s19", "s30"]
+            }
+            
+        },
+        {
+            id: "t04",
+            
+            div: {
+                id: "t04-div",
+                length: 220,
+                connections: ["s02", "s05"]
+            },
+            
+            str: {
+                id: "t04-str",
+                length: 284,
+                connections: ["s02", "s04"]
+            }
+            
+        },
+        {
+            id: "t05",
+            
+            div: {
+                id: "t05-div",
+                length: 220,
+                connections: ["s10", "s08"]
+            },
+            
+            str: {
+                id: "t05-str",
+                length: 284,
+                connections: ["s11", "s08"]
+            }
+            
+        },
+        {
+            id: "t06",
+            
+            div: {
+                id: "t06-div",
+                length: 237,
+                connections: ["s22", "s17"]
+            },
+            
+            str: {
+                id: "t06-str",
+                length: 239,
+                connections: ["s23", "s17"]
+            }
+        },
+    ],
+    turnoutEnds: [
+        "t01", "t01-div", "t01-str",
+        "t02", "t02-div", "t02-str",
+        "t03a", "t03a-div", "t03a-str",
+        "t03b", "t03b-div", "t03b-str",
+        "t04", "t04-div", "t04-str",
+        "t05", "t05-div", "t05-str",
+        "t06", "t06-div", "t06-str"
+    ],
     locomotives: [
         {
             name: "Taurus MÁV 1047",
@@ -94,7 +283,7 @@ var settings = {
     locomotiveCircleStyle: 'color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:31.88976288;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate',
     locomotiveTextStyle: "font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:150px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1",
     locomotiveTextPathStyle: "color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#1e2141;stroke-width:21.25984192;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-    
-}
+
+};
 
 
