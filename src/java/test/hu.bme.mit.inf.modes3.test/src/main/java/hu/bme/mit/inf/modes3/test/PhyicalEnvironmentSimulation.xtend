@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.test
 
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelFactory
 
 class PhyicalEnvironmentSimulation implements Runnable {
 	public val RailRoadModel model

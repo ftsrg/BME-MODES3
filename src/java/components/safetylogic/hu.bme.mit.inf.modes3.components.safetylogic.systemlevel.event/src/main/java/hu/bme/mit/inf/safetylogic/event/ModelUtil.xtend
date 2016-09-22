@@ -1,13 +1,15 @@
 package hu.bme.mit.inf.safetylogic.event
 
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelPackage
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelFactory
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatcher
+import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
+import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
@@ -15,8 +17,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.xtend.lib.annotations.Accessors
-import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
-import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
 
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
@@ -92,9 +92,9 @@ class ModelUtil implements IModelInteractor {
 		// get all matches of the pattern
 		matcher.getAllMatches().forEach [
 			val path = RailRoadModelFactory.eINSTANCE.createPath
-			path.via = it.middle as RailRoadElement
-			path.from = it.one as RailRoadElement
-			path.to = it.other as RailRoadElement
+			path.via = it.middle
+			path.from = it.one
+			path.to = it.other
 			paths.add(path)
 		]
 

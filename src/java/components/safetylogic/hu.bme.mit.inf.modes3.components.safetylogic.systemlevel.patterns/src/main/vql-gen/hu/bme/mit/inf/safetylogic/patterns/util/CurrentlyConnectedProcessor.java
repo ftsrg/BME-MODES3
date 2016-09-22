@@ -3,8 +3,8 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatch;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 
 /**
@@ -21,7 +21,7 @@ public abstract class CurrentlyConnectedProcessor implements IMatchProcessor<Cur
    * @param pConnectedTo the value of pattern parameter connectedTo in the currently processed match
    * 
    */
-  public abstract void process(final EObject pThis, final EObject pConnectedTo);
+  public abstract void process(final RailRoadElement pThis, final RailRoadElement pConnectedTo);
   
   @Override
   public void process(final CurrentlyConnectedMatch match) {

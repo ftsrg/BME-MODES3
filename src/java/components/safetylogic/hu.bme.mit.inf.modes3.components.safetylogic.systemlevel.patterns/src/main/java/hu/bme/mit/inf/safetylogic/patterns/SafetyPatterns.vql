@@ -9,7 +9,7 @@ pattern nextSection(Old : RailRoadElement, Current : RailRoadElement, Next : Rai
 	Path.to(p, Next);
 }
 
-//------------------------------------Train Collision Stuff------------------------------------//
+//------------------------------------Train Collision Stuff------------------------------------// 
 private pattern trainHitsAnotherTrainNextAfterNext(Offender : Train, Victim : Train) {
 	Train.currentlyOn(Offender, CurrentPosition);
 	Train.previouslyOn(Offender, OldPosition);

@@ -3,8 +3,9 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
 import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatch;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 
 /**
@@ -21,7 +22,7 @@ public abstract class TrainCutsTurnoutProcessor implements IMatchProcessor<Train
    * @param pVictim the value of pattern parameter Victim in the currently processed match
    * 
    */
-  public abstract void process(final EObject pOffender, final EObject pVictim);
+  public abstract void process(final Train pOffender, final RailRoadElement pVictim);
   
   @Override
   public void process(final TrainCutsTurnoutMatch match) {

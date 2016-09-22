@@ -3,10 +3,10 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.util.ThreeConnectedRailRoadPartsQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -26,15 +26,15 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  */
 @SuppressWarnings("all")
 public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch {
-  private EObject fOne;
+  private RailRoadElement fOne;
   
-  private EObject fMiddle;
+  private RailRoadElement fMiddle;
   
-  private EObject fOther;
+  private RailRoadElement fOther;
   
   private static List<String> parameterNames = makeImmutableList("one", "middle", "other");
   
-  private ThreeConnectedRailRoadPartsMatch(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  private ThreeConnectedRailRoadPartsMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     this.fOne = pOne;
     this.fMiddle = pMiddle;
     this.fOther = pOther;
@@ -48,15 +48,15 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
     return null;
   }
   
-  public EObject getOne() {
+  public RailRoadElement getOne() {
     return this.fOne;
   }
   
-  public EObject getMiddle() {
+  public RailRoadElement getMiddle() {
     return this.fMiddle;
   }
   
-  public EObject getOther() {
+  public RailRoadElement getOther() {
     return this.fOther;
   }
   
@@ -64,31 +64,31 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("one".equals(parameterName) ) {
-    	this.fOne = (EObject) newValue;
+    	this.fOne = (RailRoadElement) newValue;
     	return true;
     }
     if ("middle".equals(parameterName) ) {
-    	this.fMiddle = (EObject) newValue;
+    	this.fMiddle = (RailRoadElement) newValue;
     	return true;
     }
     if ("other".equals(parameterName) ) {
-    	this.fOther = (EObject) newValue;
+    	this.fOther = (RailRoadElement) newValue;
     	return true;
     }
     return false;
   }
   
-  public void setOne(final EObject pOne) {
+  public void setOne(final RailRoadElement pOne) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fOne = pOne;
   }
   
-  public void setMiddle(final EObject pMiddle) {
+  public void setMiddle(final RailRoadElement pMiddle) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fMiddle = pMiddle;
   }
   
-  public void setOther(final EObject pOther) {
+  public void setOther(final RailRoadElement pOther) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fOther = pOther;
   }
@@ -192,7 +192,7 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
    * @return the new, mutable (partial) match object.
    * 
    */
-  public static ThreeConnectedRailRoadPartsMatch newMutableMatch(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  public static ThreeConnectedRailRoadPartsMatch newMutableMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return new Mutable(pOne, pMiddle, pOther);
   }
   
@@ -206,12 +206,12 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
    * @return the (partial) match object.
    * 
    */
-  public static ThreeConnectedRailRoadPartsMatch newMatch(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  public static ThreeConnectedRailRoadPartsMatch newMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return new Immutable(pOne, pMiddle, pOther);
   }
   
   private static final class Mutable extends ThreeConnectedRailRoadPartsMatch {
-    Mutable(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+    Mutable(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
       super(pOne, pMiddle, pOther);
     }
     
@@ -222,7 +222,7 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
   }
   
   private static final class Immutable extends ThreeConnectedRailRoadPartsMatch {
-    Immutable(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+    Immutable(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
       super(pOne, pMiddle, pOther);
     }
     

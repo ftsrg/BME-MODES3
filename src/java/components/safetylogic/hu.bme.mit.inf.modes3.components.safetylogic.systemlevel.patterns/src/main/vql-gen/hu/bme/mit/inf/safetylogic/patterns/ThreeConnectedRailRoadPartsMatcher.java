@@ -3,13 +3,13 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatch;
 import hu.bme.mit.inf.safetylogic.patterns.util.ThreeConnectedRailRoadPartsQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
@@ -89,7 +89,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return matches represented as a ThreeConnectedRailRoadPartsMatch object.
    * 
    */
-  public Collection<ThreeConnectedRailRoadPartsMatch> getAllMatches(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  public Collection<ThreeConnectedRailRoadPartsMatch> getAllMatches(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return rawGetAllMatches(new Object[]{pOne, pMiddle, pOther});
   }
   
@@ -102,7 +102,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return a match represented as a ThreeConnectedRailRoadPartsMatch object, or null if no match is found.
    * 
    */
-  public ThreeConnectedRailRoadPartsMatch getOneArbitraryMatch(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  public ThreeConnectedRailRoadPartsMatch getOneArbitraryMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return rawGetOneArbitraryMatch(new Object[]{pOne, pMiddle, pOther});
   }
   
@@ -115,7 +115,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return true if the input is a valid (partial) match of the pattern.
    * 
    */
-  public boolean hasMatch(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  public boolean hasMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return rawHasMatch(new Object[]{pOne, pMiddle, pOther});
   }
   
@@ -127,7 +127,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the number of pattern matches found.
    * 
    */
-  public int countMatches(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  public int countMatches(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return rawCountMatches(new Object[]{pOne, pMiddle, pOther});
   }
   
@@ -139,7 +139,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @param processor the action that will process each pattern match.
    * 
    */
-  public void forEachMatch(final EObject pOne, final EObject pMiddle, final EObject pOther, final IMatchProcessor<? super ThreeConnectedRailRoadPartsMatch> processor) {
+  public void forEachMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther, final IMatchProcessor<? super ThreeConnectedRailRoadPartsMatch> processor) {
     rawForEachMatch(new Object[]{pOne, pMiddle, pOther}, processor);
   }
   
@@ -153,7 +153,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
    * 
    */
-  public boolean forOneArbitraryMatch(final EObject pOne, final EObject pMiddle, final EObject pOther, final IMatchProcessor<? super ThreeConnectedRailRoadPartsMatch> processor) {
+  public boolean forOneArbitraryMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther, final IMatchProcessor<? super ThreeConnectedRailRoadPartsMatch> processor) {
     return rawForOneArbitraryMatch(new Object[]{pOne, pMiddle, pOther}, processor);
   }
   
@@ -167,7 +167,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the (partial) match object.
    * 
    */
-  public ThreeConnectedRailRoadPartsMatch newMatch(final EObject pOne, final EObject pMiddle, final EObject pOther) {
+  public ThreeConnectedRailRoadPartsMatch newMatch(final RailRoadElement pOne, final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return ThreeConnectedRailRoadPartsMatch.newMatch(pOne, pMiddle, pOther);
   }
   
@@ -176,8 +176,8 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfone(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfone(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_ONE, parameters, results);
     return results;
   }
@@ -187,7 +187,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfone() {
+  public Set<RailRoadElement> getAllValuesOfone() {
     return rawAccumulateAllValuesOfone(emptyArray());
   }
   
@@ -196,7 +196,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfone(final ThreeConnectedRailRoadPartsMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfone(final ThreeConnectedRailRoadPartsMatch partialMatch) {
     return rawAccumulateAllValuesOfone(partialMatch.toArray());
   }
   
@@ -205,7 +205,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfone(final EObject pMiddle, final EObject pOther) {
+  public Set<RailRoadElement> getAllValuesOfone(final RailRoadElement pMiddle, final RailRoadElement pOther) {
     return rawAccumulateAllValuesOfone(new Object[]{
     null, 
     pMiddle, 
@@ -218,8 +218,8 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfmiddle(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfmiddle(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_MIDDLE, parameters, results);
     return results;
   }
@@ -229,7 +229,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfmiddle() {
+  public Set<RailRoadElement> getAllValuesOfmiddle() {
     return rawAccumulateAllValuesOfmiddle(emptyArray());
   }
   
@@ -238,7 +238,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfmiddle(final ThreeConnectedRailRoadPartsMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfmiddle(final ThreeConnectedRailRoadPartsMatch partialMatch) {
     return rawAccumulateAllValuesOfmiddle(partialMatch.toArray());
   }
   
@@ -247,7 +247,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfmiddle(final EObject pOne, final EObject pOther) {
+  public Set<RailRoadElement> getAllValuesOfmiddle(final RailRoadElement pOne, final RailRoadElement pOther) {
     return rawAccumulateAllValuesOfmiddle(new Object[]{
     pOne, 
     null, 
@@ -260,8 +260,8 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfother(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfother(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_OTHER, parameters, results);
     return results;
   }
@@ -271,7 +271,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfother() {
+  public Set<RailRoadElement> getAllValuesOfother() {
     return rawAccumulateAllValuesOfother(emptyArray());
   }
   
@@ -280,7 +280,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfother(final ThreeConnectedRailRoadPartsMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfother(final ThreeConnectedRailRoadPartsMatch partialMatch) {
     return rawAccumulateAllValuesOfother(partialMatch.toArray());
   }
   
@@ -289,7 +289,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfother(final EObject pOne, final EObject pMiddle) {
+  public Set<RailRoadElement> getAllValuesOfother(final RailRoadElement pOne, final RailRoadElement pMiddle) {
     return rawAccumulateAllValuesOfother(new Object[]{
     pOne, 
     pMiddle, 
@@ -300,7 +300,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   @Override
   protected ThreeConnectedRailRoadPartsMatch tupleToMatch(final Tuple t) {
     try {
-    	return ThreeConnectedRailRoadPartsMatch.newMatch((EObject) t.get(POSITION_ONE), (EObject) t.get(POSITION_MIDDLE), (EObject) t.get(POSITION_OTHER));
+    	return ThreeConnectedRailRoadPartsMatch.newMatch((RailRoadElement) t.get(POSITION_ONE), (RailRoadElement) t.get(POSITION_MIDDLE), (RailRoadElement) t.get(POSITION_OTHER));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -310,7 +310,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   @Override
   protected ThreeConnectedRailRoadPartsMatch arrayToMatch(final Object[] match) {
     try {
-    	return ThreeConnectedRailRoadPartsMatch.newMatch((EObject) match[POSITION_ONE], (EObject) match[POSITION_MIDDLE], (EObject) match[POSITION_OTHER]);
+    	return ThreeConnectedRailRoadPartsMatch.newMatch((RailRoadElement) match[POSITION_ONE], (RailRoadElement) match[POSITION_MIDDLE], (RailRoadElement) match[POSITION_OTHER]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -320,7 +320,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   @Override
   protected ThreeConnectedRailRoadPartsMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return ThreeConnectedRailRoadPartsMatch.newMutableMatch((EObject) match[POSITION_ONE], (EObject) match[POSITION_MIDDLE], (EObject) match[POSITION_OTHER]);
+    	return ThreeConnectedRailRoadPartsMatch.newMutableMatch((RailRoadElement) match[POSITION_ONE], (RailRoadElement) match[POSITION_MIDDLE], (RailRoadElement) match[POSITION_OTHER]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

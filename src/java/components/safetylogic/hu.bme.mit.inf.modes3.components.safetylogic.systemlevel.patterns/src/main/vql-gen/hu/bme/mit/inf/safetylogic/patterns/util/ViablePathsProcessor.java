@@ -3,8 +3,9 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.ViablePathsMatch;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 
 /**
@@ -21,7 +22,7 @@ public abstract class ViablePathsProcessor implements IMatchProcessor<ViablePath
    * @param pPath the value of pattern parameter path in the currently processed match
    * 
    */
-  public abstract void process(final EObject pThis, final EObject pPath);
+  public abstract void process(final RailRoadElement pThis, final Path pPath);
   
   @Override
   public void process(final ViablePathsMatch match) {
