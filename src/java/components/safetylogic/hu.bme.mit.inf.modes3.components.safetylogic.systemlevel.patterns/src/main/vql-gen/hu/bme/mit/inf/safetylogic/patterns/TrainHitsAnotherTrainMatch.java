@@ -3,10 +3,10 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -26,13 +26,13 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  */
 @SuppressWarnings("all")
 public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
-  private EObject fOffender;
+  private Train fOffender;
   
-  private EObject fVictim;
+  private Train fVictim;
   
   private static List<String> parameterNames = makeImmutableList("Offender", "Victim");
   
-  private TrainHitsAnotherTrainMatch(final EObject pOffender, final EObject pVictim) {
+  private TrainHitsAnotherTrainMatch(final Train pOffender, final Train pVictim) {
     this.fOffender = pOffender;
     this.fVictim = pVictim;
   }
@@ -44,11 +44,11 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
     return null;
   }
   
-  public EObject getOffender() {
+  public Train getOffender() {
     return this.fOffender;
   }
   
-  public EObject getVictim() {
+  public Train getVictim() {
     return this.fVictim;
   }
   
@@ -56,22 +56,22 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("Offender".equals(parameterName) ) {
-    	this.fOffender = (EObject) newValue;
+    	this.fOffender = (Train) newValue;
     	return true;
     }
     if ("Victim".equals(parameterName) ) {
-    	this.fVictim = (EObject) newValue;
+    	this.fVictim = (Train) newValue;
     	return true;
     }
     return false;
   }
   
-  public void setOffender(final EObject pOffender) {
+  public void setOffender(final Train pOffender) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fOffender = pOffender;
   }
   
-  public void setVictim(final EObject pVictim) {
+  public void setVictim(final Train pVictim) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fVictim = pVictim;
   }
@@ -169,7 +169,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
    * @return the new, mutable (partial) match object.
    * 
    */
-  public static TrainHitsAnotherTrainMatch newMutableMatch(final EObject pOffender, final EObject pVictim) {
+  public static TrainHitsAnotherTrainMatch newMutableMatch(final Train pOffender, final Train pVictim) {
     return new Mutable(pOffender, pVictim);
   }
   
@@ -182,12 +182,12 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
    * @return the (partial) match object.
    * 
    */
-  public static TrainHitsAnotherTrainMatch newMatch(final EObject pOffender, final EObject pVictim) {
+  public static TrainHitsAnotherTrainMatch newMatch(final Train pOffender, final Train pVictim) {
     return new Immutable(pOffender, pVictim);
   }
   
   private static final class Mutable extends TrainHitsAnotherTrainMatch {
-    Mutable(final EObject pOffender, final EObject pVictim) {
+    Mutable(final Train pOffender, final Train pVictim) {
       super(pOffender, pVictim);
     }
     
@@ -198,7 +198,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
   }
   
   private static final class Immutable extends TrainHitsAnotherTrainMatch {
-    Immutable(final EObject pOffender, final EObject pVictim) {
+    Immutable(final Train pOffender, final Train pVictim) {
       super(pOffender, pVictim);
     }
     

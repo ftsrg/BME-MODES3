@@ -3,10 +3,10 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.util.NextSectionQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -26,15 +26,15 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  */
 @SuppressWarnings("all")
 public abstract class NextSectionMatch extends BasePatternMatch {
-  private EObject fOld;
+  private RailRoadElement fOld;
   
-  private EObject fCurrent;
+  private RailRoadElement fCurrent;
   
-  private EObject fNext;
+  private RailRoadElement fNext;
   
   private static List<String> parameterNames = makeImmutableList("Old", "Current", "Next");
   
-  private NextSectionMatch(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  private NextSectionMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     this.fOld = pOld;
     this.fCurrent = pCurrent;
     this.fNext = pNext;
@@ -48,15 +48,15 @@ public abstract class NextSectionMatch extends BasePatternMatch {
     return null;
   }
   
-  public EObject getOld() {
+  public RailRoadElement getOld() {
     return this.fOld;
   }
   
-  public EObject getCurrent() {
+  public RailRoadElement getCurrent() {
     return this.fCurrent;
   }
   
-  public EObject getNext() {
+  public RailRoadElement getNext() {
     return this.fNext;
   }
   
@@ -64,31 +64,31 @@ public abstract class NextSectionMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("Old".equals(parameterName) ) {
-    	this.fOld = (EObject) newValue;
+    	this.fOld = (RailRoadElement) newValue;
     	return true;
     }
     if ("Current".equals(parameterName) ) {
-    	this.fCurrent = (EObject) newValue;
+    	this.fCurrent = (RailRoadElement) newValue;
     	return true;
     }
     if ("Next".equals(parameterName) ) {
-    	this.fNext = (EObject) newValue;
+    	this.fNext = (RailRoadElement) newValue;
     	return true;
     }
     return false;
   }
   
-  public void setOld(final EObject pOld) {
+  public void setOld(final RailRoadElement pOld) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fOld = pOld;
   }
   
-  public void setCurrent(final EObject pCurrent) {
+  public void setCurrent(final RailRoadElement pCurrent) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fCurrent = pCurrent;
   }
   
-  public void setNext(final EObject pNext) {
+  public void setNext(final RailRoadElement pNext) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fNext = pNext;
   }
@@ -192,7 +192,7 @@ public abstract class NextSectionMatch extends BasePatternMatch {
    * @return the new, mutable (partial) match object.
    * 
    */
-  public static NextSectionMatch newMutableMatch(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  public static NextSectionMatch newMutableMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return new Mutable(pOld, pCurrent, pNext);
   }
   
@@ -206,12 +206,12 @@ public abstract class NextSectionMatch extends BasePatternMatch {
    * @return the (partial) match object.
    * 
    */
-  public static NextSectionMatch newMatch(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  public static NextSectionMatch newMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return new Immutable(pOld, pCurrent, pNext);
   }
   
   private static final class Mutable extends NextSectionMatch {
-    Mutable(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+    Mutable(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
       super(pOld, pCurrent, pNext);
     }
     
@@ -222,7 +222,7 @@ public abstract class NextSectionMatch extends BasePatternMatch {
   }
   
   private static final class Immutable extends NextSectionMatch {
-    Immutable(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+    Immutable(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
       super(pOld, pCurrent, pNext);
     }
     
