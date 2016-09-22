@@ -19,8 +19,11 @@ import org.slf4j.helpers.NOPLoggerFactory
 import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.turnout.ITurnoutStatemachine
 
+/**
+ * StatusMessageForwardingFromLocalTransportNetworkToInternal
+ */
 @RunWith(Theories)
-class StatusMessageForwardingFromLocalTransportNetworkToInternal {
+class StatusFromNetworkToInternal {
 
 	/****************************************************************************************************
 	 * fields: unit under test, mocks and classes for simulating message receive over the network

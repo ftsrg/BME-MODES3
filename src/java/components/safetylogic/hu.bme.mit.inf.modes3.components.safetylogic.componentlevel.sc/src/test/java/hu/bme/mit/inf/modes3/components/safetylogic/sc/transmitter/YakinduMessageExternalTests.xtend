@@ -21,8 +21,11 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
+/**
+ * YakinduMessageBridgeToExternalLocalTransportTests
+ */
 @RunWith(Theories)
-class YakinduMessageBridgeToExternalLocalTransportTests {
+class YakinduMessageExternalTests {
 
 	var YakinduMessageBridgeToExternal unitUnderTest
 
