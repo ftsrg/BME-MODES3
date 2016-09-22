@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.modes3.transports.mqtt
 
 import hu.bme.mit.inf.modes3.transports.mqtt.conf.MQTTTransportConfigurationFactory
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -22,6 +23,12 @@ class MQTTTests {
 		receiver.connect
 	}
 
+	@After
+	def void close() {
+		sender?.close
+		receiver?.close
+	}
+
 	@Test
 	def void messageTests() {
 		// Arrange
@@ -33,7 +40,6 @@ class MQTTTests {
 		// Assert
 		val receivedMessage = new String(receiver.receiveMessage)
 		Assert.assertEquals(message, receivedMessage)
-
 	}
 
 }

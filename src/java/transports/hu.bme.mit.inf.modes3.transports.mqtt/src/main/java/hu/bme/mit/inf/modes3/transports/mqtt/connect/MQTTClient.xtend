@@ -142,5 +142,10 @@ class MQTTClient {
 			Thread.currentThread.interrupt
 		}
 	}
+	
+	def close(){
+		client?.disconnect
+		client?.close
+	}
 
 }

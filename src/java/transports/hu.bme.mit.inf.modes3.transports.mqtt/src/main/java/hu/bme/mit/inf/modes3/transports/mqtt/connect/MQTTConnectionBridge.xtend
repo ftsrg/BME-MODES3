@@ -58,6 +58,9 @@ class MQTTConnectionBridge implements MqttCallback {
 
 	def subscribe(MQTTTransport transport) {
 		subscribers.add(transport)
+		if(subscribers.empty){
+			client.close
+		}
 	}
 
 	def sendMessage(byte[] message) {
