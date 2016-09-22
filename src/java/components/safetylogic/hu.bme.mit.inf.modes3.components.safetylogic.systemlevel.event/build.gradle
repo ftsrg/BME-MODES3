@@ -3,6 +3,9 @@ apply plugin: 'org.xtext.xtend'
 apply plugin: 'application'
 
 mainClassName = "hu.bme.mit.inf.safetylogic.event.Main"
+run {
+	args = ['World']
+}
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
