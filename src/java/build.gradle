@@ -13,9 +13,10 @@ sonarqube {
 
 subprojects {
 	repositories {
-        mavenCentral()
+		mavenCentral()
 		maven { url "https://repo.eclipse.org/content/groups/viatra2" }
 		maven { url "https://plugins.gradle.org/m2/" }
+		maven { url "http://dl.bintray.com/andsel/maven/" }
 	}
 
 	plugins.withType(JavaPlugin) {

@@ -3,7 +3,5 @@ apply plugin: 'org.xtext.xtend'
 
 dependencies {
 	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.proto')
-	
 	compile project(':transports:hu.bme.mit.inf.modes3.transports.common')
-	compile project(':transports:hu.bme.mit.inf.modes3.transports.zeromq')
 }

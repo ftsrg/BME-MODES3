@@ -15,7 +15,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
-class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
+class TurnoutStateNotifierLocalTransportTests {
 
 	var BBBComponent componentUnderTest
 
@@ -41,6 +41,7 @@ class BBBTurnoutStateNotifierLocalTransportIntegrationTest {
 	def void stop() {
 		// stop the internal threads
 		componentUnderTest.interrupt
+		Thread.sleep(200)
 	}
 
 	@Test

@@ -14,7 +14,7 @@ import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.section.ISectionStatemachine.SCISection
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener
 
-class SectionCommandToExternalTransmitterTests {
+class SectionCommandToExternalTransmitterLocalTransport {
 
 	var SectionCommandToExternalTransmitter unitUnderTest
 

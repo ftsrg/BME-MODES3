@@ -23,7 +23,7 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine
  * StatusMessageForwardingFromLocalTransportNetworkToInternal
  */
 @RunWith(Theories)
-class StatusFromNetworkToInternal {
+class StatusFromNetworkToInternalLocalTransport {
 
 	/****************************************************************************************************
 	 * fields: unit under test, mocks and classes for simulating message receive over the network

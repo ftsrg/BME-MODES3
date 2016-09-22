@@ -11,7 +11,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
-class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
+class TurnoutMessageHandlerMQTTTransportTests {
 
 	var BBBComponent componentUnderTest
 
@@ -27,7 +27,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 	@Before
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderSectionController)
-		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalStack, new NOPLoggerFactory)
+		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
 	}
 
 	@Test
@@ -37,7 +37,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -55,7 +55,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -73,7 +73,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
@@ -91,7 +91,7 @@ class BBBTurnoutMessageHandlerLocalTransportIntegrationTest {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)

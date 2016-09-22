@@ -21,7 +21,7 @@ import org.mockito.stubbing.Answer
 import org.slf4j.helpers.NOPLoggerFactory
 
 @RunWith(Theories)
-class BBBSectionStateChangeNotifierLocalTransportIntegrationTest {
+class SectionStateChangeNotifierLocalTransportTests {
 
 	var BBBComponentWithStateChangeNotifier componentUnderTest
 
