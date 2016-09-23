@@ -12,13 +12,11 @@ import java.util.Collections
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
-@Ignore
 class TurnoutStateNotifierMQTTTransportTests {
 
 	val createdStacks = new ArrayList<CommunicationStack>

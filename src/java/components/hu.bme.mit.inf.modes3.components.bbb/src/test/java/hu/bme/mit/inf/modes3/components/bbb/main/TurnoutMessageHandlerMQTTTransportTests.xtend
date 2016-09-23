@@ -9,13 +9,11 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationS
 import java.util.ArrayList
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
-@Ignore
 class TurnoutMessageHandlerMQTTTransportTests {
 
 	val createdStacks = new ArrayList<CommunicationStack>

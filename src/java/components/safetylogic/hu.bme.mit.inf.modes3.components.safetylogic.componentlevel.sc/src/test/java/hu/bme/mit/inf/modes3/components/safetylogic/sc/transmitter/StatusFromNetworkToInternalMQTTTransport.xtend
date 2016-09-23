@@ -11,7 +11,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.experimental.theories.DataPoints
 import org.junit.experimental.theories.Theories
@@ -26,7 +25,6 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine
 /**
  * StatusMessageForwardingFromLocalTransportNetworkToInternal
  */
-@Ignore
 @RunWith(Theories)
 class StatusFromNetworkToInternalMQTTTransport {
 
