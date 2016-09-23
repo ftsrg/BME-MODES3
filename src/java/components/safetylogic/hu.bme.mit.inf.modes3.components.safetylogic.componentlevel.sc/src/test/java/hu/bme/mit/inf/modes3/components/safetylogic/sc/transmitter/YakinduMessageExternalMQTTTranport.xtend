@@ -17,6 +17,7 @@ import java.util.ArrayList
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.experimental.theories.DataPoints
 import org.junit.experimental.theories.Theories
 import org.junit.experimental.theories.Theory
@@ -27,6 +28,7 @@ import org.slf4j.helpers.NOPLoggerFactory
 /**
  * YakinduMessageBridgeToExternalLocalTransportTests
  */
+@Ignore
 @RunWith(Theories)
 class YakinduMessageExternalMQTTTranport {
 

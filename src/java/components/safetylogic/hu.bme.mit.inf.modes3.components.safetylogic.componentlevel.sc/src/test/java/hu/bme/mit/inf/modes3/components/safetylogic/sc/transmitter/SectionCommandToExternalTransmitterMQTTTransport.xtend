@@ -17,6 +17,7 @@ import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.section.ISectionStatemachine.SCISection
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener
 
+@Ignore
 class SectionCommandToExternalTransmitterMQTTTransport {
 
 	val createdStacks = new ArrayList<CommunicationStack>
