@@ -38,10 +38,10 @@ class TurnoutStateNotifierLocalTransportTests {
 	}
 
 	@After
-	def void stop() {
+	def void tearDown() {
 		// stop the internal threads
 		componentUnderTest.interrupt
-		Thread.sleep(200)
+		Thread.sleep(300)
 	}
 
 	@Test

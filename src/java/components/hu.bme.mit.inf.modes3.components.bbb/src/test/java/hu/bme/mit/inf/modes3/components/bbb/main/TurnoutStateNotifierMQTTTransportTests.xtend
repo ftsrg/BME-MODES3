@@ -3,21 +3,23 @@ package hu.bme.mit.inf.modes3.components.bbb.main
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import java.util.ArrayList
 import java.util.Collections
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
-@Ignore
 class TurnoutStateNotifierMQTTTransportTests {
+
+	val createdStacks = new ArrayList<CommunicationStack>
 
 	var BBBComponent componentUnderTest
 
@@ -33,16 +35,23 @@ class TurnoutStateNotifierMQTTTransportTests {
 	// used for sending messages over the network
 	var TrackCommunicationServiceLocator communicationService
 
+	private def createAndRegisterStack() {
+		val stack = CommunicationStackFactory::createLocalMQTTStack
+		createdStacks.add(stack)
+		stack
+	}
+
 	@Before
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderSectionController)
-		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
+		communicationService = new TrackCommunicationServiceLocator(createAndRegisterStack, new NOPLoggerFactory)
 	}
 
 	@After
-	def void stop() {
+	def void tearDown() {
 		// stop the internal threads
 		componentUnderTest.interrupt
+		createdStacks.forEach[stack|stack.stop]
 	}
 
 	@Test
@@ -62,7 +71,7 @@ class TurnoutStateNotifierMQTTTransportTests {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(createAndRegisterStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start
@@ -87,7 +96,7 @@ class TurnoutStateNotifierMQTTTransportTests {
 		communicationService.trackElementStateRegistry.turnoutStateChangeListener = changeListenerMock
 
 		// create component
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(createAndRegisterStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		new Thread(componentUnderTest).start

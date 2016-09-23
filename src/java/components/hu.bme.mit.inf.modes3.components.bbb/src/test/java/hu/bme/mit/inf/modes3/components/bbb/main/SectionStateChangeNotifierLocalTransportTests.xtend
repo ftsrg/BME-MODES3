@@ -56,9 +56,10 @@ class SectionStateChangeNotifierLocalTransportTests {
 	}
 
 	@After
-	def void stop() {
+	def void tearDown() {
 		// stop the internal threads
 		componentUnderTest.interrupt
+		Thread.sleep(300)
 	}
 
 	@Theory

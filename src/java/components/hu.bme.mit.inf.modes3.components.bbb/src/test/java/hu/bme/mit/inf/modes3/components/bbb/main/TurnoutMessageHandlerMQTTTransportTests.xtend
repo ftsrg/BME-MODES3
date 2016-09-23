@@ -3,17 +3,20 @@ package hu.bme.mit.inf.modes3.components.bbb.main
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
+import java.util.ArrayList
+import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
-@Ignore
 class TurnoutMessageHandlerMQTTTransportTests {
+
+	val createdStacks = new ArrayList<CommunicationStack>
 
 	var BBBComponent componentUnderTest
 
@@ -26,10 +29,21 @@ class TurnoutMessageHandlerMQTTTransportTests {
 	// used for sending messages over the network
 	var TrackCommunicationServiceLocator communicationService
 
+	private def createAndRegisterStack() {
+		val stack = CommunicationStackFactory::createLocalMQTTStack
+		createdStacks.add(stack)
+		stack
+	}
+
 	@Before
 	def void init() {
 		neverUsedInTests = Mockito.mock(ExpanderSectionController)
-		communicationService = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
+		communicationService = new TrackCommunicationServiceLocator(createAndRegisterStack, new NOPLoggerFactory)
+	}
+
+	@After
+	def void tearDown() {
+		createdStacks.forEach[stack|stack.stop]
 	}
 
 	@Test
@@ -39,7 +53,7 @@ class TurnoutMessageHandlerMQTTTransportTests {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(createAndRegisterStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -57,7 +71,7 @@ class TurnoutMessageHandlerMQTTTransportTests {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(createAndRegisterStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.STRAIGHT)
@@ -75,7 +89,7 @@ class TurnoutMessageHandlerMQTTTransportTests {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(true)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(createAndRegisterStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
@@ -93,7 +107,7 @@ class TurnoutMessageHandlerMQTTTransportTests {
 		// prepare expander mock
 		expander = Mockito.mock(ExpanderTurnoutController)
 		Mockito.when(expander.controllerManagesTurnout(turnoutId)).thenReturn(false)
-		componentUnderTest = new BBBComponent(CommunicationStackFactory::createLocalMQTTStack, neverUsedInTests, expander, new NOPLoggerFactory)
+		componentUnderTest = new BBBComponent(createAndRegisterStack, neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		communicationService.trackElementCommander.sendTurnoutCommand(turnoutId, TurnoutState.DIVERGENT)
