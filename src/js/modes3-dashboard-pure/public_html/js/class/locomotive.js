@@ -4,6 +4,24 @@
  * and open the template in the editor.
  */
 
+/**
+ * 
+ * @param {LocomotiveController} locomotive
+ * @returns {undefined}
+ */
+function __setLocomotiveOnNextSegment(locomotive) {
+    var nextSegment = locomotive.getNextSegment();
+    if (nextSegment === null) {
+        clearInterval(locomotive.timeout);
+        return;
+    }
+
+//    locomotive.setOnSegment(nextSegment);
+    locomotive.animateOnSegment(nextSegment);
+    locomotive.timeout = setTimeout(__setLocomotiveOnNextSegment,
+            locomotive.duration * 1000, locomotive);
+}
+
 
 function LocomotiveController(locomotiveConfig) {
     // setting up instance variables
@@ -22,7 +40,6 @@ function LocomotiveController(locomotiveConfig) {
     setSvgElementOpacity(this.svgElemForward, 0);
     setSvgElementOpacity(this.svgElemBackward, 0);
 }
-;
 
 LocomotiveController.prototype.setSpeed = function (speed) {
     this.indicatorElem.text(speed);
@@ -50,8 +67,8 @@ LocomotiveController.prototype.setSpeed = function (speed) {
     }
 
     // for now, we set a timeout for getNextSegment
-    setTimeout(dummy_setLocomotiveOnNextSegment, this.duration * 1000);
-
+    this.timeout = setTimeout(__setLocomotiveOnNextSegment,
+            this.duration * 1000, this);
 };
 
 LocomotiveController.prototype.setOnSegment = function (segment, reverse) {
@@ -91,14 +108,7 @@ LocomotiveController.prototype.setOnSegment = function (segment, reverse) {
     }
 };
 
-LocomotiveController.prototype.animateOnSegment = function (segment) {
-    // saving segment id for later usage
-    this.currentSegment = segment;
-
-    // get the path of the segment
-    var segmentElement = $('#layout').find('#' + segment.config.id);
-    var segmentPath = segmentElement.attr('d');
-
+LocomotiveController.prototype.getKeyPoints = function () {
     // keypoints predefined to 0 0 1 which will mean that the whole animation
     // if there is no animation is progress yet will start at 0
     var keyPointsArr = [0, 0, 1];
@@ -119,49 +129,94 @@ LocomotiveController.prototype.animateOnSegment = function (segment) {
         keyPointsArr[2] = 0;
     }
 
+    // update timestamp attr
+    this.timestamp = new Date().getTime();
+    return keyPointsArr;
+};
+
+LocomotiveController.prototype.animateOnSegment = function (segment) {
+    // first, set on the segment
+    this.setOnSegment(segment, (this.speed < 0));
+
     // get time based on the current speed and the length of the segment
     this.duration = segment.config.length / Math.abs(this.speed);
 
-    // otherwise we create the whole animation from scratch
-    this.isAnimationInProgress = true;
+    // get the path of the segment
+    var segmentElement = $('#layout').find('#' + segment.config.id);
+    var segmentPath = segmentElement.attr('d');
 
-    // first remove any animateMotion element from group
-    this.svgElemGroup.find('animateMotion').remove();
+    // split path by M 
+    var segmentPathParts = segmentPath.toLowerCase().split("m ");
+    log("SEGMENT PATHS:", segmentPathParts.length);
 
-    var coordinate_pattr = /m ([0-9.]{1,}),([0-9.]{1,})/i;
-
-    // if path is found, then the first two coordinates will be the starting point of the segment
-    var result = coordinate_pattr.exec(segmentPath);
-
-    // in result, there will be 3 item: the whole string which is applies to the 
-    // expression, and the two other item will be the two coordinate respectively
-    if (result.length <= 1) {
-        return;
+    // for every bezier curve, be get the coordinates
+    for (var s in segmentPathParts) {
+        log(segmentPathParts[s]);
+        var pattr = /([0-9\-\.]{1,}),([0-9\-\.]{1,}) c ([0-9\-\.]{1,}),([0-9\-\.]{1,}) ([0-9\-\.]{1,}),([0-9\-\.]{1,}) ([0-9\-\.]{1,}),([0-9\-\.]{1,})/i;
     }
+//    log(segmentPathParts[1]);
 
-    this.svgElemGroup.removeAttr('transform');
 
-    // create animateMotion object inside the group to animate each object
-    // simultanously 
-    var animObject = $('<animateMotion />').attr({
-        dur: this.duration + "s",
-        begin: '0s',
-        fill: 'freeze',
-        path: segmentPath,
-        keyPoints: keyPointsArr.join(";"),
-        keyTimes: "0; 0; 1",
-        calcMode: "linear"
-    });
+    this.svgElemPosition.animate(
+            {
+                width: '100%'
+            },
+            {
+                duration: this.duration * 1000,
+                step: function (now, fx) {
+//                    log("NOW:");
+//                    log(now);
+//                    log("FX:");
+//                    log(fx);
+                }
+            });
 
-    this.svgElemPosition.append(animObject.clone().attr('rotate', 'auto'));
-    this.svgElemForward.append(animObject.clone().attr('rotate', 'auto'));
-    this.svgElemBackward.append(animObject.clone().attr('rotate', 'auto'));
-    this.svgElemName.append(animObject.clone());
-    this.svgElemPath.append(animObject.clone());
-    updateDOM();
-
-    // in this point, we save the current timestamp for later usage
-    this.timestamp = new Date().getTime();
+//    log(segmentPath);
+//    
+//    return;
+//    
+//    // saving segment id for later usage
+//    this.currentSegment = segment;
+//
+//    // get the path of the segment
+//    var segmentElement = $('#layout').find('#' + segment.config.id);
+//    var segmentPath = segmentElement.attr('d');
+//
+//    // need to calculate keypoints for the animation
+//    var keyPointsArr = this.getKeyPoints();
+//
+//    // get time based on the current speed and the length of the segment
+//    this.duration = segment.config.length / Math.abs(this.speed);
+//
+//    // otherwise we create the whole animation from scratch
+//    this.isAnimationInProgress = true;
+//
+//    // first remove any animateMotion element and transform attr from group
+//    this.svgElemGroup.find('animateMotion').remove();
+//    this.svgElemGroup.removeAttr('transform');
+//
+//    // create animateMotion object inside the group to animate each object
+//    // simultanously 
+//    var animObjectStub = $(document.createElementNS("http://www.w3.org/2000/svg", "animateMotion"));
+//    animObjectStub.attr({
+//        dur: this.duration + "s",
+//        begin: '0s',
+//        fill: 'freeze',
+//        path: segmentPath,
+//        keyPoints: keyPointsArr.join(";"),
+//        keyTimes: "0;0;1",
+//        calcMode: "linear"
+//    });
+//    
+////    animObjectStub.clone().appendTo(this.svgElemPosition);
+//
+//    this.svgElemPosition.append(animObjectStub.clone().attr('rotate', 'auto'));
+//    this.svgElemForward.append(animObjectStub.clone().attr('rotate', 'auto'));
+//    this.svgElemBackward.append(animObjectStub.clone().attr('rotate', 'auto'));
+//    this.svgElemName.append(animObjectStub.clone());
+//    this.svgElemPath.append(animObjectStub.clone());
+////    $("#layout").attr('animation', 'true');
+//    updateDOM($(this.svgElemGroup).parent().parent());
 
     // then animate viewbox modification (if needed)
     switch (segment.config.id) {
@@ -193,6 +248,8 @@ LocomotiveController.prototype.animateOnSegment = function (segment) {
 };
 
 LocomotiveController.prototype.getNextSegment = function () {
+    return null;
+
     // current segment and speed predestinate which segment will be next
     var nextSegment = this.currentSegment.config.connections[this.speed < 0 ? 0 : 1];
     this.isAnimationInProgress = false;
@@ -203,26 +260,26 @@ LocomotiveController.prototype.getNextSegment = function () {
             return window.segments[s];
         }
     }
-    
-    if( $.inArray(nextSegment, window.settings.turnoutEnds) > -1 ) {
+
+    if ($.inArray(nextSegment, window.settings.turnoutEnds) > -1) {
         var turnoutEnd = nextSegment.split("-")[0];
 
         // find turnout in turnouts array
         for (var t in window.turnouts) {
             var turnout = window.turnouts[t];
             if (turnout.config.id === turnoutEnd) {
-                
+
                 var nSegment = null;
-                
+
                 // if we found the right turnout, then based on it's state,
                 // we steer the locomotive on the right path
                 if (turnout.isInStraightPosition()) {
                     nSegment = cloneObject(turnout.config.str);
-                    
+
                 } else {
                     nSegment = cloneObject(turnout.config.div);
                 }
-                
+
                 return {config: nSegment};
             }
         }
@@ -324,10 +381,20 @@ LocomotiveController.prototype.DOMUpdatedCallback = function () {
     this.svgElemName = this.svgElemGroup.find('#name');
     this.svgElemPath = this.svgElemGroup.find('#pathundertext');
 
-    // add event handler for element
-    this.svgElemPosition.bind('click', {_this: this}, function (event) {
-        clearTimeout(window.timeout);
+    // need to update every animation object's keypoints to continue animation
+    // the at point where it ended before dom update
+    // and need to update the duration as well
+    var keyPoints = this.getKeyPoints();
+//    var duration = this.duration*keyPoints[1];
+    this.svgElemGroup.find('animateMotion').attr({
+        keyPoints: keyPoints.join(";"),
+//        duration: duration+"s"
     });
+
+//    // add event handler for element
+//    this.svgElemPosition.bind('click', {_this: this}, function (event) {
+//        clearTimeout(event.data._this.timeout);
+//    });
 };
 
 

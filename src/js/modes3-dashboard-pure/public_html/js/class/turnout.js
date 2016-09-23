@@ -46,7 +46,7 @@ TurnoutController.prototype.setInStraightPosition = function () {
 
     // set variable to store position
     this.position = "str";
-    log("Turnout #" + this.config.id + " is in straight state");
+    logEvent("Turnout #" + this.config.id + " is in straight state");
 };
 
 TurnoutController.prototype.setInDivergentPosition = function () {
@@ -66,7 +66,7 @@ TurnoutController.prototype.setInDivergentPosition = function () {
 
     // set variable to store position
     this.position = "div";
-    log("Turnout #" + this.config.id + " is in divergent state");
+    logEvent("Turnout #" + this.config.id + " is in divergent state");
 };
 
 TurnoutController.prototype.isInStraightPosition = function () {

@@ -10,24 +10,6 @@ var turnouts = [];
 
 var locomotives = [];
 
-var timeout;
-
-function dummy_setLocomotiveOnNextSegment() {
-    var l = window.locomotives[0];
-    var nextSegment = l.getNextSegment();
-    
-    if( nextSegment === null ) {
-        clearInterval(window.timeout);
-        return;
-    }
-
-    l.animateOnSegment(nextSegment);
-
-
-    // for now, we set a timeout for getNextSegment
-    window.timeout = setTimeout(dummy_setLocomotiveOnNextSegment, l.duration*1000);
-}
-
 function pullInformationFromNetwork() {
     // for now, its a dummy function
     for (var s in window.segments) {
@@ -40,7 +22,7 @@ function pullInformationFromNetwork() {
     
 
     // first, animate locomotive on segment s01 and then release on itself
-//    window.locomotives[0].setOnSegment(window.segments[18], false);
+    window.locomotives[1].setOnSegment(window.segments[18], false);
     window.locomotives[0].setOnSegment(window.segments[0], false);
 }
 

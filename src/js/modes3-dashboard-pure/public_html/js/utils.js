@@ -30,12 +30,18 @@ function setSvgElementOpacity(elem, opacity) {
     elem.attr('style', s);
 }
 
+function logEvent() {
+//    for( var arg in arguments) {
+//        log(arguments[arg]);
+//    }
+}
+
 function log() {
-    if( arguments.length === 1 ) {
+    if (arguments.length === 1) {
         console.log(arguments[0]);
         return;
     }
-    
+
     s = "";
     for (var i = 0; i < arguments.length; i++) {
         s += " " + arguments[i];
@@ -78,18 +84,23 @@ function cloneObject(object) {
 }
 
 function updateDOM() {
-    $("#layout").DOMRefresh();
-    
+    if (arguments.length === 0) {
+        $("#layout").DOMRefresh();
+    } else {
+        log(arguments[0]);
+        $(arguments[0]).DOMRefresh();
+    }
+
     // call callback for every locomotive object
     for (var l in window.locomotives) {
         window.locomotives[l].DOMUpdatedCallback();
     }
-    
+
     // call callback for every segment object
     for (var s in window.segments) {
         window.segments[s].DOMUpdatedCallback();
     }
-    
+
     // call callback for every segment object
     for (var t in window.turnouts) {
         window.turnouts[t].DOMUpdatedCallback();
