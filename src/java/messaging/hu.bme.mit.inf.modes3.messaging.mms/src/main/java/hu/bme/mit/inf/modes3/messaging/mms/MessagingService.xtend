@@ -56,5 +56,9 @@ class MessagingService {
 		}
 
 	}
+	
+	def stop() {
+		dispatchThread?.interrupt
+	}
 
 }

@@ -20,4 +20,9 @@ class CommunicationStack {
 	def start() {
 		mms.start(transport, dispatcher)
 	}
+	
+	def stop() {
+		mms.stop
+		transport.close
+	}
 }

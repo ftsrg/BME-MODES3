@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.modes3.components.util
 
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptor
+import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
+import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithoutParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import java.io.ByteArrayOutputStream
 import java.util.Arrays
@@ -34,7 +35,7 @@ class ArgumentRegistryTest {
 	@Test
 	def void registerFlagArgument() {
 		// Arrange
-		val descriptor = new ArgumentDescriptor("name", "description")
+		val descriptor = new ArgumentDescriptorWithoutParameter("name", "description")
 
 		// Act
 		registry.registerArgumentWithoutOptions(descriptor)
@@ -47,7 +48,7 @@ class ArgumentRegistryTest {
 	def void registerArgumentWithParameter(Class<?> parameterType) {
 		// Theory -> see http://junit.sourceforge.net/doc/ReleaseNotes4.4.html Theories section
 		// Arrange
-		val descriptor = new ArgumentDescriptor("name", "description", parameterType)
+		val descriptor = new ArgumentDescriptorWithParameter("name", "description", parameterType)
 
 		// Act
 		registry.registerArgumentWithOptions(descriptor)
@@ -59,11 +60,10 @@ class ArgumentRegistryTest {
 	@Test
 	def void printArgumentHelp() {
 		// Arrange
-		val argumentOne = new ArgumentDescriptor("f", "sample argument without parameter")
-		val argumentTwo = new ArgumentDescriptor("s", "sample argument with string parameter", String)
+		val argumentOne = new ArgumentDescriptorWithoutParameter("f", "sample argument without parameter")
+		val argumentTwo = new ArgumentDescriptorWithParameter("s", "sample argument with string parameter", String)
 		val outputStream = new ByteArrayOutputStream
-		val expectedLines = #["Option  Description", "------  -----------", "-f      sample argument without parameter",
-			"-s      sample argument with string parameter"]
+		val expectedLines = #["Option  Description", "------  -----------", "-f      sample argument without parameter", "-s      sample argument with string parameter"]
 
 		// Act
 		registry.registerArgumentWithoutOptions(argumentOne)
@@ -80,8 +80,7 @@ class ArgumentRegistryTest {
 		assertTrue(expectedLines.forall[line|outputString.contains(line)])
 
 		// split output by new lines and trim each line
-		val outputStringSplitByLine = (outputString.split("\\r?\\n").stream as Stream<String>).map(line|line.trim).
-			collect(Collectors.toList)
+		val outputStringSplitByLine = (outputString.split("\\r?\\n").stream as Stream<String>).map(line|line.trim).collect(Collectors.toList)
 		// verify each printed line is expected
 		assertTrue(outputStringSplitByLine.forall[line|expectedLines.contains(line)])
 	}
@@ -89,7 +88,7 @@ class ArgumentRegistryTest {
 	@Test
 	def void oneCharacterLongArgumentName() {
 		// Arrange
-		val oneCharacterArg = new ArgumentDescriptor("s", "one character long argument without parameter")
+		val oneCharacterArg = new ArgumentDescriptorWithoutParameter("s", "one character long argument without parameter")
 		val outputStream = new ByteArrayOutputStream
 		val expectedLine = "-s      one character long argument without parameter"
 
@@ -109,7 +108,7 @@ class ArgumentRegistryTest {
 	@Test
 	def void moreThanOneCharacterLongArgumentName() {
 		// Arrange
-		val twoCharactersArg = new ArgumentDescriptor("tw", "two characters long argument without parameter")
+		val twoCharactersArg = new ArgumentDescriptorWithoutParameter("tw", "two characters long argument without parameter")
 		val outputStream = new ByteArrayOutputStream
 		val expectedLine = "--tw    two characters long argument without parameter"
 
@@ -132,8 +131,8 @@ class ArgumentRegistryTest {
 	@Test
 	def void parseArgumentsTest() {
 		// Arrange
-		val firstArgument = new ArgumentDescriptor("f", "first argument with one parameter", String)
-		val secondArgument = new ArgumentDescriptor("se", "second argument without parameter")
+		val firstArgument = new ArgumentDescriptorWithParameter("f", "first argument with one parameter", String)
+		val secondArgument = new ArgumentDescriptorWithoutParameter("se", "second argument without parameter")
 		val argumentsSetByCommandLine = #["-f", "firstParam", "--se"]
 
 		// Act
@@ -158,7 +157,7 @@ class ArgumentRegistryTest {
 	@Test(expected=OptionException)
 	def void parseArgumentsArgumentMissingParameter() {
 		// Arrange
-		val argument = new ArgumentDescriptor("a", "argument with parameter", String)
+		val argument = new ArgumentDescriptorWithParameter("a", "argument with parameter", String)
 		val argumentsSetByCommandLine = #["-a"]
 
 		// Act
@@ -169,8 +168,8 @@ class ArgumentRegistryTest {
 	@Test
 	def void requiredArgumentsAreSetByUser() {
 		// Arrange
-		val firstArgument = new ArgumentDescriptor("f", "first argument with one parameter", String)
-		val secondArgument = new ArgumentDescriptor("se", "second argument without parameter")
+		val firstArgument = new ArgumentDescriptorWithParameter("f", "first argument with one parameter", String)
+		val secondArgument = new ArgumentDescriptorWithoutParameter("se", "second argument without parameter")
 		val mandatoryArguments = new HashSet<String>(Arrays.asList("f", "se"))
 		val argumentsSetByCommandLine = #["-f", "firstParam", "--se"]
 
@@ -187,7 +186,7 @@ class ArgumentRegistryTest {
 	@Test
 	def void noMandatoryArgumentIsSetByUser() {
 		// Arrange
-		val firstArgument = new ArgumentDescriptor("m", "mandatory argument with one parameter", String)
+		val firstArgument = new ArgumentDescriptorWithParameter("m", "mandatory argument with one parameter", String)
 		val mandatoryArgument = new HashSet<String>(Arrays.asList("m"))
 		val argumentsSetByCommandLine = #[]
 
@@ -203,8 +202,8 @@ class ArgumentRegistryTest {
 	@Test
 	def void mandatoryArgumentIsNotSetByUser() {
 		// Arrange
-		val firstArgument = new ArgumentDescriptor("f", "first argument with one parameter", String)
-		val secondArgument = new ArgumentDescriptor("se", "second argument without parameter")
+		val firstArgument = new ArgumentDescriptorWithParameter("f", "first argument with one parameter", String)
+		val secondArgument = new ArgumentDescriptorWithoutParameter("se", "second argument without parameter")
 		val mandatoryArguments = new HashSet<String>(Arrays.asList("f", "se"))
 		val argumentsSetByCommandLine = #["-f", "firstParam"]
 
@@ -222,7 +221,7 @@ class ArgumentRegistryTest {
 	def void getStringArgumentParameterValue() {
 		// Arrange
 		val argumentName = "a"
-		val argument = new ArgumentDescriptor(argumentName, "argument with string parameter", String)
+		val argument = new ArgumentDescriptorWithParameter(argumentName, "argument with string parameter", String)
 		val expectedParameterValue = "helloworld"
 		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
 
@@ -239,7 +238,7 @@ class ArgumentRegistryTest {
 	def void getIntegerArgumentParameterValue() {
 		// Arrange
 		val argumentName = "a"
-		val argument = new ArgumentDescriptor(argumentName, "argument with integer parameter", Integer)
+		val argument = new ArgumentDescriptorWithParameter(argumentName, "argument with integer parameter", Integer)
 		val expectedParameterValue = "42"
 		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
 
@@ -256,7 +255,7 @@ class ArgumentRegistryTest {
 	def void getIntegerParameterAsString() {
 		// Arrange
 		val argumentName = "a"
-		val argument = new ArgumentDescriptor(argumentName, "argument with integer parameter", Integer)
+		val argument = new ArgumentDescriptorWithParameter(argumentName, "argument with integer parameter", Integer)
 		val expectedParameterValue = "42"
 		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
 
@@ -270,7 +269,7 @@ class ArgumentRegistryTest {
 	def void getStringParameterAsString() {
 		// Arrange
 		val argumentName = "a"
-		val argument = new ArgumentDescriptor(argumentName, "argument with string parameter", String)
+		val argument = new ArgumentDescriptorWithParameter(argumentName, "argument with string parameter", String)
 		val expectedParameterValue = "helloworld"
 		val argumentSetByCommandLine = #["-" + argumentName, expectedParameterValue]
 
