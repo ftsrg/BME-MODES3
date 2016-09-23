@@ -26,7 +26,7 @@ class MQTTClient {
 	protected val int qos
 
 	protected MqttAsyncClient client
-	protected MQTTBroker broker
+	protected MQTTBroker localBroker
 
 	/**
 	 * The parameter config object's allEndpoints field indicates which endpoints may be brokers.
@@ -86,8 +86,8 @@ class MQTTClient {
 
 				if(!success.value) {
 					// create a broker on localhost
-					broker = new MQTTBroker
-					broker.startBroker(port)
+					localBroker = new MQTTBroker
+					localBroker.startBroker(port)
 					// connect to broker on localhost
 					testAndSubscribeToConnection(mqttConfig, topic, callback)
 				}
@@ -146,6 +146,7 @@ class MQTTClient {
 	def close(){
 		client?.disconnect
 		client?.close
+		localBroker?.close
 	}
 
 }
