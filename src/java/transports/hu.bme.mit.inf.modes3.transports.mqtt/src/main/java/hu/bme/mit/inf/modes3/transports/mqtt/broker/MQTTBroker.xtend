@@ -20,6 +20,11 @@ class MQTTBroker {
 
 		broker.startServer(prop)
 		
-		Thread.sleep(1000) // give time for broker to start
+		Thread.sleep(500) // give time for broker to start
+	}
+	
+	def close(){
+		broker.stopServer
+		Thread.sleep(500) // give time for broker to stop
 	}
 }

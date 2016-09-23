@@ -14,7 +14,7 @@ public class SegmentOccupancyQueryComponentTest {
 
 	@Before
 	def void before() {
-		uut = new SectionOccupancyQueryComponent(CommunicationStackFactory::createLocalStack, new TestS88CommunicationReader, new NOPLoggerFactory)
+		uut = new SectionOccupancyQueryComponent(CommunicationStackFactory::createLocalStack, new TestUARTReader, new NOPLoggerFactory)
 	}
 
 	@Test
@@ -34,5 +34,11 @@ public class SegmentOccupancyQueryComponentTest {
 		]
 
 	// FIXME add asserts when we have a slightest clue about the bitorder
+	}
+
+	static class TestUARTReader implements IUARTReader {
+		override read() {
+			newByteArrayOfSize(4) => [set(0, 0xAA as byte); set(1, 0xAA as byte); set(2, 0xAA as byte); set(3, 0xAA as byte);]
+		}
 	}
 }

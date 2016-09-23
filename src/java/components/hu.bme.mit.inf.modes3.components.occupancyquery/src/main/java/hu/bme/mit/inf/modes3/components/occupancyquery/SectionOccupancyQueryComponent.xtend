@@ -9,21 +9,21 @@ import org.slf4j.ILoggerFactory
 
 class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationComponent {
 
-	IS88CommunicationReader reader
+	IUARTReader reader
 
-	new(CommunicationStack stack, IS88CommunicationReader reader, ILoggerFactory factory) {
+	new(CommunicationStack stack, IUARTReader reader, ILoggerFactory factory) {
 		super(stack, factory)
 		this.reader = reader
 	}
 
 	override run() {
 		while(!Thread.interrupted) {
-			process()
+			process
 		}
 	}
 
 	def process() {
-		val recievedMsg = readMsg() // blocking wait so we won't burn the CPU
+		val recievedMsg = readMsg // blocking wait so we won't burn the CPU
 		val msgToSend = parseMsg(recievedMsg)
 		sendMessage(msgToSend)
 	}
