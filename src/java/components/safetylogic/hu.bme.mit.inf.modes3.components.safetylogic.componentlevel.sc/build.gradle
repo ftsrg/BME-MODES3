@@ -1,3 +1,4 @@
+apply plugin: 'application'
 apply plugin: 'java'
 
 // In this section you declare the dependencies for your production and test code
@@ -13,3 +14,5 @@ sonarqube {
 		property "sonar.exclusions", "src/main/java/org/yakindu/scr/**"
 	}
 }
+
+mainClassName = "hu.bme.mit.inf.modes3.components.safetylogic.sc.main.Main"

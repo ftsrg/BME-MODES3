@@ -14,6 +14,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.sc.network.handler.YakinduRe
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirection
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.experimental.theories.DataPoints
 import org.junit.experimental.theories.Theories
 import org.junit.experimental.theories.Theory
@@ -24,6 +25,7 @@ import org.slf4j.helpers.NOPLoggerFactory
 /**
  * YakinduMessageBridgeToExternalLocalTransportTests
  */
+@Ignore
 @RunWith(Theories)
 class YakinduMessageExternalMQTTTranport {
 

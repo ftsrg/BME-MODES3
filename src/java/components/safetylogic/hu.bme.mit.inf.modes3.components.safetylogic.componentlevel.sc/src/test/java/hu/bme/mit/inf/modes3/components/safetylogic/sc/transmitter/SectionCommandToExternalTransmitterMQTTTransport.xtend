@@ -6,6 +6,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackF
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import java.util.ArrayList
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -14,6 +15,7 @@ import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.section.ISectionStatemachine.SCISection
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener
 
+@Ignore
 class SectionCommandToExternalTransmitterMQTTTransport {
 
 	var SectionCommandToExternalTransmitter unitUnderTest

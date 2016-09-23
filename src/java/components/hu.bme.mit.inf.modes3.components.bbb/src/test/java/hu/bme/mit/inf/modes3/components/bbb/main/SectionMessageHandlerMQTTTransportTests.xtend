@@ -6,11 +6,13 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
 
+@Ignore
 class SectionMessageHandlerMQTTTransportTests {
 
 	var BBBComponent componentUnderTest
