@@ -2,13 +2,15 @@ package hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter
 
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
+import java.util.ArrayList
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.experimental.theories.DataPoints
 import org.junit.experimental.theories.Theories
@@ -23,9 +25,10 @@ import org.yakindu.scr.turnout.ITurnoutStatemachine
 /**
  * StatusMessageForwardingFromLocalTransportNetworkToInternal
  */
-@Ignore
 @RunWith(Theories)
 class StatusFromNetworkToInternalMQTTTransport {
+
+	val createdStacks = new ArrayList<CommunicationStack>
 
 	/****************************************************************************************************
 	 * fields: unit under test, mocks and classes for simulating message receive over the network
@@ -87,12 +90,18 @@ class StatusFromNetworkToInternalMQTTTransport {
 	/****************************************************************************************************
 	 * methods: initializer method and tests
 	 ****************************************************************************************************/
+	private def createAndRegisterStack() {
+		val stack = CommunicationStackFactory::createLocalMQTTStack
+		createdStacks.add(stack)
+		stack
+	}
+
 	@Before
 	def void init() {
-		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
+		val receiverStack = new TrackCommunicationServiceLocator(createAndRegisterStack, new NOPLoggerFactory)
 		unitUnderTest = new TrackElementStatusToInternalTransmitter(receiverStack.trackElementStateRegistry, new NOPLoggerFactory)
 
-		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
+		val senderStack = new TrackCommunicationServiceLocator(createAndRegisterStack, new NOPLoggerFactory)
 		stateSender = senderStack.trackElementStateSender
 
 		// create mocks
@@ -109,6 +118,11 @@ class StatusFromNetworkToInternalMQTTTransport {
 		Mockito.when(turnoutStatemachineMock.SCITrain).thenReturn(turnoutStatemachineSCITrainMock)
 		Mockito.when(turnoutStatemachineMock.SCITurnout).thenReturn(turnoutStatemachineSCITurnoutMock)
 		unitUnderTest.registerTurnoutStatemachine(15, turnoutStatemachineMock)
+	}
+
+	@After
+	def void tearDown() {
+		createdStacks.forEach[stack|stack.stop]
 	}
 
 	@Test
