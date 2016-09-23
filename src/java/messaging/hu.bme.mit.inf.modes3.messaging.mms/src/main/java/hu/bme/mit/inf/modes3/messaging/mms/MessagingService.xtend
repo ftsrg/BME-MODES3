@@ -49,14 +49,14 @@ class MessagingService {
 					this.dispatcher.dispatchMessage(rawMessage)
 				} catch(Exception e) {
 					logger.error(e.message, e)
-				// This catch is left blank intentionally
+					Thread.currentThread.interrupt
 				}
 
 			}
 		}
 
 	}
-	
+
 	def stop() {
 		dispatchThread?.interrupt
 	}
