@@ -22,7 +22,7 @@ class MQTTConnectionBridge implements MqttCallback {
 	private static MQTTConnectionBridge instance
 
 	protected val subscribers = Collections.synchronizedList(new ArrayList<MQTTTransport>)
-	protected val MQTTClient client
+	protected var MQTTClient client
 
 	protected val String topic = "modes3/all"
 	protected val int qos = 1
@@ -58,17 +58,18 @@ class MQTTConnectionBridge implements MqttCallback {
 
 	def subscribe(MQTTTransport transport) {
 		subscribers.add(transport)
-		if(subscribers.empty){
-			client.close
-		}
 	}
 
 	def sendMessage(byte[] message) {
 		client.sendMessage(message)
 	}
 
-	def removeSubscriber(MQTTTransport client) {
+	def void removeSubscriber(MQTTTransport client) {
 		subscribers.remove(client)
+		if(subscribers.empty) {
+			this.client.close
+			instance = null
+		}
 	}
 
 	override connectionLost(Throwable cause) {
