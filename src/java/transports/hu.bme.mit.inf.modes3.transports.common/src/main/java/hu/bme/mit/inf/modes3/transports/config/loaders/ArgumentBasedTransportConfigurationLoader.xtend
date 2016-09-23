@@ -8,8 +8,14 @@ import hu.bme.mit.inf.modes3.transports.config.TransportEndpoints
 class ArgumentBasedTransportConfigurationLoader {
 	
 	static def TransportConfiguration loadConfiguration(ArgumentRegistry registry) {
-		val TransportEndpoint endpoint = new TransportEndpoint(registry.getParameterStringValue('addr'), registry.getParameterStringValue('id'), registry.getParameterIntegerValue('pubPort'), registry.getParameterIntegerValue('repPort'))
-		val TransportEndpoints endpoints = TransportEndpoints.loadConfig(registry.getParameterStringValue('config'))
+		val config = registry.getParameterStringValue('config')
+		val address = registry.getParameterStringValue('address')
+		val id = registry.getParameterStringValue('id')
+		val pubPort = registry.getParameterIntegerValue('pubPort')
+		val repPort = registry.getParameterIntegerValue('repPort')
+		
+		val TransportEndpoint endpoint = new TransportEndpoint(address, id, pubPort, repPort)
+		val TransportEndpoints endpoints = TransportEndpoints.loadConfig(config)
 		return new TransportConfiguration(endpoint,endpoints)
 	}
 	

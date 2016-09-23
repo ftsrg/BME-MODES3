@@ -1,5 +1,5 @@
 {
-	"core": {
+	"core": [
 		"bbb1.modes3.intra" : [
 			{
 				"id": "component_safety_logic",
@@ -98,5 +98,5 @@
 				"port": 1003
 			}
 		]
-	}
+	]
 }
