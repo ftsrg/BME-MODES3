@@ -1,7 +1,11 @@
+apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+	compile 'com.pi4j:pi4j-core:1.1'
 	compile project(':components:hu.bme.mit.inf.modes3.components.common')
 }
+
+mainClassName = "hu.bme.mit.inf.modes3.components.occupancyquery.main.Main"

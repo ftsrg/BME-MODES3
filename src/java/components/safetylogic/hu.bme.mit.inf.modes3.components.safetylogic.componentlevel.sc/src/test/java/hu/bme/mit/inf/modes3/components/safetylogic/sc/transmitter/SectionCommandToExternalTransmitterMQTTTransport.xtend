@@ -2,10 +2,13 @@ package hu.bme.mit.inf.modes3.components.safetylogic.sc.transmitter
 
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import java.util.ArrayList
+import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -14,7 +17,10 @@ import org.yakindu.scr.section.ISectionStatemachine
 import org.yakindu.scr.section.ISectionStatemachine.SCISection
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionListener
 
+@Ignore
 class SectionCommandToExternalTransmitterMQTTTransport {
+
+	val createdStacks = new ArrayList<CommunicationStack>
 
 	var SectionCommandToExternalTransmitter unitUnderTest
 
@@ -23,6 +29,12 @@ class SectionCommandToExternalTransmitterMQTTTransport {
 
 	@Mock
 	var ISectionStatemachine notUsedInTests
+
+	private def createAndRegisterStack() {
+		val stack = CommunicationStackFactory::createLocalMQTTStack
+		createdStacks.add(stack)
+		stack
+	}
 
 	@Before
 	def void init() {
@@ -33,7 +45,7 @@ class SectionCommandToExternalTransmitterMQTTTransport {
 		Mockito.when(sciSectionMock.listeners).thenReturn(new ArrayList<SCISectionListener>)
 
 		// stack used for sending messages over the network
-		val senderStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
+		val senderStack = new TrackCommunicationServiceLocator(createAndRegisterStack, new NOPLoggerFactory)
 
 		// register mock and track element commander
 		unitUnderTest = new SectionCommandToExternalTransmitter(notUsedInTests, senderStack.trackElementCommander, new NOPLoggerFactory)
@@ -42,11 +54,16 @@ class SectionCommandToExternalTransmitterMQTTTransport {
 		receiverMock = Mockito.mock(ISegmentCommandListener)
 	}
 
+	@After
+	def void tearDown() {
+		createdStacks.forEach[stack|stack.stop]
+	}
+
 	@Test
 	def void enableSection() {
 		// Arrange
 		val targetID = 12
-		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
+		val receiverStack = new TrackCommunicationServiceLocator(createAndRegisterStack, new NOPLoggerFactory)
 
 		receiverStack.trackElementCommandCallback.segmentCommandListener = receiverMock
 
@@ -62,7 +79,7 @@ class SectionCommandToExternalTransmitterMQTTTransport {
 	def void disableSection() {
 		// Arrange
 		val targetID = 12
-		val receiverStack = new TrackCommunicationServiceLocator(CommunicationStackFactory::createLocalMQTTStack, new NOPLoggerFactory)
+		val receiverStack = new TrackCommunicationServiceLocator(createAndRegisterStack, new NOPLoggerFactory)
 		receiverStack.trackElementCommandCallback.segmentCommandListener = receiverMock
 
 		// Act

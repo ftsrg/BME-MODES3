@@ -8,7 +8,7 @@ import java.util.Set;
 import org.slf4j.impl.SimpleLoggerFactory;
 
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.conf.LayoutConfigurationException;
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptor;
+import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter;
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory;
 
@@ -18,10 +18,10 @@ public class Main {
 		SimpleLoggerFactory loggerFactory = new SimpleLoggerFactory();
 
 		ArgumentRegistry registry = new ArgumentRegistry(loggerFactory);
-		registry.registerArgumentWithOptions(new ArgumentDescriptor<String>("cid", "The ID of the component", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("cid", "The ID of the component", String.class));
 
 		String paramName = "tid";
-		registry.registerArgumentWithOptions(new ArgumentDescriptor<Integer>(paramName, "The ID of the turnout (1-6)", Integer.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<Integer>(paramName, "The ID of the turnout (1-6)", Integer.class));
 
 		Set<String> requiredParams = new HashSet<>();
 		requiredParams.add(paramName);

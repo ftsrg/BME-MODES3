@@ -12,8 +12,12 @@ import hu.bme.mit.inf.modes3.components.safetylogic.sc.network.handler.YakinduCa
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.network.handler.YakinduReleaseToHandler
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.network.handler.YakinduReserveToHandler
 import hu.bme.mit.inf.modes3.components.safetylogic.sc.util.ConnectionDirection
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import java.util.ArrayList
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.experimental.theories.DataPoints
 import org.junit.experimental.theories.Theories
 import org.junit.experimental.theories.Theory
@@ -24,8 +28,11 @@ import org.slf4j.helpers.NOPLoggerFactory
 /**
  * YakinduMessageBridgeToExternalLocalTransportTests
  */
+@Ignore
 @RunWith(Theories)
 class YakinduMessageExternalMQTTTranport {
+
+	val createdStacks = new ArrayList<CommunicationStack>
 
 	var YakinduMessageBridgeToExternal unitUnderTest
 
@@ -57,6 +64,7 @@ class YakinduMessageExternalMQTTTranport {
 	def void init() {
 		// create sender communication stack
 		val senderStack = YakinduCommunicationStackFactory::createLocalMQTTStack(new NOPLoggerFactory)
+		createdStacks.add(senderStack)
 		senderStack.start
 
 		unitUnderTest = new YakinduMessageBridgeToExternal(senderStack.mms, new NOPLoggerFactory)
@@ -64,7 +72,13 @@ class YakinduMessageExternalMQTTTranport {
 		// create receiver communication stack
 		receiverDispatcher = new YakinduMessageDispatcher(new NOPLoggerFactory)
 		val receiverStack = YakinduCommunicationStackFactory::createLocalMQTTStackFromDispatcher(receiverDispatcher, new NOPLoggerFactory)
+		createdStacks.add(receiverStack)
 		receiverStack.start
+	}
+
+	@After
+	def void tearDown() {
+		createdStacks.forEach[stack|stack.stop]
 	}
 
 	@Theory

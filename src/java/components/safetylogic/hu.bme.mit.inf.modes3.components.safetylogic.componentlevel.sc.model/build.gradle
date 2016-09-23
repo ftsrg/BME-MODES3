@@ -1,1 +1,7 @@
 apply plugin: 'java'
+
+sonarqube {
+	properties {
+		property "sonar.exclusions", "src/main/java/org/yakindu/scr/**"
+	}
+}

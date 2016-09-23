@@ -24,6 +24,7 @@ class ZMQSenderRunner implements Runnable {
 		val zmq = new ZMQTransport(this.config)
 
 		zmq.connect
+		Thread.sleep(250)
 		zmq.sendMessage(message.bytes)
 		println('Message sent')
 		zmq.close
@@ -51,7 +52,6 @@ class ZMQReceiverRunner implements Runnable {
 		val zmq = new ZMQTransport(this.config)
 
 		zmq.connect
-		//Thread.sleep(250)
 		while(receiveCount > 0) {
 			println('Receiving message')
 			received.add(new String(zmq.receiveMessage))
@@ -95,7 +95,6 @@ class ZMQIntegrationTests {
 
 		t1.join
 		t2.join
-		//t1.notify
 
 		// Assert
 		assertEquals(1, received.size);

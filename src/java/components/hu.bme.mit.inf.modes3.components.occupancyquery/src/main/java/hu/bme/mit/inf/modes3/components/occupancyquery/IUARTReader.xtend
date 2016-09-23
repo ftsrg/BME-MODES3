@@ -1,5 +1,5 @@
 package hu.bme.mit.inf.modes3.components.occupancyquery
 
-interface IS88CommunicationReader {
+interface IUARTReader {
 	def byte[] read();
 }

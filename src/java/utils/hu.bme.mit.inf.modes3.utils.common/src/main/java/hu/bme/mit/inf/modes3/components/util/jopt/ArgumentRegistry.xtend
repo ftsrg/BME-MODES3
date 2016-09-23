@@ -49,7 +49,7 @@ public class ArgumentRegistry {
 	// parsed arguments
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var OptionSet parsed
 
-	new(ILoggerFactory factory){
+	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 	}
 
@@ -59,7 +59,7 @@ public class ArgumentRegistry {
 	 * 
 	 * @param descriptor the descriptor of the argument to be registered
 	 */
-	def void registerArgumentWithOptions(ArgumentDescriptor<?> descriptor) {
+	def void registerArgumentWithOptions(ArgumentDescriptorWithParameter<?> descriptor) {
 		val name = descriptor.name
 		val ArgumentAcceptingOptionSpec<?> argument = parser.accepts(name, descriptor.description).withRequiredArg.ofType(descriptor.type)
 		registrar.put(name, argument)
@@ -71,7 +71,7 @@ public class ArgumentRegistry {
 	 * 
 	 * @param descriptor the descriptor of the argument to be registered
 	 */
-	def void registerArgumentWithoutOptions(ArgumentDescriptor<?> descriptor) {
+	def void registerArgumentWithoutOptions(ArgumentDescriptorWithoutParameter descriptor) {
 		parser.accepts(descriptor.name, descriptor.getDescription)
 		registrarNoOptions.add(descriptor.name)
 	}
