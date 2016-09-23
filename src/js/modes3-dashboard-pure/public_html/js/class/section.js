@@ -12,41 +12,43 @@
  * 
  */
 
-function SectionControllerClass(sectionSettings) {
+function SegmentController(segmentConfig) {
     // setting up instance variables
-    this.sectionID = sectionSettings.id;
-    this.sectionDirection = sectionSettings.direction;
-    this.svgElem = $('#layout').find("#s" + zeroPad(this.sectionID, 2));
+    this.config = segmentConfig;
+    this.svgElem = $('#layout').find("#"+this.config.id);
+    
+    // first, we dont know the state of the segment
+    setTrackElementColor(this.svgElem, window.settings.segment.undefinedStateColor);
+    
+    // no need for initializing sequence, everything need to done in dom updated
+    // callback to be sure its active everytime
 
-    // initialy section will be undefined
-    setTrackElementColor(this.svgElem, settings.undefinedStateTrackElementColor);
+};
 
+SegmentController.prototype.setSegmentEnabled = function () {
+    setTrackElementColor(this.svgElem, window.settings.segment.activeColor);
+    this.isSegmentEnabled = true;
+    log("Segment #" + this.config.id + " enabled");
+};
+
+SegmentController.prototype.setSegmentDisabled = function () {
+    setTrackElementColor(this.svgElem, window.settings.segment.inactiveColor);
+    this.isSegmentEnabled = false;
+    log("Segment #" + this.config.id + " disabled");
+};
+
+SegmentController.prototype.DOMUpdatedCallback = function () {
+    this.svgElem = $('#layout').find("#"+this.config.id);
+    
     // add event handler for element
     this.svgElem.bind('click', {_this: this}, function (event) {
-        if (event.data._this.isSectionEnabled()) {
-            event.data._this.setSectionDisabled();
+        if (event.data._this.isSegmentEnabled) {
+            event.data._this.setSegmentDisabled();
         } else {
-            event.data._this.setSectionEnabled();
+            event.data._this.setSegmentEnabled();
         }
     });
     
     // add control class to have pointer cursor over element
     this.svgElem.addClass("control");
-
-}
-
-SectionControllerClass.prototype.setSectionEnabled = function () {
-    setTrackElementColor(this.svgElem, settings.activeTrackElementColor);
-    this.sectionEnabled = true;
-    log("Section #" + this.sectionID + " enabled");
-}
-
-SectionControllerClass.prototype.setSectionDisabled = function () {
-    setTrackElementColor(this.svgElem, settings.inactiveTrackElementColor);
-    this.sectionEnabled = false;
-    log("Section #" + this.sectionID + " disabled");
-}
-
-SectionControllerClass.prototype.isSectionEnabled = function () {
-    return this.sectionEnabled;
-}
+};

@@ -31,9 +31,14 @@ function setSvgElementOpacity(elem, opacity) {
 }
 
 function log() {
+    if( arguments.length === 1 ) {
+        console.log(arguments[0]);
+        return;
+    }
+    
     s = "";
     for (var i = 0; i < arguments.length; i++) {
-        s += "" + arguments[i];
+        s += " " + arguments[i];
     }
     console.log(s);
 }
@@ -53,11 +58,40 @@ function resizeLayout(width) {
             if (settings.viewBox[2] < width) {
                 settings.viewBox[2] = settings.viewBox[2] + 10;
                 $('#layout').attr('viewBox', settings.viewBox[0] + ' ' + settings.viewBox[1] + ' ' + settings.viewBox[2] + ' ' + settings.viewBox[3]);
-            }
-            else if (settings.viewBox[2] > width) {
+            } else if (settings.viewBox[2] > width) {
                 settings.viewBox[2] = settings.viewBox[2] - 10;
                 $('#layout').attr('viewBox', settings.viewBox[0] + ' ' + settings.viewBox[1] + ' ' + settings.viewBox[2] + ' ' + settings.viewBox[3]);
             }
         }
     });
+}
+
+function cloneObject(object) {
+    var newObj = (object instanceof Array) ? [] : {};
+    for (var i in object) {
+        if (object[i] && typeof object[i] == "object") {
+            newObj[i] = cloneObject(object[i]);
+        } else
+            newObj[i] = object[i]
+    }
+    return newObj;
+}
+
+function updateDOM() {
+    $("#layout").DOMRefresh();
+    
+    // call callback for every locomotive object
+    for (var l in window.locomotives) {
+        window.locomotives[l].DOMUpdatedCallback();
+    }
+    
+    // call callback for every segment object
+    for (var s in window.segments) {
+        window.segments[s].DOMUpdatedCallback();
+    }
+    
+    // call callback for every segment object
+    for (var t in window.turnouts) {
+        window.turnouts[t].DOMUpdatedCallback();
+    }
 }

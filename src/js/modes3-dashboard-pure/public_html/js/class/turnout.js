@@ -13,77 +13,83 @@
  * 
  */
 
-function TurnoutControllerClass(turnoutID) {
+function TurnoutController(turnoutConfig) {
     // setting up instance variables
-    this.turnoutID = turnoutID;
-    this.svgElemDiv = $('#layout').find("#t0"+turnoutID+"-div");
-    this.svgElemStr = $('#layout').find("#t0"+turnoutID+"-str");
-    this.svgElemDivControl  = $('#layout').find("#t0"+turnoutID+"-div-control");
-    this.svgElemStrControl  = $('#layout').find("#t0"+turnoutID+"-str-control");
-    
-    // all turnout will be undefined for the first time
-    setSvgElementOpacity(this.svgElemDiv, settings.inactiveTurnoutBranchOpacity);
-    setSvgElementOpacity(this.svgElemStr, settings.inactiveTurnoutBranchOpacity);
-    setTurnoutControlElementColor(this.svgElemStrControl, settings.inactiveTurnoutBranchColor);
-    setTurnoutControlElementColor(this.svgElemDivControl, settings.inactiveTurnoutBranchColor);
-    
-    // add event handlers for controls 
-    this.svgElemDivControl.bind('click', {_this: this}, function(event) {
-        event.data._this.setInDivergentPosition();
-    });
-    this.svgElemStrControl.bind('click', {_this: this}, function(event) {
-        event.data._this.setInStraightPosition();
-    });
-    
-}
+    this.config = turnoutConfig;
+    this.svgElemDiv = $('#layout').find("#" + this.config.id + "-div");
+    this.svgElemStr = $('#layout').find("#" + this.config.id + "-str");
+    this.svgElemDivControl = $('#layout').find("#" + this.config.id + "-div-control");
+    this.svgElemStrControl = $('#layout').find("#" + this.config.id + "-str-control");
 
-TurnoutControllerClass.prototype.setInStraightPosition = function() {
+    // all turnout will be undefined for the first time
+    setSvgElementOpacity(this.svgElemDiv, window.settings.turnout.inactiveBranchOpacity);
+    setSvgElementOpacity(this.svgElemStr, window.settings.turnout.inactiveBranchOpacity);
+    setTurnoutControlElementColor(this.svgElemStrControl, window.settings.turnout.undefinedControlColor);
+    setTurnoutControlElementColor(this.svgElemDivControl, window.settings.turnout.undefinedControlColor);
+};
+
+TurnoutController.prototype.setInStraightPosition = function () {
     // if turnout is already in straight state, then return
-    if( this.isInStraightPosition() ) {
+    if (this.isInStraightPosition()) {
         return;
     }
-    
+
     // first, the divergent track element and the controller will be grey
-    setSvgElementOpacity(this.svgElemDiv, settings.inactiveTurnoutBranchOpacity);
-    setTurnoutControlElementColor(this.svgElemDivControl, settings.activeTurnoutBranchColor);
+    setSvgElementOpacity(this.svgElemDiv, window.settings.turnout.inactiveBranchOpacity);
+    setTurnoutControlElementColor(this.svgElemDivControl, window.settings.turnout.activeControlColor);
     this.svgElemDivControl.addClass("control");
-    
+
     // then recolor straight track element and controller as well
-    setSvgElementOpacity(this.svgElemStr, settings.activeTurnoutBranchOpacity);
-    setTurnoutControlElementColor(this.svgElemStrControl, settings.inactiveTurnoutBranchColor);
+    setSvgElementOpacity(this.svgElemStr, window.settings.turnout.activeBranchOpacity);
+    setTurnoutControlElementColor(this.svgElemStrControl, window.settings.turnout.inactiveControlColor);
     this.svgElemStrControl.removeClass("control");
-    
+
     // set variable to store position
     this.position = "str";
-    log("Turnout #"+this.turnoutID+" is in straight state");
-}
+    log("Turnout #" + this.config.id + " is in straight state");
+};
 
-TurnoutControllerClass.prototype.setInDivergentPosition = function() { 
+TurnoutController.prototype.setInDivergentPosition = function () {
     // if turnout is already in straight state, then return
-    if( this.isInDivergentPosition() ) {
+    if (this.isInDivergentPosition()) {
         return;
     }
     // first, the straight track element and the controller will be grey
-    setSvgElementOpacity(this.svgElemStr, settings.inactiveTurnoutBranchOpacity);
-    setTurnoutControlElementColor(this.svgElemStrControl, settings.activeTurnoutBranchColor);
+    setSvgElementOpacity(this.svgElemStr, window.settings.turnout.inactiveBranchOpacity);
+    setTurnoutControlElementColor(this.svgElemStrControl, window.settings.turnout.activeControlColor);
     this.svgElemStrControl.addClass("control");
-    
+
     // then recolor divergent track element and controller as well
-    setSvgElementOpacity(this.svgElemDiv, settings.activeTurnoutBranchOpacity);
-    setTurnoutControlElementColor(this.svgElemDivControl, settings.inactiveTurnoutBranchColor);
+    setSvgElementOpacity(this.svgElemDiv, window.settings.turnout.activeBranchOpacity);
+    setTurnoutControlElementColor(this.svgElemDivControl, window.settings.turnout.inactiveControlColor);
     this.svgElemDivControl.removeClass("control");
-    
+
     // set variable to store position
     this.position = "div";
-    log("Turnout #"+this.turnoutID+" is in divergent state");
-}
+    log("Turnout #" + this.config.id + " is in divergent state");
+};
 
-TurnoutControllerClass.prototype.isInStraightPosition = function() {
+TurnoutController.prototype.isInStraightPosition = function () {
     return this.position === "str";
-}
+};
 
-TurnoutControllerClass.prototype.isInDivergentPosition = function() {
+TurnoutController.prototype.isInDivergentPosition = function () {
     return this.position === "div";
-}
+};
+
+TurnoutController.prototype.DOMUpdatedCallback = function() {
+    this.svgElemDiv = $('#layout').find("#" + this.config.id + "-div");
+    this.svgElemStr = $('#layout').find("#" + this.config.id + "-str");
+    this.svgElemDivControl = $('#layout').find("#" + this.config.id + "-div-control");
+    this.svgElemStrControl = $('#layout').find("#" + this.config.id + "-str-control");
+    
+    // add event handlers for controls 
+    this.svgElemDivControl.bind('click', {_this: this}, function (event) {
+        event.data._this.setInDivergentPosition();
+    });
+    this.svgElemStrControl.bind('click', {_this: this}, function (event) {
+        event.data._this.setInStraightPosition();
+    });
+};
 
 
