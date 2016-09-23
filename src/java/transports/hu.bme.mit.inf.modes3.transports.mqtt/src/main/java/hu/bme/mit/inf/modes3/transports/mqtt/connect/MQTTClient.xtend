@@ -109,7 +109,7 @@ class MQTTClient {
 		if(!client.isConnected) {
 			throw new MqttException(NOT_CONNECTED_ERROR_CODE)
 		}
-		client.disconnect
+		client.disconnect.waitForCompletion
 	}
 
 	private def createMqttClient(MQTTConfiguration config) {
@@ -119,11 +119,10 @@ class MQTTClient {
 
 			val persistence = new MemoryPersistence
 			val connOpts = new MqttConnectOptions
-			connOpts.setCleanSession(true)
 
 			val client = new MqttAsyncClient(address, clientId, persistence)
 			client.connect(connOpts)
-			Thread.sleep(500)
+			Thread.sleep(300)
 			client
 		} catch(InterruptedException e) {
 			logger.error(e.message, e)
@@ -142,8 +141,8 @@ class MQTTClient {
 			Thread.currentThread.interrupt
 		}
 	}
-	
-	def close(){
+
+	def close() {
 		client?.disconnect
 		client?.close
 		localBroker?.close
