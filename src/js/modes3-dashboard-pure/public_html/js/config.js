@@ -266,12 +266,12 @@ var settings = {
             image: "taurus-mav-1047.jpg",
             svgGroup: "taurus",
         },
-//        {
-//            name: "SNCF 68000",
-//            address: 1,
-//            image: "sncf-68000.jpg",
-//            svgGroup: 2,
-//        },
+        {
+            name: "SNCF 68000",
+            address: 1,
+            image: "sncf-68000.jpg",
+            svgGroup: 2,
+        },
 //        {
 //            name: "BR-204",
 //            address: 2,
