@@ -40,7 +40,7 @@
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
-		<nature>org.eclipse.viatra.query.projectnature</nature>
 		<nature>org.eclipse.pde.PluginNature</nature>
+		<nature>org.eclipse.viatra.query.projectnature</nature>
 	</natures>
 </projectDescription>
