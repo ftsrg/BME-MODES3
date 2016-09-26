@@ -3,7 +3,4 @@
  * GitHub account: Chorithian
 **/
 #pragma once
-enum TurnoutState {
-    STRAIGHT,
-    DIVERGENT
-};
+enum TurnoutState { STRAIGHT, DIVERGENT };

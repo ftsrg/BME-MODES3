@@ -17,412 +17,444 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace modes3 {
-namespace protobuf {
+namespace modes3
+{
+namespace protobuf
+{
 
-namespace {
+    namespace
+    {
 
-const ::google::protobuf::Descriptor* YakinduCannotGoTo_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  YakinduCannotGoTo_reflection_ = NULL;
+        const ::google::protobuf::Descriptor* YakinduCannotGoTo_descriptor_ = NULL;
+        const ::google::protobuf::internal::GeneratedMessageReflection* YakinduCannotGoTo_reflection_ = NULL;
 
-}  // namespace
+    } // namespace
 
+    void protobuf_AssignDesc_YakinduCannotGoTo_2eproto()
+    {
+        protobuf_AddDesc_YakinduCannotGoTo_2eproto();
+        const ::google::protobuf::FileDescriptor* file =
+            ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName("YakinduCannotGoTo.proto");
+        GOOGLE_CHECK(file != NULL);
+        YakinduCannotGoTo_descriptor_ = file->message_type(0);
+        static const int YakinduCannotGoTo_offsets_[2] = {
+            GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, targetid_),
+            GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, direction_),
+        };
+        YakinduCannotGoTo_reflection_ =
+            ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+                YakinduCannotGoTo_descriptor_, YakinduCannotGoTo::default_instance_, YakinduCannotGoTo_offsets_, -1, -1,
+                -1, sizeof(YakinduCannotGoTo),
+                GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, _internal_metadata_),
+                GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, _is_default_instance_));
+    }
 
-void protobuf_AssignDesc_YakinduCannotGoTo_2eproto() {
-  protobuf_AddDesc_YakinduCannotGoTo_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "YakinduCannotGoTo.proto");
-  GOOGLE_CHECK(file != NULL);
-  YakinduCannotGoTo_descriptor_ = file->message_type(0);
-  static const int YakinduCannotGoTo_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, targetid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, direction_),
-  };
-  YakinduCannotGoTo_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      YakinduCannotGoTo_descriptor_,
-      YakinduCannotGoTo::default_instance_,
-      YakinduCannotGoTo_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(YakinduCannotGoTo),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(YakinduCannotGoTo, _is_default_instance_));
-}
+    namespace
+    {
 
-namespace {
+        GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+        inline void protobuf_AssignDescriptorsOnce()
+        {
+            ::google::protobuf::GoogleOnceInit(
+                &protobuf_AssignDescriptors_once_, &protobuf_AssignDesc_YakinduCannotGoTo_2eproto);
+        }
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_YakinduCannotGoTo_2eproto);
-}
+        void protobuf_RegisterTypes(const ::std::string&)
+        {
+            protobuf_AssignDescriptorsOnce();
+            ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+                YakinduCannotGoTo_descriptor_, &YakinduCannotGoTo::default_instance());
+        }
 
-void protobuf_RegisterTypes(const ::std::string&) {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      YakinduCannotGoTo_descriptor_, &YakinduCannotGoTo::default_instance());
-}
+    } // namespace
 
-}  // namespace
+    void protobuf_ShutdownFile_YakinduCannotGoTo_2eproto()
+    {
+        delete YakinduCannotGoTo::default_instance_;
+        delete YakinduCannotGoTo_reflection_;
+    }
 
-void protobuf_ShutdownFile_YakinduCannotGoTo_2eproto() {
-  delete YakinduCannotGoTo::default_instance_;
-  delete YakinduCannotGoTo_reflection_;
-}
+    void protobuf_AddDesc_YakinduCannotGoTo_2eproto()
+    {
+        static bool already_here = false;
+        if(already_here)
+            return;
+        already_here = true;
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-void protobuf_AddDesc_YakinduCannotGoTo_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
+        ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
+        ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
+            "\n\027YakinduCannotGoTo.proto\022\017modes3.protob"
+            "uf\032\013Enums.proto\"e\n\021YakinduCannotGoTo\022\020\n\010"
+            "targetID\030\001 \001(\r\022>\n\tdirection\030\002 \001(\0162+.mode"
+            "s3.protobuf.YakinduConnectionDirectionB0"
+            "\n,hu.bme.mit.inf.modes3.messaging.mms.me"
+            "ssagesP\001b\006proto3",
+            216);
+        ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
+            "YakinduCannotGoTo.proto", &protobuf_RegisterTypes);
+        YakinduCannotGoTo::default_instance_ = new YakinduCannotGoTo();
+        YakinduCannotGoTo::default_instance_->InitAsDefaultInstance();
+        ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_YakinduCannotGoTo_2eproto);
+    }
 
-  ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
-  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\027YakinduCannotGoTo.proto\022\017modes3.protob"
-    "uf\032\013Enums.proto\"e\n\021YakinduCannotGoTo\022\020\n\010"
-    "targetID\030\001 \001(\r\022>\n\tdirection\030\002 \001(\0162+.mode"
-    "s3.protobuf.YakinduConnectionDirectionB0"
-    "\n,hu.bme.mit.inf.modes3.messaging.mms.me"
-    "ssagesP\001b\006proto3", 216);
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
-    "YakinduCannotGoTo.proto", &protobuf_RegisterTypes);
-  YakinduCannotGoTo::default_instance_ = new YakinduCannotGoTo();
-  YakinduCannotGoTo::default_instance_->InitAsDefaultInstance();
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_YakinduCannotGoTo_2eproto);
-}
+    // Force AddDescriptors() to be called at static initialization time.
+    struct StaticDescriptorInitializer_YakinduCannotGoTo_2eproto {
+        StaticDescriptorInitializer_YakinduCannotGoTo_2eproto()
+        {
+            protobuf_AddDesc_YakinduCannotGoTo_2eproto();
+        }
+    } static_descriptor_initializer_YakinduCannotGoTo_2eproto_;
 
-// Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_YakinduCannotGoTo_2eproto {
-  StaticDescriptorInitializer_YakinduCannotGoTo_2eproto() {
-    protobuf_AddDesc_YakinduCannotGoTo_2eproto();
-  }
-} static_descriptor_initializer_YakinduCannotGoTo_2eproto_;
+    namespace
+    {
 
-namespace {
+        static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
+        static void MergeFromFail(int line)
+        {
+            GOOGLE_CHECK(false) << __FILE__ << ":" << line;
+        }
 
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
-static void MergeFromFail(int line) {
-  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
-}
-
-}  // namespace
-
+    } // namespace
 
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int YakinduCannotGoTo::kTargetIDFieldNumber;
-const int YakinduCannotGoTo::kDirectionFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+    const int YakinduCannotGoTo::kTargetIDFieldNumber;
+    const int YakinduCannotGoTo::kDirectionFieldNumber;
+#endif // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-YakinduCannotGoTo::YakinduCannotGoTo()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:modes3.protobuf.YakinduCannotGoTo)
-}
+    YakinduCannotGoTo::YakinduCannotGoTo()
+        : ::google::protobuf::Message()
+        , _internal_metadata_(NULL)
+    {
+        SharedCtor();
+        // @@protoc_insertion_point(constructor:modes3.protobuf.YakinduCannotGoTo)
+    }
 
-void YakinduCannotGoTo::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
-}
+    void YakinduCannotGoTo::InitAsDefaultInstance()
+    {
+        _is_default_instance_ = true;
+    }
 
-YakinduCannotGoTo::YakinduCannotGoTo(const YakinduCannotGoTo& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:modes3.protobuf.YakinduCannotGoTo)
-}
+    YakinduCannotGoTo::YakinduCannotGoTo(const YakinduCannotGoTo& from)
+        : ::google::protobuf::Message()
+        , _internal_metadata_(NULL)
+    {
+        SharedCtor();
+        MergeFrom(from);
+        // @@protoc_insertion_point(copy_constructor:modes3.protobuf.YakinduCannotGoTo)
+    }
 
-void YakinduCannotGoTo::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  targetid_ = 0u;
-  direction_ = 0;
-}
+    void YakinduCannotGoTo::SharedCtor()
+    {
+        _is_default_instance_ = false;
+        _cached_size_ = 0;
+        targetid_ = 0u;
+        direction_ = 0;
+    }
 
-YakinduCannotGoTo::~YakinduCannotGoTo() {
-  // @@protoc_insertion_point(destructor:modes3.protobuf.YakinduCannotGoTo)
-  SharedDtor();
-}
+    YakinduCannotGoTo::~YakinduCannotGoTo()
+    {
+        // @@protoc_insertion_point(destructor:modes3.protobuf.YakinduCannotGoTo)
+        SharedDtor();
+    }
 
-void YakinduCannotGoTo::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
+    void YakinduCannotGoTo::SharedDtor()
+    {
+        if(this != default_instance_) {
+        }
+    }
 
-void YakinduCannotGoTo::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* YakinduCannotGoTo::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return YakinduCannotGoTo_descriptor_;
-}
+    void YakinduCannotGoTo::SetCachedSize(int size) const
+    {
+        GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+        _cached_size_ = size;
+        GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    }
+    const ::google::protobuf::Descriptor* YakinduCannotGoTo::descriptor()
+    {
+        protobuf_AssignDescriptorsOnce();
+        return YakinduCannotGoTo_descriptor_;
+    }
 
-const YakinduCannotGoTo& YakinduCannotGoTo::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_YakinduCannotGoTo_2eproto();
-  return *default_instance_;
-}
+    const YakinduCannotGoTo& YakinduCannotGoTo::default_instance()
+    {
+        if(default_instance_ == NULL)
+            protobuf_AddDesc_YakinduCannotGoTo_2eproto();
+        return *default_instance_;
+    }
 
-YakinduCannotGoTo* YakinduCannotGoTo::default_instance_ = NULL;
+    YakinduCannotGoTo* YakinduCannotGoTo::default_instance_ = NULL;
 
-YakinduCannotGoTo* YakinduCannotGoTo::New(::google::protobuf::Arena* arena) const {
-  YakinduCannotGoTo* n = new YakinduCannotGoTo;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
+    YakinduCannotGoTo* YakinduCannotGoTo::New(::google::protobuf::Arena* arena) const
+    {
+        YakinduCannotGoTo* n = new YakinduCannotGoTo;
+        if(arena != NULL) {
+            arena->Own(n);
+        }
+        return n;
+    }
 
-void YakinduCannotGoTo::Clear() {
+    void YakinduCannotGoTo::Clear()
+    {
 // @@protoc_insertion_point(message_clear_start:modes3.protobuf.YakinduCannotGoTo)
 #if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(YakinduCannotGoTo, f) \
-  _Pragma("clang diagnostic pop")
+#define ZR_HELPER_(f)                                                                                               \
+    _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") __builtin_offsetof( \
+        YakinduCannotGoTo, f) _Pragma("clang diagnostic pop")
 #else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<YakinduCannotGoTo*>(16)->f)
+#define ZR_HELPER_(f) reinterpret_cast<char*>(&reinterpret_cast<YakinduCannotGoTo*>(16)->f)
 #endif
 
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
+#define ZR_(first, last)                                                          \
+    do {                                                                          \
+        ::memset(&first, 0, ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last)); \
+    } while(0)
 
-  ZR_(targetid_, direction_);
+        ZR_(targetid_, direction_);
 
 #undef ZR_HELPER_
 #undef ZR_
-
-}
-
-bool YakinduCannotGoTo::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:modes3.protobuf.YakinduCannotGoTo)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 targetID = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &targetid_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_direction;
-        break;
-      }
-
-      // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_direction:
-          int value;
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_direction(static_cast< ::modes3::protobuf::YakinduConnectionDirection >(value));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
     }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:modes3.protobuf.YakinduCannotGoTo)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:modes3.protobuf.YakinduCannotGoTo)
-  return false;
+
+    bool YakinduCannotGoTo::MergePartialFromCodedStream(::google::protobuf::io::CodedInputStream* input)
+    {
+#define DO_(EXPRESSION)                  \
+    if(!GOOGLE_PREDICT_TRUE(EXPRESSION)) \
+    goto failure
+        ::google::protobuf::uint32 tag;
+        // @@protoc_insertion_point(parse_start:modes3.protobuf.YakinduCannotGoTo)
+        for(;;) {
+            ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+            tag = p.first;
+            if(!p.second)
+                goto handle_unusual;
+            switch(::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+            // optional uint32 targetID = 1;
+            case 1: {
+                if(tag == 8) {
+                    DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive< ::google::protobuf::uint32,
+                        ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(input, &targetid_)));
+
+                } else {
+                    goto handle_unusual;
+                }
+                if(input->ExpectTag(16))
+                    goto parse_direction;
+                break;
+            }
+
+            // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
+            case 2: {
+                if(tag == 16) {
+                parse_direction:
+                    int value;
+                    DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<int,
+                        ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(input, &value)));
+                    set_direction(static_cast< ::modes3::protobuf::YakinduConnectionDirection>(value));
+                } else {
+                    goto handle_unusual;
+                }
+                if(input->ExpectAtEnd())
+                    goto success;
+                break;
+            }
+
+            default: {
+            handle_unusual:
+                if(tag == 0 ||
+                    ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+                        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+                    goto success;
+                }
+                DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+                break;
+            }
+            }
+        }
+    success:
+        // @@protoc_insertion_point(parse_success:modes3.protobuf.YakinduCannotGoTo)
+        return true;
+    failure:
+        // @@protoc_insertion_point(parse_failure:modes3.protobuf.YakinduCannotGoTo)
+        return false;
 #undef DO_
-}
+    }
 
-void YakinduCannotGoTo::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:modes3.protobuf.YakinduCannotGoTo)
-  // optional uint32 targetID = 1;
-  if (this->targetid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->targetid(), output);
-  }
+    void YakinduCannotGoTo::SerializeWithCachedSizes(::google::protobuf::io::CodedOutputStream* output) const
+    {
+        // @@protoc_insertion_point(serialize_start:modes3.protobuf.YakinduCannotGoTo)
+        // optional uint32 targetID = 1;
+        if(this->targetid() != 0) {
+            ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->targetid(), output);
+        }
 
-  // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
-  if (this->direction() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      2, this->direction(), output);
-  }
+        // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
+        if(this->direction() != 0) {
+            ::google::protobuf::internal::WireFormatLite::WriteEnum(2, this->direction(), output);
+        }
 
-  // @@protoc_insertion_point(serialize_end:modes3.protobuf.YakinduCannotGoTo)
-}
+        // @@protoc_insertion_point(serialize_end:modes3.protobuf.YakinduCannotGoTo)
+    }
 
-::google::protobuf::uint8* YakinduCannotGoTo::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.YakinduCannotGoTo)
-  // optional uint32 targetID = 1;
-  if (this->targetid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->targetid(), target);
-  }
+    ::google::protobuf::uint8* YakinduCannotGoTo::InternalSerializeWithCachedSizesToArray(bool deterministic,
+        ::google::protobuf::uint8* target) const
+    {
+        // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.YakinduCannotGoTo)
+        // optional uint32 targetID = 1;
+        if(this->targetid() != 0) {
+            target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->targetid(), target);
+        }
 
-  // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
-  if (this->direction() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      2, this->direction(), target);
-  }
+        // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
+        if(this->direction() != 0) {
+            target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(2, this->direction(), target);
+        }
 
-  // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.YakinduCannotGoTo)
-  return target;
-}
+        // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.YakinduCannotGoTo)
+        return target;
+    }
 
-int YakinduCannotGoTo::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.YakinduCannotGoTo)
-  int total_size = 0;
+    int YakinduCannotGoTo::ByteSize() const
+    {
+        // @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.YakinduCannotGoTo)
+        int total_size = 0;
 
-  // optional uint32 targetID = 1;
-  if (this->targetid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->targetid());
-  }
+        // optional uint32 targetID = 1;
+        if(this->targetid() != 0) {
+            total_size += 1 + ::google::protobuf::internal::WireFormatLite::UInt32Size(this->targetid());
+        }
 
-  // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
-  if (this->direction() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->direction());
-  }
+        // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
+        if(this->direction() != 0) {
+            total_size += 1 + ::google::protobuf::internal::WireFormatLite::EnumSize(this->direction());
+        }
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
+        GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+        _cached_size_ = total_size;
+        GOOGLE_SAFE_CONCURRENT_WRITES_END();
+        return total_size;
+    }
 
-void YakinduCannotGoTo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.YakinduCannotGoTo)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const YakinduCannotGoTo* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const YakinduCannotGoTo>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:modes3.protobuf.YakinduCannotGoTo)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.YakinduCannotGoTo)
-    MergeFrom(*source);
-  }
-}
+    void YakinduCannotGoTo::MergeFrom(const ::google::protobuf::Message& from)
+    {
+        // @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.YakinduCannotGoTo)
+        if(GOOGLE_PREDICT_FALSE(&from == this))
+            MergeFromFail(__LINE__);
+        const YakinduCannotGoTo* source =
+            ::google::protobuf::internal::DynamicCastToGenerated<const YakinduCannotGoTo>(&from);
+        if(source == NULL) {
+            // @@protoc_insertion_point(generalized_merge_from_cast_fail:modes3.protobuf.YakinduCannotGoTo)
+            ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+        } else {
+            // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.YakinduCannotGoTo)
+            MergeFrom(*source);
+        }
+    }
 
-void YakinduCannotGoTo::MergeFrom(const YakinduCannotGoTo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.YakinduCannotGoTo)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.targetid() != 0) {
-    set_targetid(from.targetid());
-  }
-  if (from.direction() != 0) {
-    set_direction(from.direction());
-  }
-}
+    void YakinduCannotGoTo::MergeFrom(const YakinduCannotGoTo& from)
+    {
+        // @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.YakinduCannotGoTo)
+        if(GOOGLE_PREDICT_FALSE(&from == this))
+            MergeFromFail(__LINE__);
+        if(from.targetid() != 0) {
+            set_targetid(from.targetid());
+        }
+        if(from.direction() != 0) {
+            set_direction(from.direction());
+        }
+    }
 
-void YakinduCannotGoTo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:modes3.protobuf.YakinduCannotGoTo)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
+    void YakinduCannotGoTo::CopyFrom(const ::google::protobuf::Message& from)
+    {
+        // @@protoc_insertion_point(generalized_copy_from_start:modes3.protobuf.YakinduCannotGoTo)
+        if(&from == this)
+            return;
+        Clear();
+        MergeFrom(from);
+    }
 
-void YakinduCannotGoTo::CopyFrom(const YakinduCannotGoTo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.YakinduCannotGoTo)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
+    void YakinduCannotGoTo::CopyFrom(const YakinduCannotGoTo& from)
+    {
+        // @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.YakinduCannotGoTo)
+        if(&from == this)
+            return;
+        Clear();
+        MergeFrom(from);
+    }
 
-bool YakinduCannotGoTo::IsInitialized() const {
+    bool YakinduCannotGoTo::IsInitialized() const
+    {
 
-  return true;
-}
+        return true;
+    }
 
-void YakinduCannotGoTo::Swap(YakinduCannotGoTo* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void YakinduCannotGoTo::InternalSwap(YakinduCannotGoTo* other) {
-  std::swap(targetid_, other->targetid_);
-  std::swap(direction_, other->direction_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
-}
+    void YakinduCannotGoTo::Swap(YakinduCannotGoTo* other)
+    {
+        if(other == this)
+            return;
+        InternalSwap(other);
+    }
+    void YakinduCannotGoTo::InternalSwap(YakinduCannotGoTo* other)
+    {
+        std::swap(targetid_, other->targetid_);
+        std::swap(direction_, other->direction_);
+        _internal_metadata_.Swap(&other->_internal_metadata_);
+        std::swap(_cached_size_, other->_cached_size_);
+    }
 
-::google::protobuf::Metadata YakinduCannotGoTo::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = YakinduCannotGoTo_descriptor_;
-  metadata.reflection = YakinduCannotGoTo_reflection_;
-  return metadata;
-}
+    ::google::protobuf::Metadata YakinduCannotGoTo::GetMetadata() const
+    {
+        protobuf_AssignDescriptorsOnce();
+        ::google::protobuf::Metadata metadata;
+        metadata.descriptor = YakinduCannotGoTo_descriptor_;
+        metadata.reflection = YakinduCannotGoTo_reflection_;
+        return metadata;
+    }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// YakinduCannotGoTo
+    // YakinduCannotGoTo
 
-// optional uint32 targetID = 1;
-void YakinduCannotGoTo::clear_targetid() {
-  targetid_ = 0u;
-}
- ::google::protobuf::uint32 YakinduCannotGoTo::targetid() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.YakinduCannotGoTo.targetID)
-  return targetid_;
-}
- void YakinduCannotGoTo::set_targetid(::google::protobuf::uint32 value) {
-  
-  targetid_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.YakinduCannotGoTo.targetID)
-}
+    // optional uint32 targetID = 1;
+    void YakinduCannotGoTo::clear_targetid()
+    {
+        targetid_ = 0u;
+    }
+    ::google::protobuf::uint32 YakinduCannotGoTo::targetid() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.YakinduCannotGoTo.targetID)
+        return targetid_;
+    }
+    void YakinduCannotGoTo::set_targetid(::google::protobuf::uint32 value)
+    {
 
-// optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
-void YakinduCannotGoTo::clear_direction() {
-  direction_ = 0;
-}
- ::modes3::protobuf::YakinduConnectionDirection YakinduCannotGoTo::direction() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.YakinduCannotGoTo.direction)
-  return static_cast< ::modes3::protobuf::YakinduConnectionDirection >(direction_);
-}
- void YakinduCannotGoTo::set_direction(::modes3::protobuf::YakinduConnectionDirection value) {
-  
-  direction_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.YakinduCannotGoTo.direction)
-}
+        targetid_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.YakinduCannotGoTo.targetID)
+    }
 
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+    // optional .modes3.protobuf.YakinduConnectionDirection direction = 2;
+    void YakinduCannotGoTo::clear_direction()
+    {
+        direction_ = 0;
+    }
+    ::modes3::protobuf::YakinduConnectionDirection YakinduCannotGoTo::direction() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.YakinduCannotGoTo.direction)
+        return static_cast< ::modes3::protobuf::YakinduConnectionDirection>(direction_);
+    }
+    void YakinduCannotGoTo::set_direction(::modes3::protobuf::YakinduConnectionDirection value)
+    {
 
-// @@protoc_insertion_point(namespace_scope)
+        direction_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.YakinduCannotGoTo.direction)
+    }
 
-}  // namespace protobuf
-}  // namespace modes3
+#endif // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+    // @@protoc_insertion_point(namespace_scope)
+
+} // namespace protobuf
+} // namespace modes3
 
 // @@protoc_insertion_point(global_scope)

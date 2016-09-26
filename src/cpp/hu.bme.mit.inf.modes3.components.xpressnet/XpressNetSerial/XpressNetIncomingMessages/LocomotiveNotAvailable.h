@@ -13,7 +13,8 @@
  * @file LocomotiveNotAvailable.h
  * @brief Represents the arriving message after requesting information from a non-reachable train.
  */
-class LocomotiveNotAvailable : public IncomingXPNMessage {
+class LocomotiveNotAvailable : public IncomingXPNMessage
+{
 public:
     LocomotiveNotAvailable();
 

@@ -4,21 +4,25 @@
 **/
 #include "TrackPowerStatus.h"
 
-TrackPowerStatus::TrackPowerStatus() {
+TrackPowerStatus::TrackPowerStatus()
+{
     initialized = false;
 }
 
-TrackPowerStatus::TrackPowerStatus(TrackPowerState currentTrackPowerState) {
+TrackPowerStatus::TrackPowerStatus(TrackPowerState currentTrackPowerState)
+{
     trackPowerState = currentTrackPowerState;
     initialized = true;
 }
 
-TrackPowerState TrackPowerStatus::getTrackPowerState() {
+TrackPowerState TrackPowerStatus::getTrackPowerState()
+{
     return trackPowerState;
 }
 
-bool TrackPowerStatus::operator==(const TrackPowerStatus& rhs) {
-    if((trackPowerState == rhs.trackPowerState)&&(initialized==true)) {
+bool TrackPowerStatus::operator==(const TrackPowerStatus& rhs)
+{
+    if((trackPowerState == rhs.trackPowerState) && (initialized == true)) {
         return true;
     } else {
         trackPowerState = rhs.trackPowerState;

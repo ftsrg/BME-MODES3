@@ -7,7 +7,8 @@
 
 #include "IncomingXPNMessage.h" // Base class: IncomingXPNMessage
 
-class LocomotiveControlTaken : public IncomingXPNMessage {
+class LocomotiveControlTaken : public IncomingXPNMessage
+{
 public:
     LocomotiveControlTaken();
     std::vector<uint8_t> getFirstBytes();

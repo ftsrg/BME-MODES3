@@ -17,466 +17,500 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace modes3 {
-namespace protobuf {
+namespace modes3
+{
+namespace protobuf
+{
 
-namespace {
+    namespace
+    {
 
-const ::google::protobuf::Descriptor* TrainFunctionCommand_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TrainFunctionCommand_reflection_ = NULL;
+        const ::google::protobuf::Descriptor* TrainFunctionCommand_descriptor_ = NULL;
+        const ::google::protobuf::internal::GeneratedMessageReflection* TrainFunctionCommand_reflection_ = NULL;
 
-}  // namespace
+    } // namespace
 
+    void protobuf_AssignDesc_TrainFunctionCommand_2eproto()
+    {
+        protobuf_AddDesc_TrainFunctionCommand_2eproto();
+        const ::google::protobuf::FileDescriptor* file =
+            ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName("TrainFunctionCommand.proto");
+        GOOGLE_CHECK(file != NULL);
+        TrainFunctionCommand_descriptor_ = file->message_type(0);
+        static const int TrainFunctionCommand_offsets_[3] = {
+            GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, trainid_),
+            GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, functionid_),
+            GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, trainfunctionvalue_),
+        };
+        TrainFunctionCommand_reflection_ =
+            ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
+                TrainFunctionCommand_descriptor_, TrainFunctionCommand::default_instance_,
+                TrainFunctionCommand_offsets_, -1, -1, -1, sizeof(TrainFunctionCommand),
+                GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, _internal_metadata_),
+                GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, _is_default_instance_));
+    }
 
-void protobuf_AssignDesc_TrainFunctionCommand_2eproto() {
-  protobuf_AddDesc_TrainFunctionCommand_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "TrainFunctionCommand.proto");
-  GOOGLE_CHECK(file != NULL);
-  TrainFunctionCommand_descriptor_ = file->message_type(0);
-  static const int TrainFunctionCommand_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, trainid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, functionid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, trainfunctionvalue_),
-  };
-  TrainFunctionCommand_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      TrainFunctionCommand_descriptor_,
-      TrainFunctionCommand::default_instance_,
-      TrainFunctionCommand_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(TrainFunctionCommand),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, _internal_metadata_),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainFunctionCommand, _is_default_instance_));
-}
+    namespace
+    {
 
-namespace {
+        GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+        inline void protobuf_AssignDescriptorsOnce()
+        {
+            ::google::protobuf::GoogleOnceInit(
+                &protobuf_AssignDescriptors_once_, &protobuf_AssignDesc_TrainFunctionCommand_2eproto);
+        }
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_TrainFunctionCommand_2eproto);
-}
+        void protobuf_RegisterTypes(const ::std::string&)
+        {
+            protobuf_AssignDescriptorsOnce();
+            ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+                TrainFunctionCommand_descriptor_, &TrainFunctionCommand::default_instance());
+        }
 
-void protobuf_RegisterTypes(const ::std::string&) {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      TrainFunctionCommand_descriptor_, &TrainFunctionCommand::default_instance());
-}
+    } // namespace
 
-}  // namespace
+    void protobuf_ShutdownFile_TrainFunctionCommand_2eproto()
+    {
+        delete TrainFunctionCommand::default_instance_;
+        delete TrainFunctionCommand_reflection_;
+    }
 
-void protobuf_ShutdownFile_TrainFunctionCommand_2eproto() {
-  delete TrainFunctionCommand::default_instance_;
-  delete TrainFunctionCommand_reflection_;
-}
+    void protobuf_AddDesc_TrainFunctionCommand_2eproto()
+    {
+        static bool already_here = false;
+        if(already_here)
+            return;
+        already_here = true;
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-void protobuf_AddDesc_TrainFunctionCommand_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
+        ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
+        ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
+            "\n\032TrainFunctionCommand.proto\022\017modes3.pro"
+            "tobuf\032\013Enums.proto\"|\n\024TrainFunctionComma"
+            "nd\022\017\n\007trainID\030\001 \001(\r\022\022\n\nfunctionID\030\002 \001(\r\022"
+            "\?\n\022trainFunctionValue\030\003 \001(\0162#.modes3.pro"
+            "tobuf.TrainFunctionValueB0\n,hu.bme.mit.i"
+            "nf.modes3.messaging.mms.messagesP\001b\006prot"
+            "o3",
+            242);
+        ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
+            "TrainFunctionCommand.proto", &protobuf_RegisterTypes);
+        TrainFunctionCommand::default_instance_ = new TrainFunctionCommand();
+        TrainFunctionCommand::default_instance_->InitAsDefaultInstance();
+        ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_TrainFunctionCommand_2eproto);
+    }
 
-  ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
-  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\032TrainFunctionCommand.proto\022\017modes3.pro"
-    "tobuf\032\013Enums.proto\"|\n\024TrainFunctionComma"
-    "nd\022\017\n\007trainID\030\001 \001(\r\022\022\n\nfunctionID\030\002 \001(\r\022"
-    "\?\n\022trainFunctionValue\030\003 \001(\0162#.modes3.pro"
-    "tobuf.TrainFunctionValueB0\n,hu.bme.mit.i"
-    "nf.modes3.messaging.mms.messagesP\001b\006prot"
-    "o3", 242);
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
-    "TrainFunctionCommand.proto", &protobuf_RegisterTypes);
-  TrainFunctionCommand::default_instance_ = new TrainFunctionCommand();
-  TrainFunctionCommand::default_instance_->InitAsDefaultInstance();
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_TrainFunctionCommand_2eproto);
-}
+    // Force AddDescriptors() to be called at static initialization time.
+    struct StaticDescriptorInitializer_TrainFunctionCommand_2eproto {
+        StaticDescriptorInitializer_TrainFunctionCommand_2eproto()
+        {
+            protobuf_AddDesc_TrainFunctionCommand_2eproto();
+        }
+    } static_descriptor_initializer_TrainFunctionCommand_2eproto_;
 
-// Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_TrainFunctionCommand_2eproto {
-  StaticDescriptorInitializer_TrainFunctionCommand_2eproto() {
-    protobuf_AddDesc_TrainFunctionCommand_2eproto();
-  }
-} static_descriptor_initializer_TrainFunctionCommand_2eproto_;
+    namespace
+    {
 
-namespace {
+        static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
+        static void MergeFromFail(int line)
+        {
+            GOOGLE_CHECK(false) << __FILE__ << ":" << line;
+        }
 
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD;
-static void MergeFromFail(int line) {
-  GOOGLE_CHECK(false) << __FILE__ << ":" << line;
-}
-
-}  // namespace
-
+    } // namespace
 
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int TrainFunctionCommand::kTrainIDFieldNumber;
-const int TrainFunctionCommand::kFunctionIDFieldNumber;
-const int TrainFunctionCommand::kTrainFunctionValueFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+    const int TrainFunctionCommand::kTrainIDFieldNumber;
+    const int TrainFunctionCommand::kFunctionIDFieldNumber;
+    const int TrainFunctionCommand::kTrainFunctionValueFieldNumber;
+#endif // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-TrainFunctionCommand::TrainFunctionCommand()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:modes3.protobuf.TrainFunctionCommand)
-}
+    TrainFunctionCommand::TrainFunctionCommand()
+        : ::google::protobuf::Message()
+        , _internal_metadata_(NULL)
+    {
+        SharedCtor();
+        // @@protoc_insertion_point(constructor:modes3.protobuf.TrainFunctionCommand)
+    }
 
-void TrainFunctionCommand::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
-}
+    void TrainFunctionCommand::InitAsDefaultInstance()
+    {
+        _is_default_instance_ = true;
+    }
 
-TrainFunctionCommand::TrainFunctionCommand(const TrainFunctionCommand& from)
-  : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:modes3.protobuf.TrainFunctionCommand)
-}
+    TrainFunctionCommand::TrainFunctionCommand(const TrainFunctionCommand& from)
+        : ::google::protobuf::Message()
+        , _internal_metadata_(NULL)
+    {
+        SharedCtor();
+        MergeFrom(from);
+        // @@protoc_insertion_point(copy_constructor:modes3.protobuf.TrainFunctionCommand)
+    }
 
-void TrainFunctionCommand::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  trainid_ = 0u;
-  functionid_ = 0u;
-  trainfunctionvalue_ = 0;
-}
+    void TrainFunctionCommand::SharedCtor()
+    {
+        _is_default_instance_ = false;
+        _cached_size_ = 0;
+        trainid_ = 0u;
+        functionid_ = 0u;
+        trainfunctionvalue_ = 0;
+    }
 
-TrainFunctionCommand::~TrainFunctionCommand() {
-  // @@protoc_insertion_point(destructor:modes3.protobuf.TrainFunctionCommand)
-  SharedDtor();
-}
+    TrainFunctionCommand::~TrainFunctionCommand()
+    {
+        // @@protoc_insertion_point(destructor:modes3.protobuf.TrainFunctionCommand)
+        SharedDtor();
+    }
 
-void TrainFunctionCommand::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
+    void TrainFunctionCommand::SharedDtor()
+    {
+        if(this != default_instance_) {
+        }
+    }
 
-void TrainFunctionCommand::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* TrainFunctionCommand::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TrainFunctionCommand_descriptor_;
-}
+    void TrainFunctionCommand::SetCachedSize(int size) const
+    {
+        GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+        _cached_size_ = size;
+        GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    }
+    const ::google::protobuf::Descriptor* TrainFunctionCommand::descriptor()
+    {
+        protobuf_AssignDescriptorsOnce();
+        return TrainFunctionCommand_descriptor_;
+    }
 
-const TrainFunctionCommand& TrainFunctionCommand::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_TrainFunctionCommand_2eproto();
-  return *default_instance_;
-}
+    const TrainFunctionCommand& TrainFunctionCommand::default_instance()
+    {
+        if(default_instance_ == NULL)
+            protobuf_AddDesc_TrainFunctionCommand_2eproto();
+        return *default_instance_;
+    }
 
-TrainFunctionCommand* TrainFunctionCommand::default_instance_ = NULL;
+    TrainFunctionCommand* TrainFunctionCommand::default_instance_ = NULL;
 
-TrainFunctionCommand* TrainFunctionCommand::New(::google::protobuf::Arena* arena) const {
-  TrainFunctionCommand* n = new TrainFunctionCommand;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
+    TrainFunctionCommand* TrainFunctionCommand::New(::google::protobuf::Arena* arena) const
+    {
+        TrainFunctionCommand* n = new TrainFunctionCommand;
+        if(arena != NULL) {
+            arena->Own(n);
+        }
+        return n;
+    }
 
-void TrainFunctionCommand::Clear() {
+    void TrainFunctionCommand::Clear()
+    {
 // @@protoc_insertion_point(message_clear_start:modes3.protobuf.TrainFunctionCommand)
 #if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(TrainFunctionCommand, f) \
-  _Pragma("clang diagnostic pop")
+#define ZR_HELPER_(f)                                                                                               \
+    _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") __builtin_offsetof( \
+        TrainFunctionCommand, f) _Pragma("clang diagnostic pop")
 #else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<TrainFunctionCommand*>(16)->f)
+#define ZR_HELPER_(f) reinterpret_cast<char*>(&reinterpret_cast<TrainFunctionCommand*>(16)->f)
 #endif
 
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
+#define ZR_(first, last)                                                          \
+    do {                                                                          \
+        ::memset(&first, 0, ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last)); \
+    } while(0)
 
-  ZR_(trainid_, trainfunctionvalue_);
+        ZR_(trainid_, trainfunctionvalue_);
 
 #undef ZR_HELPER_
 #undef ZR_
-
-}
-
-bool TrainFunctionCommand::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:modes3.protobuf.TrainFunctionCommand)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 trainID = 1;
-      case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &trainid_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_functionID;
-        break;
-      }
-
-      // optional uint32 functionID = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_functionID:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &functionid_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_trainFunctionValue;
-        break;
-      }
-
-      // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
-      case 3: {
-        if (tag == 24) {
-         parse_trainFunctionValue:
-          int value;
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_trainfunctionvalue(static_cast< ::modes3::protobuf::TrainFunctionValue >(value));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
     }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:modes3.protobuf.TrainFunctionCommand)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:modes3.protobuf.TrainFunctionCommand)
-  return false;
+
+    bool TrainFunctionCommand::MergePartialFromCodedStream(::google::protobuf::io::CodedInputStream* input)
+    {
+#define DO_(EXPRESSION)                  \
+    if(!GOOGLE_PREDICT_TRUE(EXPRESSION)) \
+    goto failure
+        ::google::protobuf::uint32 tag;
+        // @@protoc_insertion_point(parse_start:modes3.protobuf.TrainFunctionCommand)
+        for(;;) {
+            ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+            tag = p.first;
+            if(!p.second)
+                goto handle_unusual;
+            switch(::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+            // optional uint32 trainID = 1;
+            case 1: {
+                if(tag == 8) {
+                    DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive< ::google::protobuf::uint32,
+                        ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(input, &trainid_)));
+
+                } else {
+                    goto handle_unusual;
+                }
+                if(input->ExpectTag(16))
+                    goto parse_functionID;
+                break;
+            }
+
+            // optional uint32 functionID = 2;
+            case 2: {
+                if(tag == 16) {
+                parse_functionID:
+                    DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive< ::google::protobuf::uint32,
+                        ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(input, &functionid_)));
+
+                } else {
+                    goto handle_unusual;
+                }
+                if(input->ExpectTag(24))
+                    goto parse_trainFunctionValue;
+                break;
+            }
+
+            // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
+            case 3: {
+                if(tag == 24) {
+                parse_trainFunctionValue:
+                    int value;
+                    DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<int,
+                        ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(input, &value)));
+                    set_trainfunctionvalue(static_cast< ::modes3::protobuf::TrainFunctionValue>(value));
+                } else {
+                    goto handle_unusual;
+                }
+                if(input->ExpectAtEnd())
+                    goto success;
+                break;
+            }
+
+            default: {
+            handle_unusual:
+                if(tag == 0 ||
+                    ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+                        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+                    goto success;
+                }
+                DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+                break;
+            }
+            }
+        }
+    success:
+        // @@protoc_insertion_point(parse_success:modes3.protobuf.TrainFunctionCommand)
+        return true;
+    failure:
+        // @@protoc_insertion_point(parse_failure:modes3.protobuf.TrainFunctionCommand)
+        return false;
 #undef DO_
-}
+    }
 
-void TrainFunctionCommand::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:modes3.protobuf.TrainFunctionCommand)
-  // optional uint32 trainID = 1;
-  if (this->trainid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->trainid(), output);
-  }
+    void TrainFunctionCommand::SerializeWithCachedSizes(::google::protobuf::io::CodedOutputStream* output) const
+    {
+        // @@protoc_insertion_point(serialize_start:modes3.protobuf.TrainFunctionCommand)
+        // optional uint32 trainID = 1;
+        if(this->trainid() != 0) {
+            ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->trainid(), output);
+        }
 
-  // optional uint32 functionID = 2;
-  if (this->functionid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->functionid(), output);
-  }
+        // optional uint32 functionID = 2;
+        if(this->functionid() != 0) {
+            ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->functionid(), output);
+        }
 
-  // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
-  if (this->trainfunctionvalue() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      3, this->trainfunctionvalue(), output);
-  }
+        // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
+        if(this->trainfunctionvalue() != 0) {
+            ::google::protobuf::internal::WireFormatLite::WriteEnum(3, this->trainfunctionvalue(), output);
+        }
 
-  // @@protoc_insertion_point(serialize_end:modes3.protobuf.TrainFunctionCommand)
-}
+        // @@protoc_insertion_point(serialize_end:modes3.protobuf.TrainFunctionCommand)
+    }
 
-::google::protobuf::uint8* TrainFunctionCommand::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.TrainFunctionCommand)
-  // optional uint32 trainID = 1;
-  if (this->trainid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->trainid(), target);
-  }
+    ::google::protobuf::uint8* TrainFunctionCommand::InternalSerializeWithCachedSizesToArray(bool deterministic,
+        ::google::protobuf::uint8* target) const
+    {
+        // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.TrainFunctionCommand)
+        // optional uint32 trainID = 1;
+        if(this->trainid() != 0) {
+            target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->trainid(), target);
+        }
 
-  // optional uint32 functionID = 2;
-  if (this->functionid() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->functionid(), target);
-  }
+        // optional uint32 functionID = 2;
+        if(this->functionid() != 0) {
+            target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->functionid(), target);
+        }
 
-  // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
-  if (this->trainfunctionvalue() != 0) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      3, this->trainfunctionvalue(), target);
-  }
+        // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
+        if(this->trainfunctionvalue() != 0) {
+            target =
+                ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(3, this->trainfunctionvalue(), target);
+        }
 
-  // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.TrainFunctionCommand)
-  return target;
-}
+        // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.TrainFunctionCommand)
+        return target;
+    }
 
-int TrainFunctionCommand::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.TrainFunctionCommand)
-  int total_size = 0;
+    int TrainFunctionCommand::ByteSize() const
+    {
+        // @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.TrainFunctionCommand)
+        int total_size = 0;
 
-  // optional uint32 trainID = 1;
-  if (this->trainid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->trainid());
-  }
+        // optional uint32 trainID = 1;
+        if(this->trainid() != 0) {
+            total_size += 1 + ::google::protobuf::internal::WireFormatLite::UInt32Size(this->trainid());
+        }
 
-  // optional uint32 functionID = 2;
-  if (this->functionid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->functionid());
-  }
+        // optional uint32 functionID = 2;
+        if(this->functionid() != 0) {
+            total_size += 1 + ::google::protobuf::internal::WireFormatLite::UInt32Size(this->functionid());
+        }
 
-  // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
-  if (this->trainfunctionvalue() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->trainfunctionvalue());
-  }
+        // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
+        if(this->trainfunctionvalue() != 0) {
+            total_size += 1 + ::google::protobuf::internal::WireFormatLite::EnumSize(this->trainfunctionvalue());
+        }
 
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
+        GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+        _cached_size_ = total_size;
+        GOOGLE_SAFE_CONCURRENT_WRITES_END();
+        return total_size;
+    }
 
-void TrainFunctionCommand::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.TrainFunctionCommand)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  const TrainFunctionCommand* source = 
-      ::google::protobuf::internal::DynamicCastToGenerated<const TrainFunctionCommand>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:modes3.protobuf.TrainFunctionCommand)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.TrainFunctionCommand)
-    MergeFrom(*source);
-  }
-}
+    void TrainFunctionCommand::MergeFrom(const ::google::protobuf::Message& from)
+    {
+        // @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.TrainFunctionCommand)
+        if(GOOGLE_PREDICT_FALSE(&from == this))
+            MergeFromFail(__LINE__);
+        const TrainFunctionCommand* source =
+            ::google::protobuf::internal::DynamicCastToGenerated<const TrainFunctionCommand>(&from);
+        if(source == NULL) {
+            // @@protoc_insertion_point(generalized_merge_from_cast_fail:modes3.protobuf.TrainFunctionCommand)
+            ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+        } else {
+            // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.TrainFunctionCommand)
+            MergeFrom(*source);
+        }
+    }
 
-void TrainFunctionCommand::MergeFrom(const TrainFunctionCommand& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.TrainFunctionCommand)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
-  if (from.trainid() != 0) {
-    set_trainid(from.trainid());
-  }
-  if (from.functionid() != 0) {
-    set_functionid(from.functionid());
-  }
-  if (from.trainfunctionvalue() != 0) {
-    set_trainfunctionvalue(from.trainfunctionvalue());
-  }
-}
+    void TrainFunctionCommand::MergeFrom(const TrainFunctionCommand& from)
+    {
+        // @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.TrainFunctionCommand)
+        if(GOOGLE_PREDICT_FALSE(&from == this))
+            MergeFromFail(__LINE__);
+        if(from.trainid() != 0) {
+            set_trainid(from.trainid());
+        }
+        if(from.functionid() != 0) {
+            set_functionid(from.functionid());
+        }
+        if(from.trainfunctionvalue() != 0) {
+            set_trainfunctionvalue(from.trainfunctionvalue());
+        }
+    }
 
-void TrainFunctionCommand::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:modes3.protobuf.TrainFunctionCommand)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
+    void TrainFunctionCommand::CopyFrom(const ::google::protobuf::Message& from)
+    {
+        // @@protoc_insertion_point(generalized_copy_from_start:modes3.protobuf.TrainFunctionCommand)
+        if(&from == this)
+            return;
+        Clear();
+        MergeFrom(from);
+    }
 
-void TrainFunctionCommand::CopyFrom(const TrainFunctionCommand& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.TrainFunctionCommand)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
+    void TrainFunctionCommand::CopyFrom(const TrainFunctionCommand& from)
+    {
+        // @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.TrainFunctionCommand)
+        if(&from == this)
+            return;
+        Clear();
+        MergeFrom(from);
+    }
 
-bool TrainFunctionCommand::IsInitialized() const {
+    bool TrainFunctionCommand::IsInitialized() const
+    {
 
-  return true;
-}
+        return true;
+    }
 
-void TrainFunctionCommand::Swap(TrainFunctionCommand* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void TrainFunctionCommand::InternalSwap(TrainFunctionCommand* other) {
-  std::swap(trainid_, other->trainid_);
-  std::swap(functionid_, other->functionid_);
-  std::swap(trainfunctionvalue_, other->trainfunctionvalue_);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
-}
+    void TrainFunctionCommand::Swap(TrainFunctionCommand* other)
+    {
+        if(other == this)
+            return;
+        InternalSwap(other);
+    }
+    void TrainFunctionCommand::InternalSwap(TrainFunctionCommand* other)
+    {
+        std::swap(trainid_, other->trainid_);
+        std::swap(functionid_, other->functionid_);
+        std::swap(trainfunctionvalue_, other->trainfunctionvalue_);
+        _internal_metadata_.Swap(&other->_internal_metadata_);
+        std::swap(_cached_size_, other->_cached_size_);
+    }
 
-::google::protobuf::Metadata TrainFunctionCommand::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TrainFunctionCommand_descriptor_;
-  metadata.reflection = TrainFunctionCommand_reflection_;
-  return metadata;
-}
+    ::google::protobuf::Metadata TrainFunctionCommand::GetMetadata() const
+    {
+        protobuf_AssignDescriptorsOnce();
+        ::google::protobuf::Metadata metadata;
+        metadata.descriptor = TrainFunctionCommand_descriptor_;
+        metadata.reflection = TrainFunctionCommand_reflection_;
+        return metadata;
+    }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// TrainFunctionCommand
+    // TrainFunctionCommand
 
-// optional uint32 trainID = 1;
-void TrainFunctionCommand::clear_trainid() {
-  trainid_ = 0u;
-}
- ::google::protobuf::uint32 TrainFunctionCommand::trainid() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionCommand.trainID)
-  return trainid_;
-}
- void TrainFunctionCommand::set_trainid(::google::protobuf::uint32 value) {
-  
-  trainid_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionCommand.trainID)
-}
+    // optional uint32 trainID = 1;
+    void TrainFunctionCommand::clear_trainid()
+    {
+        trainid_ = 0u;
+    }
+    ::google::protobuf::uint32 TrainFunctionCommand::trainid() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionCommand.trainID)
+        return trainid_;
+    }
+    void TrainFunctionCommand::set_trainid(::google::protobuf::uint32 value)
+    {
 
-// optional uint32 functionID = 2;
-void TrainFunctionCommand::clear_functionid() {
-  functionid_ = 0u;
-}
- ::google::protobuf::uint32 TrainFunctionCommand::functionid() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionCommand.functionID)
-  return functionid_;
-}
- void TrainFunctionCommand::set_functionid(::google::protobuf::uint32 value) {
-  
-  functionid_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionCommand.functionID)
-}
+        trainid_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionCommand.trainID)
+    }
 
-// optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
-void TrainFunctionCommand::clear_trainfunctionvalue() {
-  trainfunctionvalue_ = 0;
-}
- ::modes3::protobuf::TrainFunctionValue TrainFunctionCommand::trainfunctionvalue() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionCommand.trainFunctionValue)
-  return static_cast< ::modes3::protobuf::TrainFunctionValue >(trainfunctionvalue_);
-}
- void TrainFunctionCommand::set_trainfunctionvalue(::modes3::protobuf::TrainFunctionValue value) {
-  
-  trainfunctionvalue_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionCommand.trainFunctionValue)
-}
+    // optional uint32 functionID = 2;
+    void TrainFunctionCommand::clear_functionid()
+    {
+        functionid_ = 0u;
+    }
+    ::google::protobuf::uint32 TrainFunctionCommand::functionid() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionCommand.functionID)
+        return functionid_;
+    }
+    void TrainFunctionCommand::set_functionid(::google::protobuf::uint32 value)
+    {
 
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+        functionid_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionCommand.functionID)
+    }
 
-// @@protoc_insertion_point(namespace_scope)
+    // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
+    void TrainFunctionCommand::clear_trainfunctionvalue()
+    {
+        trainfunctionvalue_ = 0;
+    }
+    ::modes3::protobuf::TrainFunctionValue TrainFunctionCommand::trainfunctionvalue() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionCommand.trainFunctionValue)
+        return static_cast< ::modes3::protobuf::TrainFunctionValue>(trainfunctionvalue_);
+    }
+    void TrainFunctionCommand::set_trainfunctionvalue(::modes3::protobuf::TrainFunctionValue value)
+    {
 
-}  // namespace protobuf
-}  // namespace modes3
+        trainfunctionvalue_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionCommand.trainFunctionValue)
+    }
+
+#endif // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+    // @@protoc_insertion_point(namespace_scope)
+
+} // namespace protobuf
+} // namespace modes3
 
 // @@protoc_insertion_point(global_scope)

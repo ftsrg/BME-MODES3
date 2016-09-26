@@ -6,7 +6,8 @@
 
 #include "OutgoingXPNMessage.h" // Base class: OutgoingXPNMessage
 
-class SetLocomotiveSpeed : public OutgoingXPNMessage {
+class SetLocomotiveSpeed : public OutgoingXPNMessage
+{
 public:
     SetLocomotiveSpeed(uint8_t trainID, TrainDirection trainDirection, uint8_t trainSpeed);
 

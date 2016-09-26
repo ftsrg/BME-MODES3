@@ -7,48 +7,51 @@
 //********
 #include "XpressNetSerial/XpressNetOutgoingMessages/GetLocomotiveInformation.h"
 //********
-const int msSleepIfThreadIsOn  = 100;
+const int msSleepIfThreadIsOn = 100;
 const int msSleepIfThreadIsOff = 10000;
 const int writeBufferSoftLimit = 100;
 const int writeBufferHardLimit = 200;
 
-XpressNetSerial::XpressNetSerial() {
-
+XpressNetSerial::XpressNetSerial()
+{
 }
 
-//DEPR
-CallbackAsyncSerial& XpressNetSerial::getSerial() {
+// DEPR
+CallbackAsyncSerial& XpressNetSerial::getSerial()
+{
     return serial;
 }
 
-bool XpressNetSerial::addMessageToWriteQueue(OutgoingXPNMessage& xpnMessage) {
+bool XpressNetSerial::addMessageToWriteQueue(OutgoingXPNMessage& xpnMessage)
+{
     std::lock_guard<std::mutex> guard(messageByteBufferMutex);
-    if(messageByteBuffer.size() < writeBufferSoftLimit){
-        //writeBuffer.push_back(xpnMessage);
+    if(messageByteBuffer.size() < writeBufferSoftLimit) {
+        // writeBuffer.push_back(xpnMessage);
         messageByteBuffer.push_back(xpnMessage.getMessageBytes());
         return true;
-    }
-    else{
+    } else {
         return false;
     }
 }
 
-bool XpressNetSerial::addUrgentMessageToWriteQueue(OutgoingXPNMessage& xpnMessage) {
+bool XpressNetSerial::addUrgentMessageToWriteQueue(OutgoingXPNMessage& xpnMessage)
+{
     std::lock_guard<std::mutex> guard(messageByteBufferMutex);
-    if(messageByteBuffer.size() < writeBufferHardLimit){
+    if(messageByteBuffer.size() < writeBufferHardLimit) {
         messageByteBuffer.insert(messageByteBuffer.begin(), xpnMessage.getMessageBytes());
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-void XpressNetSerial::setThreadState(bool on) {
+void XpressNetSerial::setThreadState(bool on)
+{
     threadStateIsOn = on;
 }
 
-void XpressNetSerial::writeThread() {
+void XpressNetSerial::trainInfoPollingThread()
+{
     int i = 0;
     // Until the end of time ...
     while(true) {
@@ -58,11 +61,11 @@ void XpressNetSerial::writeThread() {
             // If there is nothing waiting to write ...
             if(messageByteBuffer.size() == 0) {
                 // ... harass trains for informations.
-                i=i%3;
+                i = i % 3;
                 int train = 8 + i;
                 GetLocomotiveInformation gli(train);
                 BoardStatus::inquireTrainInformation(train);
-                //std::cout << "KAKUKKKKK: " << BoardStatus::getInquiryVectorSize() <<std::endl;
+                // std::cout << "KAKUKKKKK: " << BoardStatus::getInquiryVectorSize() <<std::endl;
                 serial.write(gli.getMessageBytes());
                 i++;
             }
@@ -84,7 +87,8 @@ void XpressNetSerial::writeThread() {
 }
 
 // Only for testing
-void XpressNetSerial::trainInfoThread() {
+void XpressNetSerial::trainInfoThread()
+{
     int train = 9;
     GetLocomotiveInformation gli(train);
     boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
@@ -98,7 +102,7 @@ void XpressNetSerial::trainInfoThread() {
     }
 }
 
-CallbackAsyncSerial XpressNetSerial::serial("/dev/ttyACM0",9600);
-std::vector<std::vector<uint8_t>> XpressNetSerial::messageByteBuffer;
+CallbackAsyncSerial XpressNetSerial::serial("/dev/ttyACM0", 9600);
+std::vector<std::vector<uint8_t> > XpressNetSerial::messageByteBuffer;
 std::mutex XpressNetSerial::messageByteBufferMutex;
 bool XpressNetSerial::threadStateIsOn = true;

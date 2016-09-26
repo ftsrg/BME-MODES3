@@ -9,7 +9,8 @@
 
 const uint8_t xpressNetHighAddressByte = 0x00;
 
-class OutgoingXPNMessage {
+class OutgoingXPNMessage
+{
 protected:
     std::vector<uint8_t> messageBytes;
 

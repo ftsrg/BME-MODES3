@@ -12,7 +12,8 @@
 const uint8_t adirlnnHeaderByte = 0x42;
 const unsigned int adirlnnLength = 3;
 // LowerNibbleNull
-class AccessoryDecoderInformationResponse_LNN : public IncomingXPNMessage {
+class AccessoryDecoderInformationResponse_LNN : public IncomingXPNMessage
+{
 public:
     AccessoryDecoderInformationResponse_LNN();
     bool recognizedMessage(std::vector<uint8_t> messageBytes) override;

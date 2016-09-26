@@ -7,7 +7,8 @@
 const uint8_t functionOperationInstructionsHeaderByte = 0xE4;
 const uint8_t functionOperationInstructionsIdentificationByte = 0x20;
 
-SetLocomotiveFunctions::SetLocomotiveFunctions(uint8_t trainID, TrainFunctionGroup group, std::vector<bool> functions) {
+SetLocomotiveFunctions::SetLocomotiveFunctions(uint8_t trainID, TrainFunctionGroup group, std::vector<bool> functions)
+{
     messageBytes.push_back(functionOperationInstructionsHeaderByte);
     messageBytes.push_back(functionOperationInstructionsIdentificationByte + group);
     messageBytes.push_back(xpressNetHighAddressByte);
@@ -24,9 +25,9 @@ SetLocomotiveFunctions::SetLocomotiveFunctions(uint8_t trainID, TrainFunctionGro
 
     messageBytes.push_back(functionByte);
     OutgoingXPNMessage::addXORto(messageBytes);
-
 }
 
-std::vector<uint8_t> SetLocomotiveFunctions::getMessageBytes() {
+std::vector<uint8_t> SetLocomotiveFunctions::getMessageBytes()
+{
     return messageBytes;
 }

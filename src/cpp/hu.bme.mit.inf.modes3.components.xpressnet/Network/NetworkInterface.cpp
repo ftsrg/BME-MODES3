@@ -4,13 +4,17 @@
 **/
 #include "NetworkInterface.h"
 
-NetworkInterface::NetworkInterface() {}
-void NetworkInterface::sendMessage( std::string messageString ){
-    const char * charMessage = messageString.c_str();
-    mqttClient.SendMessage(charMessage);
+NetworkInterface::NetworkInterface()
+{
 }
-void NetworkInterface::setMqttClient(MqttClient mqtt) {
-    mqttClient = mqtt;
+void NetworkInterface::sendMessage(std::string messageString)
+{
+    const char* charMessage = messageString.c_str();
+    mosquittoppClient->send_message(charMessage);
+}
+void NetworkInterface::setMqttClient(MosquittoppClient* mosquittoCl)
+{
+    mosquittoppClient = mosquittoCl;
 }
 
-MqttClient NetworkInterface::mqttClient;
+MosquittoppClient* NetworkInterface::mosquittoppClient;

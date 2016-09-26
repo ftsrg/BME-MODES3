@@ -5,22 +5,27 @@
 #include "LocomotiveNotAvailable.h"
 #include <iostream>
 
-LocomotiveNotAvailable::LocomotiveNotAvailable() {
+LocomotiveNotAvailable::LocomotiveNotAvailable()
+{
     firstBytes.push_back(1);
     firstBytes.push_back(3);
     length = 3;
 }
 
-std::vector<uint8_t> LocomotiveNotAvailable::getFirstBytes() {
+std::vector<uint8_t> LocomotiveNotAvailable::getFirstBytes()
+{
     return firstBytes;
 }
-unsigned int LocomotiveNotAvailable::getMessageLength() {
+unsigned int LocomotiveNotAvailable::getMessageLength()
+{
     return length;
 }
-bool LocomotiveNotAvailable::isItSpecial() {
+bool LocomotiveNotAvailable::isItSpecial()
+{
     return false;
 }
-bool LocomotiveNotAvailable::recognizedMessage(std::vector<uint8_t> messageBytes) {
+bool LocomotiveNotAvailable::recognizedMessage(std::vector<uint8_t> messageBytes)
+{
     std::cout << "BAD ADDRESS: " << BoardStatus::getFirstInquiredTrainAddress() << std::endl;
     std::cout << "Vector size " << BoardStatus::getInquiryVectorSize() << std::endl;
     return true;

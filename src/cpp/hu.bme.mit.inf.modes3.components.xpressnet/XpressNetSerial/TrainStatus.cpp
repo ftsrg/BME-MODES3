@@ -4,26 +4,28 @@
 **/
 #include "TrainStatus.h"
 
-TrainStatus::TrainStatus() {
+TrainStatus::TrainStatus()
+{
     initialized = false;
 }
 
 TrainStatus::TrainStatus(TrainDirection currentTrainDirection,
-                         int currentTrainSpeed,
-                         bool currentTrainFunctions[numberOfTrainFunctions]) {
+    int currentTrainSpeed,
+    bool currentTrainFunctions[numberOfTrainFunctions])
+{
     trainDirection = currentTrainDirection;
     trainSpeed = currentTrainSpeed;
-    for(int i=0; i<numberOfTrainFunctions; i++) {
+    for(int i = 0; i < numberOfTrainFunctions; i++) {
         trainFunctions[i] = currentTrainFunctions[i];
     }
     initialized = true;
 }
 
-
-//deprecated
+// deprecated
 bool TrainStatus::setTrainStatus(TrainDirection currentTrainDirection,
-                                 int currentTrainSpeed,
-                                 bool currentTrainFunctions[numberOfTrainFunctions]) {
+    int currentTrainSpeed,
+    bool currentTrainFunctions[numberOfTrainFunctions])
+{
 
     bool trainStatusChanged = false;
     if(trainSpeed != currentTrainSpeed) {
@@ -34,7 +36,7 @@ bool TrainStatus::setTrainStatus(TrainDirection currentTrainDirection,
         trainDirection = currentTrainDirection;
         trainStatusChanged = true;
     }
-    for(int i=0; i<13; i++) {
+    for(int i = 0; i < 13; i++) {
         if(trainFunctions[i] != currentTrainFunctions[i]) {
             trainFunctions[i] = currentTrainFunctions[i];
             trainStatusChanged = true;
@@ -43,25 +45,27 @@ bool TrainStatus::setTrainStatus(TrainDirection currentTrainDirection,
     return trainStatusChanged;
 }
 
-const TrainDirection& TrainStatus::getTrainDirection() {
+const TrainDirection& TrainStatus::getTrainDirection()
+{
     return trainDirection;
 }
 
-int TrainStatus::getTrainSpeed() {
+int TrainStatus::getTrainSpeed()
+{
     return trainSpeed;
 }
 
-bool TrainStatus::getTrainFunctionStatus(int trainFunctionNumber){
-    if(trainFunctionNumber < numberOfTrainFunctions){
+bool TrainStatus::getTrainFunctionStatus(int trainFunctionNumber)
+{
+    if(trainFunctionNumber < numberOfTrainFunctions) {
         return trainFunctions[trainFunctionNumber];
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-bool TrainStatus::operator==(const TrainStatus& rhs) {
-
+bool TrainStatus::operator==(const TrainStatus& rhs)
+{
 
     bool equals = true;
     if(trainSpeed != rhs.trainSpeed) {
@@ -71,18 +75,18 @@ bool TrainStatus::operator==(const TrainStatus& rhs) {
     if(trainDirection != rhs.trainDirection) {
         trainDirection = rhs.trainDirection;
         equals = false;
-    }/* DISABLED TEMPORARLY
-    for(int i=0; i<13; i++) {
-        if(trainFunctions[i] != rhs.trainFunctions[i]) {
-            trainFunctions[i] = rhs.trainFunctions[i];
-            equals = false;
-        }
-    }
+    } /* DISABLED TEMPORARLY
+     for(int i=0; i<13; i++) {
+         if(trainFunctions[i] != rhs.trainFunctions[i]) {
+             trainFunctions[i] = rhs.trainFunctions[i];
+             equals = false;
+         }
+     }
 
-    if(initialized == false) {
-        equals = false;
-        initialized = true;
-    }*/
+     if(initialized == false) {
+         equals = false;
+         initialized = true;
+     }*/
 
     return equals;
- }
+}

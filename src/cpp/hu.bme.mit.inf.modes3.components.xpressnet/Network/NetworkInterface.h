@@ -5,13 +5,15 @@
 #pragma once
 #include "XpressNetSerial/BoardStatus.h"
 #include "GoogleProtocolBuffers/Message.pb.h"
-#include "Network/MqttClient.h"
+#include "Network/MosquittoppClient.h"
 
-class NetworkInterface {
+class NetworkInterface
+{
 protected:
-    static MqttClient mqttClient;
+    static MosquittoppClient* mosquittoppClient;
+
 public:
     NetworkInterface();
-    static void sendMessage( std::string messageString );
-    static void setMqttClient(MqttClient mqtt);
+    static void sendMessage(std::string messageString);
+    static void setMqttClient(MosquittoppClient* mosquittoCl);
 };

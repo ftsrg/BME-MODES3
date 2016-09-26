@@ -28,271 +28,282 @@
 #include <google/protobuf/generated_enum_reflection.h>
 // @@protoc_insertion_point(includes)
 
-namespace modes3 {
-namespace protobuf {
+namespace modes3
+{
+namespace protobuf
+{
 
-// Internal implementation detail -- do not call these.
-void protobuf_AddDesc_Enums_2eproto();
-void protobuf_AssignDesc_Enums_2eproto();
-void protobuf_ShutdownFile_Enums_2eproto();
+    // Internal implementation detail -- do not call these.
+    void protobuf_AddDesc_Enums_2eproto();
+    void protobuf_AssignDesc_Enums_2eproto();
+    void protobuf_ShutdownFile_Enums_2eproto();
 
+    enum DccOperations {
+        NORMAL_OPERATIONS = 0,
+        STOP_ALL_LOCOMOTIVES = 1,
+        STOP_OPERATIONS = 2,
+        DccOperations_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        DccOperations_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool DccOperations_IsValid(int value);
+    const DccOperations DccOperations_MIN = NORMAL_OPERATIONS;
+    const DccOperations DccOperations_MAX = STOP_OPERATIONS;
+    const int DccOperations_ARRAYSIZE = DccOperations_MAX + 1;
 
-enum DccOperations {
-  NORMAL_OPERATIONS = 0,
-  STOP_ALL_LOCOMOTIVES = 1,
-  STOP_OPERATIONS = 2,
-  DccOperations_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  DccOperations_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool DccOperations_IsValid(int value);
-const DccOperations DccOperations_MIN = NORMAL_OPERATIONS;
-const DccOperations DccOperations_MAX = STOP_OPERATIONS;
-const int DccOperations_ARRAYSIZE = DccOperations_MAX + 1;
+    const ::google::protobuf::EnumDescriptor* DccOperations_descriptor();
+    inline const ::std::string& DccOperations_Name(DccOperations value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(DccOperations_descriptor(), value);
+    }
+    inline bool DccOperations_Parse(const ::std::string& name, DccOperations* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<DccOperations>(DccOperations_descriptor(), name, value);
+    }
+    enum MessageType {
+        NULL_ = 0,
+        SEGMENT_COMMAND = 1,
+        SEGMENT_STATE = 2,
+        TRAIN_CURRENT_SEGMENT = 3,
+        TRAIN_CURRENT_SPEED = 4,
+        TRAIN_DIRECTION_COMMAND = 5,
+        TRAIN_REFERENCE_SPEED = 7,
+        TRAIN_REFERENCE_SPEED_COMMAND = 8,
+        TURNOUT_COMMAND = 9,
+        TURNOUT_STATE = 10,
+        SEGMENT_OCCUPANCY = 11,
+        YAKINDU_RELEASE_TO = 12,
+        YAKINDU_CAN_GO_TO = 13,
+        YAKINDU_CANNOT_GO_TO = 14,
+        YAKINDU_RESERVE_TO = 15,
+        TURNOUT_REFERENCE_COMMAND = 16,
+        TURNOUT_REFERENCE_STATE = 17,
+        TRAIN_FUNCTION_COMMAND = 18,
+        TRAIN_FUNCTION_STATE = 19,
+        DCC_OPERATIONS_COMMAND = 20,
+        DCC_OPERATIONS_STATE = 21,
+        MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool MessageType_IsValid(int value);
+    const MessageType MessageType_MIN = NULL_;
+    const MessageType MessageType_MAX = DCC_OPERATIONS_STATE;
+    const int MessageType_ARRAYSIZE = MessageType_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* DccOperations_descriptor();
-inline const ::std::string& DccOperations_Name(DccOperations value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    DccOperations_descriptor(), value);
-}
-inline bool DccOperations_Parse(
-    const ::std::string& name, DccOperations* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<DccOperations>(
-    DccOperations_descriptor(), name, value);
-}
-enum MessageType {
-  NULL_ = 0,
-  SEGMENT_COMMAND = 1,
-  SEGMENT_STATE = 2,
-  TRAIN_CURRENT_SEGMENT = 3,
-  TRAIN_CURRENT_SPEED = 4,
-  TRAIN_DIRECTION_COMMAND = 5,
-  TRAIN_REFERENCE_SPEED = 7,
-  TRAIN_REFERENCE_SPEED_COMMAND = 8,
-  TURNOUT_COMMAND = 9,
-  TURNOUT_STATE = 10,
-  SEGMENT_OCCUPANCY = 11,
-  YAKINDU_RELEASE_TO = 12,
-  YAKINDU_CAN_GO_TO = 13,
-  YAKINDU_CANNOT_GO_TO = 14,
-  YAKINDU_RESERVE_TO = 15,
-  TURNOUT_REFERENCE_COMMAND = 16,
-  TURNOUT_REFERENCE_STATE = 17,
-  TRAIN_FUNCTION_COMMAND = 18,
-  TRAIN_FUNCTION_STATE = 19,
-  DCC_OPERATIONS_COMMAND = 20,
-  DCC_OPERATIONS_STATE = 21,
-  MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool MessageType_IsValid(int value);
-const MessageType MessageType_MIN = NULL_;
-const MessageType MessageType_MAX = DCC_OPERATIONS_STATE;
-const int MessageType_ARRAYSIZE = MessageType_MAX + 1;
+    const ::google::protobuf::EnumDescriptor* MessageType_descriptor();
+    inline const ::std::string& MessageType_Name(MessageType value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(MessageType_descriptor(), value);
+    }
+    inline bool MessageType_Parse(const ::std::string& name, MessageType* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<MessageType>(MessageType_descriptor(), name, value);
+    }
+    enum SegmentStateValue {
+        DISABLED = 0,
+        ENABLED = 1,
+        SegmentStateValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        SegmentStateValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool SegmentStateValue_IsValid(int value);
+    const SegmentStateValue SegmentStateValue_MIN = DISABLED;
+    const SegmentStateValue SegmentStateValue_MAX = ENABLED;
+    const int SegmentStateValue_ARRAYSIZE = SegmentStateValue_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* MessageType_descriptor();
-inline const ::std::string& MessageType_Name(MessageType value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    MessageType_descriptor(), value);
-}
-inline bool MessageType_Parse(
-    const ::std::string& name, MessageType* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<MessageType>(
-    MessageType_descriptor(), name, value);
-}
-enum SegmentStateValue {
-  DISABLED = 0,
-  ENABLED = 1,
-  SegmentStateValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  SegmentStateValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool SegmentStateValue_IsValid(int value);
-const SegmentStateValue SegmentStateValue_MIN = DISABLED;
-const SegmentStateValue SegmentStateValue_MAX = ENABLED;
-const int SegmentStateValue_ARRAYSIZE = SegmentStateValue_MAX + 1;
+    const ::google::protobuf::EnumDescriptor* SegmentStateValue_descriptor();
+    inline const ::std::string& SegmentStateValue_Name(SegmentStateValue value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(SegmentStateValue_descriptor(), value);
+    }
+    inline bool SegmentStateValue_Parse(const ::std::string& name, SegmentStateValue* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<SegmentStateValue>(
+            SegmentStateValue_descriptor(), name, value);
+    }
+    enum TrainDirectionValue {
+        FORWARD = 0,
+        BACKWARD = 1,
+        TrainDirectionValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        TrainDirectionValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool TrainDirectionValue_IsValid(int value);
+    const TrainDirectionValue TrainDirectionValue_MIN = FORWARD;
+    const TrainDirectionValue TrainDirectionValue_MAX = BACKWARD;
+    const int TrainDirectionValue_ARRAYSIZE = TrainDirectionValue_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* SegmentStateValue_descriptor();
-inline const ::std::string& SegmentStateValue_Name(SegmentStateValue value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    SegmentStateValue_descriptor(), value);
-}
-inline bool SegmentStateValue_Parse(
-    const ::std::string& name, SegmentStateValue* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<SegmentStateValue>(
-    SegmentStateValue_descriptor(), name, value);
-}
-enum TrainDirectionValue {
-  FORWARD = 0,
-  BACKWARD = 1,
-  TrainDirectionValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  TrainDirectionValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool TrainDirectionValue_IsValid(int value);
-const TrainDirectionValue TrainDirectionValue_MIN = FORWARD;
-const TrainDirectionValue TrainDirectionValue_MAX = BACKWARD;
-const int TrainDirectionValue_ARRAYSIZE = TrainDirectionValue_MAX + 1;
+    const ::google::protobuf::EnumDescriptor* TrainDirectionValue_descriptor();
+    inline const ::std::string& TrainDirectionValue_Name(TrainDirectionValue value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(TrainDirectionValue_descriptor(), value);
+    }
+    inline bool TrainDirectionValue_Parse(const ::std::string& name, TrainDirectionValue* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<TrainDirectionValue>(
+            TrainDirectionValue_descriptor(), name, value);
+    }
+    enum TurnoutStateValue {
+        STRAIGHT = 0,
+        DIVERGENT = 1,
+        TurnoutStateValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        TurnoutStateValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool TurnoutStateValue_IsValid(int value);
+    const TurnoutStateValue TurnoutStateValue_MIN = STRAIGHT;
+    const TurnoutStateValue TurnoutStateValue_MAX = DIVERGENT;
+    const int TurnoutStateValue_ARRAYSIZE = TurnoutStateValue_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* TrainDirectionValue_descriptor();
-inline const ::std::string& TrainDirectionValue_Name(TrainDirectionValue value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    TrainDirectionValue_descriptor(), value);
-}
-inline bool TrainDirectionValue_Parse(
-    const ::std::string& name, TrainDirectionValue* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<TrainDirectionValue>(
-    TrainDirectionValue_descriptor(), name, value);
-}
-enum TurnoutStateValue {
-  STRAIGHT = 0,
-  DIVERGENT = 1,
-  TurnoutStateValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  TurnoutStateValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool TurnoutStateValue_IsValid(int value);
-const TurnoutStateValue TurnoutStateValue_MIN = STRAIGHT;
-const TurnoutStateValue TurnoutStateValue_MAX = DIVERGENT;
-const int TurnoutStateValue_ARRAYSIZE = TurnoutStateValue_MAX + 1;
+    const ::google::protobuf::EnumDescriptor* TurnoutStateValue_descriptor();
+    inline const ::std::string& TurnoutStateValue_Name(TurnoutStateValue value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(TurnoutStateValue_descriptor(), value);
+    }
+    inline bool TurnoutStateValue_Parse(const ::std::string& name, TurnoutStateValue* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<TurnoutStateValue>(
+            TurnoutStateValue_descriptor(), name, value);
+    }
+    enum TrainFunctionValue {
+        OFF = 0,
+        ON = 1,
+        TrainFunctionValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        TrainFunctionValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool TrainFunctionValue_IsValid(int value);
+    const TrainFunctionValue TrainFunctionValue_MIN = OFF;
+    const TrainFunctionValue TrainFunctionValue_MAX = ON;
+    const int TrainFunctionValue_ARRAYSIZE = TrainFunctionValue_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* TurnoutStateValue_descriptor();
-inline const ::std::string& TurnoutStateValue_Name(TurnoutStateValue value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    TurnoutStateValue_descriptor(), value);
-}
-inline bool TurnoutStateValue_Parse(
-    const ::std::string& name, TurnoutStateValue* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<TurnoutStateValue>(
-    TurnoutStateValue_descriptor(), name, value);
-}
-enum TrainFunctionValue {
-  OFF = 0,
-  ON = 1,
-  TrainFunctionValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  TrainFunctionValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool TrainFunctionValue_IsValid(int value);
-const TrainFunctionValue TrainFunctionValue_MIN = OFF;
-const TrainFunctionValue TrainFunctionValue_MAX = ON;
-const int TrainFunctionValue_ARRAYSIZE = TrainFunctionValue_MAX + 1;
+    const ::google::protobuf::EnumDescriptor* TrainFunctionValue_descriptor();
+    inline const ::std::string& TrainFunctionValue_Name(TrainFunctionValue value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(TrainFunctionValue_descriptor(), value);
+    }
+    inline bool TrainFunctionValue_Parse(const ::std::string& name, TrainFunctionValue* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<TrainFunctionValue>(
+            TrainFunctionValue_descriptor(), name, value);
+    }
+    enum SegmentOccupancyValue {
+        FREE = 0,
+        OCCUPIED = 1,
+        SegmentOccupancyValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        SegmentOccupancyValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool SegmentOccupancyValue_IsValid(int value);
+    const SegmentOccupancyValue SegmentOccupancyValue_MIN = FREE;
+    const SegmentOccupancyValue SegmentOccupancyValue_MAX = OCCUPIED;
+    const int SegmentOccupancyValue_ARRAYSIZE = SegmentOccupancyValue_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* TrainFunctionValue_descriptor();
-inline const ::std::string& TrainFunctionValue_Name(TrainFunctionValue value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    TrainFunctionValue_descriptor(), value);
-}
-inline bool TrainFunctionValue_Parse(
-    const ::std::string& name, TrainFunctionValue* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<TrainFunctionValue>(
-    TrainFunctionValue_descriptor(), name, value);
-}
-enum SegmentOccupancyValue {
-  FREE = 0,
-  OCCUPIED = 1,
-  SegmentOccupancyValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  SegmentOccupancyValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool SegmentOccupancyValue_IsValid(int value);
-const SegmentOccupancyValue SegmentOccupancyValue_MIN = FREE;
-const SegmentOccupancyValue SegmentOccupancyValue_MAX = OCCUPIED;
-const int SegmentOccupancyValue_ARRAYSIZE = SegmentOccupancyValue_MAX + 1;
+    const ::google::protobuf::EnumDescriptor* SegmentOccupancyValue_descriptor();
+    inline const ::std::string& SegmentOccupancyValue_Name(SegmentOccupancyValue value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(SegmentOccupancyValue_descriptor(), value);
+    }
+    inline bool SegmentOccupancyValue_Parse(const ::std::string& name, SegmentOccupancyValue* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<SegmentOccupancyValue>(
+            SegmentOccupancyValue_descriptor(), name, value);
+    }
+    enum YakinduConnectionDirection {
+        CW = 0,
+        CCW = 1,
+        Y_TOP = 2,
+        Y_DIVERGENT = 3,
+        Y_STRAIGHT = 4,
+        YakinduConnectionDirection_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+        YakinduConnectionDirection_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+    };
+    bool YakinduConnectionDirection_IsValid(int value);
+    const YakinduConnectionDirection YakinduConnectionDirection_MIN = CW;
+    const YakinduConnectionDirection YakinduConnectionDirection_MAX = Y_STRAIGHT;
+    const int YakinduConnectionDirection_ARRAYSIZE = YakinduConnectionDirection_MAX + 1;
 
-const ::google::protobuf::EnumDescriptor* SegmentOccupancyValue_descriptor();
-inline const ::std::string& SegmentOccupancyValue_Name(SegmentOccupancyValue value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    SegmentOccupancyValue_descriptor(), value);
-}
-inline bool SegmentOccupancyValue_Parse(
-    const ::std::string& name, SegmentOccupancyValue* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<SegmentOccupancyValue>(
-    SegmentOccupancyValue_descriptor(), name, value);
-}
-enum YakinduConnectionDirection {
-  CW = 0,
-  CCW = 1,
-  Y_TOP = 2,
-  Y_DIVERGENT = 3,
-  Y_STRAIGHT = 4,
-  YakinduConnectionDirection_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  YakinduConnectionDirection_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool YakinduConnectionDirection_IsValid(int value);
-const YakinduConnectionDirection YakinduConnectionDirection_MIN = CW;
-const YakinduConnectionDirection YakinduConnectionDirection_MAX = Y_STRAIGHT;
-const int YakinduConnectionDirection_ARRAYSIZE = YakinduConnectionDirection_MAX + 1;
-
-const ::google::protobuf::EnumDescriptor* YakinduConnectionDirection_descriptor();
-inline const ::std::string& YakinduConnectionDirection_Name(YakinduConnectionDirection value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    YakinduConnectionDirection_descriptor(), value);
-}
-inline bool YakinduConnectionDirection_Parse(
-    const ::std::string& name, YakinduConnectionDirection* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<YakinduConnectionDirection>(
-    YakinduConnectionDirection_descriptor(), name, value);
-}
+    const ::google::protobuf::EnumDescriptor* YakinduConnectionDirection_descriptor();
+    inline const ::std::string& YakinduConnectionDirection_Name(YakinduConnectionDirection value)
+    {
+        return ::google::protobuf::internal::NameOfEnum(YakinduConnectionDirection_descriptor(), value);
+    }
+    inline bool YakinduConnectionDirection_Parse(const ::std::string& name, YakinduConnectionDirection* value)
+    {
+        return ::google::protobuf::internal::ParseNamedEnum<YakinduConnectionDirection>(
+            YakinduConnectionDirection_descriptor(), name, value);
+    }
 // ===================================================================
 
-
 // ===================================================================
-
 
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
-#endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+#endif // !PROTOBUF_INLINE_NOT_IN_HEADERS
 
-// @@protoc_insertion_point(namespace_scope)
+    // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace protobuf
-}  // namespace modes3
+} // namespace protobuf
+} // namespace modes3
 
 #ifndef SWIG
-namespace google {
-namespace protobuf {
+namespace google
+{
+namespace protobuf
+{
 
-template <> struct is_proto_enum< ::modes3::protobuf::DccOperations> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::DccOperations>() {
-  return ::modes3::protobuf::DccOperations_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::MessageType> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::MessageType>() {
-  return ::modes3::protobuf::MessageType_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::SegmentStateValue> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::SegmentStateValue>() {
-  return ::modes3::protobuf::SegmentStateValue_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::TrainDirectionValue> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TrainDirectionValue>() {
-  return ::modes3::protobuf::TrainDirectionValue_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::TurnoutStateValue> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TurnoutStateValue>() {
-  return ::modes3::protobuf::TurnoutStateValue_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::TrainFunctionValue> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TrainFunctionValue>() {
-  return ::modes3::protobuf::TrainFunctionValue_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::SegmentOccupancyValue> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::SegmentOccupancyValue>() {
-  return ::modes3::protobuf::SegmentOccupancyValue_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::YakinduConnectionDirection> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::YakinduConnectionDirection>() {
-  return ::modes3::protobuf::YakinduConnectionDirection_descriptor();
-}
+    template <> struct is_proto_enum< ::modes3::protobuf::DccOperations> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::DccOperations>()
+    {
+        return ::modes3::protobuf::DccOperations_descriptor();
+    }
+    template <> struct is_proto_enum< ::modes3::protobuf::MessageType> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::MessageType>()
+    {
+        return ::modes3::protobuf::MessageType_descriptor();
+    }
+    template <> struct is_proto_enum< ::modes3::protobuf::SegmentStateValue> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::SegmentStateValue>()
+    {
+        return ::modes3::protobuf::SegmentStateValue_descriptor();
+    }
+    template <>
+    struct is_proto_enum< ::modes3::protobuf::TrainDirectionValue> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TrainDirectionValue>()
+    {
+        return ::modes3::protobuf::TrainDirectionValue_descriptor();
+    }
+    template <> struct is_proto_enum< ::modes3::protobuf::TurnoutStateValue> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TurnoutStateValue>()
+    {
+        return ::modes3::protobuf::TurnoutStateValue_descriptor();
+    }
+    template <>
+    struct is_proto_enum< ::modes3::protobuf::TrainFunctionValue> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TrainFunctionValue>()
+    {
+        return ::modes3::protobuf::TrainFunctionValue_descriptor();
+    }
+    template <>
+    struct is_proto_enum< ::modes3::protobuf::SegmentOccupancyValue> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::SegmentOccupancyValue>()
+    {
+        return ::modes3::protobuf::SegmentOccupancyValue_descriptor();
+    }
+    template <>
+    struct is_proto_enum< ::modes3::protobuf::YakinduConnectionDirection> : ::google::protobuf::internal::true_type {
+    };
+    template <> inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::YakinduConnectionDirection>()
+    {
+        return ::modes3::protobuf::YakinduConnectionDirection_descriptor();
+    }
 
-}  // namespace protobuf
-}  // namespace google
-#endif  // SWIG
+} // namespace protobuf
+} // namespace google
+#endif // SWIG
 
 // @@protoc_insertion_point(global_scope)
 
-#endif  // PROTOBUF_Enums_2eproto__INCLUDED
+#endif // PROTOBUF_Enums_2eproto__INCLUDED

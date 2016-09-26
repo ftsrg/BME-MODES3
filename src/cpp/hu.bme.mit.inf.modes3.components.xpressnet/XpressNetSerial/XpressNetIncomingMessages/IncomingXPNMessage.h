@@ -8,10 +8,12 @@
 #include "XpressNetSerial/BoardStatus.h"
 #include "XpressNetSerial/XpressNetInterfaces/ProtobufTranslator.h"
 
-class IncomingXPNMessage {
+class IncomingXPNMessage
+{
 protected:
     std::vector<uint8_t> firstBytes;
     unsigned int length;
+
 public:
     IncomingXPNMessage();
     virtual ~IncomingXPNMessage();
@@ -22,8 +24,8 @@ public:
 };
 
 enum TurnoutStatusFlag {
-    NOT_CONTROLLED_IN_THIS_SECTION  = 0b00,
-    LAST_COMMAND_WAS_0              = 0b01,
-    LAST_COMMAND_WAS_1              = 0b10,
-    BOTH_ENDS_ARE_ACTIVE            = 0b11
+    NOT_CONTROLLED_IN_THIS_SECTION = 0b00,
+    LAST_COMMAND_WAS_0 = 0b01,
+    LAST_COMMAND_WAS_1 = 0b10,
+    BOTH_ENDS_ARE_ACTIVE = 0b11
 };

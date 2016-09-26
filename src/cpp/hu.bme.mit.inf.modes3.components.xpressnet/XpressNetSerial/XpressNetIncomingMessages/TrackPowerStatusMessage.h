@@ -10,7 +10,8 @@
 const int tpsLength = 3;
 const uint8_t tpsFirstByte = 0x61;
 
-class TrackPowerStatusMessage : public IncomingXPNMessage {
+class TrackPowerStatusMessage : public IncomingXPNMessage
+{
 public:
     TrackPowerStatusMessage();
     bool recognizedMessage(std::vector<uint8_t> messageBytes);

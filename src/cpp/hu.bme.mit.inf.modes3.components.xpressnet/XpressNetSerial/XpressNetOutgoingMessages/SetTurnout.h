@@ -6,7 +6,8 @@
 
 #include "OutgoingXPNMessage.h" // Base class: OutgoingXPNMessage
 
-class SetTurnout : public OutgoingXPNMessage {
+class SetTurnout : public OutgoingXPNMessage
+{
 public:
     SetTurnout(uint8_t turnoutAddress, TurnoutState turnoutState);
 

@@ -29,148 +29,167 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace modes3 {
-namespace protobuf {
+namespace modes3
+{
+namespace protobuf
+{
 
-// Internal implementation detail -- do not call these.
-void protobuf_AddDesc_TrainCurrentSegment_2eproto();
-void protobuf_AssignDesc_TrainCurrentSegment_2eproto();
-void protobuf_ShutdownFile_TrainCurrentSegment_2eproto();
+    // Internal implementation detail -- do not call these.
+    void protobuf_AddDesc_TrainCurrentSegment_2eproto();
+    void protobuf_AssignDesc_TrainCurrentSegment_2eproto();
+    void protobuf_ShutdownFile_TrainCurrentSegment_2eproto();
 
-class TrainCurrentSegment;
+    class TrainCurrentSegment;
 
+    // ===================================================================
+
+    class TrainCurrentSegment
+        : public ::google::protobuf::
+              Message /* @@protoc_insertion_point(class_definition:modes3.protobuf.TrainCurrentSegment) */
+    {
+    public:
+        TrainCurrentSegment();
+        virtual ~TrainCurrentSegment();
+
+        TrainCurrentSegment(const TrainCurrentSegment& from);
+
+        inline TrainCurrentSegment& operator=(const TrainCurrentSegment& from)
+        {
+            CopyFrom(from);
+            return *this;
+        }
+
+        static const ::google::protobuf::Descriptor* descriptor();
+        static const TrainCurrentSegment& default_instance();
+
+        void Swap(TrainCurrentSegment* other);
+
+        // implements Message ----------------------------------------------
+
+        inline TrainCurrentSegment* New() const
+        {
+            return New(NULL);
+        }
+
+        TrainCurrentSegment* New(::google::protobuf::Arena* arena) const;
+        void CopyFrom(const ::google::protobuf::Message& from);
+        void MergeFrom(const ::google::protobuf::Message& from);
+        void CopyFrom(const TrainCurrentSegment& from);
+        void MergeFrom(const TrainCurrentSegment& from);
+        void Clear();
+        bool IsInitialized() const;
+
+        int ByteSize() const;
+        bool MergePartialFromCodedStream(::google::protobuf::io::CodedInputStream* input);
+        void SerializeWithCachedSizes(::google::protobuf::io::CodedOutputStream* output) const;
+        ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(bool deterministic,
+            ::google::protobuf::uint8* output) const;
+        ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const
+        {
+            return InternalSerializeWithCachedSizesToArray(false, output);
+        }
+        int GetCachedSize() const
+        {
+            return _cached_size_;
+        }
+
+    private:
+        void SharedCtor();
+        void SharedDtor();
+        void SetCachedSize(int size) const;
+        void InternalSwap(TrainCurrentSegment* other);
+
+    private:
+        inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+        {
+            return _internal_metadata_.arena();
+        }
+        inline void* MaybeArenaPtr() const
+        {
+            return _internal_metadata_.raw_arena_ptr();
+        }
+
+    public:
+        ::google::protobuf::Metadata GetMetadata() const;
+
+        // nested types ----------------------------------------------------
+
+        // accessors -------------------------------------------------------
+
+        // optional uint32 trainID = 1;
+        void clear_trainid();
+        static const int kTrainIDFieldNumber = 1;
+        ::google::protobuf::uint32 trainid() const;
+        void set_trainid(::google::protobuf::uint32 value);
+
+        // optional uint32 turnoutID = 2;
+        void clear_turnoutid();
+        static const int kTurnoutIDFieldNumber = 2;
+        ::google::protobuf::uint32 turnoutid() const;
+        void set_turnoutid(::google::protobuf::uint32 value);
+
+        // @@protoc_insertion_point(class_scope:modes3.protobuf.TrainCurrentSegment)
+    private:
+        ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+        bool _is_default_instance_;
+        ::google::protobuf::uint32 trainid_;
+        ::google::protobuf::uint32 turnoutid_;
+        mutable int _cached_size_;
+        friend void protobuf_AddDesc_TrainCurrentSegment_2eproto();
+        friend void protobuf_AssignDesc_TrainCurrentSegment_2eproto();
+        friend void protobuf_ShutdownFile_TrainCurrentSegment_2eproto();
+
+        void InitAsDefaultInstance();
+        static TrainCurrentSegment* default_instance_;
+    };
 // ===================================================================
-
-class TrainCurrentSegment : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:modes3.protobuf.TrainCurrentSegment) */ {
- public:
-  TrainCurrentSegment();
-  virtual ~TrainCurrentSegment();
-
-  TrainCurrentSegment(const TrainCurrentSegment& from);
-
-  inline TrainCurrentSegment& operator=(const TrainCurrentSegment& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const TrainCurrentSegment& default_instance();
-
-  void Swap(TrainCurrentSegment* other);
-
-  // implements Message ----------------------------------------------
-
-  inline TrainCurrentSegment* New() const { return New(NULL); }
-
-  TrainCurrentSegment* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TrainCurrentSegment& from);
-  void MergeFrom(const TrainCurrentSegment& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
-    return InternalSerializeWithCachedSizesToArray(false, output);
-  }
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(TrainCurrentSegment* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional uint32 trainID = 1;
-  void clear_trainid();
-  static const int kTrainIDFieldNumber = 1;
-  ::google::protobuf::uint32 trainid() const;
-  void set_trainid(::google::protobuf::uint32 value);
-
-  // optional uint32 turnoutID = 2;
-  void clear_turnoutid();
-  static const int kTurnoutIDFieldNumber = 2;
-  ::google::protobuf::uint32 turnoutid() const;
-  void set_turnoutid(::google::protobuf::uint32 value);
-
-  // @@protoc_insertion_point(class_scope:modes3.protobuf.TrainCurrentSegment)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::uint32 trainid_;
-  ::google::protobuf::uint32 turnoutid_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_TrainCurrentSegment_2eproto();
-  friend void protobuf_AssignDesc_TrainCurrentSegment_2eproto();
-  friend void protobuf_ShutdownFile_TrainCurrentSegment_2eproto();
-
-  void InitAsDefaultInstance();
-  static TrainCurrentSegment* default_instance_;
-};
-// ===================================================================
-
 
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
-// TrainCurrentSegment
+    // TrainCurrentSegment
 
-// optional uint32 trainID = 1;
-inline void TrainCurrentSegment::clear_trainid() {
-  trainid_ = 0u;
-}
-inline ::google::protobuf::uint32 TrainCurrentSegment::trainid() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainCurrentSegment.trainID)
-  return trainid_;
-}
-inline void TrainCurrentSegment::set_trainid(::google::protobuf::uint32 value) {
-  
-  trainid_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainCurrentSegment.trainID)
-}
+    // optional uint32 trainID = 1;
+    inline void TrainCurrentSegment::clear_trainid()
+    {
+        trainid_ = 0u;
+    }
+    inline ::google::protobuf::uint32 TrainCurrentSegment::trainid() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainCurrentSegment.trainID)
+        return trainid_;
+    }
+    inline void TrainCurrentSegment::set_trainid(::google::protobuf::uint32 value)
+    {
 
-// optional uint32 turnoutID = 2;
-inline void TrainCurrentSegment::clear_turnoutid() {
-  turnoutid_ = 0u;
-}
-inline ::google::protobuf::uint32 TrainCurrentSegment::turnoutid() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainCurrentSegment.turnoutID)
-  return turnoutid_;
-}
-inline void TrainCurrentSegment::set_turnoutid(::google::protobuf::uint32 value) {
-  
-  turnoutid_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainCurrentSegment.turnoutID)
-}
+        trainid_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainCurrentSegment.trainID)
+    }
 
-#endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+    // optional uint32 turnoutID = 2;
+    inline void TrainCurrentSegment::clear_turnoutid()
+    {
+        turnoutid_ = 0u;
+    }
+    inline ::google::protobuf::uint32 TrainCurrentSegment::turnoutid() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainCurrentSegment.turnoutID)
+        return turnoutid_;
+    }
+    inline void TrainCurrentSegment::set_turnoutid(::google::protobuf::uint32 value)
+    {
 
-// @@protoc_insertion_point(namespace_scope)
+        turnoutid_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainCurrentSegment.turnoutID)
+    }
 
-}  // namespace protobuf
-}  // namespace modes3
+#endif // !PROTOBUF_INLINE_NOT_IN_HEADERS
+
+    // @@protoc_insertion_point(namespace_scope)
+
+} // namespace protobuf
+} // namespace modes3
 
 // @@protoc_insertion_point(global_scope)
 
-#endif  // PROTOBUF_TrainCurrentSegment_2eproto__INCLUDED
+#endif // PROTOBUF_TrainCurrentSegment_2eproto__INCLUDED

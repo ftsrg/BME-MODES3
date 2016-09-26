@@ -4,45 +4,53 @@
 **/
 #include "BoardStatus.h"
 
-BoardStatus::BoardStatus() {
-
+BoardStatus::BoardStatus()
+{
 }
 
-bool BoardStatus::setTrainStatus(int trainAddress, TrainStatus currentTrainStatus) {
+bool BoardStatus::setTrainStatus(int trainAddress, TrainStatus currentTrainStatus)
+{
     bool equals = (trainStatusMap[trainAddress] == currentTrainStatus);
     return !equals;
 }
 
-TrainStatus BoardStatus::getTrainStatus(int trainAddress) {
+TrainStatus BoardStatus::getTrainStatus(int trainAddress)
+{
     return trainStatusMap[trainAddress];
 }
 
-bool BoardStatus::setTurnoutStatus(int turnoutAddress, TurnoutStatus currentTurnoutStatus) {
+bool BoardStatus::setTurnoutStatus(int turnoutAddress, TurnoutStatus currentTurnoutStatus)
+{
     bool equals = (turnoutStatusMap[turnoutAddress] == currentTurnoutStatus);
     return !equals;
 }
 
-TurnoutStatus BoardStatus::getTurnoutStatus(int turnoutAddress) {
+TurnoutStatus BoardStatus::getTurnoutStatus(int turnoutAddress)
+{
     return turnoutStatusMap[turnoutAddress];
 }
 
-bool BoardStatus::setTrackPowerStatus(TrackPowerStatus currentTrackPowerStatus) {
+bool BoardStatus::setTrackPowerStatus(TrackPowerStatus currentTrackPowerStatus)
+{
     bool equals = (trackPowerStatus == currentTrackPowerStatus);
     return !equals;
 }
 
-TrackPowerStatus BoardStatus::getTrackPowerStatus() {
+TrackPowerStatus BoardStatus::getTrackPowerStatus()
+{
     return trackPowerStatus;
 }
 
-void BoardStatus::inquireTrainInformation(int trainAddress) {
+void BoardStatus::inquireTrainInformation(int trainAddress)
+{
     boost::lock_guard<boost::mutex> lockGuard(trainAddresses_mutex);
     /*BoardStatus::trainAddresses.push_back(trainAddress);*/
     lastAddress = trainAddress;
     notRespondedQueries++;
 }
 
-int BoardStatus::getFirstInquiredTrainAddress() {
+int BoardStatus::getFirstInquiredTrainAddress()
+{
     boost::lock_guard<boost::mutex> lockGuard(trainAddresses_mutex);
     /*if(BoardStatus::getInquiryVectorSize() > 0) {
         int trainAddress = BoardStatus::trainAddresses[0];
@@ -51,19 +59,21 @@ int BoardStatus::getFirstInquiredTrainAddress() {
     } else {
         return -1;
     }*/
-    if(lastAddress != -1){
+    if(lastAddress != -1) {
         notRespondedQueries--;
     }
     return lastAddress;
 }
 
-int BoardStatus::getInquiryVectorSize() {
-    //boost::lock_guard<boost::mutex> lockGuard(trainAddresses_mutex);
-    //return trainAddresses.size();
+int BoardStatus::getInquiryVectorSize()
+{
+    // boost::lock_guard<boost::mutex> lockGuard(trainAddresses_mutex);
+    // return trainAddresses.size();
     return lastAddress;
 }
 
-int BoardStatus::getNotRespondedQueriesNumber(){
+int BoardStatus::getNotRespondedQueriesNumber()
+{
     return notRespondedQueries;
 }
 

@@ -10,8 +10,8 @@
 #include <iomanip>
 #include <bitset>
 
-
-class LocomotiveInformation : public IncomingXPNMessage {
+class LocomotiveInformation : public IncomingXPNMessage
+{
 public:
     LocomotiveInformation();
     std::vector<uint8_t> getFirstBytes();

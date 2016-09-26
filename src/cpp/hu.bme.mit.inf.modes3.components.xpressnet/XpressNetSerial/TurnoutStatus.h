@@ -5,10 +5,12 @@
 #pragma once
 #include "XpressNetSerial/XpressNetInterfaces/TurnoutState.h"
 
-class TurnoutStatus {
+class TurnoutStatus
+{
 protected:
     TurnoutState turnoutState;
     bool initialized;
+
 public:
     TurnoutStatus();
     TurnoutStatus(TurnoutState currentTurnoutState);

@@ -6,7 +6,8 @@
 
 #include "OutgoingXPNMessage.h" // Base class: OutgoingXPNMessage
 
-class EmergencyStopALocomotive : public OutgoingXPNMessage {
+class EmergencyStopALocomotive : public OutgoingXPNMessage
+{
 public:
     EmergencyStopALocomotive(uint8_t trainAddress);
 

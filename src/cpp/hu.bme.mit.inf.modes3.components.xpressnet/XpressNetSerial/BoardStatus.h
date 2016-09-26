@@ -10,7 +10,8 @@
 #include "XpressNetSerial/TrackPowerStatus.h"
 #include "XpressNetSerial/AsyncSerial.h"
 
-class BoardStatus {
+class BoardStatus
+{
 protected:
     static std::map<int, TrainStatus> trainStatusMap;
     static std::map<int, TurnoutStatus> turnoutStatusMap;
@@ -28,7 +29,7 @@ public:
     static TurnoutStatus getTurnoutStatus(int turnoutID);
     static bool setTrackPowerStatus(TrackPowerStatus currentTrackPowerStatus);
     static TrackPowerStatus getTrackPowerStatus();
-    //TODO naming
+    // TODO naming
     static void inquireTrainInformation(int trainAddress);
     static int getFirstInquiredTrainAddress();
     static int getInquiryVectorSize();

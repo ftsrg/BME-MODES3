@@ -4,18 +4,20 @@
 **/
 #include "TurnoutStatus.h"
 
-TurnoutStatus::TurnoutStatus() {
+TurnoutStatus::TurnoutStatus()
+{
     initialized = false;
 }
 
-
-TurnoutStatus::TurnoutStatus(TurnoutState currentTurnoutState) {
+TurnoutStatus::TurnoutStatus(TurnoutState currentTurnoutState)
+{
     turnoutState = currentTurnoutState;
     initialized = true;
 }
 
-//depr
-bool TurnoutStatus::setTurnoutState(TurnoutState currentTurnoutState) {
+// depr
+bool TurnoutStatus::setTurnoutState(TurnoutState currentTurnoutState)
+{
     if(turnoutState == currentTurnoutState) {
         return false;
     } else {
@@ -24,12 +26,14 @@ bool TurnoutStatus::setTurnoutState(TurnoutState currentTurnoutState) {
     }
 }
 
-const TurnoutState& TurnoutStatus::getTurnoutState() {
+const TurnoutState& TurnoutStatus::getTurnoutState()
+{
     return turnoutState;
 }
 
-bool TurnoutStatus::operator==(const TurnoutStatus& rhs) {
-    if((turnoutState == rhs.turnoutState)&&(initialized==true)) {
+bool TurnoutStatus::operator==(const TurnoutStatus& rhs)
+{
+    if((turnoutState == rhs.turnoutState) && (initialized == true)) {
         return true;
     } else {
         turnoutState = rhs.turnoutState;

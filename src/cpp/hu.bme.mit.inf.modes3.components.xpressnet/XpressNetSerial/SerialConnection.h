@@ -2,7 +2,6 @@
 // Created by Hegyi Bálint on 20/06/16.
 //
 
-
 #pragma once
 
 #include <iostream>
@@ -12,7 +11,8 @@
 #include <vector>
 #include <boost/asio.hpp>
 
-class SerialConnection {
+class SerialConnection
+{
 
 protected:
     boost::asio::io_service io;

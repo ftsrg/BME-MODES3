@@ -30,169 +30,191 @@
 #include "Enums.pb.h"
 // @@protoc_insertion_point(includes)
 
-namespace modes3 {
-namespace protobuf {
+namespace modes3
+{
+namespace protobuf
+{
 
-// Internal implementation detail -- do not call these.
-void protobuf_AddDesc_TrainFunctionState_2eproto();
-void protobuf_AssignDesc_TrainFunctionState_2eproto();
-void protobuf_ShutdownFile_TrainFunctionState_2eproto();
+    // Internal implementation detail -- do not call these.
+    void protobuf_AddDesc_TrainFunctionState_2eproto();
+    void protobuf_AssignDesc_TrainFunctionState_2eproto();
+    void protobuf_ShutdownFile_TrainFunctionState_2eproto();
 
-class TrainFunctionState;
+    class TrainFunctionState;
 
+    // ===================================================================
+
+    class TrainFunctionState
+        : public ::google::protobuf::
+              Message /* @@protoc_insertion_point(class_definition:modes3.protobuf.TrainFunctionState) */
+    {
+    public:
+        TrainFunctionState();
+        virtual ~TrainFunctionState();
+
+        TrainFunctionState(const TrainFunctionState& from);
+
+        inline TrainFunctionState& operator=(const TrainFunctionState& from)
+        {
+            CopyFrom(from);
+            return *this;
+        }
+
+        static const ::google::protobuf::Descriptor* descriptor();
+        static const TrainFunctionState& default_instance();
+
+        void Swap(TrainFunctionState* other);
+
+        // implements Message ----------------------------------------------
+
+        inline TrainFunctionState* New() const
+        {
+            return New(NULL);
+        }
+
+        TrainFunctionState* New(::google::protobuf::Arena* arena) const;
+        void CopyFrom(const ::google::protobuf::Message& from);
+        void MergeFrom(const ::google::protobuf::Message& from);
+        void CopyFrom(const TrainFunctionState& from);
+        void MergeFrom(const TrainFunctionState& from);
+        void Clear();
+        bool IsInitialized() const;
+
+        int ByteSize() const;
+        bool MergePartialFromCodedStream(::google::protobuf::io::CodedInputStream* input);
+        void SerializeWithCachedSizes(::google::protobuf::io::CodedOutputStream* output) const;
+        ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(bool deterministic,
+            ::google::protobuf::uint8* output) const;
+        ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const
+        {
+            return InternalSerializeWithCachedSizesToArray(false, output);
+        }
+        int GetCachedSize() const
+        {
+            return _cached_size_;
+        }
+
+    private:
+        void SharedCtor();
+        void SharedDtor();
+        void SetCachedSize(int size) const;
+        void InternalSwap(TrainFunctionState* other);
+
+    private:
+        inline ::google::protobuf::Arena* GetArenaNoVirtual() const
+        {
+            return _internal_metadata_.arena();
+        }
+        inline void* MaybeArenaPtr() const
+        {
+            return _internal_metadata_.raw_arena_ptr();
+        }
+
+    public:
+        ::google::protobuf::Metadata GetMetadata() const;
+
+        // nested types ----------------------------------------------------
+
+        // accessors -------------------------------------------------------
+
+        // optional uint32 trainID = 1;
+        void clear_trainid();
+        static const int kTrainIDFieldNumber = 1;
+        ::google::protobuf::uint32 trainid() const;
+        void set_trainid(::google::protobuf::uint32 value);
+
+        // optional uint32 functionID = 2;
+        void clear_functionid();
+        static const int kFunctionIDFieldNumber = 2;
+        ::google::protobuf::uint32 functionid() const;
+        void set_functionid(::google::protobuf::uint32 value);
+
+        // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
+        void clear_trainfunctionvalue();
+        static const int kTrainFunctionValueFieldNumber = 3;
+        ::modes3::protobuf::TrainFunctionValue trainfunctionvalue() const;
+        void set_trainfunctionvalue(::modes3::protobuf::TrainFunctionValue value);
+
+        // @@protoc_insertion_point(class_scope:modes3.protobuf.TrainFunctionState)
+    private:
+        ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+        bool _is_default_instance_;
+        ::google::protobuf::uint32 trainid_;
+        ::google::protobuf::uint32 functionid_;
+        int trainfunctionvalue_;
+        mutable int _cached_size_;
+        friend void protobuf_AddDesc_TrainFunctionState_2eproto();
+        friend void protobuf_AssignDesc_TrainFunctionState_2eproto();
+        friend void protobuf_ShutdownFile_TrainFunctionState_2eproto();
+
+        void InitAsDefaultInstance();
+        static TrainFunctionState* default_instance_;
+    };
 // ===================================================================
-
-class TrainFunctionState : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:modes3.protobuf.TrainFunctionState) */ {
- public:
-  TrainFunctionState();
-  virtual ~TrainFunctionState();
-
-  TrainFunctionState(const TrainFunctionState& from);
-
-  inline TrainFunctionState& operator=(const TrainFunctionState& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const TrainFunctionState& default_instance();
-
-  void Swap(TrainFunctionState* other);
-
-  // implements Message ----------------------------------------------
-
-  inline TrainFunctionState* New() const { return New(NULL); }
-
-  TrainFunctionState* New(::google::protobuf::Arena* arena) const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const TrainFunctionState& from);
-  void MergeFrom(const TrainFunctionState& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const {
-    return InternalSerializeWithCachedSizesToArray(false, output);
-  }
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  void InternalSwap(TrainFunctionState* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return _internal_metadata_.arena();
-  }
-  inline void* MaybeArenaPtr() const {
-    return _internal_metadata_.raw_arena_ptr();
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional uint32 trainID = 1;
-  void clear_trainid();
-  static const int kTrainIDFieldNumber = 1;
-  ::google::protobuf::uint32 trainid() const;
-  void set_trainid(::google::protobuf::uint32 value);
-
-  // optional uint32 functionID = 2;
-  void clear_functionid();
-  static const int kFunctionIDFieldNumber = 2;
-  ::google::protobuf::uint32 functionid() const;
-  void set_functionid(::google::protobuf::uint32 value);
-
-  // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
-  void clear_trainfunctionvalue();
-  static const int kTrainFunctionValueFieldNumber = 3;
-  ::modes3::protobuf::TrainFunctionValue trainfunctionvalue() const;
-  void set_trainfunctionvalue(::modes3::protobuf::TrainFunctionValue value);
-
-  // @@protoc_insertion_point(class_scope:modes3.protobuf.TrainFunctionState)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  bool _is_default_instance_;
-  ::google::protobuf::uint32 trainid_;
-  ::google::protobuf::uint32 functionid_;
-  int trainfunctionvalue_;
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_TrainFunctionState_2eproto();
-  friend void protobuf_AssignDesc_TrainFunctionState_2eproto();
-  friend void protobuf_ShutdownFile_TrainFunctionState_2eproto();
-
-  void InitAsDefaultInstance();
-  static TrainFunctionState* default_instance_;
-};
-// ===================================================================
-
 
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
-// TrainFunctionState
+    // TrainFunctionState
 
-// optional uint32 trainID = 1;
-inline void TrainFunctionState::clear_trainid() {
-  trainid_ = 0u;
-}
-inline ::google::protobuf::uint32 TrainFunctionState::trainid() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionState.trainID)
-  return trainid_;
-}
-inline void TrainFunctionState::set_trainid(::google::protobuf::uint32 value) {
-  
-  trainid_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionState.trainID)
-}
+    // optional uint32 trainID = 1;
+    inline void TrainFunctionState::clear_trainid()
+    {
+        trainid_ = 0u;
+    }
+    inline ::google::protobuf::uint32 TrainFunctionState::trainid() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionState.trainID)
+        return trainid_;
+    }
+    inline void TrainFunctionState::set_trainid(::google::protobuf::uint32 value)
+    {
 
-// optional uint32 functionID = 2;
-inline void TrainFunctionState::clear_functionid() {
-  functionid_ = 0u;
-}
-inline ::google::protobuf::uint32 TrainFunctionState::functionid() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionState.functionID)
-  return functionid_;
-}
-inline void TrainFunctionState::set_functionid(::google::protobuf::uint32 value) {
-  
-  functionid_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionState.functionID)
-}
+        trainid_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionState.trainID)
+    }
 
-// optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
-inline void TrainFunctionState::clear_trainfunctionvalue() {
-  trainfunctionvalue_ = 0;
-}
-inline ::modes3::protobuf::TrainFunctionValue TrainFunctionState::trainfunctionvalue() const {
-  // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionState.trainFunctionValue)
-  return static_cast< ::modes3::protobuf::TrainFunctionValue >(trainfunctionvalue_);
-}
-inline void TrainFunctionState::set_trainfunctionvalue(::modes3::protobuf::TrainFunctionValue value) {
-  
-  trainfunctionvalue_ = value;
-  // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionState.trainFunctionValue)
-}
+    // optional uint32 functionID = 2;
+    inline void TrainFunctionState::clear_functionid()
+    {
+        functionid_ = 0u;
+    }
+    inline ::google::protobuf::uint32 TrainFunctionState::functionid() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionState.functionID)
+        return functionid_;
+    }
+    inline void TrainFunctionState::set_functionid(::google::protobuf::uint32 value)
+    {
 
-#endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+        functionid_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionState.functionID)
+    }
 
-// @@protoc_insertion_point(namespace_scope)
+    // optional .modes3.protobuf.TrainFunctionValue trainFunctionValue = 3;
+    inline void TrainFunctionState::clear_trainfunctionvalue()
+    {
+        trainfunctionvalue_ = 0;
+    }
+    inline ::modes3::protobuf::TrainFunctionValue TrainFunctionState::trainfunctionvalue() const
+    {
+        // @@protoc_insertion_point(field_get:modes3.protobuf.TrainFunctionState.trainFunctionValue)
+        return static_cast< ::modes3::protobuf::TrainFunctionValue>(trainfunctionvalue_);
+    }
+    inline void TrainFunctionState::set_trainfunctionvalue(::modes3::protobuf::TrainFunctionValue value)
+    {
 
-}  // namespace protobuf
-}  // namespace modes3
+        trainfunctionvalue_ = value;
+        // @@protoc_insertion_point(field_set:modes3.protobuf.TrainFunctionState.trainFunctionValue)
+    }
+
+#endif // !PROTOBUF_INLINE_NOT_IN_HEADERS
+
+    // @@protoc_insertion_point(namespace_scope)
+
+} // namespace protobuf
+} // namespace modes3
 
 // @@protoc_insertion_point(global_scope)
 
-#endif  // PROTOBUF_TrainFunctionState_2eproto__INCLUDED
+#endif // PROTOBUF_TrainFunctionState_2eproto__INCLUDED

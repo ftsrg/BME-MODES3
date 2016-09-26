@@ -22,11 +22,13 @@
 
 const int maxMessageLength = 16;
 
-class IncomingByteBuffer {
+class IncomingByteBuffer
+{
 protected:
     std::vector<uint8_t> byteBuffer;
     boost::mutex byteBuffer_Mutex;
-    std::vector<std::unique_ptr<IncomingXPNMessage>> expectedMessages;
+    std::vector<std::unique_ptr<IncomingXPNMessage> > expectedMessages;
+
 public:
     IncomingByteBuffer();
     void addByte(uint8_t byte);

@@ -7,7 +7,8 @@
 #include "OutgoingXPNMessage.h" // Base class: OutgoingXPNMessage
 #include "XpressNetSerial/XpressNetInterfaces/TrainFunctionGroup.h"
 
-class SetLocomotiveFunctions : public OutgoingXPNMessage {
+class SetLocomotiveFunctions : public OutgoingXPNMessage
+{
 public:
     SetLocomotiveFunctions(uint8_t trainID, TrainFunctionGroup group, std::vector<bool> functions);
 

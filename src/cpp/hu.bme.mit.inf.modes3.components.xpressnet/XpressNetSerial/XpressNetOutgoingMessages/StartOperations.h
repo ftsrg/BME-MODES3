@@ -6,7 +6,8 @@
 
 #include "OutgoingXPNMessage.h" // Base class: OutgoingXPNMessage
 
-class StartOperations : public OutgoingXPNMessage {
+class StartOperations : public OutgoingXPNMessage
+{
 public:
     StartOperations();
 
