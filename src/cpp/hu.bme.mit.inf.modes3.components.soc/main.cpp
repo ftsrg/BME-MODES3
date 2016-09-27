@@ -2,6 +2,8 @@
 #include "configuration.h"
 #include "s88/s88.h"
 
+//#define VERBOSE_LOG 1
+
 extern HardwareSerial Serial;
 
 void setup() {
@@ -21,6 +23,7 @@ void loop() {
 
 #if VERBOSE_LOG == 1
     Serial.print(occupancy_vector);
+    Serial.print("\n\r");
 #endif
 
     // sending header first
@@ -35,18 +38,16 @@ void loop() {
     // we transfer 4 bytes always
     for (uint8_t i = 0; i < 4; ++i) {
         // cut the lowest 8 bits
-        arr[i] = occupancy_vector & 0xFF;
-        // shift the sensor with 8 bits
-        occupancy_vector >>= 8;
+        arr[i] = (occupancy_vector >> (i * 8));
     }
     
     // sending for the first time
-    for(uint8_t i = 0; i<4; ++i ) {
+    for(uint8_t i = 0; i < 4; ++i) {
         Serial.write(arr[i]);
     }
     
     // sending for the second time
-    for(uint8_t i = 0; i<4; ++i ) {
+    for(uint8_t i = 0; i < 4; ++i) {
         Serial.write(arr[i]);
     }
 
