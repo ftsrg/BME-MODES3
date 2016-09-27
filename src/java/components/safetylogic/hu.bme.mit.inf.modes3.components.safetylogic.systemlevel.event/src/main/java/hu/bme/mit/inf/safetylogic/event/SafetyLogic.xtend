@@ -8,19 +8,47 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
+import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import java.util.List
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
 	@Accessors(PUBLIC_GETTER) protected ModelUtil model // XXX IModelInteractor should be the static type
 	private ILoggerFactory factory
+	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[new ISegmentDisableStrategy(){
+		
+		override disableSection(int id) {
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
+		}
+		
+	}, new ISegmentDisableStrategy(){
+		
+		override disableSection(int id) {
+			val train = model.model.trains.findFirst[currentlyOn.id == id]
+			if(train != null){
+				communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = train.id; referenceSpeed = 0; it.direction = TrainDirectionValue.FORWARD]).build)			
+			} else {
+				logger.info('''You are disabling section #«id» which has no train on it''')
+			}
+		}
+		
+	}]
+	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[ new ISegmentEnableStrategy(){
+		override enableSection(int id) {
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
+		}
+	}
+		
+	]
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
 		this.factory = factory
 		logger.info('Construction started')
-		model = new ModelUtil
+		model = new ModelUtil(factory)
 		logger.info('Construction finished')
 	}
 
@@ -38,26 +66,31 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	private def void initRailRoad() {
 		val sleepTimes = 200
+		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
 		val turnouts = model.model.sections.getTurnouts
 		turnouts.forEach [
 			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
 		]
+		logger.info('All turnout set straight')
 		Thread.sleep(sleepTimes)
 		turnouts.forEach [
 			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
 		]
+		logger.info('All turnout set divergent')
 		Thread.sleep(sleepTimes)
 
 		val segments = model.model.sections.getSegments
 		segments.forEach [
 			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
 		]
+		logger.info('Disabling all sections')
 		Thread.sleep(sleepTimes)
 		segments.forEach [
 			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
 		]
+		logger.info('Enabling all sections')
 		Thread.sleep(sleepTimes)
-
+		logger.info('Railroad initialization finished')
 	}
 
 	override void run() {
@@ -91,11 +124,17 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	private def void sendMessages() {
-		model.model.sections.getSegments.forEach [
-			if(isEnabled == false)
-				locator.trackElementCommander.sendSegmentCommand(it.id, SegmentState.DISABLED)
-			else
-				locator.trackElementCommander.sendSegmentCommand(it.id, SegmentState.ENABLED)
+		val sectionsToEnable = model.model.sections.getSegments().filter[isEnabled]
+		val sectionsToDisable = model.model.sections.getSegments().filter[!isEnabled]
+		segmentEnableStrategies.forEach[strategy | 
+			sectionsToEnable.forEach[segment |
+				strategy.enableSection(segment.id)
+			]
+		]		
+		segmentDisableStrategies.forEach[strategy |
+			sectionsToDisable.forEach[segment |
+				strategy.disableSection(segment.id)
+			]
 		]
 	}
 

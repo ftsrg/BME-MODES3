@@ -49,7 +49,7 @@ class UARTReader implements IUARTReader, Runnable {
 			while(!Thread.interrupted) {
 				try {
 					val readBytes = serial.read(1)
-					logger.info("readBytes " + Arrays.toString(readBytes))
+					logger.debug("readBytes " + Arrays.toString(readBytes))
 					received.put(readBytes)
 				} catch(IllegalStateException ex) {
 					logger.error(ex.message, ex)
@@ -91,9 +91,9 @@ class UARTReader implements IUARTReader, Runnable {
 					case BEFORE_HEADER_END: {
 						if(recvd.equals(0xFF as byte) && numberOfTimes0xFFDetected < 6) {
 							numberOfTimes0xFFDetected++
-							logger.info(status + " " + numberOfTimes0xFFDetected)
+							logger.debug(status + " " + numberOfTimes0xFFDetected)
 						} else if(recvd.equals(0xFF as byte) && numberOfTimes0xFFDetected == 6) {
-							logger.info(status + " " + numberOfTimes0xFFDetected)
+							logger.debug(status + " " + numberOfTimes0xFFDetected)
 							numberOfTimes0xFFDetected = 0
 							status = UARTProcessStatus.LAST_BYTE_OF_HEADER_HAS_TO_COME
 						} else {
@@ -102,19 +102,19 @@ class UARTReader implements IUARTReader, Runnable {
 					}
 					case LAST_BYTE_OF_HEADER_HAS_TO_COME: {
 						if(recvd.equals(0xAA as byte)) {
-							logger.info("0xAA detected")
+							logger.debug("0xAA detected")
 							status = UARTProcessStatus.DETECTING_OCCUPANCIES
 						} else {
-							logger.info("0xAA not detected")
+							logger.debug("0xAA not detected")
 							status = UARTProcessStatus.BEFORE_HEADER_END
 						}
 					}
 					case DETECTING_OCCUPANCIES: {
 						if(occupancyBuffer.size < 4) {
-							logger.info("adding to occupancy buffer")
+							logger.debug("adding to occupancy buffer")
 							occupancyBuffer.add(recvd)
 						} else {
-							logger.info("converting occupancy buffer")
+							logger.debug("converting occupancy buffer")
 							// get occupancyBuffer list as an array
 							var buffer = #[new Byte(1 as byte), new Byte(1 as byte), new Byte(1 as byte), new Byte(1 as byte)]
 							val occupancies = occupancyBuffer.toArray(buffer)
@@ -124,7 +124,7 @@ class UARTReader implements IUARTReader, Runnable {
 								convertBuffer.set(i, occupancies.get(i))
 							}
 							// send occupancy bytes
-							logger.info("converted buffer: " + Arrays.toString(convertBuffer))
+							logger.debug("converted buffer: " + Arrays.toString(convertBuffer))
 							outputQueue.put(convertBuffer)
 
 							// clear stuff
