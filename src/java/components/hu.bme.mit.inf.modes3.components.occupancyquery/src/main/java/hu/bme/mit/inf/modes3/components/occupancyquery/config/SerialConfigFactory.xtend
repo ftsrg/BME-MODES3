@@ -14,7 +14,7 @@ abstract class SerialConfigFactory {
 		return createConfig(
 			new SerialConfigParameters(
 				SerialPort.getDefaultPort,
-				Baud._115200,
+				Baud._9600,
 				DataBits._8,
 				Parity.NONE,
 				StopBits._1,
