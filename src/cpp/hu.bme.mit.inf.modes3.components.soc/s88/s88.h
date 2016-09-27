@@ -24,7 +24,7 @@
  * defines for SOC and S88
  */
 #define SOC_CLOCK_TIME_US 100
-#define SOC_CYCLE_COUNT 8*3
+#define SOC_CYCLE_COUNT 8*4
 
 #define S88_PIN_LOAD A2
 #define S88_PIN_RESET A3
