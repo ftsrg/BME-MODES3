@@ -17,14 +17,17 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
-	var newTrainId = 999
+	val Logger logger
 
-	new() {
+	new(ILoggerFactory factory) {
+		logger = factory.getLogger('ModelUtil')
 		resource = loadModel
 		model = resource.modelFromResource
 		engine = ViatraQueryEngine.on(new EMFScope(resource))
@@ -43,9 +46,16 @@ class ModelUtil implements IModelInteractor {
 	}
 	
 	def override addNewTrain(){
-		val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = newTrainId++]
+		val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
 		model.trains.add(train)
 		return train
+	}
+	
+	def private getNewTrainID(){
+		if(model.trains.findFirst[id == 1] == null) return 1
+		else if(model.trains.findFirst[id==2] == null) return 2
+		logger.error("This is the third train on the railroad, something went terribly wrong")
+		throw new RuntimeException("There can't be three trains on the railroad on the same time")
 	}
 	
 	def override removeTrain(Train t){
