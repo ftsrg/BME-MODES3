@@ -11,7 +11,7 @@ class Main {
 
 	def static final main(String[] args) {
 		val loggerFactory = new SimpleLoggerFactory
-
+		
 		val registry = new ArgumentRegistry(loggerFactory)
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("cid", "The ID of the component", String))
 		registry.parseArguments(args)
