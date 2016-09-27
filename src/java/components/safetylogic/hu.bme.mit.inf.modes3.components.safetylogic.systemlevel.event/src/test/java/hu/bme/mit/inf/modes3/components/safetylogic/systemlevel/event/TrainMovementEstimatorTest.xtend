@@ -7,6 +7,7 @@ import hu.bme.mit.inf.safetylogic.event.TrainMovementEstimator
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.slf4j.helpers.NOPLoggerFactory
 import org.slf4j.impl.SimpleLoggerFactory
 
 class TrainMovementEstimatorTest {
@@ -15,7 +16,7 @@ class TrainMovementEstimatorTest {
 
 	@Before
 	def void before() {
-		modelUtil = new ModelUtil
+		modelUtil = new ModelUtil(new NOPLoggerFactory)
 		estimator = new TrainMovementEstimator(
 			modelUtil,
 			new INotifiable() {

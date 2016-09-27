@@ -25,6 +25,7 @@ class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
 	val Logger logger
+	val validTrainIDs = #[1,2]
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
@@ -52,8 +53,9 @@ class ModelUtil implements IModelInteractor {
 	}
 	
 	def private getNewTrainID(){
-		if(model.trains.findFirst[id == 1] == null) return 1
-		else if(model.trains.findFirst[id==2] == null) return 2
+		for(trainID : validTrainIDs){
+			if(model.trains.findFirst[it.id == trainID] == null) return trainID
+		}
 		logger.error("This is the third train on the railroad, something went terribly wrong")
 		throw new RuntimeException("There can't be three trains on the railroad on the same time")
 	}
