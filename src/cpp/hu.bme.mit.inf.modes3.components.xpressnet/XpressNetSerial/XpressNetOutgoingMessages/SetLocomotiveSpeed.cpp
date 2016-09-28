@@ -4,13 +4,22 @@
 **/
 #include "SetLocomotiveSpeed.h"
 
-SetLocomotiveSpeed::SetLocomotiveSpeed(uint8_t trainID, TrainDirection trainDirection, uint8_t trainSpeed)
+SetLocomotiveSpeed::SetLocomotiveSpeed(uint8_t trainID, TrainDirection trainDirection, int trainSpeed)
 {
     messageBytes.push_back(0xE4);
     messageBytes.push_back(0x13);
     messageBytes.push_back(0x00);
     messageBytes.push_back(trainID);
-    messageBytes.push_back(trainDirection | trainSpeed);
+    uint8_t uTrainSpeed;
+    switch(trainSpeed) {
+    case -1:
+        uTrainSpeed = 1;
+    case 0:
+        break;
+    default:
+        uTrainSpeed = trainSpeed + 1;
+    }
+    messageBytes.push_back(trainDirection | uTrainSpeed);
     OutgoingXPNMessage::addXORto(messageBytes);
 }
 

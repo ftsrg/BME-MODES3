@@ -31,11 +31,11 @@ void receivedDataFromSerialPort(const char* data, unsigned int len)
 int main(int argc, char** argv)
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
-    
-    MosquittoppClient mosquittoppClient = MosquittoppClient(NULL, "xpressnet", "192.168.1.2", 1883);
+
+    MosquittoppClient mosquittoppClient = MosquittoppClient(NULL, "modes3/all", "192.168.1.2", 1883);
     NetworkInterface::setMqttClient(&mosquittoppClient);
     // std::cout << argc << std::endl;
-    
+
     boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
     boost::thread serialWriter(XpressNetSerial::trainInfoPollingThread);
     XpressNetSerial::getSerial().setCallback(receivedDataFromSerialPort);
@@ -44,6 +44,5 @@ int main(int argc, char** argv)
         boost::this_thread::sleep_for(boost::chrono::milliseconds(3000));
 
         boost::this_thread::sleep_for(boost::chrono::milliseconds(3000));
-
     }
 }

@@ -12,12 +12,22 @@ MosquittoppClient::MosquittoppClient(const char* _id, const char* _topic, const 
     connect_async(host, // non blocking connection to broker request
         port, keepalive);
     loop_start(); // Start thread managing connection / publish / subscribe
+    subscribe(nullptr, topic);
 }
 
 MosquittoppClient::~MosquittoppClient()
 {
     loop_stop();           // Kill the thread
     mosqpp::lib_cleanup(); // Mosquitto library cleanup
+}
+
+void MosquittoppClient::on_message(const mosquitto_message* message)
+{
+    if(message->payloadlen > 0) {
+        std::string str = static_cast<const char*>(message->payload);
+        // std::cout << str << std::endl;
+        ProtobufTranslator::processMessage(str);
+    }
 }
 
 bool MosquittoppClient::send_message(const char* _message)

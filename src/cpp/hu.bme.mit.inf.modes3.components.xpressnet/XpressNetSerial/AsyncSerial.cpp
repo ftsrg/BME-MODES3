@@ -109,7 +109,7 @@ void AsyncSerial::open(const std::string& devname,
     thread t(boost::bind(&asio::io_service::run, &pimpl->io));
     pimpl->backgroundThread.swap(t);
     setErrorStatus(false); // If we get here, no error
-    pimpl->open = true; // Port is now open
+    pimpl->open = true;    // Port is now open
 }
 
 bool AsyncSerial::isOpen() const
