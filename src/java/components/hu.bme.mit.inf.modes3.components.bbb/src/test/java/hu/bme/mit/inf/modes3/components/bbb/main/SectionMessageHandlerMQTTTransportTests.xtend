@@ -13,6 +13,7 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.slf4j.helpers.NOPLoggerFactory
+import org.junit.Ignore
 
 class SectionMessageHandlerMQTTTransportTests {
 
@@ -84,6 +85,7 @@ class SectionMessageHandlerMQTTTransportTests {
 		Mockito.verify(expander, Mockito.never).enableSection(sectionId)
 	}
 
+	@Ignore //TODO
 	@Test
 	def void disableHandledSection() {
 		// Arrange

@@ -19,7 +19,7 @@ void IncomingByteBuffer::addByte(uint8_t byte)
     byteBuffer_Mutex.try_lock();
     byteBuffer.push_back(byte);
     ////std::cout << "Added byte " << std::hex << std::setfill ('0') << std::setw(2) << (unsigned int) byte <<
-    ///std::endl;
+    /// std::endl;
 
     // For every added byte try to recognize a message.
     // The longest XpressNet message can only be 16 bytes long. If the buffer is longer than that

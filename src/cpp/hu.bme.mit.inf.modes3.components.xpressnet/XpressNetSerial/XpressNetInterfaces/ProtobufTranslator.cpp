@@ -18,12 +18,13 @@ bool ProtobufTranslator::processMessage(std::string messageString)
     // PowerState
     if(message.type() == modes3::protobuf::DCC_OPERATIONS_COMMAND) {
         TrackPowerState powerState;
-        if(message.dccoperationscommand().dccoperations() == modes3::protobuf::DccOperations::STOP_OPERATIONS) {
+        if(message.mutable_dccoperationscommand()->dccoperations() ==
+            modes3::protobuf::DccOperations::STOP_OPERATIONS) {
             powerState = TrackPowerState::OFF;
-        } else if(message.dccoperationscommand().dccoperations() ==
+        } else if(message.mutable_dccoperationscommand()->dccoperations() ==
             modes3::protobuf::DccOperations::STOP_ALL_LOCOMOTIVES) {
             powerState = TrackPowerState::ALL_TRAINS_OFF;
-        } else if(message.dccoperationscommand().dccoperations() ==
+        } else if(message.mutable_dccoperationscommand()->dccoperations() ==
             modes3::protobuf::DccOperations::NORMAL_OPERATIONS) {
             powerState = TrackPowerState::ON;
         }
@@ -32,38 +33,50 @@ bool ProtobufTranslator::processMessage(std::string messageString)
     // Turnout
     else if(message.type() == modes3::protobuf::TURNOUT_COMMAND) {
         TurnoutState turnoutState;
-        if(message.turnoutcommand().state() == modes3::protobuf::TurnoutStateValue::DIVERGENT) {
+        // DIVERGENT
+        if(message.mutable_turnoutcommand()->state() == modes3::protobuf::TurnoutStateValue::DIVERGENT) {
             turnoutState = TurnoutState::DIVERGENT;
-        } else if(message.turnoutcommand().state() == modes3::protobuf::TurnoutStateValue::STRAIGHT) {
+        }
+        // STRAIGHT
+        else if(message.mutable_turnoutcommand()->state() == modes3::protobuf::TurnoutStateValue::STRAIGHT) {
             turnoutState = TurnoutState::STRAIGHT;
-        } else {
+        }
+        // ???
+        else {
             return false;
         }
-        int turnoutAddress = message.turnoutcommand().turnoutid();
+        int turnoutAddress = message.mutable_turnoutcommand()->turnoutid();
         ProtobufTranslator::setTurnoutState(1, turnoutAddress, turnoutState);
     }
     // TrainSpeed
     else if(message.type() == modes3::protobuf::TRAIN_REFERENCE_SPEED_COMMAND) {
         TrainDirection trainDirection;
         // BACKWARD
-        if(message.trainreferencespeedcommand().direction() == modes3::protobuf::TrainDirectionValue::BACKWARD) {
+        if(message.mutable_trainreferencespeedcommand()->direction() ==
+            modes3::protobuf::TrainDirectionValue::BACKWARD) {
             trainDirection = TrainDirection::BACKWARD;
         }
         // FORWARD
-        else if(message.trainreferencespeedcommand().direction() == modes3::protobuf::TrainDirectionValue::FORWARD) {
+        else if(message.mutable_trainreferencespeedcommand()->direction() ==
+            modes3::protobuf::TrainDirectionValue::FORWARD) {
             trainDirection = TrainDirection::FORWARD;
         }
         //???
         else {
             return false;
         }
-        int trainAddress = message.trainreferencespeedcommand().trainid();
-        int trainSpeed = message.trainreferencespeedcommand().referencespeed();
+        int trainAddress = message.mutable_trainreferencespeedcommand()->trainid();
+        int trainSpeed = message.mutable_trainreferencespeedcommand()->referencespeed();
         ProtobufTranslator::setTrainSpeed(1, trainAddress, trainDirection, trainSpeed);
     }
     // TrainFunction
     else if(message.type() == modes3::protobuf::TRAIN_FUNCTION_COMMAND) {
         // Not yet implemented.
+        return false;
+    }
+    // ???
+    else {
+        return false;
     }
     return true;
 }
@@ -110,12 +123,29 @@ bool ProtobufTranslator::setTrainSpeed(int messagePriority,
     TrainDirection trainDirection,
     int trainSpeed)
 {
+
     bool successfullyAdded = false;
-    SetLocomotiveSpeed slp = SetLocomotiveSpeed(trainAddress, trainDirection, trainSpeed);
+    int sTrainSpeed;
+    // TOO LOW
+    if(trainSpeed < -1) {
+        sTrainSpeed = -1;
+    }
+    // TOO HOGH
+    else if(trainSpeed > 126) {
+        sTrainSpeed = 126;
+    }
+    // NORMAL
+    else {
+        sTrainSpeed = trainSpeed;
+    }
+    SetLocomotiveSpeed slp = SetLocomotiveSpeed(trainAddress, trainDirection, sTrainSpeed);
+    // HIGH PRIO
     if(messagePriority < 1) {
-        successfullyAdded = XpressNetSerial::addMessageToWriteQueue(slp);
-    } else {
         successfullyAdded = XpressNetSerial::addUrgentMessageToWriteQueue(slp);
+    }
+    // LOW PRIO
+    else {
+        successfullyAdded = XpressNetSerial::addMessageToWriteQueue(slp);
     }
     return successfullyAdded;
 }
@@ -125,6 +155,7 @@ bool ProtobufTranslator::setTrainFunction(int messagePriority,
     int trainFunctionNumber,
     bool trainFunctionState)
 {
+
     bool successfullyAdded = false;
     TrainFunctionGroup trainFunctionGroup;
     int function;
@@ -205,6 +236,7 @@ void ProtobufTranslator::powerStateChanged(TrackPowerState powerState)
 {
     modes3::protobuf::Message wrapperMessage = modes3::protobuf::Message();
     wrapperMessage.set_type(modes3::protobuf::DCC_OPERATIONS_STATE);
+    wrapperMessage.set_type(modes3::protobuf::DCC_OPERATIONS_STATE);
 
     modes3::protobuf::DccOperations dccOperations;
     // ALL OFF
@@ -223,8 +255,7 @@ void ProtobufTranslator::powerStateChanged(TrackPowerState powerState)
     ProtobufTranslator::sendMessage(wrapperMessage);
 }
 
-void ProtobufTranslator::trainSpeedChanged(int trainAddress, TrainDirection direction, int speed)
-{
+void ProtobufTranslator::trainSpeedChanged(int trainAddress, TrainDirection direction, int speed) {
     modes3::protobuf::Message wrapperMessage = modes3::protobuf::Message();
     wrapperMessage.set_type(modes3::protobuf::TRAIN_REFERENCE_SPEED);
     modes3::protobuf::TrainDirectionValue mTrainDirection;
@@ -242,13 +273,11 @@ void ProtobufTranslator::trainSpeedChanged(int trainAddress, TrainDirection dire
     ProtobufTranslator::sendMessage(wrapperMessage);
 }
 
-void ProtobufTranslator::trainFunctionChanged(int trainAddress, bool trainFunctions[13])
-{
+void ProtobufTranslator::trainFunctionChanged(int trainAddress, bool trainFunctions[13]) {
     // NOT IMPLEMENTED YET.
 }
 
-void ProtobufTranslator::turnoutStateChanged(int turnoutAddress, TurnoutState turnoutState)
-{
+void ProtobufTranslator::turnoutStateChanged(int turnoutAddress, TurnoutState turnoutState) {
     modes3::protobuf::Message wrapperMessage = modes3::protobuf::Message();
     wrapperMessage.set_type(modes3::protobuf::TURNOUT_REFERENCE_STATE);
 
@@ -263,8 +292,7 @@ void ProtobufTranslator::turnoutStateChanged(int turnoutAddress, TurnoutState tu
     ProtobufTranslator::sendMessage(wrapperMessage);
 }
 
-bool ProtobufTranslator::sendMessage(modes3::protobuf::Message message)
-{
+bool ProtobufTranslator::sendMessage(modes3::protobuf::Message message) {
     std::ostringstream stream;
     message.SerializeToOstream(&stream);
 
