@@ -2,6 +2,9 @@ package hu.bme.mit.inf.modes3.messaging.mms.dispatcher
 
 import com.google.protobuf.GeneratedMessageV3
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsStateOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
 import hu.bme.mit.inf.modes3.messaging.mms.messages.MessageType
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
@@ -27,7 +30,6 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
@@ -40,7 +42,8 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TurnoutStateOrBuilder> turnoutStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentStateOrBuilder> segmentStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentOccupancyOrBuilder> segmentOccupancyHandler
-
+	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<DccOperationsStateOrBuilder> dccOperationStateHandler
+	
 	// COMMANDS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainReferenceSpeedCommandOrBuilder> trainReferenceSpeedCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainFunctionCommandOrBuilder> trainFunctionCommandHandler
@@ -75,6 +78,9 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 					turnoutStateHandler?.handleMessage(message.turnoutState)
 				case MessageType.SEGMENT_OCCUPANCY:
 					segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
+				case MessageType.DCC_OPERATIONS_STATE:
+					dccOperationStateHandler?.handleMessage(message.dccOperationsState)
+						
 				default:
 					return
 			}
