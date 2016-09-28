@@ -38,10 +38,10 @@ class CommunicationStackFactory {
 		)
 	}
 
-	def static createMQTTStack(TransportConfiguration configuration, ILoggerFactory factory) {
+	def static createMQTTStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		return new CommunicationStack(
 			new MessagingService(factory),
-			new MQTTTransport(configuration, factory),
+			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry), factory),
 			new ProtobufMessageDispatcher(factory)
 		)
 	}
