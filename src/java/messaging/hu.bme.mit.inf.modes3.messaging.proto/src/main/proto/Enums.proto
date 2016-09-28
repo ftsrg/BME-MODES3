@@ -1,7 +1,14 @@
 syntax = "proto3";
 
+package modes3.protobuf;
 option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
 option java_multiple_files = true;
+
+enum DccOperations {
+	NORMAL_OPERATIONS = 0;
+	STOP_ALL_LOCOMOTIVES = 1;
+	STOP_OPERATIONS = 2;
+}
 
 enum MessageType {
 	NULL = 0;
@@ -10,7 +17,7 @@ enum MessageType {
 	TRAIN_CURRENT_SEGMENT = 3;
 	TRAIN_CURRENT_SPEED = 4;
 	TRAIN_DIRECTION_COMMAND = 5;
-	TRAIN_FUNCTION_COMMAND = 6;
+	
 	TRAIN_REFERENCE_SPEED = 7;
 	TRAIN_REFERENCE_SPEED_COMMAND = 8;
 	TURNOUT_COMMAND = 9;
@@ -20,6 +27,12 @@ enum MessageType {
 	YAKINDU_CAN_GO_TO = 13;
 	YAKINDU_CANNOT_GO_TO = 14;
 	YAKINDU_RESERVE_TO = 15;
+	TURNOUT_REFERENCE_COMMAND = 16;
+	TURNOUT_REFERENCE_STATE = 17;
+	TRAIN_FUNCTION_COMMAND = 18;
+	TRAIN_FUNCTION_STATE = 19;
+	DCC_OPERATIONS_COMMAND = 20;
+	DCC_OPERATIONS_STATE = 21;
 }
 
 enum SegmentStateValue {
@@ -35,6 +48,11 @@ enum TrainDirectionValue {
 enum TurnoutStateValue {
 	STRAIGHT = 0;
 	DIVERGENT = 1;
+}
+
+enum TrainFunctionValue {
+	OFF = 0;
+	ON = 1;
 }
 
 enum SegmentOccupancyValue {

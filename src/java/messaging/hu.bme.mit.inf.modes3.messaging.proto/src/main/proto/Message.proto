@@ -1,15 +1,21 @@
 syntax = "proto3";
 
+package modes3.protobuf;
+import "DccOperationsCommand.proto";
+import "DccOperationsState.proto";
 import "Enums.proto";
 import "SegmentCommand.proto";
 import "SegmentState.proto";
 import "TrainCurrentSegment.proto";
 import "TrainCurrentSpeed.proto";
 import "TrainFunctionCommand.proto";
+import "TrainFunctionState.proto";
 import "TrainReferenceSpeed.proto";
 import "TrainReferenceSpeedCommand.proto";
 import "TurnoutCommand.proto";
 import "TurnoutState.proto";
+import "TurnoutReferenceCommand.proto";
+import "TurnoutReferenceState.proto";
 import "SegmentOccupancy.proto";
 import "YakinduReleaseTo.proto";
 import "YakinduCanGoTo.proto";
@@ -26,7 +32,7 @@ message Message {
 	SegmentState segmentState = 3;
 	TrainCurrentSegment trainCurrentSegment = 4;
 	TrainCurrentSpeed trainCurrentSpeed = 5;
-	TrainFunctionCommand trainFunctionCommand = 6;
+	
 	TrainReferenceSpeed trainReferenceSpeed = 7;
 	TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
 	TurnoutCommand turnoutCommand = 9;
@@ -36,4 +42,10 @@ message Message {
 	YakinduCanGoTo yakinduCanGoTo = 13;
 	YakinduCannotGoTo yakinduCannotGoTo = 14;
 	YakinduReserveTo yakinduReserveTo = 15;
+	TurnoutReferenceCommand turnoutReferenceCommand = 16;
+	TurnoutReferenceState turnoutReferenceState = 17;
+	TrainFunctionCommand trainFunctionCommand = 18;
+	TrainFunctionState trainFunctionState = 19;
+	DccOperationsCommand dccOperationsCommand = 20;
+	DccOperationsState dccOperationsState = 21;
 }

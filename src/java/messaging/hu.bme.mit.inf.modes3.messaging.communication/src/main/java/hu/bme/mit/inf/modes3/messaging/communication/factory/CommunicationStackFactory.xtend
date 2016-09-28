@@ -4,7 +4,6 @@ import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.LocalTransport
-import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 import hu.bme.mit.inf.modes3.transports.config.loaders.ArgumentBasedTransportConfigurationLoader
 import hu.bme.mit.inf.modes3.transports.mqtt.MQTTTransport
 import hu.bme.mit.inf.modes3.transports.mqtt.conf.MQTTTransportConfigurationFactory
@@ -38,10 +37,10 @@ class CommunicationStackFactory {
 		)
 	}
 
-	def static createMQTTStack(TransportConfiguration configuration, ILoggerFactory factory) {
+	def static createMQTTStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		return new CommunicationStack(
 			new MessagingService(factory),
-			new MQTTTransport(configuration, factory),
+			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadMQTTConfiguration(argumentRegistry), factory),
 			new ProtobufMessageDispatcher(factory)
 		)
 	}
@@ -49,7 +48,7 @@ class CommunicationStackFactory {
 	def static createProtobufStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		return new CommunicationStack(
 			new MessagingService(factory),
-			new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry)),
+			new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadZeroMQConfiguration(argumentRegistry)),
 			new ProtobufMessageDispatcher(factory)
 		)
 	}

@@ -32,7 +32,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener {
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
 			if(train == null) { // There is not even a train nearby, so it must have been put there recently
 				train = model.addNewTrain
-				logger.info('''New train estimated on «changedSection.id»''')
+				logger.info('''New train estimated on «changedSection.id». The new train's ID is «train.id»''')
 			} else {
 				logger.info('''Train moved from «train.currentlyOn.id» to «changedSection.id»''')
 			}
