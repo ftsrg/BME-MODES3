@@ -3,6 +3,7 @@ package hu.bme.mit.inf.modes3.components.occupancyquery
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import java.util.Collections
 import java.util.HashMap
 import java.util.Map
 import org.slf4j.ILoggerFactory
@@ -41,23 +42,23 @@ class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationCompon
 	 */
 	private def parseMsg(byte[] byteVector) {
 		// That masking with 0xff is necessary because java doesn't have unsigned chars (so the sign bits messes up shifting)
-		val int occupancy = 
-			(byteVector.get(0).bitwiseAnd(0xff) << 24)
-			.bitwiseOr(byteVector.get(1).bitwiseAnd(0xff) << 16)
-			.bitwiseOr(byteVector.get(2).bitwiseAnd(0xff) << 8)
-			.bitwiseOr(byteVector.get(3).bitwiseAnd(0xff))
+		val int occupancy = (byteVector.get(0).bitwiseAnd(0xff) << 24).bitwiseOr(byteVector.get(1).bitwiseAnd(0xff) << 16).bitwiseOr(byteVector.get(2).bitwiseAnd(0xff) << 8).bitwiseOr(
+			byteVector.get(3).bitwiseAnd(0xff))
 		val map = new HashMap<Integer, SegmentOccupancy>
-		for (i : 0 ..< 31) {
+		for (i : 0 ..< 32) {
 			val mask = ( 1 << i )
 			val bit = (occupancy.bitwiseAnd(mask) >> i)
-			map.put(i, if(bit == 1) SegmentOccupancy.OCCUPIED else SegmentOccupancy.FREE)
+			// i+1 is the section ID, because we start number from 1
+			map.put(i + 1, if(bit == 1) SegmentOccupancy.OCCUPIED else SegmentOccupancy.FREE)
 		}
 		return reshuffle(map)
 	}
 
 	private def HashMap<Integer, SegmentOccupancy> reshuffle(HashMap<Integer, SegmentOccupancy> map) {
-		val transitionTable = #{1 -> 2, 2 -> 1}
-		val ignoredBits = #[0]
+		// val transitionTable = #{1 -> 2, 2 -> 1}
+		// val ignoredBits = #[0]
+		val transitionTable = Collections.emptyMap
+		val ignoredBits = Collections.emptyList
 		val newMap = new HashMap<Integer, SegmentOccupancy>
 		map.filter [ id, state |
 			!ignoredBits.contains(id)
