@@ -7,6 +7,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
@@ -120,28 +121,28 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	override void run() {
-//		for(value: 0..<126) {
-//			communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = 9; referenceSpeed = value; direction = TrainDirectionValue.FORWARD]).build)
-//			println('Msg sent ' +value)
-//			Thread.sleep(1000)
-//		}
-		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.STOP_OPERATIONS]).build)
-		println('STOPPED')
-		Thread.sleep(5000)
-		println('STARTED')
-		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
+////		for(value: 0..<126) {
+////			communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = 9; referenceSpeed = value; direction = TrainDirectionValue.FORWARD]).build)
+////			println('Msg sent ' +value)
+////			Thread.sleep(1000)
+////		}
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.STOP_OPERATIONS]).build)
+//		println('STOPPED')
+//		Thread.sleep(5000)
+//		println('STARTED')
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
 		
-//		this.logger.info("Running started...")
-//		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
-//		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
-//
-//			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-//				(model.model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
-//				refreshSafetyLogicState
-//			}
-//		}
-//
-//		initRailRoad()
+		this.logger.info("Running started...")
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
+		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
+
+			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
+				(model.model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				refreshSafetyLogicState
+			}
+		}
+
+		initRailRoad()
 	}
 
 	def public void refreshSafetyLogicState() {
