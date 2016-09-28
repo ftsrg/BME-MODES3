@@ -25,7 +25,7 @@ class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
 	val Logger logger
-	val validTrainIDs = #[1,2]
+	val validTrainIDs = #[9,10] //8=RED, 9=TAURUS, 10=SNCF
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')

@@ -27,6 +27,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
@@ -158,6 +159,10 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 		message.type = MessageType.SEGMENT_OCCUPANCY
 		message.segmentOccupancy = _message
 		message.build.toByteArray
+	}
+	
+	def dispatch byte[] internalConvertMessageToRaw(DccOperationsCommand _message){
+		(Message.newBuilder => [type = MessageType.DCC_OPERATIONS_COMMAND; dccOperationsCommand = _message ]).build.toByteArray
 	}
 
 }

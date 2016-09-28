@@ -40,7 +40,7 @@ class CommunicationStackFactory {
 	def static createMQTTStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		return new CommunicationStack(
 			new MessagingService(factory),
-			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry), factory),
+			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadMQTTConfiguration(argumentRegistry), factory),
 			new ProtobufMessageDispatcher(factory)
 		)
 	}
@@ -48,7 +48,7 @@ class CommunicationStackFactory {
 	def static createProtobufStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		return new CommunicationStack(
 			new MessagingService(factory),
-			new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry)),
+			new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadZeroMQConfiguration(argumentRegistry)),
 			new ProtobufMessageDispatcher(factory)
 		)
 	}

@@ -8,6 +8,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateRegi
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
+import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
@@ -23,6 +24,7 @@ class TrackCommunicationServiceLocator {
 	val TrackElementCommander tec
 	val TrackElementCommandCallback tecc
 	val TrackElementStateRegistry tsr
+	val TrainReferenceSpeedState trss 
 
 	new(CommunicationStack _stack, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
@@ -33,6 +35,7 @@ class TrackCommunicationServiceLocator {
 		tec = new TrackElementCommander(stack.mms, factory)
 		tecc = new TrackElementCommandCallback(stack.dispatcher as ProtobufMessageDispatcher, factory)
 		tsr = new TrackElementStateRegistry(stack.dispatcher as ProtobufMessageDispatcher, factory)
+		trss = new TrainReferenceSpeedState(stack.dispatcher as ProtobufMessageDispatcher, factory)
 	}
 
 	def ITrackElementStateSender getTrackElementStateSender() {
@@ -49,5 +52,9 @@ class TrackCommunicationServiceLocator {
 
 	def ITrackElementStateRegistry getTrackElementStateRegistry() {
 		return tsr
+	}
+	
+	def TrainReferenceSpeedState getTrainReferenceSpeedState(){
+		return trss
 	}
 }

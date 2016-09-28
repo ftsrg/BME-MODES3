@@ -44,12 +44,12 @@ public class YakinduCommunicationStackFactory {
 
 	public static CommunicationStack createProtobufStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		return new YakinduCommunicationStack(new MessagingService(factory),
-				new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry)));
+				new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadZeroMQConfiguration(argumentRegistry)));
 	}
 
 	public static CommunicationStack createProtobufStackFromDispatcher(ArgumentRegistry argumentRegistry, YakinduMessageDispatcher dispatcher,
 			ILoggerFactory factory) {
 		return new YakinduCommunicationStack(new MessagingService(factory),
-				new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadConfiguration(argumentRegistry)), dispatcher);
+				new ZMQTransport(ArgumentBasedTransportConfigurationLoader.loadZeroMQConfiguration(argumentRegistry)), dispatcher);
 	}
 }

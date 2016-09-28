@@ -8,6 +8,10 @@ import org.slf4j.impl.SimpleLoggerFactory
 class Main {
 
 	public static def void main(String[] args) {
+		
+		
+		
+		
 		val loggerFactory = new SimpleLoggerFactory
 		
 		val registry = new ArgumentRegistry(loggerFactory)

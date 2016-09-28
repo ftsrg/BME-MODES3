@@ -55,9 +55,12 @@ class MQTTClient {
 			{
 				// connect to the first possible remote location which has a broker
 				if(!success.value) {
+					println('config address = ' + config.addr)
 					try {
+						println('i am trying')
 						val mqttConfig = new MQTTConfiguration(config.pubPort, config.addr, transportConfig.localEndpoint.id)
 						testAndSubscribeToConnection(mqttConfig, topic, callback)
+						println('yeey')
 						success.value = true
 					} catch(MqttException ex) {
 						if(ex.reasonCode != NOT_CONNECTED_ERROR_CODE) {
