@@ -4,7 +4,6 @@ import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.LocalTransport
-import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 import hu.bme.mit.inf.modes3.transports.config.loaders.ArgumentBasedTransportConfigurationLoader
 import hu.bme.mit.inf.modes3.transports.mqtt.MQTTTransport
 import hu.bme.mit.inf.modes3.transports.mqtt.conf.MQTTTransportConfigurationFactory
