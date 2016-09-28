@@ -15,6 +15,9 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsStateOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
@@ -121,16 +124,29 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	override void run() {
-////		for(value: 0..<126) {
-////			communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = 9; referenceSpeed = value; direction = TrainDirectionValue.FORWARD]).build)
-////			println('Msg sent ' +value)
-////			Thread.sleep(1000)
-////		}
-//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.STOP_OPERATIONS]).build)
+//		for(value: 0..<126) {
+//			communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = 9; referenceSpeed = value; direction = TrainDirectionValue.FORWARD]).build)
+//			println('Msg sent ' +value)
+//			Thread.sleep(1000)
+//		}
+//		(communication.dispatcher as ProtobufMessageDispatcher).dccOperationStateHandler = new MessageHandler<DccOperationsStateOrBuilder>(){
+//			override handleMessage(DccOperationsStateOrBuilder message) {
+//				println('Value = ' + message.dccOperationsValue)
+//				println(switch(message.dccOperations){
+//					case NORMAL_OPERATIONS: 'normal'
+//					case STOP_ALL_LOCOMOTIVES: 'stop loco'
+//					case STOP_OPERATIONS: 'stop all'
+//					case UNRECOGNIZED: 'unrecognized'
+//				})
+//			}
+//		}
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.STOP_OPERATIONS]).build)
 //		println('STOPPED')
 //		Thread.sleep(5000)
 //		println('STARTED')
-//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
+//		
+//		Thread.sleep(5000)
 		
 		this.logger.info("Running started...")
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)

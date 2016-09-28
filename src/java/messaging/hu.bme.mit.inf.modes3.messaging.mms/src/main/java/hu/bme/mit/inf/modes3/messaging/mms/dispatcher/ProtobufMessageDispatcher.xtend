@@ -2,7 +2,6 @@ package hu.bme.mit.inf.modes3.messaging.mms.dispatcher
 
 import com.google.protobuf.GeneratedMessageV3
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
-import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsStateOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
@@ -80,7 +79,6 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 					segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
 				case MessageType.DCC_OPERATIONS_STATE:
 					dccOperationStateHandler?.handleMessage(message.dccOperationsState)
-						
 				default:
 					return
 			}
