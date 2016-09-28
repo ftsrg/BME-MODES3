@@ -19,11 +19,11 @@ class TrackElementStateChangeNotifier extends TrackElementStateNotifier {
 			factory)
 	}
 
-	private new(TrackCommunicationServiceLocator locator, BoardWrapper board, ILoggerFactory factory) {
-		this(locator, new ExpanderSectionController(board, factory), new ExpanderTurnoutController(board, factory), factory)
+	private new(int turnoutID, TrackCommunicationServiceLocator locator, BoardWrapper board, ILoggerFactory factory) {
+		this(locator, new ExpanderSectionController(turnoutID, board, factory), new ExpanderTurnoutController(turnoutID, board, factory), factory)
 	}
 
-	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
-		this(locator, new BoardWrapper(factory), factory)
+	new(int turnoutID, TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
+		this(turnoutID, locator, new BoardWrapper(factory), factory)
 	}
 }

@@ -18,7 +18,7 @@ import org.slf4j.Logger
  * 
  * @author hegyibalint
  */
-class Setting {
+class Configuration {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) static var Logger logger
 
@@ -26,13 +26,13 @@ class Setting {
 	 * Stores the managed turnouts ID [key], and the pinout header value through
 	 * that turnout's status (divergent/straight) is measurable.
 	 */
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, Integer> turnouts
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, String> turnouts
 
 	/**
 	 * Stores the managed sections ID [key], and the pinout header value through
 	 * that sections are controllable.
 	 */
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, Integer> sections
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, String> sections
 
 	/**
 	 * The deserialized configuration of the pinout headers, based on the
@@ -43,18 +43,17 @@ class Setting {
 	 * @return the pinout configuration
 	 * @throws Exception
 	 */
-	static def Setting loadPinoutConfig(int id, ILoggerFactory factory) {
+	static def Configuration loadPinoutConfig(int id, ILoggerFactory factory) {
 		logger = factory.getLogger(Pinout.name)
 
 		val gson = new Gson
 		var InputStreamReader isr = null
 		var JsonReader reader = null
 		try {
-			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("conf/settings.json"))
+			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("resources/config.json"))
 			reader = new JsonReader(isr)
-			var JsonObject settings = gson.fromJson(reader, JsonObject)
-			settings = settings.get("settings").asJsonObject
-			gson.fromJson(settings.get(String.valueOf(id)), Setting)
+			var JsonObject config = gson.fromJson(reader, JsonObject)
+			gson.fromJson(config.get(String.valueOf(id)), typeof(Configuration))
 		} catch(Exception ex){
 			logger.error(ex.message, ex)
 			throw ex
@@ -94,11 +93,11 @@ class Setting {
 		sections.keySet
 	}
 
-	def getTurnoutPinoutHeaderValue(int turnout) {
-		turnouts.get(String.valueOf(turnout))
+	def getTurnoutExpander(int turnoutID) {
+		turnouts.get(String.valueOf(turnoutID))
 	}
 
-	def getSectionPinoutHeaderValue(int section) {
-		sections.get(String.valueOf(section))
+	def getSectionExpander(int sectionID) {
+		sections.get(String.valueOf(sectionID))
 	}
 }

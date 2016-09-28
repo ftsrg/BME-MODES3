@@ -27,10 +27,10 @@ class TrackElementCommandHandler {
 		turnoutMessageHandler = new TurnoutMessageHandler(locator.trackElementCommandCallback, turnoutController, factory)
 	}
 
-	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
+	new(int turnoutID, TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		val board = new BoardWrapper(factory)
-		sectionMessageHandler = new SectionMessageHandler(locator.trackElementCommandCallback, new ExpanderSectionController(board, factory), factory)
-		turnoutMessageHandler = new TurnoutMessageHandler(locator.trackElementCommandCallback, new ExpanderTurnoutController(board, factory), factory)
+		sectionMessageHandler = new SectionMessageHandler(locator.trackElementCommandCallback, new ExpanderSectionController(turnoutID, board, factory), factory)
+		turnoutMessageHandler = new TurnoutMessageHandler(locator.trackElementCommandCallback, new ExpanderTurnoutController(turnoutID, board, factory), factory)
 	}
 
 }

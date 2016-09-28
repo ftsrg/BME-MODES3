@@ -15,9 +15,9 @@ import org.slf4j.ILoggerFactory
  */
 class BBBComponentWithStateChangeNotifier extends BBBComponent {
 
-	new(CommunicationStack stack, ILoggerFactory factory) {
-		super(stack, factory)
-		stateNotifier = new TrackElementStateChangeNotifier(locator, factory)
+	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
+		super(turnoutID, stack, factory)
+		stateNotifier = new TrackElementStateChangeNotifier(turnoutID, locator, factory)
 	}
 
 	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController, ILoggerFactory factory) {

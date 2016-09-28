@@ -22,10 +22,10 @@ class Main {
 
 		val communicationStack = CommunicationStackFactory::createProtobufStack(registry, loggerFactory)
 		if(registry.hasMandatoryArguments(requiredParams)) {
-			val bbb = new BBBComponentWithStateChangeNotifier(communicationStack, loggerFactory)
+			val bbb = new BBBComponentWithStateChangeNotifier(registry.getParameterIntegerValue("cid"), communicationStack, loggerFactory)
 			bbb.run // run on main thread
 		} else {
-			val bbb = new BBBComponent(communicationStack, loggerFactory)
+			val bbb = new BBBComponent(registry.getParameterIntegerValue("cid"), communicationStack, loggerFactory)
 			val thread = new Thread(bbb)
 			thread.start
 		}

@@ -28,13 +28,13 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 	// thread-safe wrapper for the BBB board
 	protected var BoardWrapper board
 
-	new(BoardWrapper boardWrapper, ILoggerFactory factory) {
+	new(int turnoutID, BoardWrapper boardWrapper, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 
 		board = boardWrapper
 
 		try {
-			controllerConf = new ExpanderControllerConfiguration(factory)
+			controllerConf = new ExpanderControllerConfiguration(turnoutID, factory)
 		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 		}
@@ -55,25 +55,23 @@ class ExpanderSectionController implements ISegmentControllerStrategy {
 	}
 
 	override enableSection(int sectionId) {
-		logger.info('''Enable section «sectionId» physically.''')
+		logger.debug('''Enable section «sectionId» physically.''')
 
-		val sectionExpander = controllerConf.getSectionExpander(sectionId);
-		board.setPinLevel(sectionExpander.get(0), Signal.High)
-		board.setPinLevel(sectionExpander.get(1), Signal.High)
-		board.setPinLevel(sectionExpander.get(2), Signal.High)
-		board.setPinLevel(sectionExpander.get(3), Signal.High)
+		val sectionExpanderPins = controllerConf.getSectionExpander(sectionId);
+		sectionExpanderPins.forEach[
+			board.setPinLevel(it, Signal.High)	
+		]
 
 		sectionStatus.put(sectionId, SegmentState.ENABLED)
 	}
 
 	override disableSection(int sectionId) {
-		logger.info('''Disable section «sectionId» physically.''')
+		logger.debug('''Disable section «sectionId» physically.''')
 
-		val sectionExpander = controllerConf.getSectionExpander(sectionId)
-		board.setPinLevel(sectionExpander.get(0), Signal.Low)
-		board.setPinLevel(sectionExpander.get(1), Signal.Low)
-		board.setPinLevel(sectionExpander.get(2), Signal.Low)
-		board.setPinLevel(sectionExpander.get(3), Signal.Low)
+		val sectionExpanderPins = controllerConf.getSectionExpander(sectionId)
+		sectionExpanderPins.forEach[
+			board.setPinLevel(it, Signal.Low)	
+		]
 
 		sectionStatus.put(sectionId, SegmentState.DISABLED)
 	}
