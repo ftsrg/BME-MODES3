@@ -1,14 +1,15 @@
 plugins {
 	id "org.xtext.xtend" version "1.0.12" apply false
 	id "com.google.protobuf" version "0.8.0" apply false
-	
+
 	id "org.sonarqube" version "2.1-rc3"
+	id 'org.hidetake.ssh' version '2.7.0'
 }
 
+ssh.settings { knownHosts = allowAnyHosts}
+
 sonarqube {
-	properties {
-		property "sonar.projectName", "MoDeS3"
-	}
+	properties { property "sonar.projectName", "MoDeS3" }
 }
 
 subprojects {
@@ -37,13 +38,25 @@ subprojects {
 	plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
 		sourceSets {
 			main {
-				java.srcDirs = ['src/main/java', 'src/main/xtext-gen']
-				resources.srcDirs = ['src/main/resources', 'src/main/xtext-gen']
+				java.srcDirs = [
+					'src/main/java',
+					'src/main/xtext-gen'
+				]
+				resources.srcDirs = [
+					'src/main/resources',
+					'src/main/xtext-gen'
+				]
 				xtendOutputDir = 'src/main/xtend-gen'
 			}
 			test {
-				java.srcDirs = ['src/test/java', 'src/test/xtext-gen']
-				resources.srcDirs = ['src/test/resources', 'src/test/xtext-gen']
+				java.srcDirs = [
+					'src/test/java',
+					'src/test/xtext-gen'
+				]
+				resources.srcDirs = [
+					'src/test/resources',
+					'src/test/xtext-gen'
+				]
 				xtendOutputDir = 'src/test/xtend-gen'
 			}
 		}

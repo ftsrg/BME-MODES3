@@ -36,10 +36,9 @@ class Pinout {
 		var InputStreamReader isr = null
 		var JsonReader reader = null
 		try {
-			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("conf/pinouts.json"))
+			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("resources/pinouts.json"))
 			reader = new JsonReader(isr)
-			val JsonObject pinout = gson.fromJson(reader, JsonObject)
-			gson.fromJson(pinout, Pinout)
+			gson.fromJson(reader, Pinout)
 		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 			throw ex
@@ -50,7 +49,7 @@ class Pinout {
 	}
 
 	def String[] getHeaderPins(String headerName) {
-		val pins = headers.get(headerName)
+		val pins = headers.get(headerName.replaceAll("[HL]", ""))
 		
 		if (headerName.endsWith('L')) {
 			#[pins.get(0), pins.get(2)]	

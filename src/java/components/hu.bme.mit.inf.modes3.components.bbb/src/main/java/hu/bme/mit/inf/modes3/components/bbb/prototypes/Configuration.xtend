@@ -53,7 +53,7 @@ class Configuration {
 			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("resources/config.json"))
 			reader = new JsonReader(isr)
 			var JsonObject config = gson.fromJson(reader, JsonObject)
-			gson.fromJson(config.get(String.valueOf(id)), typeof(Configuration))
+			gson.fromJson(config.get("t" + Integer.valueOf(id)), typeof(Configuration))
 		} catch(Exception ex){
 			logger.error(ex.message, ex)
 			throw ex
