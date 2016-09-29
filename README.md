@@ -9,7 +9,7 @@ A case study system using the cooperation of a model railway and a robot to demo
 This repository uses [Gradle](https://gradle.org/) for build management. To build the project type
 
 ```
-cd src
+cd src/java
 ./gradlew build
 ```
 

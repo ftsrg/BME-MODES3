@@ -7,6 +7,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
@@ -14,6 +15,9 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsStateOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
@@ -125,23 +129,36 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 //			println('Msg sent ' +value)
 //			Thread.sleep(1000)
 //		}
-		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.STOP_OPERATIONS]).build)
-		println('STOPPED')
-		Thread.sleep(5000)
-		println('STARTED')
-		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
-		
-//		this.logger.info("Running started...")
-//		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
-//		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
-//
-//			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-//				(model.model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
-//				refreshSafetyLogicState
+//		(communication.dispatcher as ProtobufMessageDispatcher).dccOperationStateHandler = new MessageHandler<DccOperationsStateOrBuilder>(){
+//			override handleMessage(DccOperationsStateOrBuilder message) {
+//				println('Value = ' + message.dccOperationsValue)
+//				println(switch(message.dccOperations){
+//					case NORMAL_OPERATIONS: 'normal'
+//					case STOP_ALL_LOCOMOTIVES: 'stop loco'
+//					case STOP_OPERATIONS: 'stop all'
+//					case UNRECOGNIZED: 'unrecognized'
+//				})
 //			}
 //		}
-//
-//		initRailRoad()
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.STOP_OPERATIONS]).build)
+//		println('STOPPED')
+//		Thread.sleep(5000)
+//		println('STARTED')
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
+//		
+//		Thread.sleep(5000)
+		
+		this.logger.info("Running started...")
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
+		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
+
+			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
+				(model.model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				refreshSafetyLogicState
+			}
+		}
+
+		initRailRoad()
 	}
 
 	def public void refreshSafetyLogicState() {
