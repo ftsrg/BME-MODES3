@@ -59,6 +59,7 @@ class MQTTClient {
 						val mqttConfig = new MQTTConfiguration(config.pubPort, config.addr, transportConfig.localEndpoint.id)
 						testAndSubscribeToConnection(mqttConfig, topic, callback)
 						success.value = true
+						logger.info('''Connection succesful to MQTT Broker on «config.addr»:«config.pubPort»''')
 					} catch(MqttException ex) {
 						if(ex.reasonCode != NOT_CONNECTED_ERROR_CODE) {
 							logger.error(ex.message, ex)
@@ -133,7 +134,7 @@ class MQTTClient {
 	def synchronized sendMessage(byte[] message) {
 		try {
 			client?.publish(topic, message, qos, false)
-			Thread.sleep(10)
+			Thread.sleep(50)
 		} catch(MqttException ex) {
 			logger.error(ex.message, ex)
 		} catch(InterruptedException ex) {
