@@ -9,7 +9,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import org.slf4j.ILoggerFactory
 
-class TrainReferceCommander extends Commander {
+class TrainReferenceCommander extends Commander {
 
 	new(MessagingService mms, ILoggerFactory factory) {
 		super(mms, factory)

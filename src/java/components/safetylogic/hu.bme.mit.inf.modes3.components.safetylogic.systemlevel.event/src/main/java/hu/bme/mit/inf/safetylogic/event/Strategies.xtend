@@ -1,15 +1,15 @@
 package hu.bme.mit.inf.safetylogic.event
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
-import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
+import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
-import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection
+import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceCommander
 
 public interface ITrainStopStrategy {
 	def void stopTrain(Train train)
@@ -51,35 +51,31 @@ public class XPressZeroSpeedDisableStrategy implements ITrainStopStrategy {
 }
 
 public class XPressInvertDirection implements ITrainStopStrategy {
-	MessagingService mms
+	TrainReferenceCommander mms
 	TrainReferenceSpeedState referenceSpeedState
 	Logger logger
-
-	new(MessagingService mms, TrainReferenceSpeedState referenceSpeedState, Logger logger) {
+ 
+	new(TrainReferenceCommander mms, TrainReferenceSpeedState referenceSpeedState, Logger logger) {
 		this.mms = mms
 		this.referenceSpeedState = referenceSpeedState
 		this.logger = logger
 	}
 
 	override stopTrain(Train train) {
-		mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [
-			trainID = train.id;
-			referenceSpeed = 0;
-			it.direction = if(referenceSpeedState.getDirection(train.id) == TrainDirectionValue.FORWARD) TrainDirectionValue.BACKWARD else TrainDirectionValue.FORWARD
-		]).build)
+		mms.setTrainReferenceSpeedAndDirection(train.id, 0, if(referenceSpeedState.getDirection(train.id) == TrainDirection.FORWARD) TrainDirection.BACKWARD else TrainDirection.FORWARD)
 	}
 
 }
 
 public class XPressStopAll implements ISegmentDisableStrategy, ITrainStopStrategy {
-	MessagingService mms
+	TrainReferenceCommander trc
 
-	new(MessagingService mms) {
-		this.mms = mms
+	new(TrainReferenceCommander trc) {
+		this.trc = trc
 	}
 
 	def internalStop() {
-		mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.STOP_OPERATIONS]).build)
+		trc.stopEntireRailRoad
 	}
 
 	override stopTrain(Train train) {
