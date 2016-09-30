@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed
 
+import hu.bme.mit.inf.modes3.messaging.communication.enums.EnumTransformator
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
 import java.util.HashMap
@@ -31,6 +32,6 @@ class TrainReferenceSpeedState {
 	}	
 	
 	def getDirection(int id){
-		return directions.get(id)
+		return EnumTransformator.toGeneral(directions.get(id))
 	}
 }
