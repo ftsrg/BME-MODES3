@@ -3,75 +3,33 @@ package hu.bme.mit.inf.safetylogic.event
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
-import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
-import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
+import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
-import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsStateOrBuilder
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
 	@Accessors(PUBLIC_GETTER) protected ModelUtil model // XXX IModelInteractor should be the static type
 	private ILoggerFactory factory
+	
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
-		new ISegmentDisableStrategy() {
-
-			override disableSection(int id) {
-				locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
-			}
-
-		},
-		new ISegmentDisableStrategy() {
-
-			override disableSection(int id) {
-				val train = model.model.trains.findFirst[currentlyOn.id == id]
-				if(train != null) {
-					communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = train.id; referenceSpeed = 0; it.direction = TrainDirectionValue.FORWARD]).build)
-				} else {
-					logger.info('''You are disabling section #«id» which has no train on it''')
-				}
-			}
-		},
-		new ISegmentDisableStrategy() {
-
-			override disableSection(int id) {
-				val train = model.model.trains.findFirst[currentlyOn.id == id]
-				if(train != null) {
-					communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [
-						trainID = train.id; referenceSpeed = 0; 
-						it.direction = 
-							if(locator.trainReferenceSpeedState.getDirection(train.id) == TrainDirectionValue.FORWARD) TrainDirectionValue.BACKWARD 
-							else TrainDirectionValue.FORWARD
-					]).build)
-				} else {
-					logger.info('''You are disabling section #«id» which has no train on it''')
-				}
-			}
-
-		}, new ISegmentDisableStrategy(){
-			
-			override disableSection(int id) {
-				communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.STOP_OPERATIONS]).build)
-			}
-			
-		}
+		new TrackDisableStrategy(locator.trackElementCommander)//BBB Config, like good ol' days!
 	]
+	val List<Train> stoppedTrains = new ArrayList<Train>
+	
+	val List<ITrainStopStrategy> trainStopStrategies = #[
+		
+	]
+	
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
-		new ISegmentEnableStrategy() {
-			override enableSection(int id) {
-				locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
-			}
-		}
+		new TrackEnableStrategy(locator.trackElementCommander)//BBB Config, like good ol' days!
 	]
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
@@ -95,7 +53,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	private def void initRailRoad() {
-		val sleepTimes = 200
+		val sleepTimes = 1000
 		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
 		val turnouts = model.model.sections.getTurnouts
 		turnouts.forEach [
@@ -124,30 +82,6 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	override void run() {
-//		for(value: 0..<126) {
-//			communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = 9; referenceSpeed = value; direction = TrainDirectionValue.FORWARD]).build)
-//			println('Msg sent ' +value)
-//			Thread.sleep(1000)
-//		}
-//		(communication.dispatcher as ProtobufMessageDispatcher).dccOperationStateHandler = new MessageHandler<DccOperationsStateOrBuilder>(){
-//			override handleMessage(DccOperationsStateOrBuilder message) {
-//				println('Value = ' + message.dccOperationsValue)
-//				println(switch(message.dccOperations){
-//					case NORMAL_OPERATIONS: 'normal'
-//					case STOP_ALL_LOCOMOTIVES: 'stop loco'
-//					case STOP_OPERATIONS: 'stop all'
-//					case UNRECOGNIZED: 'unrecognized'
-//				})
-//			}
-//		}
-//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.STOP_OPERATIONS]).build)
-//		println('STOPPED')
-//		Thread.sleep(5000)
-//		println('STARTED')
-//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
-//		
-//		Thread.sleep(5000)
-		
 		this.logger.info("Running started...")
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
@@ -162,16 +96,23 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	def public void refreshSafetyLogicState() {
-		logger.info('''Refreshing state: #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		logger.info('''Refreshing state: #of trains «model.model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		logger.info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«train.previouslyOn?.id»}«ENDFOR»''')
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first
+		val offenders = new ArrayList<Train>
 		model.cuts.forEach [ cut |
 			logger.info('''CUT: victim on «(cut.victim).id» cuts «(cut.offender).currentlyOn.id»''')
 			model.getSegment(cut.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which cut sections
+			offenders.add(cut.offender)
 		]
 
 		model.hits.forEach [ hit |
 			logger.info('''HIT: offender on «(hit.offender).currentlyOn.id», victim on «(hit.victim).currentlyOn.id»''')
 			model.getSegment(hit.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which hit another
+			offenders.add(hit.offender)
+		]
+		offenders.filter[!stoppedTrains.contains(it)].forEach[ train |
+			trainStopStrategies.forEach[it.stopTrain(train )]
 		]
 
 		sendMessages()
