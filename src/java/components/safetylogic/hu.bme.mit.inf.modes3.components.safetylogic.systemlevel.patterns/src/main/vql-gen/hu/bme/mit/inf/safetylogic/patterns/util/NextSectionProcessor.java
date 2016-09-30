@@ -3,8 +3,8 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatch;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 
 /**
@@ -22,7 +22,7 @@ public abstract class NextSectionProcessor implements IMatchProcessor<NextSectio
    * @param pNext the value of pattern parameter Next in the currently processed match
    * 
    */
-  public abstract void process(final EObject pOld, final EObject pCurrent, final EObject pNext);
+  public abstract void process(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext);
   
   @Override
   public void process(final NextSectionMatch match) {

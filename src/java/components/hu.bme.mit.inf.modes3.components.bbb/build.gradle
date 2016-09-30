@@ -1,12 +1,62 @@
+apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
 	compile 'io.silverspoon:bulldog-devices:0.2.1'
-	compile ('io.silverspoon:bulldog-board-beagleboneblack:0.2.1') {
-		exclude module: 'bulldog-linux-native-beagleboneblack'
-	}
+	compile ('io.silverspoon:bulldog-board-beagleboneblack:0.2.1') { exclude module: 'bulldog-linux-native-beagleboneblack' }
 	compile 'com.google.code.gson:gson:2.7'
 	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
+}
+
+mainClassName = "hu.bme.mit.inf.modes3.components.bbb.main.Main"
+
+remotes {
+	t1 {
+		role('turnout')
+		host = 't1.modes3.intra'
+		user = 'debian'
+		identity = file('modes3_key')
+	}
+	t2 {
+		role('turnout')
+		host = 't2.modes3.intra'
+		user = 'debian'
+		identity = file('modes3_key')
+	}
+	t3 {
+		role('turnout')
+		host = 't3.modes3.intra'
+		user = 'debian'
+		identity = file('modes3_key')
+	}
+	t4 {
+		role('turnout')
+		host = 't4.modes3.intra'
+		user = 'debian'
+		identity = file('modes3_key')
+	}
+	t5 {
+		role('turnout')
+		host = 't5.modes3.intra'
+		user = 'debian'
+		identity = file('modes3_key')
+	}
+	t6 {
+		role('turnout')
+		host = 't6.modes3.intra'
+		user = 'debian'
+		identity = file('modes3_key')
+	}
+}
+
+task deploy(dependsOn: 'distTar') << {
+	ssh.run {
+		session(remotes.role('turnout')) {
+			put from: 'components/hu.bme.mit.inf.modes3.components.bbb/build/distributions/hu.bme.mit.inf.modes3.components.bbb.tar', into: '/modes3'
+			execute 'cd /modes3 && tar -xf hu.bme.mit.inf.modes3.components.bbb.tar'
+		}
+	}
 }

@@ -6,8 +6,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElem
 import java.util.Map
 import java.util.TreeMap
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.slf4j.ILoggerFactory
 
 /**
  * Implements a runnable which frequently polls the sections status 
@@ -22,12 +21,10 @@ import org.slf4j.LoggerFactory
  */
 package class SectionStateChangeNotifier extends SectionStateNotifier {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(SectionStateChangeNotifier)
-
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<Integer, SegmentState> latestSectionStates
 
-	new(ITrackElementStateSender _trackElementStateSender, ExpanderSectionController _sectionController) {
-		super(_trackElementStateSender, _sectionController)
+	new(ITrackElementStateSender _trackElementStateSender, ExpanderSectionController _sectionController, ILoggerFactory factory) {
+		super(_trackElementStateSender, _sectionController, factory)
 
 		latestSectionStates = new TreeMap
 		for (sectionId : sectionController.managedSections) {
@@ -37,6 +34,8 @@ package class SectionStateChangeNotifier extends SectionStateNotifier {
 	}
 
 	override run() {
+		logger.info('''SectionStateChangeNotifier started''')
+
 		while(!Thread.interrupted) {
 			try {
 				for (sectionId : sectionController.managedSections) {
@@ -44,6 +43,8 @@ package class SectionStateChangeNotifier extends SectionStateNotifier {
 					if(latestSectionStates.get(sectionId) != status) {
 						latestSectionStates.put(sectionId, status)
 						trackElementStateSender.sendSegmentState(sectionId, status)
+
+						logger.info('''Section «sectionId»'s status «status» is sent.''')
 					}
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)

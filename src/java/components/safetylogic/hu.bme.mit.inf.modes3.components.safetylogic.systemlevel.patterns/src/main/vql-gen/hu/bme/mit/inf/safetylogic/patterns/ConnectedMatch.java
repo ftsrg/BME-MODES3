@@ -3,10 +3,10 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.util.ConnectedQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -26,13 +26,13 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  */
 @SuppressWarnings("all")
 public abstract class ConnectedMatch extends BasePatternMatch {
-  private EObject fThis;
+  private RailRoadElement fThis;
   
-  private EObject fConnectedTo;
+  private RailRoadElement fConnectedTo;
   
   private static List<String> parameterNames = makeImmutableList("This", "connectedTo");
   
-  private ConnectedMatch(final EObject pThis, final EObject pConnectedTo) {
+  private ConnectedMatch(final RailRoadElement pThis, final RailRoadElement pConnectedTo) {
     this.fThis = pThis;
     this.fConnectedTo = pConnectedTo;
   }
@@ -44,11 +44,11 @@ public abstract class ConnectedMatch extends BasePatternMatch {
     return null;
   }
   
-  public EObject getThis() {
+  public RailRoadElement getThis() {
     return this.fThis;
   }
   
-  public EObject getConnectedTo() {
+  public RailRoadElement getConnectedTo() {
     return this.fConnectedTo;
   }
   
@@ -56,22 +56,22 @@ public abstract class ConnectedMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("This".equals(parameterName) ) {
-    	this.fThis = (EObject) newValue;
+    	this.fThis = (RailRoadElement) newValue;
     	return true;
     }
     if ("connectedTo".equals(parameterName) ) {
-    	this.fConnectedTo = (EObject) newValue;
+    	this.fConnectedTo = (RailRoadElement) newValue;
     	return true;
     }
     return false;
   }
   
-  public void setThis(final EObject pThis) {
+  public void setThis(final RailRoadElement pThis) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fThis = pThis;
   }
   
-  public void setConnectedTo(final EObject pConnectedTo) {
+  public void setConnectedTo(final RailRoadElement pConnectedTo) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fConnectedTo = pConnectedTo;
   }
@@ -169,7 +169,7 @@ public abstract class ConnectedMatch extends BasePatternMatch {
    * @return the new, mutable (partial) match object.
    * 
    */
-  public static ConnectedMatch newMutableMatch(final EObject pThis, final EObject pConnectedTo) {
+  public static ConnectedMatch newMutableMatch(final RailRoadElement pThis, final RailRoadElement pConnectedTo) {
     return new Mutable(pThis, pConnectedTo);
   }
   
@@ -182,12 +182,12 @@ public abstract class ConnectedMatch extends BasePatternMatch {
    * @return the (partial) match object.
    * 
    */
-  public static ConnectedMatch newMatch(final EObject pThis, final EObject pConnectedTo) {
+  public static ConnectedMatch newMatch(final RailRoadElement pThis, final RailRoadElement pConnectedTo) {
     return new Immutable(pThis, pConnectedTo);
   }
   
   private static final class Mutable extends ConnectedMatch {
-    Mutable(final EObject pThis, final EObject pConnectedTo) {
+    Mutable(final RailRoadElement pThis, final RailRoadElement pConnectedTo) {
       super(pThis, pConnectedTo);
     }
     
@@ -198,7 +198,7 @@ public abstract class ConnectedMatch extends BasePatternMatch {
   }
   
   private static final class Immutable extends ConnectedMatch {
-    Immutable(final EObject pThis, final EObject pConnectedTo) {
+    Immutable(final RailRoadElement pThis, final RailRoadElement pConnectedTo) {
       super(pThis, pConnectedTo);
     }
     

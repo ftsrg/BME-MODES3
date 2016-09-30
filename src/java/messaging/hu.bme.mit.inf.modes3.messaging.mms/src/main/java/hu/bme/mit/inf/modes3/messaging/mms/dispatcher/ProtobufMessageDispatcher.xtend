@@ -2,6 +2,8 @@ package hu.bme.mit.inf.modes3.messaging.mms.dispatcher
 
 import com.google.protobuf.GeneratedMessageV3
 import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsStateOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
 import hu.bme.mit.inf.modes3.messaging.mms.messages.MessageType
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
@@ -25,13 +27,12 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommandOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
-		ProtobufMessageDispatcher)
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	// SIGNALS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainCurrentSpeedOrBuilder> trainCurrentSpeedHandler
@@ -40,12 +41,17 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TurnoutStateOrBuilder> turnoutStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentStateOrBuilder> segmentStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentOccupancyOrBuilder> segmentOccupancyHandler
-
+	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<DccOperationsStateOrBuilder> dccOperationStateHandler
+	
 	// COMMANDS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainReferenceSpeedCommandOrBuilder> trainReferenceSpeedCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainFunctionCommandOrBuilder> trainFunctionCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TurnoutCommandOrBuilder> turnoutCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentCommandOrBuilder> segmentCommandHandler
+
+	new(ILoggerFactory factory) {
+		logger = factory.getLogger(this.class.name)
+	}
 
 	override dispatchMessage(byte[] raw_message) {
 		try {
@@ -71,10 +77,12 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 					turnoutStateHandler?.handleMessage(message.turnoutState)
 				case MessageType.SEGMENT_OCCUPANCY:
 					segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
+				case MessageType.DCC_OPERATIONS_STATE:
+					dccOperationStateHandler?.handleMessage(message.dccOperationsState)
 				default:
 					return
 			}
-		} catch (Exception e) {
+		} catch(Exception e) {
 			logger.error(e.message, e)
 		}
 	}
@@ -82,7 +90,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	override convertMessageToRaw(Object _message) throws IllegalArgumentException {
 		try {
 			internalConvertMessageToRaw(_message as GeneratedMessageV3);
-		} catch (ClassCastException e) {
+		} catch(ClassCastException e) {
 			throw new IllegalArgumentException(e.message, e)
 		}
 	}
@@ -155,6 +163,10 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 		message.type = MessageType.SEGMENT_OCCUPANCY
 		message.segmentOccupancy = _message
 		message.build.toByteArray
+	}
+	
+	def dispatch byte[] internalConvertMessageToRaw(DccOperationsCommand _message){
+		(Message.newBuilder => [type = MessageType.DCC_OPERATIONS_COMMAND; dccOperationsCommand = _message ]).build.toByteArray
 	}
 
 }

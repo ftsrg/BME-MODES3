@@ -3,8 +3,8 @@ package hu.bme.mit.inf.modes3.components.bbb.notifiers
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 /**
  * Implements a runnable which frequently polls the turnouts status 
@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory
  */
 package class TurnoutStateNotifier implements Runnable {
 
-	@Accessors(#[PRIVATE_GETTER, PRIVATE_SETTER]) static val Logger logger = LoggerFactory.getLogger(
-		TurnoutStateNotifier)
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val SLEEP_MS_BETWEEN_POLLINGS = 50
 
@@ -26,20 +25,26 @@ package class TurnoutStateNotifier implements Runnable {
 	// send turnout state on the network
 	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val ITrackElementStateSender trackElementStateSender
 
-	new(ITrackElementStateSender _trackElementStateSender, ITurnoutControllerStrategy _turnoutController) {
+	new(ITrackElementStateSender _trackElementStateSender, ITurnoutControllerStrategy _turnoutController, ILoggerFactory factory) {
 		trackElementStateSender = _trackElementStateSender
 		turnoutController = _turnoutController
+
+		this.logger = factory.getLogger(this.class.name)
 	}
 
 	override run() {
-		while (!Thread.interrupted) {
+		logger.info('''TurnoutStateNotifier started''')
+
+		while(!Thread.interrupted) {
 			try {
 				for (turnoutId : turnoutController.managedTurnouts) {
 					val turnoutStatus = turnoutController.getTurnoutStatus(turnoutId)
 					trackElementStateSender.sendTurnoutState(turnoutId, turnoutStatus)
+
+					logger.info('''Turnout «turnoutId»'s status «turnoutStatus» is sent.''')
 				}
 				Thread.sleep(SLEEP_MS_BETWEEN_POLLINGS)
-			} catch (InterruptedException ex) {
+			} catch(InterruptedException ex) {
 				logger.error(ex.message, ex)
 				Thread.currentThread.interrupt
 			}

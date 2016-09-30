@@ -23,17 +23,21 @@ include ':messaging:hu.bme.mit.inf.modes3.messaging.proto'
 include ':messaging:hu.bme.mit.inf.modes3.messaging.communication'
 
 include ':transports:hu.bme.mit.inf.modes3.transports.common'
+include ':transports:hu.bme.mit.inf.modes3.transports.mqtt'
 include ':transports:hu.bme.mit.inf.modes3.transports.zeromq'
 
+include ':components:hu.bme.mit.inf.modes3.components.occupancyquery'
 include ':components:hu.bme.mit.inf.modes3.components.common'
 include ':components:hu.bme.mit.inf.modes3.components.bbb'
 include ':components:hu.bme.mit.inf.modes3.components.sample'
 include ':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc'
+include ':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model'
 include ':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model'
 include ':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.event'
 include ':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.patterns'
 
 include ':utils:hu.bme.mit.inf.modes3.utils.common'
+include ':utils:hu.bme.mit.inf.modes3.utils.serialmonitor'
 
 include ':test:hu.bme.mit.inf.modes3.test'
 

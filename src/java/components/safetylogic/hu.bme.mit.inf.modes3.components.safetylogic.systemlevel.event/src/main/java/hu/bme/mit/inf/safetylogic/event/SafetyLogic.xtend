@@ -1,193 +1,199 @@
 package hu.bme.mit.inf.safetylogic.event
 
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Turnout
-import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
-import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatch
-import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
-import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch
-import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
-import java.io.PrintWriter
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
-import org.eclipse.viatra.query.runtime.emf.EMFScope
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Train
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
+import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
+import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsStateOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.handlers.MessageHandler
 
-class SafetyLogic extends AbstractRailRoadCommunicationComponent {
+class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
-	protected var ViatraQueryEngine engine;
-	protected var newTrainId = 999
-	protected var RailRoadModel model //TODO accessors
-	
-	def getSegment(int segmentId){
-		model.sections.findFirst[id == segmentId]
-	}
+	@Accessors(PUBLIC_GETTER) protected ModelUtil model // XXX IModelInteractor should be the static type
+	private ILoggerFactory factory
+	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
+		new ISegmentDisableStrategy() {
 
-	new(CommunicationStack stack) {
-		super(stack)
-	}
+			override disableSection(int id) {
+				locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
+			}
 
-	def setup(Resource modelResource) {
-		engine = ViatraQueryEngine.on(new EMFScope(modelResource))
-	}
+		},
+		new ISegmentDisableStrategy() {
 
-	private def getCuts() {
-		TrainCutsTurnoutMatcher.on(engine).getAllMatches
-	}
+			override disableSection(int id) {
+				val train = model.model.trains.findFirst[currentlyOn.id == id]
+				if(train != null) {
+					communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = train.id; referenceSpeed = 0; it.direction = TrainDirectionValue.FORWARD]).build)
+				} else {
+					logger.info('''You are disabling section #«id» which has no train on it''')
+				}
+			}
+		},
+		new ISegmentDisableStrategy() {
 
-	private def getHits() {
-		TrainHitsAnotherTrainMatcher.on(engine).getAllMatches
-	}
+			override disableSection(int id) {
+				val train = model.model.trains.findFirst[currentlyOn.id == id]
+				if(train != null) {
+					communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [
+						trainID = train.id; referenceSpeed = 0; 
+						it.direction = 
+							if(locator.trainReferenceSpeedState.getDirection(train.id) == TrainDirectionValue.FORWARD) TrainDirectionValue.BACKWARD 
+							else TrainDirectionValue.FORWARD
+					]).build)
+				} else {
+					logger.info('''You are disabling section #«id» which has no train on it''')
+				}
+			}
 
-	private def getCurrentlyConnected(RailRoadElement what) {
-		CurrentlyConnectedMatcher.on(engine).getAllValuesOfconnectedTo(what)
-	}
-
-	private def boolAsInt(Boolean b) {
-		if (b) {
-			1
-		} else {
-			0
+		}, new ISegmentDisableStrategy(){
+			
+			override disableSection(int id) {
+				communication.mms.sendMessage((DccOperationsCommand.newBuilder => [it.dccOperations = DccOperations.STOP_OPERATIONS]).build)
+			}
+			
 		}
+	]
+	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
+		new ISegmentEnableStrategy() {
+			override enableSection(int id) {
+				locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
+			}
+		}
+	]
+
+	new(CommunicationStack stack, ILoggerFactory factory) {
+		super(stack, factory)
+		this.factory = factory
+		logger.info('Construction started')
+		model = new ModelUtil(factory)
+		logger.info('Construction finished')
 	}
 
-	private def print(TrainCutsTurnoutMatch match) {
-		'''CUT: «(match.offender as Train).id» «(match.victim as Train).id»''' // TODO viatra ticket
+	private def Iterable<Turnout> getTurnouts(Iterable<RailRoadElement> railRoadElements) {
+		railRoadElements.filter[it instanceof Turnout].map[it as Turnout]
 	}
 
-	private def print(TrainHitsAnotherTrainMatch match) {
-		'''HIT: «(match.offender as Train).id» «(match.victim as Train).id»''' // TODO viatra ticket
+	private def Iterable<Segment> getSegments(Iterable<RailRoadElement> railRoadElements) {
+		railRoadElements.filter[it instanceof Segment].map[it as Segment]
+	}
+
+	private def turn(RailRoadElement element, SegmentState state) {
+		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
+	}
+
+	private def void initRailRoad() {
+		val sleepTimes = 200
+		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
+		val turnouts = model.model.sections.getTurnouts
+		turnouts.forEach [
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
+		]
+		logger.info('All turnout set straight')
+		Thread.sleep(sleepTimes)
+		turnouts.forEach [
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
+		]
+		logger.info('All turnout set divergent')
+		Thread.sleep(sleepTimes)
+
+		val segments = model.model.sections.getSegments
+		segments.forEach [
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
+		]
+		logger.info('Disabling all sections')
+		Thread.sleep(sleepTimes)
+		segments.forEach [
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
+		]
+		logger.info('Enabling all sections')
+		Thread.sleep(sleepTimes)
+		logger.info('Railroad initialization finished')
 	}
 
 	override void run() {
-		val resource = ModelUtil.loadModel()
-		setup(resource);
-		model = ModelUtil.getModelFromResource(resource)
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new ISegmentOccupancyChangeListener() {
-			// FIXME by my current informations, i think this algorithm wont work when the train changes from ccw to cw or the other way around. Or at least it does lose some information which it shouldn't
-			// XXX move this to a class, and create unit tests.
-			override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
-				if (newValue == SegmentOccupancy.OCCUPIED) {
-					val changedSection = model.sections.findFirst[it.id == id]
-					val possibleTrainPositions = getCurrentlyConnected(changedSection)
-					val train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
-					if (train == null) { // There is not even a train nearby
-						model.trains.add(RailRoadModelFactory.eINSTANCE.createTrain => [it.id = newTrainId++])
-					}
-					train.previouslyOn = train.currentlyOn
-					train.currentlyOn = changedSection
-				} else if (newValue == SegmentOccupancy.FREE) {
-					val train = model.trains.findFirst[it.currentlyOn.id == id]
-					if (train != null) {
-						model.trains.remove(train)
-					}
-				}
-				refreshSafetyLogicState
-			}
-
-		}
-
+//		for(value: 0..<126) {
+//			communication.mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = 9; referenceSpeed = value; direction = TrainDirectionValue.FORWARD]).build)
+//			println('Msg sent ' +value)
+//			Thread.sleep(1000)
+//		}
+//		(communication.dispatcher as ProtobufMessageDispatcher).dccOperationStateHandler = new MessageHandler<DccOperationsStateOrBuilder>(){
+//			override handleMessage(DccOperationsStateOrBuilder message) {
+//				println('Value = ' + message.dccOperationsValue)
+//				println(switch(message.dccOperations){
+//					case NORMAL_OPERATIONS: 'normal'
+//					case STOP_ALL_LOCOMOTIVES: 'stop loco'
+//					case STOP_OPERATIONS: 'stop all'
+//					case UNRECOGNIZED: 'unrecognized'
+//				})
+//			}
+//		}
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.STOP_OPERATIONS]).build)
+//		println('STOPPED')
+//		Thread.sleep(5000)
+//		println('STARTED')
+//		communication.mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
+//		
+//		Thread.sleep(5000)
+		
+		this.logger.info("Running started...")
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-				(model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue ==
-					TurnoutState.DIVERGENT)
+				(model.model.sections.findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
 				refreshSafetyLogicState
 			}
 		}
 
+		initRailRoad()
 	}
 
-	def refreshSafetyLogicState() {
-		// TODO enable all sections
-		cuts.forEach [ cut |
-			(model.sections.findFirst[id == (cut.victim as Train).currentlyOn.id] as Segment).isEnabled = false //TODO viatra ticket
+	def public void refreshSafetyLogicState() {
+		logger.info('''Refreshing state: #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first
+		model.cuts.forEach [ cut |
+			logger.info('''CUT: victim on «(cut.victim).id» cuts «(cut.offender).currentlyOn.id»''')
+			model.getSegment(cut.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which cut sections
 		]
 
-		hits.forEach [ hit |
-			(model.sections.findFirst[id == (hit.victim as Train).currentlyOn.id] as Segment).isEnabled = false //TODO viatra ticket
+		model.hits.forEach [ hit |
+			logger.info('''HIT: offender on «(hit.offender).currentlyOn.id», victim on «(hit.victim).currentlyOn.id»''')
+			model.getSegment(hit.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which hit another
 		]
 
-		model.sections.filter[it instanceof Segment].map[it as Segment].forEach [
-			if(isEnabled == false) 
-				locator.trackElementCommander.sendSegmentCommand(it.id, SegmentState.DISABLED) 
-			else 
-				locator.trackElementCommander.sendSegmentCommand(it.id, SegmentState.ENABLED)
-		]
-	}  
-
-	def exhaustiveTest() { // XXX find a use-case for this
-		println("Testing started...")
-
-		val resource = ModelUtil.loadModel()
-		setup(resource);
-		val model = ModelUtil.getModelFromResource(resource)
-
-		val train1 = RailRoadModelFactory.eINSTANCE.createTrain => [id = 100]
-		val train2 = RailRoadModelFactory.eINSTANCE.createTrain => [id = 200]
-		model.trains.add(train1)
-		model.trains.add(train2)
-
-		val turnouts = #[14, 28, 25, 32, 3, 9, 21] // Same as model.sections.filter[it instanceof Turnout].map[id]
-		var testNmbr = 1
-
-		val booleans = #[true, false]
-
-		val PrintWriter writer = new PrintWriter("testres.txt", "UTF-8");
-
-		for (turnout1State : booleans) {
-			for (turnout2State : booleans) {
-				for (turnout3State : booleans) {
-					for (turnout4State : booleans) {
-						for (turnout5State : booleans) {
-							for (turnout6State : booleans) {
-								for (turnout7State : booleans) {
-									for (train1Position : model.sections) {
-										for (train1Previous : train1Position.currentlyConnected) {
-											for (train2Position : model.sections.filter[it.id != train1Position.id]) {
-												for (train2Previous : train2Position.currentlyConnected) {
-													val currentTurnouts = #[turnout1State, turnout2State, turnout3State,
-														turnout4State, turnout5State, turnout6State, turnout7State]
-													for (var i = 0; i != 6; i++) {
-														val ii = i;
-														(model.sections.
-															findFirst[id == turnouts.get(ii)] as Turnout).currentlyDivergent = currentTurnouts.
-															get(i)
-													}
-
-													train1.currentlyOn = train1Position
-													train1.previouslyOn = train1Previous as RailRoadElement // TODO Viatra ticket
-													train2.currentlyOn = train2Position
-													train2.previouslyOn = train2Previous as RailRoadElement
-
-													writer.
-														println(
-															'''test #«testNmbr++»	«turnout1State.boolAsInt» «turnout2State.boolAsInt» «turnout3State.boolAsInt» «turnout4State.boolAsInt» «turnout5State.boolAsInt» «turnout6State.boolAsInt» «turnout7State.boolAsInt» «train1.currentlyOn.id» «train1.previouslyOn.id» «train2.currentlyOn.id» «train2.previouslyOn.id» «FOR cut : cuts»«cut.print»«ENDFOR»	«FOR hit : hits»«hit.print»«ENDFOR»'''
-														)
-												}
-											}
-										}
-										System.gc
-										Thread.sleep(10)
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		writer.close
-		println("Testing finished")
+		sendMessages()
 	}
+
+	private def void sendMessages() {
+		val sectionsToEnable = model.model.sections.getSegments().filter[isEnabled]
+		val sectionsToDisable = model.model.sections.getSegments().filter[!isEnabled]
+		segmentEnableStrategies.forEach [ strategy |
+			sectionsToEnable.forEach [ segment |
+				strategy.enableSection(segment.id)
+			]
+		]
+		segmentDisableStrategies.forEach [ strategy |
+			sectionsToDisable.forEach [ segment |
+				strategy.disableSection(segment.id)
+			]
+		]
+	}
+
+	override onUpdate() {
+		refreshSafetyLogicState
+	}
+
 }

@@ -3,10 +3,11 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.util.ViablePathsQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -26,13 +27,13 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  */
 @SuppressWarnings("all")
 public abstract class ViablePathsMatch extends BasePatternMatch {
-  private EObject fThis;
+  private RailRoadElement fThis;
   
-  private EObject fPath;
+  private Path fPath;
   
   private static List<String> parameterNames = makeImmutableList("This", "path");
   
-  private ViablePathsMatch(final EObject pThis, final EObject pPath) {
+  private ViablePathsMatch(final RailRoadElement pThis, final Path pPath) {
     this.fThis = pThis;
     this.fPath = pPath;
   }
@@ -44,11 +45,11 @@ public abstract class ViablePathsMatch extends BasePatternMatch {
     return null;
   }
   
-  public EObject getThis() {
+  public RailRoadElement getThis() {
     return this.fThis;
   }
   
-  public EObject getPath() {
+  public Path getPath() {
     return this.fPath;
   }
   
@@ -56,22 +57,22 @@ public abstract class ViablePathsMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("This".equals(parameterName) ) {
-    	this.fThis = (EObject) newValue;
+    	this.fThis = (RailRoadElement) newValue;
     	return true;
     }
     if ("path".equals(parameterName) ) {
-    	this.fPath = (EObject) newValue;
+    	this.fPath = (Path) newValue;
     	return true;
     }
     return false;
   }
   
-  public void setThis(final EObject pThis) {
+  public void setThis(final RailRoadElement pThis) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fThis = pThis;
   }
   
-  public void setPath(final EObject pPath) {
+  public void setPath(final Path pPath) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fPath = pPath;
   }
@@ -169,7 +170,7 @@ public abstract class ViablePathsMatch extends BasePatternMatch {
    * @return the new, mutable (partial) match object.
    * 
    */
-  public static ViablePathsMatch newMutableMatch(final EObject pThis, final EObject pPath) {
+  public static ViablePathsMatch newMutableMatch(final RailRoadElement pThis, final Path pPath) {
     return new Mutable(pThis, pPath);
   }
   
@@ -182,12 +183,12 @@ public abstract class ViablePathsMatch extends BasePatternMatch {
    * @return the (partial) match object.
    * 
    */
-  public static ViablePathsMatch newMatch(final EObject pThis, final EObject pPath) {
+  public static ViablePathsMatch newMatch(final RailRoadElement pThis, final Path pPath) {
     return new Immutable(pThis, pPath);
   }
   
   private static final class Mutable extends ViablePathsMatch {
-    Mutable(final EObject pThis, final EObject pPath) {
+    Mutable(final RailRoadElement pThis, final Path pPath) {
       super(pThis, pPath);
     }
     
@@ -198,7 +199,7 @@ public abstract class ViablePathsMatch extends BasePatternMatch {
   }
   
   private static final class Immutable extends ViablePathsMatch {
-    Immutable(final EObject pThis, final EObject pPath) {
+    Immutable(final RailRoadElement pThis, final Path pPath) {
       super(pThis, pPath);
     }
     

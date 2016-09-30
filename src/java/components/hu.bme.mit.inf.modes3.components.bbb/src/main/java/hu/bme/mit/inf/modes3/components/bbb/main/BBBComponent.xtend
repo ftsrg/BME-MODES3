@@ -6,6 +6,7 @@ import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import org.slf4j.ILoggerFactory
 
 /**
  * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
@@ -22,16 +23,16 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent {
 	// to send track element states
 	protected var TrackElementStateNotifier stateNotifier
 
-	new(CommunicationStack stack) {
-		super(stack)
-		commandDispatcher = new TrackElementCommandHandler(locator)
-		stateNotifier = new TrackElementStateNotifier(locator)
+	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
+		super(stack, factory)
+		commandDispatcher = new TrackElementCommandHandler(turnoutID, locator, factory)
+		stateNotifier = new TrackElementStateNotifier(turnoutID, locator, factory)
 	}
 
-	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController) {
-		super(stack)
-		commandDispatcher = new TrackElementCommandHandler(locator, sectionController, turnoutController)
-		stateNotifier = new TrackElementStateNotifier(locator, sectionController, turnoutController)
+	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController, ILoggerFactory factory) {
+		super(stack, factory)
+		commandDispatcher = new TrackElementCommandHandler(locator, sectionController, turnoutController, factory)
+		stateNotifier = new TrackElementStateNotifier(locator, sectionController, turnoutController, factory)
 	}
 
 	override run() {

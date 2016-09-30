@@ -4,6 +4,7 @@ import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateChangeNot
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderSectionController
 import hu.bme.mit.inf.modes3.components.bbb.strategy.ExpanderTurnoutController
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import org.slf4j.ILoggerFactory
 
 /**
  * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
@@ -14,14 +15,14 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
  */
 class BBBComponentWithStateChangeNotifier extends BBBComponent {
 
-	new(CommunicationStack stack) {
-		super(stack)
-		stateNotifier = new TrackElementStateChangeNotifier(locator)
+	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
+		super(turnoutID, stack, factory)
+		stateNotifier = new TrackElementStateChangeNotifier(turnoutID, locator, factory)
 	}
 
-	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController) {
-		super(stack, sectionController, turnoutController)
-		stateNotifier = new TrackElementStateChangeNotifier(locator, sectionController, turnoutController)
+	new(CommunicationStack stack, ExpanderSectionController sectionController, ExpanderTurnoutController turnoutController, ILoggerFactory factory) {
+		super(stack, sectionController, turnoutController, factory)
+		stateNotifier = new TrackElementStateChangeNotifier(locator, sectionController, turnoutController, factory)
 	}
 
 }

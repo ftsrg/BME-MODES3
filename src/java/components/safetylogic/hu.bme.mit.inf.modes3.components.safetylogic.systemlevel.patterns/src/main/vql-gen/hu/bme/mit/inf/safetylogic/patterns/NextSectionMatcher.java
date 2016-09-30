@@ -3,13 +3,13 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatch;
 import hu.bme.mit.inf.safetylogic.patterns.util.NextSectionQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
@@ -90,7 +90,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return matches represented as a NextSectionMatch object.
    * 
    */
-  public Collection<NextSectionMatch> getAllMatches(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  public Collection<NextSectionMatch> getAllMatches(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return rawGetAllMatches(new Object[]{pOld, pCurrent, pNext});
   }
   
@@ -103,7 +103,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return a match represented as a NextSectionMatch object, or null if no match is found.
    * 
    */
-  public NextSectionMatch getOneArbitraryMatch(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  public NextSectionMatch getOneArbitraryMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return rawGetOneArbitraryMatch(new Object[]{pOld, pCurrent, pNext});
   }
   
@@ -116,7 +116,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return true if the input is a valid (partial) match of the pattern.
    * 
    */
-  public boolean hasMatch(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  public boolean hasMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return rawHasMatch(new Object[]{pOld, pCurrent, pNext});
   }
   
@@ -128,7 +128,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the number of pattern matches found.
    * 
    */
-  public int countMatches(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  public int countMatches(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return rawCountMatches(new Object[]{pOld, pCurrent, pNext});
   }
   
@@ -140,7 +140,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @param processor the action that will process each pattern match.
    * 
    */
-  public void forEachMatch(final EObject pOld, final EObject pCurrent, final EObject pNext, final IMatchProcessor<? super NextSectionMatch> processor) {
+  public void forEachMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext, final IMatchProcessor<? super NextSectionMatch> processor) {
     rawForEachMatch(new Object[]{pOld, pCurrent, pNext}, processor);
   }
   
@@ -154,7 +154,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
    * 
    */
-  public boolean forOneArbitraryMatch(final EObject pOld, final EObject pCurrent, final EObject pNext, final IMatchProcessor<? super NextSectionMatch> processor) {
+  public boolean forOneArbitraryMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext, final IMatchProcessor<? super NextSectionMatch> processor) {
     return rawForOneArbitraryMatch(new Object[]{pOld, pCurrent, pNext}, processor);
   }
   
@@ -168,7 +168,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the (partial) match object.
    * 
    */
-  public NextSectionMatch newMatch(final EObject pOld, final EObject pCurrent, final EObject pNext) {
+  public NextSectionMatch newMatch(final RailRoadElement pOld, final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return NextSectionMatch.newMatch(pOld, pCurrent, pNext);
   }
   
@@ -177,8 +177,8 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfOld(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfOld(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_OLD, parameters, results);
     return results;
   }
@@ -188,7 +188,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfOld() {
+  public Set<RailRoadElement> getAllValuesOfOld() {
     return rawAccumulateAllValuesOfOld(emptyArray());
   }
   
@@ -197,7 +197,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfOld(final NextSectionMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfOld(final NextSectionMatch partialMatch) {
     return rawAccumulateAllValuesOfOld(partialMatch.toArray());
   }
   
@@ -206,7 +206,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfOld(final EObject pCurrent, final EObject pNext) {
+  public Set<RailRoadElement> getAllValuesOfOld(final RailRoadElement pCurrent, final RailRoadElement pNext) {
     return rawAccumulateAllValuesOfOld(new Object[]{
     null, 
     pCurrent, 
@@ -219,8 +219,8 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfCurrent(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfCurrent(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_CURRENT, parameters, results);
     return results;
   }
@@ -230,7 +230,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfCurrent() {
+  public Set<RailRoadElement> getAllValuesOfCurrent() {
     return rawAccumulateAllValuesOfCurrent(emptyArray());
   }
   
@@ -239,7 +239,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfCurrent(final NextSectionMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfCurrent(final NextSectionMatch partialMatch) {
     return rawAccumulateAllValuesOfCurrent(partialMatch.toArray());
   }
   
@@ -248,7 +248,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfCurrent(final EObject pOld, final EObject pNext) {
+  public Set<RailRoadElement> getAllValuesOfCurrent(final RailRoadElement pOld, final RailRoadElement pNext) {
     return rawAccumulateAllValuesOfCurrent(new Object[]{
     pOld, 
     null, 
@@ -261,8 +261,8 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfNext(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfNext(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_NEXT, parameters, results);
     return results;
   }
@@ -272,7 +272,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfNext() {
+  public Set<RailRoadElement> getAllValuesOfNext() {
     return rawAccumulateAllValuesOfNext(emptyArray());
   }
   
@@ -281,7 +281,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfNext(final NextSectionMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfNext(final NextSectionMatch partialMatch) {
     return rawAccumulateAllValuesOfNext(partialMatch.toArray());
   }
   
@@ -290,7 +290,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfNext(final EObject pOld, final EObject pCurrent) {
+  public Set<RailRoadElement> getAllValuesOfNext(final RailRoadElement pOld, final RailRoadElement pCurrent) {
     return rawAccumulateAllValuesOfNext(new Object[]{
     pOld, 
     pCurrent, 
@@ -301,7 +301,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
   @Override
   protected NextSectionMatch tupleToMatch(final Tuple t) {
     try {
-    	return NextSectionMatch.newMatch((EObject) t.get(POSITION_OLD), (EObject) t.get(POSITION_CURRENT), (EObject) t.get(POSITION_NEXT));
+    	return NextSectionMatch.newMatch((RailRoadElement) t.get(POSITION_OLD), (RailRoadElement) t.get(POSITION_CURRENT), (RailRoadElement) t.get(POSITION_NEXT));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -311,7 +311,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
   @Override
   protected NextSectionMatch arrayToMatch(final Object[] match) {
     try {
-    	return NextSectionMatch.newMatch((EObject) match[POSITION_OLD], (EObject) match[POSITION_CURRENT], (EObject) match[POSITION_NEXT]);
+    	return NextSectionMatch.newMatch((RailRoadElement) match[POSITION_OLD], (RailRoadElement) match[POSITION_CURRENT], (RailRoadElement) match[POSITION_NEXT]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -321,7 +321,7 @@ public class NextSectionMatcher extends BaseMatcher<NextSectionMatch> {
   @Override
   protected NextSectionMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return NextSectionMatch.newMutableMatch((EObject) match[POSITION_OLD], (EObject) match[POSITION_CURRENT], (EObject) match[POSITION_NEXT]);
+    	return NextSectionMatch.newMutableMatch((RailRoadElement) match[POSITION_OLD], (RailRoadElement) match[POSITION_CURRENT], (RailRoadElement) match[POSITION_NEXT]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

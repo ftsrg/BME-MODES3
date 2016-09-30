@@ -7,6 +7,7 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.slf4j.helpers.NOPLoggerFactory
 
 class SectionMessageHandlerTest {
 
@@ -30,7 +31,7 @@ class SectionMessageHandlerTest {
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onSegmentCommand(int id, SegmentState state))
-		handler = new SectionMessageHandler(neverUsedInTests, expander)
+		handler = new SectionMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -49,7 +50,7 @@ class SectionMessageHandlerTest {
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onSegmentCommand(int id, SegmentState state))
-		handler = new SectionMessageHandler(neverUsedInTests, expander)
+		handler = new SectionMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onSegmentCommand(sectionId, SegmentState.ENABLED)
@@ -68,7 +69,7 @@ class SectionMessageHandlerTest {
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(true)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onSegmentCommand(int id, SegmentState state))
-		handler = new SectionMessageHandler(neverUsedInTests, expander)
+		handler = new SectionMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onSegmentCommand(sectionId, SegmentState.DISABLED)
@@ -87,7 +88,7 @@ class SectionMessageHandlerTest {
 		Mockito.when(expander.controllerManagesSection(sectionId)).thenReturn(false)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onSegmentCommand(int id, SegmentState state))
-		handler = new SectionMessageHandler(neverUsedInTests, expander)
+		handler = new SectionMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onSegmentCommand(sectionId, SegmentState.DISABLED)
@@ -105,7 +106,7 @@ class SectionMessageHandlerTest {
 		expander = Mockito.mock(ExpanderSectionController)
 		// the first parameter is the same dummy object, because the ITrackElementCommandCallback would call this class
 		// instead of that we do the call explicitly (onSegmentCommand(int id, SegmentState state))
-		handler = new SectionMessageHandler(neverUsedInTests, expander)
+		handler = new SectionMessageHandler(neverUsedInTests, expander, new NOPLoggerFactory)
 
 		// Act
 		handler.onSegmentCommand(sectionId, null)

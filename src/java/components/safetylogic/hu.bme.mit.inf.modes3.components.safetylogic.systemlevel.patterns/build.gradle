@@ -30,3 +30,7 @@ plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
 		}
 	}
 }
+
+sonarqube {
+	skipProject = true
+}

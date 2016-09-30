@@ -7,8 +7,9 @@ import io.silverspoon.bulldog.core.gpio.DigitalInput
 import java.util.HashMap
 import java.util.Map
 import java.util.concurrent.ConcurrentHashMap
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 /**
  * The turnout controller part of the embedded controller. Through it the
@@ -18,7 +19,7 @@ import org.slf4j.LoggerFactory
  */
 class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 
-	private static val Logger logger = LoggerFactory.getLogger(ExpanderTurnoutController)
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	// IO map for the input pins (to get turnout direction)
 	protected val ioMap = new HashMap<String, DigitalInput>(4)
@@ -32,11 +33,13 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	// thread-safe wrapper for the BBB board
 	protected var BoardWrapper board
 
-	new(BoardWrapper boardWrapper) {
+	new(int turnoutID, BoardWrapper boardWrapper, ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.class.name)
+
 		board = boardWrapper
 
 		try {
-			controllerConf = new ExpanderControllerConfiguration
+			controllerConf = new ExpanderControllerConfiguration(turnoutID, factory)
 		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 		}
@@ -57,6 +60,8 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override getTurnoutStatus(int turnoutId) {
+		logger.debug('''Reading turnout «turnoutId»'s physical direction.''')
+
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 
 		// decide direction
@@ -78,12 +83,16 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override setTurnoutStraight(int turnoutId) {
+		logger.debug('''Set turnout «turnoutId» straight physically.''')
+
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
 		turnoutStatus.put(turnoutId, TurnoutState.STRAIGHT)
 	}
 
 	override setTurnoutDivergent(int turnoutId) {
+		logger.debug('''Set turnout «turnoutId» divergent physically.''')
+
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
 		turnoutStatus.put(turnoutId, TurnoutState.DIVERGENT)

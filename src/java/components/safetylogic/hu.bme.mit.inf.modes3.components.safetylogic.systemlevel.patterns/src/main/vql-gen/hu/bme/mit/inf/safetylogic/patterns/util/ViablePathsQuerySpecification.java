@@ -65,7 +65,7 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
   
   @Override
   public ViablePathsMatch newMatch(final Object... parameters) {
-    return ViablePathsMatch.newMatch((org.eclipse.emf.ecore.EObject) parameters[0], (org.eclipse.emf.ecore.EObject) parameters[1]);
+    return ViablePathsMatch.newMatch((hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement) parameters[0], (hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path) parameters[1]);
   }
   
   /**
@@ -110,8 +110,8 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
     @Override
     public List<PParameter> getParameters() {
       return Arrays.asList(
-      			 new PParameter("This", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement"))),
-      			 new PParameter("path", "org.eclipse.emf.ecore.EObject", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")))
+      			 new PParameter("This", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement"))),
+      			 new PParameter("path", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")))
       			);
     }
     

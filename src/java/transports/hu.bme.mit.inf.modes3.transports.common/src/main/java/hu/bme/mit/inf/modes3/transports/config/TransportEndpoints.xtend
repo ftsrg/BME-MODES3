@@ -14,17 +14,29 @@ class TransportEndpoints {
 		INTEGRATION_LOCAL_2,
 		INTEGRATION_LOCAL_3
 	}
-	
-	List<TransportEndpoint> core = new ArrayList<TransportEndpoint>;
 
-	def static TransportEndpoints loadConfig(ActiveConfiguration selectedConfig) {	
+	List<TransportEndpoint> core
+
+	new() {
+		core = new ArrayList<TransportEndpoint>
+	}
+	
+	new(List<TransportEndpoint> core){
+		this.core = core
+	}
+	
+	def static TransportEndpoints loadConfig(String selectedConfigName){
 		val gson = new Gson
-		val inputReader = new InputStreamReader(TransportEndpoints.getResourceAsStream('''/configs/«selectedConfig.name.toLowerCase».json'''))
+		val inputReader = new InputStreamReader(TransportEndpoints.getResourceAsStream('''/configs/«selectedConfigName.toLowerCase».json'''))
 		try {
 			return gson.fromJson(inputReader, TransportEndpoints)
 		} finally {
 			inputReader.close
 		}
+	}
+
+	def static TransportEndpoints loadConfig(ActiveConfiguration selectedConfig) {
+		loadConfig(selectedConfig.name)
 	}
 
 }

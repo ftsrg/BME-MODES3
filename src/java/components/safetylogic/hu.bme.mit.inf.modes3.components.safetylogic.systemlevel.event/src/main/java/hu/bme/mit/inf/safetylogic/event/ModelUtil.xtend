@@ -1,18 +1,80 @@
 package hu.bme.mit.inf.safetylogic.event
 
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModel
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelFactory
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadModelPackage
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelFactory
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
+import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatcher
+import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
+import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
-import hu.bme.mit.inf.safetylogic.model.RailRoadModel.RailRoadElement
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
-class ModelUtil {
+class ModelUtil implements IModelInteractor {
+	@Accessors(PUBLIC_GETTER) val Resource resource
+	@Accessors(PUBLIC_GETTER) val RailRoadModel model
+	var ViatraQueryEngine engine
+	val Logger logger
+	val validTrainIDs = #[9,10] //8=RED, 9=TAURUS, 10=SNCF
+
+	new(ILoggerFactory factory) {
+		logger = factory.getLogger('ModelUtil')
+		resource = loadModel
+		model = resource.modelFromResource
+		engine = ViatraQueryEngine.on(new EMFScope(resource))
+		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[it.isEnabled = true]
+	}
+
+	def override getEnabledTrains(){
+		model.trains.filter[
+			if (it.currentlyOn instanceof Segment) (currentlyOn as Segment).isEnabled 
+			else true
+		]
+	}
+	
+	def override getSegment(int segmentId){
+		model.sections.findFirst[id == segmentId]
+	}
+	
+	def override addNewTrain(){
+		val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
+		model.trains.add(train)
+		return train
+	}
+	
+	def private getNewTrainID(){
+		for(trainID : validTrainIDs){
+			if(model.trains.findFirst[it.id == trainID] == null) return trainID
+		}
+		logger.error("This is the third train on the railroad, something went terribly wrong")
+		throw new RuntimeException("There can't be three trains on the railroad on the same time")
+	}
+	
+	def override removeTrain(Train t){
+		model.trains.remove(t)
+	}
+	
+	public override getCurrentlyConnected(RailRoadElement what) {
+		CurrentlyConnectedMatcher.on(engine).getAllValuesOfconnectedTo(what)
+	}
+	
+	package def getCuts() {
+		TrainCutsTurnoutMatcher.on(engine).getAllMatches
+	}
+
+	package def getHits() {
+		TrainHitsAnotherTrainMatcher.on(engine).getAllMatches
+	}
 
 	def private static loadSectionResource() {
 		// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
@@ -20,7 +82,7 @@ class ModelUtil {
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel", new XMIResourceFactoryImpl());
 
 		val resourceSet = new ResourceSetImpl();
-		resourceSet.getResource(URI.createURI("instance.railroadmodel"),true);
+		resourceSet.getResource(URI.createURI("instance.railroadmodel"), true);
 	}
 
 	def static loadModel() {
@@ -37,14 +99,14 @@ class ModelUtil {
 		val ViatraQueryEngine engine = ViatraQueryEngine.on(new EMFScope(modelResource))
 		// phase 2: the matcher itself
 		val matcher = ThreeConnectedRailRoadPartsMatcher.on(engine)
-		
+
 		val paths = getModelFromResource(modelResource).paths
 		// get all matches of the pattern
 		matcher.getAllMatches().forEach [
 			val path = RailRoadModelFactory.eINSTANCE.createPath
-			path.via = it.middle as RailRoadElement //TODO Viatra-ticket
-			path.from = it.one as RailRoadElement
-			path.to = it.other as RailRoadElement
+			path.via = it.middle
+			path.from = it.one
+			path.to = it.other
 			paths.add(path)
 		]
 
@@ -54,5 +116,6 @@ class ModelUtil {
 	def static getModelFromResource(Resource resource) {
 		resource.contents.head as RailRoadModel
 	}
-}
 
+	
+}

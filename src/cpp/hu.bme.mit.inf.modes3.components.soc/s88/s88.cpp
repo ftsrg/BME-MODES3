@@ -69,7 +69,9 @@ ISR(TIMER1_COMPA_vect) {
             sensor >>= 1;
             // if there is a signal on the DATA, we shift the thing to the end
             if (digitalRead(S88_PIN_DATA)) {
-                sensor |= 0x800000;
+		// This number should be the same with, as the incoming data width
+		// E.g. 4 section sensor = 32 bit of data
+                sensor |= 0x80000000;
             }
         }
     }

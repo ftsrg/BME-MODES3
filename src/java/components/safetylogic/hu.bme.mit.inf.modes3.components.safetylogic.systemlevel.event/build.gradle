@@ -1,5 +1,15 @@
 apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
+apply plugin: 'application'
+
+mainClassName = "hu.bme.mit.inf.safetylogic.event.Main"
+run {
+	args = ['--config', 'production',
+		'--address', '127.0.0.1',
+		'--id', 'SafetyLogic',
+		'--pubPort', '9999',
+		'--repPort', '9998']
+}
 
 // In this section you declare the dependencies for your production and test code
 dependencies {

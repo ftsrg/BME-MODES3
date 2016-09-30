@@ -2,7 +2,7 @@ package hu.bme.mit.inf.safetylogic.patterns
 
 import "http://hu.bme.mit.inf.safetylogic.railroadmodel"  
 
-//TODO @QueryBasedFeature(feature = "currentlyConnected")
+//XXX @QueryBasedFeature(feature = "currentlyConnected")
 pattern currentlyConnected(This : RailRoadElement, connectedTo : RailRoadElement) = {
 	Segment(This);
 	Segment.connectedTo(This, connectedTo);
@@ -24,7 +24,7 @@ pattern currentlyConnected(This : RailRoadElement, connectedTo : RailRoadElement
 	Turnout.straight(This, connectedTo);
 }
 
-//TODO @QueryBasedFeature(feature = "connected")//, source = This, target = connectedTo, kind = "many")
+//XXX @QueryBasedFeature(feature = "connected")//, source = This, target = connectedTo, kind = "many") 
 pattern connected(This : RailRoadElement, connectedTo : RailRoadElement) = {
 	Segment(This);
 	Segment.connectedTo(This, connectedTo);
@@ -39,7 +39,7 @@ pattern connected(This : RailRoadElement, connectedTo : RailRoadElement) = {
 	Turnout.straight(This, connectedTo);
 }
 
-//TODO @QueryBasedFeature(feature = "viablePaths")
+//XXX @QueryBasedFeature(feature = "viablePaths")
 pattern viablePaths(This : RailRoadElement, path : Path) = {
 	Segment(This);
 	Segment.connectedTo(This, connected1);

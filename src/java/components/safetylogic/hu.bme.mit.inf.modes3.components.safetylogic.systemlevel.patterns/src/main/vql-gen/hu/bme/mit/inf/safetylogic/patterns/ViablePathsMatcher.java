@@ -3,13 +3,14 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.safetylogic.patterns.ViablePathsMatch;
 import hu.bme.mit.inf.safetylogic.patterns.util.ViablePathsQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 import org.eclipse.viatra.query.runtime.api.IQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
@@ -29,7 +30,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 
  * <p>Original source:
  * <code><pre>
- * //TODO {@literal @}QueryBasedFeature(feature = "viablePaths")
+ * //XXX {@literal @}QueryBasedFeature(feature = "viablePaths")
  * pattern viablePaths(This : RailRoadElement, path : Path) = {
  * 	Segment(This);
  * 	Segment.connectedTo(This, connected1);
@@ -130,7 +131,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return matches represented as a ViablePathsMatch object.
    * 
    */
-  public Collection<ViablePathsMatch> getAllMatches(final EObject pThis, final EObject pPath) {
+  public Collection<ViablePathsMatch> getAllMatches(final RailRoadElement pThis, final Path pPath) {
     return rawGetAllMatches(new Object[]{pThis, pPath});
   }
   
@@ -142,7 +143,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return a match represented as a ViablePathsMatch object, or null if no match is found.
    * 
    */
-  public ViablePathsMatch getOneArbitraryMatch(final EObject pThis, final EObject pPath) {
+  public ViablePathsMatch getOneArbitraryMatch(final RailRoadElement pThis, final Path pPath) {
     return rawGetOneArbitraryMatch(new Object[]{pThis, pPath});
   }
   
@@ -154,7 +155,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return true if the input is a valid (partial) match of the pattern.
    * 
    */
-  public boolean hasMatch(final EObject pThis, final EObject pPath) {
+  public boolean hasMatch(final RailRoadElement pThis, final Path pPath) {
     return rawHasMatch(new Object[]{pThis, pPath});
   }
   
@@ -165,7 +166,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the number of pattern matches found.
    * 
    */
-  public int countMatches(final EObject pThis, final EObject pPath) {
+  public int countMatches(final RailRoadElement pThis, final Path pPath) {
     return rawCountMatches(new Object[]{pThis, pPath});
   }
   
@@ -176,7 +177,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @param processor the action that will process each pattern match.
    * 
    */
-  public void forEachMatch(final EObject pThis, final EObject pPath, final IMatchProcessor<? super ViablePathsMatch> processor) {
+  public void forEachMatch(final RailRoadElement pThis, final Path pPath, final IMatchProcessor<? super ViablePathsMatch> processor) {
     rawForEachMatch(new Object[]{pThis, pPath}, processor);
   }
   
@@ -189,7 +190,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
    * 
    */
-  public boolean forOneArbitraryMatch(final EObject pThis, final EObject pPath, final IMatchProcessor<? super ViablePathsMatch> processor) {
+  public boolean forOneArbitraryMatch(final RailRoadElement pThis, final Path pPath, final IMatchProcessor<? super ViablePathsMatch> processor) {
     return rawForOneArbitraryMatch(new Object[]{pThis, pPath}, processor);
   }
   
@@ -202,7 +203,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the (partial) match object.
    * 
    */
-  public ViablePathsMatch newMatch(final EObject pThis, final EObject pPath) {
+  public ViablePathsMatch newMatch(final RailRoadElement pThis, final Path pPath) {
     return ViablePathsMatch.newMatch(pThis, pPath);
   }
   
@@ -211,8 +212,8 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfThis(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfThis(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_THIS, parameters, results);
     return results;
   }
@@ -222,7 +223,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfThis() {
+  public Set<RailRoadElement> getAllValuesOfThis() {
     return rawAccumulateAllValuesOfThis(emptyArray());
   }
   
@@ -231,7 +232,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfThis(final ViablePathsMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfThis(final ViablePathsMatch partialMatch) {
     return rawAccumulateAllValuesOfThis(partialMatch.toArray());
   }
   
@@ -240,7 +241,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfThis(final EObject pPath) {
+  public Set<RailRoadElement> getAllValuesOfThis(final Path pPath) {
     return rawAccumulateAllValuesOfThis(new Object[]{
     null, 
     pPath
@@ -252,8 +253,8 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<EObject> rawAccumulateAllValuesOfpath(final Object[] parameters) {
-    Set<EObject> results = new HashSet<EObject>();
+  protected Set<Path> rawAccumulateAllValuesOfpath(final Object[] parameters) {
+    Set<Path> results = new HashSet<Path>();
     rawAccumulateAllValues(POSITION_PATH, parameters, results);
     return results;
   }
@@ -263,7 +264,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfpath() {
+  public Set<Path> getAllValuesOfpath() {
     return rawAccumulateAllValuesOfpath(emptyArray());
   }
   
@@ -272,7 +273,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfpath(final ViablePathsMatch partialMatch) {
+  public Set<Path> getAllValuesOfpath(final ViablePathsMatch partialMatch) {
     return rawAccumulateAllValuesOfpath(partialMatch.toArray());
   }
   
@@ -281,7 +282,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<EObject> getAllValuesOfpath(final EObject pThis) {
+  public Set<Path> getAllValuesOfpath(final RailRoadElement pThis) {
     return rawAccumulateAllValuesOfpath(new Object[]{
     pThis, 
     null
@@ -291,7 +292,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   @Override
   protected ViablePathsMatch tupleToMatch(final Tuple t) {
     try {
-    	return ViablePathsMatch.newMatch((EObject) t.get(POSITION_THIS), (EObject) t.get(POSITION_PATH));
+    	return ViablePathsMatch.newMatch((RailRoadElement) t.get(POSITION_THIS), (Path) t.get(POSITION_PATH));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -301,7 +302,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   @Override
   protected ViablePathsMatch arrayToMatch(final Object[] match) {
     try {
-    	return ViablePathsMatch.newMatch((EObject) match[POSITION_THIS], (EObject) match[POSITION_PATH]);
+    	return ViablePathsMatch.newMatch((RailRoadElement) match[POSITION_THIS], (Path) match[POSITION_PATH]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -311,7 +312,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   @Override
   protected ViablePathsMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return ViablePathsMatch.newMutableMatch((EObject) match[POSITION_THIS], (EObject) match[POSITION_PATH]);
+    	return ViablePathsMatch.newMutableMatch((RailRoadElement) match[POSITION_THIS], (Path) match[POSITION_PATH]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;

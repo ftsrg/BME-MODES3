@@ -14,15 +14,15 @@ else
     ifeq ($(UNAME),Linux)
         $(info Building on Linux platform...)
 	COM_PORT = /dev/ttyUSB*
-	ARDUINO_BASE_DIR = /usr/share/arduino
+	ARDUINO_BASE_DIR = /usr/share/arduino-1.6.8
     else 
 	$(error Unknown platform, halting.)
     endif
 endif
 
 BAUD_RATE = 115200
-ARDUINO_VERSION = 105
-ARDUINO_CORE_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/cores/arduino
+ARDUINO_VERSION = 168
+ARDUINO_CORE_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/avr/cores/arduino
 ARDUINO_LIB_DIR = ${ARDUINO_BASE_DIR}/libraries
 LIB_CORE_DIR = lib/core
 LIB_LIBS_DIR = lib/libs
@@ -32,7 +32,7 @@ ARDUINO_LIB_LIBS = ${LIB_LIBS_DIR}/arduinolibs.a
 # Arduino Uno:
 ARDUINO_MODEL = atmega328p
 ARDUINO_PROGRAMMER = arduino
-ARDUINO_PINS_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/variants/standard
+ARDUINO_PINS_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/avr/variants/standard
 
 # Arduino Mega 2560:
 #ARDUINO_MODEL = atmega2560
@@ -43,12 +43,12 @@ ARDUINO_PINS_DIR = ${ARDUINO_BASE_DIR}/hardware/arduino/variants/standard
 BAUD_RATE = 57600
 
 # Include the libraries that you want. This are subfolders of "arduino-1.0.4/libraries" folder:
-INCLUDE_LIBS=SPI;Ethernet;Ethernet/utility;
+INCLUDE_LIBS=SPI;
 #INCLUDE_LIBS=EEPROM;Esplora;Ethernet;Ethernet/utility;Firmata;GSMSHIELD;\
 LiquidCrystal;MemoryFree;RTClib;SD;SD/utility;Servo;SoftwareSerial;SPI;\
 Stepper;WiFi;WiFi/utility;Wire;Wire/utility;\
 
-AVR_DUDE = ${ARDUINO_BASE_DIR}/hardware/tools/avr/bin/avrdude -C ${ARDUINO_BASE_DIR}/hardware/tools/avrdude.conf
+AVR_DUDE = ${ARDUINO_BASE_DIR}/hardware/tools/avr/bin/avrdude -C ${ARDUINO_BASE_DIR}/hardware/tools/avr/etc/avrdude.conf
 	
 #
 ############################# END OF USER CHANGES #############################
