@@ -2,8 +2,11 @@ package hu.bme.mit.inf.modes3.components.bbb.strategy
 
 import io.silverspoon.bulldog.core.Signal
 import io.silverspoon.bulldog.core.gpio.DigitalInput
-import io.silverspoon.bulldog.core.gpio.DigitalOutput
 import io.silverspoon.bulldog.core.platform.Board
+import java.io.BufferedReader
+import java.io.BufferedWriter
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -20,6 +23,7 @@ class BoardWrapper {
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	protected var Board board
+	protected var Process pinProcess;
 
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
@@ -29,11 +33,14 @@ class BoardWrapper {
 		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 		}
+		
+		pinProcess = Runtime.runtime.exec("python /modes3/pinControl.py")
 	}
 
 	new(Board board, ILoggerFactory factory) {
 		this.board = board
 		this.logger = factory.getLogger(this.class.name)
+
 	}
 
 	/**
@@ -59,10 +66,19 @@ class BoardWrapper {
 	 * @param level HIGH or LOW
 	 */
 	synchronized def setPinLevel(String pin, Signal level) {
-		logger.info('''Setting pin «pin» level «level»''')
-
-		val output = board?.getPin(pin).^as(DigitalOutput)
-		output?.applySignal(level);
+		val os = pinProcess.outputStream
+		val bw = new BufferedWriter(new OutputStreamWriter(os))
+		
+		logger.info('''Pin «pin» set to «level»''')
+		logger.info('''Process status: «pinProcess.alive»''')
+		logger.info('''«pin»;« if (level == Signal.High) "1" else "0"»''')
+		
+		bw.write('''«pin»;« if (level == Signal.High) "1" else "0"»''')
+		bw.newLine
+		bw.flush
+		
+		val br = new BufferedReader(new InputStreamReader(pinProcess.inputStream))
+		logger.info(br.readLine)
 	}
 
 	/**
@@ -78,8 +94,7 @@ class BoardWrapper {
 	 * @return level of the pin: HIGH or LOW
 	 */
 	synchronized def getPinLevel(String pin) {
-		val input = board?.getPin(pin).^as(DigitalInput)
-		input?.read
+		
 	}
 
 }

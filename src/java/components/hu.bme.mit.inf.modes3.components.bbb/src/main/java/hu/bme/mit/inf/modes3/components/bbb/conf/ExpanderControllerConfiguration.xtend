@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.components.bbb.conf;
 
+import hu.bme.mit.inf.modes3.components.bbb.prototypes.Configuration
 import hu.bme.mit.inf.modes3.components.bbb.prototypes.Pinout
-import hu.bme.mit.inf.modes3.components.bbb.prototypes.Setting
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -19,7 +19,7 @@ class ExpanderControllerConfiguration {
 	@Accessors(PACKAGE_GETTER, PACKAGE_SETTER) var Pinout pinout
 
 	// contains the managed turnouts and sections ID
-	@Accessors(PACKAGE_GETTER, PACKAGE_SETTER) var Setting setting
+	@Accessors(PACKAGE_GETTER, PACKAGE_SETTER) var Configuration config
 
 	/**
 	 * Creates a new pinout and setting configuration based on the TURNOUT_ID
@@ -27,50 +27,42 @@ class ExpanderControllerConfiguration {
 	 * 
 	 * @throws Exception if TURNOUT_ID is not a valid environmental variable
 	 */
-	new(ILoggerFactory factory) {
+	new(int turnoutID, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 
-		val env = System.getenv
-		if(!env.containsKey("TURNOUT_ID")) {
-			val ex = new Exception('''There is no TURNOUT_ID environmental variable defined''')
-			logger.error(ex.message, ex)
-			throw ex
-		}
-		val controllerID = Integer.valueOf(env.get("TURNOUT_ID"))
-
 		pinout = Pinout.loadPinoutConfig(factory)
-		setting = Setting.loadPinoutConfig(controllerID, factory)
+		config = Configuration.loadPinoutConfig(turnoutID, factory)
 	}
 
 	def controllerManagesTurnout(int turnoutId) {
-		setting.containsTurnout(turnoutId)
+		config.containsTurnout(turnoutId)
 	}
 
 	def controllerManagesSection(int sectionId) {
-		setting.containsSection(sectionId)
+		config.containsSection(sectionId)
 	}
 
 	/**
 	 * @return the managed turnouts ID as String
 	 */
 	def getAllTurnout() {
-		setting.turnoutNames
+		config.turnoutNames
 	}
 
 	/**
 	 * @return the managed sections ID as String
 	 */
 	def getAllSection() {
-		setting.sectionNames
+		config.sectionNames
 	}
 
-	def getSectionExpander(int sectionId) {
-		val expander = setting.getSectionPinoutHeaderValue(sectionId)
+	def String[] getSectionExpander(int sectionId) {
+		val expander = config.getSectionExpander(sectionId)
 		pinout.getHeaderPins(String.valueOf(expander))
 	}
 
-	def getTurnoutExpander(int turnoutId) {
-		val expander = setting.getTurnoutPinoutHeaderValue(turnoutId)
+	def String[] getTurnoutExpander(int turnoutId) {
+		val expander = config.getTurnoutExpander(turnoutId)
 		pinout.getHeaderPins(String.valueOf(expander))
 	}
 

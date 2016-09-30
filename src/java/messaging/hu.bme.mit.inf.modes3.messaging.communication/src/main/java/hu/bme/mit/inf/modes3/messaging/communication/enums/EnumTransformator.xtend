@@ -2,6 +2,7 @@ package hu.bme.mit.inf.modes3.messaging.communication.enums
 
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue
+import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
@@ -35,6 +36,14 @@ class EnumTransformator {
 			case DIVERGENT: TurnoutStateValue.DIVERGENT
 			case STRAIGHT: TurnoutStateValue.STRAIGHT
 		}
+	}
+
+	def static TrainDirectionValue toSpecific(TrainDirection direction) {
+		switch (direction) {
+			case FORWARD: TrainDirectionValue.FORWARD
+			case BACKWARD: TrainDirectionValue.BACKWARD
+		}
+
 	}
 
 	def static SegmentOccupancy toGeneral(SegmentOccupancyValue state) {
@@ -72,6 +81,19 @@ class EnumTransformator {
 			case UNRECOGNIZED: {
 				logger.warn("TurnoutStateValue is UNRECOGNIZED, default TurnoutState.STRAIGHT is used instead")
 				TurnoutState.STRAIGHT
+			}
+		}
+	}
+
+	def static TrainDirection toGeneral(TrainDirectionValue direction) {
+		switch (direction) {
+			case FORWARD:
+				TrainDirection.FORWARD
+			case BACKWARD:
+				TrainDirection.BACKWARD
+			case UNRECOGNIZED: {
+				logger.warn("TrainDirection is UNRECOGNIZED, default trainDirection.FORWARD is used instead");
+				TrainDirection.FORWARD
 			}
 		}
 	}

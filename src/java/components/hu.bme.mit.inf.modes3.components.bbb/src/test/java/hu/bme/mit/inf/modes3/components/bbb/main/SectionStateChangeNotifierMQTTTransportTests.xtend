@@ -11,7 +11,6 @@ import java.util.ArrayList
 import java.util.Collections
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.experimental.theories.DataPoints
 import org.junit.experimental.theories.Theories
@@ -23,7 +22,6 @@ import org.mockito.invocation.InvocationOnMock
 import org.mockito.stubbing.Answer
 import org.slf4j.helpers.NOPLoggerFactory
 
-@Ignore
 @RunWith(Theories)
 class SectionStateChangeNotifierMQTTTransportTests {
 

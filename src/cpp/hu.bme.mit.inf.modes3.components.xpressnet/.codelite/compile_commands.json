@@ -1,0 +1,205 @@
+[{
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/main.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/main.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/main.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/MqttClient.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/MqttClient.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/MqttClient.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/NetworkInterface.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/NetworkInterface.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/NetworkInterface.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/MosquittoppClient.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/MosquittoppClient.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/Network/MosquittoppClient.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetInterfaces/ProtobufTranslator.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetInterfaces/ProtobufTranslator.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetInterfaces/ProtobufTranslator.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveNotAvailable.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveNotAvailable.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveNotAvailable.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/TrackPowerStatusMessage.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/TrackPowerStatusMessage.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/TrackPowerStatusMessage.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/IncomingXPNMessage.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/IncomingXPNMessage.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/IncomingXPNMessage.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/AccessoryDecoderInformationResponse_LNN.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/AccessoryDecoderInformationResponse_LNN.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/AccessoryDecoderInformationResponse_LNN.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/AccessoryDecoderInformationResponse.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/AccessoryDecoderInformationResponse.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/AccessoryDecoderInformationResponse.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveControlTaken.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveControlTaken.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveControlTaken.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/IncomingByteBuffer.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/IncomingByteBuffer.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/IncomingByteBuffer.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveInformation.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveInformation.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetIncomingMessages/LocomotiveInformation.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetLocomotiveSpeed.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetLocomotiveSpeed.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetLocomotiveSpeed.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StopAllLocomotives.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StopAllLocomotives.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StopAllLocomotives.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetLocomotiveFunctions.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetLocomotiveFunctions.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetLocomotiveFunctions.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/GetLocomotiveInformation.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/GetLocomotiveInformation.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/GetLocomotiveInformation.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/CVTrainProgramming.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/CVTrainProgramming.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/CVTrainProgramming.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetTurnout.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetTurnout.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/SetTurnout.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/OutgoingXPNMessage.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/OutgoingXPNMessage.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/OutgoingXPNMessage.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StartOperations.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StartOperations.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StartOperations.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StopOperations.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StopOperations.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/StopOperations.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/EmergencyStopALocomotive.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/EmergencyStopALocomotive.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetOutgoingMessages/EmergencyStopALocomotive.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TrainStatus.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TrainStatus.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TrainStatus.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/BoardStatus.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/BoardStatus.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/BoardStatus.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TurnoutStatus.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TurnoutStatus.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TurnoutStatus.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetSerial.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetSerial.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/XpressNetSerial.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/AsyncSerial.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/AsyncSerial.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/AsyncSerial.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TrackPowerStatus.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TrackPowerStatus.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/TrackPowerStatus.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/SerialConnection.cpp",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/SerialConnection.cpp -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/XpressNetSerial/SerialConnection.cpp.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/DccOperationsCommand.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/DccOperationsCommand.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/DccOperationsCommand.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/DccOperationsState.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/DccOperationsState.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/DccOperationsState.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/Enums.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/Enums.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/Enums.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/Message.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/Message.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/Message.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentCommand.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentCommand.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentCommand.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentOccupancy.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentOccupancy.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentOccupancy.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentState.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentState.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/SegmentState.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainCurrentSegment.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainCurrentSegment.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainCurrentSegment.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainCurrentSpeed.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainCurrentSpeed.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainCurrentSpeed.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainFunctionCommand.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainFunctionCommand.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainFunctionCommand.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainFunctionState.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainFunctionState.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainFunctionState.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainReferenceSpeed.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainReferenceSpeed.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainReferenceSpeed.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainReferenceSpeedCommand.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainReferenceSpeedCommand.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TrainReferenceSpeedCommand.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutCommand.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutCommand.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutCommand.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutReferenceCommand.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutReferenceCommand.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutReferenceCommand.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutReferenceState.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutReferenceState.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutReferenceState.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutState.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutState.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/TurnoutState.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduCanGoTo.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduCanGoTo.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduCanGoTo.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduCannotGoTo.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduCannotGoTo.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduCannotGoTo.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduReleaseTo.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduReleaseTo.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduReleaseTo.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }, {
+  "file": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduReserveTo.pb.cc",
+  "directory": "/home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet",
+  "command": "/usr/bin/g++ -c /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduReserveTo.pb.cc -o /home/chorithian/Documents/hu.bme.mit.inf.modes3.components.xpressnet/GoogleProtocolBuffers/YakinduReserveTo.pb.cc.o  -g -Wall -std=c++11 `pkg-config --cflags protobuf` -I. -I. -I/usr/include/boost/"
+ }]

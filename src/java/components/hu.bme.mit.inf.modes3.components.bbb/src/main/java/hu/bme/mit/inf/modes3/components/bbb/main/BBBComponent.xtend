@@ -23,10 +23,10 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent {
 	// to send track element states
 	protected var TrackElementStateNotifier stateNotifier
 
-	new(CommunicationStack stack, ILoggerFactory factory) {
+	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
-		commandDispatcher = new TrackElementCommandHandler(locator, factory)
-		stateNotifier = new TrackElementStateNotifier(locator, factory)
+		commandDispatcher = new TrackElementCommandHandler(turnoutID, locator, factory)
+		stateNotifier = new TrackElementStateNotifier(turnoutID, locator, factory)
 	}
 
 	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController, ILoggerFactory factory) {

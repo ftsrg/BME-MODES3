@@ -39,10 +39,10 @@ class TrackElementStateNotifier {
 		this.logger = factory.getLogger(this.class.name)
 	}
 
-	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
+	new(int turnoutID, TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		val board = new BoardWrapper(factory)
-		sectionStateNotifier = new SectionStateNotifier(locator.trackElementStateSender, new ExpanderSectionController(board, factory), factory)
-		turnoutStateNotifier = new TurnoutStateNotifier(locator.trackElementStateSender, new ExpanderTurnoutController(board, factory), factory)
+		sectionStateNotifier = new SectionStateNotifier(locator.trackElementStateSender, new ExpanderSectionController(turnoutID, board, factory), factory)
+		turnoutStateNotifier = new TurnoutStateNotifier(locator.trackElementStateSender, new ExpanderTurnoutController(turnoutID, board, factory), factory)
 
 		this.logger = factory.getLogger(this.class.name)
 	}

@@ -13,14 +13,18 @@ class Main {
 		val loggerFactory = new SimpleLoggerFactory
 
 		val registry = new ArgumentRegistry(loggerFactory)
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("cid", "The ID of the component", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The selected configuration for deployment", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The IP address of the component", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The publish port for the component", Integer))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The reply port for the component", Integer))
 		registry.parseArguments(args)
 
 		val reader = new UARTReader(loggerFactory)
 		val readerThread = new Thread(reader)
 		readerThread.start
 
-		val stack = CommunicationStackFactory::createProtobufStack(registry, loggerFactory)
+		val stack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
 		val query = new SectionOccupancyQueryComponent(stack, reader, loggerFactory)
 		val queryThread = new Thread(query)
 		queryThread.start

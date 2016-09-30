@@ -59,6 +59,7 @@ class MQTTClient {
 						val mqttConfig = new MQTTConfiguration(config.pubPort, config.addr, transportConfig.localEndpoint.id)
 						testAndSubscribeToConnection(mqttConfig, topic, callback)
 						success.value = true
+						logger.info('''Connection succesful to MQTT Broker on «config.addr»:«config.pubPort»''')
 					} catch(MqttException ex) {
 						if(ex.reasonCode != NOT_CONNECTED_ERROR_CODE) {
 							logger.error(ex.message, ex)
@@ -109,7 +110,7 @@ class MQTTClient {
 		if(!client.isConnected) {
 			throw new MqttException(NOT_CONNECTED_ERROR_CODE)
 		}
-		client.disconnect
+		client.disconnect.waitForCompletion
 	}
 
 	private def createMqttClient(MQTTConfiguration config) {
@@ -119,11 +120,10 @@ class MQTTClient {
 
 			val persistence = new MemoryPersistence
 			val connOpts = new MqttConnectOptions
-			connOpts.setCleanSession(true)
 
 			val client = new MqttAsyncClient(address, clientId, persistence)
 			client.connect(connOpts)
-			Thread.sleep(500)
+			Thread.sleep(300)
 			client
 		} catch(InterruptedException e) {
 			logger.error(e.message, e)
@@ -134,7 +134,7 @@ class MQTTClient {
 	def synchronized sendMessage(byte[] message) {
 		try {
 			client?.publish(topic, message, qos, false)
-			Thread.sleep(10)
+			Thread.sleep(50)
 		} catch(MqttException ex) {
 			logger.error(ex.message, ex)
 		} catch(InterruptedException ex) {
@@ -142,8 +142,8 @@ class MQTTClient {
 			Thread.currentThread.interrupt
 		}
 	}
-	
-	def close(){
+
+	def close() {
 		client?.disconnect
 		client?.close
 		localBroker?.close

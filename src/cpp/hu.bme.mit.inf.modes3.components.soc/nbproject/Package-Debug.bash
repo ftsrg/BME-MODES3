@@ -6,16 +6,16 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=Arduino-Linux-x86
+CND_PLATFORM=Arduino-168-Linux
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 CND_DLIB_EXT=so
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hu.bme.mit.inf.master.mqtt.soc
-OUTPUT_BASENAME=hu.bme.mit.inf.master.mqtt.soc
-PACKAGE_TOP_DIR=hu.bme.mit.inf.master.mqtt.soc/
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hu.bme.mit.inf.modes3.components.soc
+OUTPUT_BASENAME=hu.bme.mit.inf.modes3.components.soc
+PACKAGE_TOP_DIR=hu.bme.mit.inf.modes3.components.soc/
 
 # Functions
 function checkReturnCode
@@ -60,15 +60,15 @@ mkdir -p ${NBTMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory "${NBTMPDIR}/hu.bme.mit.inf.master.mqtt.soc/bin"
+makeDirectory "${NBTMPDIR}/hu.bme.mit.inf.modes3.components.soc/bin"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/hu.bme.mit.inf.master.mqtt.soc.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/hu.bme.mit.inf.modes3.components.soc.tar
 cd ${NBTMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/hu.bme.mit.inf.master.mqtt.soc.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/hu.bme.mit.inf.modes3.components.soc.tar *
 checkReturnCode
 
 # Cleanup

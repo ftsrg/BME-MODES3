@@ -33,13 +33,13 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	// thread-safe wrapper for the BBB board
 	protected var BoardWrapper board
 
-	new(BoardWrapper boardWrapper, ILoggerFactory factory) {
+	new(int turnoutID, BoardWrapper boardWrapper, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 
 		board = boardWrapper
 
 		try {
-			controllerConf = new ExpanderControllerConfiguration(factory)
+			controllerConf = new ExpanderControllerConfiguration(turnoutID, factory)
 		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 		}
@@ -60,7 +60,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override getTurnoutStatus(int turnoutId) {
-		logger.info('''Reading turnout «turnoutId»'s physical direction.''')
+		logger.debug('''Reading turnout «turnoutId»'s physical direction.''')
 
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 
@@ -83,7 +83,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override setTurnoutStraight(int turnoutId) {
-		logger.info('''Set turnout «turnoutId» straight physically.''')
+		logger.debug('''Set turnout «turnoutId» straight physically.''')
 
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement
@@ -91,7 +91,7 @@ class ExpanderTurnoutController implements ITurnoutControllerStrategy {
 	}
 
 	override setTurnoutDivergent(int turnoutId) {
-		logger.info('''Set turnout «turnoutId» divergent physically.''')
+		logger.debug('''Set turnout «turnoutId» divergent physically.''')
 
 		val pins = controllerConf.getTurnoutExpander(turnoutId)
 		// TODO implement

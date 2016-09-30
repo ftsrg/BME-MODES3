@@ -19,7 +19,6 @@ class MQTTBroker {
 		prop.put("allow_anonymous", "true")
 
 		broker.startServer(prop)
-		
 		Thread.sleep(500) // give time for broker to start
 	}
 	
