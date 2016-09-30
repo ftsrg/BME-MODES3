@@ -106,3 +106,56 @@ function updateDOM() {
         window.turnouts[t].DOMUpdatedCallback();
     }
 }
+
+function getCoordinatesOfSegment(segmentID, t) {
+    var segmentElement = $('#layout').find('#' + segmentID);
+    var segmentPath = segmentElement.attr('d');
+    log(segmentPath);
+
+    // split path by M 
+    var segmentPathParts = segmentPath.toLowerCase().split("m ");
+
+    /**
+     * Paths are constructed as follows:
+     * Defining first the starting point: M x,y
+     * Then defining bezier curve: C x1,y1 x2,y2, x,y
+     * bezier curve starts on current pen position, ends in x,y
+     * and the two control point's coordinates are x1,y1
+     */
+    var pattr = /([0-9\-\.]{1,}),([0-9\-\.]{1,}) c ([0-9\-\.]{1,}),([0-9\-\.]{1,}) ([0-9\-\.]{1,}),([0-9\-\.]{1,}) ([0-9\-\.]{1,}),([0-9\-\.]{1,})/i;
+
+    // should be only 1 bezier curve!
+    var results = null;
+
+    // for every bezier curve, be get the coordinates
+    for (var s in segmentPathParts) {
+
+        // sometimes we get 1 or 2 whitespace character as a segmentpart, 
+        // we should skip them
+        if (segmentPathParts[s].length < 3) {
+            continue;
+        }
+
+        // if first curve found, then immediatelly break loop
+        results = pattr.exec(segmentPathParts[s]);
+        break;
+    }
+
+    // getting control points from results
+    var P_0 = [results[1], results[2]];
+    var P_1 = [results[3], results[4]];
+    var P_2 = [results[5], results[6]];
+    var P_3 = [results[7], results[8]];
+
+    /**
+     * Bezier curves explicit formula
+     * B(t) = (1-t)^3 * P_0 + 3*(1-t)^2*t*P_1 + 3*(1-t)*t^2*P_2 + t^3*P_3
+     */
+
+    function bezier(i, t) {
+        return Math.pow(1 - t, 3) * P_0[i] + 3 * Math.pow(1 - t, 2) * t * P_1[i]
+                + 3 * (1 - t) * Math.pow(t, 2) * P_2[i] + Math.pow(t, 3) * P_3[i];
+    }
+
+    return [bezier(0, t), bezier(1, t)];
+}
