@@ -6,10 +6,12 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import java.util.Collections
 import java.util.HashMap
 import java.util.Map
+import java.util.TreeMap
 import org.slf4j.ILoggerFactory
 
 class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationComponent {
 
+	Map<Integer, SegmentOccupancy> stateCache = new TreeMap
 	IUARTReader reader
 
 	new(CommunicationStack stack, IUARTReader reader, ILoggerFactory factory) {
@@ -31,7 +33,15 @@ class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationCompon
 
 	private def sendMessage(Map<Integer, SegmentOccupancy> states) {
 		states.forEach [ id, state |
-			locator.trackElementStateSender.sendSegmentOccupation(id, state)
+			if(!stateCache.containsKey(id)) {
+				stateCache.put(id, state)
+				logger.info('''«id» «state»''')
+				locator.trackElementStateSender.sendSegmentOccupation(id, state)
+			} else if(!stateCache.get(id).equals(state)) {
+				stateCache.put(id, state)
+				logger.info('''«id» «state»''')
+				locator.trackElementStateSender.sendSegmentOccupation(id, state)
+			}
 		]
 	}
 
@@ -42,14 +52,16 @@ class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationCompon
 	 */
 	private def parseMsg(byte[] byteVector) {
 		// That masking with 0xff is necessary because java doesn't have unsigned chars (so the sign bits messes up shifting)
-		val int occupancy = (byteVector.get(0).bitwiseAnd(0xff) << 24).bitwiseOr(byteVector.get(1).bitwiseAnd(0xff) << 16).bitwiseOr(byteVector.get(2).bitwiseAnd(0xff) << 8).bitwiseOr(
-			byteVector.get(3).bitwiseAnd(0xff))
+		val int occupancy = (byteVector.get(0).bitwiseAnd(0xff) << 24)
+				.bitwiseOr(byteVector.get(1).bitwiseAnd(0xff) << 16)
+				.bitwiseOr(byteVector.get(2).bitwiseAnd(0xff) << 8)
+				.bitwiseOr(byteVector.get(3).bitwiseAnd(0xff))
 		val map = new HashMap<Integer, SegmentOccupancy>
 		for (i : 0 ..< 32) {
 			val mask = ( 1 << i )
 			val bit = (occupancy.bitwiseAnd(mask) >> i)
 			// i+1 is the section ID, because we start number from 1
-			map.put(i + 1, if(bit == 1) SegmentOccupancy.OCCUPIED else SegmentOccupancy.FREE)
+			map.put(i + 1, if(bit.bitwiseAnd(1) == 1) SegmentOccupancy.OCCUPIED else SegmentOccupancy.FREE)
 		}
 		return reshuffle(map)
 	}
