@@ -43,14 +43,14 @@ class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationCompon
 				if(state == SegmentOccupancy.OCCUPIED) { //Occupied msg arrived
 					freeFor.put(id, 0)
 					occupiedFor.put(id, occupiedFor.get(id) + 1) 
-					if(occupiedFor.get(id) > threshold) {
+					if(occupiedFor.get(id) == threshold) {
 						locator.trackElementStateSender.sendSegmentOccupation(id, state)
 						logger.info('''«id» «state»''')
 					}
 				} else { // Free msg arrived
 					occupiedFor.put(id, 0)
 					freeFor.put(id, freeFor.get(id) + 1)
-					if(freeFor.get(id) > threshold) {
+					if(freeFor.get(id) == threshold) {
 						locator.trackElementStateSender.sendSegmentOccupation(id, state)
 						logger.info('''«id» «state»''')
 					}
