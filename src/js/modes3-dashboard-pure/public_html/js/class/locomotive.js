@@ -71,41 +71,18 @@ LocomotiveController.prototype.setSpeed = function (speed) {
             this.duration * 1000, this);
 };
 
-LocomotiveController.prototype.setOnSegment = function (segment, reverse) {
+LocomotiveController.prototype.setOnSegment = function (segment, percentage) {
+    // getting position from percentage
+    var position = getCoordinatesOfSegment(segment.config.id, percentage/100.0);
+    var x = position[0] - this.svgElemPosition.attr('cx');
+    var y = position[1] - this.svgElemPosition.attr('cy');
 
-    // first, get the path of the section
-    var segmentElement = $('#layout').find('#' + segment.config.id);
+    // translate group to this point
+    this.svgElemGroup.attr('transform', 'translate(' + x + ',' + y + ')');
 
-    // if path is found, then the first two coordinates will be the starting point,
-    // and the last two coordinates will be the ending point of the segment
-    var startPoint = /m ([\-0-9.]{1,}),([\-0-9.]{1,})/i.exec(segmentElement.attr('d'));
-    var endPoint = /([\-0-9.]{1,}),([\-0-9.]{1,})$/i.exec(segmentElement.attr('d'));
-
-    // in result, there will be 3 item: the whole string which is applies to the 
-    // expression, and the two other item will be the two coordinate respectively
-    if (reverse === false && startPoint.length > 1) {
-        // translate position with the center point of the position element
-        var x = startPoint[1] - this.svgElemPosition.attr('cx');
-        var y = startPoint[2] - this.svgElemPosition.attr('cy');
-
-        // translate group to this point
-        this.svgElemGroup.attr('transform', 'translate(' + x + ',' + y + ')');
-
-        // saving segment id for later usage
-        this.currentSegment = segment;
-    }
-
-    if (reverse === true && endPoint.length > 1) {
-        // translate position with the center point of the position element
-        var x = endPoint[1] - this.svgElemPosition.attr('cx');
-        var y = endPoint[2] - this.svgElemPosition.attr('cy');
-
-        // translate group to this point
-        this.svgElemGroup.attr('transform', 'translate(' + x + ',' + y + ')');
-
-        // saving segment id for later usage
-        this.currentSegment = segment;
-    }
+    // saving segment id for later usage
+    this.currentSegment = segment;
+    
 };
 
 LocomotiveController.prototype.getKeyPoints = function () {

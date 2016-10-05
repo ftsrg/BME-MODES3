@@ -25,13 +25,13 @@ function SegmentController(segmentConfig) {
 
 };
 
-SegmentController.prototype.setSegmentEnabled = function () {
+SegmentController.prototype.setEnabled = function () {
     setTrackElementColor(this.svgElem, window.settings.segment.activeColor);
     this.isSegmentEnabled = true;
     logEvent("Segment #" + this.config.id + " enabled");
 };
 
-SegmentController.prototype.setSegmentDisabled = function () {
+SegmentController.prototype.setDisabled = function () {
     setTrackElementColor(this.svgElem, window.settings.segment.inactiveColor);
     this.isSegmentEnabled = false;
     logEvent("Segment #" + this.config.id + " disabled");
