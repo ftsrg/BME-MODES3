@@ -25,7 +25,9 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	]
 	var Set<Train> stoppedTrains = new HashSet<Train>
 
-	val List<ITrainStopStrategy> trainStopStrategies = #[]
+	val List<ITrainStopStrategy> trainStopStrategies = #[
+		new XPressInvertDirectionStrategy(locator.trackElementCommander, locator.trainReferenceSpeedState, logger)
+	]
 
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
 		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
@@ -36,6 +38,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		this.factory = factory
 		logger.info('Construction started')
 		model = new ModelUtil(factory)
+		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
 	}
 
@@ -50,7 +53,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	private def turn(RailRoadElement element, SegmentState state) {
 		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
 	}
-
+	
 	private def void initRailRoad() {
 		// 9
 		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
@@ -100,7 +103,6 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	def public void refreshSafetyLogicState() {
 		logger.info('''Refreshing state: #of trains «model.model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
 		logger.info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
-		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		val offenders = new HashSet<Train>
 		model.cuts.forEach [ cut |
 			logger.info('''CUT: victim on «(cut.victim).id» cuts «(cut.offender).currentlyOn.id»''')
@@ -135,25 +137,16 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		logger.info('''SectionToEnable = {«FOR enable : sectionsToEnable SEPARATOR ', '» «enable.id» «ENDFOR»}''')
 		logger.info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
 
-		stoppedTrains = offenders
+		sectionsToEnable.filter[it instanceof Segment].map[it as Segment].forEach [
+			it.isEnabled = true
+		]
+		sectionsToDisable.filter[it instanceof Segment].map[it as Segment].forEach [
+			it.isEnabled = false
+		]
 
-//		sendMessages()
+		stoppedTrains = offenders
 	}
 
-//	private def void sendMessages() {
-//		val sectionsToEnable = model.model.sections.getSegments().filter[isEnabled]
-//		val sectionsToDisable = model.model.sections.getSegments().filter[!isEnabled]
-//		segmentEnableStrategies.forEach [ strategy |
-//			sectionsToEnable.forEach [ segment |
-//				strategy.enableSection(segment.id)
-//			]
-//		]
-//		segmentDisableStrategies.forEach [ strategy |
-//			sectionsToDisable.forEach [ segment |
-//				strategy.disableSection(segment.id)
-//			]
-//		]
-//	}
 	override onUpdate() {
 		refreshSafetyLogicState
 	}
