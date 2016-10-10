@@ -9,7 +9,6 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import org.slf4j.Logger
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection
-import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceCommander
 
 public interface ITrainStopStrategy {
 	def void stopTrain(Train train)
@@ -50,12 +49,12 @@ public class XPressZeroSpeedDisableStrategy implements ITrainStopStrategy {
 	}
 }
 
-public class XPressInvertDirection implements ITrainStopStrategy {
-	TrainReferenceCommander mms
+public class XPressInvertDirectionStrategy implements ITrainStopStrategy {
+	ITrackElementCommander mms
 	TrainReferenceSpeedState referenceSpeedState
 	Logger logger
  
-	new(TrainReferenceCommander mms, TrainReferenceSpeedState referenceSpeedState, Logger logger) {
+	new(ITrackElementCommander mms, TrainReferenceSpeedState referenceSpeedState, Logger logger) {
 		this.mms = mms
 		this.referenceSpeedState = referenceSpeedState
 		this.logger = logger
@@ -67,10 +66,10 @@ public class XPressInvertDirection implements ITrainStopStrategy {
 
 }
 
-public class XPressStopAll implements ISegmentDisableStrategy, ITrainStopStrategy {
-	TrainReferenceCommander trc
+public class XPressStopAllStrategy implements ISegmentDisableStrategy, ITrainStopStrategy {
+	ITrackElementCommander trc
 
-	new(TrainReferenceCommander trc) {
+	new(ITrackElementCommander trc) {
 		this.trc = trc
 	}
 

@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.modes3.transports.mqtt.connect
 
+import hu.bme.mit.inf.modes3.messaging.mms.messages.Message
+import hu.bme.mit.inf.modes3.messaging.mms.messages.MessageType
 import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 import hu.bme.mit.inf.modes3.transports.mqtt.MQTTTransport
 import java.util.ArrayList
@@ -43,6 +45,7 @@ class MQTTConnectionBridge implements MqttCallback {
 	 */
 	private new(ILoggerFactory factory, TransportConfiguration transportConfig) {
 		client = new MQTTClient(factory, transportConfig, topic, qos, this)
+		logger = factory.getLogger(this.class.name)
 	}
 
 	static def getInstance(ILoggerFactory factory, TransportConfiguration transportConfig) {
@@ -82,6 +85,12 @@ class MQTTConnectionBridge implements MqttCallback {
 
 	override messageArrived(String topic, MqttMessage message) throws Exception {
 		if(topic.equals(this.topic)) {
+			try{
+			val m = Message.parseFrom(message.payload)
+			logger.info((m.type as MessageType).toString)
+			} catch(Exception e){
+				
+			}
 			subscribers.forEach[subs|subs.putMessage(message.payload)]
 		}
 	}

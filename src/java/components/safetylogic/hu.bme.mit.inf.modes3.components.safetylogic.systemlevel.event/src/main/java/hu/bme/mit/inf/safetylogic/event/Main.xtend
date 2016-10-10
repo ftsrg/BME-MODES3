@@ -22,7 +22,6 @@ class Main {
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The publish port for the component", Integer))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The reply port for the component", Integer))
 		registry.parseArguments(args)
-//		val sl = new SafetyLogic(CommunicationStackFactory::createProtobufStack(registry, loggerFactory), loggerFactory)
 		val sl = new SafetyLogic(CommunicationStackFactory::createMQTTStack(registry, loggerFactory), loggerFactory)
 
 		sl.run // The component will run on this thread

@@ -56,8 +56,9 @@ class ModelUtil implements IModelInteractor {
 		for(trainID : validTrainIDs){
 			if(model.trains.findFirst[it.id == trainID] == null) return trainID
 		}
-		logger.error("This is the third train on the railroad, something went terribly wrong")
-		throw new RuntimeException("There can't be three trains on the railroad on the same time")
+		logger.error("There can't be this much trains on the track")
+		model.trains.clear
+		throw new RuntimeException("There can't be this much trains on the track")
 	}
 	
 	def override removeTrain(Train t){

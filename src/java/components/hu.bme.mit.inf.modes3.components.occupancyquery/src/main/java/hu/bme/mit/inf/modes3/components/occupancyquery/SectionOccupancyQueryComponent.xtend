@@ -6,13 +6,15 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import java.util.Collections
 import java.util.HashMap
 import java.util.Map
-import java.util.TreeMap
 import org.slf4j.ILoggerFactory
 
 class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationComponent {
 
-	Map<Integer, SegmentOccupancy> stateCache = new TreeMap
+//	Map<Integer, SegmentOccupancy> stateCache = new TreeMap
+	Map<Integer, Integer> occupiedFor = new HashMap
+	Map<Integer, Integer> freeFor = new HashMap
 	IUARTReader reader
+	val threshold = 2
 
 	new(CommunicationStack stack, IUARTReader reader, ILoggerFactory factory) {
 		super(stack, factory)
@@ -33,14 +35,27 @@ class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationCompon
 
 	private def sendMessage(Map<Integer, SegmentOccupancy> states) {
 		states.forEach [ id, state |
-			if(!stateCache.containsKey(id)) {
-				stateCache.put(id, state)
-				logger.info('''«id» «state»''')
-				locator.trackElementStateSender.sendSegmentOccupation(id, state)
-			} else if(!stateCache.get(id).equals(state)) {
-				stateCache.put(id, state)
-				logger.info('''«id» «state»''')
-				locator.trackElementStateSender.sendSegmentOccupation(id, state)
+			if(!freeFor.containsKey(id)) { // Not in the map yet
+				freeFor.put(id, 0)
+				occupiedFor.put(id, 0)
+			} else {
+
+				if(state == SegmentOccupancy.OCCUPIED) { //Occupied msg arrived
+					freeFor.put(id, 0)
+					occupiedFor.put(id, occupiedFor.get(id) + 1) 
+					if(occupiedFor.get(id) == threshold) {
+						locator.trackElementStateSender.sendSegmentOccupation(id, state)
+						logger.info('''«id» «state»''')
+					}
+				} else { // Free msg arrived
+					occupiedFor.put(id, 0)
+					freeFor.put(id, freeFor.get(id) + 1)
+					if(freeFor.get(id) == threshold) {
+						locator.trackElementStateSender.sendSegmentOccupation(id, state)
+						logger.info('''«id» «state»''')
+					}
+				}
+
 			}
 		]
 	}
@@ -52,10 +67,8 @@ class SectionOccupancyQueryComponent extends AbstractRailRoadCommunicationCompon
 	 */
 	private def parseMsg(byte[] byteVector) {
 		// That masking with 0xff is necessary because java doesn't have unsigned chars (so the sign bits messes up shifting)
-		val int occupancy = (byteVector.get(0).bitwiseAnd(0xff) << 24)
-				.bitwiseOr(byteVector.get(1).bitwiseAnd(0xff) << 16)
-				.bitwiseOr(byteVector.get(2).bitwiseAnd(0xff) << 8)
-				.bitwiseOr(byteVector.get(3).bitwiseAnd(0xff))
+		val int occupancy = (byteVector.get(0).bitwiseAnd(0xff) << 24).bitwiseOr(byteVector.get(1).bitwiseAnd(0xff) << 16).bitwiseOr(byteVector.get(2).bitwiseAnd(0xff) << 8).bitwiseOr(
+			byteVector.get(3).bitwiseAnd(0xff))
 		val map = new HashMap<Integer, SegmentOccupancy>
 		for (i : 0 ..< 32) {
 			val mask = ( 1 << i )
