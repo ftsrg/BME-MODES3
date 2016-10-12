@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import hu.bme.mit.inf.safetylogic.patterns.ViablePathsMatch;
 import hu.bme.mit.inf.safetylogic.patterns.ViablePathsMatcher;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
@@ -16,6 +17,7 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecificat
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
+import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
@@ -24,6 +26,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Inequalit
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
+import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.QueryInitializationException;
 import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
 
@@ -56,6 +59,11 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
   @Override
   protected ViablePathsMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
     return ViablePathsMatcher.on(engine);
+  }
+  
+  @Override
+  public ViablePathsMatcher instantiate() throws ViatraQueryException {
+    return ViablePathsMatcher.create();
   }
   
   @Override
@@ -97,6 +105,12 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
     private final static ViablePathsQuerySpecification.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
+    private final PParameter parameter_pThis = new PParameter("This", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")), PParameterDirection.INOUT);
+    
+    private final PParameter parameter_pPath = new PParameter("path", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")), PParameterDirection.INOUT);
+    
+    private final List<PParameter> parameters = Arrays.asList(parameter_pThis, parameter_pPath);
+    
     @Override
     public String getFullyQualifiedName() {
       return "hu.bme.mit.inf.safetylogic.patterns.viablePaths";
@@ -109,14 +123,12 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
     
     @Override
     public List<PParameter> getParameters() {
-      return Arrays.asList(
-      			 new PParameter("This", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement"))),
-      			 new PParameter("path", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")))
-      			);
+      return parameters;
     }
     
     @Override
     public Set<PBody> doGetContainedBodies() throws QueryInitializationException {
+      setEvaluationHints(new QueryEvaluationHint(null, Collections.<String,Object>emptyMap()));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
       	{
@@ -128,8 +140,8 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_path, "path")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_path, parameter_pPath)
       		));
       		// 	Segment(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment")));
@@ -171,8 +183,8 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_path, "path")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_path, parameter_pPath)
       		));
       		// 	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
@@ -219,8 +231,8 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_path, "path")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_path, parameter_pPath)
       		));
       		// 	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
@@ -267,8 +279,8 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_path, "path")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_path, parameter_pPath)
       		));
       		// 	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
@@ -315,8 +327,8 @@ public final class ViablePathsQuerySpecification extends BaseGeneratedEMFQuerySp
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_path), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_path, "path")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_path, parameter_pPath)
       		));
       		// 	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
