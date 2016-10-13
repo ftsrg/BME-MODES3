@@ -1,8 +1,7 @@
 package hu.bme.mit.inf.modes3.components.bbb.strategy
 
+import hu.bme.mit.inf.modes3.components.bbb.main.HardwareAbstractionLayer
 import io.silverspoon.bulldog.core.Signal
-import io.silverspoon.bulldog.core.gpio.DigitalInput
-import io.silverspoon.bulldog.core.platform.Board
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.InputStreamReader
@@ -11,46 +10,20 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
-import static io.silverspoon.bulldog.core.platform.Platform.createBoard
-
 /**
  * Thread-safe wrapper for the board instance.
  * 
  * @author benedekh
  */
-class BoardWrapper {
+class BoardWrapper implements HardwareAbstractionLayer {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
-	protected var Board board
 	protected var Process pinProcess;
 
 	new(ILoggerFactory factory) {
-		this.logger = factory.getLogger(this.class.name)
-
-		try {
-			board = createBoard
-		} catch(Exception ex) {
-			logger.error(ex.message, ex)
-		}
-		
+		this.logger = factory.getLogger(this.class.name)	
 		pinProcess = Runtime.runtime.exec("python /modes3/pinControl.py")
-	}
-
-	new(Board board, ILoggerFactory factory) {
-		this.board = board
-		this.logger = factory.getLogger(this.class.name)
-
-	}
-
-	/**
-	 * Thread-safe wrapper for board.getPin(pin).as(DigitalInput) method.
-	 * 
-	 * pin is the name of the pin on the sheet:
-	 * https://insigntech.files.wordpress.com/2013/09/bbb_pinouts.jpg
-	 */
-	synchronized def getPinAsDigitalInput(String pin) {
-		board?.getPin(pin).^as(DigitalInput)
 	}
 
 	/**
@@ -65,7 +38,7 @@ class BoardWrapper {
 	 * @param pin
 	 * @param level HIGH or LOW
 	 */
-	synchronized def setPinLevel(String pin, Signal level) {
+ 	synchronized override setPinLevel(String pin, Signal level) {
 		val os = pinProcess.outputStream
 		val bw = new BufferedWriter(new OutputStreamWriter(os))
 		
@@ -93,7 +66,7 @@ class BoardWrapper {
 	 * @param pin
 	 * @return level of the pin: HIGH or LOW
 	 */
-	synchronized def getPinLevel(String pin) {
+	synchronized override getPinLevel(String pin) {
 		
 	}
 

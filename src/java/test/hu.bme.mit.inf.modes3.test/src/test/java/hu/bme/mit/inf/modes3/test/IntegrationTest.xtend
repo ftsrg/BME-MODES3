@@ -1,52 +1,52 @@
-package hu.bme.mit.inf.modes3.test
-
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
-import hu.bme.mit.inf.safetylogic.event.ModelUtil
-import hu.bme.mit.inf.safetylogic.event.SafetyLogic
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
-import org.slf4j.impl.SimpleLoggerFactory
-
-class IntegrationTest {
-	var SafetyLogic sl
-	var Thread slThread
-
-	var RailRoadModel model
-	var Thread physicalThread
-	var Thread arduinoThread
-	var Thread bbbThread
-	
-
-	@Before def void before() {
-		sl = new SafetyLogic(CommunicationStackFactory::createLocalStack, new SimpleLoggerFactory())
-		slThread = new Thread(sl)
-
-		model = ModelUtil.getModelFromResource(ModelUtil.loadModel)
-		physicalThread = new Thread(new PhyicalEnvironmentSimulation(model))
-		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model, new SimpleLoggerFactory))
-		bbbThread = new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model, new SimpleLoggerFactory))
-		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
-	}
-
-	@Test def void integrationTest() {
-		synchronized(model) {
-
-			Assert.assertEquals(true, (model.sections.findFirst[id == 24] as Segment).isEnabled)
-			Assert.assertEquals(true, (model.sections.findFirst[id == 29] as Segment).isEnabled)
-		}
-		slThread.start
-		bbbThread.start
-		physicalThread.start
-		arduinoThread.start
-
-		Thread.sleep(3000)
-	
-		synchronized(model) {
-			Assert.assertEquals(false, (model.sections.findFirst[id == 24] as Segment).isEnabled)
-			Assert.assertEquals(false, (model.sections.findFirst[id == 29] as Segment).isEnabled)
-		}
-	}
-}
+//package hu.bme.mit.inf.modes3.test
+//
+//import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
+//import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
+//import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
+//import hu.bme.mit.inf.safetylogic.event.ModelUtil
+//import hu.bme.mit.inf.safetylogic.event.SafetyLogic
+//import org.junit.Assert
+//import org.junit.Before
+//import org.junit.Test
+//import org.slf4j.impl.SimpleLoggerFactory
+//
+//class IntegrationTest {
+//	var SafetyLogic sl
+//	var Thread slThread
+//
+//	var RailRoadModel model
+//	var Thread physicalThread
+//	var Thread arduinoThread
+//	var Thread bbbThread
+//	
+//
+//	@Before def void before() {
+//		sl = new SafetyLogic(CommunicationStackFactory::createLocalStack, new SimpleLoggerFactory())
+//		slThread = new Thread(sl)
+//
+//		model = ModelUtil.getModelFromResource(ModelUtil.loadModel)
+//		physicalThread = new Thread(new PhyicalEnvironmentSimulation(model))
+//		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model, new SimpleLoggerFactory))
+//		bbbThread = new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model, new SimpleLoggerFactory))
+//		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
+//	}
+//
+//	@Test def void integrationTest() {
+//		synchronized(model) {
+//
+//			Assert.assertEquals(true, (model.sections.findFirst[id == 24] as Segment).isEnabled)
+//			Assert.assertEquals(true, (model.sections.findFirst[id == 29] as Segment).isEnabled)
+//		}
+//		slThread.start
+//		bbbThread.start
+//		physicalThread.start
+//		arduinoThread.start
+//
+//		Thread.sleep(3000)
+//	
+//		synchronized(model) {
+//			Assert.assertEquals(false, (model.sections.findFirst[id == 24] as Segment).isEnabled)
+//			Assert.assertEquals(false, (model.sections.findFirst[id == 29] as Segment).isEnabled)
+//		}
+//	}
+//}

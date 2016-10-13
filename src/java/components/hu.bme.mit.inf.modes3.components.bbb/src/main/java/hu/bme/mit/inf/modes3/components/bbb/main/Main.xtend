@@ -32,7 +32,7 @@ class Main {
 
 		val communicationStack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
 		
-		val bbb = new BBBComponentWithStateChangeNotifier(turnoutID, communicationStack, loggerFactory)
+		val bbb = new BBBComponent(turnoutID, communicationStack, loggerFactory)
 		bbb.run // run on main thread
 
 //		if(registry.hasMandatoryArguments(requiredParams)) {
