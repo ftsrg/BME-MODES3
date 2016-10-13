@@ -33,6 +33,7 @@ enum MessageType {
 	TRAIN_FUNCTION_STATE = 19;
 	DCC_OPERATIONS_COMMAND = 20;
 	DCC_OPERATIONS_STATE = 21;
+	SEND_ALL_STATUS = 22;
 }
 
 enum SegmentStateValue {
