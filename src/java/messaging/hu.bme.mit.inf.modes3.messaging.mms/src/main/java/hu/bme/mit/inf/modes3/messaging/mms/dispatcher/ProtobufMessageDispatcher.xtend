@@ -12,6 +12,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateOrBuilder
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SendAllStatusOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainCurrentSegment
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainCurrentSegmentOrBuilder
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainCurrentSpeed
@@ -29,6 +30,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SendAllStatus
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
@@ -48,6 +50,9 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainFunctionCommandOrBuilder> trainFunctionCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TurnoutCommandOrBuilder> turnoutCommandHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentCommandOrBuilder> segmentCommandHandler
+	
+	// UPDATE
+	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SendAllStatusOrBuilder> sendAllStatusHandler
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger(this.class.name)
@@ -79,6 +84,8 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 					segmentOccupancyHandler?.handleMessage(message.segmentOccupancy)
 				case MessageType.DCC_OPERATIONS_STATE:
 					dccOperationStateHandler?.handleMessage(message.dccOperationsState)
+				case MessageType.SEND_ALL_STATUS:
+					sendAllStatusHandler?.handleMessage(message.allStatus)
 				default:
 					return
 			}
@@ -169,4 +176,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 		(Message.newBuilder => [type = MessageType.DCC_OPERATIONS_COMMAND; dccOperationsCommand = _message ]).build.toByteArray
 	}
 
+	def dispatch byte[] internalConvertMessageToRaw(SendAllStatus _message){
+		(Message.newBuilder => [type = MessageType.SEND_ALL_STATUS; allStatus = _message]).build.toByteArray
+	}
 }
