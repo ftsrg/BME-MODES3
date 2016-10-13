@@ -7,6 +7,7 @@ import com.google.common.collect.Sets;
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatch;
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
@@ -16,6 +17,7 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecificat
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
+import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
@@ -23,6 +25,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedP
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
+import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.QueryInitializationException;
 import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
 
@@ -55,6 +58,11 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
   @Override
   protected CurrentlyConnectedMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
     return CurrentlyConnectedMatcher.on(engine);
+  }
+  
+  @Override
+  public CurrentlyConnectedMatcher instantiate() throws ViatraQueryException {
+    return CurrentlyConnectedMatcher.create();
   }
   
   @Override
@@ -96,6 +104,12 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
     private final static CurrentlyConnectedQuerySpecification.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
+    private final PParameter parameter_pThis = new PParameter("This", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")), PParameterDirection.INOUT);
+    
+    private final PParameter parameter_pConnectedTo = new PParameter("connectedTo", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")), PParameterDirection.INOUT);
+    
+    private final List<PParameter> parameters = Arrays.asList(parameter_pThis, parameter_pConnectedTo);
+    
     @Override
     public String getFullyQualifiedName() {
       return "hu.bme.mit.inf.safetylogic.patterns.currentlyConnected";
@@ -108,14 +122,12 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
     
     @Override
     public List<PParameter> getParameters() {
-      return Arrays.asList(
-      			 new PParameter("This", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement"))),
-      			 new PParameter("connectedTo", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")))
-      			);
+      return parameters;
     }
     
     @Override
     public Set<PBody> doGetContainedBodies() throws QueryInitializationException {
+      setEvaluationHints(new QueryEvaluationHint(null, Collections.<String,Object>emptyMap()));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
       	{
@@ -125,8 +137,8 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_connectedTo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_connectedTo, "connectedTo")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_connectedTo, parameter_pConnectedTo)
       		));
       		// 	Segment(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment")));
@@ -144,8 +156,8 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_connectedTo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_connectedTo, "connectedTo")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_connectedTo, parameter_pConnectedTo)
       		));
       		//  	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
@@ -170,8 +182,8 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_connectedTo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_connectedTo, "connectedTo")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_connectedTo, parameter_pConnectedTo)
       		));
       		// 	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
@@ -196,8 +208,8 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_connectedTo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_connectedTo, "connectedTo")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_connectedTo, parameter_pConnectedTo)
       		));
       		// 	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
@@ -222,8 +234,8 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		new TypeConstraint(body, new FlatTuple(var_connectedTo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, "This"),
-      		   new ExportedParameter(body, var_connectedTo, "connectedTo")
+      		   new ExportedParameter(body, var_This, parameter_pThis),
+      		   new ExportedParameter(body, var_connectedTo, parameter_pConnectedTo)
       		));
       		// 	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));

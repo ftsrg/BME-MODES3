@@ -3,12 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-/**
- * 
- * @param {LocomotiveController} locomotive
- * @returns {undefined}
- */
 function __setLocomotiveOnNextSegment(locomotive) {
     var nextSegment = locomotive.getNextSegment();
     if (nextSegment === null) {
@@ -22,7 +16,11 @@ function __setLocomotiveOnNextSegment(locomotive) {
             locomotive.duration * 1000, locomotive);
 }
 
-
+/**
+ * 
+ * @param {LocomotiveController} locomotive
+ * @returns {undefined}
+ */
 function LocomotiveController(locomotiveConfig) {
     // setting up instance variables
     this.config = locomotiveConfig;
@@ -83,32 +81,6 @@ LocomotiveController.prototype.setOnSegment = function (segment, percentage) {
     // saving segment id for later usage
     this.currentSegment = segment;
     
-};
-
-LocomotiveController.prototype.getKeyPoints = function () {
-    // keypoints predefined to 0 0 1 which will mean that the whole animation
-    // if there is no animation is progress yet will start at 0
-    var keyPointsArr = [0, 0, 1];
-
-    // if there is a previously inserted animation, then we need to calculate
-    // keypoints too
-    if (this.isAnimationInProgress) {
-        // we need to calculate the keypoints based on ellapsed time
-        var elapsed = new Date().getTime() - this.timestamp;
-        var startFrom = elapsed / (this.duration * 1000);
-        keyPointsArr[1] = startFrom;
-    }
-
-    // if speed is negative, then the animation needs to move backwards
-    if (this.speed < 0) {
-        keyPointsArr[0] = 1;
-        keyPointsArr[1] = 1 - keyPointsArr[1];
-        keyPointsArr[2] = 0;
-    }
-
-    // update timestamp attr
-    this.timestamp = new Date().getTime();
-    return keyPointsArr;
 };
 
 LocomotiveController.prototype.animateOnSegment = function (segment) {
