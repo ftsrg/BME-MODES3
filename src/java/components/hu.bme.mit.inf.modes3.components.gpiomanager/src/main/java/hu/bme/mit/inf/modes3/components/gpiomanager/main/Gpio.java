@@ -11,12 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.nio.file.StandardWatchEventKinds;
-import java.nio.file.WatchEvent;
-import java.nio.file.WatchKey;
-import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -155,7 +149,7 @@ public final class Gpio implements Runnable {
             w.newLine();
             w.flush();
         }
-        Logger.info(TAG, "Succeded!");
+        Logger.info(TAG, "Succeeded!");
     }
 
     private void setupFileChangeWatching() throws IOException {

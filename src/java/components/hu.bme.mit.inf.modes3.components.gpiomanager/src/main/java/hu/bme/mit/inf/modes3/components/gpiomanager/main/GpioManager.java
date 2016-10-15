@@ -57,7 +57,7 @@ public class GpioManager {
             
             Gpio instance = new Gpio(pin, direction);
             INSTANCE._usedGpios.add(instance);
-            Logger.info(TAG, "Pin \"%s\" setup succeded with direction of \"%s\".", port, direction);
+            Logger.info(TAG, "Pin \"%s\" setup succeeded with direction of \"%s\".", port, direction);
             return instance;
         }
         
