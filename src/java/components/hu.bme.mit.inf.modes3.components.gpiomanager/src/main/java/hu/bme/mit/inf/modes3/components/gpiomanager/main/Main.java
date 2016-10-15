@@ -67,8 +67,10 @@ public class Main {
         g.addGpioInputListener(new TestListener());
 
         // wait for one key
-        System.console().format("Press ENTER to proceed.\n");
-        System.console().readLine();
+//        System.console().format("Press ENTER to proceed.\n");
+//        System.console().readLine();
+
+        Thread.sleep(100000);
         
     }
 

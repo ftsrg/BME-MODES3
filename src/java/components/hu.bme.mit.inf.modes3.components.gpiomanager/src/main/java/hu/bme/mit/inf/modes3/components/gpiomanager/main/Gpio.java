@@ -176,7 +176,11 @@ public final class Gpio implements Runnable {
                         listeners.stream().forEach((listener) -> {
                             listener.levelStateChanged(_level);
                         });
+
+                        Thread.sleep(50);
                     }
+                } catch (InterruptedException ex) {
+                    Logger.error(TAG, ex.getMessage());
                 }
 
             } catch (FileNotFoundException ex) {
