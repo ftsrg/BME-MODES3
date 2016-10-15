@@ -21,26 +21,55 @@ public class Main {
         
         GpioManager.setGpioMapping(args[0]);
         
+        checkSegmentActuator();
+        
+        checkInput();
+
+        GpioManager.cleanup();
+
+    }
+
+    public static void checkSegmentActuator() throws Exception {
         // running test with P6-G6 and P7-G7
         ArrayList<Gpio> gpios = new ArrayList<>();
         gpios.add(GpioManager.setGpio("P6", Gpio.Direction.OUT));
         gpios.add(GpioManager.setGpio("P7", Gpio.Direction.OUT));
         gpios.add(GpioManager.setGpio("G6", Gpio.Direction.OUT));
         gpios.add(GpioManager.setGpio("G7", Gpio.Direction.OUT));
-        
+
         // test will be the following: every 500s one gpio set to high, and then the set to low
-        for(Gpio g: gpios) {
+        for (Gpio g : gpios) {
             g.setLevel(Gpio.Level.HIGH);
             Thread.sleep(500);
         }
-        
-        for(Gpio g: gpios) {
+
+        for (Gpio g : gpios) {
             g.setLevel(Gpio.Level.LOW);
             Thread.sleep(500);
         }
-        
-        GpioManager.cleanup();
 
+    }
+    
+    private static class TestListener implements Gpio.GpioInputListener {
+
+        private static final String TAG = "LISTENER";
+        
+        @Override
+        public void levelStateChanged(Gpio.Level newLevel) {
+            Logger.info(TAG, "level changed! %s", newLevel.toString());
+        }
+        
+    }
+    
+    public static void checkInput() throws Exception {
+        
+        Gpio g = GpioManager.setGpio("P0", Gpio.Direction.IN);
+        g.addGpioInputListener(new TestListener());
+
+        // wait for one key
+        System.console().format("Press ENTER to proceed.\n");
+        System.console().readLine();
+        
     }
 
 }
