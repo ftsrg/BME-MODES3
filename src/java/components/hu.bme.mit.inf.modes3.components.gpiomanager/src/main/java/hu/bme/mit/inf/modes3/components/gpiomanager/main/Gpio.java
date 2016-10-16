@@ -12,14 +12,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
  * @author zsoltmazlo
  */
-public final class Gpio implements Runnable {
+public final class Gpio {
 
     public enum Level {
         LOW,
@@ -31,7 +31,7 @@ public final class Gpio implements Runnable {
         IN
     }
 
-    public interface GpioInputListener {
+    public interface InputStateListener {
 
         public void levelStateChanged(Level newLevel);
 
@@ -45,7 +45,7 @@ public final class Gpio implements Runnable {
 
     private final Direction _direction;
 
-    private final ArrayList<GpioInputListener> listeners = new ArrayList<>();
+    private final ArrayList<InputStateListener> listeners = new ArrayList<>();
 
     private String _gpioFolder;
 
@@ -53,7 +53,7 @@ public final class Gpio implements Runnable {
 
     private volatile boolean _isInputListenerRunning = false;
 
-    private Thread _watcher;
+    private Timer _inputListener;
 
     public Gpio(int pin, Direction direction) throws IOException, GpioNotConfiguratedException {
         this._pin = pin;
@@ -82,7 +82,7 @@ public final class Gpio implements Runnable {
                 // setup edge detection as well
                 executeCommand("both", _gpioFolder + "edge");
 
-                setupFileChangeWatching();
+                setupInputChangeListening();
                 break;
             case OUT:
                 // set level immediately to low
@@ -114,10 +114,10 @@ public final class Gpio implements Runnable {
         }
     }
 
-    public final void impulse(int milliseconds, boolean nonBlocking) throws InterruptedException, IOException {
+    public final void impulse(int milliseconds, boolean nonBlocking)
+            throws InterruptedException, IOException {
         if (nonBlocking) {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.submit(() -> {
+            Thread impulse = new Thread(() -> {
                 try {
                     this.invertLevel();
                     Thread.sleep(milliseconds);
@@ -127,6 +127,7 @@ public final class Gpio implements Runnable {
                 }
 
             });
+            impulse.start();
         } else {
             invertLevel();
             Thread.sleep(milliseconds);
@@ -134,11 +135,11 @@ public final class Gpio implements Runnable {
         }
     }
 
-    public final void addGpioInputListener(GpioInputListener listener) {
+    public final void addInputStateListener(InputStateListener listener) {
         this.listeners.add(listener);
     }
 
-    public final void removeGpioListener(GpioInputListener listener) {
+    public final void removeInputStateListener(InputStateListener listener) {
         this.listeners.remove(listener);
     }
 
@@ -152,35 +153,20 @@ public final class Gpio implements Runnable {
         Logger.info(TAG, "Succeeded!");
     }
 
-    private void setupFileChangeWatching() throws IOException {
-        _isInputListenerRunning = true;
-        _watcher = new Thread(this);
-        _watcher.start();
-    }
+    private class InputStateChangeListenerTask extends TimerTask {
 
-    @Override
-    public void run() {
-
-        // unfortunatelly I can't found any working example for checking 
-        // value node with libraries, so for first approach I will constantly
-        // check the node if changed or not
-        String currentValue = "0";
-        while (_isInputListenerRunning) {
+        @Override
+        public void run() {
             try {
                 try (BufferedReader reader = new BufferedReader(new FileReader(_gpioFolder + "value"))) {
-                    String newValue = reader.readLine();
-                    if (!newValue.equals(currentValue)) {
-                        Logger.info(TAG, "Pin state changed!\nPin: %d\nValue: %s", _pin, newValue);
-                        currentValue = newValue;
-                        _level = newValue.equals("1") ? Level.HIGH : Level.LOW;
+                    Level newLevel = reader.readLine().equals("1") ? Level.HIGH : Level.LOW;
+                    if (!newLevel.equals(_level)) {
+                        Logger.info(TAG, "Pin state changed! Pin: %d Value: %s", _pin, newLevel.toString());
+                        _level = newLevel;
                         listeners.stream().forEach((listener) -> {
                             listener.levelStateChanged(_level);
                         });
-
-                        Thread.sleep(50);
                     }
-                } catch (InterruptedException ex) {
-                    Logger.error(TAG, ex.getMessage());
                 }
 
             } catch (FileNotFoundException ex) {
@@ -190,22 +176,29 @@ public final class Gpio implements Runnable {
                 Logger.error(TAG, "IO error during file read on pin #%d", _pin);
                 Logger.error(TAG, ex.getMessage());
             }
-
         }
 
+    }
+
+    private void setupInputChangeListening() throws IOException {
+        if (!_isInputListenerRunning) {
+            _isInputListenerRunning = true;
+            _inputListener = new Timer();
+            _inputListener.schedule(new InputStateChangeListenerTask(), 0, 50);
+        }
     }
 
     public final void cleanup() throws IOException, InterruptedException {
         // unexport gpio pin
         try {
             if (_isInputListenerRunning) {
-                Logger.info(TAG, "Stopping watcher service for pin #%d", _pin);
+                Logger.info(TAG, "Stopping listening service for pin #%d", _pin);
+                _inputListener.cancel();
                 _isInputListenerRunning = false;
-                _watcher.join();
-                Logger.info(TAG, "Watcher service for pin #%d stopped.", _pin);
+                Logger.info(TAG, "Listening service for pin #%d stopped.", _pin);
             }
             executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "unexport");
-        } catch (InterruptedException | IOException ex) {
+        } catch (IOException ex) {
             Logger.error(TAG, "Pin unexport failed! Pin: %d", _pin);
             throw ex;
         }
