@@ -2,4 +2,3 @@
 /build/
 
 **/xtend-gen/
-**/gradle/wrapper/gradle-wrapper.jar
