@@ -8,14 +8,11 @@ import org.slf4j.impl.SimpleLoggerFactory
 class Main {
 
 	public static def void main(String[] args) {
-		
-		
-		
-		
+		System.setProperty(org.slf4j.impl.SimpleLogger.LOG_FILE_KEY, "System.out")
 		val loggerFactory = new SimpleLoggerFactory
-		
+			
 		val registry = new ArgumentRegistry(loggerFactory)
-		
+	
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The selected configuration for deployment", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The IP address of the component", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String))
