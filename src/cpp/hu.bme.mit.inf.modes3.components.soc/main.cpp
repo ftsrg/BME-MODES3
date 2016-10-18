@@ -2,7 +2,7 @@
 #include "configuration.h"
 #include "s88/s88.h"
 
-//#define VERBOSE_LOG 1
+#define DEBUG_MODE 0
 
 extern HardwareSerial Serial;
 
@@ -12,26 +12,32 @@ void setup() {
     S88_Init();
 }
 
-void loop() {
-
-#if VERBOSE_LOG == 1
-    Serial.print("SOC message sending try, data: ");
+void send(uint8_t b) {
+#if DEBUG_MODE == 0
+	Serial.write(b);
+#else
+	Serial.print(b, HEX);
+	Serial.print('|');
 #endif
+}
+
+void endPacket() { 
+#if DEBUG_MODE == 1
+	Serial.println(' ');
+#endif
+}
+
+void loop() {
 
     // reading occupancy vector
     uint32_t occupancy_vector = S88_readOccupancy();
 
-#if VERBOSE_LOG == 1
-    Serial.print(occupancy_vector);
-    Serial.print("\n\r");
-#endif
-
     // sending header first
     for (uint8_t i = 0; i < 7; ++i) {
-        Serial.write(0xFF);
+        send(0xFF);
     }
     
-    Serial.write(0xAA);
+    send(0xAA);
     
     uint8_t arr[4];
 
@@ -43,12 +49,32 @@ void loop() {
     
     // sending for the first time
     for(uint8_t i = 0; i < 4; ++i) {
-        Serial.write(arr[i]);
+        send(arr[i]);
     }
     
     // sending for the second time
     for(uint8_t i = 0; i < 4; ++i) {
-        Serial.write(arr[i]);
+        send(arr[i]);
     }
+
+    endPacket();
+
+
+#if DEBUG_MODE == 1
+    Serial.print("Occupied: ");
+    for(uint8_t i=0; i<4; ++i ) {
+	uint8_t arr_cpy = arr[i];
+	for(uint8_t j=0; j < 8; ++j)  {
+	    uint32_t segmentOccupied = arr_cpy & 1;
+	    if( segmentOccupied > 0 ) {
+	        Serial.print(32-(i*8+(8-j))+1);
+		Serial.print(',');
+	    }
+	    arr_cpy >>= 1;
+    	}
+    }
+    Serial.println('\n');
+#endif
+    delay(100);
 
 }
