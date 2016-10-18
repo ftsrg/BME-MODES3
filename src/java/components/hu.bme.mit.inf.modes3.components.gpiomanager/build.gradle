@@ -1,0 +1,13 @@
+apply plugin: 'application'
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+}
+
+mainClassName = "hu.bme.mit.inf.modes3.components.gpiomanager.main.Main"
