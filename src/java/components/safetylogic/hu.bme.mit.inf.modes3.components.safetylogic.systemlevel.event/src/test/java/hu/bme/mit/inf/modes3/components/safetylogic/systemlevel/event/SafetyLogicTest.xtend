@@ -16,6 +16,7 @@ class SafetyLogicTest {
 
 	MessagingService mms
 	SafetyLogic sl
+	val sleepTime = 300
 
 	@Before
 	def init() {
@@ -28,24 +29,41 @@ class SafetyLogicTest {
 	@Test
 	def void safetyLogicRegressionTest() {
 		new TrackElementStateSender(mms, new NOPLoggerFactory) => [
+			assertOnlyBlocked(#[]) 
 			sendSegmentOccupation(15, SegmentOccupancy.OCCUPIED)
+			Thread.sleep(sleepTime)
+			
+			assertOnlyBlocked(#[]) 
 			sendSegmentOccupation(24, SegmentOccupancy.OCCUPIED)
+			Thread.sleep(sleepTime)
 
+			assertOnlyBlocked(#[])
 			sendSegmentOccupation(28, SegmentOccupancy.OCCUPIED)
+			Thread.sleep(sleepTime)
+
+			assertOnlyBlocked(#[24])		
 			sendSegmentOccupation(29, SegmentOccupancy.OCCUPIED)
+			Thread.sleep(sleepTime)
+	
+			assertOnlyBlocked(#[24, 29])		
 		]
 
-		Thread.sleep(1000)
-		assertOnlyBlocked(#[24, 29])
+	}
+	
+	@Test
+	def void tooCloseWithoutMovingTest(){
+		new TrackElementStateSender(mms, new NOPLoggerFactory) => [
+			
+		]
 	}
 
 	def assertOnlyBlocked(List<Integer> integers) {
 		sl.model.model.sections.forEach [
 			if(it instanceof Segment) {
 				if(integers.contains(it.id)) {
-					Assert.assertEquals(false, it.isIsEnabled)
+					Assert.assertEquals('''«it.id» Should be disabled but it is enabled''', false, it.isIsEnabled)
 				} else {
-					Assert.assertEquals(true, it.isIsEnabled)
+					Assert.assertEquals('''«it.id» should be enabled, but it is disabled''', true, it.isIsEnabled)
 				}
 			}
 		]
