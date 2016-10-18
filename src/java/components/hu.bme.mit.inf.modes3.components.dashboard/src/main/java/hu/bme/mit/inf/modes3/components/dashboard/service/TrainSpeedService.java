@@ -7,7 +7,6 @@ import org.atmosphere.config.service.Message;
 import org.atmosphere.config.service.Singleton;
 import org.atmosphere.cpr.MetaBroadcaster;
 
-import com.google.gson.Gson;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 
@@ -19,13 +18,10 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed;
 @Singleton
 @ManagedService(path = "/ws/trainspeed")
 public class TrainSpeedService {
-	
-	private Gson gson;
-	
+		
 	private TrainReferenceSpeed.Builder builder;
 	
 	public TrainSpeedService() {
-		gson = new Gson();
 		builder = TrainReferenceSpeed.newBuilder().clear();
 	}
 	

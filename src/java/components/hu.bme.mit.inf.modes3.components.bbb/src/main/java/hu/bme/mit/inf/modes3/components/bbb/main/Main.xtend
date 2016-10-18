@@ -10,7 +10,6 @@ class Main {
 
 	def static void main(String[] args) {
 		val loggerFactory = new SimpleLoggerFactory
-		
 		val logger = loggerFactory.getLogger(Main.name)
 
 		val registry = new ArgumentRegistry(loggerFactory)

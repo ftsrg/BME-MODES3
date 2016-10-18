@@ -39,7 +39,6 @@ public class DashboardManager {
 	
 	private DashboardManager() {
 		server = new Server();
-		locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
 	}
 	
 	public static void main(String[] args) {
@@ -49,7 +48,7 @@ public class DashboardManager {
 		
 		INSTANCE.parseArguments(args);
 		
-		INSTANCE.initializeStack();
+		INSTANCE.initialize();
 		
 		try {
 			INSTANCE.startJetty();
@@ -60,9 +59,11 @@ public class DashboardManager {
 		}
 	}
 	
-	public void initializeStack() {
+	public void initialize() {
 		communicationStack = CommunicationStackFactory.createMQTTStack(registry, loggerFactory);
+		locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
 	}
+	
 	
 	public void parseArguments(String[] args) {
 		registry = new ArgumentRegistry(loggerFactory);

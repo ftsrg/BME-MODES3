@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-var segments = [];
+var segments = new Map();
 
-var turnouts = [];
+var turnouts = new Map();
 
-var locomotives = [];
+var locomotives = new Map();
 
 var segment_index = 0;
 
@@ -24,17 +24,17 @@ function pullInformationFromNetwork() {
 }
 
 $(document).ready(function () {
-	
+		
 	var trainController = new TrainSpeedController();
 	
+	var segmentOccupancyController = new SegmentOccupancyController();
+	
     // setup segment objects
-    for (var s in window.settings.segments) {
-        window.segments.push(new SegmentController(window.settings.segments[s]));
-    }
+	new Map(window.settings.segments).forEach(fillSegments);
 
     // setup turnout objects
     for (var t in window.settings.turnouts) {
-        window.turnouts.push(new TurnoutController(window.settings.turnouts[t]));
+        
     }
 
     // setup locomotive objects
@@ -67,7 +67,26 @@ $(document).ready(function () {
     
     $("#test-number").trigger('change');
     
-    
-
     pullInformationFromNetwork();
 });
+
+function updateSegmentOccupancy(segmentOccupancy) {
+	console.log("Segment occupancy: ");
+	console.log(segmentOccupancy);
+	if(segmentOccupancy.stateValue)
+		window.segments[segmentOccupancy.segmentID].setEnabled();
+	else
+		window.segments[segmentOccupancy.segmentID].setDisabled();
+}
+
+function fillSegments(value, key, map) {
+    window.segments[key] = new SegmentController(value);
+}
+
+function fillTurnouts(value, key, map) {
+	window.turnouts[key] = new TurnoutController(map);
+}
+
+function fillLocomotives(value, key, map) {
+	
+}

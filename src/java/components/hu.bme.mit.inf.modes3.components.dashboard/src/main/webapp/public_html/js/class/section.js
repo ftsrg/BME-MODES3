@@ -21,7 +21,7 @@ function SegmentController(segmentConfig) {
     setTrackElementColor(this.svgElem, window.settings.segment.undefinedStateColor);
     
     // no need for initializing sequence, everything need to done in dom updated
-    // callback to be sure its active everytime
+    // callback to be sure its active every time
 
 };
 
@@ -43,9 +43,9 @@ SegmentController.prototype.DOMUpdatedCallback = function () {
     // add event handler for element
     this.svgElem.bind('click', {_this: this}, function (event) {
         if (event.data._this.isSegmentEnabled) {
-            event.data._this.setSegmentDisabled();
+            event.data._this.setDisabled();
         } else {
-            event.data._this.setSegmentEnabled();
+            event.data._this.setEnabled();
         }
     });
     
