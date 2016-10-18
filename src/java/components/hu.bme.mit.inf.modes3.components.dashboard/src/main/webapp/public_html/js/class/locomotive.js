@@ -21,13 +21,14 @@ function __setLocomotiveOnNextSegment(locomotive) {
  * @param {LocomotiveController} locomotive
  * @returns {undefined}
  */
-function LocomotiveController(locomotiveConfig) {
+function LocomotiveController(locomotiveConfig, rc) {
     // setting up instance variables
     this.config = locomotiveConfig;
     this.speed = 0;
     this.currentSegment = null;
     this.isAnimationInProgress = false;
-
+    this.rc = rc;
+    
     // creating SVG representation from scratch
     this.createSVGrepresentation();
 
@@ -47,7 +48,8 @@ LocomotiveController.prototype.setSpeed = function (speed) {
     if (this.speed < 0) {
         setSvgElementOpacity(this.svgElemForward, 0);
         setSvgElementOpacity(this.svgElemBackward, 1);
-
+        
+        this.rc.pushTrainSpeed(this.config.address, speed, 1);
         // if segment setted correctly, then we could animate as well
         if (this.currentSegment !== null) {
             this.animateOnSegment(this.currentSegment);
@@ -57,7 +59,8 @@ LocomotiveController.prototype.setSpeed = function (speed) {
         // locomotive will be go forward
         setSvgElementOpacity(this.svgElemForward, 1);
         setSvgElementOpacity(this.svgElemBackward, 0);
-
+        
+        this.rc.pushTrainSpeed(this.config.address, speed, 0);
         // if segment setted correctly, then we could animate as well
         if (this.currentSegment !== null) {
             this.animateOnSegment(this.currentSegment);

@@ -160,9 +160,10 @@ function getCoordinatesOfSegment(segmentID, t) {
     return [bezier(0, t), bezier(1, t)];
 }
 
-function createTrainSpeedData(trainId, speed) {
+function createTrainSpeedData(tId, s, d) {
 	var jsonData = {};
-	jsonData[trainId] = trainId;
-	jsonData[trainSpeed] = speed;
+	jsonData['trainID'] = tId;
+	jsonData['referenceSpeed'] = s;
+	jsonData['direction'] = d;
 	return jsonData;
 }

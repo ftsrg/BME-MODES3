@@ -24,7 +24,9 @@ function pullInformationFromNetwork() {
 }
 
 $(document).ready(function () {
-
+	
+	var trainController = new TrainSpeedController();
+	
     // setup segment objects
     for (var s in window.settings.segments) {
         window.segments.push(new SegmentController(window.settings.segments[s]));
@@ -37,7 +39,7 @@ $(document).ready(function () {
 
     // setup locomotive objects
     for (var l in window.settings.locomotives) {
-        window.locomotives.push(new LocomotiveController(window.settings.locomotives[l]));
+        window.locomotives.push(new LocomotiveController(window.settings.locomotives[l], trainController));
     }
 
     updateDOM();

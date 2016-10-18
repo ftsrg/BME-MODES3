@@ -16,32 +16,67 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLoggerFactory;
 
-public class Main {
+import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter;
+import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry;
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack;
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory;
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
+
+public class DashboardManager {
 	
 	private Server server;
 	
+	private static SimpleLoggerFactory loggerFactory;
 	private static Logger logger;
 	
-	public Main() {
+	private ArgumentRegistry registry;
+	
+	private CommunicationStack communicationStack;
+		
+	private TrackCommunicationServiceLocator locator;
+	
+	public static final DashboardManager INSTANCE = new DashboardManager();
+	
+	private DashboardManager() {
 		server = new Server();
+		locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
 	}
 	
 	public static void main(String[] args) {
-		SimpleLoggerFactory loggerFactory = new SimpleLoggerFactory();
-		logger = loggerFactory.getLogger(Main.class.getName());
+		loggerFactory = new SimpleLoggerFactory();
+		logger = loggerFactory.getLogger(DashboardManager.class.getName());
 		
-		Main server = new Main();
+		
+		INSTANCE.parseArguments(args);
+		
+		INSTANCE.initializeStack();
+		
 		try {
-			server.start();
+			INSTANCE.startJetty();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 			e.printStackTrace();
+			System.exit(-1);
 		}
 	}
 	
-	public void start() throws Exception {
+	public void initializeStack() {
+		communicationStack = CommunicationStackFactory.createMQTTStack(registry, loggerFactory);
+	}
+	
+	public void parseArguments(String[] args) {
+		registry = new ArgumentRegistry(loggerFactory);
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The ID of the component", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer.class));
+	
+		registry.parseArguments(args);
+	}
+	
+	public void startJetty() throws Exception {
 		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory());
-		http.setPort(80);
+		http.setPort(7070);
 		http.setIdleTimeout(30000);
 
 		server.setConnectors(new Connector[] { http });
@@ -60,6 +95,7 @@ public class Main {
 		
 		ResourceHandler cpr = new ResourceHandler();
 		cpr.setBaseResource(Resource.newClassPathResource("/public_html/"));
+		cpr.setDirectoriesListed(true);
 		
 		HandlerList handlers = new HandlerList();
 		handlers.setHandlers(new Handler[] { cpr, servletContextHandler });
@@ -70,4 +106,20 @@ public class Main {
 		server.join();
 	}
 	
+	
+	public CommunicationStack getCommunicationStack() {
+		return communicationStack;
+	}
+	
+	public SimpleLoggerFactory getLoggerFactory() {
+		return loggerFactory;
+	}
+	
+	public Logger getLogger() {
+		return logger;
+	}
+	
+	public TrackCommunicationServiceLocator getLocator() {
+		return locator;
+	}
 }

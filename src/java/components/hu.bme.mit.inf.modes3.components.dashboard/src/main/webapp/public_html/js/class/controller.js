@@ -10,8 +10,8 @@ function TrainSpeedController() {
 	
 	ws.connect();
 	
-	TrainSpeedController.prototype.setTrainSpeed = function(trainId, speed) {
-		var trainSpeedData = createTrainSpeedData(trainId, speed);
+	TrainSpeedController.prototype.pushTrainSpeed = function(trainId, speed, direction) {
+		var trainSpeedData = createTrainSpeedData(trainId, speed, direction);
 		ws.publish(trainSpeedData);
 	}
 	
