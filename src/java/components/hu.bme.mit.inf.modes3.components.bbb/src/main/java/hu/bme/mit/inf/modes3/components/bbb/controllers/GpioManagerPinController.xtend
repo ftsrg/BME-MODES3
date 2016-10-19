@@ -2,11 +2,8 @@ package hu.bme.mit.inf.modes3.components.bbb.controllers
 
 import hu.bme.mit.inf.modes3.components.bbb.Signal
 import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.IPinController
-import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.ITurnoutPinChangedHandler
 import hu.bme.mit.inf.modes3.components.bbb.gpiomanager.Gpio
 import hu.bme.mit.inf.modes3.components.bbb.gpiomanager.Gpio.Direction
-import hu.bme.mit.inf.modes3.components.bbb.gpiomanager.Gpio.InputStateListener
-import hu.bme.mit.inf.modes3.components.bbb.gpiomanager.Gpio.Level
 import hu.bme.mit.inf.modes3.components.bbb.gpiomanager.GpioManager
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -14,7 +11,6 @@ import org.slf4j.Logger
 class GpioManagerPinController implements IPinController {
 	
 	val Logger logger
-	var ITurnoutPinChangedHandler turnoutChangeHandler = null
 	
 	new (ILoggerFactory factory) {
 		logger = factory.getLogger(class.name)
@@ -45,27 +41,9 @@ class GpioManagerPinController implements IPinController {
 			return Signal.LOW
 		}
 	}
-	
-	override setTurnoutSensePins(String pinDiv, String pinStr) {
-		logger.info('''Registering pins div:«pinDiv» str:«pinStr» as turnout sense''')
 		
-		GpioManager.setGpio(pinDiv, Gpio.Direction.IN).addInputStateListener(new InputStateListener {
-			override levelStateChanged(Level newLevel) {
-				if (newLevel == Gpio.Level.HIGH)
-					turnoutChangeHandler?.handleTurnoutPinChange(true, false);
-			}
-		})
-		
-		GpioManager.setGpio(pinStr, Gpio.Direction.IN).addInputStateListener(new InputStateListener {
-			override levelStateChanged(Level newLevel) {
-				if (newLevel == Gpio.Level.HIGH)
-					turnoutChangeHandler?.handleTurnoutPinChange(false, true);
-			}
-		})
-	}
-	
-	override setTurnoutPinChangedHandler(ITurnoutPinChangedHandler handler) {
-		turnoutChangeHandler = handler
+	override setTurnoutPinChangedHandler(TurnoutPinChangedHandler handler) {
+		handler.registerGpios();
 	}
 	
 }

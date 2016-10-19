@@ -4,12 +4,10 @@ import hu.bme.mit.inf.modes3.components.bbb.Signal
 import hu.bme.mit.inf.modes3.components.bbb.config.Pinout
 import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.IExpanderController
 import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.IPinController
-import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.ITurnoutPinChangedHandler
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import java.util.List
 
 class CapeExpanderController implements IExpanderController {
 
@@ -43,15 +41,9 @@ class CapeExpanderController implements IExpanderController {
 		}
 	}
 	
-	override setTurnoutExpanderChangedHandler(ITurnoutPinChangedHandler handler) {
+	override setTurnoutExpanderChangedHandler(TurnoutPinChangedHandler handler) {
+		handler.resolveExpanderPins(pinout)
 		pinController.turnoutPinChangedHandler = handler
-	}
-	
-	override setTurnoutExpanders(List<String> expanders) {
-		expanders.forEach[exp | 
-			val pins = pinout.getHeaderPins(exp)
-			pinController.setTurnoutSensePins(pins.get(2), pins.get(3))
-		]
 	}
 
 }
