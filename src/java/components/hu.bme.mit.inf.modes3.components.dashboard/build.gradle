@@ -8,6 +8,14 @@ repositories {
     }
   }
 
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources", "src/main/webapp"
+        }
+    }
+}
+
 // In this section you declare the dependencies for your production and test code
 dependencies {
 	
