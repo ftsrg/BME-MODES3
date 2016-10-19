@@ -3,6 +3,7 @@ package hu.bme.mit.inf.modes3.components.bbb
 import hu.bme.mit.inf.modes3.components.bbb.config.Configuration
 import hu.bme.mit.inf.modes3.components.bbb.controllers.CapeExpanderController
 import hu.bme.mit.inf.modes3.components.bbb.controllers.GpioManagerPinController
+import hu.bme.mit.inf.modes3.components.bbb.controllers.TurnoutPinChangedHandler
 import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.IExpanderController
 import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.IPinController
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
@@ -12,7 +13,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import org.slf4j.ILoggerFactory
-import hu.bme.mit.inf.modes3.components.bbb.controllers.strategy.ITurnoutPinChangedHandler
 
 class BBBComponent extends AbstractRailRoadCommunicationComponent {
 
@@ -28,7 +28,6 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent {
 		config = Configuration::loadPinoutConfig(turnoutID, factory)
 		pinController = new GpioManagerPinController(factory)
 		expanderController = new CapeExpanderController(pinController, factory)
-		expanderController.turnoutExpanders = config.turnoutExpanders
 
 		logger.info('''Segments responsible for: «config.sectionNames»''')
 
@@ -52,21 +51,15 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent {
 			}
 		}
 		
-		expanderController.turnoutExpanderChangedHandler = new ITurnoutPinChangedHandler {
-			override handleTurnoutPinChange(boolean div, boolean str) {
-				if (div && str) {
-					return
-				}
-				if (div) {
-					logger.info('''Sending DIVERGENT turnout state''')
-					locator.trackElementStateSender.sendTurnoutState(turnoutID, TurnoutState.DIVERGENT)
-				}
-				if (str) {
-					logger.info('''Sending STRAIGHT turnout state''')
-					locator.trackElementStateSender.sendTurnoutState(turnoutID, TurnoutState.STRAIGHT)
-				}
+		val turnoutChangeHandler = new TurnoutPinChangedHandler() {
+			override handleTurnoutPinChange(TurnoutState state) {
+				logger.info('''Turnout id «id» changed to «state.name»''')
+				locator.trackElementStateSender.sendTurnoutState(turnoutID, state)
 			}
 		}
+		
+		turnoutChangeHandler.resolveExpanders(config)
+		expanderController.turnoutExpanderChangedHandler = turnoutChangeHandler
 	}
 
 	override run() {
