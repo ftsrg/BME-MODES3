@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.bme.mit.inf.modes3.components.bbb.gpiomanager;
+package hu.bme.mit.inf.modes3.components.gpiomanager;
 
 /**
  *

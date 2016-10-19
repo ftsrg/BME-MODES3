@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hu.bme.mit.inf.modes3.components.bbb.gpiomanager;
+package hu.bme.mit.inf.modes3.components.gpiomanager;
 
+import com.google.gson.Gson;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+import javax.print.attribute.standard.MediaSize.ISO;
 
 /**
  *
@@ -26,7 +26,7 @@ public class GpioManager {
     
     private HashMap<String, Integer> _gpioMapping = new HashMap<>();
     
-    private final ArrayList<Gpio> _usedGpios = new ArrayList<>();
+    private final HashMap<String, Gpio> _usedGpios = new HashMap<>();
     
     private GpioManager() {
         
@@ -37,23 +37,24 @@ public class GpioManager {
         public int port;
     }
     
-    public static void setGpioMapping(String jsonFile) throws FileNotFoundException {
-        //Logger.info(TAG, "mapping GPIOs from file: %s", jsonFile);
-        
-    	InputStream is = GpioManager.class.getClassLoader().getResourceAsStream("resources/gpio.json");
-    	Logger.info("IS", "%s", is);
-    	InputStreamReader isr = new InputStreamReader(is);
-    	JsonReader reader = new JsonReader(isr);
+    public static void setGpioMapping(String resourceName) throws FileNotFoundException {
     	
+    	String fileName = GpioManager.class.getClassLoader().getResource(resourceName).getPath();
+        Logger.info(TAG, "mapping GPIOs from file: %s", fileName);
+        
         // reading from json file
         Gson gson = new Gson();
-        GpioMarkupObject[] data = gson.fromJson(reader, GpioMarkupObject[].class);
+        GpioMarkupObject[] data = gson.fromJson(new InputStreamReader(GpioManager.class.getClassLoader().getResourceAsStream(resourceName)), GpioMarkupObject[].class);
         
         // adding every pin to the hashmap
         for(GpioMarkupObject gpio: data ) {
             INSTANCE._gpioMapping.put(gpio.name, gpio.port);
             Logger.info(TAG, "GPIO \"%s\" added.", gpio.name);
         }
+    }
+    
+    public static boolean hasGpio(String port) {
+    	return INSTANCE._usedGpios.containsKey(port);
     }
     
     public static Gpio setGpio(String port, Gpio.Direction direction) throws Exception {
@@ -64,7 +65,7 @@ public class GpioManager {
             int pin = INSTANCE._gpioMapping.get(port);
             
             Gpio instance = new Gpio(pin, direction);
-            INSTANCE._usedGpios.add(instance);
+            INSTANCE._usedGpios.put(port, instance);
             Logger.info(TAG, "Pin \"%s\" setup succeeded with direction of \"%s\".", port, direction);
             return instance;
         }
@@ -75,8 +76,16 @@ public class GpioManager {
         throw new GpioNotConfiguratedException("There is no pin with this name!");
     }
     
+    public static Gpio getGpio(String port, Gpio.Direction direction) throws Exception {
+    	if( hasGpio(port) ) {
+    		return INSTANCE._usedGpios.get(port);
+    	} else {
+    		return setGpio(port, direction);
+    	}
+    }
+    
     public static void cleanup() {
-        INSTANCE._usedGpios.stream().forEach((g) -> {
+        INSTANCE._usedGpios.values().stream().forEach((g) -> {
             try {
                 g.cleanup();
             } catch (Exception ex) {
