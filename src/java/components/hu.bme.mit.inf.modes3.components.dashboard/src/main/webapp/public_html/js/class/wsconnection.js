@@ -1,12 +1,12 @@
 /**
  * 
  */
-function WSConnection(path) {
+function WSConnection(type, path) {
 	this.socket = atmosphere;
 	this.transport = 'websocket';
 
 	this.request = {
-		url : document.location.toString() + "ws/" + path,
+		url : document.location.toString() + "ws/" + type + "/" + path,
 		contentType : "application/json",
 		logLevel : 'debug',
 		transport : this.transport,

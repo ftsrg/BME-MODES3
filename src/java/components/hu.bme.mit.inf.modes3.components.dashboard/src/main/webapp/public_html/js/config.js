@@ -257,18 +257,18 @@ var settings = {
 		"t06", "t06-div", "t06-str"
 	],
 	locomotives : [
-		{
+		[ 0, {
 			name : "Taurus MÁV 1047",
 			address : 0,
 			image : "taurus-mav-1047.jpg",
 			svgGroup : "taurus",
-		},
-		{
+		}],
+		[ 1, {
 			name : "SNCF 68000",
 			address : 1,
 			image : "sncf-68000.jpg",
 			svgGroup : 2,
-		},
+		}],
 	//        {
 	//            name: "BR-204",
 	//            address: 2,

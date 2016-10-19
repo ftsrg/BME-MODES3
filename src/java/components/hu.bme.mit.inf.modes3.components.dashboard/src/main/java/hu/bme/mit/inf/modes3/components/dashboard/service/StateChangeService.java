@@ -18,20 +18,18 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOc
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener;
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener;
 
-@ManagedService(path = "/ws/state/{target}")
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.*;
+
+@ManagedService(path = "/ws/state/{source}")
 public class StateChangeService implements ISegmentOccupancyChangeListener, ITurnoutStateChangeListener, ISegmentStateChangeListener {
-	
-	public final static String SEGMENT_OCCUPACY = "segmentoccupancy";
-	public final static String SEGMENT_STATE = "segmentstate";
-	public final static String TURNOUT_STATE = "turnoutstate";
 	
 	Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger(StateChangeService.class.getName());
 	
 	@Inject
 	protected MetaBroadcaster metaBroadcaster;
 	
-	@PathParam
-	protected String target;
+	@PathParam("source")
+	protected String source;
 	
 	hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancy.Builder segmentOccBuilder;
 	hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState.Builder segmentStateBuilder;

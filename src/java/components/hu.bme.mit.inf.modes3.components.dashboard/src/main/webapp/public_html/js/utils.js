@@ -167,3 +167,17 @@ function createTrainSpeedData(tId, s, d) {
 	jsonData['direction'] = d;
 	return jsonData;
 }
+
+function createSegmentStateData(sId, sState) {
+	var jsonData = {};
+	jsonData['segmentID'] = sId;
+	jsonData['state'] = sState;
+	return jsonData;
+}
+
+function createTurnoutStateData(tId, tState) {
+	var jsonData = {};
+	jsonData['turnoutID'] = tId;
+	jsonData['state'] = tState;
+	return jsonData;
+}

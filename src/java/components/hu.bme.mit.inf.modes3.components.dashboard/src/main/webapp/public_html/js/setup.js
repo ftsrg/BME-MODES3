@@ -27,20 +27,22 @@ $(document).ready(function () {
 		
 	var trainController = new TrainSpeedController();
 	
-	var segmentOccupancyController = new SegmentOccupancyController();
+	var segmentOccupancyUpdater = new SegmentUpdater(updateSegmentOccupancy);
 	
     // setup segment objects
-	new Map(window.settings.segments).forEach(fillSegments);
+	new Map(window.settings.segments).forEach(function(value, key, map) {
+		window.segments[key] = new SegmentController(value);
+	});
 
     // setup turnout objects
-    for (var t in window.settings.turnouts) {
-        
-    }
+    new Map(window.settings.turnouts).forEach(function(value, key, map) {
+    	window.turnouts[key] = new TurnoutController(value);
+    });
 
     // setup locomotive objects
-    for (var l in window.settings.locomotives) {
-        window.locomotives.push(new LocomotiveController(window.settings.locomotives[l], trainController));
-    }
+    new Map(window.settings.locomotives).forEach(function(value, key, map) {
+    	window.locomotives[key] = new LocomotiveController(value, trainController)
+    })
 
     updateDOM();
 
@@ -77,16 +79,4 @@ function updateSegmentOccupancy(segmentOccupancy) {
 		window.segments[segmentOccupancy.segmentID].setEnabled();
 	else
 		window.segments[segmentOccupancy.segmentID].setDisabled();
-}
-
-function fillSegments(value, key, map) {
-    window.segments[key] = new SegmentController(value);
-}
-
-function fillTurnouts(value, key, map) {
-	window.turnouts[key] = new TurnoutController(map);
-}
-
-function fillLocomotives(value, key, map) {
-	
 }
