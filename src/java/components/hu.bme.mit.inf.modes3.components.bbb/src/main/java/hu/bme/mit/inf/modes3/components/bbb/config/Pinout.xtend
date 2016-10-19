@@ -35,7 +35,7 @@ class Pinout {
 		var InputStreamReader isr = null
 		var JsonReader reader = null
 		try {
-			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("resources/pinouts.json"))
+			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("pinouts.json"))
 			reader = new JsonReader(isr)
 			gson.fromJson(reader, Pinout)
 		} catch(Exception ex) {

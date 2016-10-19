@@ -51,7 +51,7 @@ class Configuration {
 		var InputStreamReader isr = null
 		var JsonReader reader = null
 		try {
-			isr = new InputStreamReader(Configuration.classLoader.getResourceAsStream("resources/config.json"))
+			isr = new InputStreamReader(Configuration.classLoader.getResourceAsStream("config.json"))
 			reader = new JsonReader(isr)
 			var JsonObject config = gson.fromJson(reader, JsonObject)
 			gson.fromJson(config.get("t" + Integer.valueOf(id)), typeof(Configuration))
