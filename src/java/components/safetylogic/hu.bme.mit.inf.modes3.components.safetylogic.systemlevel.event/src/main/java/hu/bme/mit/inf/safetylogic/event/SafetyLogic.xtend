@@ -5,17 +5,19 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
-import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
@@ -42,25 +44,25 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		model = new ModelUtil(factory)
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
-		locator.sendAllStatusCallback.listener = new IAllStatusUpdateListener(){
-			
+		locator.sendAllStatusCallback.listener = new IAllStatusUpdateListener() {
+
 			override onAllStatusUpdate() {
-				model.model.sections.getTurnouts.forEach[
+				model.model.sections.getTurnouts.forEach [
 					locator.trackElementStateSender.sendTurnoutState(id, if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT)
 				]
-				model.model.sections.getSegments.forEach[
+				model.model.sections.getSegments.forEach [
 					locator.trackElementStateSender.sendSegmentState(id, if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
 				]
 				val occupiedSections = model.model.sections.filter[model.model.trains.map[currentlyOn].contains(it)]
-				occupiedSections.forEach[
+				occupiedSections.forEach [
 					locator.trackElementStateSender.sendSegmentOccupation(id, SegmentOccupancy.OCCUPIED)
 				]
 				val freeSections = model.model.sections.filter[!occupiedSections.toList.contains(it)]
-				freeSections.forEach[
+				freeSections.forEach [
 					locator.trackElementStateSender.sendSegmentOccupation(id, SegmentOccupancy.FREE)
 				]
 			}
-			
+
 		}
 	}
 
@@ -75,12 +77,11 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	private def turn(RailRoadElement element, SegmentState state) {
 		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
 	}
-	
+
 	private def void initRailRoad() {
-		// 9
 		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
-		(model.model.sections.findFirst[id == 9] as Turnout).currentlyDivergent = true
-		val sleepTimes = 1000
+//		(model.model.sections.findFirst[id == 9] as Turnout).currentlyDivergent = true
+		val sleepTimes = 3000
 		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
 		val turnouts = model.model.sections.getTurnouts
 		turnouts.forEach [
@@ -118,7 +119,6 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 				refreshSafetyLogicState
 			}
 		}
-
 		initRailRoad()
 	}
 
@@ -156,8 +156,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 				strategy.disableSection(segment.id)
 			]
 		]
-		logger.info('''SectionToEnable = {«FOR enable : sectionsToEnable SEPARATOR ', '» «enable.id» «ENDFOR»}''')
-		logger.info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
+		if(!sectionsToEnable.empty){
+			logger.info('''SectionToEnable = {«FOR enable : sectionsToEnable SEPARATOR ', '» «enable.id» «ENDFOR»}''')		
+		}
+		if(!sectionsToDisable.empty){
+			logger.info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
+		}
 
 		sectionsToEnable.filter[it instanceof Segment].map[it as Segment].forEach [
 			it.isEnabled = true

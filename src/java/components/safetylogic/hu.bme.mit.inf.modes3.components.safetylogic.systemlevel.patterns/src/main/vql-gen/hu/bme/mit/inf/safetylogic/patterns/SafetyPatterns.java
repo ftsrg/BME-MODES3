@@ -21,7 +21,9 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * in order to achieve better performance than one-by-one on-demand matcher initialization.
  * 
  * <p> From package hu.bme.mit.inf.safetylogic.patterns, the group contains the definition of the following patterns: <ul>
+ * <li>notNull</li>
  * <li>nextSection</li>
+ * <li>trainsAreTooClose</li>
  * <li>trainHitsAnotherTrainNextAfterNext</li>
  * <li>trainHitsAnotherTrainNext</li>
  * <li>trainHitsAnotherTrain</li>

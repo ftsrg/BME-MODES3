@@ -16,3 +16,5 @@
 /.CurrentlyConnectedQuerySpecification.java._trace
 /.ViablePathsProcessor.java._trace
 /.ViablePathsQuerySpecification.java._trace
+/.NotNullQuerySpecification.java._trace
+/.TrainsAreTooCloseQuerySpecification.java._trace
