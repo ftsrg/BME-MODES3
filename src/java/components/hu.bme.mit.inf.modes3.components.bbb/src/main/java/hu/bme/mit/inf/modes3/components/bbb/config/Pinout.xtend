@@ -1,7 +1,6 @@
-package hu.bme.mit.inf.modes3.components.bbb.prototypes;
+package hu.bme.mit.inf.modes3.components.bbb.config;
 
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
 import java.io.InputStreamReader
 import java.util.Map
@@ -20,7 +19,7 @@ import org.slf4j.Logger
  */
 class Pinout {
 
-	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) static var Logger logger
+	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger
 
 	// the pinout header addresses of the BeagleBone Black embedded controller.
 	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, String[]> headers

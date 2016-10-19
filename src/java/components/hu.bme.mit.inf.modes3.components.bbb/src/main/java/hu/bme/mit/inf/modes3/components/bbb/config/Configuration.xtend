@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.bbb.prototypes;
+package hu.bme.mit.inf.modes3.components.bbb.config;
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -21,7 +21,7 @@ import org.slf4j.Logger
  */
 class Configuration {
 
-	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) static var Logger logger
+	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger
 
 	/**
 	 * Stores the managed turnouts ID [key], and the pinout header value through
@@ -51,7 +51,7 @@ class Configuration {
 		var InputStreamReader isr = null
 		var JsonReader reader = null
 		try {
-			isr = new InputStreamReader(Pinout.classLoader.getResourceAsStream("resources/config.json"))
+			isr = new InputStreamReader(Configuration.classLoader.getResourceAsStream("resources/config.json"))
 			reader = new JsonReader(isr)
 			var JsonObject config = gson.fromJson(reader, JsonObject)
 			gson.fromJson(config.get("t" + Integer.valueOf(id)), typeof(Configuration))
@@ -84,6 +84,6 @@ class Configuration {
 	}
 
 	def getSectionExpander(int sectionID) {
-		sections.get(String.valueOf(sectionID))
+		sections.get(sectionID.toString)
 	}
 }
