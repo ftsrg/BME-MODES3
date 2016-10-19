@@ -2,12 +2,30 @@ package hu.bme.mit.inf.safetylogic.patterns
 
 import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
 
+private pattern notNull(Old : RailRoadElement){
+	RailRoadElement(Old);
+}
+
 pattern nextSection(Old : RailRoadElement, Current : RailRoadElement, Next : RailRoadElement){
 	find viablePaths(Current, p);
 	Path.from(p, Old);
 	Path.via(p, Current);
 	Path.to(p, Next);
+} or {
+	neg find notNull(Old); // Check for null, as if it is, we don't know the direction
+	find viablePaths(Current, p);
+	Path.from(p, _);
+	Path.via(p, Current);
+	Path.to(p, Next);
 }
+
+//------------------------------------Train distance without direction------------------------------------//
+private pattern trainsAreTooClose(Offender : Train, Victim : Train){
+	Train.currentlyOn(Offender, OffenderPosition);
+	Train.currentlyOn(Victim, VictimPosition);
+	find currentlyConnected(VictimPosition, OffenderPosition);
+}
+
 
 //------------------------------------Train Collision Stuff------------------------------------// 
 private pattern trainHitsAnotherTrainNextAfterNext(Offender : Train, Victim : Train) {
@@ -33,6 +51,8 @@ pattern trainHitsAnotherTrain(Offender : Train, Victim : Train){
 	find trainHitsAnotherTrainNext(Offender, Victim);
 } or {
 	find trainHitsAnotherTrainNextAfterNext(Offender, Victim);
+} or {
+	find trainsAreTooClose(Offender, Victim);
 }
 
 //------------------------------------Turnout Cutting Stuff------------------------------------//
