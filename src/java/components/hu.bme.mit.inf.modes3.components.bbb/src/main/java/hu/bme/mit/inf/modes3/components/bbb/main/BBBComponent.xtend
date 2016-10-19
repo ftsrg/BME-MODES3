@@ -1,49 +1,73 @@
 package hu.bme.mit.inf.modes3.components.bbb.main
 
-import hu.bme.mit.inf.modes3.components.bbb.handlers.TrackElementCommandHandler
-import hu.bme.mit.inf.modes3.components.bbb.notifiers.TrackElementStateNotifier
-import hu.bme.mit.inf.modes3.components.bbb.strategy.ISegmentControllerStrategy
-import hu.bme.mit.inf.modes3.components.bbb.strategy.ITurnoutControllerStrategy
+import hu.bme.mit.inf.modes3.components.bbb.prototypes.Configuration
+import hu.bme.mit.inf.modes3.components.bbb.prototypes.Pinout
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import io.silverspoon.bulldog.core.Signal
+import java.util.ArrayList
+import java.util.HashMap
 import org.slf4j.ILoggerFactory
 
-/**
- * The standalone component of the BBB code. It encapsulates the command processor and the state sender units as well.<br>
- * Command processor = handling section enable/disable, turnout set straight/divergent commands which were received over the network<br>
- * State sender = send section/turnout state events to the network.
- * 
- * @author benedekh
- */
 class BBBComponent extends AbstractRailRoadCommunicationComponent {
 
-	// to handle track element commands
-	protected val TrackElementCommandHandler commandDispatcher
+	val HardwareAbstractionLayer hal = null
+	Configuration config
+	Pinout pinout
+	val int id
 
-	// to send track element states
-	protected var TrackElementStateNotifier stateNotifier
+	HashMap<String, Signal> pinStatus
 
-	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
+	new( int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
-		commandDispatcher = new TrackElementCommandHandler(turnoutID, locator, factory)
-		stateNotifier = new TrackElementStateNotifier(turnoutID, locator, factory)
+		id = turnoutID
+		pinStatus = new HashMap<String, Signal>
+
+		config = Configuration::loadPinoutConfig(turnoutID, factory)
+		pinout = Pinout::loadPinoutConfig(factory)
+
+		locator.trackElementCommandCallback.segmentCommandListener = new ISegmentCommandListener() {
+			override onSegmentCommand(int id, SegmentState state) {
+				val pins = pinout.getHeaderPins(config.getSectionExpander(id))
+				pins.forEach [
+					hal.setPinLevel(it, if(state == SegmentState.ENABLED) Signal.High else Signal.Low)
+				]
+				locator.trackElementStateSender.sendSegmentState(id, state)
+			}
+		}
+		locator.trackElementCommandCallback.turnoutCommandListener = new ITurnoutCommandListener() {
+			override onTurnoutCommand(int id, TurnoutState state) {
+				val pins = getPins
+				hal.setPinLevel(pins.get(0), if(state == TurnoutState.STRAIGHT) Signal.High else Signal.Low)
+				hal.setPinLevel(pins.get(1), if(state != TurnoutState.STRAIGHT) Signal.High else Signal.Low) // TODO @hegyibalint
+				locator.trackElementStateSender.sendTurnoutState(id, state)
+			}
+		}
 	}
 
-	new(CommunicationStack stack, ISegmentControllerStrategy sectionController, ITurnoutControllerStrategy turnoutController, ILoggerFactory factory) {
-		super(stack, factory)
-		commandDispatcher = new TrackElementCommandHandler(locator, sectionController, turnoutController, factory)
-		stateNotifier = new TrackElementStateNotifier(locator, sectionController, turnoutController, factory)
+	def getPins() {
+		val pins = new ArrayList<String>
+		config.getTurnoutExpanders().forEach [ expander |
+			pins.addAll(pinout.getHeaderPins(expander))
+		]
+		return pins
 	}
 
 	override run() {
-		stateNotifier?.start
-	}
-
-	/**
-	 * Stop internal threads.
-	 */
-	def interrupt() {
-		stateNotifier?.interrupt
+		val pins = getPins
+		while(!Thread.interrupted) {
+			val pin = pins.get(2)
+			val level = hal.getPinLevel(pin)
+			if(pinStatus.get(pin) != level) { // it has changed
+				locator.trackElementStateSender.sendTurnoutState(id, if(level==Signal.High) TurnoutState.STRAIGHT else TurnoutState.DIVERGENT )
+			}
+			pinStatus.put(pin, level)
+			Thread.sleep(100)
+		}
 	}
 
 }

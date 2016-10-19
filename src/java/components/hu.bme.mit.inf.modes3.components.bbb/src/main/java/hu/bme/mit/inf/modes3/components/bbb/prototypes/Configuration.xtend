@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.stream.JsonReader
 import java.io.InputStreamReader
+import java.util.List
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
@@ -26,7 +27,7 @@ class Configuration {
 	 * Stores the managed turnouts ID [key], and the pinout header value through
 	 * that turnout's status (divergent/straight) is measurable.
 	 */
-	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var Map<String, String> turnouts
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var List<String> turnouts
 
 	/**
 	 * Stores the managed sections ID [key], and the pinout header value through
@@ -64,17 +65,6 @@ class Configuration {
 	}
 
 	/**
-	 * Tells whether this embedded controller manages the referred turnout.
-	 * 
-	 * @param turnoutId that should be examined if it is managed
-	 * @return true if the respective turnout is managed by this embedded
-	 * controller
-	 */
-	def containsTurnout(int turnoutId) {
-		turnouts.containsKey(turnoutId)
-	}
-
-	/**
 	 * Tells whether this embedded controller manages the referred section.
 	 * 
 	 * @param sectionId that should be examined if it is managed
@@ -85,16 +75,12 @@ class Configuration {
 		sections.containsKey(sectionId)
 	}
 
-	def getTurnoutNames() {
-		turnouts.keySet
-	}
-
 	def getSectionNames() {
 		sections.keySet
 	}
 
-	def getTurnoutExpander(int turnoutID) {
-		turnouts.get(String.valueOf(turnoutID))
+	def getTurnoutExpanders() {
+		turnouts
 	}
 
 	def getSectionExpander(int sectionID) {

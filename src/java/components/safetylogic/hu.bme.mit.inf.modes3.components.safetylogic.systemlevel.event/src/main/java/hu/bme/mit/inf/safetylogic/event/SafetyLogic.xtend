@@ -14,6 +14,8 @@ import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
@@ -40,6 +42,26 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		model = new ModelUtil(factory)
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
+		locator.sendAllStatusCallback.listener = new IAllStatusUpdateListener(){
+			
+			override onAllStatusUpdate() {
+				model.model.sections.getTurnouts.forEach[
+					locator.trackElementStateSender.sendTurnoutState(id, if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT)
+				]
+				model.model.sections.getSegments.forEach[
+					locator.trackElementStateSender.sendSegmentState(id, if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
+				]
+				val occupiedSections = model.model.sections.filter[model.model.trains.map[currentlyOn].contains(it)]
+				occupiedSections.forEach[
+					locator.trackElementStateSender.sendSegmentOccupation(id, SegmentOccupancy.OCCUPIED)
+				]
+				val freeSections = model.model.sections.filter[!occupiedSections.toList.contains(it)]
+				freeSections.forEach[
+					locator.trackElementStateSender.sendSegmentOccupation(id, SegmentOccupancy.FREE)
+				]
+			}
+			
+		}
 	}
 
 	private def Iterable<Turnout> getTurnouts(Iterable<RailRoadElement> railRoadElements) {
