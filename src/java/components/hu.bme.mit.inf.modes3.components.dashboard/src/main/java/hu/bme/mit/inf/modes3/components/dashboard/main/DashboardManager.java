@@ -23,104 +23,101 @@ import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackF
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
 
 public class DashboardManager {
-	
-	private Server server;
-	
-	private static SimpleLoggerFactory loggerFactory;
-	private static Logger logger;
-	
-	private ArgumentRegistry registry;
-	
-	private CommunicationStack communicationStack;
-		
-	private TrackCommunicationServiceLocator locator;
-	
-	public static final DashboardManager INSTANCE = new DashboardManager();
-	
-	private DashboardManager() {
-		server = new Server();
-	}
-	
-	public static void main(String[] args) {
-		loggerFactory = new SimpleLoggerFactory();
-		logger = loggerFactory.getLogger(DashboardManager.class.getName());
-		
-		
-		INSTANCE.parseArguments(args);
-		
-		INSTANCE.initialize();
-		
-		try {
-			INSTANCE.startJetty();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			e.printStackTrace();
-			System.exit(-1);
-		}
-	}
-	
-	public void initialize() {
-		communicationStack = CommunicationStackFactory.createMQTTStack(registry, loggerFactory);
-		locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
-	}
-	
-	
-	public void parseArguments(String[] args) {
-		registry = new ArgumentRegistry(loggerFactory);
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The ID of the component", String.class));
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String.class));
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer.class));
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer.class));
-	
-		registry.parseArguments(args);
-	}
-	
-	public void startJetty() throws Exception {
-		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory());
-		http.setPort(7070);
-		http.setIdleTimeout(30000);
 
-		server.setConnectors(new Connector[] { http });
-		
-		ServletHolder atmosphereServletHolder = new ServletHolder(AtmosphereServlet.class);
-		atmosphereServletHolder.setInitParameter(ApplicationConfig.ANNOTATION_PACKAGE, "hu.bme.mit.inf.modes3.components.dashboard.service");
-		atmosphereServletHolder.setInitParameter(ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
-		atmosphereServletHolder.setInitParameter(ApplicationConfig.PROPERTY_COMET_SUPPORT, Jetty9AsyncSupportWithWebSocket.class.getName());
+    private Server server;
 
-		atmosphereServletHolder.setAsyncSupported(true);
-		
-		ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-		servletContextHandler.setContextPath("/");
-		
-		servletContextHandler.addServlet(atmosphereServletHolder, "/ws/*");
-		
-		ResourceHandler cpr = new ResourceHandler();
-		cpr.setBaseResource(Resource.newClassPathResource("/public_html/"));
-		cpr.setDirectoriesListed(true);
-		
-		HandlerList handlers = new HandlerList();
-		handlers.setHandlers(new Handler[] { cpr, servletContextHandler });
+    private static SimpleLoggerFactory loggerFactory;
+    private static Logger logger;
 
-		server.setHandler(handlers);
-		server.setStopAtShutdown(true);
-		server.start();
-		server.join();
-	}
-	
-	
-	public CommunicationStack getCommunicationStack() {
-		return communicationStack;
-	}
-	
-	public SimpleLoggerFactory getLoggerFactory() {
-		return loggerFactory;
-	}
-	
-	public Logger getLogger() {
-		return logger;
-	}
-	
-	public TrackCommunicationServiceLocator getLocator() {
-		return locator;
-	}
+    private ArgumentRegistry registry;
+
+    private CommunicationStack communicationStack;
+
+    private TrackCommunicationServiceLocator locator;
+
+    public static final DashboardManager INSTANCE = new DashboardManager();
+
+    private DashboardManager() {
+        server = new Server();
+    }
+
+    public static void main(String[] args) {
+        loggerFactory = new SimpleLoggerFactory();
+        logger = loggerFactory.getLogger(DashboardManager.class.getName());
+
+        INSTANCE.parseArguments(args);
+
+        INSTANCE.initialize();
+
+        try {
+            INSTANCE.startJetty();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
+    public void initialize() {
+        communicationStack = CommunicationStackFactory.createMQTTStack(registry, loggerFactory);
+        locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
+    }
+
+    public void parseArguments(String[] args) {
+        registry = new ArgumentRegistry(loggerFactory);
+        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The ID of the component", String.class));
+        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String.class));
+        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer.class));
+        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer.class));
+
+        registry.parseArguments(args);
+    }
+
+    public void startJetty() throws Exception {
+        ServerConnector http = new ServerConnector(server, new HttpConnectionFactory());
+        http.setPort(7070);
+        http.setIdleTimeout(30000);
+
+        server.setConnectors(new Connector[]{http});
+
+        ServletHolder atmosphereServletHolder = new ServletHolder(AtmosphereServlet.class);
+        atmosphereServletHolder.setInitParameter(ApplicationConfig.ANNOTATION_PACKAGE, "hu.bme.mit.inf.modes3.components.dashboard.service");
+        atmosphereServletHolder.setInitParameter(ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
+        atmosphereServletHolder.setInitParameter(ApplicationConfig.PROPERTY_COMET_SUPPORT, Jetty9AsyncSupportWithWebSocket.class.getName());
+
+        atmosphereServletHolder.setAsyncSupported(true);
+
+        ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        servletContextHandler.setContextPath("/");
+
+        servletContextHandler.addServlet(atmosphereServletHolder, "/ws/*");
+
+        ResourceHandler cpr = new ResourceHandler();
+        cpr.setBaseResource(Resource.newClassPathResource("/public_html/"));
+        cpr.setDirectoriesListed(true);
+
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[]{cpr, servletContextHandler});
+
+        server.setHandler(handlers);
+        server.setStopAtShutdown(true);
+        server.start();
+        server.join();
+    }
+
+    public CommunicationStack getCommunicationStack() {
+        return communicationStack;
+    }
+
+    public SimpleLoggerFactory getLoggerFactory() {
+        return loggerFactory;
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public TrackCommunicationServiceLocator getLocator() {
+        return locator;
+    }
 }

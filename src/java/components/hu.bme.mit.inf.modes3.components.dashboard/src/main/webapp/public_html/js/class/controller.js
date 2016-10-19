@@ -9,6 +9,9 @@ var TURNOUT_STATE = "turnoutstate";
 var STATE = "state";
 var COMMAND = "command";
 
+
+// controller weben control -> hálózat
+
 function TrainSpeedController() {
 	
 	var tsws = new WSConnection(COMMAND, TRAIN_SPEED);
@@ -21,11 +24,11 @@ function TrainSpeedController() {
 	}
 }
 
-function SegmentOccupancyController() {
+function SegmentStateController() {
 	var scws = new WSConnection(COMMAND, SEGMENT_STATE);
 	scws.connect();
 	
-	SegmentController.prototype.pushSegmentState = function(segmentId, state) {
+	SegmentStateController.prototype.pushSegmentState = function(segmentId, state) {
 		var segmentStateData = createSegmentStateData(segmentId, state);
 		scws.publish(segmentStateData);
 	}
@@ -41,6 +44,8 @@ function TurnoutStateController() {
 		tsws.publish(turnoutStateData);
 	}
 }
+
+// state update ha jön valami a hálózat felől
 
 function SegmentUpdater(callback) {
 	

@@ -37,6 +37,14 @@ SegmentController.prototype.setDisabled = function () {
     logEvent("Segment #" + this.config.id + " disabled");
 };
 
+SegmentController.prototype.setOccupied = function () {
+    // TODO
+}
+
+SegmentController.prototype.setFree = function () {
+    // TODO
+}
+
 SegmentController.prototype.DOMUpdatedCallback = function () {
     this.svgElem = $('#layout').find("#"+this.config.id);
     

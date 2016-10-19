@@ -1,33 +1,15 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-function __setLocomotiveOnNextSegment(locomotive) {
-    var nextSegment = locomotive.getNextSegment();
-    if (nextSegment === null) {
-        clearInterval(locomotive.timeout);
-        return;
-    }
-
-//    locomotive.setOnSegment(nextSegment);
-    locomotive.animateOnSegment(nextSegment);
-    locomotive.timeout = setTimeout(__setLocomotiveOnNextSegment,
-            locomotive.duration * 1000, locomotive);
-}
-
 /**
  * 
  * @param {LocomotiveController} locomotive
  * @returns {undefined}
  */
-function LocomotiveController(locomotiveConfig, rc) {
+function LocomotiveController(locomotiveConfig, controller) {
     // setting up instance variables
     this.config = locomotiveConfig;
     this.speed = 0;
     this.currentSegment = null;
     this.isAnimationInProgress = false;
-    this.rc = rc;
+    this.controller = controller;
     
     // creating SVG representation from scratch
     this.createSVGrepresentation();
@@ -49,7 +31,7 @@ LocomotiveController.prototype.setSpeed = function (speed) {
         setSvgElementOpacity(this.svgElemForward, 0);
         setSvgElementOpacity(this.svgElemBackward, 1);
         
-        this.rc.pushTrainSpeed(this.config.address, speed, 1);
+        this.controller.pushTrainSpeed(this.config.address, speed, 1);
         // if segment setted correctly, then we could animate as well
         if (this.currentSegment !== null) {
             this.animateOnSegment(this.currentSegment);
@@ -60,16 +42,12 @@ LocomotiveController.prototype.setSpeed = function (speed) {
         setSvgElementOpacity(this.svgElemForward, 1);
         setSvgElementOpacity(this.svgElemBackward, 0);
         
-        this.rc.pushTrainSpeed(this.config.address, speed, 0);
+        this.controller.pushTrainSpeed(this.config.address, speed, 0);
         // if segment setted correctly, then we could animate as well
         if (this.currentSegment !== null) {
             this.animateOnSegment(this.currentSegment);
         }
     }
-
-    // for now, we set a timeout for getNextSegment
-    this.timeout = setTimeout(__setLocomotiveOnNextSegment,
-            this.duration * 1000, this);
 };
 
 LocomotiveController.prototype.setOnSegment = function (segment, percentage) {
