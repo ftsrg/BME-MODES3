@@ -8,6 +8,7 @@ interface ITrackElementCommander {
 	
 	def void sendSegmentCommand(int id, SegmentState state)
 	def void sendTurnoutCommand(int id, TurnoutState state)
+	def void sendTurnoutCommandWithTurnoutId(int id, TurnoutState state)
 	def void stopEntireRailRoad()
 	def void setTrainReferenceSpeedAndDirection(int id, int speed, TrainDirection direction)
 	def void stopTrains()

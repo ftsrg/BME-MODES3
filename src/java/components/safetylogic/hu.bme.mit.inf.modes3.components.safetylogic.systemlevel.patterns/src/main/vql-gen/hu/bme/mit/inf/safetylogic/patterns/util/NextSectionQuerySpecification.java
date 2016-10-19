@@ -6,6 +6,7 @@ package hu.bme.mit.inf.safetylogic.patterns.util;
 import com.google.common.collect.Sets;
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatch;
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.util.NotNullQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.ViablePathsQuerySpecification;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,6 +24,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.NegativePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.PositivePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
@@ -154,6 +156,42 @@ public final class NextSectionQuerySpecification extends BaseGeneratedEMFQuerySp
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
       		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "from")));
       		new Equality(body, var__virtual_0_, var_Old);
+      		// 	Path.via(p, Current)
+      		new TypeConstraint(body, new FlatTuple(var_p), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
+      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
+      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "via")));
+      		new Equality(body, var__virtual_1_, var_Current);
+      		// 	Path.to(p, Next)
+      		new TypeConstraint(body, new FlatTuple(var_p), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
+      		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
+      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "to")));
+      		new Equality(body, var__virtual_2_, var_Next);
+      		bodies.add(body);
+      	}
+      	{
+      		PBody body = new PBody(this);
+      		PVariable var_Old = body.getOrCreateVariableByName("Old");
+      		PVariable var_Current = body.getOrCreateVariableByName("Current");
+      		PVariable var_Next = body.getOrCreateVariableByName("Next");
+      		PVariable var_p = body.getOrCreateVariableByName("p");
+      		PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
+      		new TypeConstraint(body, new FlatTuple(var_Old), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+      		new TypeConstraint(body, new FlatTuple(var_Current), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+      		new TypeConstraint(body, new FlatTuple(var_Next), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
+      		   new ExportedParameter(body, var_Old, parameter_pOld),
+      		   new ExportedParameter(body, var_Current, parameter_pCurrent),
+      		   new ExportedParameter(body, var_Next, parameter_pNext)
+      		));
+      		// 	neg find notNull(Old)
+      		new NegativePatternCall(body, new FlatTuple(var_Old), NotNullQuerySpecification.instance().getInternalQueryRepresentation());
+      		//  // Check for null, as if it is, we don't know the direction	find viablePaths(Current, p)
+      		new PositivePatternCall(body, new FlatTuple(var_Current, var_p), ViablePathsQuerySpecification.instance().getInternalQueryRepresentation());
+      		// 	Path.from(p, _)
+      		new TypeConstraint(body, new FlatTuple(var_p), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
+      		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
+      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "from")));
+      		new Equality(body, var__virtual_0_, var___0_);
       		// 	Path.via(p, Current)
       		new TypeConstraint(body, new FlatTuple(var_p), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
       		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");

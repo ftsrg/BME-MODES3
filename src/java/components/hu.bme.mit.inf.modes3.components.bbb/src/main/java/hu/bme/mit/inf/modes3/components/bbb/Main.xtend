@@ -1,9 +1,10 @@
-package hu.bme.mit.inf.modes3.components.bbb.main
+package hu.bme.mit.inf.modes3.components.bbb
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithoutParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
+import java.net.InetAddress
 import org.slf4j.impl.SimpleLoggerFactory
 
 class Main {
@@ -25,7 +26,7 @@ class Main {
 
 		registry.parseArguments(args);
 
-		val hostname = java.net.InetAddress.getLocalHost().getHostName();
+		val hostname = InetAddress.getLocalHost().getHostName();
 		logger.info("Hostname: " + hostname);
 		val turnoutID = Integer.valueOf(hostname.replace('t', ''));
 
