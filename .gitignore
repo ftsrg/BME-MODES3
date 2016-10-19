@@ -43,6 +43,7 @@ atlassian-ide-plugin.xml
 # --------
 **/.nb-gradle
 **/.nb-gradle-properties
+**/nbproject
 **/nbproject/private
 **/build/
 **/nbbuild/
