@@ -39,9 +39,9 @@ function TurnoutStateController() {
 	var tcws = new WSConnection(COMMAND, TURNOUT_STATE);
 	tcws.connect();
 	
-	TurnoutController.prototype.pushTurnoutState = function(turnoutId, state) {
+	TurnoutStateController.prototype.pushTurnoutState = function(turnoutId, state) {
 		var turnoutStateData = createTurnoutStateData(turnoutId, state);
-		tsws.publish(turnoutStateData);
+		tcws.publish(turnoutStateData);
 	}
 }
 

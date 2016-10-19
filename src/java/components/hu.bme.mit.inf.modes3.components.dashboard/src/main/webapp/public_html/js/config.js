@@ -171,37 +171,37 @@ var settings = {
 				connections : [ "s31", "s29" ]
 			}
 		}],
-		[ 3, {
-			id : "t03a",
-
-			div : {
-				id : "t03a-div",
-				length : 237,
-				connections : [ "s20", "t03b-div" ]
-			},
-
-			str : {
-				id : "t03a-str",
-				length : 239,
-				connections : [ "s20", "s26" ]
-			}
-		}],
+//		[ 3, {
+//			id : "t03a",
+//
+//			div : {
+//				id : "t03a-div",
+//				length : 237,
+//				connections : [ "s20", "t03b-div" ]
+//			},
+//
+//			str : {
+//				id : "t03a-str",
+//				length : 239,
+//				connections : [ "s20", "s26" ]
+//			}
+//		}],
+//		[ 4, {
+//			id : "t03b",
+//
+//			div : {
+//				id : "t03b-div",
+//				length : 237,
+//				connections : [ "t03a-div", "s30" ]
+//			},
+//
+//			str : {
+//				id : "t03b-str",
+//				length : 239,
+//				connections : [ "s19", "s30" ]
+//			}
+//		}],
 		[ 4, {
-			id : "t03b",
-
-			div : {
-				id : "t03b-div",
-				length : 237,
-				connections : [ "t03a-div", "s30" ]
-			},
-
-			str : {
-				id : "t03b-str",
-				length : 239,
-				connections : [ "s19", "s30" ]
-			}
-		}],
-		[ 5, {
 			id : "t04",
 
 			div : {
@@ -216,7 +216,7 @@ var settings = {
 				connections : [ "s02", "s04" ]
 			}
 		}],
-		[ 6, {
+		[ 5, {
 			id : "t05",
 
 			div : {
@@ -231,7 +231,7 @@ var settings = {
 				connections : [ "s11", "s08" ]
 			}
 		}],
-		[ 7, {
+		[ 6, {
 			id : "t06",
 
 			div : {

@@ -13,23 +13,32 @@ var locomotives = new Map();
 var segment_index = 0;
 
 $(document).ready(function () {
-    
+
     // creating segmentState controller to able to communicate through the transport layer
     var segmentStateController = new SegmentStateController();
-		
-	//var trainController = new TrainSpeedController();
-	
+    var turnoutStateController = new TurnoutStateController();
+
+    // setup every segment objects
+    new Map(window.settings.segments).forEach(function (value, key, map) {
+        window.segments[key] = new SegmentController(value, segmentStateController, key);
+    });
+   
+    // setup turnout objects
+    new Map(window.settings.turnouts).forEach(function (value, key, map) {
+        window.turnouts[key] = new TurnoutController(value, turnoutStateController, key);
+    });
+
+
+
+
+
+
+    //var trainController = new TrainSpeedController();
+
 //	var segmentOccupancyUpdater = new SegmentUpdater(updateSegmentOccupancy);
-	
+
     // setup segment objects
-//	new Map(window.settings.segments).forEach(function(value, key, map) {
-//		window.segments[key] = new SegmentController(value);
-//	});
 //
-//    // setup turnout objects
-//    new Map(window.settings.turnouts).forEach(function(value, key, map) {
-//    	window.turnouts[key] = new TurnoutController(value);
-//    });
 
 //    // setup locomotive objects
 //    new Map(window.settings.locomotives).forEach(function(value, key, map) {
@@ -60,15 +69,15 @@ $(document).ready(function () {
 //    });
 //    
 //    $("#test-number").trigger('change');
-    
+
     //pullInformationFromNetwork();
 });
 
 function updateSegmentOccupancy(segmentOccupancy) {
-	console.log("Segment occupancy: ");
-	console.log(segmentOccupancy);
-	if(segmentOccupancy.stateValue)
-		window.segments[segmentOccupancy.segmentID].setEnabled();
-	else
-		window.segments[segmentOccupancy.segmentID].setDisabled();
+    console.log("Segment occupancy: ");
+    console.log(segmentOccupancy);
+    if (segmentOccupancy.stateValue)
+        window.segments[segmentOccupancy.segmentID].setEnabled();
+    else
+        window.segments[segmentOccupancy.segmentID].setDisabled();
 }

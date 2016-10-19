@@ -13,9 +13,12 @@
  * 
  */
 
-function TurnoutController(turnoutConfig) {
+function TurnoutController(turnoutConfig, stateController, controlKey) {
     // setting up instance variables
     this.config = turnoutConfig;
+    this.stateController = stateController;
+    log(this.stateController);
+    this.controlKey = controlKey;
     this.svgElemDiv = $('#layout').find("#" + this.config.id + "-div");
     this.svgElemStr = $('#layout').find("#" + this.config.id + "-str");
     this.svgElemDivControl = $('#layout').find("#" + this.config.id + "-div-control");
@@ -33,6 +36,9 @@ TurnoutController.prototype.setInStraightPosition = function () {
     if (this.isInStraightPosition()) {
         return;
     }
+    
+    // send control message over transport layer
+    this.stateController.pushTurnoutState(this.controlKey, 0);
 
     // first, the divergent track element and the controller will be grey
     setSvgElementOpacity(this.svgElemDiv, window.settings.turnout.inactiveBranchOpacity);
@@ -54,6 +60,10 @@ TurnoutController.prototype.setInDivergentPosition = function () {
     if (this.isInDivergentPosition()) {
         return;
     }
+    
+    // send control message over transport layer
+    this.stateController.pushTurnoutState(this.controlKey, 1);
+    
     // first, the straight track element and the controller will be grey
     setSvgElementOpacity(this.svgElemStr, window.settings.turnout.inactiveBranchOpacity);
     setTurnoutControlElementColor(this.svgElemStrControl, window.settings.turnout.activeControlColor);
