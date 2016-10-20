@@ -69,7 +69,8 @@ public class DashboardManager {
         registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String.class));
         registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer.class));
         registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer.class));
-
+        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The ID of the component", String.class));
+        
         registry.parseArguments(args);
     }
 

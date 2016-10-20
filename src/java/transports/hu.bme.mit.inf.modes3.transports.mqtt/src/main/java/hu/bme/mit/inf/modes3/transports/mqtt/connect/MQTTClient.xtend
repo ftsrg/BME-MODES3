@@ -12,6 +12,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.modes3.transports.config.TransportEndpoints.ActiveConfiguration
 
 /**
  * The MQTT client which encapsulates the MqttAsyncClient that connects to the remote broker.
@@ -54,14 +55,15 @@ class MQTTClient {
 		transportConfig.allEndpoints?.core?.forEach [ config |
 			{
 				// connect to the first possible remote location which has a broker
-				if(!success.value) {
+				if (!success.value) {
 					try {
-						val mqttConfig = new MQTTConfiguration(config.pubPort, config.addr, transportConfig.localEndpoint.id)
+						val mqttConfig = new MQTTConfiguration(config.pubPort, config.addr,
+							transportConfig.localEndpoint.id)
 						testAndSubscribeToConnection(mqttConfig, topic, callback)
 						success.value = true
-						logger.info('''Connection succesful to MQTT Broker on «config.addr»:«config.pubPort»''')
-					} catch(MqttException ex) {
-						if(ex.reasonCode != NOT_CONNECTED_ERROR_CODE) {
+						logger.info('''Connection successfull to MQTT Broker on «config.addr»:«config.pubPort»''')
+					} catch (MqttException ex) {
+						if (ex.reasonCode != NOT_CONNECTED_ERROR_CODE) {
 							logger.error(ex.message, ex)
 						}
 					}
@@ -69,31 +71,40 @@ class MQTTClient {
 			}
 		]
 
-		if(!success.value) {
-			try {
-				val port = transportConfig.localEndpoint.pubPort
-				val address = "127.0.0.1"
-				val mqttConfig = new MQTTConfiguration(port, address, transportConfig.localEndpoint.id)
+		if (!success.value) {
+			
+			if (transportConfig.allEndpoints.activeConfig != ActiveConfiguration.PRODUCTION) {
+				logger.warn('''Connection failed on configured brokers. Connecting to local (127.0.0.1) broker...''')
 
 				try {
-					// connect to broker on localhost
-					testAndSubscribeToConnection(mqttConfig, topic, callback)
-					success.value = true
-				} catch(MqttException ex) {
-					if(ex.reasonCode != NOT_CONNECTED_ERROR_CODE) {
-						logger.error(ex.message, ex)
-					}
-				}
+					val port = transportConfig.localEndpoint.pubPort
+					val address = "127.0.0.1"
+					val mqttConfig = new MQTTConfiguration(port, address, transportConfig.localEndpoint.id)
 
-				if(!success.value) {
-					// create a broker on localhost
-					localBroker = new MQTTBroker
-					localBroker.startBroker(port)
-					// connect to broker on localhost
-					testAndSubscribeToConnection(mqttConfig, topic, callback)
+					try {
+						// connect to broker on localhost
+						testAndSubscribeToConnection(mqttConfig, topic, callback)
+						success.value = true
+						logger.warn("Connected to the local MQTT broker!")
+					} catch (MqttException ex) {
+						if (ex.reasonCode != NOT_CONNECTED_ERROR_CODE) {
+							logger.error(ex.message, ex)
+						}
+					}
+
+					if (!success.value) {
+						logger.warn('''Connection failed on broker. Connecting to embedded broker...''')
+						// create a broker on localhost
+						localBroker = new MQTTBroker
+						localBroker.startBroker(port)
+						// connect to broker on localhost
+						testAndSubscribeToConnection(mqttConfig, topic, callback)
+					}
+				} catch (MqttException ex) {
+					logger.error(ex.message, ex)
 				}
-			} catch(MqttException ex) {
-				logger.error(ex.message, ex)
+			} else {
+				throw new MqttException(MqttException.REASON_CODE_BROKER_UNAVAILABLE);
 			}
 		}
 	}
@@ -107,7 +118,7 @@ class MQTTClient {
 
 	private def testMqttConnection(MQTTConfiguration config) {
 		val client = createMqttClient(config)
-		if(!client.isConnected) {
+		if (!client.isConnected) {
 			throw new MqttException(NOT_CONNECTED_ERROR_CODE)
 		}
 		client.disconnect.waitForCompletion
@@ -125,7 +136,7 @@ class MQTTClient {
 			client.connect(connOpts)
 			Thread.sleep(300)
 			client
-		} catch(InterruptedException e) {
+		} catch (InterruptedException e) {
 			logger.error(e.message, e)
 			Thread.currentThread.interrupt
 		}
@@ -135,9 +146,9 @@ class MQTTClient {
 		try {
 			client?.publish(topic, message, qos, false)
 			Thread.sleep(50)
-		} catch(MqttException ex) {
+		} catch (MqttException ex) {
 			logger.error(ex.message, ex)
-		} catch(InterruptedException ex) {
+		} catch (InterruptedException ex) {
 			logger.error(ex.message, ex)
 			Thread.currentThread.interrupt
 		}
