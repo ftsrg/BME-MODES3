@@ -4,6 +4,7 @@ import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 import hu.bme.mit.inf.modes3.transports.config.TransportEndpoint
 import hu.bme.mit.inf.modes3.transports.config.TransportEndpoints
+import hu.bme.mit.inf.modes3.transports.config.TransportEndpoints.ActiveConfiguration
 
 class ArgumentBasedTransportConfigurationLoader {
 	
@@ -23,9 +24,14 @@ class ArgumentBasedTransportConfigurationLoader {
 		val address = registry.getParameterStringValue('address')
 		val id = registry.getParameterStringValue('id')
 		val pubPort = registry.getParameterIntegerValue('pubPort')
+		val config = registry.getParameterStringValue('config');
 		
 		val endpoint = new TransportEndpoint('',id,pubPort,0)
-		val endpoints = new TransportEndpoints(#[new TransportEndpoint(address,'',pubPort,0)])		
+		var TransportEndpoints endpoints = null
+		if(config != null)
+			endpoints = new TransportEndpoints(#[new TransportEndpoint(address,'',pubPort,0)], ActiveConfiguration.valueOf(config.toUpperCase))
+		else
+			endpoints = new TransportEndpoints(#[new TransportEndpoint(address,'',pubPort,0)])
 		return new TransportConfiguration(endpoint,endpoints)
 	}
 	
