@@ -34,15 +34,6 @@ class Main {
 		
 		val bbb = new BBBComponent(turnoutID, communicationStack, loggerFactory)
 		bbb.run // run on main thread
-
-//		if(registry.hasMandatoryArguments(requiredParams)) {
-//			val bbb = new BBBComponentWithStateChangeNotifier(turnoutID, communicationStack, loggerFactory)
-//			bbb.run // run on main thread
-//		} else {
-//			val bbb = new BBBComponent(turnoutID, communicationStack, loggerFactory)
-//			val thread = new Thread(bbb)
-//			thread.start
-//		}
 	}
 
 }
