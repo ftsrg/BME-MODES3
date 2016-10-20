@@ -10,13 +10,19 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegment
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.components.bbb.config.Pinout
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioManager
+import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.components.bbb.controllers.PhysicalTurnoutController
+import java.util.List
 
-class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISegmentCommandListener {
+class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener {
 
 	Configuration config
 	val int id
 
 	private HashMap<Integer, PhysicalSegmentController> segmentControllers = newHashMap()
+	
+	private List<PhysicalTurnoutController> turnoutControllers = newArrayList()
 
 	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
@@ -42,8 +48,16 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 			}
 		}
 		
+		// we will have an turnoutController class as well
+		// in only one case, there will be two turnout controller to work with, therefore
+		// we need a list of the controllers also
+		for( String turnout: config.turnoutExpanders ) {
+			turnoutControllers.add(new PhysicalTurnoutController(pinout, turnout));
+		}
+		
 		// adding component as segmentCommandListener
 		locator.trackElementCommandCallback.segmentCommandListener = this;
+		locator.trackElementCommandCallback.turnoutCommandListener = this;
 
 //		pinController = new GpioManagerPinController(factory)
 //		expanderController = new CapeExpanderController(pinController, factory)
@@ -88,18 +102,32 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 
 	override onSegmentCommand(int id, SegmentState state) {
 		
-		// if new segment command received on network, we need to check if it's our obligation or not
+		// if new segment command received on network, we need to check if it's our obligation to handle or not
 		if (!segmentControllers.keySet.contains(id)) {
 			return;
 		}
 		
-		logger.info('''Segment state change command received on segment #«id»: «state»''')
+		logger.info('''Segment state change command received on segment #«id»: «state»''');
 		
 		// locator.trackElementStateSender.sendSegmentState(id, state)
 
 		// set state of segment
 		segmentControllers.get(id).segmentState = state;
 
+	}
+	
+	override onTurnoutCommand(int id, TurnoutState state) {
+		
+		// if new turnout command received on network, we need to check if it's our obligation to handle or not
+		if( this.id != id ) {
+			return;
+		}
+		
+		logger.info('''Turnout state change command received on turnout #«id»: «state»''');
+		
+		for(PhysicalTurnoutController controller: turnoutControllers) {
+			controller.turnoutState = state;
+		}
 	}
 
 }
