@@ -53,6 +53,7 @@ public class CommandService {
                 case TRAIN_SPEED:
                     JsonFormat.parser().merge(message, trainSpeedBuilder.clear());
                     TrainReferenceSpeed sm = trainSpeedBuilder.build();
+                	logger.info("Train speed setup called, id: %d, speed: %d", sm.getTrainID(), sm.getReferenceSpeed());
                     commander.setTrainReferenceSpeedAndDirection(sm.getTrainID(), sm.getReferenceSpeed(), TrainDirection.valueOf(sm.getDirection().name()));
                     break;
 
@@ -64,7 +65,7 @@ public class CommandService {
                 case TURNOUT_STATE:
                     JsonFormat.parser().merge(message, turnoutState.clear());
                     TurnoutState ts = turnoutState.build();
-                    commander.sendTurnoutCommand(ts.getTurnoutID(), hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState.valueOf(ts.getState().name()));
+                    commander.sendTurnoutCommandWithTurnoutId(ts.getTurnoutID(), hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState.valueOf(ts.getState().name()));
                     break;
                 default:
                     logger.debug("Unrecognized target resource: " + target);

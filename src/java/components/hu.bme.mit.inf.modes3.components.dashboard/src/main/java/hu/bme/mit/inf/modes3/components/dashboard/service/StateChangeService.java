@@ -65,6 +65,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 					.setSegmentID(id)
 					.setStateValue(newValue.ordinal()));
 					metaBroadcaster.broadcastTo("/ws/state/" + SEGMENT_STATE, stateAsJson);
+			logger.info("segment old state: "+oldValue.toString()+", new state: "+newValue.toString());
 		} catch (InvalidProtocolBufferException e) {
 			logger.error("Unable to convert & push turnout state message " + e.getMessage());
 		}

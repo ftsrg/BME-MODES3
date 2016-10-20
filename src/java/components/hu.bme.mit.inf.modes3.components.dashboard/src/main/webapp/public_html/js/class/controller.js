@@ -47,9 +47,9 @@ function TurnoutStateController() {
 
 // state update ha jön valami a hálózat felől
 
-function SegmentUpdater(callback) {
+function SegmentStateUpdater(callback) {
 	
-	var suws = new WSConnection(STATE, SEGMENT_OCCUPANCY);
+	var suws = new WSConnection(STATE, SEGMENT_STATE);
 	
 	suws.connect();
 	

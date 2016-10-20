@@ -259,13 +259,13 @@ var settings = {
 	locomotives : [
 		[ 0, {
 			name : "Taurus MÁV 1047",
-			address : 0,
+			address : 9,
 			image : "taurus-mav-1047.jpg",
 			svgGroup : "taurus",
 		}],
 		[ 1, {
 			name : "SNCF 68000",
-			address : 1,
+			address : 10,
 			image : "sncf-68000.jpg",
 			svgGroup : 2,
 		}],

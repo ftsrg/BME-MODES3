@@ -37,7 +37,7 @@ public class GpioManager {
         public int port;
     }
     
-    public static void setGpioMapping(String resourceName) throws FileNotFoundException {
+    public static void loadGpioMappingFromFile(String resourceName) throws FileNotFoundException {
     	
     	String fileName = GpioManager.class.getClassLoader().getResource(resourceName).getPath();
         Logger.info(TAG, "mapping GPIOs from file: %s", fileName);

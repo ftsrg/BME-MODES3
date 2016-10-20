@@ -8,11 +8,16 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class SendAllStatusCallback {
 
 	val Logger logger;
-	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IAllStatusUpdateListener listener
+	
+	var IAllStatusUpdateListener listener
 
 	new(ProtobufMessageDispatcher dispatcher, ILoggerFactory factory) {
 		logger = factory.getLogger(this.class.name)
 		dispatcher.sendAllStatusHandler = new AllStatusUpdateClient(this)
+	}
+	
+	def setStatusUpdateListener(IAllStatusUpdateListener listener) {
+		this.listener = listener;
 	}
 	
 	

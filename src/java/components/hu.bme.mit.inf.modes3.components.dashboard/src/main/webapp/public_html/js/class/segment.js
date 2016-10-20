@@ -19,12 +19,11 @@ function SegmentController(segmentConfig, stateController, controlKey) {
     this.controlKey = controlKey;
     this.stateController = stateController;
     
-    // first, we dont know the state of the segment
+    // first, we don't know the state of the segment
     setTrackElementColor(this.svgElem, window.settings.segment.undefinedStateColor);
     
     // no need for initializing sequence, everything need to done in dom updated
     // callback to be sure its active every time
-
 };
 
 SegmentController.prototype.setEnabled = function () {

@@ -19,7 +19,7 @@ public class Main {
      */
     public static void main(String[] args) throws Exception {
 
-        GpioManager.setGpioMapping(args[0]);
+        GpioManager.loadGpioMappingFromFile(args[0]);
 
         checkSegmentActuator2();
 
