@@ -12,11 +12,24 @@ var locomotives = new Map();
 
 var segment_index = 0;
 
+function updateSegmentState(segmentState) {
+    log("Segment state changed: ");
+    log(segmentState);
+    if (segmentState.stateValue) {
+        window.segments[segmentState.segmentID].setEnabled();
+    } else {
+        window.segments[segmentState.segmentID].setDisabled();
+    }
+}
+
 $(document).ready(function () {
 
-    // creating segmentState controller to able to communicate through the transport layer
+    // creating controllers to able to communicate through the transport layer
     var segmentStateController = new SegmentStateController();
     var turnoutStateController = new TurnoutStateController();
+    
+    // creating state updaters to able to get information from transport layer
+    var segmentStateUpdater = new SegmentStateUpdater(updateSegmentState);
 
     // setup every segment objects
     new Map(window.settings.segments).forEach(function (value, key, map) {
@@ -28,22 +41,12 @@ $(document).ready(function () {
         window.turnouts[key] = new TurnoutController(value, turnoutStateController, key);
     });
 
-
-
-
-
-
-    //var trainController = new TrainSpeedController();
-
-//	var segmentOccupancyUpdater = new SegmentUpdater(updateSegmentOccupancy);
-
-    // setup segment objects
-//
-
-//    // setup locomotive objects
-//    new Map(window.settings.locomotives).forEach(function(value, key, map) {
-//    	window.locomotives[key] = new LocomotiveController(value, trainController)
-//    })
+    
+    // setup locomotive objects
+    var trainController = new TrainSpeedController();
+    new Map(window.settings.locomotives).forEach(function(value, key, map) {
+    	window.locomotives[key] = new LocomotiveController(value, trainController)
+    })
 
     updateDOM();
 
@@ -72,12 +75,3 @@ $(document).ready(function () {
 
     //pullInformationFromNetwork();
 });
-
-function updateSegmentOccupancy(segmentOccupancy) {
-    console.log("Segment occupancy: ");
-    console.log(segmentOccupancy);
-    if (segmentOccupancy.stateValue)
-        window.segments[segmentOccupancy.segmentID].setEnabled();
-    else
-        window.segments[segmentOccupancy.segmentID].setDisabled();
-}

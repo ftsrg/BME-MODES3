@@ -45,7 +45,7 @@ class Configuration {
 	 * @throws Exception
 	 */
 	static def Configuration loadPinoutConfig(int id, ILoggerFactory factory) {
-		logger = factory.getLogger(Pinout.name)
+		logger = factory.getLogger(ExpanderConfigInterpreter.name)
 
 		val gson = new Gson
 		var InputStreamReader isr = null

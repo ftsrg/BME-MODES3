@@ -12,41 +12,27 @@ function LocomotiveController(locomotiveConfig, controller) {
     this.controller = controller;
     
     // creating SVG representation from scratch
-    this.createSVGrepresentation();
+    //this.createSVGrepresentation();
 
     // then create DOM in trains list
     this.createDOMrepresentation();
 
     // then remove the forward and backward arrow
-    setSvgElementOpacity(this.svgElemForward, 0);
-    setSvgElementOpacity(this.svgElemBackward, 0);
+    //setSvgElementOpacity(this.svgElemForward, 0);
+    //setSvgElementOpacity(this.svgElemBackward, 0);
 }
 
 LocomotiveController.prototype.setSpeed = function (speed) {
-    this.indicatorElem.text(speed);
     this.speed = speed;
 
     // changing direction arrows regarding the speed
     if (this.speed < 0) {
-        setSvgElementOpacity(this.svgElemForward, 0);
-        setSvgElementOpacity(this.svgElemBackward, 1);
-        
-        this.controller.pushTrainSpeed(this.config.address, speed, 1);
-        // if segment setted correctly, then we could animate as well
-        if (this.currentSegment !== null) {
-            this.animateOnSegment(this.currentSegment);
-        }
+        log("Pushing train speed: "+speed);
+        this.controller.pushTrainSpeed(this.config.address, Math.abs(speed), 1);
 
     } else {
-        // locomotive will be go forward
-        setSvgElementOpacity(this.svgElemForward, 1);
-        setSvgElementOpacity(this.svgElemBackward, 0);
-        
+    	log("Pushing train speed: "+speed);
         this.controller.pushTrainSpeed(this.config.address, speed, 0);
-        // if segment setted correctly, then we could animate as well
-        if (this.currentSegment !== null) {
-            this.animateOnSegment(this.currentSegment);
-        }
     }
 };
 
@@ -280,8 +266,8 @@ LocomotiveController.prototype.createDOMrepresentation = function () {
             .attr('src', 'images/locomotives/' + this.config.image);
     var input = $('<input />').attr({
         type: 'range',
-        min: -128,
-        max: +128,
+        min: -50,
+        max: +50,
         value: 0
     });
     this.indicatorElem = $('<div />').addClass('train-control-speed-indicator').text('0');
@@ -304,27 +290,12 @@ LocomotiveController.prototype.createDOMrepresentation = function () {
 
 LocomotiveController.prototype.DOMUpdatedCallback = function () {
     // after doom refresh, we lost every object here, so query all of them again
-    this.svgElemGroup = $('#' + this.config.svgGroup);
-    this.svgElemForward = this.svgElemGroup.find('#forward');
-    this.svgElemBackward = this.svgElemGroup.find('#backward');
-    this.svgElemPosition = this.svgElemGroup.find('#position');
-    this.svgElemName = this.svgElemGroup.find('#name');
-    this.svgElemPath = this.svgElemGroup.find('#pathundertext');
-
-    // need to update every animation object's keypoints to continue animation
-    // the at point where it ended before dom update
-    // and need to update the duration as well
-    var keyPoints = this.getKeyPoints();
-//    var duration = this.duration*keyPoints[1];
-    this.svgElemGroup.find('animateMotion').attr({
-        keyPoints: keyPoints.join(";"),
-//        duration: duration+"s"
-    });
-
-//    // add event handler for element
-//    this.svgElemPosition.bind('click', {_this: this}, function (event) {
-//        clearTimeout(event.data._this.timeout);
-//    });
+//    this.svgElemGroup = $('#' + this.config.svgGroup);
+//    this.svgElemForward = this.svgElemGroup.find('#forward');
+//    this.svgElemBackward = this.svgElemGroup.find('#backward');
+//    this.svgElemPosition = this.svgElemGroup.find('#position');
+//    this.svgElemName = this.svgElemGroup.find('#name');
+//    this.svgElemPath = this.svgElemGroup.find('#pathundertext');
 };
 
 

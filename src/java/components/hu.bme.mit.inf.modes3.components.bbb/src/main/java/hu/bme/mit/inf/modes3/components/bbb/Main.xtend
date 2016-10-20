@@ -20,10 +20,6 @@ class Main {
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer))
 
-		val paramName = "spam"
-		registry.registerArgumentWithoutOptions(new ArgumentDescriptorWithoutParameter(paramName, "BBB reports only the change notifications."))
-		val requiredParams = #{paramName}
-
 		registry.parseArguments(args);
 
 		val hostname = InetAddress.getLocalHost().getHostName();
