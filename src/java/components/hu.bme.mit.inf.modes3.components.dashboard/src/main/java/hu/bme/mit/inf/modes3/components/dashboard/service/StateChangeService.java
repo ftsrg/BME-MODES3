@@ -1,7 +1,10 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SEGMENT_OCCUPACY;
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SEGMENT_STATE;
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TURNOUT_STATE;
+
 import javax.inject.Inject;
-import javax.swing.SwingWorker.StateValue;
 
 import org.atmosphere.config.service.ManagedService;
 import org.atmosphere.config.service.PathParam;
@@ -12,7 +15,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
-import hu.bme.mit.inf.modes3.messaging.communication.enums.EnumTransformator;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState;
@@ -22,8 +24,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutSt
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyValue;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentStateValue;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateValue;
-
-import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.*;
 
 @ManagedService(path = "/ws/state/{source}")
 public class StateChangeService implements ISegmentOccupancyChangeListener, ITurnoutStateChangeListener, ISegmentStateChangeListener {
@@ -66,11 +66,11 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	public void onSegmentStateChange(int id, SegmentState oldValue, SegmentState newValue ) {
 		String stateAsJson;
 		try {
-			stateAsJson = JsonFormat.printer().print(segmentStateBuilder.clear()
+			stateAsJson = JsonFormat.printer().includingDefaultValueFields().print(segmentStateBuilder.clear()
 					.setSegmentID(id)
 					.setState(SegmentStateValue.valueOf(newValue.name())).build());
 					metaBroadcaster.broadcastTo("/ws/state/" + SEGMENT_STATE, stateAsJson);
-			logger.info("segment new state: "+newValue.toString());
+			logger.info("segment "+id+" new state: "+newValue.toString());
 		} catch (InvalidProtocolBufferException e) {
 			logger.error("Unable to convert & push segment state message " + e.getMessage());
 		}
@@ -80,10 +80,11 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	public void onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
 		String stateAsJson;
 		try {
-			stateAsJson = JsonFormat.printer().print(turnoutStateBuilder.clear()
+			stateAsJson = JsonFormat.printer().includingDefaultValueFields().print(turnoutStateBuilder.clear()
 					.setTurnoutID(id)
-					.setState(TurnoutStateValue.valueOf(newValue.name())));
+					.setState(TurnoutStateValue.valueOf(newValue.name())).build());
 					metaBroadcaster.broadcastTo("/ws/state/" + TURNOUT_STATE, stateAsJson);
+			logger.info("turnout new state: "+newValue.toString());
 		} catch (InvalidProtocolBufferException e) {
 			logger.error("Unable to convert & push turnout state message " + e.getMessage());
 		}

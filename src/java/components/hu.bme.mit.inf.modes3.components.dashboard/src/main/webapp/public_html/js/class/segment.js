@@ -26,32 +26,23 @@ function SegmentController(segmentConfig, stateController, controlKey) {
     // callback to be sure its active every time
 };
 
-/**
- * 
- */
-SegmentController.prototype.refreshSegmentState = function(segmentState) {
-	log("segment state value:"+segmentState.state);
+SegmentController.prototype.setSegmentState = function(segmentState) {
+	log("segment state value: "+segmentState);
+	this.isSegmentEnabled = segmentState == "ENABLED";
 	
-	if( segmentState.state == "ENABLED" ) {
+	if( this.isSegmentEnabled ) {
 		setTrackElementColor(this.svgElem, window.settings.segment.activeColor);
-	    this.isSegmentEnabled = true;
 	    logEvent("Segment #" + this.config.id + " enabled");
 	} else {
 		setTrackElementColor(this.svgElem, window.settings.segment.inactiveColor);
-	    this.isSegmentEnabled = false;
 	    logEvent("Segment #" + this.config.id + " disabled");
 	}
 }
 
-SegmentController.prototype.setEnabled = function () {
-    // send state control message over transport layer
-    this.stateController.pushSegmentState(this.controlKey, 1);
-};
-
-SegmentController.prototype.setDisabled = function () {
-    // send state control message over transport layer
-    this.stateController.pushSegmentState(this.controlKey, 0);
-};
+SegmentController.prototype.pushSegmentState = function(segmentState) {
+	log("Pushing new segment state for segment "+this.controlKey+", state: "+segmentState);
+	this.stateController.pushSegmentState(this.controlKey, segmentState == "ENABLED"? 1 : 0);
+}
 
 SegmentController.prototype.setOccupied = function () {
     // TODO
@@ -67,9 +58,11 @@ SegmentController.prototype.DOMUpdatedCallback = function () {
     // add event handler for element
     this.svgElem.bind('click', {_this: this}, function (event) {
         if (event.data._this.isSegmentEnabled) {
-            event.data._this.setDisabled();
+            // send state control message over transport layer
+        	event.data._this.pushSegmentState("DISABLED");
         } else {
-            event.data._this.setEnabled();
+            // send state control message over transport layer
+        	event.data._this.pushSegmentState("ENABLED");
         }
     });
     

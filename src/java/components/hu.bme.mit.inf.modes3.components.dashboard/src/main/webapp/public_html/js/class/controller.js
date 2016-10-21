@@ -56,7 +56,7 @@ function SegmentStateUpdater(callback) {
 	suws.onMessageArrived = callback;
 }
 
-function TurnoutUpdater(callback) {
+function TurnoutStateUpdater(callback) {
 	
 	var tuws = new WSConnection(STATE, TURNOUT_STATE);
 	
