@@ -171,6 +171,21 @@ var settings = {
 				connections : [ "s31", "s29" ]
 			}
 		}],
+		[ 3, {
+			id : "t03",
+
+			div : {
+				id : "t03-div",
+				length : 237,
+				connections : [ "s20", "t03b-div" ]
+			},
+
+			str : {
+				id : "t03-str",
+				length : 239,
+				connections : [ "s20", "s26" ]
+			}
+		}],
 //		[ 3, {
 //			id : "t03a",
 //
