@@ -20,6 +20,10 @@ function updateTurnoutStateCallback(turnoutState) {
 	window.turnouts[turnoutState.turnoutID].setTurnoutState(turnoutState.state);
 }
 
+//function updateTrainSpeedStateCallback(trainSpeedState) {
+//	log(trainSpeedState);
+//}
+
 $(document).ready(function () {
 
     // creating controllers to able to communicate through the transport layer
@@ -29,6 +33,7 @@ $(document).ready(function () {
     // creating state updaters to able to get information from transport layer
     var segmentStateUpdater = new SegmentStateUpdater(updateSegmentStateCallback);
     var turnoutStateUpdater = new TurnoutStateUpdater(updateTurnoutStateCallback);
+//    var trainSpeedStateUpdater = new TrainSpeedStateUpdater(updateTrainSpeedStateCallback);
     
     // setup every segment objects
     new Map(window.settings.segments).forEach(function (value, key, map) {
@@ -44,7 +49,7 @@ $(document).ready(function () {
     // setup locomotive objects
     var trainController = new TrainSpeedController();
     new Map(window.settings.locomotives).forEach(function(value, key, map) {
-    	window.locomotives[key] = new LocomotiveController(value, trainController)
+    	window.locomotives[key] = new LocomotiveController(value, trainController);
     })
 
     updateDOM();
@@ -60,6 +65,15 @@ $(document).ready(function () {
     	for(var i in window.turnouts) {
     		window.turnouts[i].pushTurnoutState("STRAIGHT");
     	}
+    });
+    
+    $("#stop-all-train").bind('click', function() {
+    	$('input[type="range"]').val(0);
+    	$('input[type="range"]').trigger('change');
+    });
+    
+    $("#test").bind('click', function() {
+    	window.locomotives[9].setSpeed(10);
     });
 
 //    // setup event handler for control trains button

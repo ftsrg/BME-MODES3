@@ -50,17 +50,20 @@ function TurnoutStateController() {
 function SegmentStateUpdater(callback) {
 	
 	var suws = new WSConnection(STATE, SEGMENT_STATE);
-	
 	suws.connect();
-	
 	suws.onMessageArrived = callback;
 }
 
 function TurnoutStateUpdater(callback) {
 	
 	var tuws = new WSConnection(STATE, TURNOUT_STATE);
-	
 	tuws.connect();
-	
 	tuws.onMessageArrived = callback;
 }
+
+//function TrainSpeedStateUpdater(callback) {
+//	
+//	var tuws = new WSConnection(STATE, TRAIN_SPEED);
+//	tuws.connect();
+//	tuws.onMessageArrived = callback;
+//}
