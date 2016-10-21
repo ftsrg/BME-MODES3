@@ -52,6 +52,8 @@ public final class Gpio {
 	private volatile boolean _isInputListenerRunning = false;
 
 	private Timer _inputListener;
+	
+	private TimerTask _inputListenerTask;
 
 	public Gpio(int pin, Direction direction) throws IOException, GpioNotConfiguratedException {
 		this._pin = pin;
@@ -192,7 +194,8 @@ public final class Gpio {
 		if (!_isInputListenerRunning) {
 			_isInputListenerRunning = true;
 			_inputListener = new Timer();
-			_inputListener.schedule(new InputStateChangeListenerTask(), 0, 50);
+			_inputListenerTask = new InputStateChangeListenerTask();
+			_inputListener.schedule(_inputListenerTask, 0, 50);
 		}
 	}
 
@@ -201,6 +204,8 @@ public final class Gpio {
 		try {
 			if (_isInputListenerRunning) {
 				Logger.info(TAG, "Stopping listening service for pin #%d", _pin);
+				_inputListenerTask.cancel();
+				_inputListener.purge();
 				_inputListener.cancel();
 				_isInputListenerRunning = false;
 				Logger.info(TAG, "Listening service for pin #%d stopped.", _pin);
