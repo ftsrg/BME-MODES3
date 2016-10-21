@@ -10,7 +10,12 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
-class PhysicalTurnoutController {
+class PhysicalTurnoutController implements InputStateListener {
+	
+	public interface ITurnoutStateChangedListener {
+		
+		def void onStateChanged(TurnoutState newState);
+	}
 
 	/**
 	 * for each turnout controller, we have to use four gpio pins:
@@ -24,12 +29,17 @@ class PhysicalTurnoutController {
 	Gpio straightState;
 
 	Gpio divergentState;
+	
+	PhysicalTurnoutController.ITurnoutStateChangedListener listener;
 
 	private final static int TURNOUT_IMPULSE_WIDTH = 200;
 
 	val Logger logger
+	
+	String expander
 
 	new(ExpanderConfigInterpreter pinout, String expander, ILoggerFactory factory) {
+		this.expander = expander;
 		logger = factory.getLogger(PhysicalTurnoutController.name);
 		val String[] pins = pinout.getHeaderPins(expander);
 		try {
@@ -42,23 +52,39 @@ class PhysicalTurnoutController {
 			// TODO this exception should be handled correctly!
 			logger.debug("GPIO pin could not be setted!", ex);
 		}
-
-		// adding input listeners for state gpios as well
-		straightState.addInputStateListener(new InputStateListener() {
-
-			override levelStateChanged(Level newLevel) {
-				logger.info('''level state changed on straight sense: «newLevel»''');
+		
+		// there will be only one listener for both input, therefore we could handle the change
+		// correctly
+		straightState.addInputStateListener(this);
+		divergentState.addInputStateListener(this);
+	}
+	
+	def setTurnoutStateChangedListener(ITurnoutStateChangedListener listener) {
+		this.listener = listener;
+	}
+	
+	def getTurnoutState() {
+		
+		if( straightState.level == Level.HIGH ) {
+			
+			if( divergentState.level == Level.LOW ) {
+				// the turnout switch correctly to straight position, sending message
+				return TurnoutState.STRAIGHT;
+			} else {
+				// TODO what should we do, if both of the inputs are high??
+				return TurnoutState.ILLEGAL;
 			}
-
-		});
-
-		divergentState.addInputStateListener(new InputStateListener() {
-
-			override levelStateChanged(Level newLevel) {
-				logger.info('''level state changed on divergent sense: «newLevel»''');
+			
+		} else {
+			
+			if( divergentState.level == Level.HIGH ) {
+				// the turnout switch correctly to divergent position, sending message
+				return TurnoutState.DIVERGENT;
+			} else {
+				// TODO what should we do, if both of the inputs are low??
+				return TurnoutState.ILLEGAL;
 			}
-
-		});
+		}
 	}
 
 	def setTurnoutState(TurnoutState state) {
@@ -79,4 +105,10 @@ class PhysicalTurnoutController {
 		}
 
 	}
+	
+	override levelStateChanged(Level newLevel) {
+		logger.info('''level state changed! expander: «expander»''');
+		listener?.onStateChanged(turnoutState);
+	}
+	
 }
