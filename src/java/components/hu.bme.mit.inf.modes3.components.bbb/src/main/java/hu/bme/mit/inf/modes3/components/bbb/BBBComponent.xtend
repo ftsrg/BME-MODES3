@@ -16,7 +16,7 @@ import java.util.HashMap
 import java.util.List
 import org.slf4j.ILoggerFactory
 
-class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener, IAllStatusUpdateListener {
+class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener, IAllStatusUpdateListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
 
 	Configuration config
 	val int id
@@ -25,13 +25,14 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 
 	private List<PhysicalTurnoutController> turnoutControllers = newArrayList()
 
+	Object turnoutStateChangedBarrier = new Object();
+
 	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
 
 		id = turnoutID
-		
-		// TODO move out configuration files from resources and get the path of them from parameters
 
+		// TODO move out configuration files from resources and get the path of them from parameters
 		// loading configurations
 		config = Configuration::loadPinoutConfig(turnoutID, factory)
 		val pinout = ExpanderConfigInterpreter.loadPinoutConfig(factory);
@@ -55,14 +56,15 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 		// in only one case, there will be two turnout controller to work with, therefore
 		// we need a list of the controllers also
 		for (String turnout : config.turnoutExpanders) {
-			turnoutControllers.add(new PhysicalTurnoutController(pinout, turnout, factory));
+			var controller = new PhysicalTurnoutController(pinout, turnout, factory);
+			controller.turnoutStateChangedListener = this;
+			turnoutControllers.add(controller);
 		}
 
 		// adding component as segmentCommandListener
 		locator.trackElementCommandCallback.segmentCommandListener = this;
 		locator.trackElementCommandCallback.turnoutCommandListener = this;
 //		locator.sendAllStatusCallback.statusUpdateListener = this;
-
 	}
 
 	override run() {
@@ -82,7 +84,7 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 
 		// set state of segment
 		segmentControllers.get(id).segmentState = state;
-		
+
 		// also we need to send segmentState over network
 		locator.trackElementStateSender.sendSegmentState(id, segmentControllers.get(id).segmentState);
 	}
@@ -96,19 +98,47 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 
 		logger.info('''Turnout state change command received on turnout #«id»: «state»''');
 
+		// sending for every controller the new state
 		for (PhysicalTurnoutController controller : turnoutControllers) {
-			controller.turnoutState = state;
+			if (!controller.turnoutState.equals(state)) {
+				controller.turnoutState = state;
+			}
 		}
-		
-		// TODO send turnout state back on network!
+
+	// we do not need to send state back to the network, the pin change will trigger a state message
 	}
 
 	override onAllStatusUpdate() {
-
 		// sending state of every segment located in the expanders
 //		for (Entry<Integer, PhysicalSegmentController> controllerEntry : segmentControllers.entrySet) {
 //			locator.trackElementStateSender.sendSegmentState(controllerEntry.key, controllerEntry.value.segmentState);
 //		}
+	}
+
+	override onStateChanged(TurnoutState newState) {
+		synchronized (turnoutStateChangedBarrier) {
+
+			logger.info('''state changed! new state: «newState»''')
+
+			if (newState == TurnoutState.ILLEGAL) {
+				// TODO handle it in a correct
+				return;
+			}
+
+			// we have to set all the turnout controllers to the new state to be absolutely sure
+			// that all turnout are in the same position (it is vital in the case of T3)
+			if (id == 3) {
+				for (PhysicalTurnoutController controller : turnoutControllers) {
+					if (!controller.turnoutState.equals(newState)) {
+						controller.turnoutState = newState;
+					}
+				}
+			}
+
+			// need to send segmentState over network
+			locator.trackElementStateSender.sendTurnoutState(id, newState);
+
+		}
 	}
 
 }
