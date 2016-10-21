@@ -1,20 +1,16 @@
 #!/bin/sh
 
-# ?? libmosquittopp1
-sudo apt-get update
-sudo apt-get install git cmake autoconf automake libtool curl make g++ unzip libboost-all-dev libmosquittopp-dev
+# first, delete build folder is there is any
+echo "deleting previous build folder"
+rm -rf build
 
-git clone https://github.com/google/protobuf.git
-cd protobuf
-
-./autogen.sh
-./configure
-make check
-sudo make install
-sudo ldconfig # refresh shared library cache.
+echo "deleting previous protobuf gen folder"
+rm -rf GoogleProtocolBuffers
+mkdir GoogleProtocolBuffers
 
 # cd back to the folder of BME-MODES3/src
-cd ../../../
+cd ../../
+pwd
 
 # generate protoc files
 protoc --proto_path=java/messaging/hu.bme.mit.inf.modes3.messaging.proto/src/main/proto --cpp_out=cpp/hu.bme.mit.inf.modes3.components.xpressnetbridge/GoogleProtocolBuffers/ java/messaging/hu.bme.mit.inf.modes3.messaging.proto/src/main/proto/*
