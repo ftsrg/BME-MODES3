@@ -26,24 +26,31 @@ function SegmentController(segmentConfig, stateController, controlKey) {
     // callback to be sure its active every time
 };
 
+/**
+ * 
+ */
+SegmentController.prototype.refreshSegmentState = function(segmentState) {
+	log("segment state value:"+segmentState.state);
+	
+	if( segmentState.state == "ENABLED" ) {
+		setTrackElementColor(this.svgElem, window.settings.segment.activeColor);
+	    this.isSegmentEnabled = true;
+	    logEvent("Segment #" + this.config.id + " enabled");
+	} else {
+		setTrackElementColor(this.svgElem, window.settings.segment.inactiveColor);
+	    this.isSegmentEnabled = false;
+	    logEvent("Segment #" + this.config.id + " disabled");
+	}
+}
+
 SegmentController.prototype.setEnabled = function () {
     // send state control message over transport layer
     this.stateController.pushSegmentState(this.controlKey, 1);
-    
-    // updating UI
-    setTrackElementColor(this.svgElem, window.settings.segment.activeColor);
-    this.isSegmentEnabled = true;
-    logEvent("Segment #" + this.config.id + " enabled");
 };
 
 SegmentController.prototype.setDisabled = function () {
     // send state control message over transport layer
     this.stateController.pushSegmentState(this.controlKey, 0);
-    
-    // updating UI
-    setTrackElementColor(this.svgElem, window.settings.segment.inactiveColor);
-    this.isSegmentEnabled = false;
-    logEvent("Segment #" + this.config.id + " disabled");
 };
 
 SegmentController.prototype.setOccupied = function () {

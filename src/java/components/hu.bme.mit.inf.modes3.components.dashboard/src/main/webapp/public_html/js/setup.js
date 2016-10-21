@@ -12,14 +12,10 @@ var locomotives = new Map();
 
 var segment_index = 0;
 
-function updateSegmentState(segmentState) {
-    log("Segment state changed: ");
-    log(segmentState);
-    if (segmentState.stateValue) {
-        window.segments[segmentState.segmentID].setEnabled();
-    } else {
-        window.segments[segmentState.segmentID].setDisabled();
-    }
+function updateSegmentStateCallback(segmentState) {
+	log("segment state: ");
+	log(segmentState);
+    window.segments[segmentState.segmentID].refreshSegmentState(segmentState);
 }
 
 $(document).ready(function () {
@@ -29,7 +25,7 @@ $(document).ready(function () {
     var turnoutStateController = new TurnoutStateController();
     
     // creating state updaters to able to get information from transport layer
-    var segmentStateUpdater = new SegmentStateUpdater(updateSegmentState);
+    var segmentStateUpdater = new SegmentStateUpdater(updateSegmentStateCallback);
 
     // setup every segment objects
     new Map(window.settings.segments).forEach(function (value, key, map) {
