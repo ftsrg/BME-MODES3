@@ -12,6 +12,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
+import hu.bme.mit.inf.modes3.messaging.communication.enums.EnumTransformator;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState;
@@ -69,9 +70,9 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 					.setSegmentID(id)
 					.setState(SegmentStateValue.valueOf(newValue.name())).build());
 					metaBroadcaster.broadcastTo("/ws/state/" + SEGMENT_STATE, stateAsJson);
-			logger.info("segment old state: "+oldValue.toString()+", new state: "+newValue.toString());
+			logger.info("segment new state: "+newValue.toString());
 		} catch (InvalidProtocolBufferException e) {
-			logger.error("Unable to convert & push turnout state message " + e.getMessage());
+			logger.error("Unable to convert & push segment state message " + e.getMessage());
 		}
 	}
 

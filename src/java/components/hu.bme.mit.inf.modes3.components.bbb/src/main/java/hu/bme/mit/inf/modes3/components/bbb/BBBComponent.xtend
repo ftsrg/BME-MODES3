@@ -80,15 +80,11 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 
 		logger.info('''Segment state change command received on segment #«id»: «state»''');
 
-		// locator.trackElementStateSender.sendSegmentState(id, state)
 		// set state of segment
 		segmentControllers.get(id).segmentState = state;
 		
-		// TODO send segment state back on the network!
-		
 		// also we need to send segmentState over network
-//		locator.trackElementStateSender.sendSegmentState(id, segmentControllers.get(id).segmentState);
-
+		locator.trackElementStateSender.sendSegmentState(id, segmentControllers.get(id).segmentState);
 	}
 
 	override onTurnoutCommand(int id, TurnoutState state) {
