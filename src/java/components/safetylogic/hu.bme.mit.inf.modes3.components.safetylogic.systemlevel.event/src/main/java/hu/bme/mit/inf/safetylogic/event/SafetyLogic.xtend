@@ -44,7 +44,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		model = new ModelUtil(factory)
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
-		locator.sendAllStatusCallback.listener = new IAllStatusUpdateListener() {
+		locator.sendAllStatusCallback.statusUpdateListener = new IAllStatusUpdateListener() {
 
 			override onAllStatusUpdate() {
 				model.model.sections.getTurnouts.forEach [
