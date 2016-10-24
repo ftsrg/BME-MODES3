@@ -45,11 +45,16 @@ function TurnoutStateController() {
 	}
 }
 
-// state update ha jön valami a hálózat felől
-
 function SegmentStateUpdater(callback) {
 	
 	var suws = new WSConnection(STATE, SEGMENT_STATE);
+	suws.connect();
+	suws.onMessageArrived = callback;
+}
+
+function SegmentOccupancyUpdater(callback) {
+	
+	var suws = new WSConnection(STATE, SEGMENT_OCCUPANCY);
 	suws.connect();
 	suws.onMessageArrived = callback;
 }
@@ -61,9 +66,9 @@ function TurnoutStateUpdater(callback) {
 	tuws.onMessageArrived = callback;
 }
 
-//function TrainSpeedStateUpdater(callback) {
-//	
-//	var tuws = new WSConnection(STATE, TRAIN_SPEED);
-//	tuws.connect();
-//	tuws.onMessageArrived = callback;
-//}
+function TrainSpeedStateUpdater(callback) {
+	
+	var tuws = new WSConnection(STATE, TRAIN_SPEED);
+	tuws.connect();
+	tuws.onMessageArrived = callback;
+}

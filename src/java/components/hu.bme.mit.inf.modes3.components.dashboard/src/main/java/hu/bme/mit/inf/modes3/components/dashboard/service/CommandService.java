@@ -1,5 +1,10 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.ALL_STATE;
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SEGMENT_STATE;
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TRAIN_SPEED;
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TURNOUT_STATE;
+
 import javax.inject.Inject;
 
 import org.atmosphere.config.service.ManagedService;
@@ -18,8 +23,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeed;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutState;
-
-import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.*;
 
 @Singleton
 @ManagedService(path = "/ws/command/{target}")
@@ -75,8 +78,6 @@ public class CommandService {
             DashboardManager.INSTANCE.getLogger().error("Unable to parse message: " + message);
             e.printStackTrace();
         }
-
-        System.out.println(target + " : " + message);
     }
 
 }

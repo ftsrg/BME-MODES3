@@ -143,7 +143,8 @@ var settings = {
 	turnouts : [
 		[ 1, {
 			id : "t01",
-
+			senseID: [14],
+			
 			div : {
 				id : "t01-div",
 				length : 237,
@@ -158,7 +159,8 @@ var settings = {
 		}],
 		[ 2, {
 			id : "t02",
-
+			senseID: [28],
+			
 			div : {
 				id : "t02-div",
 				length : 220,
@@ -173,7 +175,8 @@ var settings = {
 		}],
 		[ 3, {
 			id : "t03",
-
+			senseID: [25, 32],
+			
 			div : {
 				id : "t03-div",
 				length : 237,
@@ -218,6 +221,7 @@ var settings = {
 //		}],
 		[ 4, {
 			id : "t04",
+			senseID: [3],
 
 			div : {
 				id : "t04-div",
@@ -233,6 +237,7 @@ var settings = {
 		}],
 		[ 5, {
 			id : "t05",
+			senseID: [9],
 
 			div : {
 				id : "t05-div",
@@ -248,6 +253,7 @@ var settings = {
 		}],
 		[ 6, {
 			id : "t06",
+			senseID: [21],
 
 			div : {
 				id : "t06-div",

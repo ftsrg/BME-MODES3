@@ -20,9 +20,40 @@ function updateTurnoutStateCallback(turnoutState) {
 	window.turnouts[turnoutState.turnoutID].setTurnoutState(turnoutState.state);
 }
 
-//function updateTrainSpeedStateCallback(trainSpeedState) {
-//	log(trainSpeedState);
-//}
+function updateSegmentOccupancyCallback(segmentOccupancy) {
+
+	// if segment is not find in the segments hash, then it must be a turnout
+	var segment = window.segments[segmentOccupancy.segmentID];
+	if( segment === undefined ) {
+		for(var id in window.turnouts) {
+			if( $.inArray(segmentOccupancy.segmentID, window.turnouts[id].config.senseID) !== -1 ) {
+				segment = window.turnouts[id];
+				break;
+			}
+		}
+	}
+	
+	// if segment still not found, then halt process
+	if( segment === undefined ) {
+		return;
+	}
+	
+	// segment ID only related for one turnout, but we give to everybody
+	segment.setOccupancyState(segmentOccupancy.state, segmentOccupancy.segmentID);
+}
+
+function updateTrainSpeedCallback(trainSpeed) {
+	console.log(trainSpeed);
+	var train = window.locomotives[trainSpeed.trainID];
+	
+	if( train !== undefined ) {
+		var speed = trainSpeed.currentSpeed;
+		if( trainSpeed.direction !== "FORWARD" ) {
+			speed *= -1;
+		}
+		train.setSpeed(speed);
+	}
+}
 
 $(document).ready(function () {
 
@@ -33,7 +64,8 @@ $(document).ready(function () {
     // creating state updaters to able to get information from transport layer
     var segmentStateUpdater = new SegmentStateUpdater(updateSegmentStateCallback);
     var turnoutStateUpdater = new TurnoutStateUpdater(updateTurnoutStateCallback);
-//    var trainSpeedStateUpdater = new TrainSpeedStateUpdater(updateTrainSpeedStateCallback);
+    var segmentOccupancyUpdater = new SegmentOccupancyUpdater(updateSegmentOccupancyCallback);
+    var trainSpeedStateUpdater = new TrainSpeedStateUpdater(updateTrainSpeedCallback);
     
     // setup every segment objects
     new Map(window.settings.segments).forEach(function (value, key, map) {
@@ -72,32 +104,19 @@ $(document).ready(function () {
     	$('input[type="range"]').trigger('change');
     });
     
-    $("#test").bind('click', function() {
-    	window.locomotives[9].setSpeed(10);
-    });
-
-//    // setup event handler for control trains button
-//    $('#train-control-button').bind('click', function () {
-//        $("#train-control").toggleClass('active');
-//        $("#train-control-button").toggleClass('active');
+//    $("#test").bind('click', function() {
+//    	window.locomotives[9].setSpeed(10);
 //    });
-//
-//    $("#test-range").bind('mousemove', function () {
-//        window.locomotives[0].setOnSegment(window.segments[segment_index], $(this).val());
-//    });
-//
-//    $("#test-number").bind('change', function () {
-//        log($(this).val());
-//        // set previous segment enabled
-//        window.segments[segment_index].setEnabled();
-//        
-//        segment_index = $(this).val();
-//
-//        window.segments[segment_index].setDisabled();
-//        window.locomotives[0].setOnSegment(window.segments[segment_index], 0);
-//    });
-//    
-//    $("#test-number").trigger('change');
-
-    //pullInformationFromNetwork();
+    $("#test").remove();
+    
+    // sending all state request one time
+    var allStateWS = new WSConnection("allstate", "");
+    allStateWS.request.onOpen = function(response) {
+		console.log("Connection opened: " + response.request.uuid);
+    	
+		// send message immediately
+		this.wsconnection.publish({});
+    };
+    allStateWS.connect();
+    
 });

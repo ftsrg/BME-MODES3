@@ -42,33 +42,28 @@ SegmentController.prototype.pushSegmentState = function(segmentState) {
 	this.stateController.pushSegmentState(this.controlKey, segmentState == "ENABLED"? 1 : 0);
 };
 
-SegmentController.prototype.setOccupied = function () {
-	this.isOccupied = true;
-	
+SegmentController.prototype.setOccupancyState = function (segmentOccupancy, senseID) {
+	this.isOccupied = segmentOccupancy == "OCCUPIED";
+
 	// if segment is occupied, we need to create an svg representation for the train
-	this.svgElemGroup = $('<g />').attr('id', this.config.id+"_occupancy");
-	 // adding position circle
-	this.svgElemPosition = $('<circle />').attr({
-		id: 'position',
-	    style: window.settings.locomotiveCircleStyle,
-	    cx: 0,
-	    cy: 0,
-	    r: 100.91698
-	});
-	this.svgElemGroup.append(this.svgElemPosition);
+	if( this.isOccupied ) {
+		this.svgElemGroup = $('<g />').attr('id', this.config.id+"_occupancy");
+		 // adding position circle
+		this.svgElemPosition = $('<circle />').attr({
+			id: 'position',
+		    style: window.settings.locomotiveCircleStyle,
+		    cx: 0,
+		    cy: 0,
+		    r: 100.91698
+		});
+		this.svgElemGroup.append(this.svgElemPosition);
 
-    // adding svgElement to it parent
-    $('#layer4').append(this.svgElemGroup);
+	    // adding svgElement to it parent
+	    $('#layer4').append(this.svgElemGroup);
+	} else {
+		$(this.svgElemGroup).remove();
+	}
     
-	// calling svg update
-    updateDOM();
-};
-
-SegmentController.prototype.setFree = function () {
-	this.isOccupied = false;
-	
-	$(this.svgElemGroup).remove();
-
 	// calling svg update
     updateDOM();
 };
