@@ -18,6 +18,7 @@ function TurnoutController(turnoutConfig, stateController, controlKey) {
     this.config = turnoutConfig;
     this.stateController = stateController;
     this.controlKey = controlKey;
+    this.isOccupied = false;
     this.svgElemDiv = $('#layout').find("#" + this.config.id + "-div");
     this.svgElemStr = $('#layout').find("#" + this.config.id + "-str");
     this.svgElemDivControl = $('#layout').find("#" + this.config.id + "-div-control");
@@ -65,6 +66,33 @@ TurnoutController.prototype.setTurnoutState = function(turnoutState) {
 	
 }
 
+TurnoutController.prototype.setOccupancyState = function(segmentOccupancy, senseID) {
+	this.isOccupied = segmentOccupancy == "OCCUPIED";
+	this.senseID = senseID;
+	
+	// if turnout is occupied, we need to create an svg representation for the train
+	if( this.isOccupied ) {
+		this.svgElemGroup = $('<g />').attr('id', this.config.id+"_occupancy");
+		 // adding position circle
+		this.svgElemPosition = $('<circle />').attr({
+			id: 'position',
+		    style: window.settings.locomotiveCircleStyle,
+		    cx: 0,
+		    cy: 0,
+		    r: 100.91698
+		});
+		this.svgElemGroup.append(this.svgElemPosition);
+
+	    // adding svgElement to it parent
+	    $('#layer4').append(this.svgElemGroup);
+	} else {
+		$(this.svgElemGroup).remove();
+	}
+    
+	// calling svg update
+    updateDOM();
+};
+
 TurnoutController.prototype.isInStraightPosition = function () {
     return this.position === "STRAIGHT";
 };
@@ -83,6 +111,32 @@ TurnoutController.prototype.DOMUpdatedCallback = function() {
     this.svgElemStr = $('#layout').find("#" + this.config.id + "-str");
     this.svgElemDivControl = $('#layout').find("#" + this.config.id + "-div-control");
     this.svgElemStrControl = $('#layout').find("#" + this.config.id + "-str-control");
+    
+    // if turnout is occupied, then we need to sign it with a circle
+    if( this.isOccupied ) {
+    	this.svgElemGroup = $('#layout').find("#"+this.config.id+"_occupancy");
+    	this.svgElemPosition = this.svgElemGroup.find('circle');
+    	
+    	// get the ID of the segment
+    	var branch = this.isInStraightPosition() ? "str" : "div";
+    	
+    	// if we dealing with t3, the identification a little bit more complex...
+    	if( this.config.id == "t03" ) {
+    		var part = this.senseID == 25 ? "t03a-str-3" : "t03b-str-0";
+    		branch = this.isInStraightPosition()? part : "t03-div";
+    	} else {
+    		branch = this.config.id+"-"+branch;
+    	}
+        // and set the group on the segment
+        var position = getCoordinatesOfSegment(branch, 0.5);
+        
+        console.log(branch, position);
+        var x = position[0] - this.svgElemPosition.attr('cx');
+        var y = position[1] - this.svgElemPosition.attr('cy');
+        
+        // translate group to this point
+        this.svgElemGroup.attr('transform', 'translate(' + x + ',' + y + ')');
+    }
     
     // add event handlers for controls 
     this.svgElemDivControl.bind('click', {_this: this}, function (event) {

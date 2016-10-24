@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.dashboard.command;
+package hu.bme.mit.inf.modes3.components.dashboard.injectable;
 
 import java.lang.reflect.Type;
 
