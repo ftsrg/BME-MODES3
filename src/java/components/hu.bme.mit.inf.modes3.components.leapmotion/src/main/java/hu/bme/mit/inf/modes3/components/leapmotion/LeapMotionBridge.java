@@ -12,11 +12,11 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import hu.bme.mit.inf.modes3.components.leapmotion.processor.IGestureProcessor;
 import hu.bme.mit.inf.modes3.components.leapmotion.processor.impl.TrainSpeedHandler;
-import hu.bme.mit.inf.modes3.components.leapmotion.proto.ComplexGestures.ComplexGesture;
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
+import hu.bme.mit.inf.modes3.messaging.mms.messages.ComplexGestures.ComplexGesture;
 
 public class LeapMotionBridge implements Runnable {
 

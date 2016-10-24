@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import hu.bme.mit.inf.modes3.components.leapmotion.proto.ComplexGestures.ComplexGesture;
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection;
+import hu.bme.mit.inf.modes3.messaging.mms.messages.ComplexGestures.ComplexGesture;
 
 public class TrainSpeedHandler extends GestureBasedCommander {
 
@@ -46,6 +46,9 @@ public class TrainSpeedHandler extends GestureBasedCommander {
 			break;
 		case TYPE_SLOW_DOWN:
 			newSpeed = updateTrainSpeed(gesture.getId(), false);
+			break;
+		case TYPE_STOP:
+			newSpeed = 0;
 			break;
 		default:
 			return;
