@@ -17,21 +17,30 @@ class UARTReader implements IUARTReader, Runnable {
 
 	protected val Serial serial
 
-	protected val Thread bytesProcessor
+	protected val Thread processorThread
 
 	protected val received = new LinkedBlockingQueue<byte[]>
 	protected val occupancyBytes = new LinkedBlockingQueue<byte[]>
+	
+	private volatile boolean isReadingThreadRunning = false;
+	
+	val RawOccupancyDataProcesssor processor;
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger(this.class.name)
 		serial = SerialFactory::createInstance
-		bytesProcessor = new Thread(new BytesProcesssor(received, occupancyBytes, factory))
-		bytesProcessor.start
+		isReadingThreadRunning = true;
+		processor = new RawOccupancyDataProcesssor(received, occupancyBytes, factory);
+		processor.isProcessorRunning = true;
+		processorThread = new Thread()
+		processorThread.start
 	}
 
 	def close() {
 		try {
-			bytesProcessor.interrupt
+			processor.isProcessorRunning = false;
+			isReadingThreadRunning = false;
+			processorThread.join()
 			serial.close
 			logger.info("serial port closed")
 		} catch(IllegalStateException ex) {
@@ -46,7 +55,7 @@ class UARTReader implements IUARTReader, Runnable {
 			serial.open(SerialConfigFactory::createDefaultConfig)
 			logger.info("serial port opened")
 
-			while(!Thread.interrupted) {
+			while(isReadingThreadRunning) {
 				try {
 					val readBytes = serial.read(1)
 					logger.debug("readBytes " + Arrays.toString(readBytes))
@@ -66,7 +75,7 @@ class UARTReader implements IUARTReader, Runnable {
 		occupancyBytes.take
 	}
 
-	static class BytesProcesssor implements Runnable {
+	static class RawOccupancyDataProcesssor implements Runnable {
 
 		protected val Logger logger
 
@@ -74,6 +83,9 @@ class UARTReader implements IUARTReader, Runnable {
 
 		protected val LinkedBlockingQueue<byte[]> inputQueue
 		protected val LinkedBlockingQueue<byte[]> outputQueue
+		
+		@Accessors(PUBLIC_SETTER, PROTECTED_GETTER)
+		private volatile boolean isProcessorRunning = false;
 
 		new(LinkedBlockingQueue<byte[]> received, LinkedBlockingQueue<byte[]> occupancyBytes, ILoggerFactory factory) {
 			this.inputQueue = received
@@ -85,7 +97,7 @@ class UARTReader implements IUARTReader, Runnable {
 			var status = UARTProcessStatus.BEFORE_HEADER_END
 			var numberOfTimes0xFFDetected = 0
 
-			while(!Thread.interrupted) {
+			while(isProcessorRunning) {
 				val recvd = inputQueue.take.get(0)
 				switch (status) {
 					case BEFORE_HEADER_END: {
