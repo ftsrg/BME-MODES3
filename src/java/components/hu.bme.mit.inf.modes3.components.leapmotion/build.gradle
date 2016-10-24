@@ -2,14 +2,6 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-sourceSets {
-    main {
-        java {
-            srcDirs = ['src/main/java', 'src/main/java-gen']
-        }
-    }
-}
-
 // In this section you declare the dependencies for your production and test code
 dependencies {
 	
