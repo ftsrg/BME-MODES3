@@ -5,14 +5,11 @@
  */
 package hu.bme.mit.inf.modes3.components.gpiomanager;
 
-import com.google.gson.Gson;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.print.attribute.standard.MediaSize.ISO;
+import com.google.gson.Gson;
 
 /**
  *
