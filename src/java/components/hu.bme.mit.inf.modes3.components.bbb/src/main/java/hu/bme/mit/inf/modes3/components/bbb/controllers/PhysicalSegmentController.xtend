@@ -32,6 +32,9 @@ class PhysicalSegmentController {
 		try {
 			appControl = GpioManager.getGpio(pins.get(0), Gpio.Direction.OUT);
 			pruControl = GpioManager.getGpio(pins.get(1), Gpio.Direction.OUT);
+			
+			appControl.level = Gpio.Level.LOW;
+			pruControl.level = Gpio.Level.LOW;
 
 		}catch(GpioNotConfiguratedException ex) {
 			// TODO this exception should be handled correctly!

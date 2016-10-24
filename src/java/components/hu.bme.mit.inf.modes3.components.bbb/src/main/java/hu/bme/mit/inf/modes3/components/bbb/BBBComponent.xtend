@@ -16,7 +16,7 @@ import java.util.HashMap
 import java.util.List
 import org.slf4j.ILoggerFactory
 
-class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener, IAllStatusUpdateListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
+class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
 
 	Configuration config
 	val int id
@@ -46,7 +46,13 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 			try {
 				var segmentId = Integer.parseInt(section);
 				var expander = config.getSectionExpander(Integer.parseInt(section));
-				segmentControllers.put(segmentId, new PhysicalSegmentController(pinout, expander, factory));
+				var controller = new PhysicalSegmentController(pinout, expander, factory);
+				segmentControllers.put(segmentId, controller);
+
+				// because we do know, that all pin that we will use will be low at this time,
+				// we could send an message over network about the segment's status (disabled)
+				locator.trackElementStateSender.sendSegmentState(segmentId, controller.segmentState);
+				
 			} catch (NumberFormatException exp) {
 				// TODO if section is not a number, it is a problem!
 			}
@@ -64,7 +70,6 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 		// adding component as segmentCommandListener
 		locator.trackElementCommandCallback.segmentCommandListener = this;
 		locator.trackElementCommandCallback.turnoutCommandListener = this;
-//		locator.sendAllStatusCallback.statusUpdateListener = this;
 	}
 
 	override run() {
@@ -106,13 +111,6 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 		}
 
 	// we do not need to send state back to the network, the pin change will trigger a state message
-	}
-
-	override onAllStatusUpdate() {
-		// sending state of every segment located in the expanders
-//		for (Entry<Integer, PhysicalSegmentController> controllerEntry : segmentControllers.entrySet) {
-//			locator.trackElementStateSender.sendSegmentState(controllerEntry.key, controllerEntry.value.segmentState);
-//		}
 	}
 
 	override onStateChanged(TurnoutState newState) {
