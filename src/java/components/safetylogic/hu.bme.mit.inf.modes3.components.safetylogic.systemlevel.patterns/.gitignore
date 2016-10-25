@@ -4,3 +4,4 @@
 !build.properties
 !.project
 !.settings
+!/vql-gen/**
