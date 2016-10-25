@@ -26,7 +26,6 @@ private pattern trainsAreTooClose(Offender : Train, Victim : Train){
 	find currentlyConnected(VictimPosition, OffenderPosition);
 }
 
-
 //------------------------------------Train Collision Stuff------------------------------------// 
 private pattern trainHitsAnotherTrainNextAfterNext(Offender : Train, Victim : Train) {
 	Train.currentlyOn(Offender, CurrentPosition);
