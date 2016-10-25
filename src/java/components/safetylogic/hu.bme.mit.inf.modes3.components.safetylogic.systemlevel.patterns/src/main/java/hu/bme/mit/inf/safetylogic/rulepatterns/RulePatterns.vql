@@ -1,0 +1,8 @@
+package hu.bme.mit.inf.safetylogic.rulepatterns
+
+import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
+
+pattern railRoadModel(model : RailRoadModel) {
+	RailRoadModel(model);
+}
+

@@ -1,0 +1,46 @@
+// Apply the java plugin to add support for Java
+apply plugin: 'java'
+//apply plugin: "com.diffplug.gradle.p2.asmaven"
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    jcenter()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'src-gen']
+        }
+    }
+}
+
+/*
+p2AsMaven {
+    //destination buildDir
+    group 'viatra-cep', {
+        repo 'https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/'
+        p2.addIU('org.eclipse.viatra.cep.core')
+    }
+}
+*/
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile 'org.eclipse.emf:org.eclipse.emf.common:2.11.0-v20150805-0538'
+	compile 'org.eclipse.emf:org.eclipse.emf.ecore:2.11.1-v20150805-0538'
+	compile 'org.eclipse.viatra:org.eclipse.viatra.transformation.evm:1.4.0'
+	compile 'org.eclipse.viatra:viatra-query-runtime:1.4.0'
+	compile 'org.eclipse.viatra:org.eclipse.viatra.transformation.runtime.emf:1.4.0'
+	compile 'org.eclipse.viatra:org.eclipse.viatra.transformation.runtime.emf.feature:1.4.0'
+	
+ 	//compile 'org.eclipse.viatra-cep:org.eclipse.viatra.cep.core:+'
+ 	
+ 	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
+	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model')
+	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.patterns')
+ 	
+ 	// XXX: workaround because p2AsMaven does not work properly
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

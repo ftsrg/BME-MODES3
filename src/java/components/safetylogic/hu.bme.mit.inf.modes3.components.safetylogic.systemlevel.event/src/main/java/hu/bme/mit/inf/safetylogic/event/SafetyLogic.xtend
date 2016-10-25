@@ -5,17 +5,23 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.SafetyLogicRuleEngine
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.util.HashSet
 import java.util.List
 import java.util.Set
+import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.viatra.addon.querybasedfeatures.runtime.QueryBasedFeatureSettingDelegateFactory
+import org.eclipse.viatra.cep.core.metamodels.automaton.AutomatonPackage
+import org.eclipse.viatra.cep.core.metamodels.derived.DerivedFeatures
+import org.eclipse.viatra.query.runtime.extensibility.SingletonQueryGroupProvider
+import org.eclipse.viatra.query.runtime.registry.QuerySpecificationRegistry
+import org.eclipse.viatra.query.runtime.registry.connector.QueryGroupProviderSourceConnector
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 
@@ -23,7 +29,10 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	@Accessors(PUBLIC_GETTER) protected ModelUtil model // XXX IModelInteractor should be the static type
 	private ILoggerFactory factory
-
+	
+	@Accessors(PUBLIC_GETTER)
+	private SafetyLogicRuleEngine rules
+	
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
 		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
@@ -37,11 +46,21 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
 
+	private static final String CONNECTOR_ID = "org.eclipse.viatra.cep.metamodels.standalone.connector";
+	
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
 		this.factory = factory
 		logger.info('Construction started')
+		
+		EStructuralFeature.Internal.SettingDelegate.Factory.Registry.INSTANCE.put("org.eclipse.viatra.query.querybasedfeature", new QueryBasedFeatureSettingDelegateFactory)
+		AutomatonPackage.eINSTANCE.class
+	    val groupProvider = new SingletonQueryGroupProvider(DerivedFeatures.instance);
+        val sourceConnector = new QueryGroupProviderSourceConnector(CONNECTOR_ID, groupProvider, true);
+        QuerySpecificationRegistry.getInstance().addSource(sourceConnector);
+		
 		model = new ModelUtil(factory)
+		
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
 		locator.sendAllStatusCallback.statusUpdateListener = new IAllStatusUpdateListener() {
@@ -64,6 +83,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 
 		}
+		
 	}
 
 	private def Iterable<Turnout> getTurnouts(Iterable<RailRoadElement> railRoadElements) {
@@ -120,6 +140,8 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 		}
 		initRailRoad()
+		rules = new SafetyLogicRuleEngine(model.resourceSet)
+		rules.start
 	}
 
 	def public void refreshSafetyLogicState() {
