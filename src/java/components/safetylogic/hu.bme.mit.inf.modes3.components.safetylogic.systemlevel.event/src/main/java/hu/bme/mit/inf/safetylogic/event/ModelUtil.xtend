@@ -12,6 +12,7 @@ import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
@@ -22,6 +23,7 @@ import org.slf4j.Logger
 
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
+	@Accessors(PUBLIC_GETTER) val ResourceSet resourceSet;
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
 	val Logger logger
@@ -29,6 +31,7 @@ class ModelUtil implements IModelInteractor {
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
+		resourceSet = new ResourceSetImpl()
 		resource = loadModel
 		model = resource.modelFromResource
 		engine = ViatraQueryEngine.on(new EMFScope(resource))
@@ -77,17 +80,15 @@ class ModelUtil implements IModelInteractor {
 		TrainHitsAnotherTrainMatcher.on(engine).getAllMatches
 	}
 
-	def private static loadSectionResource() {
+	def private loadSectionResource() {
 		// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		RailRoadModelPackage.eINSTANCE.class
 		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel", new XMIResourceFactoryImpl());
-
-		val resourceSet = new ResourceSetImpl();
 		resourceSet.getResource(URI.createURI("instance.railroadmodel"), true);
 	}
 
-	def static loadModel() {
-		val resource = ModelUtil.loadSectionResource
+	def loadModel() {
+		val resource =loadSectionResource
 		ModelUtil.createAllPaths(resource)
 		return resource;
 

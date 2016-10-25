@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rules
+Bundle-SymbolicName: hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules
+Bundle-Version: 1.0.0.qualifier
+Export-Package: hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules,
+ hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult,
+ hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.jobs,
+ hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.mapping,
+ hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.atomic.queryresult,
+ hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules
+Require-Bundle: org.eclipse.viatra.cep.core;bundle-version="0.14.0"

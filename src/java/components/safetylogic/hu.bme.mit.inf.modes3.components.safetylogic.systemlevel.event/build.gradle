@@ -21,4 +21,25 @@ dependencies {
 	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.patterns')
+	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules')
 }
+
+/*
+remotes {
+	safetylogic {
+		role('turnout')
+		host = 'safetylogic.modes3.intra'
+		user = 'pi'
+		identity = file('modes3_key')
+	}
+}
+
+task deploy(dependsOn: 'distTar') << {
+	ssh.run {
+		session(remotes.role('turnout')) {
+			put from: 'components/safetylogic/hu.bme.mit.inf.modes3.components.safetylogic/build/distributions/hu.bme.mit.inf.modes3.components.bbb.tar', into: '/modes3'
+			execute 'cd /modes3 && tar -xf hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.tar'
+		}
+	}
+}
+*/

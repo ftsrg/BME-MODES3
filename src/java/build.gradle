@@ -4,6 +4,7 @@ plugins {
 
     id "org.sonarqube" version "2.1-rc3"
     id 'org.hidetake.ssh' version '2.7.0'
+    id 'com.diffplug.gradle.p2.asmaven' version '3.0.6'
 }
 
 ssh.settings { knownHosts = allowAnyHosts}
@@ -13,7 +14,9 @@ sonarqube {
 }
 
 subprojects {
+	
     repositories {
+        jcenter()
         mavenCentral()
         maven { url "https://repo.eclipse.org/content/groups/viatra2" }
         maven { url "https://plugins.gradle.org/m2/" }
