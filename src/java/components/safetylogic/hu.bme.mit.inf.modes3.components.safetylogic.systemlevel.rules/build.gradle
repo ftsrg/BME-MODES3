@@ -19,7 +19,7 @@ sourceSets {
 p2AsMaven {
     //destination buildDir
     group 'viatra-cep', {
-        repo 'https://hudson.eclipse.org/viatra/job/viatra-master/lastSuccessfulBuild/artifact/releng/org.eclipse.viatra.update/target/repository/'
+        repo 'http://download.eclipse.org/viatra/updates/integration'
         p2.addIU('org.eclipse.viatra.cep.core')
     }
 }
@@ -41,6 +41,6 @@ dependencies {
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.patterns')
  	
- 	// XXX: workaround because p2AsMaven does not work properly
+ 	// XXX: workaround: (1) p2AsMaven does not work properly (2) Viatra-CEP & Viatra QueryBasedFeatures aren't available in m2 repository
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

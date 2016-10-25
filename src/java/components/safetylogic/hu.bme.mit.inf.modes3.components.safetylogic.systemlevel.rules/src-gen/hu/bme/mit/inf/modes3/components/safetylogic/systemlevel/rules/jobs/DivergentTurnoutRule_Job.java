@@ -5,17 +5,16 @@ import org.eclipse.viatra.cep.core.api.rules.CepJob;
 import org.eclipse.viatra.transformation.evm.api.Activation;
 import org.eclipse.viatra.transformation.evm.api.Context;
 import org.eclipse.viatra.transformation.evm.api.event.ActivationState;
-import org.eclipse.xtext.xbase.lib.InputOutput;
 
 @SuppressWarnings("all")
-public class Test_event_rule_Job extends CepJob<IObservableComplexEventPattern> {
-  public Test_event_rule_Job(final ActivationState activationState) {
+public class DivergentTurnoutRule_Job extends CepJob<IObservableComplexEventPattern> {
+  public DivergentTurnoutRule_Job(final ActivationState activationState) {
     super(activationState);
   }
   
   @Override
   public void execute(final Activation<? extends IObservableComplexEventPattern> ruleInstance, final Context context) {
-    InputOutput.<String>println("Test rule fired");
+    System.out.println("Turnout switched to divergent!");
   }
   
   @Override

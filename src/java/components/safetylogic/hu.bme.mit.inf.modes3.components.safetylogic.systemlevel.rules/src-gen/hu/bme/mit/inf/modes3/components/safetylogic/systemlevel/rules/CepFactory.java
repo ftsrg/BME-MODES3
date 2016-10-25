@@ -1,9 +1,9 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules;
 
 import com.google.common.collect.Lists;
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.RailRoadTest_Event;
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.atomic.queryresult.RailRoadTest_Pattern;
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules.Test_event_rule;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.DivergentTurnoutEvent_Event;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.atomic.queryresult.DivergentTurnoutEvent_Pattern;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules.DivergentTurnoutRule;
 import java.util.List;
 import org.eclipse.viatra.cep.core.api.rules.ICepRule;
 import org.eclipse.viatra.cep.core.metamodels.events.EventSource;
@@ -20,31 +20,31 @@ public class CepFactory {
   }
   
   /**
-   * Factory method for event class {@link RailRoadTest_Event}.
+   * Factory method for event class {@link DivergentTurnoutEvent_Event}.
    */
-  public RailRoadTest_Event createRailRoadTest_Event(final EventSource eventSource) {
-    return new RailRoadTest_Event(eventSource);
+  public DivergentTurnoutEvent_Event createDivergentTurnoutEvent_Event(final EventSource eventSource) {
+    return new DivergentTurnoutEvent_Event(eventSource);
   }
   
   /**
-   * Factory method for event class {@link RailRoadTest_Event}.
+   * Factory method for event class {@link DivergentTurnoutEvent_Event}.
    */
-  public RailRoadTest_Event createRailRoadTest_Event() {
-    return new RailRoadTest_Event(null);
+  public DivergentTurnoutEvent_Event createDivergentTurnoutEvent_Event() {
+    return new DivergentTurnoutEvent_Event(null);
   }
   
   /**
-   * Factory method for atomic query result event pattern {@link RailRoadTest_Pattern}.
+   * Factory method for atomic query result event pattern {@link DivergentTurnoutEvent_Pattern}.
    */
-  public Class<? extends ICepRule> rule_RailRoadTest_Pattern() {
-    return Test_event_rule.class;
+  public Class<? extends ICepRule> rule_DivergentTurnoutEvent_Pattern() {
+    return DivergentTurnoutRule.class;
   }
   
   /**
-   * Factory method for rule {@link Test_event_rule}.
+   * Factory method for rule {@link DivergentTurnoutRule}.
    */
-  public Class<? extends ICepRule> rule_Test_event_rule() {
-    return Test_event_rule.class;
+  public Class<? extends ICepRule> rule_DivergentTurnoutRule() {
+    return DivergentTurnoutRule.class;
   }
   
   /**
@@ -52,7 +52,7 @@ public class CepFactory {
    */
   public List<Class<? extends ICepRule>> allRules() {
     List<Class<? extends ICepRule>> rules = Lists.newArrayList();
-    rules.add(Test_event_rule.class);
+    rules.add(DivergentTurnoutRule.class);
     return rules;
   }
 }

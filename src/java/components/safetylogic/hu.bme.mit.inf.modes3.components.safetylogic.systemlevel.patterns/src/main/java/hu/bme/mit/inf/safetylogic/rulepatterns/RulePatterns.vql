@@ -6,3 +6,7 @@ pattern railRoadModel(model : RailRoadModel) {
 	RailRoadModel(model);
 }
 
+pattern divergentTurnout(t : Turnout) {
+	Turnout.currentlyDivergent(t, d);
+	check(d == false);
+}

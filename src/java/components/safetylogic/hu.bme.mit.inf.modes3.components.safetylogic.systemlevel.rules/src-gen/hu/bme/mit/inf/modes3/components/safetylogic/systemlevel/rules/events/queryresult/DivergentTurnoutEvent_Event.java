@@ -4,8 +4,8 @@ import org.eclipse.viatra.cep.core.api.events.ParameterizableViatraQueryPatternE
 import org.eclipse.viatra.cep.core.metamodels.events.EventSource;
 
 @SuppressWarnings("all")
-public class RailRoadTest_Event extends ParameterizableViatraQueryPatternEventInstance {
-  public RailRoadTest_Event(final EventSource eventSource) {
+public class DivergentTurnoutEvent_Event extends ParameterizableViatraQueryPatternEventInstance {
+  public DivergentTurnoutEvent_Event(final EventSource eventSource) {
     super(eventSource);
     
   }

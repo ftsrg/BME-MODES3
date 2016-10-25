@@ -2,8 +2,8 @@ package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules
 
 import-queries hu.bme.mit.inf.safetylogic.rulepatterns.*
 
-queryEvent railRoadTest() as railRoadModel found
+queryEvent divergentTurnoutEvent() as divergentTurnout found
 
-rule test_event_rule on railRoadTest {
-	println("Test rule fired")
+rule divergentTurnoutRule on divergentTurnoutEvent {
+	System.out.println("Turnout switched to divergent!")
 }
