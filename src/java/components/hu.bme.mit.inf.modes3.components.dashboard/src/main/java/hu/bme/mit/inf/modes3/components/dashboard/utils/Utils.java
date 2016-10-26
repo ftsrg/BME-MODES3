@@ -77,6 +77,11 @@ public class Utils {
 	
 	public static void sendTrainReferenceSpeedChange(MetaBroadcaster metaBroadcaster, int id, int speed, TrainDirectionValue direction) {
 		
+		// if speed is smaller than zero, than we've got a wrong data, halting
+		if( speed < 0 ) {
+			return;
+		}
+		
 		if (trainSpeedBuilder == null) {
 			trainSpeedBuilder = hu.bme.mit.inf.modes3.messaging.mms.messages.TrainCurrentSpeed.newBuilder();
 		}
@@ -85,6 +90,7 @@ public class Utils {
 		try {
 			stateAsJson = JsonFormat.printer().includingDefaultValueFields().print(trainSpeedBuilder.clear()
 					.setTrainID(id).setDirection(direction).setCurrentSpeed(speed).build());
+			System.out.println(trainSpeedBuilder.getCurrentSpeed());
 			metaBroadcaster.broadcastTo("/ws/state/" + TRAIN_SPEED, stateAsJson);
 		} catch (InvalidProtocolBufferException e) {
 			System.err.println("Unable to convert & push turnout state message " + e.getMessage());
