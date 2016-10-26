@@ -27,7 +27,6 @@ class SegmentOccupancyReaderMock extends AbstractRailRoadCommunicationComponent 
 				super.notifyChanged(msg)
 				update()
 			}
-
 		})
 		model.eSetDeliver(true)
 	}
