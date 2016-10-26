@@ -5,8 +5,10 @@ package hu.bme.mit.inf.safetylogic.rulepatterns;
 
 import hu.bme.mit.inf.safetylogic.rulepatterns.DivergentTurnoutMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.RailRoadModelMatcher;
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.DivergentTurnoutQuerySpecification;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.RailRoadModelQuerySpecification;
+import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainOnStationQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPatternGroup;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -21,6 +23,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * <p> From package hu.bme.mit.inf.safetylogic.rulepatterns, the group contains the definition of the following patterns: <ul>
  * <li>railRoadModel</li>
  * <li>divergentTurnout</li>
+ * <li>trainOnStation</li>
  * </ul>
  * 
  * @see IPatternGroup
@@ -47,6 +50,7 @@ public final class RulePatterns extends BaseGeneratedPatternGroup {
   private RulePatterns() throws ViatraQueryException {
     querySpecifications.add(RailRoadModelQuerySpecification.instance());
     querySpecifications.add(DivergentTurnoutQuerySpecification.instance());
+    querySpecifications.add(TrainOnStationQuerySpecification.instance());
   }
   
   public RailRoadModelQuerySpecification getRailRoadModel() throws ViatraQueryException {
@@ -63,5 +67,13 @@ public final class RulePatterns extends BaseGeneratedPatternGroup {
   
   public DivergentTurnoutMatcher getDivergentTurnout(final ViatraQueryEngine engine) throws ViatraQueryException {
     return DivergentTurnoutMatcher.on(engine);
+  }
+  
+  public TrainOnStationQuerySpecification getTrainOnStation() throws ViatraQueryException {
+    return TrainOnStationQuerySpecification.instance();
+  }
+  
+  public TrainOnStationMatcher getTrainOnStation(final ViatraQueryEngine engine) throws ViatraQueryException {
+    return TrainOnStationMatcher.on(engine);
   }
 }

@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.components.leapmotion;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,6 +39,14 @@ public class LeapMotionBridge implements Runnable {
 		locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
 		logger = loggerFactory.getLogger(this.getClass().getName());
 		
+		String leapHost = "";
+		
+		try {
+			leapHost = registry.getParameterStringValue("leaphost");
+		} catch (IOException e) {
+			leapHost = "127.0.0.1";
+		}
+		
 		processors = new HashSet<IGestureProcessor>();
 		
 		registerDefaults();
@@ -46,9 +55,9 @@ public class LeapMotionBridge implements Runnable {
 		sub = context.socket(ZMQ.SUB);
 
 		try {
-			sub.bind(String.format("tcp://%s:%d", "127.0.0.1", 5556));
+			sub.bind(String.format("tcp://%s:%d", leapHost, 5556));
 		} catch (ZMQException ex) {
-			sub.connect(String.format("tcp://%s:%d", "127.0.0.1", 5556));
+			sub.connect(String.format("tcp://%s:%d", leapHost, 5556));
 		}
 		sub.subscribe("gesturetream".getBytes());
 

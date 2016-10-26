@@ -19,12 +19,13 @@ public class Main {
     
 	public static void main(String[] args) {
 		loggerFactory = new SimpleLoggerFactory();
-		 registry = new ArgumentRegistry(loggerFactory);
+		registry = new ArgumentRegistry(loggerFactory);
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The ID of the component", String.class));
         registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String.class));
         registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer.class));
         registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer.class));
         registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The ID of the component", String.class));
+        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("leaphost", "The host ip of the leap motion gesture stream", String.class));
         
         registry.parseArguments(args);
         

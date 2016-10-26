@@ -1,8 +1,12 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.mapping;
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.DivergentTurnoutEvent_Event;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.TrainLeftStation_Event;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.TrainOnStation_Event;
 import hu.bme.mit.inf.safetylogic.rulepatterns.DivergentTurnoutMatch;
 import hu.bme.mit.inf.safetylogic.rulepatterns.DivergentTurnoutMatcher;
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatch;
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.viatra.cep.core.streams.EventStream;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
@@ -36,6 +40,7 @@ public class QueryEngine2ViatraCep {
   
   public EventDrivenTransformationRuleGroup getRules() {
     EventDrivenTransformationRuleGroup ruleGroup = new EventDrivenTransformationRuleGroup(
+    	createtrainOnStation_MappingRule(), 
     	createdivergentTurnout_MappingRule()
     );
     return ruleGroup;
@@ -47,6 +52,39 @@ public class QueryEngine2ViatraCep {
     } catch (ViatraQueryException e) {
     	e.printStackTrace();
     }
+  }
+  
+  public EventDrivenTransformationRule<TrainOnStationMatch, TrainOnStationMatcher> createtrainOnStation_MappingRule() {
+    try{
+      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<TrainOnStationMatch, TrainOnStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
+      builder.addLifeCycle(Lifecycles.getDefault(false, true));
+      builder.precondition(TrainOnStationMatcher.querySpecification());
+      
+      IMatchProcessor<TrainOnStationMatch> actionOnAppear_0 = new IMatchProcessor<TrainOnStationMatch>() {
+        public void process(final TrainOnStationMatch matchedPattern) {
+          TrainOnStation_Event event = new TrainOnStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
+      
+      IMatchProcessor<TrainOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<TrainOnStationMatch>() {
+        public void process(final TrainOnStationMatch matchedPattern) {
+          TrainLeftStation_Event event = new TrainLeftStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
+      
+      return builder.build();
+    } catch (ViatraQueryException e) {
+      e.printStackTrace();
+    } catch (InconsistentEventSemanticsException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
   
   public EventDrivenTransformationRule<DivergentTurnoutMatch, DivergentTurnoutMatcher> createdivergentTurnout_MappingRule() {
