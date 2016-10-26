@@ -5,7 +5,6 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.TurnoutImpl
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.SafetyLogicRuleEngine
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
@@ -25,21 +24,21 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	private ILoggerFactory factory
 
 	@Accessors(PUBLIC_GETTER)
-	private SafetyLogicRuleEngine rules
+	private SafetyLogicRuleEngine rules 
 
 	static val turnoutToSenseIDMap = #{1 -> #{14}, 2 -> #{28}, 3 -> #{25, 32}, 4 -> #{3}, 5 -> #{9}, 6 -> #{21}}
 
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
-		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
+//		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
 	var Set<Train> stoppedTrains = new HashSet<Train>
 
 	val List<ITrainStopStrategy> trainStopStrategies = #[
-		new XPressInvertDirectionStrategy(locator.trackElementCommander, locator.trainReferenceSpeedState, logger)
+//		new XPressInvertDirectionStrategy(locator.trackElementCommander, locator.trainReferenceSpeedState, logger)
 	]
 
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
-		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
+//		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
@@ -92,35 +91,39 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	private def void initRailRoad() {
-		model.model.sections.getTurnouts.forEach[currentlyDivergent = true]
-		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
-//		(model.model.sections.findFirst[id == 9] as Turnout).currentlyDivergent = true
-		val sleepTimes = 3000
-		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
-		val turnouts = model.model.sections.getTurnouts
-		turnouts.forEach [
-			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
-		]
-		logger.info('All turnout set straight')
-		Thread.sleep(sleepTimes)
-		turnouts.forEach [
-			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
-		]
-		logger.info('All turnout set divergent')
-		Thread.sleep(sleepTimes)
-
-		val segments = model.model.sections.getSegments
-		segments.forEach [
-			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
-		]
-		logger.info('Disabling all sections')
-		Thread.sleep(sleepTimes)
-		segments.forEach [
-			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
-		]
-		logger.info('Enabling all sections')
-		Thread.sleep(sleepTimes)
-		logger.info('Railroad initialization finished')
+//		model.model.sections.getTurnouts.forEach[currentlyDivergent = true]
+//		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
+////		(model.model.sections.findFirst[id == 9] as Turnout).currentlyDivergent = true
+//		val sleepTimes = 3000
+//		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
+//		val turnouts = model.model.sections.getTurnouts
+//		
+//		
+//		Thread.sleep(sleepTimes)
+//		turnouts.forEach [
+//			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
+//		]
+//		logger.info('All turnout set divergent')
+//		Thread.sleep(sleepTimes)
+//
+//		turnouts.forEach [
+//			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
+//		]
+//		logger.info('All turnout set straight')
+//
+//
+//		val segments = model.model.sections.getSegments
+//		segments.forEach [
+//			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
+//		] 
+//		logger.info('Disabling all sections')
+//		Thread.sleep(sleepTimes)
+//		segments.forEach [
+//			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
+//		]
+//		logger.info('Enabling all sections')
+//		Thread.sleep(sleepTimes)
+//		logger.info('Railroad initialization finished')
 	}
 
 	override void run() {
@@ -130,9 +133,11 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
+				logger.info('''TurnoutStateChange arrived, id = «id» oldState = «oldValue.name» newState = «newValue.name»''')
 				val senseID = turnoutToSenseIDMap.get(id)
 				model.model.sections.filter[it instanceof Turnout].filter[it.id == senseID].map[it as Turnout].forEach [
 					currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+					logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
 				]
 				refreshSafetyLogicState
 			}
@@ -140,7 +145,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 		rules.start
 
-		initRailRoad()
+//		initRailRoad()
 	}
 
 	def public void refreshSafetyLogicState() {
@@ -150,13 +155,13 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 		val offenders = new HashSet<Train>
 		model.cuts.forEach [ cut |
-			logger.info('''CUT: victim on «(cut.victim).id» cuts «(cut.offender).currentlyOn.id»''')
+			logger.info('''CUT: Train on «cut.offender.currentlyOn.id» will cut «cut.victim.id»''')
 			model.getSegment(cut.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which cut sections
 			offenders.add(cut.offender)
 		]
 
 		model.hits.forEach [ hit |
-			logger.info('''HIT: offender on «(hit.offender).currentlyOn.id», victim on «(hit.victim).currentlyOn.id»''')
+			logger.info('''HIT: offender on «hit.offender.currentlyOn.id», hits victim on «hit.victim.currentlyOn.id»''')
 			model.getSegment(hit.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which hit another
 			offenders.add(hit.offender)
 		]
