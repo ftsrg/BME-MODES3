@@ -1,9 +1,11 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules
-
 import-queries hu.bme.mit.inf.safetylogic.rulepatterns.*
+
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.message.*
 
 queryEvent divergentTurnoutEvent() as divergentTurnout found
 
 rule divergentTurnoutRule on divergentTurnoutEvent {
 	System.out.println("Turnout switched to divergent!")
+	EasterEggMessageSender.INSTANCE.sendMessage("Turnout switched to divergent!")
 }
