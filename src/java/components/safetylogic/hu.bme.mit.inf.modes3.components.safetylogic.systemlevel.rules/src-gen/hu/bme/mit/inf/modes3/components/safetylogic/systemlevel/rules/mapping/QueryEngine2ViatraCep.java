@@ -1,7 +1,14 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.mapping;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.MultipleTrainsOnStation_Event;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.NoMultipleTrainsOnStation_Event;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.NoTrainOnStation_Event;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.TrainLeftStation_Event;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.TrainOnStation_Event;
+import hu.bme.mit.inf.safetylogic.rulepatterns.MultipleTrainsOnStationMatch;
+import hu.bme.mit.inf.safetylogic.rulepatterns.MultipleTrainsOnStationMatcher;
+import hu.bme.mit.inf.safetylogic.rulepatterns.NoTrainOnStationMatch;
+import hu.bme.mit.inf.safetylogic.rulepatterns.NoTrainOnStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatch;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -37,7 +44,9 @@ public class QueryEngine2ViatraCep {
   
   public EventDrivenTransformationRuleGroup getRules() {
     EventDrivenTransformationRuleGroup ruleGroup = new EventDrivenTransformationRuleGroup(
-    	createtrainOnStation_MappingRule()
+    	createtrainOnStation_MappingRule(), 
+    	createnoTrainOnStation_MappingRule(), 
+    	createmultipleTrainsOnStation_MappingRule()
     );
     return ruleGroup;
   }
@@ -70,6 +79,69 @@ public class QueryEngine2ViatraCep {
           TrainLeftStation_Event event = new TrainLeftStation_Event(null);
           event.setQueryMatch(matchedPattern);
           eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
+      
+      return builder.build();
+    } catch (ViatraQueryException e) {
+      e.printStackTrace();
+    } catch (InconsistentEventSemanticsException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  
+  public EventDrivenTransformationRule<NoTrainOnStationMatch, NoTrainOnStationMatcher> createnoTrainOnStation_MappingRule() {
+    try{
+      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<NoTrainOnStationMatch, NoTrainOnStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
+      builder.addLifeCycle(Lifecycles.getDefault(false, true));
+      builder.precondition(NoTrainOnStationMatcher.querySpecification());
+      
+      IMatchProcessor<NoTrainOnStationMatch> actionOnAppear_0 = new IMatchProcessor<NoTrainOnStationMatch>() {
+        public void process(final NoTrainOnStationMatch matchedPattern) {
+          NoTrainOnStation_Event event = new NoTrainOnStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
+      
+      IMatchProcessor<NoTrainOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<NoTrainOnStationMatch>() {
+        public void process(final NoTrainOnStationMatch matchedPattern) {
+          NoMultipleTrainsOnStation_Event event = new NoMultipleTrainsOnStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
+      
+      return builder.build();
+    } catch (ViatraQueryException e) {
+      e.printStackTrace();
+    } catch (InconsistentEventSemanticsException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  
+  public EventDrivenTransformationRule<MultipleTrainsOnStationMatch, MultipleTrainsOnStationMatcher> createmultipleTrainsOnStation_MappingRule() {
+    try{
+      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<MultipleTrainsOnStationMatch, MultipleTrainsOnStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
+      builder.addLifeCycle(Lifecycles.getDefault(false, true));
+      builder.precondition(MultipleTrainsOnStationMatcher.querySpecification());
+      
+      IMatchProcessor<MultipleTrainsOnStationMatch> actionOnAppear_0 = new IMatchProcessor<MultipleTrainsOnStationMatch>() {
+        public void process(final MultipleTrainsOnStationMatch matchedPattern) {
+          MultipleTrainsOnStation_Event event = new MultipleTrainsOnStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
+      
+      IMatchProcessor<MultipleTrainsOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<MultipleTrainsOnStationMatch>() {
+        public void process(final MultipleTrainsOnStationMatch matchedPattern) {
         }
       };
       builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);

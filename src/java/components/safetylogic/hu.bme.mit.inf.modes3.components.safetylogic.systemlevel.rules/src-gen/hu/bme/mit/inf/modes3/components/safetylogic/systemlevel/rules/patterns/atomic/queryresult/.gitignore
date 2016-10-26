@@ -1,4 +1,5 @@
-/.RailRoadTest_Pattern.java._trace
-/.DivergentTurnoutEvent_Pattern.java._trace
-/.TrainOnStation_Pattern.java._trace
 /.TrainLeftStation_Pattern.java._trace
+/.TrainOnStation_Pattern.java._trace
+/.MultipleTrainsOnStation_Pattern.java._trace
+/.NoMultipleTrainsOnStation_Pattern.java._trace
+/.NoTrainOnStation_Pattern.java._trace

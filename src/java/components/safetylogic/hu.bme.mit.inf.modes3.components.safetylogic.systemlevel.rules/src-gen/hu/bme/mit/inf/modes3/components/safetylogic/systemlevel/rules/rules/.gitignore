@@ -1,4 +1,4 @@
-/.Test_event_rule.java._trace
-/.DivergentTurnoutRule.java._trace
-/.TestRule.java._trace
-/.TrainPassedThroughStation.java._trace
+/.TrainPassedThroughStationRule.java._trace
+/.TransferRule.java._trace
+/.ThreeTimesMetRule.java._trace
+/.MultipleTrainsOnStationRule.java._trace
