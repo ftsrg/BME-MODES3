@@ -7,7 +7,7 @@ import org.slf4j.ILoggerFactory
 
 abstract class AbstractRailRoadCommunicationComponent extends AbstractCommunicationComponent {
 	
-	@Accessors(PROTECTED_GETTER) val TrackCommunicationServiceLocator locator
+	@Accessors(PROTECTED_GETTER) val protected TrackCommunicationServiceLocator locator
 	
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
