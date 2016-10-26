@@ -56,7 +56,7 @@ public class LeapMotionBridge implements Runnable {
 	}
 	
 	protected void registerDefaults() {
-		registerProcessor(new TrainSpeedHandler(locator.getTrackElementCommander()));
+		registerProcessor(new TrainSpeedHandler(locator));
 	}
 	
 	public void registerProcessor(IGestureProcessor processor) {
