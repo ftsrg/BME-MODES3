@@ -15,18 +15,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateList
 import java.util.HashSet
 import java.util.List
 import java.util.Set
-import org.apache.log4j.Level
-import org.apache.log4j.Logger
-import org.eclipse.emf.ecore.EStructuralFeature
-import org.eclipse.viatra.addon.querybasedfeatures.runtime.QueryBasedFeatureSettingDelegateFactory
-import org.eclipse.viatra.cep.core.logging.LoggerUtils
-import org.eclipse.viatra.cep.core.metamodels.automaton.AutomatonPackage
-import org.eclipse.viatra.cep.core.metamodels.derived.DerivedFeatures
-import org.eclipse.viatra.query.runtime.base.comprehension.WellbehavingDerivedFeatureRegistry
-import org.eclipse.viatra.query.runtime.extensibility.SingletonQueryGroupProvider
-import org.eclipse.viatra.query.runtime.registry.QuerySpecificationRegistry
-import org.eclipse.viatra.query.runtime.registry.connector.QueryGroupProviderSourceConnector
-import org.eclipse.viatra.transformation.evm.api.Agenda
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 
@@ -50,25 +38,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
 		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
-
-	private static final String CONNECTOR_ID = "org.eclipse.viatra.cep.metamodels.standalone.connector";
 	
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
 		this.factory = factory
 		logger.info('Construction started')
-		
-		EStructuralFeature.Internal.SettingDelegate.Factory.Registry.INSTANCE.put("org.eclipse.viatra.query.querybasedfeature", new QueryBasedFeatureSettingDelegateFactory)
-		AutomatonPackage.eINSTANCE.class
-		
-		WellbehavingDerivedFeatureRegistry.registerWellbehavingDerivedPackage(AutomatonPackage.eINSTANCE)
-		
-	    val groupProvider = new SingletonQueryGroupProvider(DerivedFeatures.instance);
-        val sourceConnector = new QueryGroupProviderSourceConnector(CONNECTOR_ID, groupProvider, true);
-        QuerySpecificationRegistry.getInstance().addSource(sourceConnector);
-		
-		Logger.getLogger(Agenda.package.name).level = Level.DEBUG
-		LoggerUtils.instance.level = Level.DEBUG
+		SafetyLogicRuleEngine.standaloneSetup
 		
 		model = new ModelUtil(factory)
 		
