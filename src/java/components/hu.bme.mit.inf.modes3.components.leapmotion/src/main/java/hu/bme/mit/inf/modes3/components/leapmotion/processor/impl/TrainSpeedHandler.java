@@ -32,7 +32,7 @@ public class TrainSpeedHandler extends GestureBasedCommander implements ITrainRe
 		} else {
 			int speed = accelerate ? trainSpeeds.get().get(id).intValue() + TRAIN_SPEED_INCREMENT
 					: trainSpeeds.get().get(id).intValue() - TRAIN_SPEED_INCREMENT;
-			speed = speed < MAX_TRAIN_SPEED*(-1) ? MAX_TRAIN_SPEED*(-1) : speed;
+			speed = speed < MAX_TRAIN_SPEED*(-1) ? MAX_TRAIN_SPEED : speed;
 			speed = speed >= MAX_TRAIN_SPEED ? MAX_TRAIN_SPEED : speed;
 			trainSpeeds.get().put(id, speed);
 			System.out.println(String.format("Train with %d id reference speed is %d", id, speed));
@@ -58,7 +58,7 @@ public class TrainSpeedHandler extends GestureBasedCommander implements ITrainRe
 			return;
 		}
 		
-		commander.setTrainReferenceSpeedAndDirection(gesture.getId(), newSpeed,
+		commander.setTrainReferenceSpeedAndDirection(gesture.getId(), Math.abs(newSpeed),
 				newSpeed >= 0 ? TrainDirection.FORWARD : TrainDirection.BACKWARD);
 	}
 
