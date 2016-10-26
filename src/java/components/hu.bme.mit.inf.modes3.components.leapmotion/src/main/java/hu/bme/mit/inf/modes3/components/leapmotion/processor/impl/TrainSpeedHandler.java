@@ -6,9 +6,12 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander;
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection;
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
+import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.ITrainReferenceSpeedCallback;
 import hu.bme.mit.inf.modes3.messaging.mms.messages.ComplexGestures.ComplexGesture;
+import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue;
 
-public class TrainSpeedHandler extends GestureBasedCommander {
+public class TrainSpeedHandler extends GestureBasedCommander implements ITrainReferenceSpeedCallback {
 
 	public static final int MAX_TRAIN_SPEED = 50;
 
@@ -16,9 +19,10 @@ public class TrainSpeedHandler extends GestureBasedCommander {
 
 	protected AtomicReference<Map<Long, Integer>> trainSpeeds;
 
-	public TrainSpeedHandler(ITrackElementCommander commander) {
-		super(commander);
+	public TrainSpeedHandler(TrackCommunicationServiceLocator locator) {
+		super(locator.getTrackElementCommander());
 		trainSpeeds = new AtomicReference<Map<Long, Integer>>(new HashMap<Long, Integer>());
+		locator.getTrainReferenceSpeedState().addTrainReferenceSpeedCallback(this);
 	}
 
 	protected int updateTrainSpeed(long id, boolean accelerate) {
@@ -56,6 +60,11 @@ public class TrainSpeedHandler extends GestureBasedCommander {
 		
 		commander.setTrainReferenceSpeedAndDirection(gesture.getId(), newSpeed,
 				newSpeed >= 0 ? TrainDirection.FORWARD : TrainDirection.BACKWARD);
+	}
+
+	@Override
+	public void onTrainReferenceSpeed(int id, int speed, TrainDirectionValue direction) {
+		trainSpeeds.get().put((long)id, direction == TrainDirectionValue.FORWARD ? speed : (-1)*speed);
 	}
 
 }
