@@ -18,13 +18,11 @@ import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
-import org.eclipse.viatra.query.runtime.matchers.psystem.IExpressionEvaluator;
-import org.eclipse.viatra.query.runtime.matchers.psystem.IValueProvider;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
-import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExpressionEvaluation;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.ConstantValue;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
@@ -133,40 +131,19 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
       	{
       		PBody body = new PBody(this);
       		PVariable var_t = body.getOrCreateVariableByName("t");
-      		PVariable var_segment = body.getOrCreateVariableByName("segment");
-      		PVariable var_id = body.getOrCreateVariableByName("id");
       		new TypeConstraint(body, new FlatTuple(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
       		   new ExportedParameter(body, var_t, parameter_pT)
       		));
-      		// 	Train.currentlyOn(t, segment)
-      		new TypeConstraint(body, new FlatTuple(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		// 	Train.currentlyOn.id(t, 18)
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
-      		new Equality(body, var__virtual_0_, var_segment);
-      		// 	Segment.id(segment, id)
-      		new TypeConstraint(body, new FlatTuple(var_segment), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Segment")));
+      		new ConstantValue(body, var__virtual_0_, 18);
+      		new TypeConstraint(body, new FlatTuple(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
       		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_segment, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement", "id")));
-      		new Equality(body, var__virtual_1_, var_id);
-      		// 	check(id == 18)
-      		new ExpressionEvaluation(body, new IExpressionEvaluator() {
-      		
-      		    @Override
-      		    public String getShortDescription() {
-      		        return "Expression evaluation from pattern trainOnStation";
-      		    }
-      		    
-      		    @Override
-      		    public Iterable<String> getInputParameterNames() {
-      		        return Arrays.asList("id");}
-      		
-      		    @Override
-      		    public Object evaluateExpression(IValueProvider provider) throws Exception {
-      		        Integer id = (Integer) provider.getValue("id");
-      		        return evaluateExpression_1_1(id);
-      		    }
-      		},  null); 
+      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+      		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
+      		new TypeConstraint(body, new FlatTuple(var__virtual_1_, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement", "id")));
+      		new Equality(body, var__virtual_2_, var__virtual_0_);
       		bodies.add(body);
       	}
       	// to silence compiler error
@@ -176,9 +153,5 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
       }
       return bodies;
     }
-  }
-  
-  private static boolean evaluateExpression_1_1(final Integer id) {
-    return ((id).intValue() == 18);
   }
 }
