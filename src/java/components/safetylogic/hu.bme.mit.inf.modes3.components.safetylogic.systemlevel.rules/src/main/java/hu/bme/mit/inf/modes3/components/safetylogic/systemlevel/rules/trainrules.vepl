@@ -5,13 +5,22 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.message.*
 
 queryEvent trainOnStation() as trainOnStation found
 
-queryEvent trainLeftStation() as trainOnStation lost
+queryEvent trainLeftStation() as trainLeftStation found
 
-complexEvent passThroughStation() {
+complexEvent trainPassThroughStation() {
 	as (trainOnStation -> trainLeftStation)[10000]
 }
 
-rule trainPassedThroughStation on passThroughStation {
+complexEvent trainReturnToStation() {
+	as (trainLeftStation -> trainOnStation)[30000]
+}
+
+rule trainPassedThroughStationRule on trainPassThroughStation {
 	System.out.println("TRAIN PASSED THROUGH STATION!")
-	EasterEggMessageSender.INSTANCE.sendMessage("TTRAIN PASSED THROUGH STATION!")
+	EasterEggMessageSender.INSTANCE.sendMessage("TRAIN PASSED THROUGH STATION!")
+}
+
+rule trainReturnToStationRule on trainReturnToStation {
+	System.out.println("TRAIN RETURN STATION!")
+	EasterEggMessageSender.INSTANCE.sendMessage("TRAIN RETURN STATION!")
 }

@@ -26,6 +26,7 @@
   <extension id="hu.bme.mit.inf.safetylogic.rulepatterns.RulePatterns" point="org.eclipse.viatra.query.runtime.queryspecification">
     <group group="org.eclipse.viatra.query.runtime.extensibility.SingletonExtensionFactory:hu.bme.mit.inf.safetylogic.rulepatterns.RulePatterns" id="hu.bme.mit.inf.safetylogic.rulepatterns.RulePatterns">
       <query-specification fqn="hu.bme.mit.inf.safetylogic.rulepatterns.trainOnStation"/>
+      <query-specification fqn="hu.bme.mit.inf.safetylogic.rulepatterns.trainLeftStation"/>
     </group>
   </extension>
 </plugin>

@@ -3,7 +3,9 @@
  */
 package hu.bme.mit.inf.safetylogic.rulepatterns;
 
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainLeftStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
+import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainLeftStationQuerySpecification;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainOnStationQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPatternGroup;
@@ -18,6 +20,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * 
  * <p> From package hu.bme.mit.inf.safetylogic.rulepatterns, the group contains the definition of the following patterns: <ul>
  * <li>trainOnStation</li>
+ * <li>trainLeftStation</li>
  * </ul>
  * 
  * @see IPatternGroup
@@ -43,6 +46,7 @@ public final class RulePatterns extends BaseGeneratedPatternGroup {
   
   private RulePatterns() throws ViatraQueryException {
     querySpecifications.add(TrainOnStationQuerySpecification.instance());
+    querySpecifications.add(TrainLeftStationQuerySpecification.instance());
   }
   
   public TrainOnStationQuerySpecification getTrainOnStation() throws ViatraQueryException {
@@ -51,5 +55,13 @@ public final class RulePatterns extends BaseGeneratedPatternGroup {
   
   public TrainOnStationMatcher getTrainOnStation(final ViatraQueryEngine engine) throws ViatraQueryException {
     return TrainOnStationMatcher.on(engine);
+  }
+  
+  public TrainLeftStationQuerySpecification getTrainLeftStation() throws ViatraQueryException {
+    return TrainLeftStationQuerySpecification.instance();
+  }
+  
+  public TrainLeftStationMatcher getTrainLeftStation(final ViatraQueryEngine engine) throws ViatraQueryException {
+    return TrainLeftStationMatcher.on(engine);
   }
 }
