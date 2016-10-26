@@ -2,18 +2,6 @@ package hu.bme.mit.inf.safetylogic.rulepatterns
 
 import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
 
-pattern railRoadModel(model : RailRoadModel) {
-	RailRoadModel(model);
-}
-
-pattern divergentTurnout(t : Turnout) {
-	Turnout.currentlyDivergent(t, d);
-	check(d == false);
-}
-
 pattern trainOnStation(t : Train) {
-	Train.currentlyOn(t, segment);
-	Segment.id(segment, id);
-	check(id == 18);
+	Train.currentlyOn.id(t, 18);
 }
-

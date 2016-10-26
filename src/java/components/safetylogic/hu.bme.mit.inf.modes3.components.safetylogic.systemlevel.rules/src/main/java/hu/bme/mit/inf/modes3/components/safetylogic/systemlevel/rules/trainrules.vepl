@@ -3,8 +3,6 @@ import-queries hu.bme.mit.inf.safetylogic.rulepatterns.*
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.message.*
 
-queryEvent divergentTurnoutEvent() as divergentTurnout found
-
 queryEvent trainOnStation() as trainOnStation found
 
 queryEvent trainLeftStation() as trainOnStation lost
@@ -12,12 +10,6 @@ queryEvent trainLeftStation() as trainOnStation lost
 complexEvent passThroughStation() {
 	as (trainOnStation -> trainLeftStation)[10000]
 }
-
-rule divergentTurnoutRule on divergentTurnoutEvent {
-	System.out.println("Turnout switched to divergent!")
-	EasterEggMessageSender.INSTANCE.sendMessage("Turnout switched to divergent!")
-}
-
 
 rule trainPassedThroughStation on passThroughStation {
 	System.out.println("TRAIN PASSED THROUGH STATION!")

@@ -47,7 +47,9 @@ function updateTrainSpeedCallback(trainSpeed) {
 	var train = window.locomotives[trainSpeed.trainID];
 	
 	if( train !== undefined ) {
+		console.log(trainSpeed.currentSpeed);
 		var speed = trainSpeed.currentSpeed;
+		console.log(speed);
 		if( trainSpeed.direction !== "FORWARD" ) {
 			speed *= -1;
 		}
