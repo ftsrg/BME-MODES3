@@ -110,7 +110,7 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 			}
 		}
 
-	// we do not need to send state back to the network, the pin change will trigger a state message
+		// we do not need to send state back to the network, the pin change will trigger a state message
 	}
 
 	override onStateChanged(TurnoutState newState) {
