@@ -2,3 +2,5 @@
 /.DivergentTurnoutRule.java._trace
 /.TestRule.java._trace
 /.TrainPassedThroughStation.java._trace
+/.TrainPassedThroughStationRule.java._trace
+/.TrainReturnToStationRule.java._trace

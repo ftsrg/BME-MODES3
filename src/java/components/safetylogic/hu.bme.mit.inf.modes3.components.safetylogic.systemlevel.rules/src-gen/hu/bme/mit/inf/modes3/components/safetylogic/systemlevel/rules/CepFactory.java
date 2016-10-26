@@ -5,8 +5,10 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.que
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.TrainOnStation_Event;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.atomic.queryresult.TrainLeftStation_Pattern;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.atomic.queryresult.TrainOnStation_Pattern;
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.PassThroughStation_Pattern;
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules.TrainPassedThroughStation;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.TrainPassThroughStation_Pattern;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.TrainReturnToStation_Pattern;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules.TrainPassedThroughStationRule;
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules.TrainReturnToStationRule;
 import java.util.List;
 import org.eclipse.viatra.cep.core.api.rules.ICepRule;
 import org.eclipse.viatra.cep.core.metamodels.events.EventSource;
@@ -50,13 +52,18 @@ public class CepFactory {
     return new TrainLeftStation_Event(null);
   }
   
-
+  /**
+   * Factory method for rule {@link TrainPassedThroughStationRule}.
+   */
+  public Class<? extends ICepRule> rule_TrainPassedThroughStationRule() {
+    return TrainPassedThroughStationRule.class;
+  }
   
   /**
-   * Factory method for rule {@link TrainPassedThroughStation}.
+   * Factory method for rule {@link TrainReturnToStationRule}.
    */
-  public Class<? extends ICepRule> rule_TrainPassedThroughStation() {
-    return TrainPassedThroughStation.class;
+  public Class<? extends ICepRule> rule_TrainReturnToStationRule() {
+    return TrainReturnToStationRule.class;
   }
   
   /**
@@ -64,7 +71,8 @@ public class CepFactory {
    */
   public List<Class<? extends ICepRule>> allRules() {
     List<Class<? extends ICepRule>> rules = Lists.newArrayList();
-    rules.add(TrainPassedThroughStation.class);
+    rules.add(TrainPassedThroughStationRule.class);
+    rules.add(TrainReturnToStationRule.class);
     return rules;
   }
 }
