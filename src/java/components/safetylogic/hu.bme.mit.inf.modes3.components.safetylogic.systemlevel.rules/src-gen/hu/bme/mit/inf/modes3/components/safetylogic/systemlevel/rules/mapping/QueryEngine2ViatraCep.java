@@ -2,8 +2,6 @@ package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.mapping;
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.TrainLeftStation_Event;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.queryresult.TrainOnStation_Event;
-import hu.bme.mit.inf.safetylogic.rulepatterns.TrainLeftStationMatch;
-import hu.bme.mit.inf.safetylogic.rulepatterns.TrainLeftStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatch;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -39,7 +37,6 @@ public class QueryEngine2ViatraCep {
   
   public EventDrivenTransformationRuleGroup getRules() {
     EventDrivenTransformationRuleGroup ruleGroup = new EventDrivenTransformationRuleGroup(
-    	createtrainLeftStation_MappingRule(), 
     	createtrainOnStation_MappingRule()
     );
     return ruleGroup;
@@ -51,36 +48,6 @@ public class QueryEngine2ViatraCep {
     } catch (ViatraQueryException e) {
     	e.printStackTrace();
     }
-  }
-  
-  public EventDrivenTransformationRule<TrainLeftStationMatch, TrainLeftStationMatcher> createtrainLeftStation_MappingRule() {
-    try{
-      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<TrainLeftStationMatch, TrainLeftStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
-      builder.addLifeCycle(Lifecycles.getDefault(false, true));
-      builder.precondition(TrainLeftStationMatcher.querySpecification());
-      
-      IMatchProcessor<TrainLeftStationMatch> actionOnAppear_0 = new IMatchProcessor<TrainLeftStationMatch>() {
-        public void process(final TrainLeftStationMatch matchedPattern) {
-          TrainLeftStation_Event event = new TrainLeftStation_Event(null);
-          event.setQueryMatch(matchedPattern);
-          eventStream.push(event);
-        }
-      };
-      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
-      
-      IMatchProcessor<TrainLeftStationMatch> actionOnDisappear_0 = new IMatchProcessor<TrainLeftStationMatch>() {
-        public void process(final TrainLeftStationMatch matchedPattern) {
-        }
-      };
-      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
-      
-      return builder.build();
-    } catch (ViatraQueryException e) {
-      e.printStackTrace();
-    } catch (InconsistentEventSemanticsException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
   
   public EventDrivenTransformationRule<TrainOnStationMatch, TrainOnStationMatcher> createtrainOnStation_MappingRule() {
@@ -100,6 +67,9 @@ public class QueryEngine2ViatraCep {
       
       IMatchProcessor<TrainOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<TrainOnStationMatch>() {
         public void process(final TrainOnStationMatch matchedPattern) {
+          TrainLeftStation_Event event = new TrainLeftStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
         }
       };
       builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);

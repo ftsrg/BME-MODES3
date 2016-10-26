@@ -6,9 +6,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.events.que
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.atomic.queryresult.TrainLeftStation_Pattern;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.atomic.queryresult.TrainOnStation_Pattern;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.TrainPassThroughStation_Pattern;
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.TrainReturnToStation_Pattern;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules.TrainPassedThroughStationRule;
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.rules.TrainReturnToStationRule;
 import java.util.List;
 import org.eclipse.viatra.cep.core.api.rules.ICepRule;
 import org.eclipse.viatra.cep.core.metamodels.events.EventSource;
@@ -53,17 +51,17 @@ public class CepFactory {
   }
   
   /**
-   * Factory method for rule {@link TrainPassedThroughStationRule}.
+   * Factory method for complex event pattern {@link TrainPassThroughStation_Pattern}.
    */
-  public Class<? extends ICepRule> rule_TrainPassedThroughStationRule() {
+  public Class<? extends ICepRule> rule_TrainPassThroughStation_Pattern() {
     return TrainPassedThroughStationRule.class;
   }
   
   /**
-   * Factory method for rule {@link TrainReturnToStationRule}.
+   * Factory method for rule {@link TrainPassedThroughStationRule}.
    */
-  public Class<? extends ICepRule> rule_TrainReturnToStationRule() {
-    return TrainReturnToStationRule.class;
+  public Class<? extends ICepRule> rule_TrainPassedThroughStationRule() {
+    return TrainPassedThroughStationRule.class;
   }
   
   /**
@@ -72,7 +70,6 @@ public class CepFactory {
   public List<Class<? extends ICepRule>> allRules() {
     List<Class<? extends ICepRule>> rules = Lists.newArrayList();
     rules.add(TrainPassedThroughStationRule.class);
-    rules.add(TrainReturnToStationRule.class);
     return rules;
   }
 }
