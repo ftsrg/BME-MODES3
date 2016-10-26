@@ -30,9 +30,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * <p>Original source:
  * <code><pre>
  * pattern trainOnStation(t : Train) {
- * 	Train.currentlyOn(t, segment);
- * 	Segment.id(segment, id);
- * 	check(id == 18);
+ * 	Train.currentlyOn.id(t, 18);
  * }
  * </pre></code>
  * 

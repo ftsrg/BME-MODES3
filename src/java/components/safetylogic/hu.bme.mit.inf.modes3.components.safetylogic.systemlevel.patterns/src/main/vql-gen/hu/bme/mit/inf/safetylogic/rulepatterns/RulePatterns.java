@@ -3,11 +3,7 @@
  */
 package hu.bme.mit.inf.safetylogic.rulepatterns;
 
-import hu.bme.mit.inf.safetylogic.rulepatterns.DivergentTurnoutMatcher;
-import hu.bme.mit.inf.safetylogic.rulepatterns.RailRoadModelMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
-import hu.bme.mit.inf.safetylogic.rulepatterns.util.DivergentTurnoutQuerySpecification;
-import hu.bme.mit.inf.safetylogic.rulepatterns.util.RailRoadModelQuerySpecification;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainOnStationQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPatternGroup;
@@ -21,8 +17,6 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * in order to achieve better performance than one-by-one on-demand matcher initialization.
  * 
  * <p> From package hu.bme.mit.inf.safetylogic.rulepatterns, the group contains the definition of the following patterns: <ul>
- * <li>railRoadModel</li>
- * <li>divergentTurnout</li>
  * <li>trainOnStation</li>
  * </ul>
  * 
@@ -48,25 +42,7 @@ public final class RulePatterns extends BaseGeneratedPatternGroup {
   private static RulePatterns INSTANCE;
   
   private RulePatterns() throws ViatraQueryException {
-    querySpecifications.add(RailRoadModelQuerySpecification.instance());
-    querySpecifications.add(DivergentTurnoutQuerySpecification.instance());
     querySpecifications.add(TrainOnStationQuerySpecification.instance());
-  }
-  
-  public RailRoadModelQuerySpecification getRailRoadModel() throws ViatraQueryException {
-    return RailRoadModelQuerySpecification.instance();
-  }
-  
-  public RailRoadModelMatcher getRailRoadModel(final ViatraQueryEngine engine) throws ViatraQueryException {
-    return RailRoadModelMatcher.on(engine);
-  }
-  
-  public DivergentTurnoutQuerySpecification getDivergentTurnout() throws ViatraQueryException {
-    return DivergentTurnoutQuerySpecification.instance();
-  }
-  
-  public DivergentTurnoutMatcher getDivergentTurnout(final ViatraQueryEngine engine) throws ViatraQueryException {
-    return DivergentTurnoutMatcher.on(engine);
   }
   
   public TrainOnStationQuerySpecification getTrainOnStation() throws ViatraQueryException {
