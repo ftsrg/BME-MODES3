@@ -7,8 +7,27 @@ queryEvent trainOnStation() as trainOnStation found
 
 queryEvent trainLeftStation() as trainOnStation lost
 
+queryEvent noTrainOnStation() as noTrainOnStation found
+
+queryEvent multipleTrainsOnStation() as multipleTrainsOnStation found
+
+queryEvent noMultipleTrainsOnStation() as noTrainOnStation lost
+
+complexEvent transfer() {
+	as noTrainOnStation -> trainOnStation -> multipleTrainsOnStation -> noMultipleTrainsOnStation
+}
+
 complexEvent trainPassThroughStation() {
-	as (trainOnStation -> trainLeftStation)[100000]
+	as (trainOnStation -> trainLeftStation)[10000]
+}
+
+complexEvent threeTimesMet() {
+	as multipleTrainsOnStation{3}
+}
+
+rule multipleTrainsOnStationRule on multipleTrainsOnStation {
+	System.out.println("MULTIPLE TRAINS ON STATION!")
+	EasterEggMessageSender.INSTANCE.sendMessage("MULTIPLE TRAINS ON STATION!")
 }
 
 rule trainPassedThroughStationRule on trainPassThroughStation {
@@ -16,3 +35,12 @@ rule trainPassedThroughStationRule on trainPassThroughStation {
 	EasterEggMessageSender.INSTANCE.sendMessage("TRAIN PASSED THROUGH STATION!")
 }
 
+rule transferRule on transfer {
+	System.out.println("TRANSFER ON STATION!")
+	EasterEggMessageSender.INSTANCE.sendMessage("TRANSFER ON STATION!")
+}
+
+rule threeTimesMetRule on threeTimesMet {
+	System.out.println("THREE TIMES MET!")
+	EasterEggMessageSender.INSTANCE.sendMessage("THREE TIMES MET!")
+}
