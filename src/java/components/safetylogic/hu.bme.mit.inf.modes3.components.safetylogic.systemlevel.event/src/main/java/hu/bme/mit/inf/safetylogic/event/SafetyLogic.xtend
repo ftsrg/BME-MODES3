@@ -23,12 +23,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	@Accessors(PUBLIC_GETTER) protected ModelUtil model // XXX IModelInteractor should be the static type
 	private ILoggerFactory factory
-	
+
 	@Accessors(PUBLIC_GETTER)
 	private SafetyLogicRuleEngine rules
-	
-	static val turnoutToSenseIDMap = #{1 -> 14, 2 -> 28, 3 -> 25, 3 -> 32, 4-> 3, 5 -> 9 , 6 -> 21}
-	
+
+	static val turnoutToSenseIDMap = #{1 -> #{14}, 2 -> #{28}, 3 -> #{25, 32}, 4 -> #{3}, 5 -> #{9}, 6 -> #{21}}
+
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
 		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
@@ -41,27 +41,29 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
 		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
-	
+
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
 		this.factory = factory
 		logger.info('Construction started')
 		SafetyLogicRuleEngine.standaloneSetup
-		
+
 		model = new ModelUtil(factory)
-		
+
 		rules = new SafetyLogicRuleEngine(model.resourceSet)
-		
+
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
 		locator.sendAllStatusCallback.statusUpdateListener = new IAllStatusUpdateListener() {
 
 			override onAllStatusUpdate() {
 				model.model.sections.getTurnouts.forEach [
-					locator.trackElementStateSender.sendTurnoutState(id, if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT)
+					locator.trackElementStateSender.sendTurnoutState(id,
+						if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT)
 				]
 				model.model.sections.getSegments.forEach [
-					locator.trackElementStateSender.sendSegmentState(id, if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
+					locator.trackElementStateSender.sendSegmentState(id,
+						if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
 				]
 				val occupiedSections = model.model.sections.filter[model.model.trains.map[currentlyOn].contains(it)]
 				occupiedSections.forEach [
@@ -74,7 +76,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 
 		}
-		
+
 	}
 
 	private def Iterable<Turnout> getTurnouts(Iterable<RailRoadElement> railRoadElements) {
@@ -123,24 +125,29 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	override void run() {
 		this.logger.info("Running started...")
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this,
+			factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
 				val senseID = turnoutToSenseIDMap.get(id)
-				(model.model.sections.filter[it instanceof Turnout].findFirst[it.id == senseID] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				model.model.sections.filter[it instanceof Turnout].filter[it.id == senseID].map[it as Turnout].forEach [
+					currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				]
 				refreshSafetyLogicState
 			}
 		}
-		
+
 		rules.start
-		
+
 		initRailRoad()
 	}
 
 	def public void refreshSafetyLogicState() {
-		logger.info('''Refreshing state: #of trains «model.model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
-		logger.info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		logger.
+			info('''Refreshing state: #of trains «model.model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		logger.
+			info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 		val offenders = new HashSet<Train>
 		model.cuts.forEach [ cut |
 			logger.info('''CUT: victim on «(cut.victim).id» cuts «(cut.offender).currentlyOn.id»''')
@@ -172,11 +179,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 				strategy.disableSection(segment.id)
 			]
 		]
-		if(!sectionsToEnable.empty){
-			logger.info('''SectionToEnable = {«FOR enable : sectionsToEnable SEPARATOR ', '» «enable.id» «ENDFOR»}''')		
+		if (!sectionsToEnable.empty) {
+			logger.info('''SectionToEnable = {«FOR enable : sectionsToEnable SEPARATOR ', '» «enable.id» «ENDFOR»}''')
 		}
-		if(!sectionsToDisable.empty){
-			logger.info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
+		if (!sectionsToDisable.empty) {
+			logger.
+				info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
 		}
 
 		sectionsToEnable.filter[it instanceof Segment].map[it as Segment].forEach [
