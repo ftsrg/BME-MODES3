@@ -4,8 +4,8 @@
 package hu.bme.mit.inf.safetylogic.rulepatterns.util;
 
 import com.google.common.collect.Sets;
-import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatch;
-import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainLeftStationMatch;
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainLeftStationMatcher;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -30,15 +30,15 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.queries.QueryInitializa
 import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
 
 /**
- * A pattern-specific query specification that can instantiate TrainOnStationMatcher in a type-safe way.
+ * A pattern-specific query specification that can instantiate TrainLeftStationMatcher in a type-safe way.
  * 
- * @see TrainOnStationMatcher
- * @see TrainOnStationMatch
+ * @see TrainLeftStationMatcher
+ * @see TrainLeftStationMatch
  * 
  */
 @SuppressWarnings("all")
-public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuerySpecification<TrainOnStationMatcher> {
-  private TrainOnStationQuerySpecification() {
+public final class TrainLeftStationQuerySpecification extends BaseGeneratedEMFQuerySpecification<TrainLeftStationMatcher> {
+  private TrainLeftStationQuerySpecification() {
     super(GeneratedPQuery.INSTANCE);
   }
   
@@ -47,7 +47,7 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
    * @throws ViatraQueryException if the pattern definition could not be loaded
    * 
    */
-  public static TrainOnStationQuerySpecification instance() throws ViatraQueryException {
+  public static TrainLeftStationQuerySpecification instance() throws ViatraQueryException {
     try{
     	return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
@@ -56,35 +56,35 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
   }
   
   @Override
-  protected TrainOnStationMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
-    return TrainOnStationMatcher.on(engine);
+  protected TrainLeftStationMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
+    return TrainLeftStationMatcher.on(engine);
   }
   
   @Override
-  public TrainOnStationMatcher instantiate() throws ViatraQueryException {
-    return TrainOnStationMatcher.create();
+  public TrainLeftStationMatcher instantiate() throws ViatraQueryException {
+    return TrainLeftStationMatcher.create();
   }
   
   @Override
-  public TrainOnStationMatch newEmptyMatch() {
-    return TrainOnStationMatch.newEmptyMatch();
+  public TrainLeftStationMatch newEmptyMatch() {
+    return TrainLeftStationMatch.newEmptyMatch();
   }
   
   @Override
-  public TrainOnStationMatch newMatch(final Object... parameters) {
-    return TrainOnStationMatch.newMatch((hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train) parameters[0]);
+  public TrainLeftStationMatch newMatch(final Object... parameters) {
+    return TrainLeftStationMatch.newMatch((hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train) parameters[0]);
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link TrainOnStationQuerySpecification} to be created 
+   * Inner class allowing the singleton instance of {@link TrainLeftStationQuerySpecification} to be created 
    * 	<b>not</b> at the class load time of the outer class, 
-   * 	but rather at the first call to {@link TrainOnStationQuerySpecification#instance()}.
+   * 	but rather at the first call to {@link TrainLeftStationQuerySpecification#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
    */
   private static class LazyHolder {
-    private final static TrainOnStationQuerySpecification INSTANCE = new TrainOnStationQuerySpecification();
+    private final static TrainLeftStationQuerySpecification INSTANCE = new TrainLeftStationQuerySpecification();
     
     /**
      * Statically initializes the query specification <b>after</b> the field {@link #INSTANCE} is assigned.
@@ -102,7 +102,7 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
   }
   
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
-    private final static TrainOnStationQuerySpecification.GeneratedPQuery INSTANCE = new GeneratedPQuery();
+    private final static TrainLeftStationQuerySpecification.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
     private final PParameter parameter_pT = new PParameter("t", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")), PParameterDirection.INOUT);
     
@@ -110,7 +110,7 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
     
     @Override
     public String getFullyQualifiedName() {
-      return "hu.bme.mit.inf.safetylogic.rulepatterns.trainOnStation";
+      return "hu.bme.mit.inf.safetylogic.rulepatterns.trainLeftStation";
     }
     
     @Override
@@ -135,12 +135,12 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
       		   new ExportedParameter(body, var_t, parameter_pT)
       		));
-      		// 	Train.currentlyOn.id(t, 18)
+      		// 	Train.previouslyOn.id(t, 18)
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
       		new ConstantValue(body, var__virtual_0_, 18);
       		new TypeConstraint(body, new FlatTuple(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
       		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "previouslyOn")));
       		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
       		new TypeConstraint(body, new FlatTuple(var__virtual_1_, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement", "id")));
       		new Equality(body, var__virtual_2_, var__virtual_0_);
@@ -153,12 +153,12 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
       		   new ExportedParameter(body, var_t, parameter_pT)
       		));
-      		// 	Train.currentlyOn.id(t, 19)
+      		// 	Train.previouslyOn.id(t, 19)
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
       		new ConstantValue(body, var__virtual_0_, 19);
       		new TypeConstraint(body, new FlatTuple(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
       		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "previouslyOn")));
       		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
       		new TypeConstraint(body, new FlatTuple(var__virtual_1_, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement", "id")));
       		new Equality(body, var__virtual_2_, var__virtual_0_);
@@ -171,12 +171,12 @@ public final class TrainOnStationQuerySpecification extends BaseGeneratedEMFQuer
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
       		   new ExportedParameter(body, var_t, parameter_pT)
       		));
-      		// 	Train.currentlyOn.id(t, 20)
+      		// 	Train.previouslyOn.id(t, 20)
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
       		new ConstantValue(body, var__virtual_0_, 20);
       		new TypeConstraint(body, new FlatTuple(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
       		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+      		new TypeConstraint(body, new FlatTuple(var_t, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "previouslyOn")));
       		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
       		new TypeConstraint(body, new FlatTuple(var__virtual_1_, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement", "id")));
       		new Equality(body, var__virtual_2_, var__virtual_0_);

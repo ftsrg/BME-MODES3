@@ -4,4 +4,27 @@ import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
 
 pattern trainOnStation(t : Train) {
 	Train.currentlyOn.id(t, 18);
+} or {
+	Train.currentlyOn.id(t, 19);
+} or {
+	Train.currentlyOn.id(t, 20);
 }
+
+pattern trainLeftStation(t : Train) {
+	Train.previouslyOn.id(t, 18);
+} or {
+	Train.previouslyOn.id(t, 19);
+} or {
+	Train.previouslyOn.id(t, 20);
+}
+
+pattern noTrainOnStation() {
+	neg find trainOnStation(_);
+}
+
+pattern multipleTrainsOnStation(t1 : Train, t2 : Train) {
+	find trainOnStation(t1);
+	find trainOnStation(t2);
+	t1 != t2;
+}
+

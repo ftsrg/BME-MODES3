@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.message;
 
+import java.util.Date;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -35,6 +37,7 @@ public class EasterEggMessageSender {
 	}
 	
 	public void sendMessage(String message) {
+		message = message + " " + new Date(System.currentTimeMillis()).toLocaleString();
 		try {
 			if(client != null) {
 				client.publish(MESSAGE_TOPIC, message.getBytes(), MESSAGE_QoS, false);

@@ -4,8 +4,8 @@
 package hu.bme.mit.inf.safetylogic.rulepatterns;
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
-import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatch;
-import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainOnStationQuerySpecification;
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainLeftStationMatch;
+import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainLeftStationQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,32 +19,32 @@ import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 
 /**
- * Generated pattern matcher API of the hu.bme.mit.inf.safetylogic.rulepatterns.trainOnStation pattern,
+ * Generated pattern matcher API of the hu.bme.mit.inf.safetylogic.rulepatterns.trainLeftStation pattern,
  * providing pattern-specific query methods.
  * 
  * <p>Use the pattern matcher on a given model via {@link #on(ViatraQueryEngine)},
  * e.g. in conjunction with {@link ViatraQueryEngine#on(Notifier)}.
  * 
- * <p>Matches of the pattern will be represented as {@link TrainOnStationMatch}.
+ * <p>Matches of the pattern will be represented as {@link TrainLeftStationMatch}.
  * 
  * <p>Original source:
  * <code><pre>
- * pattern trainOnStation(t : Train) {
- * 	Train.currentlyOn.id(t, 18);
+ * pattern trainLeftStation(t : Train) {
+ * 	Train.previouslyOn.id(t, 18);
  * } or {
- * 	Train.currentlyOn.id(t, 19);
+ * 	Train.previouslyOn.id(t, 19);
  * } or {
- * 	Train.currentlyOn.id(t, 20);
+ * 	Train.previouslyOn.id(t, 20);
  * }
  * </pre></code>
  * 
- * @see TrainOnStationMatch
- * @see TrainOnStationProcessor
- * @see TrainOnStationQuerySpecification
+ * @see TrainLeftStationMatch
+ * @see TrainLeftStationProcessor
+ * @see TrainLeftStationQuerySpecification
  * 
  */
 @SuppressWarnings("all")
-public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
+public class TrainLeftStationMatcher extends BaseMatcher<TrainLeftStationMatch> {
   /**
    * Initializes the pattern matcher within an existing VIATRA Query engine.
    * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
@@ -53,11 +53,11 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  public static TrainOnStationMatcher on(final ViatraQueryEngine engine) throws ViatraQueryException {
+  public static TrainLeftStationMatcher on(final ViatraQueryEngine engine) throws ViatraQueryException {
     // check if matcher already exists
-    TrainOnStationMatcher matcher = engine.getExistingMatcher(querySpecification());
+    TrainLeftStationMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = (TrainOnStationMatcher)engine.getMatcher(querySpecification());
+    	matcher = (TrainLeftStationMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -70,13 +70,13 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  public static TrainOnStationMatcher create() throws ViatraQueryException {
-    return new TrainOnStationMatcher();
+  public static TrainLeftStationMatcher create() throws ViatraQueryException {
+    return new TrainLeftStationMatcher();
   }
   
   private final static int POSITION_T = 0;
   
-  private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(TrainOnStationMatcher.class);
+  private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(TrainLeftStationMatcher.class);
   
   /**
    * Initializes the pattern matcher within an existing VIATRA Query engine.
@@ -86,17 +86,17 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  private TrainOnStationMatcher() throws ViatraQueryException {
+  private TrainLeftStationMatcher() throws ViatraQueryException {
     super(querySpecification());
   }
   
   /**
    * Returns the set of all matches of the pattern that conform to the given fixed values of some parameters.
    * @param pT the fixed value of pattern parameter t, or null if not bound.
-   * @return matches represented as a TrainOnStationMatch object.
+   * @return matches represented as a TrainLeftStationMatch object.
    * 
    */
-  public Collection<TrainOnStationMatch> getAllMatches(final Train pT) {
+  public Collection<TrainLeftStationMatch> getAllMatches(final Train pT) {
     return rawGetAllMatches(new Object[]{pT});
   }
   
@@ -104,10 +104,10 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * Returns an arbitrarily chosen match of the pattern that conforms to the given fixed values of some parameters.
    * Neither determinism nor randomness of selection is guaranteed.
    * @param pT the fixed value of pattern parameter t, or null if not bound.
-   * @return a match represented as a TrainOnStationMatch object, or null if no match is found.
+   * @return a match represented as a TrainLeftStationMatch object, or null if no match is found.
    * 
    */
-  public TrainOnStationMatch getOneArbitraryMatch(final Train pT) {
+  public TrainLeftStationMatch getOneArbitraryMatch(final Train pT) {
     return rawGetOneArbitraryMatch(new Object[]{pT});
   }
   
@@ -138,7 +138,7 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * @param processor the action that will process each pattern match.
    * 
    */
-  public void forEachMatch(final Train pT, final IMatchProcessor<? super TrainOnStationMatch> processor) {
+  public void forEachMatch(final Train pT, final IMatchProcessor<? super TrainLeftStationMatch> processor) {
     rawForEachMatch(new Object[]{pT}, processor);
   }
   
@@ -150,7 +150,7 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
    * 
    */
-  public boolean forOneArbitraryMatch(final Train pT, final IMatchProcessor<? super TrainOnStationMatch> processor) {
+  public boolean forOneArbitraryMatch(final Train pT, final IMatchProcessor<? super TrainLeftStationMatch> processor) {
     return rawForOneArbitraryMatch(new Object[]{pT}, processor);
   }
   
@@ -162,8 +162,8 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * @return the (partial) match object.
    * 
    */
-  public TrainOnStationMatch newMatch(final Train pT) {
-    return TrainOnStationMatch.newMatch(pT);
+  public TrainLeftStationMatch newMatch(final Train pT) {
+    return TrainLeftStationMatch.newMatch(pT);
   }
   
   /**
@@ -187,9 +187,9 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
   }
   
   @Override
-  protected TrainOnStationMatch tupleToMatch(final Tuple t) {
+  protected TrainLeftStationMatch tupleToMatch(final Tuple t) {
     try {
-    	return TrainOnStationMatch.newMatch((Train) t.get(POSITION_T));
+    	return TrainLeftStationMatch.newMatch((Train) t.get(POSITION_T));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -197,9 +197,9 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
   }
   
   @Override
-  protected TrainOnStationMatch arrayToMatch(final Object[] match) {
+  protected TrainLeftStationMatch arrayToMatch(final Object[] match) {
     try {
-    	return TrainOnStationMatch.newMatch((Train) match[POSITION_T]);
+    	return TrainLeftStationMatch.newMatch((Train) match[POSITION_T]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -207,9 +207,9 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
   }
   
   @Override
-  protected TrainOnStationMatch arrayToMatchMutable(final Object[] match) {
+  protected TrainLeftStationMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TrainOnStationMatch.newMutableMatch((Train) match[POSITION_T]);
+    	return TrainLeftStationMatch.newMutableMatch((Train) match[POSITION_T]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -221,7 +221,7 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
    * @throws ViatraQueryException if the pattern definition could not be loaded
    * 
    */
-  public static IQuerySpecification<TrainOnStationMatcher> querySpecification() throws ViatraQueryException {
-    return TrainOnStationQuerySpecification.instance();
+  public static IQuerySpecification<TrainLeftStationMatcher> querySpecification() throws ViatraQueryException {
+    return TrainLeftStationQuerySpecification.instance();
   }
 }
