@@ -9,6 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
 import org.slf4j.impl.SimpleLoggerFactory
+import org.junit.Ignore
 
 class IntegrationTest {
 	var SafetyLogic sl
@@ -33,6 +34,7 @@ class IntegrationTest {
 		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
 	}
 
+	@Ignore
 	@Test def void integrationTest() {
 		synchronized(model) {
 			Assert.assertEquals(true, (model.model.sections.findFirst[id == 24] as Segment).isEnabled)
