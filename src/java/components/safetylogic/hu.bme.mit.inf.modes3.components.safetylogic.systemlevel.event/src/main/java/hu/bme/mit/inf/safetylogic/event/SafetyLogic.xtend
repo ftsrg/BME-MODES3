@@ -27,6 +27,8 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	@Accessors(PUBLIC_GETTER)
 	private SafetyLogicRuleEngine rules
 	
+	static val turnoutToSenseIDMap = #{1 -> 14, 2 -> 28, 3 -> 25, 3 -> 32, 4-> 3, 5 -> 9 , 6 -> 21}
+	
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
 		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
@@ -125,7 +127,8 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-				(model.model.sections.filter[it instanceof TurnoutImpl].findFirst[it.id == id] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				val senseID = turnoutToSenseIDMap.get(id)
+				(model.model.sections.filter[it instanceof Turnout].findFirst[it.id == senseID] as Turnout).currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
 				refreshSafetyLogicState
 			}
 		}
