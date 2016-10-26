@@ -55,11 +55,11 @@ public class LeapMotionBridge implements Runnable {
 		sub = context.socket(ZMQ.SUB);
 
 		try {
-			sub.bind(String.format("tcp://%s:%d", leapHost, 5556));
+			sub.bind(String.format("tcp://%s:%d", leapHost, 7071));
 		} catch (ZMQException ex) {
-			sub.connect(String.format("tcp://%s:%d", leapHost, 5556));
+			sub.connect(String.format("tcp://%s:%d", leapHost, 7071));
 		}
-		sub.subscribe("gesturetream".getBytes());
+		sub.subscribe("gesturestream".getBytes());
 
 		running = true;
 	}
