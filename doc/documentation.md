@@ -1,12 +1,12 @@
 # Introduction
 
-Bullshit, let `Andrew the Red` handle this.
+TODO let `Andrew the Red` handle this.
 
 <!-- Use a top-down approach -->
 
  # Capabilities of the system
 
-<!-- Bullshit. -->
+<!-- TODO -->
 
  Base capabilities of the system:
 
@@ -20,9 +20,19 @@ Additional capabilities of the system <!-- (via the XpressNet component) -->
 - Sense the speed of the trains
 - Send and receive STOP signals.
 
+# Operation of the system
+
+## Start the BBB's
+
+## Start the occupancy query
+
+## Start the XpressNet bridge
+
+## Start the safety logic
+
 # Physical stuff
 
-Bullshit
+TODO
 
 ## Layout of the track
 
@@ -32,7 +42,8 @@ Add a PNG showing the track. Explain the properties of the layout. (There are tw
 
 ### One turnout
 
-Explain what is connected to one turnout, how do they work Bullshit about the BBBs. How do we turn off a segment. And how do we sense the status of the turnouts. -- could be a separate section
+Explain what is connected to one turnout, how do they work
+informations about the BBBs. How do we turn off a segment. And how do we sense the status of the turnouts. -- could be a separate section
 
 ### Network of the turnouts
 
