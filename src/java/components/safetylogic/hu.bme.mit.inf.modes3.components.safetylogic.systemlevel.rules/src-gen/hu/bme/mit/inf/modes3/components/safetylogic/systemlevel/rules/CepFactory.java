@@ -104,31 +104,59 @@ public class CepFactory {
   }
   
   /**
+   * Factory method for atomic query result event pattern {@link TrainOnStation_Pattern}.
+   */
+  public TrainOnStation_Pattern createTrainOnStation_Pattern() {
+    return new TrainOnStation_Pattern();
+  }
+  
+  /**
+   * Factory method for atomic query result event pattern {@link TrainLeftStation_Pattern}.
+   */
+  public TrainLeftStation_Pattern createTrainLeftStation_Pattern() {
+    return new TrainLeftStation_Pattern();
+  }
+  
+  /**
+   * Factory method for atomic query result event pattern {@link NoTrainOnStation_Pattern}.
+   */
+  public NoTrainOnStation_Pattern createNoTrainOnStation_Pattern() {
+    return new NoTrainOnStation_Pattern();
+  }
+  
+  /**
    * Factory method for atomic query result event pattern {@link MultipleTrainsOnStation_Pattern}.
    */
-  public Class<? extends ICepRule> rule_MultipleTrainsOnStation_Pattern() {
-    return MultipleTrainsOnStationRule.class;
+  public MultipleTrainsOnStation_Pattern createMultipleTrainsOnStation_Pattern() {
+    return new MultipleTrainsOnStation_Pattern();
+  }
+  
+  /**
+   * Factory method for atomic query result event pattern {@link NoMultipleTrainsOnStation_Pattern}.
+   */
+  public NoMultipleTrainsOnStation_Pattern createNoMultipleTrainsOnStation_Pattern() {
+    return new NoMultipleTrainsOnStation_Pattern();
   }
   
   /**
    * Factory method for complex event pattern {@link Transfer_Pattern}.
    */
-  public Class<? extends ICepRule> rule_Transfer_Pattern() {
-    return TransferRule.class;
+  public Transfer_Pattern createTransfer_Pattern() {
+    return new Transfer_Pattern();
   }
   
   /**
    * Factory method for complex event pattern {@link TrainPassThroughStation_Pattern}.
    */
-  public Class<? extends ICepRule> rule_TrainPassThroughStation_Pattern() {
-    return TrainPassedThroughStationRule.class;
+  public TrainPassThroughStation_Pattern createTrainPassThroughStation_Pattern() {
+    return new TrainPassThroughStation_Pattern();
   }
   
   /**
    * Factory method for complex event pattern {@link ThreeTimesMet_Pattern}.
    */
-  public Class<? extends ICepRule> rule_ThreeTimesMet_Pattern() {
-    return ThreeTimesMetRule.class;
+  public ThreeTimesMet_Pattern createThreeTimesMet_Pattern() {
+    return new ThreeTimesMet_Pattern();
   }
   
   /**

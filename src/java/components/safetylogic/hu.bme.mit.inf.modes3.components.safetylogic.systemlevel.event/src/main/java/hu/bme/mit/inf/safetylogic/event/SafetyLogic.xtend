@@ -27,9 +27,10 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	private SafetyLogicRuleEngine rules 
 
 	static val turnoutToSenseIDMap = #{1 -> #{14}, 2 -> #{28}, 3 -> #{25, 32}, 4 -> #{3}, 5 -> #{9}, 6 -> #{21}}
+	static val senseToTurnoutIDMap = #{14 -> 1, 28 -> 2, 25 -> 3, 32 -> 3, 3 -> 4, 9 -> 5, 21 -> 6}
 
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
-//		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
+		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
 	var Set<Train> stoppedTrains = new HashSet<Train>
 
@@ -38,7 +39,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	]
 
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
-//		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
+		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
@@ -91,54 +92,59 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	private def void initRailRoad() {
-//		model.model.sections.getTurnouts.forEach[currentlyDivergent = true]
-//		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
-////		(model.model.sections.findFirst[id == 9] as Turnout).currentlyDivergent = true
-//		val sleepTimes = 3000
-//		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
-//		val turnouts = model.model.sections.getTurnouts
-//		
-//		
-//		Thread.sleep(sleepTimes)
-//		turnouts.forEach [
-//			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
-//		]
-//		logger.info('All turnout set divergent')
-//		Thread.sleep(sleepTimes)
-//
-//		turnouts.forEach [
-//			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
-//		]
-//		logger.info('All turnout set straight')
-//
-//
-//		val segments = model.model.sections.getSegments
-//		segments.forEach [
-//			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
-//		] 
-//		logger.info('Disabling all sections')
-//		Thread.sleep(sleepTimes)
-//		segments.forEach [
-//			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
-//		]
-//		logger.info('Enabling all sections')
-//		Thread.sleep(sleepTimes)
-//		logger.info('Railroad initialization finished')
+		model.model.sections.getTurnouts.forEach[currentlyDivergent = true]
+		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
+//		(model.model.sections.findFirst[id == 9] as Turnout).currentlyDivergent = true
+		val sleepTimes = 3000
+		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
+		val turnouts = model.model.sections.getTurnouts
+		
+		
+		Thread.sleep(sleepTimes)
+		turnouts.forEach [
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
+		]
+		logger.info('All turnout set divergent')
+		Thread.sleep(sleepTimes)
+
+		turnouts.forEach [
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
+		]
+		logger.info('All turnout set straight')
+
+
+		val segments = model.model.sections.getSegments
+		segments.forEach [
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
+		] 
+		logger.info('Disabling all sections')
+		Thread.sleep(sleepTimes)
+		segments.forEach [
+			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
+		]
+		logger.info('Enabling all sections')
+		Thread.sleep(sleepTimes)
+		logger.info('Railroad initialization finished')
 	}
 
 	override void run() {
+		
 		this.logger.info("Running started...")
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this,
 			factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-				logger.info('''TurnoutStateChange arrived, id = «id» oldState = «oldValue.name» newState = «newValue.name»''')
 				val senseID = turnoutToSenseIDMap.get(id)
-				model.model.sections.filter[it instanceof Turnout].filter[it.id == senseID].map[it as Turnout].forEach [
-					currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+				logger.info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
+				println(model.model.sections.filter[it instanceof Turnout].filter[senseID.contains(it.id)].size)//.map[it as Turnout].size)
+				model.model.sections.filter[it instanceof Turnout].filter[senseID.contains(it.id)].map[it as Turnout].forEach [
+					it.currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
 					logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
 				]
+				logger.info('''Turnout States: <«FOR turnout : model.model.sections.filter[it instanceof Turnout].map[it as Turnout] SEPARATOR ";\t "»
+				Sense=«turnout.id»,TurnoutID=«senseToTurnoutIDMap.get(turnout.id)»,State=«if(turnout.currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»
+				«ENDFOR»>''')
 				refreshSafetyLogicState
 			}
 		}

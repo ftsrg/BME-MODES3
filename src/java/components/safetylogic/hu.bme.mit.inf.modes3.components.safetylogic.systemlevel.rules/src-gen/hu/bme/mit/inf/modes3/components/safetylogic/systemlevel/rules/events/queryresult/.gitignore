@@ -3,3 +3,6 @@
 /.MultipleTrainsOnStation_Event.java._trace
 /.NoMultipleTrainsOnStation_Event.java._trace
 /.NoTrainOnStation_Event.java._trace
+/MultipleTrainsOnStation_Event.java
+/NoMultipleTrainsOnStation_Event.java
+/NoTrainOnStation_Event.java
