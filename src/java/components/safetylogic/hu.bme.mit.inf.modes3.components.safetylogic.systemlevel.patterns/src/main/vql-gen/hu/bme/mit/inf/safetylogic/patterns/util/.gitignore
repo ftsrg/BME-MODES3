@@ -18,3 +18,4 @@
 /.ViablePathsQuerySpecification.java._trace
 /.NotNullQuerySpecification.java._trace
 /.TrainsAreTooCloseQuerySpecification.java._trace
+/TrainCutsTurnoutNextAfterNextQuerySpecification.java

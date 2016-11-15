@@ -5,3 +5,15 @@
 /.RulePatterns.java._trace
 /.TrainOnStationMatch.java._trace
 /.TrainOnStationMatcher.java._trace
+/.MultipleTrainsOnStationMatch.java._trace
+/.MultipleTrainsOnStationMatcher.java._trace
+/.NoTrainOnStationMatch.java._trace
+/.NoTrainOnStationMatcher.java._trace
+/.TrainLeftStationMatch.java._trace
+/.TrainLeftStationMatcher.java._trace
+/MultipleTrainsOnStationMatch.java
+/MultipleTrainsOnStationMatcher.java
+/NoTrainOnStationMatch.java
+/NoTrainOnStationMatcher.java
+/TrainLeftStationMatch.java
+/TrainLeftStationMatcher.java

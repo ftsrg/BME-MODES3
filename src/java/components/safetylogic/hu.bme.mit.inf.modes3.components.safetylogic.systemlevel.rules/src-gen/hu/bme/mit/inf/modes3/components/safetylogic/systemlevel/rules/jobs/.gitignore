@@ -2,3 +2,7 @@
 /.TransferRule_Job.java._trace
 /.ThreeTimesMetRule_Job.java._trace
 /.MultipleTrainsOnStationRule_Job.java._trace
+/MultipleTrainsOnStationRule_Job.java
+/ThreeTimesMetRule_Job.java
+/TrainPassedThroughStationRule_Job.java
+/TransferRule_Job.java
