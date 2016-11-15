@@ -57,7 +57,7 @@ The parameters of the service are the following:
 
 The XpressNet controller is connected to the Management Pi (`manage.modes3.intra`), and the `xpressnetbridge` service can be started from there.
 
-The service can be started from the `/modes3/xpressnetbridge` directory.
+The service can be started from the `/modes3/hu.bme.mit.inf.modes3.components.xpressnetbridge` directory.
 
 The binary can be executed without any parameter.
 
