@@ -16,3 +16,5 @@
 /NoTrainOnStationQuerySpecification.java
 /TrainLeftStationProcessor.java
 /TrainLeftStationQuerySpecification.java
+/TrainOnStationProcessor.java
+/TrainOnStationQuerySpecification.java

@@ -17,3 +17,6 @@
 /NoTrainOnStationMatcher.java
 /TrainLeftStationMatch.java
 /TrainLeftStationMatcher.java
+/TrainOnStationMatch.java
+/TrainOnStationMatcher.java
+/RulePatterns.java
