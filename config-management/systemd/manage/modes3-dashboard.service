@@ -1,0 +1,11 @@
+[Unit]
+Description=MoDeS3 Dashboard Server
+After=syslog.target network.target
+
+[Service]
+ExecStart=/modes3/hu.bme.mit.inf.modes3.components.dashboard/bin/hu.bme.mit.inf.modes3.components.dashboard -address root.modes3.intra -id pidashboard -pubPort 1883 -config production
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
