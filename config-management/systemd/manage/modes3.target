@@ -1,0 +1,7 @@
+[Unit]
+Description=MoDeS3 Control Agent
+Wants=modes3-occupancy.service modes3-xpressnet.service modes3-dashboard.service
+
+[Install]
+WantedBy=multi-user.target
+

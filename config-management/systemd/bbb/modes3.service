@@ -1,0 +1,10 @@
+[Unit]
+Description=MoDeS3 Control Agent
+After=syslog.target network.target
+
+[Service]
+ExecStart=/modes3/hu.bme.mit.inf.modes3.components.bbb/bin/hu.bme.mit.inf.modes3.components.bbb -address root.modes3.intra -pubPort 1883 -id %H
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
