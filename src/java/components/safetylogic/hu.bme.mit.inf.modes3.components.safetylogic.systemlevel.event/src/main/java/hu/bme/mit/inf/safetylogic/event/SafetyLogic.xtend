@@ -20,7 +20,7 @@ import org.slf4j.ILoggerFactory
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
-	@Accessors(PUBLIC_GETTER) protected ModelUtil model // XXX IModelInteractor should be the static type
+	@Accessors(PUBLIC_GETTER) protected IModelInteractor model // XXX IModelInteractor should be the static type
 	private ILoggerFactory factory
 
 	@Accessors(PUBLIC_GETTER)
@@ -50,7 +50,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 		model = new ModelUtil(factory)
 
-		rules = new SafetyLogicRuleEngine(model.resourceSet)
+//		rules = new SafetyLogicRuleEngine(model.resourceSet)
 
 		model.segments.map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
@@ -66,11 +66,11 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 					locator.trackElementStateSender.sendSegmentState(id,
 						if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
 				]
-				val occupiedSections = model.model.sections.filter[model.model.trains.map[currentlyOn].contains(it)]
+				val occupiedSections = model.sections.filter[model.trains.map[currentlyOn].toList.contains(it)]
 				occupiedSections.forEach [
 					locator.trackElementStateSender.sendSegmentOccupation(id, SegmentOccupancy.OCCUPIED)
 				]
-				val freeSections = model.model.sections.filter[!occupiedSections.toList.contains(it)]
+				val freeSections = model.sections.filter[!occupiedSections.toList.contains(it)]
 				freeSections.forEach [
 					locator.trackElementStateSender.sendSegmentOccupation(id, SegmentOccupancy.FREE)
 				]
@@ -80,13 +80,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	}
 	
-	private def Iterable<Turnout> getTurnouts(ModelUtil model){
-		 model.model.sections.filter[it instanceof Turnout].map[it as Turnout]
-	}
-	
-	private def Iterable<Segment> getSegments(ModelUtil model){
-		 model.model.sections.filter[it instanceof Segment].map[it as Segment]
-	}
+
 
 	private def switchTurnoutTo(RailRoadElement element, SegmentState state) {
 		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
@@ -157,8 +151,8 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	def public void refreshSafetyLogicState() {
-		logger.info('''Refreshing state: #of trains «model.model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
-		logger.info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		logger.info('''Refreshing state: #of trains «model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 		
 		val offenders = new HashSet<Train>
 		
