@@ -30,6 +30,8 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * <p>Original source:
  * <code><pre>
  * pattern multipleTrainsOnStation(t1 : Train, t2 : Train) {
+ * 	RailRoadModel.trains(railroad, t1);
+ * 	RailRoadModel.trains(railroad, t2);
  * 	find trainOnStation(t1);
  * 	find trainOnStation(t2);
  * 	t1 != t2;

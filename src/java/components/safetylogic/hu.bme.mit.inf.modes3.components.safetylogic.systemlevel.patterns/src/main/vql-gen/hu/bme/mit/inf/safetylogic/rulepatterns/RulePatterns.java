@@ -5,10 +5,12 @@ package hu.bme.mit.inf.safetylogic.rulepatterns;
 
 import hu.bme.mit.inf.safetylogic.rulepatterns.MultipleTrainsOnStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.NoTrainOnStationMatcher;
+import hu.bme.mit.inf.safetylogic.rulepatterns.TrainIsNotInStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainLeftStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.TrainOnStationMatcher;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.MultipleTrainsOnStationQuerySpecification;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.NoTrainOnStationQuerySpecification;
+import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainIsNotInStationQuerySpecification;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainLeftStationQuerySpecification;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainOnStationQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
@@ -25,6 +27,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * <p> From package hu.bme.mit.inf.safetylogic.rulepatterns, the group contains the definition of the following patterns: <ul>
  * <li>trainOnStation</li>
  * <li>trainLeftStation</li>
+ * <li>trainIsNotInStation</li>
  * <li>noTrainOnStation</li>
  * <li>multipleTrainsOnStation</li>
  * </ul>
@@ -53,6 +56,7 @@ public final class RulePatterns extends BaseGeneratedPatternGroup {
   private RulePatterns() throws ViatraQueryException {
     querySpecifications.add(TrainOnStationQuerySpecification.instance());
     querySpecifications.add(TrainLeftStationQuerySpecification.instance());
+    querySpecifications.add(TrainIsNotInStationQuerySpecification.instance());
     querySpecifications.add(NoTrainOnStationQuerySpecification.instance());
     querySpecifications.add(MultipleTrainsOnStationQuerySpecification.instance());
   }
@@ -71,6 +75,14 @@ public final class RulePatterns extends BaseGeneratedPatternGroup {
   
   public TrainLeftStationMatcher getTrainLeftStation(final ViatraQueryEngine engine) throws ViatraQueryException {
     return TrainLeftStationMatcher.on(engine);
+  }
+  
+  public TrainIsNotInStationQuerySpecification getTrainIsNotInStation() throws ViatraQueryException {
+    return TrainIsNotInStationQuerySpecification.instance();
+  }
+  
+  public TrainIsNotInStationMatcher getTrainIsNotInStation(final ViatraQueryEngine engine) throws ViatraQueryException {
+    return TrainIsNotInStationMatcher.on(engine);
   }
   
   public NoTrainOnStationQuerySpecification getNoTrainOnStation() throws ViatraQueryException {

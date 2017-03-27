@@ -173,6 +173,7 @@ public final class NextSectionQuerySpecification extends BaseGeneratedEMFQuerySp
       		PVariable var_Old = body.getOrCreateVariableByName("Old");
       		PVariable var_Current = body.getOrCreateVariableByName("Current");
       		PVariable var_Next = body.getOrCreateVariableByName("Next");
+      		PVariable var_RailRoad = body.getOrCreateVariableByName("RailRoad");
       		PVariable var_p = body.getOrCreateVariableByName("p");
       		PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
       		new TypeConstraint(body, new FlatTuple(var_Old), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
@@ -185,23 +186,38 @@ public final class NextSectionQuerySpecification extends BaseGeneratedEMFQuerySp
       		));
       		// 	neg find notNull(Old)
       		new NegativePatternCall(body, new FlatTuple(var_Old), NotNullQuerySpecification.instance().getInternalQueryRepresentation());
-      		//  // Check for null, as if it is, we don't know the direction	find viablePaths(Current, p)
+      		//  // Check for null, as if it is, we don't know the direction		RailRoadModel.sections(RailRoad,Old)
+      		new TypeConstraint(body, new FlatTuple(var_RailRoad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));
+      		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
+      		new TypeConstraint(body, new FlatTuple(var_RailRoad, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel", "sections")));
+      		new Equality(body, var__virtual_0_, var_Old);
+      		// 	RailRoadModel.sections(RailRoad,Next)
+      		new TypeConstraint(body, new FlatTuple(var_RailRoad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));
+      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
+      		new TypeConstraint(body, new FlatTuple(var_RailRoad, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel", "sections")));
+      		new Equality(body, var__virtual_1_, var_Next);
+      		// 	RailRoadModel.sections(RailRoad,Current)
+      		new TypeConstraint(body, new FlatTuple(var_RailRoad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));
+      		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
+      		new TypeConstraint(body, new FlatTuple(var_RailRoad, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel", "sections")));
+      		new Equality(body, var__virtual_2_, var_Current);
+      		// 		find viablePaths(Current, p)
       		new PositivePatternCall(body, new FlatTuple(var_Current, var_p), ViablePathsQuerySpecification.instance().getInternalQueryRepresentation());
       		// 	Path.from(p, _)
       		new TypeConstraint(body, new FlatTuple(var_p), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
-      		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "from")));
-      		new Equality(body, var__virtual_0_, var___0_);
+      		PVariable var__virtual_3_ = body.getOrCreateVariableByName(".virtual{3}");
+      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_3_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "from")));
+      		new Equality(body, var__virtual_3_, var___0_);
       		// 	Path.via(p, Current)
       		new TypeConstraint(body, new FlatTuple(var_p), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
-      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "via")));
-      		new Equality(body, var__virtual_1_, var_Current);
+      		PVariable var__virtual_4_ = body.getOrCreateVariableByName(".virtual{4}");
+      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_4_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "via")));
+      		new Equality(body, var__virtual_4_, var_Current);
       		// 	Path.to(p, Next)
       		new TypeConstraint(body, new FlatTuple(var_p), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path")));
-      		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
-      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "to")));
-      		new Equality(body, var__virtual_2_, var_Next);
+      		PVariable var__virtual_5_ = body.getOrCreateVariableByName(".virtual{5}");
+      		new TypeConstraint(body, new FlatTuple(var_p, var__virtual_5_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Path", "to")));
+      		new Equality(body, var__virtual_5_, var_Next);
       		bodies.add(body);
       	}
       	// to silence compiler error

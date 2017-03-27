@@ -6,3 +6,7 @@
 /.TrainOnStationQuerySpecification.java._trace
 /.MultipleTrainsOnStationProcessor.java._trace
 /.MultipleTrainsOnStationQuerySpecification.java._trace
+/.TrainIsNotOnStationProcessor.java._trace
+/.TrainIsNotOnStationQuerySpecification.java._trace
+/.TrainIsNotInStationProcessor.java._trace
+/.TrainIsNotInStationQuerySpecification.java._trace

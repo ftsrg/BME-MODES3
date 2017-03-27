@@ -18,11 +18,17 @@ pattern trainLeftStation(t : Train) {
 	Train.previouslyOn.id(t, 20);
 }
 
+pattern trainIsNotInStation(t : Train){
+	neg find trainOnStation(t);
+}
+
 pattern noTrainOnStation() {
-	neg find trainOnStation(_);
+	count find trainIsNotInStation(_) == 0;
 }
 
 pattern multipleTrainsOnStation(t1 : Train, t2 : Train) {
+	RailRoadModel.trains(railroad, t1);
+	RailRoadModel.trains(railroad, t2);
 	find trainOnStation(t1);
 	find trainOnStation(t2);
 	t1 != t2;
