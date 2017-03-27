@@ -24,7 +24,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	private ILoggerFactory factory
 
 	@Accessors(PUBLIC_GETTER)
-	private SafetyLogicRuleEngine rules 
+	private SafetyLogicRuleEngine rules
 
 	static val turnoutToSenseIDMap = #{1 -> #{14}, 2 -> #{28}, 3 -> #{25, 32}, 4 -> #{3}, 5 -> #{9}, 6 -> #{21}}
 	static val senseToTurnoutIDMap = #{14 -> 1, 28 -> 2, 25 -> 3, 32 -> 3, 3 -> 4, 9 -> 5, 21 -> 6}
@@ -92,20 +92,18 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	private def void initRailRoad() {
-		model.model.sections.getTurnouts.forEach[currentlyDivergent = true]
 		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
-//		(model.model.sections.findFirst[id == 9] as Turnout).currentlyDivergent = true
-		val sleepTimes = 3000
-		logger.info('Railroad initialization started, sleep times are ' + sleepTimes)
+		val initSleepTimes = 3000
+		logger.info('Railroad initialization started, sleep times are ' + initSleepTimes)
 		val turnouts = model.model.sections.getTurnouts
 		
 		
-		Thread.sleep(sleepTimes)
+		Thread.sleep(initSleepTimes)
 		turnouts.forEach [
 			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
 		]
 		logger.info('All turnout set divergent')
-		Thread.sleep(sleepTimes)
+		Thread.sleep(initSleepTimes)
 
 		turnouts.forEach [
 			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
@@ -118,18 +116,21 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
 		] 
 		logger.info('Disabling all sections')
-		Thread.sleep(sleepTimes)
+		Thread.sleep(initSleepTimes)
 		segments.forEach [
 			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
 		]
 		logger.info('Enabling all sections')
-		Thread.sleep(sleepTimes)
+		Thread.sleep(initSleepTimes)
 		logger.info('Railroad initialization finished')
 	}
 
 	override void run() {
 		
 		this.logger.info("Running started...")
+		
+		initRailRoad
+		
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this,
 			factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
