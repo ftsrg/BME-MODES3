@@ -6,6 +6,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
@@ -118,6 +119,12 @@ class ModelUtil implements IModelInteractor {
 	def static getModelFromResource(Resource resource) {
 		resource.contents.head as RailRoadModel
 	}
-
 	
+	override Iterable<Turnout> getTurnouts(){
+		 model.sections.filter[it instanceof Turnout].map[it as Turnout]
+	}
+	
+	override Iterable<Segment> getSegments(){
+		 model.sections.filter[it instanceof Segment].map[it as Segment]
+	}	
 }
