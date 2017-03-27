@@ -52,16 +52,17 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 		rules = new SafetyLogicRuleEngine(model.resourceSet)
 
-		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
+		model.segments.map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
 		locator.sendAllStatusCallback.statusUpdateListener = new IAllStatusUpdateListener() {
 
+			//TODO : This part still requires some testing.
 			override onAllStatusUpdate() {
-				model.model.sections.getTurnouts.forEach [
+				model.turnouts.forEach [
 					locator.trackElementStateSender.sendTurnoutState(id,
 						if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT)
 				]
-				model.model.sections.getSegments.forEach [
+				model.segments.forEach [
 					locator.trackElementStateSender.sendSegmentState(id,
 						if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
 				]
@@ -78,24 +79,24 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		}
 
 	}
-
-	private def Iterable<Turnout> getTurnouts(Iterable<RailRoadElement> railRoadElements) {
-		railRoadElements.filter[it instanceof Turnout].map[it as Turnout]
+	
+	private def Iterable<Turnout> getTurnouts(ModelUtil model){
+		 model.model.sections.filter[it instanceof Turnout].map[it as Turnout]
+	}
+	
+	private def Iterable<Segment> getSegments(ModelUtil model){
+		 model.model.sections.filter[it instanceof Segment].map[it as Segment]
 	}
 
-	private def Iterable<Segment> getSegments(Iterable<RailRoadElement> railRoadElements) {
-		railRoadElements.filter[it instanceof Segment].map[it as Segment]
-	}
-
-	private def turn(RailRoadElement element, SegmentState state) {
+	private def switchTurnoutTo(RailRoadElement element, SegmentState state) {
 		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
 	}
 
 	private def void initRailRoad() {
-		model.model.sections.getTurnouts.forEach[currentlyDivergent = false]
+		model.turnouts.forEach[currentlyDivergent = false]
 		val initSleepTimes = 3000
 		logger.info('Railroad initialization started, sleep times are ' + initSleepTimes)
-		val turnouts = model.model.sections.getTurnouts
+		val turnouts = model.turnouts
 		
 		
 		Thread.sleep(initSleepTimes)
@@ -111,7 +112,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		logger.info('All turnout set straight')
 
 
-		val segments = model.model.sections.getSegments
+		val segments = model.segments
 		segments.forEach [
 			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
 		] 
@@ -138,12 +139,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
 				val senseID = turnoutToSenseIDMap.get(id)
 				logger.info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
-				println(model.model.sections.filter[it instanceof Turnout].filter[senseID.contains(it.id)].size)//.map[it as Turnout].size)
-				model.model.sections.filter[it instanceof Turnout].filter[senseID.contains(it.id)].map[it as Turnout].forEach [
+				println(model.turnouts.filter[senseID.contains(it.id)].size)//.map[it as Turnout].size)
+				model.turnouts.filter[senseID.contains(it.id)].map[it as Turnout].forEach [
 					it.currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
 					logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
 				]
-				logger.info('''Turnout States: <«FOR turnout : model.model.sections.filter[it instanceof Turnout].map[it as Turnout] SEPARATOR ";\t "»
+				logger.info('''Turnout States: <«FOR turnout : model.turnouts.map[it as Turnout] SEPARATOR ";\t "»
 				Sense=«turnout.id»,TurnoutID=«senseToTurnoutIDMap.get(turnout.id)»,State=«if(turnout.currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»
 				«ENDFOR»>''')
 				refreshSafetyLogicState
@@ -156,24 +157,25 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 
 	def public void refreshSafetyLogicState() {
-		logger.
-			info('''Refreshing state: #of trains «model.model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
-		logger.
-			info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		logger.info('''Refreshing state: #of trains «model.model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		logger.info('''Trains «FOR train : model.model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		
 		val offenders = new HashSet<Train>
+		
 		model.cuts.forEach [ cut |
 			logger.info('''CUT: Train on «cut.offender.currentlyOn.id» will cut «cut.victim.id»''')
-			model.getSegment(cut.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which cut sections
+			model.getSegment(cut.offender.currentlyOn.id).switchTurnoutTo(SegmentState.DISABLED) // disable the trains which cut sections
 			offenders.add(cut.offender)
 		]
 
 		model.hits.forEach [ hit |
 			logger.info('''HIT: offender on «hit.offender.currentlyOn.id», hits victim on «hit.victim.currentlyOn.id»''')
-			model.getSegment(hit.offender.currentlyOn.id).turn(SegmentState.DISABLED) // disable the trains which hit another
+			model.getSegment(hit.offender.currentlyOn.id).switchTurnoutTo(SegmentState.DISABLED) // disable the trains which hit another
 			offenders.add(hit.offender)
 		]
 
 		val trainsToStop = offenders.filter[!stoppedTrains.contains(it)]
+		
 		trainsToStop.forEach [ train |
 			trainStopStrategies.forEach[it.stopTrain(train)]
 		]
@@ -195,8 +197,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			logger.info('''SectionToEnable = {«FOR enable : sectionsToEnable SEPARATOR ', '» «enable.id» «ENDFOR»}''')
 		}
 		if (!sectionsToDisable.empty) {
-			logger.
-				info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
+			logger.info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
 		}
 
 		sectionsToEnable.filter[it instanceof Segment].map[it as Segment].forEach [
