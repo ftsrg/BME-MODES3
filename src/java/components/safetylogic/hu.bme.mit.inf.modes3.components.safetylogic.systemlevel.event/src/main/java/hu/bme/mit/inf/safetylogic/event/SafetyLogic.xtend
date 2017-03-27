@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.safetylogic.event
 
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
@@ -17,6 +16,7 @@ import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
@@ -81,10 +81,10 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 	
 
-
-	private def switchTurnoutTo(RailRoadElement element, SegmentState state) {
-		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
-	}
+//
+//	private def turnSegmentTo(RailRoadElement element, SegmentState state) {
+//		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
+//	}
 
 	private def void initRailRoad() {
 		model.turnouts.forEach[currentlyDivergent = false]
@@ -118,16 +118,16 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		logger.info('Enabling all sections')
 		Thread.sleep(initSleepTimes)
 		logger.info('Railroad initialization finished')
+		
+
 	}
 
 	override void run() {
 		
 		this.logger.info("Running started...")
 		
-		initRailRoad
 		
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this,
-			factory)
+		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
@@ -147,7 +147,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 		rules.start
 
-//		initRailRoad()
+		initRailRoad()
 	}
 
 	def public void refreshSafetyLogicState() {
@@ -158,13 +158,13 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		
 		model.cuts.forEach [ cut |
 			logger.info('''CUT: Train on «cut.offender.currentlyOn.id» will cut «cut.victim.id»''')
-			model.getSegment(cut.offender.currentlyOn.id).switchTurnoutTo(SegmentState.DISABLED) // disable the trains which cut sections
+//			model.getSegment(cut.offender.currentlyOn.id).turnSegmentTo(SegmentState.DISABLED) // disable the trains which cut sections XXX this should be done by the given strategy
 			offenders.add(cut.offender)
 		]
 
 		model.hits.forEach [ hit |
 			logger.info('''HIT: offender on «hit.offender.currentlyOn.id», hits victim on «hit.victim.currentlyOn.id»''')
-			model.getSegment(hit.offender.currentlyOn.id).switchTurnoutTo(SegmentState.DISABLED) // disable the trains which hit another
+//			model.getSegment(hit.offender.currentlyOn.id).turnSegmentTo(SegmentState.DISABLED) // disable the trains which hit another XXX this should be done by the given strategy
 			offenders.add(hit.offender)
 		]
 
@@ -173,6 +173,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		trainsToStop.forEach [ train |
 			trainStopStrategies.forEach[it.stopTrain(train)]
 		]
+		
 		val trainsToRelease = stoppedTrains.filter[!offenders.contains(it)]
 		val sectionsToEnable = trainsToRelease.map[it.currentlyOn]
 		val sectionsToDisable = trainsToStop.map[it.currentlyOn]
