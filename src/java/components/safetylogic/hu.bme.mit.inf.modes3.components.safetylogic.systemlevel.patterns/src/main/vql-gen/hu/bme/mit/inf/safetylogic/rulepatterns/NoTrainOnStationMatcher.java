@@ -25,7 +25,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * <p>Original source:
  * <code><pre>
  * pattern noTrainOnStation() {
- * 	neg find trainOnStation(_);
+ * 	count find trainIsNotInStation(_) == 0;
  * }
  * </pre></code>
  * 

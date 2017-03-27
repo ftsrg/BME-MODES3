@@ -44,8 +44,8 @@ public class QueryEngine2ViatraCep {
   
   public EventDrivenTransformationRuleGroup getRules() {
     EventDrivenTransformationRuleGroup ruleGroup = new EventDrivenTransformationRuleGroup(
-    	createmultipleTrainsOnStation_MappingRule(), 
     	createnoTrainOnStation_MappingRule(), 
+    	createmultipleTrainsOnStation_MappingRule(), 
     	createtrainOnStation_MappingRule()
     );
     return ruleGroup;
@@ -57,36 +57,6 @@ public class QueryEngine2ViatraCep {
     } catch (ViatraQueryException e) {
     	e.printStackTrace();
     }
-  }
-  
-  public EventDrivenTransformationRule<MultipleTrainsOnStationMatch, MultipleTrainsOnStationMatcher> createmultipleTrainsOnStation_MappingRule() {
-    try{
-      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<MultipleTrainsOnStationMatch, MultipleTrainsOnStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
-      builder.addLifeCycle(Lifecycles.getDefault(false, true));
-      builder.precondition(MultipleTrainsOnStationMatcher.querySpecification());
-      
-      IMatchProcessor<MultipleTrainsOnStationMatch> actionOnAppear_0 = new IMatchProcessor<MultipleTrainsOnStationMatch>() {
-        public void process(final MultipleTrainsOnStationMatch matchedPattern) {
-          MultipleTrainsOnStation_Event event = new MultipleTrainsOnStation_Event(null);
-          event.setQueryMatch(matchedPattern);
-          eventStream.push(event);
-        }
-      };
-      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
-      
-      IMatchProcessor<MultipleTrainsOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<MultipleTrainsOnStationMatch>() {
-        public void process(final MultipleTrainsOnStationMatch matchedPattern) {
-        }
-      };
-      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
-      
-      return builder.build();
-    } catch (ViatraQueryException e) {
-      e.printStackTrace();
-    } catch (InconsistentEventSemanticsException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
   
   public EventDrivenTransformationRule<NoTrainOnStationMatch, NoTrainOnStationMatcher> createnoTrainOnStation_MappingRule() {
@@ -109,6 +79,36 @@ public class QueryEngine2ViatraCep {
           NoMultipleTrainsOnStation_Event event = new NoMultipleTrainsOnStation_Event(null);
           event.setQueryMatch(matchedPattern);
           eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
+      
+      return builder.build();
+    } catch (ViatraQueryException e) {
+      e.printStackTrace();
+    } catch (InconsistentEventSemanticsException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+  
+  public EventDrivenTransformationRule<MultipleTrainsOnStationMatch, MultipleTrainsOnStationMatcher> createmultipleTrainsOnStation_MappingRule() {
+    try{
+      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<MultipleTrainsOnStationMatch, MultipleTrainsOnStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
+      builder.addLifeCycle(Lifecycles.getDefault(false, true));
+      builder.precondition(MultipleTrainsOnStationMatcher.querySpecification());
+      
+      IMatchProcessor<MultipleTrainsOnStationMatch> actionOnAppear_0 = new IMatchProcessor<MultipleTrainsOnStationMatch>() {
+        public void process(final MultipleTrainsOnStationMatch matchedPattern) {
+          MultipleTrainsOnStation_Event event = new MultipleTrainsOnStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
+      
+      IMatchProcessor<MultipleTrainsOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<MultipleTrainsOnStationMatch>() {
+        public void process(final MultipleTrainsOnStationMatch matchedPattern) {
         }
       };
       builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
