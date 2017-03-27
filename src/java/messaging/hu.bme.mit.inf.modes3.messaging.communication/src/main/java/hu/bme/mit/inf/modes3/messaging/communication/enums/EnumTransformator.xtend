@@ -33,8 +33,14 @@ class EnumTransformator {
 
 	def static TurnoutStateValue toSpecific(TurnoutState state) {
 		switch (state) {
-			case DIVERGENT: TurnoutStateValue.DIVERGENT
-			case STRAIGHT: TurnoutStateValue.STRAIGHT
+			case DIVERGENT:
+				TurnoutStateValue.DIVERGENT
+			case STRAIGHT:
+				TurnoutStateValue.STRAIGHT
+			case ILLEGAL: {
+				logger.warn("TurnoutStateValue is ILLEGAL, default TurnoutStateValue.DIVERGENT is used instead")
+				return TurnoutStateValue.DIVERGENT
+			}
 		}
 	}
 
