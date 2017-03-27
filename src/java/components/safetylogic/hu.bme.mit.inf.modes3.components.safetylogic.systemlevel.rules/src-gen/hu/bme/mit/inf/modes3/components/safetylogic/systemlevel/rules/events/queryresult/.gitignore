@@ -6,3 +6,5 @@
 /MultipleTrainsOnStation_Event.java
 /NoMultipleTrainsOnStation_Event.java
 /NoTrainOnStation_Event.java
+/TrainLeftStation_Event.java
+/TrainOnStation_Event.java

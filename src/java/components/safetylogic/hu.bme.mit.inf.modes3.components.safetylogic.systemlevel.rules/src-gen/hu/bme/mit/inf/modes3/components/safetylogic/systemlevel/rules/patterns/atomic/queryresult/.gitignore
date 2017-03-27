@@ -6,3 +6,5 @@
 /MultipleTrainsOnStation_Pattern.java
 /NoMultipleTrainsOnStation_Pattern.java
 /NoTrainOnStation_Pattern.java
+/TrainLeftStation_Pattern.java
+/TrainOnStation_Pattern.java

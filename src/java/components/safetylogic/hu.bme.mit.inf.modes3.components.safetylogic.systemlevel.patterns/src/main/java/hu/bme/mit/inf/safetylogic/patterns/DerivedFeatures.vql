@@ -22,7 +22,7 @@ pattern currentlyConnected(This : RailRoadElement, connectedTo : RailRoadElement
 	Turnout(This);
 	Turnout.currentlyDivergent(This, false);
 	Turnout.straight(This, connectedTo);
-}
+}  
 
 //XXX @QueryBasedFeature(feature = "connected")//, source = This, target = connectedTo, kind = "many") 
 pattern connected(This : RailRoadElement, connectedTo : RailRoadElement) = {
