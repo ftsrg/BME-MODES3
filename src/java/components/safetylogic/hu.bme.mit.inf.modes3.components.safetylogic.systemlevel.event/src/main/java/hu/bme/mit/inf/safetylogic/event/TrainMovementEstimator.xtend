@@ -15,14 +15,14 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 
 	val IModelInteractor model
 	val INotifiable notifiable
-	val SortedMap<Long, RailRoadElement> freedSections
+	val SortedMap<RailRoadElement, Long> freedSections
 	val Poller poller
 
 	new(IModelInteractor model, INotifiable notifiable, ILoggerFactory factory) {
 		this.model = model
 		this.notifiable = notifiable
 		this.logger = factory.getLogger(this.class.name)
-		this.freedSections = new TreeMap<Long, RailRoadElement>
+		this.freedSections = new TreeMap<RailRoadElement, Long>
 		this.poller = new Poller(this)
 		poller.start
 	}
@@ -33,8 +33,8 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	
 	def synchronized checkFreedSections(){
 		val time = System.currentTimeMillis
-		freedSections.keySet.filter[it < time - 10000].forEach[
-			val train = model.enabledTrains.findFirst[it.currentlyOn.id == id]
+		freedSections.filter[freedSection, timeStamp| timeStamp < time - 10000].forEach[freedSection, timeStamp | 
+			val train = model.enabledTrains.findFirst[it.currentlyOn == freedSection]
 			logger.info('''Old train #«train.id» removed from «train.currentlyOn.id»''')
 			model.removeTrain(train)
 		]
@@ -48,7 +48,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 		val changedSegment = model.getSegment(id)
 		if(newValue == SegmentOccupancy.OCCUPIED) {
 			if(freedSections.values.contains(changedSegment)){
-				freedSections.filter[time, segment| segment == changedSegment].keySet.forEach[freedSections.remove(it)]
+				freedSections.remove(changedSegment)
 			}
 			val possibleTrainPositions = model.getCurrentlyConnected(changedSegment)
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
@@ -61,7 +61,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 			train.previouslyOn = train.currentlyOn
 			train.currentlyOn = changedSegment
 		} else if(newValue == SegmentOccupancy.FREE) {
-			freedSections.put(System.currentTimeMillis, model.getSegment(id))
+			freedSections.put(model.getSegment(id), System.currentTimeMillis)
 		}
 		this.onUpdate
 		notifiable.onUpdate
