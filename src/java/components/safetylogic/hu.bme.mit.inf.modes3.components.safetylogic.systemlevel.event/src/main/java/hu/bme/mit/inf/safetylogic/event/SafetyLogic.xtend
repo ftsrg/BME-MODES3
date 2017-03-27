@@ -103,13 +103,13 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		turnouts.forEach [
 			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
 		]
-		logger.info('All turnout set divergent')
+		logger.info('All turnouts set divergent')
 		Thread.sleep(initSleepTimes)
 
 		turnouts.forEach [
 			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
 		]
-		logger.info('All turnout set straight')
+		logger.info('All turnouts set straight')
 
 
 		val segments = model.segments
