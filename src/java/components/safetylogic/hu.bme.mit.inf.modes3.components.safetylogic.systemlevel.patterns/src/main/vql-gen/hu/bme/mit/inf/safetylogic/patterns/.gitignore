@@ -1,3 +1,6 @@
+/.PathBuildingHelperQueries.java._trace
+/.ThreeConnectedRailRoadPartsMatch.java._trace
+/.ThreeConnectedRailRoadPartsMatcher.java._trace
 /.NextSectionMatch.java._trace
 /.NextSectionMatcher.java._trace
 /.TrainHitsAnotherTrainMatch.java._trace
@@ -5,9 +8,6 @@
 /.SafetyPatterns.java._trace
 /.TrainCutsTurnoutMatch.java._trace
 /.TrainCutsTurnoutMatcher.java._trace
-/.PathBuildingHelperQueries.java._trace
-/.ThreeConnectedRailRoadPartsMatch.java._trace
-/.ThreeConnectedRailRoadPartsMatcher.java._trace
 /.ConnectedMatch.java._trace
 /.ConnectedMatcher.java._trace
 /.CurrentlyConnectedMatch.java._trace
@@ -15,20 +15,3 @@
 /.DerivedFeatures.java._trace
 /.ViablePathsMatch.java._trace
 /.ViablePathsMatcher.java._trace
-/NextSectionMatch.java
-/NextSectionMatcher.java
-/TrainHitsAnotherTrainMatch.java
-/TrainHitsAnotherTrainMatcher.java
-/PathBuildingHelperQueries.java
-/SafetyPatterns.java
-/ThreeConnectedRailRoadPartsMatch.java
-/ThreeConnectedRailRoadPartsMatcher.java
-/TrainCutsTurnoutMatch.java
-/TrainCutsTurnoutMatcher.java
-/ConnectedMatch.java
-/ConnectedMatcher.java
-/CurrentlyConnectedMatch.java
-/CurrentlyConnectedMatcher.java
-/DerivedFeatures.java
-/ViablePathsMatch.java
-/ViablePathsMatcher.java

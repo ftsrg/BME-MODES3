@@ -5,7 +5,6 @@ package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
@@ -16,6 +15,7 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFPQuery;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecification;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
+import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
@@ -122,7 +122,7 @@ final class NotNullQuerySpecification extends BaseGeneratedEMFQuerySpecification
     
     @Override
     public Set<PBody> doGetContainedBodies() throws QueryInitializationException {
-      setEvaluationHints(new QueryEvaluationHint(null, Collections.<String,Object>emptyMap()));
+      setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
       	{
