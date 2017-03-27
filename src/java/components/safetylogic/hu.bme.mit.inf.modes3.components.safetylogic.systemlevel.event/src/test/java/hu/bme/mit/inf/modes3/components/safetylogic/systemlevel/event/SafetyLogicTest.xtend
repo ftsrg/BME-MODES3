@@ -58,7 +58,7 @@ class SafetyLogicTest {
 	}
 
 	def assertOnlyBlocked(List<Integer> integers) {
-		sl.model.model.sections.forEach [
+		sl.model.sections.forEach [
 			if(it instanceof Segment) {
 				if(integers.contains(it.id)) {
 					Assert.assertEquals('''«it.id» Should be disabled but it is enabled''', false, it.isIsEnabled)
