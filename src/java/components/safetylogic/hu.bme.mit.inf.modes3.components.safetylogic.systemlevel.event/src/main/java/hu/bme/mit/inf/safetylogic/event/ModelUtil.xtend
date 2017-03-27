@@ -39,18 +39,18 @@ class ModelUtil implements IModelInteractor {
 		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[it.isEnabled = true]
 	}
 
-	def override getEnabledTrains(){
+	override getEnabledTrains(){
 		model.trains.filter[
 			if (it.currentlyOn instanceof Segment) (currentlyOn as Segment).isEnabled 
 			else true
 		]
 	}
 	
-	def override getSegment(int segmentId){
+	override getSegment(int segmentId){
 		model.sections.findFirst[id == segmentId]
 	}
 	
-	def override addNewTrain(){
+	override addNewTrain(){
 		val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
 		model.trains.add(train)
 		return train
@@ -69,15 +69,15 @@ class ModelUtil implements IModelInteractor {
 		model.trains.remove(t)
 	}
 	
-	public override getCurrentlyConnected(RailRoadElement what) {
+	override getCurrentlyConnected(RailRoadElement what) {
 		CurrentlyConnectedMatcher.on(engine).getAllValuesOfconnectedTo(what)
 	}
 	
-	package def getCuts() {
+	override getCuts() {
 		TrainCutsTurnoutMatcher.on(engine).getAllMatches
 	}
 
-	package def getHits() {
+	override getHits() {
 		TrainHitsAnotherTrainMatcher.on(engine).getAllMatches
 	}
 
@@ -126,5 +126,14 @@ class ModelUtil implements IModelInteractor {
 	
 	override Iterable<Segment> getSegments(){
 		 model.sections.filter[it instanceof Segment].map[it as Segment]
-	}	
+	}
+	
+	override getSections() {
+		model.sections
+	}
+	
+	override getTrains() {
+		model.trains
+	}
+	
 }
