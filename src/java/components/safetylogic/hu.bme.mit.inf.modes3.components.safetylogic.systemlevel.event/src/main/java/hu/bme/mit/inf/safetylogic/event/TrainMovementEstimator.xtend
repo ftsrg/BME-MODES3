@@ -3,8 +3,9 @@ package hu.bme.mit.inf.safetylogic.event
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
-import java.util.SortedMap
-import java.util.TreeMap
+import java.util.HashMap
+import java.util.HashSet
+import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -15,14 +16,14 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 
 	val IModelInteractor model
 	val INotifiable notifiable
-	val SortedMap<RailRoadElement, Long> freedSections
+	val Map<RailRoadElement, Long> freedSections
 	val Poller poller
 
 	new(IModelInteractor model, INotifiable notifiable, ILoggerFactory factory) {
 		this.model = model
 		this.notifiable = notifiable
 		this.logger = factory.getLogger(this.class.name)
-		this.freedSections = new TreeMap<RailRoadElement, Long>
+		this.freedSections = new HashMap<RailRoadElement, Long>
 		this.poller = new Poller(this)
 		poller.start
 	}
@@ -30,25 +31,37 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	private def print(SegmentOccupancy value) {
 		if(value == SegmentOccupancy.FREE) 'FREE' else 'OCCUPIED'
 	}
-	
-	def synchronized checkFreedSections(){
+
+	def synchronized checkFreedSections() {
 		val time = System.currentTimeMillis
-		freedSections.filter[freedSection, timeStamp| timeStamp < time - 10000].forEach[freedSection, timeStamp | 
+		val freedLongTimeAgo = freedSections.filter[freedSection, timeStamp|timeStamp < (time - 5000)]
+		if(freedLongTimeAgo.size == 0) {
+			return
+		}
+		
+		val removeKeys = new HashSet<RailRoadElement>
+		freedLongTimeAgo.forEach [ freedSection, timeStamp |
 			val train = model.enabledTrains.findFirst[it.currentlyOn == freedSection]
-			logger.info('''Old train #«train.id» removed from «train.currentlyOn.id»''')
-			model.removeTrain(train)
+			if(train != null) {
+				logger.info('''Old train #«train.id» removed from «train.currentlyOn.id»''')
+				model.removeTrain(train)
+			}
+			removeKeys.add(freedSection)
 		]
 		
-		
+		removeKeys.forEach[freedSections.remove(it)]
 	}
-	
+
 	def synchronized threadSafeOnSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
 		logger.info('''Segment occupancy changed on «id» from «oldValue.print» to «newValue.print»''')
 		val enabledTrains = model.enabledTrains
 		val changedSegment = model.getSegment(id)
 		if(newValue == SegmentOccupancy.OCCUPIED) {
-			if(freedSections.values.contains(changedSegment)){
+			if(freedSections.keySet.contains(changedSegment)) {
 				freedSections.remove(changedSegment)
+			}
+			if(model.trains.map[currentlyOn].toList.contains(changedSegment)){
+				return
 			}
 			val possibleTrainPositions = model.getCurrentlyConnected(changedSegment)
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
@@ -70,27 +83,33 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
 		threadSafeOnSegmentOccupancyChange(id, oldValue, newValue)
 	}
-	
+
 	override onUpdate() {
 		checkFreedSections
+		println('''current time = «System.currentTimeMillis» «'\t'» «freedSections»''')
 	}
 
 }
 
-class Poller{
+class Poller {
 	val INotifiable toNotify
 	Thread t = null
-	new(INotifiable notify){
+
+	new(INotifiable notify) {
 		this.toNotify = notify
 	}
-	def start(){
-		if(t != null){
+
+	def start() {
+		if(t != null) {
 			throw new RuntimeException
 		}
-		t = new Thread(new Runnable(){
+		t = new Thread(new Runnable() {
 			override run() {
-				Thread.sleep(1000)
-				toNotify.onUpdate
+				while(true) {
+					Thread.sleep(1000)
+					toNotify.onUpdate
+				}
+
 			}
 		})
 		t.start

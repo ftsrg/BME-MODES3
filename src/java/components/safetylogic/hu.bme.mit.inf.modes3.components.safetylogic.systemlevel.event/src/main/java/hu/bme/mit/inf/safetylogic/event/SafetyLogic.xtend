@@ -16,7 +16,6 @@ import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
@@ -147,7 +146,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 //		rules.start
 
-		initRailRoad()
+		initRailRoad
 	}
 
 	def public void refreshSafetyLogicState() {
