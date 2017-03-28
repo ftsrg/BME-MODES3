@@ -145,7 +145,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 		}
 
-		rules.start
+//		rules.start
 
 		initRailRoad()
 	}
