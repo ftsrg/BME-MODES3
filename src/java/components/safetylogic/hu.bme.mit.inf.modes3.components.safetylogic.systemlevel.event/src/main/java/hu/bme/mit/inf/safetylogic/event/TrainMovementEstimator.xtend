@@ -86,7 +86,6 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 
 	override onUpdate() {
 		checkFreedSections
-		println('''current time = «System.currentTimeMillis» «'\t'» «freedSections»''')
 	}
 
 }
