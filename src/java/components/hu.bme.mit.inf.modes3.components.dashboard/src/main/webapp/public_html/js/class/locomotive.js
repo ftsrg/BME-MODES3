@@ -33,7 +33,7 @@ LocomotiveController.prototype.setSpeed = function (speed) {
 };
 
 LocomotiveController.prototype.createDOMrepresentation = function () {
-    var container = $('<div />').addClass('train-container');
+    var container = $('<div />').addClass('train-container').attr("id", "train-"+this.config.address);
     var header = $('<h2 />').text(this.config.name);
     var image = $('<img />')
             .attr('src', 'images/locomotives/' + this.config.image);
@@ -50,7 +50,6 @@ LocomotiveController.prototype.createDOMrepresentation = function () {
     image.wrap($('<div />').addClass('train-control-image'));
     this.rangeInput.wrap($('<div />').addClass('train-control-speed-input'));
     $('#train-control').append(container);
-
 
     // add event handler for range input
     this.rangeInput.bind('change', {_this: this}, function (event) {
