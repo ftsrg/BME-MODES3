@@ -28,7 +28,7 @@ class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
 	val Logger logger
-	val validTrainIDs = #[8,9,10] //8=RED, 9=TAURUS, 10=SNCF
+	val validTrainIDs = #[8, 9, 10] // 8=RED, 9=TAURUS, 10=SNCF
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
@@ -39,46 +39,59 @@ class ModelUtil implements IModelInteractor {
 		model.sections.filter[it instanceof Segment].map[it as Segment].forEach[it.isEnabled = true]
 	}
 
-	override getEnabledTrains(){
-		model.trains.filter[
-			if (it.currentlyOn instanceof Segment) (currentlyOn as Segment).isEnabled 
-			else true
-		]
+	override getEnabledTrains() {
+		synchronized(model) {
+			model.trains.filter [
+				if(it.currentlyOn instanceof Segment) (currentlyOn as Segment).isEnabled else true
+			]
+		}
 	}
-	
-	override getSegment(int segmentId){
-		model.sections.findFirst[id == segmentId]
+
+	override getSegment(int segmentId) {
+		synchronized(model) {
+			model.sections.findFirst[id == segmentId]
+		}
 	}
-	
-	override addNewTrain(){
-		val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
-		model.trains.add(train)
-		return train
+
+	override addNewTrain() {
+		synchronized(model) {
+			val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
+			model.trains.add(train)
+			return train
+		}
 	}
-	
-	def private getNewTrainID(){
-		for(trainID : validTrainIDs){
+
+	def private getNewTrainID() {
+		for (trainID : validTrainIDs) {
 			if(model.trains.findFirst[it.id == trainID] == null) return trainID
 		}
 		logger.error("There can't be this much trains on the track")
 		model.trains.clear
 		throw new RuntimeException("There can't be this much trains on the track")
 	}
-	
-	def override removeTrain(Train t){
-		model.trains.remove(t)
+
+	def override removeTrain(Train t) {
+		synchronized(model) {
+			model.trains.remove(t)
+		}
 	}
-	
+
 	override getCurrentlyConnected(RailRoadElement what) {
-		CurrentlyConnectedMatcher.on(engine).getAllValuesOfconnectedTo(what)
+		synchronized(model) {
+			CurrentlyConnectedMatcher.on(engine).getAllValuesOfconnectedTo(what)
+		}
 	}
-	
+
 	override getCuts() {
-		TrainCutsTurnoutMatcher.on(engine).getAllMatches
+		synchronized(model) {
+			TrainCutsTurnoutMatcher.on(engine).getAllMatches
+		}
 	}
 
 	override getHits() {
-		TrainHitsAnotherTrainMatcher.on(engine).getAllMatches
+		synchronized(model) {
+			TrainHitsAnotherTrainMatcher.on(engine).getAllMatches
+		}
 	}
 
 	def private loadSectionResource() {
@@ -89,7 +102,7 @@ class ModelUtil implements IModelInteractor {
 	}
 
 	def loadModel() {
-		val resource =loadSectionResource
+		val resource = loadSectionResource
 		ModelUtil.createAllPaths(resource)
 		return resource;
 
@@ -119,21 +132,33 @@ class ModelUtil implements IModelInteractor {
 	def static getModelFromResource(Resource resource) {
 		resource.contents.head as RailRoadModel
 	}
-	
-	override Iterable<Turnout> getTurnouts(){
-		 model.sections.filter[it instanceof Turnout].map[it as Turnout]
+
+	override Iterable<Turnout> getTurnouts() {
+		synchronized(model) {
+			model.sections.filter[it instanceof Turnout].map[it as Turnout]
+
+		}
 	}
-	
-	override Iterable<Segment> getSegments(){
-		 model.sections.filter[it instanceof Segment].map[it as Segment]
+
+	override Iterable<Segment> getSegments() {
+		synchronized(model) {
+			model.sections.filter[it instanceof Segment].map[it as Segment]
+
+		}
 	}
-	
+
 	override getSections() {
-		model.sections
+		synchronized(model) {
+
+			model.sections
+		}
 	}
-	
+
 	override getTrains() {
-		model.trains
+		synchronized(model) {
+
+			model.trains
+		}
 	}
-	
+
 }
