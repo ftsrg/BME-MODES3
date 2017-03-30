@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
-import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.ALL_STATE;
 import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SEGMENT_STATE;
 import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TRAIN_SPEED;
 import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TURNOUT_STATE;
