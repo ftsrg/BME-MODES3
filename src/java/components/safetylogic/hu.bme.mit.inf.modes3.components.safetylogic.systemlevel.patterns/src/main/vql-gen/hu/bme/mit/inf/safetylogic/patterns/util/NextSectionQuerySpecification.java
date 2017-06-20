@@ -184,7 +184,7 @@ public final class NextSectionQuerySpecification extends BaseGeneratedEMFQuerySp
       		   new ExportedParameter(body, var_Current, parameter_pCurrent),
       		   new ExportedParameter(body, var_Next, parameter_pNext)
       		));
-      		// 	neg find notNull(Old)
+      		// 		neg find notNull(Old)
       		new NegativePatternCall(body, new FlatTuple(var_Old), NotNullQuerySpecification.instance().getInternalQueryRepresentation());
       		//  // Check for null, as if it is, we don't know the direction		RailRoadModel.sections(RailRoad,Old)
       		new TypeConstraint(body, new FlatTuple(var_RailRoad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));

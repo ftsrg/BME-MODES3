@@ -38,7 +38,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 		if(freedLongTimeAgo.size == 0) {
 			return
 		}
-		
+
 		val removeKeys = new HashSet<RailRoadElement>
 		freedLongTimeAgo.forEach [ freedSection, timeStamp |
 			val train = model.enabledTrains.findFirst[it.currentlyOn == freedSection]
@@ -48,7 +48,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 			}
 			removeKeys.add(freedSection)
 		]
-		
+
 		removeKeys.forEach[freedSections.remove(it)]
 	}
 
@@ -60,14 +60,18 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 			if(freedSections.keySet.contains(changedSegment)) {
 				freedSections.remove(changedSegment)
 			}
-			if(model.trains.map[currentlyOn].toList.contains(changedSegment)){
+			if(model.trains.map[currentlyOn].toList.contains(changedSegment)) {
 				return
 			}
 			val possibleTrainPositions = model.getCurrentlyConnected(changedSegment)
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
-			if(train == null) { // There is not even a train nearby, so it must have been put there recently
-				train = model.addNewTrain
-				logger.info('''New train estimated on «changedSegment.id». The new train's ID is «train.id»''')
+			if(train == null) { // There is no enabled train nearby
+				train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
+				if(train == null) {
+					train = model.addNewTrain
+					logger.info('''New train estimated on «changedSegment.id». The new train's ID is «train.id»''')
+				}
+
 			} else {
 				logger.info('''Train moved from «train.currentlyOn.id» to «changedSegment.id»''')
 			}
