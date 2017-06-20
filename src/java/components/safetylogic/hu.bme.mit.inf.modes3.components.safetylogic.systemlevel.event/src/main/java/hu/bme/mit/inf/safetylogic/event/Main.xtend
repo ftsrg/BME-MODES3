@@ -3,13 +3,16 @@ package hu.bme.mit.inf.safetylogic.event
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
+import org.slf4j.impl.SimpleLogger
 import org.slf4j.impl.SimpleLoggerFactory
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.message.EasterEggMessageSender
 
 class Main {
 
 	public static def void main(String[] args) {
-		System.setProperty(org.slf4j.impl.SimpleLogger.LOG_FILE_KEY, "System.out")
+		System.setProperty(SimpleLogger.LOG_FILE_KEY, "System.out")
+
+//		System.setProperty(org.slf4j.impl.SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "ERROR");
+
 		val loggerFactory = new SimpleLoggerFactory
 			
 		val registry = new ArgumentRegistry(loggerFactory)
@@ -21,7 +24,7 @@ class Main {
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The reply port for the component", Integer))
 		registry.parseArguments(args)
 		
-		EasterEggMessageSender.INSTANCE.initialize(registry.getParameterStringValue("address"), registry.getParameterIntegerValue("pubPort"), EasterEggMessageSender.name)
+//		EasterEggMessageSender.INSTANCE.initialize(registry.getParameterStringValue("address"), registry.getParameterIntegerValue("pubPort"), EasterEggMessageSender.name)
 		val sl = new SafetyLogic(CommunicationStackFactory::createMQTTStack(registry, loggerFactory), loggerFactory)
 
 		sl.run // The component will run on this thread
