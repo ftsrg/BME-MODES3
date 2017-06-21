@@ -22,7 +22,7 @@ class TrackCommunicationServiceLocator {
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
 	val CommunicationStack stack
-
+	
 	val TrackElementStateSender tess
 	val TrackElementCommander tec
 	val TrackElementCommandCallback tecc

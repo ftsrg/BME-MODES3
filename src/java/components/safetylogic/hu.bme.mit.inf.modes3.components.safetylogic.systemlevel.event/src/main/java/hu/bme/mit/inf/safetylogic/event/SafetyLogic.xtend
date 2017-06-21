@@ -9,6 +9,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.IComputerVisionListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
 import java.util.HashSet
@@ -16,6 +17,7 @@ import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
@@ -49,6 +51,8 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 		model = new ModelUtil(factory)
 
+
+		
 //		rules = new SafetyLogicRuleEngine(model.resourceSet)
 
 		model.segments.map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
@@ -140,7 +144,22 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 		}
 		
-		initRailRoad
+//		initRailRoad
+
+		println('adding the cv callback')
+
+		locator.computerVisionCallback.setComputerVisionListener(new IComputerVisionListener(){
+			
+			
+			override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp, long frameindex) {
+				println('''Information recieved @ «timestamp» frame #«frameindex»
+				
+					«information»
+				''')
+			}
+			
+		})
+		println('cv callback added')
 	}
 
 	def public void refreshSafetyLogicState() {
