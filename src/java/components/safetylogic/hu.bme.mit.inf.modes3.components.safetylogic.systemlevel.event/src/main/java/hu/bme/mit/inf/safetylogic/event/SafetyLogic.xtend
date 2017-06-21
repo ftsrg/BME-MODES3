@@ -80,11 +80,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	}
 	
 
-//
-//	private def turnSegmentTo(RailRoadElement element, SegmentState state) {
-//		if(element instanceof Segment) element.isEnabled = (state == SegmentState.ENABLED)
-//	}
-
+	
 	private def void initRailRoad() {
 		model.turnouts.forEach[currentlyDivergent = false]
 		val initSleepTimes = 3000
@@ -143,9 +139,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 				refreshSafetyLogicState
 			}
 		}
-
-//		rules.start
-
+		
 		initRailRoad
 	}
 

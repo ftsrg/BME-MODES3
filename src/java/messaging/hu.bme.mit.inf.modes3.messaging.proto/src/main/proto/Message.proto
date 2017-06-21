@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package modes3.protobuf;
+
 import "DccOperationsCommand.proto";
 import "DccOperationsState.proto";
 import "Enums.proto";
@@ -22,6 +23,7 @@ import "YakinduCanGoTo.proto";
 import "YakinduCannotGoTo.proto";
 import "YakinduReserveTo.proto";
 import "SendAllStatus.proto";
+import "ComputerVisionObjectPositions.proto";
 
 option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
 option java_multiple_files = true;
@@ -50,4 +52,5 @@ message Message {
 	DccOperationsCommand dccOperationsCommand = 20;
 	DccOperationsState dccOperationsState = 21;
 	SendAllStatus allStatus = 22;
+	ComputerVisionObjectPositions computerVisionObjectPositions = 23;
 }

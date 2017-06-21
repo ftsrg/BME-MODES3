@@ -35,6 +35,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 	Path.via(p, Current);
  * 	Path.to(p, Next);
  * } or {
+ * 	
  * 	neg find notNull(Old); // Check for null, as if it is, we don't know the direction
  * 	
  * 	RailRoadModel.sections(RailRoad,Old);

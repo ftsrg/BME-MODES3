@@ -4,7 +4,7 @@ import hu.bme.mit.inf.modes3.transports.common.Transport
 import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 import org.zeromq.ZMQ
 
-class ZMQTransport extends Transport {
+class ZMQTransport extends Transport { 
 
 	var ZMQ.Context ctx
 	var ZMQ.Socket pub

@@ -4,16 +4,18 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.TrackElementCommand
 import hu.bme.mit.inf.modes3.messaging.communication.command.TrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
+import hu.bme.mit.inf.modes3.messaging.communication.computervision.ComputerVisionCallback
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState
+import hu.bme.mit.inf.modes3.messaging.communication.update.SendAllStatusCallback
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.messaging.communication.update.SendAllStatusCallback
+import hu.bme.mit.inf.modes3.messaging.communication.computervision.IComputerVisionCallback
 
 class TrackCommunicationServiceLocator {
 
@@ -27,6 +29,7 @@ class TrackCommunicationServiceLocator {
 	val TrackElementStateRegistry tsr
 	val TrainReferenceSpeedState trss 
 	val SendAllStatusCallback sasc
+	val ComputerVisionCallback cvc
 
 	new(CommunicationStack _stack, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
@@ -39,6 +42,7 @@ class TrackCommunicationServiceLocator {
 		tsr = new TrackElementStateRegistry(stack.dispatcher as ProtobufMessageDispatcher, factory)
 		trss = new TrainReferenceSpeedState(stack.dispatcher as ProtobufMessageDispatcher, factory)
 		sasc = new SendAllStatusCallback(stack.dispatcher as ProtobufMessageDispatcher, factory)
+		cvc = new ComputerVisionCallback(stack.dispatcher as ProtobufMessageDispatcher, factory)
 	}
 
 	def ITrackElementStateSender getTrackElementStateSender() {
@@ -63,5 +67,9 @@ class TrackCommunicationServiceLocator {
 	
 	def SendAllStatusCallback getSendAllStatusCallback(){
 		return sasc
+	}
+	
+	def IComputerVisionCallback getComputerVisionCallback(){
+		return cvc
 	}
 }
