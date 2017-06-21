@@ -20,18 +20,18 @@ class ComputerVisionCallback implements IComputerVisionCallback{
 		dispatcher.computerVisionObjectPositionsHandler = new ComputerVisionClient(this)
 	}
 	
-	override setComputerVisionListener(IComputerVisionListener listener, long timestamp, long frameindex) {
+	override setComputerVisionListener(IComputerVisionListener listener) {
 		this.listener = listener
 		logger.trace('''ComputerVisionListener changed''')
 	}
 	
-	def onComputerVisionDetection(ArrayList<ComputerVisionInformation> information) {
+	def onComputerVisionDetection(ArrayList<ComputerVisionInformation> information, long timestamp, long frameindex) {
 		if(listener == null) {
 			logger.trace('''ComputerVisionInformation recieved, but the listener is not set''')
 		} else {
 			logger.trace('''ComputerVisionInformation recieved, «information»''')
 		}
-		listener?.onComputerVisionDetection(information)
+		listener?.onComputerVisionDetection(information, timestamp, frameindex)
 	}
 	
 

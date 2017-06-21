@@ -15,13 +15,12 @@ package class ComputerVisionClient implements ComputerVisionHandler {
 		callback = controller
 	}
 
-//	def handleMessage(SegmentCommandOrBuilder message) {
-//		val id = message.segmentID
-//		val state = EnumTransformator.toGeneral(message.state)
-//		callback.onSegmentCommand(id, state)
-//	}
-	
 	override handleMessage(ComputerVisionObjectPositionsOrBuilder message) {
+		println('''DEBUG : «message»''')
+		
+		
+		println('''MORE DEBUG «message.physicalObjectsMap.keySet.length»''')
+		println('''EOF DEBUG''')
 		val information = new ArrayList<ComputerVisionInformation>
 		message.physicalObjectsMap.forEach[name,physicalObject |
 			physicalObject.markersMap.forEach[name_, marker |
@@ -34,7 +33,7 @@ package class ComputerVisionClient implements ComputerVisionHandler {
 				] , marker.trackedList.head))
 			]
 		]
-		callback.onComputerVisionDetection(information)
+		callback.onComputerVisionDetection(information, message.timestamp, message.frameindex)
 	}
 	
 }
