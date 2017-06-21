@@ -6,12 +6,20 @@ import org.eclipse.xtend.lib.annotations.Data
 public class TwoDimensionalPosition{
 	public var double x
 	public var double y 
+	
+	override toString(){
+		'''x = «x»	y = «y»'''
+	}
 }
 
 public class ThreeDimensionalPosition{
 	public var double x
 	public var double y
 	public var double z
+	
+	override toString(){
+		'''x = «x»	y = «y»	z = «z»'''
+	}
 }
 
 @Data
@@ -23,5 +31,5 @@ public class ComputerVisionInformation{
 }
 
 interface IComputerVisionListener {
-	def void onComputerVisionDetection(List<ComputerVisionInformation> information)
+	def void onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp, long frameindex)
 }

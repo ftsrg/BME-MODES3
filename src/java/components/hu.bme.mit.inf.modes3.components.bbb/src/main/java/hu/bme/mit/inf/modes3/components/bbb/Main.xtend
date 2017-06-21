@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.components.bbb
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithoutParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import java.net.InetAddress
