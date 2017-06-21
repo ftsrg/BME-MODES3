@@ -31,6 +31,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SendAllStatus
+import hu.bme.mit.inf.modes3.messaging.mms.messages.ComputerVisionObjectPositionsOrBuilder
 
 class ProtobufMessageDispatcher implements IMessageDispatcher {
 
@@ -44,6 +45,7 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentStateOrBuilder> segmentStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SegmentOccupancyOrBuilder> segmentOccupancyHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<DccOperationsStateOrBuilder> dccOperationStateHandler
+	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<ComputerVisionObjectPositionsOrBuilder> computerVisionObjectPositionsHandler
 	
 	// COMMANDS
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<TrainReferenceSpeedCommandOrBuilder> trainReferenceSpeedCommandHandler
@@ -53,6 +55,8 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 	
 	// UPDATE
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var MessageHandler<SendAllStatusOrBuilder> sendAllStatusHandler
+	
+
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger(this.class.name)
@@ -86,6 +90,8 @@ class ProtobufMessageDispatcher implements IMessageDispatcher {
 					dccOperationStateHandler?.handleMessage(message.dccOperationsState)
 				case MessageType.SEND_ALL_STATUS:
 					sendAllStatusHandler?.handleMessage(message.allStatus)
+				case MessageType.COMPUTER_VISION_OBJECT_POSITIONS:
+					computerVisionObjectPositionsHandler?.handleMessage(message.computerVisionObjectPositions)
 				default:
 					return
 			}
