@@ -1,3 +1,5 @@
+#include <Servo.h>
+
 typedef enum TurnoutState_ {
   STRAIGHT,
   DIVERGENT
@@ -11,26 +13,28 @@ const int senseStrPin = 9;
 const int senseDivPin = 10;
 
 // Application specific values for Servo control PWM
-const int straightDuty = 50;
-const int divergentDuty = 78;
+const int straightDegree = 50;
+const int divergentDegree = 78;
 
 State currentState;
+
+Servo servo;
 
 void changeState(State state){
   digitalWrite(senseStrPin, state == STRAIGHT);
   digitalWrite(senseDivPin, state == DIVERGENT);
-  analogWrite(pwmPin, state == STRAIGHT ? straightDuty : divergentDuty);
+  servo.write(state == STRAIGHT ? straightDegree : divergentDegree);
   currentState = state;
 }
 
 void setup() {
   // Enabling UART for debug and traceability
-  Serial.begin(115200);
+  Serial.begin(57600);
 
   Serial.print("Starting...");
 
   // Setting pin modes
-  pinMode(pwmPin, OUTPUT);
+  servo.attach(pwmPin);
   pinMode(senseStrPin, OUTPUT);
   pinMode(senseDivPin, OUTPUT);
 
