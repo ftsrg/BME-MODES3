@@ -13,8 +13,8 @@ const int senseStrPin = 9;
 const int senseDivPin = 10;
 
 // Application specific values for Servo control PWM
-const int straightDegree = 50;
-const int divergentDegree = 78;
+const int straightDegree = 77;
+const int divergentDegree = 110;
 
 State currentState;
 
