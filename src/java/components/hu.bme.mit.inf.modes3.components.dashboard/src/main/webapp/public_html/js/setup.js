@@ -129,13 +129,24 @@ $(document).ready(function () {
     updateDOM();
     
     // setup event handlers for control buttons
-    $("#control-all-segment").bind('click', function() {
+    $("#control-all-segment-en").bind('click', function() {
     	for(var i in window.segments) {
     		window.segments[i].pushSegmentState("ENABLED");
     	}
-    });
+    });    
+    $("#control-all-segment-dis").bind('click', function() {         
+        for(var i in window.segments) {                          
+                window.segments[i].pushSegmentState("DISABLED");
+	}
+    });    
+
+    $("#control-all-turnout-str").bind('click', function() {
+        for(var i in window.turnouts) {
+                window.turnouts[i].pushTurnoutState("STRAIGHT");
+        }
+    });                                                         
     
-    $("#control-all-turnout").bind('click', function() {
+    $("#control-all-turnout-div").bind('click', function() {
     	for(var i in window.turnouts) {
     		window.turnouts[i].pushTurnoutState("STRAIGHT");
     	}
