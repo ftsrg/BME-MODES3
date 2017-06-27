@@ -21,6 +21,7 @@ import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher
 
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
@@ -159,6 +160,10 @@ class ModelUtil implements IModelInteractor {
 
 			model.trains
 		}
+	}
+	
+	override getNextSection(RailRoadElement old, RailRoadElement current) {
+		return NextSectionMatcher.on(engine).getAllMatches(old, current, null).head.next
 	}
 
 }
