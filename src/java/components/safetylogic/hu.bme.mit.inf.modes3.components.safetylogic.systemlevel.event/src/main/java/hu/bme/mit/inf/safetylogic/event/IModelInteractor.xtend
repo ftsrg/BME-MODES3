@@ -20,6 +20,8 @@ interface IModelInteractor {
 	def Iterable<RailRoadElement> getSections()
 	def Iterable<Train> getTrains()
 	
+	def RailRoadElement getNextSection(RailRoadElement old, RailRoadElement current)
+	
 		
 	def Collection<TrainCutsTurnoutMatch> getCuts() 
 	def Collection<TrainHitsAnotherTrainMatch> getHits()
