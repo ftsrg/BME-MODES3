@@ -5,7 +5,7 @@
 **/moquette_store.mapdb.t
 
 # Gradle
-# ------
+/# ------
 .gradle
 **/.gradle
 **/build
@@ -75,6 +75,7 @@ atlassian-ide-plugin.xml
 # OS X
 # ----
 .DS_Store
+._.DS_Store
 
 # HPROF
 # -----
