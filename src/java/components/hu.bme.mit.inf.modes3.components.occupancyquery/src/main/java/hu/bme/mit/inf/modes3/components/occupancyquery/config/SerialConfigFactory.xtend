@@ -14,7 +14,7 @@ abstract class SerialConfigFactory {
 			new SerialConfigParameters(
 				// SerialPort.defaultPort, // default UART port 
 				"/dev/ttyUSB0", // USB port on Raspberry Pi
-				Baud._9600,
+				Baud._115200,
 				DataBits._8,
 				Parity.NONE,
 				StopBits._1,
