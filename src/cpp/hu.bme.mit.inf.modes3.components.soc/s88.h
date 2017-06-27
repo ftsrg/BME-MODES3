@@ -50,4 +50,3 @@ uint32_t S88_readOccupancy();
 
 
 #endif	/* S88_H */
-

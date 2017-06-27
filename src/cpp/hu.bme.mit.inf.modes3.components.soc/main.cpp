@@ -1,80 +1,80 @@
 #include <Arduino.h>
-#include "configuration.h"
-#include "s88/s88.h"
+#include "s88.h"
 
-#define DEBUG_MODE 0
+//#define DEBUG
+#define WINDOW_SIZE 10
 
-extern HardwareSerial Serial;
+uint32_t buffer[WINDOW_SIZE];
 
 void setup() {
-    // initialize serial debug
-    Serial.begin(SERIAL_BAUD_RATE);
+    // Initialize serial
+    Serial.begin(115200);
+    // Initialize the S88 processor
     S88_Init();
+
+    // Zeroing out the buffer
+    for(uint8_t i = 0; i < WINDOW_SIZE; ++i) {
+    	buffer[i] = 0;
+    }
 }
 
 void send(uint8_t b) {
-#if DEBUG_MODE == 0
-	Serial.write(b);
+#ifdef DEBUG
+    Serial.print(b, HEX);
+    Serial.print('|');
 #else
-	Serial.print(b, HEX);
-	Serial.print('|');
-#endif
-}
-
-void endPacket() { 
-#if DEBUG_MODE == 1
-	Serial.println(' ');
+    Serial.write(b);
 #endif
 }
 
 void loop() {
+    uint32_t occ = S88_readOccupancy();
 
-    // reading occupancy vector
-    uint32_t occupancy_vector = S88_readOccupancy();
+#ifdef DEBUG
+    Serial.print(occ);
+    Serial.print(" > ");
 
-    // sending header first
+    for(int8_t shift = 24; shift >= 0; shift -= 8) {
+        uint8_t byte = (occ >> shift) & 0xFF;
+        Serial.print(byte);
+        Serial.print(' ');
+    }
+    Serial.println();
+#endif
+
+    // Shifting the previous buffer values
+    for (uint8_t i = 1; i < WINDOW_SIZE - 1; i++) {
+        buffer[i-1] = buffer[i];
+    }
+    // Reading the occupancy vector into the buffer
+    buffer[WINDOW_SIZE-1] = S88_readOccupancy();
+
+    uint32_t max = 0;
+    for (uint8_t i = 0; i < WINDOW_SIZE; ++i) {
+        max = (max < buffer[i]) ? buffer[i] : max;
+    }
+
+    // Sending header first
     for (uint8_t i = 0; i < 7; ++i) {
         send(0xFF);
     }
-    
     send(0xAA);
-    
+
+    // 
     uint8_t arr[4];
-
-    // we transfer 4 bytes always
+    // We always transfer 4 bytes
     for (uint8_t i = 0; i < 4; ++i) {
-        // cut the lowest 8 bits
-        arr[i] = (occupancy_vector >> (i * 8));
+        // Cut the lowest 8 bits
+        arr[i] = (max >> (i * 8));
     }
-    
-    // sending for the first time
-    for(uint8_t i = 0; i < 4; ++i) {
-        send(arr[i]);
-    }
-    
-    // sending for the second time
+
+    // Sending for the first time
     for(uint8_t i = 0; i < 4; ++i) {
         send(arr[i]);
     }
 
-    endPacket();
-
-
-#if DEBUG_MODE == 1
-    Serial.print("Occupied: ");
-    for(uint8_t i=0; i<4; ++i ) {
-	uint8_t arr_cpy = arr[i];
-	for(uint8_t j=0; j < 8; ++j)  {
-	    uint32_t segmentOccupied = arr_cpy & 1;
-	    if( segmentOccupied > 0 ) {
-	        Serial.print(32-(i*8+(8-j))+1);
-		Serial.print(',');
-	    }
-	    arr_cpy >>= 1;
-    	}
+    // Sending for the second time
+    for(uint8_t i = 0; i < 4; ++i) {
+        send(arr[i]);
     }
-    Serial.println('\n');
-#endif
-    delay(100);
-
 }
