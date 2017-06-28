@@ -3,12 +3,13 @@ apply plugin: 'com.google.protobuf'
 
 dependencies {
 	compile 'com.google.protobuf:protobuf-java:3.1.0'
-	compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.0'
+	compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
 }
 
 protobuf {
 	protoc {
-		path = "/usr/local/bin/protoc"
+		path = '/usr/local/bin/protoc'
+		artifact = 'com.google.protobuf:protoc:3.1.0'
 	}
 	generatedFilesBaseDir = "$projectDir/src/"
 }
