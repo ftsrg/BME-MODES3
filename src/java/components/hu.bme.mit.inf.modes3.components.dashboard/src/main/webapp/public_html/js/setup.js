@@ -12,6 +12,8 @@ var locomotives = new Map();
 
 var segment_index = 0;
 
+
+var added_trains_cookie = [];
 var cookie_locomotives = 'locomotives';
 
 var locomotiveList = getLocomotiveList();
@@ -48,6 +50,7 @@ function getLocomotiveList() {
         return ids;
     }
 }
+
 
 
 function updateSegmentStateCallback(segmentState) {
@@ -116,9 +119,13 @@ $(document).ready(function () {
     new Map(window.settings.turnouts).forEach(function (value, key, map) {
         window.turnouts[key] = new TurnoutController(value, turnoutStateController, key);
     });
-
-    
+	
+	
+	
+    //ezt a gomb után kell majd, ha már kiválogattuk mi kell
+	
     // setup locomotive objects
+
     var trainController = new TrainSpeedController();
     new Map(window.settings.locomotives).forEach(function(value, key, map) {
     	if( locomotiveList.indexOf(key) !== -1 ) {
@@ -126,45 +133,62 @@ $(document).ready(function () {
     	}
     })
 
+
     updateDOM();
-    
+
+
     // setup event handlers for control buttons
-    $("#control-all-segment-en").bind('click', function() {
-    	for(var i in window.segments) {
-    		window.segments[i].pushSegmentState("ENABLED");
-    	}
+    $("#control-all-segments-en").bind('click', function() {
+        for(var i in window.segments) {
+            window.segments[i].pushSegmentState("ENABLED");
+        }
     });    
-    $("#control-all-segment-dis").bind('click', function() {         
-        for(var i in window.segments) {                          
+    $("#control-all-segments-dis").bind('click', function() {         
+        for(var i in window.segments) {
                 window.segments[i].pushSegmentState("DISABLED");
-	}
+    }
     });    
 
-    $("#control-all-turnout-str").bind('click', function() {
+    $("#control-all-turnouts-str").bind('click', function() {
         for(var i in window.turnouts) {
                 window.turnouts[i].pushTurnoutState("STRAIGHT");
         }
-    });                                                         
-    
-    $("#control-all-turnout-div").bind('click', function() {
-    	for(var i in window.turnouts) {
-    		window.turnouts[i].pushTurnoutState("STRAIGHT");
-    	}
     });
     
+    $("#control-all-turnouts-div").bind('click', function() {
+        for(var i in window.turnouts) {
+            window.turnouts[i].pushTurnoutState("DIVERGENT");
+        }
+    });
+
+
+
+
+
     $("#add-train").bind('click', function() {
-    	
-    	// TODO add all train from config file
     	
     	// 1. clear train list container (#train-list)
     	$("#train-list").empty();
     	
     	// 2. add all train with DOM
-    	for(var i=0; i<10; ++i) {
+    	for(var i=9; i<20; ++i) {
+			
+			var locoObject = new Map(window.settings.locomotives).get(i);
+			console.log(locoObject);
+			
+			var urlstr= "background-image: url('/images/locomotives/";
+			var prev = locoObject.preview;
+			var res = urlstr.concat(prev);
+			var urlres = res.concat("')");
+			console.log(urlres);
+			
     		var div = $('<div />').addClass('train-list-item');
-    		var header = $('<h3/>').text(i);
-    		var input = $("<input />").attr('type', 'hidden').attr('name', 'train-id').val(i);
-    		div.append(header);
+    		var header = $('<h3/>').text(locoObject.name);
+    		var imageholder = $('<div />').addClass('train-image-holder').attr('style', urlres);
+			var input = $("<input />").attr('type', 'hidden').attr('name', 'train-id').val(i);
+    		
+			div.append(header);
+			div.append(imageholder);
     		div.append(input);
     		
     		if( locomotiveList.indexOf(i) !== -1 ) {
@@ -203,7 +227,7 @@ $(document).ready(function () {
     	var newId = parseInt($('#add-train-dialog .train-list-item.selected > input').val());
     	
     	locomotiveList.push(newId);
-    	//setCookie(cookie_locomotives, locomotiveList.toString(), 365);
+    	setCookie(cookie_locomotives, locomotiveList.toString(), 365);
     	
     	// get locomotive with new ID from setup array and insert it into the list next to them
     	var locoObject = new Map(window.settings.locomotives).get(newId);
@@ -216,11 +240,13 @@ $(document).ready(function () {
     });
     
     
-    $("#stop-all-train").bind('click', function() {
+    $("#stop-all-trains").bind('click', function() {
     	$('input[type="range"]').val(0);
     	$('input[type="range"]').trigger('change');
     });
     
+
+
     $("#test").remove();
     
     // sending all state request one time

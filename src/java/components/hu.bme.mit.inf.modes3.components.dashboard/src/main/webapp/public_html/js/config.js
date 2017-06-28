@@ -278,26 +278,99 @@ var settings = {
 		"t06", "t06-div", "t06-str"
 	],
 	locomotives : [
+	
+	//ide sok vonat
 		[ 9, {
 			name : "Taurus MÁV 1047",
 			address : 9,
 			image : "taurus-mav-1047.jpg",
-			preview: "",
+			preview: "taurus-mav-1047-preview.png",
 			svgGroup : "taurus",
 		}],
+		
 		[ 10, {
 			name : "SNCF 68000",
 			address : 10,
 			image : "sncf-68000.jpg",
-			preview: "",
+			preview: "sncf-68000-preview.jpg",
 			svgGroup : 2,
 		}],
-	//        {
-	//            name: "BR-204",
-	//            address: 2,
-	//            image: "br-204.jpg",
-	//            svgGroup: 3
-	//        }
+		
+		[ 11, {
+	        name: "BR-204",
+	        address: 11,
+	        image: "br-204.jpg",
+			preview: "br-204-preview-2.jpg",
+	        svgGroup: 3
+	    }],
+		
+		[ 12, {
+			name : "NOHAB MÁV M61 #1",
+			address : 12,
+			image : "nohab.jpg",
+			preview: "nohab-preview.jpg",
+			svgGroup : "nohab",
+		}],
+		
+		[ 13, {
+			name : "Siemens Desiro",
+			address : 13,
+			image : "vagottdesiro.jpg",
+			preview: "desiro-preview.jpg",
+			svgGroup : "desiro2",
+		}],
+		
+		[ 14, {
+			name : "MÁV V43",
+			address : 14,
+			image : "szili.jpg",
+			preview: "szili-preview.jpg",
+			svgGroup : "szili",
+		}],
+		
+		[ 15, {
+			name : "NOHAB MÁV M61 #2",
+			address : 15,
+			image : "nohab.jpg",
+			preview: "nohab-preview.jpg",
+			svgGroup : "nohab",
+		}],
+		
+		[ 16, {
+			name : "NOHAB MÁV M61 #3",
+			address : 16,
+			image : "nohab.jpg",
+			preview: "nohab-preview.jpg",
+			svgGroup : "nohab",
+		}],
+		[ 17, {
+			name : "NOHAB MÁV M61 #4",
+			address : 17,
+			image : "nohab.jpg",
+			preview: "nohab-preview.jpg",
+			svgGroup : "nohab",
+		}],
+		[ 18, {
+			name : "NOHAB MÁV M61 #5",
+			address : 18,
+			image : "nohab.jpg",
+			preview: "nohab-preview.jpg",
+			svgGroup : "nohab",
+		}],
+		[ 19, {
+			name : "NOHAB MÁV M61 #6",
+			address : 19,
+			image : "nohab.jpg",
+			preview: "nohab-preview.jpg",
+			svgGroup : "nohab",
+		}],
+		[ 20, {
+			name : "NOHAB MÁV M61 #7",
+			address : 20,
+			image : "nohab.jpg",
+			preview: "nohab-preview.jpg",
+			svgGroup : "nohab",
+		}]
 	],
 	locomotiveArrowStyle : 'color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:21.25984192;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate',
 	locomotiveCircleStyle : 'color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:31.88976288;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate',
