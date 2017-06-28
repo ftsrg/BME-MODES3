@@ -9,6 +9,7 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 
 class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifiable {
 
@@ -53,30 +54,39 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	}
 
 	def synchronized threadSafeOnSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+		
 		logger.info('''Segment occupancy changed on «id» from «oldValue.print» to «newValue.print»''')
 		val enabledTrains = model.enabledTrains
-		val changedSegment = model.getSegment(id)
+		var changedSegment = model.getSegment(id)
+		
 		if(newValue == SegmentOccupancy.OCCUPIED) {
+			
 			if(freedSections.keySet.contains(changedSegment)) {
 				freedSections.remove(changedSegment)
 			}
+			
 			if(model.trains.map[currentlyOn].toList.contains(changedSegment)) {
 				return
 			}
+			
 			val possibleTrainPositions = model.getCurrentlyConnected(changedSegment)
-			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
+			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)] // Search for an enabled train in one of the connected railroad elements
 			if(train == null) { // There is no enabled train nearby
 				train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
-				if(train == null) {
+				if(train == null) { // There are not even disabled trains nearby
 					train = model.addNewTrain
 					logger.info('''New train estimated on «changedSegment.id». The new train's ID is «train.id»''')
 				}
 
-			} else {
+			} else { // There is an enabled or disabled train nearby
+				if(changedSegment instanceof Turnout) { // If we move on a turnout
+					changedSegment = model.getNextSection(train.currentlyOn, changedSegment) // We skip the turnout as a railroadelement, as the train can not be stopped on it
+				}
 				logger.info('''Train moved from «train.currentlyOn.id» to «changedSegment.id»''')
 			}
-			train.previouslyOn = train.currentlyOn
-			train.currentlyOn = changedSegment
+			train.previouslyOn = train.currentlyOn // Set the previous on the model
+			train.currentlyOn = changedSegment // And update the train position
+		
 		} else if(newValue == SegmentOccupancy.FREE) {
 			freedSections.put(model.getSegment(id), System.currentTimeMillis)
 		}

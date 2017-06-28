@@ -161,18 +161,11 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		));
       		//  	Turnout(This)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
-      		// 	Turnout.currentlyDivergent(This, true)
+      		// 	Turnout.top(This, connectedTo)
+      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
       		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-      		new ConstantValue(body, var__virtual_0_, true);
-      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
-      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout", "currentlyDivergent")));
-      		new Equality(body, var__virtual_1_, var__virtual_0_);
-      		//   	Turnout.top(This, connectedTo)
-      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
-      		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
-      		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout", "top")));
-      		new Equality(body, var__virtual_2_, var_connectedTo);
+      		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout", "top")));
+      		new Equality(body, var__virtual_0_, var_connectedTo);
       		bodies.add(body);
       	}
       	{
@@ -220,32 +213,6 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
       		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
       		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout", "currentlyDivergent")));
       		new Equality(body, var__virtual_1_, var__virtual_0_);
-      		// 	Turnout.top(This, connectedTo)
-      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
-      		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
-      		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout", "top")));
-      		new Equality(body, var__virtual_2_, var_connectedTo);
-      		bodies.add(body);
-      	}
-      	{
-      		PBody body = new PBody(this);
-      		PVariable var_This = body.getOrCreateVariableByName("This");
-      		PVariable var_connectedTo = body.getOrCreateVariableByName("connectedTo");
-      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-      		new TypeConstraint(body, new FlatTuple(var_connectedTo), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_This, parameter_pThis),
-      		   new ExportedParameter(body, var_connectedTo, parameter_pConnectedTo)
-      		));
-      		// 	Turnout(This)
-      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
-      		// 	Turnout.currentlyDivergent(This, false)
-      		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-      		new ConstantValue(body, var__virtual_0_, false);
-      		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
-      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-      		new TypeConstraint(body, new FlatTuple(var_This, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout", "currentlyDivergent")));
-      		new Equality(body, var__virtual_1_, var__virtual_0_);
       		// 	Turnout.straight(This, connectedTo)
       		new TypeConstraint(body, new FlatTuple(var_This), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Turnout")));
       		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
@@ -262,19 +229,11 @@ public final class CurrentlyConnectedQuerySpecification extends BaseGeneratedEMF
     }
   }
   
-  private static boolean evaluateExpression_2_1() {
-    return true;
-  }
-  
   private static boolean evaluateExpression_3_1() {
     return true;
   }
   
   private static boolean evaluateExpression_4_1() {
-    return false;
-  }
-  
-  private static boolean evaluateExpression_5_1() {
     return false;
   }
 }

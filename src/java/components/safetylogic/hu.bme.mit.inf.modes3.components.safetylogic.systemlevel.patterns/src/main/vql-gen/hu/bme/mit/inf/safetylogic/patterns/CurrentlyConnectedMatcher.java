@@ -35,16 +35,11 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 	Segment.connectedTo(This, connectedTo);
  * } or { 
  * 	Turnout(This);
- * 	Turnout.currentlyDivergent(This, true);  
  * 	Turnout.top(This, connectedTo);
  * } or {
  * 	Turnout(This);
  * 	Turnout.currentlyDivergent(This, true);
  * 	Turnout.divergent(This, connectedTo);	
- * } or {
- * 	Turnout(This);
- * 	Turnout.currentlyDivergent(This, false);
- * 	Turnout.top(This, connectedTo);
  * } or {
  * 	Turnout(This);
  * 	Turnout.currentlyDivergent(This, false);
