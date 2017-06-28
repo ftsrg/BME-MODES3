@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.safetylogic.event
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import java.util.HashMap
@@ -9,7 +10,6 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 
 class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifiable {
 
@@ -54,44 +54,53 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	}
 
 	def synchronized threadSafeOnSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
-		
+
 		logger.info('''Segment occupancy changed on «id» from «oldValue.print» to «newValue.print»''')
 		val enabledTrains = model.enabledTrains
 		var changedSegment = model.getSegment(id)
-		
+
 		if(newValue == SegmentOccupancy.OCCUPIED) {
-			
+
 			if(freedSections.keySet.contains(changedSegment)) {
 				freedSections.remove(changedSegment)
 			}
-			
-			if(model.trains.map[currentlyOn].toList.contains(changedSegment)) {
-				return
+
+			if(model.trains.map[currentlyOn].toList.contains(changedSegment)) { // If there is a train already on the section which got occupied 
+				return // We simply ignore this as this is a multiple message which we already received
 			}
-			
+
 			val possibleTrainPositions = model.getCurrentlyConnected(changedSegment)
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)] // Search for an enabled train in one of the connected railroad elements
 			if(train == null) { // There is no enabled train nearby
 				train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
 				if(train == null) { // There are not even disabled trains nearby
 					train = model.addNewTrain
+					train.currentlyOn = changedSegment
 					logger.info('''New train estimated on «changedSegment.id». The new train's ID is «train.id»''')
+					return
 				}
 
 			} else { // There is an enabled or disabled train nearby
 				if(changedSegment instanceof Turnout) { // If we move on a turnout
-					changedSegment = model.getNextSection(train.currentlyOn, changedSegment) // We skip the turnout as a railroadelement, as the train can not be stopped on it
+					val next = nextSegment(train.currentlyOn, changedSegment) // We skip the turnout as a railroadelement, as the train can not be stopped on it
+					logger.info('''Train arrived on turnout «changedSegment.id» so it is moved to «next.id»''')
+					train.previouslyOn = changedSegment
+					train.currentlyOn = next
+					return 
 				}
 				logger.info('''Train moved from «train.currentlyOn.id» to «changedSegment.id»''')
 			}
 			train.previouslyOn = train.currentlyOn // Set the previous on the model
 			train.currentlyOn = changedSegment // And update the train position
-		
 		} else if(newValue == SegmentOccupancy.FREE) {
 			freedSections.put(model.getSegment(id), System.currentTimeMillis)
 		}
 		this.onUpdate
 		notifiable.onUpdate
+	}
+
+	def nextSegment(RailRoadElement old, RailRoadElement current) {
+		return model.getNextSection(old,current)
 	}
 
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
