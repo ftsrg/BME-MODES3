@@ -1,4 +1,4 @@
-/* 
+/*
     Created on : Sep 12, 2016, 11:05:40 AM
     Author     : zsoltmazlo
 */
@@ -114,6 +114,7 @@ input[type="button"] {
 }
 
 #layout-tab #train-control {
+	overflow-y: scroll;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -185,7 +186,7 @@ input[type="button"] {
 }
 
 /**
- * trains 
+ * trains
  */
 .train-container {
 	display: block;
@@ -230,6 +231,78 @@ input[type="button"] {
 	font-family: Canaro;
 	font-weight: normal;
 	font-size: 24px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+/* 	color: rgb(0,0,0); */
+	font-family: Canaro;
+    position: relative;
+    background-color: #3366cc;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #1e2141;
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #1e2141;
+    color: white;
 }
 
 /* optimalization for raspberry pi display */
@@ -351,7 +424,7 @@ input[type="button"] {
 #train-list .train-list-item {
 	background-color: #DDD;
 	display: inline-block;
-	width: 225px;
+	width: 230px;
 	margin: 16px 8px;
 	float: left;
 	transition: 0.4s all;
@@ -397,3 +470,71 @@ input[type="button"] {
 	margin: 10px 11px;
 	height: 250px;
 }
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.85); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+button {
+   width: 40px;
+   height: 40px;
+   display: inline-block;
+}
+
+button > i.material-icons.md-36 {
+   display: inline-block;
+    font-size: 32px;
+}
+
+button#stop-all-train {
+   position: relative;
+   top: -2px;
+}
+
+button#stop-all-train i {
+    font-size: 26px;
+   margin-top: 6px;
+   margin-bottom: 12px;
+}
+
+
+
+.remove-train:hover {
+	opacity:1;
+
+}
+
+.remove-train {
+	visibility: visible;
+	opacity:.2;
+	position: fixed;
+	z-index: 2;
+	right: 29px;
+	font:bold;
+	color:red;
+	font-family: cursive;
+}
+
+/*.remove-train {
+		visibility:hidden;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.remove-train:hover,
+.remove-train:focus {
+    color: #ff0000;
+    text-decoration: none;
+    cursor: pointer;
+}*/
