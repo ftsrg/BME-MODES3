@@ -72,7 +72,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 			val possibleTrainPositions = model.getCurrentlyConnected(changedSegment)
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)] // Search for an enabled train in one of the connected railroad elements
 			if(train == null) { // There is no enabled train nearby
-				train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)]
+				train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)] // Search for a disabled train, it must have moved somehow
 				if(train == null) { // There are not even disabled trains nearby
 					train = model.addNewTrain
 					train.currentlyOn = changedSegment
@@ -88,8 +88,8 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 					train.currentlyOn = next
 					return 
 				}
-				logger.info('''Train moved from «train.currentlyOn.id» to «changedSegment.id»''')
 			}
+			logger.info('''Train moved from «train.currentlyOn.id» to «changedSegment.id»''')
 			train.previouslyOn = train.currentlyOn // Set the previous on the model
 			train.currentlyOn = changedSegment // And update the train position
 		} else if(newValue == SegmentOccupancy.FREE) {
