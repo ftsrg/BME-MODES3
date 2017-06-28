@@ -284,7 +284,7 @@ var settings = {
 			name : "Taurus MÁV 1047",
 			address : 9,
 			image : "taurus-mav-1047.jpg",
-			preview: "taurus-mav-1047-preview.png",
+			preview: "taurus-mav-1047-preview.jpg",
 			svgGroup : "taurus",
 		}],
 		
