@@ -90,32 +90,34 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		val initSleepTimes = 3000
 		logger.info('Railroad initialization started, sleep times are ' + initSleepTimes)
 		val turnouts = model.turnouts
-		
-		
-		Thread.sleep(initSleepTimes)
-		turnouts.forEach [
-			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
-		]
-		logger.info('All turnouts set divergent')
-		Thread.sleep(initSleepTimes)
-
-		turnouts.forEach [
-			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
-		]
-		logger.info('All turnouts set straight')
-
-
 		val segments = model.segments
+		
+		logger.info('Disabling all sections')
 		segments.forEach [
 			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.DISABLED)
 		] 
-		logger.info('Disabling all sections')
+		
 		Thread.sleep(initSleepTimes)
+		
+		logger.info('Setting turnouts to divergent')
+		turnouts.forEach [
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
+		]
+
+		Thread.sleep(initSleepTimes)
+
+		logger.info('Setting all turnouts to straight')
+		turnouts.forEach [
+			locator.trackElementCommander.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
+		]
+
+		Thread.sleep(initSleepTimes)
+		
+		logger.info('Enabling all sections')
 		segments.forEach [
 			locator.trackElementCommander.sendSegmentCommand(id, SegmentState.ENABLED)
 		]
-		logger.info('Enabling all sections')
-		Thread.sleep(initSleepTimes)
+		
 		logger.info('Railroad initialization finished')
 		
 
@@ -144,9 +146,9 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 		}
 		
-//		initRailRoad
+		initRailRoad
 
-		println('adding the cv callback')
+		logger.info('adding the cv callback')
 
 		locator.computerVisionCallback.setComputerVisionListener(new IComputerVisionListener(){
 			
@@ -159,7 +161,8 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 			
 		})
-		println('cv callback added')
+		
+		logger.info('cv callback added')
 	}
 
 	def public void refreshSafetyLogicState() {
