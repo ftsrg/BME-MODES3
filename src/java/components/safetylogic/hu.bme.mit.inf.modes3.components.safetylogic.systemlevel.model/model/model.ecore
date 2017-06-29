@@ -18,8 +18,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="RailRoadElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         iD="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="points" lowerBound="2"
-        upperBound="-1" eType="#//Point" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Turnout" eSuperTypes="#//RailRoadElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="rectangle" lowerBound="1"
@@ -49,9 +47,6 @@
         eType="#//Point" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="size" lowerBound="1" eType="#//Dimension"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inverseMatrix" ordered="false"
-        unique="false" lowerBound="1" upperBound="8" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"
-        defaultValueLiteral="0.0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Dimension">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="width" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
@@ -63,6 +58,8 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2003/XMLType#//Boolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectedTo" lowerBound="1"
         upperBound="2" eType="#//RailRoadElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="points" lowerBound="2"
+        upperBound="-1" eType="#//Point" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Path">
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="#//RailRoadElement"/>
