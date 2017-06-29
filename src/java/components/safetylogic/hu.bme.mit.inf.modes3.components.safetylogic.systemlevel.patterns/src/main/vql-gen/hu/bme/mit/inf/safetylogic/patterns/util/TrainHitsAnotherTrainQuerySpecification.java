@@ -6,6 +6,7 @@ package hu.bme.mit.inf.safetylogic.patterns.util;
 import com.google.common.collect.Sets;
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch;
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainNextAfterNextQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainNextQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainsAreTooCloseQuerySpecification;
@@ -171,6 +172,20 @@ public final class TrainHitsAnotherTrainQuerySpecification extends BaseGenerated
       		));
       		// 	find trainsAreTooClose(Offender, Victim)
       		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainsAreTooCloseQuerySpecification.instance().getInternalQueryRepresentation());
+      		bodies.add(body);
+      	}
+      	{
+      		PBody body = new PBody(this);
+      		PVariable var_Offender = body.getOrCreateVariableByName("Offender");
+      		PVariable var_Victim = body.getOrCreateVariableByName("Victim");
+      		new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
+      		   new ExportedParameter(body, var_Offender, parameter_pOffender),
+      		   new ExportedParameter(body, var_Victim, parameter_pVictim)
+      		));
+      		// 	find trainHitsAnotherTrainNextAfterNextAfterNext(Offender, Victim)
+      		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification.instance().getInternalQueryRepresentation());
       		bodies.add(body);
       	}
       	// to silence compiler error

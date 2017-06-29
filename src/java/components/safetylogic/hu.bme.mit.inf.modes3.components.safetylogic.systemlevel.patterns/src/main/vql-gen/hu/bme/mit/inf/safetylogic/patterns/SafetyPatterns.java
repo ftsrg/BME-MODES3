@@ -4,11 +4,11 @@
 package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher;
-import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher;
+import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatcher;
 import hu.bme.mit.inf.safetylogic.patterns.util.NextSectionQuerySpecification;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainCutsTurnoutQuerySpecification;
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainQuerySpecification;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainTrailingTurnoutQuerySpecification;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPatternGroup;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -25,11 +25,12 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * <li>nextSection</li>
  * <li>trainsAreTooClose</li>
  * <li>trainHitsAnotherTrainNextAfterNext</li>
+ * <li>trainHitsAnotherTrainNextAfterNextAfterNext</li>
  * <li>trainHitsAnotherTrainNext</li>
  * <li>trainHitsAnotherTrain</li>
- * <li>trainCutsTurnoutNext</li>
- * <li>trainCutsTurnoutNextAfterNext</li>
- * <li>trainCutsTurnout</li>
+ * <li>trainDerailsOnNextTurnout</li>
+ * <li>trainDerailsOnTurnoutNextAfterNext</li>
+ * <li>trainTrailingTurnout</li>
  * </ul>
  * 
  * @see IPatternGroup
@@ -56,7 +57,7 @@ public final class SafetyPatterns extends BaseGeneratedPatternGroup {
   private SafetyPatterns() throws ViatraQueryException {
     querySpecifications.add(NextSectionQuerySpecification.instance());
     querySpecifications.add(TrainHitsAnotherTrainQuerySpecification.instance());
-    querySpecifications.add(TrainCutsTurnoutQuerySpecification.instance());
+    querySpecifications.add(TrainTrailingTurnoutQuerySpecification.instance());
   }
   
   public NextSectionQuerySpecification getNextSection() throws ViatraQueryException {
@@ -75,11 +76,11 @@ public final class SafetyPatterns extends BaseGeneratedPatternGroup {
     return TrainHitsAnotherTrainMatcher.on(engine);
   }
   
-  public TrainCutsTurnoutQuerySpecification getTrainCutsTurnout() throws ViatraQueryException {
-    return TrainCutsTurnoutQuerySpecification.instance();
+  public TrainTrailingTurnoutQuerySpecification getTrainTrailingTurnout() throws ViatraQueryException {
+    return TrainTrailingTurnoutQuerySpecification.instance();
   }
   
-  public TrainCutsTurnoutMatcher getTrainCutsTurnout(final ViatraQueryEngine engine) throws ViatraQueryException {
-    return TrainCutsTurnoutMatcher.on(engine);
+  public TrainTrailingTurnoutMatcher getTrainTrailingTurnout(final ViatraQueryEngine engine) throws ViatraQueryException {
+    return TrainTrailingTurnoutMatcher.on(engine);
   }
 }
