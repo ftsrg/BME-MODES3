@@ -167,19 +167,17 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 	def public void refreshSafetyLogicState() {
 		logger.info('''Refreshing state: #of trains «model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
-		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn == null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 		
 		val offenders = new HashSet<Train>
 		
 		model.cuts.forEach [ cut |
-			logger.info('''CUT: Train on «cut.offender.currentlyOn.id» will cut «cut.victim.id»''')
-//			model.getSegment(cut.offender.currentlyOn.id).turnSegmentTo(SegmentState.DISABLED) // disable the trains which cut sections XXX this should be done by the given strategy
+			logger.info('''TRAILING TURNOUT: Train on «cut.offender.currentlyOn.id» will trail turnout «cut.victim.id»''')
 			offenders.add(cut.offender)
 		]
 
 		model.hits.forEach [ hit |
 			logger.info('''HIT: offender on «hit.offender.currentlyOn.id», hits victim on «hit.victim.currentlyOn.id»''')
-//			model.getSegment(hit.offender.currentlyOn.id).turnSegmentTo(SegmentState.DISABLED) // disable the trains which hit another XXX this should be done by the given strategy
 			offenders.add(hit.offender)
 		]
 
@@ -217,7 +215,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			it.isEnabled = false
 		]
 
-		stoppedTrains = offenders
+		stoppedTrains = offenders.filter[currentlyOn instanceof Segment].toSet // As if one of the trains is on a turnout it was not stopped
 	}
 
 	override onUpdate() {
