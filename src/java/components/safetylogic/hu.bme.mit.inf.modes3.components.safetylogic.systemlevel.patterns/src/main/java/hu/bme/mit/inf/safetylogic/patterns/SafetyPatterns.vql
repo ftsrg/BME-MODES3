@@ -43,6 +43,17 @@ private pattern trainHitsAnotherTrainNextAfterNext(Offender : Train, Victim : Tr
 	Train.currentlyOn(Victim, NextPositionAfterNextPosition);
 }
 
+private pattern trainHitsAnotherTrainNextAfterNextAfterNext(Offender : Train, Victim : Train) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	find nextSection(CurrentPosition, NextPosition, NextPositionAfterNextPosition);
+	find nextSection(NextPosition, NextPositionAfterNextPosition, NextPositionAfterNextPositionAfterNextPosition);
+	
+	Train.currentlyOn(Victim, NextPositionAfterNextPositionAfterNextPosition);
+}
+
 private pattern trainHitsAnotherTrainNext(Offender : Train, Victim : Train) {
 	Train.currentlyOn(Offender, CurrentPosition);
 	Train.previouslyOn(Offender, OldPosition);
@@ -58,11 +69,13 @@ pattern trainHitsAnotherTrain(Offender : Train, Victim : Train){
 	find trainHitsAnotherTrainNextAfterNext(Offender, Victim);
 } or {
 	find trainsAreTooClose(Offender, Victim);
+} or {
+	find trainHitsAnotherTrainNextAfterNextAfterNext(Offender, Victim);
 }
 
 //------------------------------------Turnout Cutting Stuff------------------------------------//
 
-private pattern trainCutsTurnoutNext(Offender : Train, Victim : RailRoadElement) {
+private pattern trainDerailsOnNextTurnout(Offender : Train, Victim : RailRoadElement) {
 	Train.currentlyOn(Offender, CurrentPosition);
 	Train.previouslyOn(Offender, OldPosition);
 	
@@ -71,7 +84,7 @@ private pattern trainCutsTurnoutNext(Offender : Train, Victim : RailRoadElement)
 	neg find currentlyConnected(Victim, CurrentPosition);
 }
 
-private pattern trainCutsTurnoutNextAfterNext(Offender : Train, Victim : RailRoadElement) {
+private pattern trainDerailsOnTurnoutNextAfterNext(Offender : Train, Victim : RailRoadElement) {
 	Train.currentlyOn(Offender, CurrentPosition);
 	Train.previouslyOn(Offender, OldPosition);
 	
@@ -81,8 +94,8 @@ private pattern trainCutsTurnoutNextAfterNext(Offender : Train, Victim : RailRoa
 	neg find currentlyConnected(Victim, NextPosition);
 }
 
-pattern trainCutsTurnout(Offender : Train, Victim : RailRoadElement){
-	find trainCutsTurnoutNext(Offender, Victim);
+pattern trainTrailingTurnout(Offender : Train, Victim : RailRoadElement){
+	find trainDerailsOnNextTurnout(Offender, Victim);
 } or {
-	find trainCutsTurnoutNextAfterNext(Offender, Victim);
+	find trainDerailsOnTurnoutNextAfterNext(Offender, Victim);
 }

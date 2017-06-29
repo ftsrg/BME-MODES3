@@ -33,7 +33,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
 		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
-	var Set<Train> stoppedTrains = new HashSet<Train>
+	val Set<Train> stoppedTrains = new HashSet<Train>
 
 	val List<ITrainStopStrategy> trainStopStrategies = #[
 //		new XPressInvertDirectionStrategy(locator.trackElementCommander, locator.trainReferenceSpeedState, logger)
@@ -151,29 +151,27 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		logger.info('adding the cv callback')
 
 		locator.computerVisionCallback.setComputerVisionListener(new IComputerVisionListener(){
-			
-			
+
 			override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp, long frameindex) {
-				println('''Information recieved @ «timestamp» frame #«frameindex»
-				
-					«information»
+				println('''
+				Information recieved @ «timestamp» frame #«frameindex»
+				«information»
 				''')
-			}
-			
+			}			
 		})
 		
 		logger.info('cv callback added')
 	}
 
 	def public void refreshSafetyLogicState() {
-		logger.info('''Refreshing state: #of trains «model.trains.size», #of cuts «model.cuts.size», #of hits «model.hits.size»''')
+		logger.info('''Refreshing state: #of trains «model.trains.size», #of trailings «model.trailings.size», #of hits «model.hits.size»''')
 		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 		
 		val offenders = new HashSet<Train>
 		
-		model.cuts.forEach [ cut |
-			logger.info('''TRAILING TURNOUT: Train on «cut.offender.currentlyOn.id» will trail turnout «cut.victim.id»''')
-			offenders.add(cut.offender)
+		model.trailings.forEach [ trailing |
+			logger.info('''TRAILING TURNOUT: Train on «trailing.offender.currentlyOn.id» will trail turnout «trailing.victim.id»''')
+			offenders.add(trailing.offender)
 		]
 
 		model.hits.forEach [ hit |
@@ -202,10 +200,10 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			]
 		]
 		if (!sectionsToEnable.empty) {
-			logger.info('''SectionToEnable = {«FOR enable : sectionsToEnable SEPARATOR ', '» «enable.id» «ENDFOR»}''')
+			logger.info('''SectionToEnable = «FOR enable : sectionsToEnable BEFORE '{' SEPARATOR ', ' AFTER '}'» «enable.id» «ENDFOR»''')
 		}
 		if (!sectionsToDisable.empty) {
-			logger.info('''SectionToDisable = {«FOR disable : sectionsToDisable SEPARATOR ', '» «disable.id» «ENDFOR»}''')
+			logger.info('''SectionToDisable = «FOR disable : sectionsToDisable BEFORE '{' SEPARATOR ', ' AFTER '}'» «disable.id» «ENDFOR»''')
 		}
 
 		sectionsToEnable.filter[it instanceof Segment].map[it as Segment].forEach [
@@ -214,8 +212,15 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		sectionsToDisable.filter[it instanceof Segment].map[it as Segment].forEach [
 			it.isEnabled = false
 		]
-
-		stoppedTrains = offenders.filter[currentlyOn instanceof Segment].toSet // As if one of the trains is on a turnout it was not stopped
+		
+		stoppedTrains.clear
+		
+		if(trainStopStrategies.empty){
+			stoppedTrains.addAll(offenders.filter[currentlyOn instanceof Segment]) // As if we have no train stopping strategies 			
+		} else {
+			stoppedTrains.addAll(offenders)
+		}
+		
 	}
 
 	override onUpdate() {

@@ -5,7 +5,7 @@ package hu.bme.mit.inf.safetylogic.patterns;
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainCutsTurnoutQuerySpecification;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainTrailingTurnoutQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
@@ -13,27 +13,27 @@ import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 
 /**
- * Pattern-specific match representation of the hu.bme.mit.inf.safetylogic.patterns.trainCutsTurnout pattern,
- * to be used in conjunction with {@link TrainCutsTurnoutMatcher}.
+ * Pattern-specific match representation of the hu.bme.mit.inf.safetylogic.patterns.trainTrailingTurnout pattern,
+ * to be used in conjunction with {@link TrainTrailingTurnoutMatcher}.
  * 
  * <p>Class fields correspond to parameters of the pattern. Fields with value null are considered unassigned.
  * Each instance is a (possibly partial) substitution of pattern parameters,
  * usable to represent a match of the pattern in the result of a query,
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
- * @see TrainCutsTurnoutMatcher
- * @see TrainCutsTurnoutProcessor
+ * @see TrainTrailingTurnoutMatcher
+ * @see TrainTrailingTurnoutProcessor
  * 
  */
 @SuppressWarnings("all")
-public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
+public abstract class TrainTrailingTurnoutMatch extends BasePatternMatch {
   private Train fOffender;
   
   private RailRoadElement fVictim;
   
   private static List<String> parameterNames = makeImmutableList("Offender", "Victim");
   
-  private TrainCutsTurnoutMatch(final Train pOffender, final RailRoadElement pVictim) {
+  private TrainTrailingTurnoutMatch(final Train pOffender, final RailRoadElement pVictim) {
     this.fOffender = pOffender;
     this.fVictim = pVictim;
   }
@@ -79,12 +79,12 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
   
   @Override
   public String patternName() {
-    return "hu.bme.mit.inf.safetylogic.patterns.trainCutsTurnout";
+    return "hu.bme.mit.inf.safetylogic.patterns.trainTrailingTurnout";
   }
   
   @Override
   public List<String> parameterNames() {
-    return TrainCutsTurnoutMatch.parameterNames;
+    return TrainTrailingTurnoutMatch.parameterNames;
   }
   
   @Override
@@ -93,7 +93,7 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
   }
   
   @Override
-  public TrainCutsTurnoutMatch toImmutable() {
+  public TrainTrailingTurnoutMatch toImmutable() {
     return isMutable() ? newMatch(fOffender, fVictim) : this;
   }
   
@@ -120,7 +120,7 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
   public boolean equals(final Object obj) {
     if (this == obj)
     	return true;
-    if (!(obj instanceof TrainCutsTurnoutMatch)) { // this should be infrequent
+    if (!(obj instanceof TrainTrailingTurnoutMatch)) { // this should be infrequent
     	if (obj == null) {
     		return false;
     	}
@@ -132,7 +132,7 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
     		return false;
     	return Arrays.deepEquals(toArray(), otherSig.toArray());
     }
-    TrainCutsTurnoutMatch other = (TrainCutsTurnoutMatch) obj;
+    TrainTrailingTurnoutMatch other = (TrainTrailingTurnoutMatch) obj;
     if (fOffender == null) {if (other.fOffender != null) return false;}
     else if (!fOffender.equals(other.fOffender)) return false;
     if (fVictim == null) {if (other.fVictim != null) return false;}
@@ -141,9 +141,9 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
   }
   
   @Override
-  public TrainCutsTurnoutQuerySpecification specification() {
+  public TrainTrailingTurnoutQuerySpecification specification() {
     try {
-    	return TrainCutsTurnoutQuerySpecification.instance();
+    	return TrainTrailingTurnoutQuerySpecification.instance();
     } catch (ViatraQueryException ex) {
      	// This cannot happen, as the match object can only be instantiated if the query specification exists
      	throw new IllegalStateException (ex);
@@ -157,7 +157,7 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
    * @return the empty match.
    * 
    */
-  public static TrainCutsTurnoutMatch newEmptyMatch() {
+  public static TrainTrailingTurnoutMatch newEmptyMatch() {
     return new Mutable(null, null);
   }
   
@@ -170,7 +170,7 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
    * @return the new, mutable (partial) match object.
    * 
    */
-  public static TrainCutsTurnoutMatch newMutableMatch(final Train pOffender, final RailRoadElement pVictim) {
+  public static TrainTrailingTurnoutMatch newMutableMatch(final Train pOffender, final RailRoadElement pVictim) {
     return new Mutable(pOffender, pVictim);
   }
   
@@ -183,11 +183,11 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
    * @return the (partial) match object.
    * 
    */
-  public static TrainCutsTurnoutMatch newMatch(final Train pOffender, final RailRoadElement pVictim) {
+  public static TrainTrailingTurnoutMatch newMatch(final Train pOffender, final RailRoadElement pVictim) {
     return new Immutable(pOffender, pVictim);
   }
   
-  private static final class Mutable extends TrainCutsTurnoutMatch {
+  private static final class Mutable extends TrainTrailingTurnoutMatch {
     Mutable(final Train pOffender, final RailRoadElement pVictim) {
       super(pOffender, pVictim);
     }
@@ -198,7 +198,7 @@ public abstract class TrainCutsTurnoutMatch extends BasePatternMatch {
     }
   }
   
-  private static final class Immutable extends TrainCutsTurnoutMatch {
+  private static final class Immutable extends TrainTrailingTurnoutMatch {
     Immutable(final Train pOffender, final RailRoadElement pVictim) {
       super(pOffender, pVictim);
     }
