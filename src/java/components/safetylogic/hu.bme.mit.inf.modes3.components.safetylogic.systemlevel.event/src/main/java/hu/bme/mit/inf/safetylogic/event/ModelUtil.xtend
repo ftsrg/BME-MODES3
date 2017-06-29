@@ -8,9 +8,10 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
+import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatcher
-import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
+import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatcher
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -21,7 +22,6 @@ import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher
 
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
@@ -83,9 +83,9 @@ class ModelUtil implements IModelInteractor {
 		}
 	}
 
-	override getCuts() {
+	override getTrailings() {
 		synchronized(model) {
-			TrainCutsTurnoutMatcher.on(engine).getAllMatches
+			TrainTrailingTurnoutMatcher.on(engine).getAllMatches
 		}
 	}
 
