@@ -35,6 +35,8 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * 	find trainHitsAnotherTrainNextAfterNext(Offender, Victim);
  * } or {
  * 	find trainsAreTooClose(Offender, Victim);
+ * } or {
+ * 	find trainHitsAnotherTrainNextAfterNextAfterNext(Offender, Victim);
  * }
  * </pre></code>
  * 

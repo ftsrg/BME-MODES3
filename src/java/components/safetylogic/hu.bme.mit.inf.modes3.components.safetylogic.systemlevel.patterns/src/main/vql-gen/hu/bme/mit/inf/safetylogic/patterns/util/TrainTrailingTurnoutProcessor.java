@@ -5,17 +5,17 @@ package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
-import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatch;
+import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatch;
 import org.eclipse.viatra.query.runtime.api.IMatchProcessor;
 
 /**
- * A match processor tailored for the hu.bme.mit.inf.safetylogic.patterns.trainCutsTurnout pattern.
+ * A match processor tailored for the hu.bme.mit.inf.safetylogic.patterns.trainTrailingTurnout pattern.
  * 
  * Clients should derive an (anonymous) class that implements the abstract process().
  * 
  */
 @SuppressWarnings("all")
-public abstract class TrainCutsTurnoutProcessor implements IMatchProcessor<TrainCutsTurnoutMatch> {
+public abstract class TrainTrailingTurnoutProcessor implements IMatchProcessor<TrainTrailingTurnoutMatch> {
   /**
    * Defines the action that is to be executed on each match.
    * @param pOffender the value of pattern parameter Offender in the currently processed match
@@ -25,7 +25,7 @@ public abstract class TrainCutsTurnoutProcessor implements IMatchProcessor<Train
   public abstract void process(final Train pOffender, final RailRoadElement pVictim);
   
   @Override
-  public void process(final TrainCutsTurnoutMatch match) {
+  public void process(final TrainTrailingTurnoutMatch match) {
     process(match.getOffender(), match.getVictim());
   }
 }

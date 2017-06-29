@@ -4,8 +4,8 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
-import hu.bme.mit.inf.safetylogic.patterns.TrainCutsTurnoutMatch
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch
+import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatch
 import java.util.Collection
 import java.util.Set
 
@@ -23,6 +23,6 @@ interface IModelInteractor {
 	def RailRoadElement getNextSection(RailRoadElement old, RailRoadElement current)
 	
 		
-	def Collection<TrainCutsTurnoutMatch> getCuts() 
+	def Collection<TrainTrailingTurnoutMatch> getTrailings() 
 	def Collection<TrainHitsAnotherTrainMatch> getHits()
 }

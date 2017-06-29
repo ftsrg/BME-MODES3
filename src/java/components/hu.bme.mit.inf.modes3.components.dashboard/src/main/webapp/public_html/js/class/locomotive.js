@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * @param {LocomotiveController} locomotive
  * @returns {undefined}
  */
@@ -34,7 +34,9 @@ LocomotiveController.prototype.setSpeed = function (speed) {
 
 LocomotiveController.prototype.createDOMrepresentation = function () {
     var container = $('<div />').addClass('train-container').attr("id", "train-"+this.config.address);
+	//var header = $('<h2 />').text(this.config.name);
     var header = $('<h2 />').text(this.config.name);
+	  var removebtn = $('<button />').addClass('remove-train').text('X');
     var image = $('<img />')
             .attr('src', 'images/locomotives/' + this.config.image);
     this.rangeInput = $('<input />').attr({
@@ -46,7 +48,7 @@ LocomotiveController.prototype.createDOMrepresentation = function () {
     this.indicatorElem = $('<div />').addClass('train-control-speed-indicator').text('0');
     var controls = $('<div />').addClass('train-control-speed')
             .append(this.rangeInput).append(this.indicatorElem);
-    container.append(header).append(image).append(controls);
+    container.append(header).append(removebtn).append(image).append(controls);
     image.wrap($('<div />').addClass('train-control-image'));
     this.rangeInput.wrap($('<div />').addClass('train-control-speed-input'));
     $('#train-control').append(container);
@@ -56,7 +58,7 @@ LocomotiveController.prototype.createDOMrepresentation = function () {
     	var speed = $(this).val();
         event.data._this.setSpeed(speed);
         event.data._this.pushSpeed(speed);
-        
+
     });
     this.rangeInput.bind('mousemove', {_this: this}, function (event) {
         event.data._this.setSpeed($(this).val());
@@ -64,7 +66,5 @@ LocomotiveController.prototype.createDOMrepresentation = function () {
 };
 
 LocomotiveController.prototype.DOMUpdatedCallback = function () {
-    
+
 };
-
-
