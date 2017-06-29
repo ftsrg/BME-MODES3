@@ -6,21 +6,13 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Point;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Rectangle;
-
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +24,6 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * <ul>
  *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.RectangleImpl#getOrigin <em>Origin</em>}</li>
  *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.RectangleImpl#getSize <em>Size</em>}</li>
- *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.RectangleImpl#getInverseMatrix <em>Inverse Matrix</em>}</li>
  * </ul>
  *
  * @generated
@@ -57,16 +48,6 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 	 * @ordered
 	 */
 	protected Dimension size;
-
-	/**
-	 * The cached value of the '{@link #getInverseMatrix() <em>Inverse Matrix</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getInverseMatrix()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Double> inverseMatrix;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -178,18 +159,6 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Double> getInverseMatrix() {
-		if (inverseMatrix == null) {
-			inverseMatrix = new EDataTypeEList<Double>(Double.class, this, RailRoadModelPackage.RECTANGLE__INVERSE_MATRIX);
-		}
-		return inverseMatrix;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -213,8 +182,6 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 				return getOrigin();
 			case RailRoadModelPackage.RECTANGLE__SIZE:
 				return getSize();
-			case RailRoadModelPackage.RECTANGLE__INVERSE_MATRIX:
-				return getInverseMatrix();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -234,10 +201,6 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 			case RailRoadModelPackage.RECTANGLE__SIZE:
 				setSize((Dimension)newValue);
 				return;
-			case RailRoadModelPackage.RECTANGLE__INVERSE_MATRIX:
-				getInverseMatrix().clear();
-				getInverseMatrix().addAll((Collection<? extends Double>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -256,9 +219,6 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 			case RailRoadModelPackage.RECTANGLE__SIZE:
 				setSize((Dimension)null);
 				return;
-			case RailRoadModelPackage.RECTANGLE__INVERSE_MATRIX:
-				getInverseMatrix().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -275,26 +235,8 @@ public class RectangleImpl extends MinimalEObjectImpl.Container implements Recta
 				return origin != null;
 			case RailRoadModelPackage.RECTANGLE__SIZE:
 				return size != null;
-			case RailRoadModelPackage.RECTANGLE__INVERSE_MATRIX:
-				return inverseMatrix != null && !inverseMatrix.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (inverseMatrix: ");
-		result.append(inverseMatrix);
-		result.append(')');
-		return result.toString();
 	}
 
 } //RectangleImpl

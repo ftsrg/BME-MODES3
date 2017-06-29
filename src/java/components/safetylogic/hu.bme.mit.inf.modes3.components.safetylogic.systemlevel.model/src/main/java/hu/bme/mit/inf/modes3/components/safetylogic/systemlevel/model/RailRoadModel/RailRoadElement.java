@@ -2,8 +2,6 @@
  */
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement#getId <em>Id</em>}</li>
- *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement#getPoints <em>Points</em>}</li>
  * </ul>
  *
  * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage#getRailRoadElement()
@@ -49,21 +46,5 @@ public interface RailRoadElement extends EObject {
 	 * @generated
 	 */
 	void setId(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Points</b></em>' containment reference list.
-	 * The list contents are of type {@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Point}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Points</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Points</em>' containment reference list.
-	 * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage#getRailRoadElement_Points()
-	 * @model containment="true" lower="2"
-	 * @generated
-	 */
-	EList<Point> getPoints();
 
 } // RailRoadElement

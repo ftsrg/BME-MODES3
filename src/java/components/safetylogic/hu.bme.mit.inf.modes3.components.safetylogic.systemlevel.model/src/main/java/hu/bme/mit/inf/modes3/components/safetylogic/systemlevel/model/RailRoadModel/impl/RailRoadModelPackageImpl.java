@@ -142,16 +142,11 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		// Initialize simple dependencies
 		XMLTypePackage.eINSTANCE.eClass();
 
-		// Obtain or create and register interdependencies
-		RailRoadModelPackageImpl theRailRoadModelPackage_1 = (RailRoadModelPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(RailRoadModelPackage.eNS_URI) instanceof RailRoadModelPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(RailRoadModelPackage.eNS_URI) : RailRoadModelPackage.eINSTANCE);
-
 		// Create package meta-data objects
 		theRailRoadModelPackage.createPackageContents();
-		theRailRoadModelPackage_1.createPackageContents();
 
 		// Initialize created meta-data
 		theRailRoadModelPackage.initializePackageContents();
-		theRailRoadModelPackage_1.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
 		theRailRoadModelPackage.freeze();
@@ -232,15 +227,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 	 */
 	public EAttribute getRailRoadElement_Id() {
 		return (EAttribute)railRoadElementEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getRailRoadElement_Points() {
-		return (EReference)railRoadElementEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -392,15 +378,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getRectangle_InverseMatrix() {
-		return (EAttribute)rectangleEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getDimension() {
 		return dimensionEClass;
 	}
@@ -448,6 +425,15 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 	 */
 	public EReference getSegment_ConnectedTo() {
 		return (EReference)segmentEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getSegment_Points() {
+		return (EReference)segmentEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -523,7 +509,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 
 		railRoadElementEClass = createEClass(RAIL_ROAD_ELEMENT);
 		createEAttribute(railRoadElementEClass, RAIL_ROAD_ELEMENT__ID);
-		createEReference(railRoadElementEClass, RAIL_ROAD_ELEMENT__POINTS);
 
 		turnoutEClass = createEClass(TURNOUT);
 		createEReference(turnoutEClass, TURNOUT__RECTANGLE);
@@ -544,7 +529,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		rectangleEClass = createEClass(RECTANGLE);
 		createEReference(rectangleEClass, RECTANGLE__ORIGIN);
 		createEReference(rectangleEClass, RECTANGLE__SIZE);
-		createEAttribute(rectangleEClass, RECTANGLE__INVERSE_MATRIX);
 
 		dimensionEClass = createEClass(DIMENSION);
 		createEAttribute(dimensionEClass, DIMENSION__WIDTH);
@@ -553,6 +537,7 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		segmentEClass = createEClass(SEGMENT);
 		createEAttribute(segmentEClass, SEGMENT__IS_ENABLED);
 		createEReference(segmentEClass, SEGMENT__CONNECTED_TO);
+		createEReference(segmentEClass, SEGMENT__POINTS);
 
 		pathEClass = createEClass(PATH);
 		createEReference(pathEClass, PATH__FROM);
@@ -584,7 +569,6 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		setNsURI(eNS_URI);
 
 		// Obtain other dependent packages
-		RailRoadModelPackage theRailRoadModelPackage_1 = (RailRoadModelPackage)EPackage.Registry.INSTANCE.getEPackage(RailRoadModelPackage.eNS_URI);
 		XMLTypePackage theXMLTypePackage = (XMLTypePackage)EPackage.Registry.INSTANCE.getEPackage(XMLTypePackage.eNS_URI);
 
 		// Create type parameters
@@ -592,26 +576,25 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		turnoutEClass.getESuperTypes().add(theRailRoadModelPackage_1.getRailRoadElement());
-		segmentEClass.getESuperTypes().add(theRailRoadModelPackage_1.getRailRoadElement());
+		turnoutEClass.getESuperTypes().add(this.getRailRoadElement());
+		segmentEClass.getESuperTypes().add(this.getRailRoadElement());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(trainEClass, Train.class, "Train", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTrain_CurrentlyOn(), theRailRoadModelPackage_1.getRailRoadElement(), null, "currentlyOn", null, 1, 1, Train.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTrain_CurrentlyOn(), this.getRailRoadElement(), null, "currentlyOn", null, 1, 1, Train.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTrain_X(), ecorePackage.getEDouble(), "x", null, 1, 1, Train.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTrain_Y(), ecorePackage.getEDouble(), "y", null, 1, 1, Train.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTrain_Id(), ecorePackage.getEInt(), "id", null, 1, 1, Train.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTrain_PreviouslyOn(), theRailRoadModelPackage_1.getRailRoadElement(), null, "previouslyOn", null, 1, 1, Train.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTrain_PreviouslyOn(), this.getRailRoadElement(), null, "previouslyOn", null, 1, 1, Train.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(railRoadElementEClass, RailRoadElement.class, "RailRoadElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getRailRoadElement_Id(), ecorePackage.getEInt(), "id", null, 1, 1, RailRoadElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRailRoadElement_Points(), theRailRoadModelPackage_1.getPoint(), null, "points", null, 2, -1, RailRoadElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(turnoutEClass, Turnout.class, "Turnout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getTurnout_Rectangle(), theRailRoadModelPackage_1.getRectangle(), null, "rectangle", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTurnout_Top(), theRailRoadModelPackage_1.getRailRoadElement(), null, "top", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTurnout_Straight(), theRailRoadModelPackage_1.getRailRoadElement(), null, "straight", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getTurnout_Divergent(), theRailRoadModelPackage_1.getRailRoadElement(), null, "divergent", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTurnout_Rectangle(), this.getRectangle(), null, "rectangle", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTurnout_Top(), this.getRailRoadElement(), null, "top", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTurnout_Straight(), this.getRailRoadElement(), null, "straight", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getTurnout_Divergent(), this.getRailRoadElement(), null, "divergent", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTurnout_CurrentlyDivergent(), theXMLTypePackage.getBoolean(), "currentlyDivergent", null, 1, 1, Turnout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(pointEClass, Point.class, "Point", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -619,14 +602,13 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 		initEAttribute(getPoint_Y(), ecorePackage.getEDouble(), "y", null, 1, 1, Point.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(railRoadModelEClass, RailRoadModel.class, "RailRoadModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRailRoadModel_Sections(), theRailRoadModelPackage_1.getRailRoadElement(), null, "sections", null, 0, -1, RailRoadModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRailRoadModel_Trains(), theRailRoadModelPackage_1.getTrain(), null, "trains", null, 0, -1, RailRoadModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRailRoadModel_Paths(), theRailRoadModelPackage_1.getPath(), null, "paths", null, 0, -1, RailRoadModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRailRoadModel_Sections(), this.getRailRoadElement(), null, "sections", null, 0, -1, RailRoadModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRailRoadModel_Trains(), this.getTrain(), null, "trains", null, 0, -1, RailRoadModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRailRoadModel_Paths(), this.getPath(), null, "paths", null, 0, -1, RailRoadModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(rectangleEClass, Rectangle.class, "Rectangle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getRectangle_Origin(), theRailRoadModelPackage_1.getPoint(), null, "origin", null, 1, 1, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getRectangle_Size(), theRailRoadModelPackage_1.getDimension(), null, "size", null, 1, 1, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRectangle_InverseMatrix(), ecorePackage.getEDouble(), "inverseMatrix", "0.0", 1, 8, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getRectangle_Origin(), this.getPoint(), null, "origin", null, 1, 1, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getRectangle_Size(), this.getDimension(), null, "size", null, 1, 1, Rectangle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dimensionEClass, Dimension.class, "Dimension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getDimension_Width(), ecorePackage.getEDouble(), "width", null, 1, 1, Dimension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -634,12 +616,16 @@ public class RailRoadModelPackageImpl extends EPackageImpl implements RailRoadMo
 
 		initEClass(segmentEClass, Segment.class, "Segment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getSegment_IsEnabled(), theXMLTypePackage.getBoolean(), "isEnabled", null, 1, 1, Segment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getSegment_ConnectedTo(), theRailRoadModelPackage_1.getRailRoadElement(), null, "connectedTo", null, 1, 2, Segment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSegment_ConnectedTo(), this.getRailRoadElement(), null, "connectedTo", null, 1, 2, Segment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSegment_Points(), this.getPoint(), null, "points", null, 2, -1, Segment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(pathEClass, Path.class, "Path", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getPath_From(), theRailRoadModelPackage_1.getRailRoadElement(), null, "from", null, 0, 1, Path.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPath_Via(), theRailRoadModelPackage_1.getRailRoadElement(), null, "via", null, 0, 1, Path.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPath_To(), theRailRoadModelPackage_1.getRailRoadElement(), null, "to", null, 0, 1, Path.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPath_From(), this.getRailRoadElement(), null, "from", null, 0, 1, Path.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPath_Via(), this.getRailRoadElement(), null, "via", null, 0, 1, Path.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPath_To(), this.getRailRoadElement(), null, "to", null, 0, 1, Path.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Create resource
+		createResource(eNS_URI);
 
 		// Create annotations
 		// http://www.eclipse.org/emf/2002/Ecore

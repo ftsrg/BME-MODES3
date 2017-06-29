@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment#isIsEnabled <em>Is Enabled</em>}</li>
  *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment#getConnectedTo <em>Connected To</em>}</li>
+ *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment#getPoints <em>Points</em>}</li>
  * </ul>
  *
  * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage#getSegment()
@@ -63,5 +64,21 @@ public interface Segment extends RailRoadElement {
 	 * @generated
 	 */
 	EList<RailRoadElement> getConnectedTo();
+
+	/**
+	 * Returns the value of the '<em><b>Points</b></em>' containment reference list.
+	 * The list contents are of type {@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Point}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Points</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Points</em>' containment reference list.
+	 * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage#getSegment_Points()
+	 * @model containment="true" lower="2"
+	 * @generated
+	 */
+	EList<Point> getPoints();
 
 } // Segment

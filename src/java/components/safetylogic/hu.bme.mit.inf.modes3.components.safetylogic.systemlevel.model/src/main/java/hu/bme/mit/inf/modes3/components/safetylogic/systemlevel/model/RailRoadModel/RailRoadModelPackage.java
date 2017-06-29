@@ -150,22 +150,13 @@ public interface RailRoadModelPackage extends EPackage {
 	int RAIL_ROAD_ELEMENT__ID = 0;
 
 	/**
-	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RAIL_ROAD_ELEMENT__POINTS = 1;
-
-	/**
 	 * The number of structural features of the '<em>Rail Road Element</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RAIL_ROAD_ELEMENT_FEATURE_COUNT = 2;
+	int RAIL_ROAD_ELEMENT_FEATURE_COUNT = 1;
 
 	/**
 	 * The number of operations of the '<em>Rail Road Element</em>' class.
@@ -193,16 +184,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__ID = RailRoadModelPackage.RAIL_ROAD_ELEMENT__ID;
-
-	/**
-	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int TURNOUT__POINTS = RailRoadModelPackage.RAIL_ROAD_ELEMENT__POINTS;
+	int TURNOUT__ID = RAIL_ROAD_ELEMENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Rectangle</b></em>' containment reference.
@@ -211,7 +193,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__RECTANGLE = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 0;
+	int TURNOUT__RECTANGLE = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Top</b></em>' reference.
@@ -220,7 +202,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__TOP = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 1;
+	int TURNOUT__TOP = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Straight</b></em>' reference.
@@ -229,7 +211,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__STRAIGHT = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 2;
+	int TURNOUT__STRAIGHT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Divergent</b></em>' reference.
@@ -238,7 +220,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__DIVERGENT = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 3;
+	int TURNOUT__DIVERGENT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Currently Divergent</b></em>' attribute.
@@ -247,7 +229,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT__CURRENTLY_DIVERGENT = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 4;
+	int TURNOUT__CURRENTLY_DIVERGENT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Turnout</em>' class.
@@ -256,7 +238,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT_FEATURE_COUNT = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 5;
+	int TURNOUT_FEATURE_COUNT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of operations of the '<em>Turnout</em>' class.
@@ -265,7 +247,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TURNOUT_OPERATION_COUNT = RailRoadModelPackage.RAIL_ROAD_ELEMENT_OPERATION_COUNT + 0;
+	int TURNOUT_OPERATION_COUNT = RAIL_ROAD_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.PointImpl <em>Point</em>}' class.
@@ -397,22 +379,13 @@ public interface RailRoadModelPackage extends EPackage {
 	int RECTANGLE__SIZE = 1;
 
 	/**
-	 * The feature id for the '<em><b>Inverse Matrix</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int RECTANGLE__INVERSE_MATRIX = 2;
-
-	/**
 	 * The number of structural features of the '<em>Rectangle</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int RECTANGLE_FEATURE_COUNT = 3;
+	int RECTANGLE_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Rectangle</em>' class.
@@ -486,16 +459,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEGMENT__ID = RailRoadModelPackage.RAIL_ROAD_ELEMENT__ID;
-
-	/**
-	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SEGMENT__POINTS = RailRoadModelPackage.RAIL_ROAD_ELEMENT__POINTS;
+	int SEGMENT__ID = RAIL_ROAD_ELEMENT__ID;
 
 	/**
 	 * The feature id for the '<em><b>Is Enabled</b></em>' attribute.
@@ -504,7 +468,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEGMENT__IS_ENABLED = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 0;
+	int SEGMENT__IS_ENABLED = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Connected To</b></em>' reference list.
@@ -513,7 +477,16 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEGMENT__CONNECTED_TO = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 1;
+	int SEGMENT__CONNECTED_TO = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Points</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SEGMENT__POINTS = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Segment</em>' class.
@@ -522,7 +495,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEGMENT_FEATURE_COUNT = RailRoadModelPackage.RAIL_ROAD_ELEMENT_FEATURE_COUNT + 2;
+	int SEGMENT_FEATURE_COUNT = RAIL_ROAD_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Segment</em>' class.
@@ -531,7 +504,7 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SEGMENT_OPERATION_COUNT = RailRoadModelPackage.RAIL_ROAD_ELEMENT_OPERATION_COUNT + 0;
+	int SEGMENT_OPERATION_COUNT = RAIL_ROAD_ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.PathImpl <em>Path</em>}' class.
@@ -674,17 +647,6 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getRailRoadElement_Id();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement#getPoints <em>Points</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Points</em>'.
-	 * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement#getPoints()
-	 * @see #getRailRoadElement()
-	 * @generated
-	 */
-	EReference getRailRoadElement_Points();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout <em>Turnout</em>}'.
@@ -859,17 +821,6 @@ public interface RailRoadModelPackage extends EPackage {
 	EReference getRectangle_Size();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Rectangle#getInverseMatrix <em>Inverse Matrix</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Inverse Matrix</em>'.
-	 * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Rectangle#getInverseMatrix()
-	 * @see #getRectangle()
-	 * @generated
-	 */
-	EAttribute getRectangle_InverseMatrix();
-
-	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Dimension <em>Dimension</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -932,6 +883,17 @@ public interface RailRoadModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getSegment_ConnectedTo();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment#getPoints <em>Points</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Points</em>'.
+	 * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment#getPoints()
+	 * @see #getSegment()
+	 * @generated
+	 */
+	EReference getSegment_Points();
 
 	/**
 	 * Returns the meta object for class '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Path <em>Path</em>}'.
@@ -1066,14 +1028,6 @@ public interface RailRoadModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RAIL_ROAD_ELEMENT__ID = eINSTANCE.getRailRoadElement_Id();
-
-		/**
-		 * The meta object literal for the '<em><b>Points</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference RAIL_ROAD_ELEMENT__POINTS = eINSTANCE.getRailRoadElement_Points();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.TurnoutImpl <em>Turnout</em>}' class.
@@ -1212,14 +1166,6 @@ public interface RailRoadModelPackage extends EPackage {
 		EReference RECTANGLE__SIZE = eINSTANCE.getRectangle_Size();
 
 		/**
-		 * The meta object literal for the '<em><b>Inverse Matrix</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute RECTANGLE__INVERSE_MATRIX = eINSTANCE.getRectangle_InverseMatrix();
-
-		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.DimensionImpl <em>Dimension</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1270,6 +1216,14 @@ public interface RailRoadModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference SEGMENT__CONNECTED_TO = eINSTANCE.getSegment_ConnectedTo();
+
+		/**
+		 * The meta object literal for the '<em><b>Points</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SEGMENT__POINTS = eINSTANCE.getSegment_Points();
 
 		/**
 		 * The meta object literal for the '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl.PathImpl <em>Path</em>}' class.

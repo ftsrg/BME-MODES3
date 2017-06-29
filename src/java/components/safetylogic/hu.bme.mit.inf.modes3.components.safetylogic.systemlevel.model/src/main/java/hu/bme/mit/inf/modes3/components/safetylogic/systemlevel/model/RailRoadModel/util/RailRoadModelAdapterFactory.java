@@ -104,10 +104,6 @@ public class RailRoadModelAdapterFactory extends AdapterFactoryImpl {
 				return createPathAdapter();
 			}
 			@Override
-			public Adapter caseRailRoadModel_RailRoadElement(RailRoadElement object) {
-				return createRailRoadModel_RailRoadElementAdapter();
-			}
-			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -250,20 +246,6 @@ public class RailRoadModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createPathAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement <em>Rail Road Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
-	 * @generated
-	 */
-	public Adapter createRailRoadModel_RailRoadElementAdapter() {
 		return null;
 	}
 

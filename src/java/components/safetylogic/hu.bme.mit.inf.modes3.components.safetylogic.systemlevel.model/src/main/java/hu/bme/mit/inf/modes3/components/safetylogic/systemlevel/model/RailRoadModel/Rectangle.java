@@ -2,8 +2,6 @@
  */
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Rectangle#getOrigin <em>Origin</em>}</li>
  *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Rectangle#getSize <em>Size</em>}</li>
- *   <li>{@link hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Rectangle#getInverseMatrix <em>Inverse Matrix</em>}</li>
  * </ul>
  *
  * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage#getRectangle()
@@ -76,21 +73,5 @@ public interface Rectangle extends EObject {
 	 * @generated
 	 */
 	void setSize(Dimension value);
-
-	/**
-	 * Returns the value of the '<em><b>Inverse Matrix</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.Double}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Inverse Matrix</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Inverse Matrix</em>' attribute list.
-	 * @see hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelPackage#getRectangle_InverseMatrix()
-	 * @model default="0.0" unique="false" required="true" upper="8" ordered="false"
-	 * @generated
-	 */
-	EList<Double> getInverseMatrix();
 
 } // Rectangle
