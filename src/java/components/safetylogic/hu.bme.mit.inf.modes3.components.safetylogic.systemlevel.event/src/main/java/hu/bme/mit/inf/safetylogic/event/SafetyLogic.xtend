@@ -21,7 +21,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVi
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
-	@Accessors(PUBLIC_GETTER) protected IModelInteractor model // XXX IModelInteractor should be the static type
+	@Accessors(PUBLIC_GETTER) protected IModelInteractor model
 	private ILoggerFactory factory
 
 	@Accessors(PUBLIC_GETTER)
@@ -42,6 +42,8 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
 		new TrackEnableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!
 	]
+	
+	val ComputerVisionEstimator computerVisionEstimator
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
 		super(stack, factory)
@@ -51,7 +53,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 
 		model = new ModelUtil(factory)
 
-
+		this.computerVisionEstimator = new ComputerVisionEstimator(model)
 		
 //		rules = new SafetyLogicRuleEngine(model.resourceSet)
 
@@ -155,8 +157,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp, long frameindex) {
 				println('''
 				Information recieved @ «timestamp» frame #«frameindex»
-				«information»
+				«FOR info : information»
+					CV Estimated train «info.name» on segment #«computerVisionEstimator.getElementByCoordinates(info.realPosition.x, info.realPosition.y).id»
+				«ENDFOR»
 				''')
+				
+				
 			}			
 		})
 		
