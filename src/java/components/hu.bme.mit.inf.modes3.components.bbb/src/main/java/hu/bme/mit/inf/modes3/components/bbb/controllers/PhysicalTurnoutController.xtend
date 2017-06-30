@@ -50,7 +50,7 @@ class PhysicalTurnoutController implements InputStateListener {
 			divergentState = GpioManager.getGpio(pins.get(3), Gpio.Direction.IN);
 		} catch (GpioNotConfiguratedException ex) {
 			// TODO this exception should be handled correctly!
-			logger.debug("GPIO pin could not be setted!", ex);
+			logger.debug("GPIO pin could not be set!", ex);
 		}
 		
 		// there will be only one listener for both input, therefore we could handle the change
