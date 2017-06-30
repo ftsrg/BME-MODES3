@@ -98,6 +98,9 @@ class PhysicalTurnoutController implements InputStateListener {
 				case STRAIGHT: {
 					straightControl.impulse(TURNOUT_IMPULSE_WIDTH, false);
 				}
+				case ILLEGAL: {
+					throw new RuntimeException("ILLEGAL state received, simply ignoring it")
+				}
 			}
 		} catch (Exception ex) {
 			// TODO this exception should be handled correctly!
