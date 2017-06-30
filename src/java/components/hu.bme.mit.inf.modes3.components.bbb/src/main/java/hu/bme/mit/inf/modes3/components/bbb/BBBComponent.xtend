@@ -11,7 +11,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnout
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
-import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
 import java.util.HashMap
 import java.util.List
 import org.slf4j.ILoggerFactory
