@@ -89,7 +89,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 	
 	private def void initRailRoad() {
 		model.turnouts.forEach[currentlyDivergent = false]
-		val initSleepTimes = 3000
+		val initSleepTimes = 500
 		logger.info('Railroad initialization started, sleep times are ' + initSleepTimes)
 		val turnouts = model.turnouts
 		val segments = model.segments
@@ -129,7 +129,7 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		
 		this.logger.info("Running started...")
 		
-		
+//		
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
 		locator.trackElementStateRegistry.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
@@ -155,14 +155,12 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 		locator.computerVisionCallback.setComputerVisionListener(new IComputerVisionListener(){
 
 			override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp, long frameindex) {
-				println('''
-				Information recieved @ «timestamp» frame #«frameindex»
-				«FOR info : information»
-					CV Estimated train «info.name» on segment #«computerVisionEstimator.getElementByCoordinates(info.realPosition.x, info.realPosition.y).id»
-				«ENDFOR»
-				''')
-				
-				
+//				println('''
+//				Information recieved @ «timestamp» frame #«frameindex»
+//				«FOR info : information»
+//					CV Estimated train «info.name» on segment #«computerVisionEstimator.getElementByCoordinates(info.realPosition.x, info.realPosition.y).id»
+//				«ENDFOR»
+//				''')
 			}			
 		})
 		

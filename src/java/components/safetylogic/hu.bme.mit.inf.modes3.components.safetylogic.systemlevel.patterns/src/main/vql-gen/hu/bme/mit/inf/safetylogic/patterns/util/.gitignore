@@ -18,3 +18,13 @@
 /.CurrentlyConnectedQuerySpecification.java._trace
 /.ViablePathsProcessor.java._trace
 /.ViablePathsQuerySpecification.java._trace
+/.TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification.java._trace
+/TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification.java
+/.TrainDerailsOnNextTurnoutQuerySpecification.java._trace
+/.TrainDerailsOnTurnoutNextAfterNextQuerySpecification.java._trace
+/TrainDerailsOnNextTurnoutQuerySpecification.java
+/TrainDerailsOnTurnoutNextAfterNextQuerySpecification.java
+/.TrainTrailingTurnoutQuerySpecification.java._trace
+/TrainTrailingTurnoutQuerySpecification.java
+/.TrainTrailingTurnoutProcessor.java._trace
+/TrainTrailingTurnoutProcessor.java
