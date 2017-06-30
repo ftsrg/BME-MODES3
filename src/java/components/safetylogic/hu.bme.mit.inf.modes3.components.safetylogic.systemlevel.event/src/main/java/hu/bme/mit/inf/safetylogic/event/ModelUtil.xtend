@@ -29,7 +29,7 @@ class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
 	val Logger logger
-	val validTrainIDs = #[8, 9, 10] // 8=RED, 9=TAURUS, 10=SNCF
+	val validTrainIDs = #[8, 9, 10].immutableCopy // 8=RED, 9=TAURUS, 10=SNCF
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
@@ -150,18 +150,16 @@ class ModelUtil implements IModelInteractor {
 
 	override getSections() {
 		synchronized(model) {
-
 			model.sections
 		}
 	}
 
 	override getTrains() {
 		synchronized(model) {
-
 			model.trains
 		}
 	}
-	
+
 	override getNextSection(RailRoadElement old, RailRoadElement current) {
 		return NextSectionMatcher.on(engine).getAllMatches(old, current, null).head.next
 	}
