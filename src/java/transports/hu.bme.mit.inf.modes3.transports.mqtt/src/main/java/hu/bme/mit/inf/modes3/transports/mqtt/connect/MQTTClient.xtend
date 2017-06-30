@@ -131,6 +131,7 @@ class MQTTClient {
 
 			val persistence = new MemoryPersistence
 			val connOpts = new MqttConnectOptions
+			connOpts.maxInflight = 100
 
 			val client = new MqttAsyncClient(address, clientId, persistence)
 			client.connect(connOpts)
@@ -145,7 +146,6 @@ class MQTTClient {
 	def synchronized sendMessage(byte[] message) {
 		try {
 			client?.publish(topic, message, qos, false)
-			Thread.sleep(50)
 		} catch (MqttException ex) {
 			logger.error(ex.message, ex)
 		} catch (InterruptedException ex) {
