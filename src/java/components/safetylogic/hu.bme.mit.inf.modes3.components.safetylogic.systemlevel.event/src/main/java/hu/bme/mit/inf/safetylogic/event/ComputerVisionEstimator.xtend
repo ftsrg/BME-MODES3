@@ -2,9 +2,6 @@ package hu.bme.mit.inf.safetylogic.event
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Point
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelFactory
 
 class ComputerVisionEstimator {
@@ -18,31 +15,22 @@ class ComputerVisionEstimator {
 	def RailRoadElement getElementByCoordinates(double x, double y) {
 		val turnouts = model.turnouts
 		val segments = model.segments
-		val pointFromCoordinates = RailRoadModelFactory.eINSTANCE.createPoint => [
+		val tp = RailRoadModelFactory.eINSTANCE.createPoint => [
 			it.x = x
 			it.y = y
 		]
 
 		val matchingTurnout = turnouts.findFirst [
-			it.rectangle.origin.x < x && x < it.rectangle.origin.x + it.rectangle.size.width && it.rectangle.origin.y < y && y < it.rectangle.origin.y + it.rectangle.size.height
+			Math.abs(it.rectangle.origin.x - x) <= it.rectangle.size.width / 2 &&
+				Math.abs(it.rectangle.origin.y - y) <= it.rectangle.size.height / 2
 		]
-
-		if(matchingTurnout !== null) {
+		if (matchingTurnout !== null) {
 			return matchingTurnout
 		}
-
-		var closestSegment = segments.head
-		var closestPoint = closestSegment.points.head
-
-		for (segment : segments) {
-			for (point : segment.points) {
-				if(distance(point, pointFromCoordinates) < distance(point, closestPoint)) {
-					closestPoint = point
-					closestSegment = segment
-				}
-			}
-		}
-		return closestSegment
+		
+		segments.minBy[
+			it.points.map[distance(it, tp)].min
+		]
 	}
 
 	def static double distance(Point one, Point other) {

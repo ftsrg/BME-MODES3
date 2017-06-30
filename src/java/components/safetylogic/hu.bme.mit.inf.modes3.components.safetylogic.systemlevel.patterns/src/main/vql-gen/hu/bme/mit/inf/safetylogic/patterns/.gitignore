@@ -17,3 +17,7 @@
 /.ViablePathsMatcher.java._trace
 /ThreeConnectedRailRoadPartsMatch.java
 /ConnectedMatcher.java
+/.TrainTrailingTurnoutMatch.java._trace
+/.TrainTrailingTurnoutMatcher.java._trace
+/TrainTrailingTurnoutMatch.java
+/TrainTrailingTurnoutMatcher.java
