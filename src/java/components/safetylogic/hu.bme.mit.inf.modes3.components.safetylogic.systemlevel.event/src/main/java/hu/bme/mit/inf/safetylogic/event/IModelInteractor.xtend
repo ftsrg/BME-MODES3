@@ -8,6 +8,8 @@ import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch
 import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatch
 import java.util.Collection
 import java.util.Set
+import java.util.List
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
 
 interface IModelInteractor {
 	def Iterable<Train> getEnabledTrains()
@@ -25,4 +27,8 @@ interface IModelInteractor {
 		
 	def Collection<TrainTrailingTurnoutMatch> getTrailings() 
 	def Collection<TrainHitsAnotherTrainMatch> getHits()
+	
+	def void ensureIds(List<Pair<RailRoadElement, ComputerVisionInformation>> pairs)
+	
+	
 }
