@@ -87,7 +87,7 @@ class MQTTConnectionBridge implements MqttCallback {
 		if(topic.equals(this.topic)) {
 			try{
 			val m = Message.parseFrom(message.payload)
-			logger.info((m.type as MessageType).toString)
+			logger.debug((m.type as MessageType).toString)
 			} catch(Exception e){
 				
 			}

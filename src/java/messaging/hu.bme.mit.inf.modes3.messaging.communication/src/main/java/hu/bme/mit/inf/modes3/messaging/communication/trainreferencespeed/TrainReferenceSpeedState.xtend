@@ -24,7 +24,7 @@ class TrainReferenceSpeedState {
 		client.addTrainReferenceSpeedCallback(new ITrainReferenceSpeedCallback() {
 
 			override onTrainReferenceSpeed(int id, int speed, TrainDirectionValue direction) {
-				logger.info('''TrainReferenceSpeed message recieved, id=«id», speed=«speed», direction=«direction»''')
+				logger.debug('''TrainReferenceSpeed message recieved, id=«id», speed=«speed», direction=«direction»''')
 				synchronized (speeds) {
 					speeds.put(id, speed);
 				}
