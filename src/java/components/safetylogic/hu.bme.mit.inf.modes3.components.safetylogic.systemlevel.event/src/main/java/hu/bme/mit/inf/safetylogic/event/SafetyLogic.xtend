@@ -21,6 +21,8 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVi
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
+	var initializeRailRoad = false
+
 	@Accessors(PUBLIC_GETTER) protected IModelInteractor model
 	private ILoggerFactory factory
 
@@ -148,19 +150,25 @@ class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INot
 			}
 		}
 		
-		initRailRoad
+		if(initializeRailRoad){
+			initRailRoad
+		}
 
 		logger.info('adding the cv callback')
 
 		locator.computerVisionCallback.setComputerVisionListener(new IComputerVisionListener(){
 
 			override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp, long frameindex) {
-//				println('''
-//				Information recieved @ «timestamp» frame #«frameindex»
-//				«FOR info : information»
-//					CV Estimated train «info.name» on segment #«computerVisionEstimator.getElementByCoordinates(info.realPosition.x, info.realPosition.y).id»
-//				«ENDFOR»
-//				''')
+				val segmentIds = information.map[computerVisionEstimator.getElementByCoordinates(it.realPosition.x, it.realPosition.y)]
+				val infoIter = information.iterator
+				val combined = segmentIds.map[it -> infoIter.next]
+				println('''
+				Information recieved @ «timestamp» frame #«frameindex»
+				«FOR info : information»
+					CV Estimated train «info.name» on segment #«computerVisionEstimator.getElementByCoordinates(info.realPosition.x, info.realPosition.y).id»
+				«ENDFOR»
+				''')
+				model.ensureIds(combined)
 			}			
 		})
 		
