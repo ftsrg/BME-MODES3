@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.safetylogic.event
 
+import com.google.common.collect.ImmutableBiMap
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModelFactory
@@ -22,6 +23,8 @@ import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import java.util.List
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
 
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
@@ -29,7 +32,7 @@ class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
 	val Logger logger
-	val validTrainIDs = #[8, 9, 10] // 8=RED, 9=TAURUS, 10=SNCF
+	val trainNameMapping = (new ImmutableBiMap.Builder<String, Integer> => [putAll(#{"BR294" -> 8,"Taurus" -> 9, "SNCF" -> 10})]).build
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
@@ -56,14 +59,14 @@ class ModelUtil implements IModelInteractor {
 
 	override addNewTrain() {
 		synchronized(model) {
-			val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
+		val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
 			model.trains.add(train)
 			return train
 		}
 	}
 
 	def private getNewTrainID() {
-		for (trainID : validTrainIDs) {
+		for (trainID : trainNameMapping.values) {
 			if(model.trains.findFirst[it.id == trainID] == null) return trainID
 		}
 		logger.error("There can't be this much trains on the track")
@@ -150,20 +153,27 @@ class ModelUtil implements IModelInteractor {
 
 	override getSections() {
 		synchronized(model) {
-
 			model.sections
 		}
 	}
 
 	override getTrains() {
 		synchronized(model) {
-
 			model.trains
 		}
 	}
-	
+
 	override getNextSection(RailRoadElement old, RailRoadElement current) {
 		return NextSectionMatcher.on(engine).getAllMatches(old, current, null).head.next
 	}
-
+	
+	override ensureIds(List<Pair<RailRoadElement, ComputerVisionInformation>> pairs) {
+		pairs.filter[value.tracked && trainNameMapping.keySet.contains(value.name)].forEach[ pair|
+			val section = model.sections.findFirst[id === pair.key.id]
+			val train = model.trains.findFirst[it.currentlyOn === section]
+			train.id = trainNameMapping.get(pair.value.name)
+			logger.info('''A train got a new ID from the CV information. updated train on «train.currentlyOn» to ID «train.id»''')
+		]
+	}
+	
 }
