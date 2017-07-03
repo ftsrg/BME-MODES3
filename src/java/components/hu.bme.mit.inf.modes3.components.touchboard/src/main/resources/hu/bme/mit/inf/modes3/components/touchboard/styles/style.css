@@ -1,4 +1,8 @@
-.turnoutContainer > ToggleButton {
+TitledPane {
+    -fx-background-radius: 0;
+}
+
+.turnoutContainer > BorderPane > ToggleButton {
 	-fx-background-radius: 0;
 }
 
