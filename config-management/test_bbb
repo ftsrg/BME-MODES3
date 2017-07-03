@@ -1,6 +1,0 @@
-[modes3-bbb]
-192.168.1.31 turnout_id=20 ti=31 mac=54-4a-16-c5-fe-0d
-
-[modes3-pi]
-192.168.1.2
-
