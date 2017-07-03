@@ -1,0 +1,7 @@
+.turnoutContainer > ToggleButton {
+	-fx-background-radius: 0;
+}
+
+.turnoutContainer > ToggleButton:selected {
+    -fx-background-color: gray;
+}
