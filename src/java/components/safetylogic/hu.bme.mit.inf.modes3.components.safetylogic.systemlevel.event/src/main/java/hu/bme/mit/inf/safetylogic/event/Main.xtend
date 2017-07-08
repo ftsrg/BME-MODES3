@@ -17,14 +17,12 @@ class Main {
 			
 		val registry = new ArgumentRegistry(loggerFactory)
 	
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The selected configuration for deployment", String))
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The IP address of the component", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The configuration used", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String))
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The publish port for the component", Integer))
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The reply port for the component", Integer))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("port", "The oprt used by the transport server", Integer))
 		registry.parseArguments(args)
 		
-//		EasterEggMessageSender.INSTANCE.initialize(registry.getParameterStringValue("address"), registry.getParameterIntegerValue("pubPort"), EasterEggMessageSender.name)
 		val sl = new SafetyLogic(CommunicationStackFactory::createMQTTStack(registry, loggerFactory), loggerFactory)
 
 		sl.run // The component will run on this thread

@@ -11,6 +11,12 @@ import org.eclipse.xtend.lib.annotations.Data
 @Data
 class ArgumentDescriptorWithParameter<T> {
 
+	new(String name, String description, Class<T> type) {
+		this.name = name
+		this.description = description
+		this.type = type
+	}
+
 	// the name of the argument
 	String name
 
@@ -19,4 +25,5 @@ class ArgumentDescriptorWithParameter<T> {
 
 	// type of the argument (e.g. String.class, Integer.class)
 	Class<T> type
+	
 }

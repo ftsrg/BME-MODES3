@@ -3,13 +3,13 @@ package hu.bme.mit.inf.modes3.components.occupancyquery
 import com.pi4j.io.serial.Serial
 import com.pi4j.io.serial.SerialFactory
 import hu.bme.mit.inf.modes3.components.occupancyquery.config.SerialConfigFactory
+import java.io.IOException
 import java.util.ArrayList
 import java.util.Arrays
 import java.util.concurrent.LinkedBlockingQueue
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import zmq.ZError.IOException
 
 class UARTReader implements IUARTReader, Runnable {
 

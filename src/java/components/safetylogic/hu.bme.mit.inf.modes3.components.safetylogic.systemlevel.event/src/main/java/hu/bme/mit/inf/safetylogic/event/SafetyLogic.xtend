@@ -21,7 +21,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVi
 
 class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
 
-	var initializeRailRoad = false
+	val initializeRailRoad = true
 
 	@Accessors(PUBLIC_GETTER) protected IModelInteractor model
 	private ILoggerFactory factory

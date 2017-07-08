@@ -19,7 +19,7 @@
                <children>
                   <HBox>
                      <children>
-                        <TitledPane collapsible="false" layoutX="10.0" layoutY="210.0" maxHeight="1.7976931348623157E308" text="Turnout #1" VBox.vgrow="ALWAYS">
+                        <TitledPane collapsible="false" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="10.0" layoutY="210.0" maxHeight="1.7976931348623157E308" text="Turnout #1" VBox.vgrow="ALWAYS">
                            <content>
                               <HBox>
                                  <children>
@@ -139,6 +139,19 @@
                </children>
             </VBox>
          </bottom>
+         <center>
+            <GridPane BorderPane.alignment="CENTER">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </center>
       </BorderPane>
    </children>
 </HBox>
