@@ -2,9 +2,9 @@ package hu.bme.mit.inf.modes3.transports.mqtt
 
 import hu.bme.mit.inf.modes3.transports.common.Transport
 import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
-import hu.bme.mit.inf.modes3.transports.mqtt.connect.MQTTConnectionBridge
 import java.util.concurrent.LinkedBlockingQueue
 import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 import org.slf4j.impl.SimpleLoggerFactory
 
 /**
@@ -17,9 +17,11 @@ import org.slf4j.impl.SimpleLoggerFactory
  * fact that MQTTConnectionBridge is a singleton class.
  */
 class MQTTTransport extends Transport {
-
-	protected MQTTConnectionBridge bridge
-	protected val messages = new LinkedBlockingQueue<byte[]>
+	
+	MQTTConnection connection;
+	Logger logger;
+	LinkedBlockingQueue<byte[]> messages = new LinkedBlockingQueue<byte[]>;
+	
 
 	/**
 	 * Everyone who uses MQTTTransport in the same JVM will uses the same MQTT connection. It is guaranteed by the
@@ -44,11 +46,16 @@ class MQTTTransport extends Transport {
 
 	new(TransportConfiguration config, ILoggerFactory factory) {
 		super(config)
-		bridge = MQTTConnectionBridge.getInstance(factory, config)
+		this.logger = factory.getLogger("MQ");
 	}
 
 	override connect() {
-		bridge.subscribe(this)
+		connection = new MQTTConnection(
+			this.config, 
+			this.logger,
+			this.messages
+		);
+		connection.connect()
 	}
 
 	override receiveMessage() {
@@ -56,15 +63,11 @@ class MQTTTransport extends Transport {
 	}
 
 	override sendMessage(byte[] message) {
-		bridge.sendMessage(message)
+		connection.send(message);
 	}
 
 	override close() {
-		bridge.removeSubscriber(this)
-	}
-
-	def putMessage(byte[] message) {
-		messages.put(message)
+		connection.close();
 	}
 
 }

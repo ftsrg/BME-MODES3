@@ -1,11 +1,13 @@
 package hu.bme.mit.inf.modes3.transports.mqtt
 
-import hu.bme.mit.inf.modes3.transports.mqtt.conf.MQTTTransportConfigurationFactory
+import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
+
+// FIXME: Redo the local testing of the MQTT
 
 class MQTTTests {
 
@@ -14,19 +16,21 @@ class MQTTTests {
 
 	@Before
 	def void init() {
-		val senderTransportConfig = MQTTTransportConfigurationFactory::createLocalTransportConfig
-		sender = new MQTTTransport(senderTransportConfig, new NOPLoggerFactory)
+		val senderConfig = new TransportConfiguration("MQTT-TEST-SENDER", "root.modes3.intra", 1883)
+		sender = new MQTTTransport(senderConfig, new NOPLoggerFactory)
 		sender.connect
+		println("Sender connected")
 
-		val receiverTransportConfig = MQTTTransportConfigurationFactory::createLocalTransportConfig
-		receiver = new MQTTTransport(receiverTransportConfig, new NOPLoggerFactory)
+		val receiverConfig = new TransportConfiguration("MQTT-TEST-RECEIVER", "root.modes3.intra", 1883)
+		receiver = new MQTTTransport(receiverConfig, new NOPLoggerFactory)
 		receiver.connect
+		println("Receiver connected")
 	}
 
 	@After
 	def void close() {
-		sender?.close
-		receiver?.close
+		sender.close
+		receiver.close
 	}
 
 	@Test
@@ -36,9 +40,12 @@ class MQTTTests {
 
 		// Act
 		sender.sendMessage(message.bytes)
+		println("Sender sent message")
 
 		// Assert
+		println("Receiving...")
 		val receivedMessage = new String(receiver.receiveMessage)
+		println("Received")
 		Assert.assertEquals(message, receivedMessage)
 	}
 

@@ -7,8 +7,6 @@
  * user guide available at https://docs.gradle.org/3.0/userguide/tutorial_java_projects.html
  */
 
-// Apply the java plugin to add support for Java
-apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 

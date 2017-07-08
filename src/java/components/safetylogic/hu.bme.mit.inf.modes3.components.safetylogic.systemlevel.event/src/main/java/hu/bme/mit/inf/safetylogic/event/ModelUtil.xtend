@@ -168,12 +168,12 @@ class ModelUtil implements IModelInteractor {
 	}
 	
 	override ensureIds(List<Pair<RailRoadElement, ComputerVisionInformation>> pairs) {
-		pairs.filter[value.tracked && trainNameMapping.keySet.contains(value.name)].forEach[ pair|
-			val section = model.sections.findFirst[id === pair.key.id]
-			val train = model.trains.findFirst[it.currentlyOn === section]
-			train.id = trainNameMapping.get(pair.value.name)
-			logger.info('''A train got a new ID from the CV information. updated train on «train.currentlyOn» to ID «train.id»''')
-		]
+//		pairs.filter[value.tracked && trainNameMapping.keySet.contains(value.name)].forEach[ pair|
+//			val section = model.sections.findFirst[id === pair.key.id]
+//			val train = model.trains.findFirst[it.currentlyOn === section]
+//			train.id = trainNameMapping.get(pair.value.name)
+//			logger.info('''A train got a new ID from the CV information. updated train on «train.currentlyOn» to ID «train.id»''')
+//		]
 	}
 	
 }

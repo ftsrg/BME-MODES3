@@ -13,11 +13,10 @@ class Main {
 		val logger = loggerFactory.getLogger(Main.name)
 
 		val registry = new ArgumentRegistry(loggerFactory)
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The ID of the component", String))
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The ID of the component", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The configuration used", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String))
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer))
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("port", "The oprt used by the transport server", Integer))
 
 		registry.parseArguments(args);
 
