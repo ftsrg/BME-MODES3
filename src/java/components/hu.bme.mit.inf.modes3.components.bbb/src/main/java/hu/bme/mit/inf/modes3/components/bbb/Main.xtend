@@ -22,7 +22,7 @@ class Main {
 
 		val hostname = InetAddress.getLocalHost().getHostName();
 		logger.info("Hostname: " + hostname);
-		val turnoutID = Integer.valueOf(hostname.replace('t', ''));
+		val turnoutID = Integer.valueOf(hostname.split("\\.").get(0).replace('t', ''));
 
 		val communicationStack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
 		

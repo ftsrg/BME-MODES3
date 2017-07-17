@@ -72,9 +72,7 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 	}
 
 	override run() {
-		System.console.readLine("Press ENTER for ending BBB component running");
-		logger.info('''Stopping BBBComponent...''')
-		GpioManager.cleanup
+		Thread.currentThread.join
 	}
 
 	override onSegmentCommand(int id, SegmentState state) {
