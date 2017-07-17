@@ -1,0 +1,8 @@
+---
+- hosts: root
+  remote_user: pi
+  tasks:
+  - debug: msg="Installing dashboard"
+  - include: deploy.yaml service_name=dashboard
+  - debug: msg="Installing occupancyquery"
+  - include: deploy.yaml service_name=occupancyquery

@@ -1,0 +1,5 @@
+---
+- hosts: bbb
+  remote_user: debian
+  tasks:
+  - include: deploy.yaml service_name=bbb

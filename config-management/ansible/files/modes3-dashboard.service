@@ -1,0 +1,10 @@
+[Unit]
+Description=MoDeS3 Dashboard Server
+Wants=network-online.target
+
+[Service]
+ExecStart=/modes3/hu.bme.mit.inf.modes3.components.dashboard/bin/hu.bme.mit.inf.modes3.components.dashboard -id dashboard -address root.modes3.intra -port 1883 -config production
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
