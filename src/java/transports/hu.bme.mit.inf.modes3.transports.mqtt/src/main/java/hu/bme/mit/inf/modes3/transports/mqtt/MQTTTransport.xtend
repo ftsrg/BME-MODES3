@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import org.slf4j.impl.SimpleLoggerFactory
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 
 /**
  * Creates a transport over MQTT.
@@ -55,6 +56,10 @@ class MQTTTransport extends Transport {
 			this.logger,
 			this.messages
 		);
+		
+		val options = new MqttConnectOptions();
+		options.maxInflight = 100
+		
 		connection.connect()
 	}
 
@@ -67,7 +72,7 @@ class MQTTTransport extends Transport {
 	}
 
 	override close() {
-		connection.close();
+		connection?.close()
 	}
 
 }

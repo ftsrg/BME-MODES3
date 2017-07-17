@@ -1,12 +1,13 @@
 package hu.bme.mit.inf.modes3.transports.mqtt
 
 import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
+import java.util.concurrent.LinkedBlockingQueue
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient
 import org.eclipse.paho.client.mqttv3.MqttCallback
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions
 import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.slf4j.Logger
-import java.util.concurrent.LinkedBlockingQueue
 
 class MQTTConnection implements MqttCallback {
 
@@ -18,7 +19,7 @@ class MQTTConnection implements MqttCallback {
 	val LinkedBlockingQueue<byte[]> messages
 	var MqttAsyncClient client;
 	
-	new(hu.bme.mit.inf.modes3.transports.config.TransportConfiguration configuration, org.slf4j.Logger logger, LinkedBlockingQueue<byte[]> messages) {
+	new(TransportConfiguration configuration, Logger logger, LinkedBlockingQueue<byte[]> messages) {
 		this.configuration = configuration
 		this.logger = logger
 		this.messages = messages
@@ -32,8 +33,18 @@ class MQTTConnection implements MqttCallback {
 		)
 		client.callback = this
 		
-		client.connect().waitForCompletion(1000 * 60 * 5);
-		logger.info('''MQTT transport is connected to «this.configuration.addr»''')
+		val options = new MqttConnectOptions();
+		options.maxInflight = 100
+		
+		while (!client.connected) {
+			try {
+				client.connect(options).waitForCompletion(1000 * 60 * 5);
+				logger.info('''MQTT transport is connected to «this.configuration.addr»''')
+			} catch (Exception e) {
+				e.printStackTrace()
+				Thread.sleep(2500);	
+			}
+		} 
 		
 		client.subscribe(DEFAULT_TOPIC, 1).waitForCompletion(5000);
 		logger.info('''MQTT transport is subscribed to «DEFAULT_TOPIC»''')
@@ -46,17 +57,17 @@ class MQTTConnection implements MqttCallback {
 	
 	def send(byte[] message) {
 		if (client.connected)
-			client.publish(DEFAULT_TOPIC, message, DEFAULT_QOS, false);
+			client.publish(DEFAULT_TOPIC, message, DEFAULT_QOS, false)
 	}
 
 	override connectionLost(Throwable cause) {
-		logger.info('''MQTT connection lost with cause: «cause»''');
-		Thread.sleep(1000);
-		client.connect
+		logger.info('''MQTT connection lost with cause: «cause»''')
+		Thread.sleep(1000)
+		client.connect()
 	}
 
 	override deliveryComplete(IMqttDeliveryToken token) {
-		// Nothing to implement here
+		// Intentionally left blank
 	}
 
 	override messageArrived(String topic, MqttMessage message) throws Exception {
