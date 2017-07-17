@@ -65,11 +65,10 @@ public class DashboardManager {
 
     public void parseArguments(String[] args) {
         registry = new ArgumentRegistry(loggerFactory);
-        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The ID of the component", String.class));
-        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "The ID of the component", String.class));
-        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("pubPort", "The ID of the component", Integer.class));
-        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("repPort", "The ID of the component", Integer.class));
-        registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("config", "The ID of the component", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("config", "The configuration used", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("id", "The ID of the component", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("address", "The address of the transport server", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<Integer>("port", "The oprt used by the transport server", Integer.class));
         
         registry.parseArguments(args);
     }
