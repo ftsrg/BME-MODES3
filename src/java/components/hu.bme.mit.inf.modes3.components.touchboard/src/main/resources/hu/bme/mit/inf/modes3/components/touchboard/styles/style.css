@@ -9,3 +9,7 @@ TitledPane {
 .turnoutContainer > ToggleButton:selected {
     -fx-background-color: gray;
 }
+
+.segmentContainer > Button {
+    -fx-background-radius: 0;
+}
