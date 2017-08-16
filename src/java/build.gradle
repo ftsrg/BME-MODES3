@@ -8,11 +8,10 @@ plugins {
 	id 'com.diffplug.gradle.p2.asmaven' version '3.0.6'
 }
 
-
 //Used versions of dependencies
 subprojects{
 	ext{
-		viatraVersion = '1.5.2'
+		viatraVersion = '1.6.1'
 		xtendVersion = '2.9.0'
 	}
 }
