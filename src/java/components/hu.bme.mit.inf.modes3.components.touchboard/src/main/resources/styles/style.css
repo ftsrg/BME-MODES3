@@ -1,0 +1,40 @@
+* {
+  -fx-background-radius: 0;
+  -fx-font-family: "Roboto";
+  -fx-font-size: 9pt;
+  -fx-font-weight: bold; }
+
+#segmentContainer Button ImageView {
+  -fx-image: url("../images/train_black.png");
+  -fx-opacity: 0.05; }
+#segmentContainer Button.occupied ImageView {
+  -fx-image: url("../images/train_black.png");
+  -fx-opacity: 1.0; }
+#segmentContainer Button.enabled {
+  -fx-base: #c5e1a5; }
+#segmentContainer Button.disabled {
+  -fx-base: #e57373; }
+
+#turnoutContainer .regularTurnout ImageView {
+  -fx-image: url("../images/turnout_reg.png");
+  -fx-opacity: 0.1; }
+#turnoutContainer .regularTurnout.straight ImageView {
+  -fx-image: url("../images/turnout_reg_straight.png");
+  -fx-opacity: 1.0; }
+#turnoutContainer .regularTurnout.divergent ImageView {
+  -fx-image: url("../images/turnout_reg_divergent.png");
+  -fx-opacity: 1.0; }
+#turnoutContainer .dualTurnout ImageView {
+  -fx-image: url("../images/turnout_dual.png");
+  -fx-opacity: 0.1; }
+#turnoutContainer .dualTurnout.straight ImageView {
+  -fx-image: url("../images/turnout_dual_straight.png");
+  -fx-opacity: 1.0; }
+#turnoutContainer .dualTurnout.divergent ImageView {
+  -fx-image: url("../images/turnout_dual_divergent.png");
+  -fx-opacity: 1.0; }
+
+#trainSpeedContainer .stop {
+  -fx-base: #e57373; }
+
+/*# sourceMappingURL=style.css.map */

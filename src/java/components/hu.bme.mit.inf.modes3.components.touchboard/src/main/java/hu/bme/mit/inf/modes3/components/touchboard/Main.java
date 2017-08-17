@@ -12,9 +12,13 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/hu/bme/mit/inf/modes3/components/touchboard/views/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/main.fxml"));
         Pane pane = loader.load();
+        //pane.setCursor(Cursor.NONE);
         Scene scene = new Scene(pane, 650, 400);
+        
+        String css = getClass().getResource("/styles/style.css").toExternalForm();
+        scene.getStylesheets().add(css);
         
         primaryStage.setScene(scene);
         primaryStage.setFullScreen(true);

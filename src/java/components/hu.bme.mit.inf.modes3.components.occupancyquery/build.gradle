@@ -6,4 +6,4 @@ dependencies {
 	compile project(':components:hu.bme.mit.inf.modes3.components.common')
 }
 
-mainClassName = "hu.bme.mit.inf.modes3.components.occupancyquery.main.Main"
+mainClassName = "hu.bme.mit.inf.modes3.components.occupancyquery.Main"

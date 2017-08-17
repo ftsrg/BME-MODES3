@@ -1,0 +1,77 @@
+$default-color: #f5f5f5;
+$enabled-color: #c5e1a5;
+$disabled-color: #e57373;
+
+* {
+    -fx-background-radius: 0;
+    -fx-font-family: "Roboto"; 
+    -fx-font-size: 9pt; 
+    -fx-font-weight: bold; 
+}
+
+#segmentContainer {
+    Button {
+        ImageView  {
+            -fx-image: url("../images/train_black.png");
+            -fx-opacity: 0.05;
+        }
+
+        &.occupied {
+            ImageView  {
+                -fx-image: url("../images/train_black.png");
+                -fx-opacity: 1.0;
+            }
+        }
+
+        &.enabled {
+            -fx-base: $enabled-color;
+        }
+
+        &.disabled {
+            -fx-base: $disabled-color;
+        }
+    }
+}
+
+#turnoutContainer {
+    .regularTurnout {
+        ImageView  {
+            -fx-image: url("../images/turnout_reg.png");
+            -fx-opacity: 0.1;
+        }
+
+        &.straight ImageView {
+            -fx-image: url("../images/turnout_reg_straight.png");
+            -fx-opacity: 1.0;
+        }
+
+        &.divergent ImageView {
+            -fx-image: url("../images/turnout_reg_divergent.png");
+            -fx-opacity: 1.0;
+        }
+
+    }
+
+    .dualTurnout {
+        ImageView  {
+            -fx-image: url("../images/turnout_dual.png");
+            -fx-opacity: 0.1;
+        }
+
+        &.straight ImageView {
+            -fx-image: url("../images/turnout_dual_straight.png");
+            -fx-opacity: 1.0;
+        }
+
+        &.divergent ImageView {
+            -fx-image: url("../images/turnout_dual_divergent.png");
+            -fx-opacity: 1.0;
+        }
+    }
+}
+
+#trainSpeedContainer {
+    .stop {
+        -fx-base: $disabled-color;
+    }
+}
