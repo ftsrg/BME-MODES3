@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.touchboard
+package hu.bme.mit.inf.modes3.components.touchboard.ui
 
 import javafx.scene.Node
 import javafx.application.Platform

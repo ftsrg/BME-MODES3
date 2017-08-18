@@ -1,5 +1,6 @@
-package hu.bme.mit.inf.modes3.components.touchboard
+package hu.bme.mit.inf.modes3.components.touchboard.controller
 
+import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
@@ -17,8 +18,6 @@ class SegmentEventHandler {
 
 	val ITrackElementStateRegistry trackElementStateRegistry
 	val ITrackElementCommander trackElementCommander
-
-	var int i = 0
 
 	new(ILoggerFactory loggerFactory, ThreadSafeNode node, ITrackElementStateRegistry trackElementStateRegistry,
 		ITrackElementCommander trackElementCommander) {
@@ -49,10 +48,7 @@ class SegmentEventHandler {
 	def onSegmentClicked() {
 		try {
 			val segmentId = node.nodeId
-			// FIXME use this with the track
-			// val state = trackElementStateRegistry.getSegmentState(segmentId)
-			val state = if((i++) % 2 === 0) SegmentState.ENABLED else SegmentState.DISABLED
-
+			val state = trackElementStateRegistry.getSegmentState(segmentId)
 			val newState = getSegmentOppositeState(state)
 
 			trackElementCommander.sendSegmentCommand(segmentId, newState)

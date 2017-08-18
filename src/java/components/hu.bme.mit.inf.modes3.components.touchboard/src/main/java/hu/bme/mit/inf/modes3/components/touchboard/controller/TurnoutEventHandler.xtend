@@ -1,5 +1,6 @@
-package hu.bme.mit.inf.modes3.components.touchboard
+package hu.bme.mit.inf.modes3.components.touchboard.controller
 
+import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
@@ -17,8 +18,6 @@ class TurnoutEventHandler {
 	val ITrackElementStateRegistry trackElementStateRegistry
 	val ITrackElementCommander trackElementCommander
 	
-	var i = 0
-
 	new(ILoggerFactory loggerFactory, ThreadSafeNode node, ITrackElementStateRegistry trackElementStateRegistry,
 		ITrackElementCommander trackElementCommander) {
 		this.logger = loggerFactory.getLogger(this.class.name)
@@ -40,12 +39,10 @@ class TurnoutEventHandler {
 	def onTurnoutClicked() {
 		try {
 			val turnoutId = node.nodeId
-			// FIXME use this in production
-			//val state = trackElementStateRegistry.getTurnoutState(turnoutId)
-			val state = if((i++) % 2 === 0) TurnoutState.STRAIGHT else TurnoutState.DIVERGENT
+			val state = trackElementStateRegistry.getTurnoutState(turnoutId)
 			val newState = getTurnoutOppositeState(state)
 
-			//trackElementCommander.sendTurnoutCommand(turnoutId, newState)
+			trackElementCommander.sendTurnoutCommandWithTurnoutId(turnoutId, newState)
 			updateTurnoutState(newState)
 
 			logger.info('''Turnout «turnoutId» is «newState»''')
