@@ -57,7 +57,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
     // check if matcher already exists
     MultipleTrainsOnStationMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-        matcher = (MultipleTrainsOnStationMatcher)engine.getMatcher(querySpecification());
+    	matcher = (MultipleTrainsOnStationMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -175,7 +175,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t1.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   protected Set<Train> rawAccumulateAllValuesOft1(final Object[] parameters) {
@@ -186,7 +186,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t1.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOft1() {
@@ -195,7 +195,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t1.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOft1(final MultipleTrainsOnStationMatch partialMatch) {
@@ -204,7 +204,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t1.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOft1(final Train pT2) {
@@ -216,7 +216,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t2.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   protected Set<Train> rawAccumulateAllValuesOft2(final Object[] parameters) {
@@ -227,7 +227,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t2.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOft2() {
@@ -236,7 +236,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t2.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOft2(final MultipleTrainsOnStationMatch partialMatch) {
@@ -245,7 +245,7 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   
   /**
    * Retrieve the set of values that occur in matches for t2.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOft2(final Train pT1) {
@@ -258,30 +258,30 @@ public class MultipleTrainsOnStationMatcher extends BaseMatcher<MultipleTrainsOn
   @Override
   protected MultipleTrainsOnStationMatch tupleToMatch(final Tuple t) {
     try {
-        return MultipleTrainsOnStationMatch.newMatch((Train) t.get(POSITION_T1), (Train) t.get(POSITION_T2));
+    	return MultipleTrainsOnStationMatch.newMatch((Train) t.get(POSITION_T1), (Train) t.get(POSITION_T2));
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in tuple not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in tuple not properly typed!",e);
+    	return null;
     }
   }
   
   @Override
   protected MultipleTrainsOnStationMatch arrayToMatch(final Object[] match) {
     try {
-        return MultipleTrainsOnStationMatch.newMatch((Train) match[POSITION_T1], (Train) match[POSITION_T2]);
+    	return MultipleTrainsOnStationMatch.newMatch((Train) match[POSITION_T1], (Train) match[POSITION_T2]);
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in array not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in array not properly typed!",e);
+    	return null;
     }
   }
   
   @Override
   protected MultipleTrainsOnStationMatch arrayToMatchMutable(final Object[] match) {
     try {
-        return MultipleTrainsOnStationMatch.newMutableMatch((Train) match[POSITION_T1], (Train) match[POSITION_T2]);
+    	return MultipleTrainsOnStationMatch.newMutableMatch((Train) match[POSITION_T1], (Train) match[POSITION_T2]);
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in array not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in array not properly typed!",e);
+    	return null;
     }
   }
   
