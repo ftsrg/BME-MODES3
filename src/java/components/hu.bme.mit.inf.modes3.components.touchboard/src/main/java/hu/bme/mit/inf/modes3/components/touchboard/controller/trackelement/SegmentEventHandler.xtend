@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.touchboard.controller
+package hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement
 
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
@@ -15,6 +15,7 @@ class SegmentEventHandler {
 
 	val Logger logger
 	val ThreadSafeNode node
+	val int segmentId
 
 	val ITrackElementStateRegistry trackElementStateRegistry
 	val ITrackElementCommander trackElementCommander
@@ -23,6 +24,7 @@ class SegmentEventHandler {
 		ITrackElementCommander trackElementCommander) {
 		this.logger = loggerFactory.getLogger(this.class.name)
 		this.node = node
+		this.segmentId = node.nodeId
 		this.trackElementStateRegistry = trackElementStateRegistry
 		this.trackElementCommander = trackElementCommander
 	}
@@ -45,27 +47,45 @@ class SegmentEventHandler {
 		node.removeCssClass(OCCUPIED)
 	}
 
-	def onSegmentClicked() {
+	def void onSegmentClicked() {
 		try {
-			val segmentId = node.nodeId
 			val state = trackElementStateRegistry.getSegmentState(segmentId)
 			val newState = getSegmentOppositeState(state)
-
-			trackElementCommander.sendSegmentCommand(segmentId, newState)
-			updateSectionState(newState)
-
-			logger.info('''Segment «segmentId» is «newState»''')
+			setSegmentState(newState)
 		} catch (Exception ex) {
 			logger.error(ex.message, ex)
 		}
 	}
 
+	def void onEnableSegment() {
+		try {
+			setSegmentState(SegmentState.ENABLED)
+		} catch (Exception ex) {
+			logger.error(ex.message, ex)
+		}
+	}
+
+	def void onDisableSegment() {
+		try {
+			setSegmentState(SegmentState.DISABLED)
+		} catch (Exception ex) {
+			logger.error(ex.message, ex)
+		}
+	}
+
+	private def setSegmentState(SegmentState state) {
+		trackElementCommander.sendSegmentCommand(segmentId, state)
+		updateSectionState(state)
+
+		logger.info('''Segment «segmentId» is «state»''')
+	}
+
 	private def void updateSectionState(SegmentState newState) {
 		switch (newState) {
 			case ENABLED:
-				setEnabled()
+				setEnabled
 			case DISABLED:
-				setDisabled()
+				setDisabled
 		}
 	}
 
