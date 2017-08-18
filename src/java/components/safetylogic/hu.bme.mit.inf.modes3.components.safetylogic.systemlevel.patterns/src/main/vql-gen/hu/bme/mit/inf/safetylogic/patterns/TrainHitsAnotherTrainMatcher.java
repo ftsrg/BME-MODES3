@@ -59,7 +59,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
     // check if matcher already exists
     TrainHitsAnotherTrainMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = (TrainHitsAnotherTrainMatcher)engine.getMatcher(querySpecification());
+        matcher = (TrainHitsAnotherTrainMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -177,7 +177,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Offender.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<Train> rawAccumulateAllValuesOfOffender(final Object[] parameters) {
@@ -188,7 +188,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Offender.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOfOffender() {
@@ -197,7 +197,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Offender.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOfOffender(final TrainHitsAnotherTrainMatch partialMatch) {
@@ -206,7 +206,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Offender.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOfOffender(final Train pVictim) {
@@ -218,7 +218,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Victim.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<Train> rawAccumulateAllValuesOfVictim(final Object[] parameters) {
@@ -229,7 +229,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Victim.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOfVictim() {
@@ -238,7 +238,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Victim.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOfVictim(final TrainHitsAnotherTrainMatch partialMatch) {
@@ -247,7 +247,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   
   /**
    * Retrieve the set of values that occur in matches for Victim.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOfVictim(final Train pOffender) {
@@ -260,30 +260,30 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   @Override
   protected TrainHitsAnotherTrainMatch tupleToMatch(final Tuple t) {
     try {
-    	return TrainHitsAnotherTrainMatch.newMatch((Train) t.get(POSITION_OFFENDER), (Train) t.get(POSITION_VICTIM));
+        return TrainHitsAnotherTrainMatch.newMatch((Train) t.get(POSITION_OFFENDER), (Train) t.get(POSITION_VICTIM));
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in tuple not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in tuple not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected TrainHitsAnotherTrainMatch arrayToMatch(final Object[] match) {
     try {
-    	return TrainHitsAnotherTrainMatch.newMatch((Train) match[POSITION_OFFENDER], (Train) match[POSITION_VICTIM]);
+        return TrainHitsAnotherTrainMatch.newMatch((Train) match[POSITION_OFFENDER], (Train) match[POSITION_VICTIM]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected TrainHitsAnotherTrainMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TrainHitsAnotherTrainMatch.newMutableMatch((Train) match[POSITION_OFFENDER], (Train) match[POSITION_VICTIM]);
+        return TrainHitsAnotherTrainMatch.newMutableMatch((Train) match[POSITION_OFFENDER], (Train) match[POSITION_VICTIM]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   

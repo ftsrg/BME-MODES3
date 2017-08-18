@@ -10,7 +10,7 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPatternGroup;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 
 /**
- * A pattern group formed of all patterns defined in PathBuildingHelperQueries.vql.
+ * A pattern group formed of all public patterns defined in PathBuildingHelperQueries.vql.
  * 
  * <p>Use the static instance as any {@link org.eclipse.viatra.query.runtime.api.IPatternGroup}, to conveniently prepare
  * a VIATRA Query engine for matching all patterns originally defined in file PathBuildingHelperQueries.vql,
@@ -34,7 +34,7 @@ public final class PathBuildingHelperQueries extends BaseGeneratedPatternGroup {
    */
   public static PathBuildingHelperQueries instance() throws ViatraQueryException {
     if (INSTANCE == null) {
-    	INSTANCE = new PathBuildingHelperQueries();
+        INSTANCE = new PathBuildingHelperQueries();
     }
     return INSTANCE;
   }
