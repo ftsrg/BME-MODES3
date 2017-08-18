@@ -39,18 +39,22 @@ class TrackElementCommander extends Commander implements ITrackElementCommander 
 	}
 
 	override setTrainReferenceSpeedAndDirection(int id, int speed, TrainDirection direction) {
+		logger.info('''TrainCommand message sent with id=«id»(speed=«(speed)») direction=«direction»''')
 		mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = id; referenceSpeed = speed; it.direction = EnumTransformator.toSpecific(direction)]).build)
 	}
 
 	override stopEntireRailRoad() {
+		logger.info('''TrainCommand stop entire railroad sent''')
 		mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.STOP_OPERATIONS]).build)
 	}
 
 	override stopTrains() {
+		logger.info('''TrainCommand stop trains sent''')
 		mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.STOP_ALL_LOCOMOTIVES]).build)
 	}
 
 	override startEntireRailRoad() {
+		logger.info('''TrainCommand start entire railroad sent''')
 		mms.sendMessage((DccOperationsCommand.newBuilder => [dccOperations = DccOperations.NORMAL_OPERATIONS]).build)
 	}
 
