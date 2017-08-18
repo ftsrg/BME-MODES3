@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.touchboard.controller
+package hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement
 
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
