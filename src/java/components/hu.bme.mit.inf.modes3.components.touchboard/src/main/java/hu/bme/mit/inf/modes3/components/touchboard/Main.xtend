@@ -1,7 +1,9 @@
 package hu.bme.mit.inf.modes3.components.touchboard
 
+import hu.bme.mit.inf.modes3.components.touchboard.controller.Controller
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
+import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import java.io.IOException
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
@@ -19,8 +21,8 @@ class Main extends Application {
 	static var ILoggerFactory loggerFactory
 
 	override void start(Stage primaryStage) throws IOException {
-		val controller = new Controller(loggerFactory, registry)
 		val loader = new FXMLLoader(getClass().getResource(FXML_PATH))
+		val controller = createController
 		loader.controller = controller
 
 		val pane = loader.load
@@ -31,7 +33,7 @@ class Main extends Application {
 		primaryStage.scene = scene
 		primaryStage.fullScreen = true
 		primaryStage.show
-		
+
 		controller.scene = scene
 	}
 
@@ -52,7 +54,12 @@ class Main extends Application {
 		registry.registerArgumentWithOptions(
 			new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
 		registry.registerArgumentWithOptions(
-			new ArgumentDescriptorWithParameter("port", "The oprt used by the transport server", Integer))
+			new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
 		return registry
+	}
+
+	private def static createController() {
+		val communicationStack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
+		return new Controller(communicationStack, loggerFactory)
 	}
 }
