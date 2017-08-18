@@ -24,55 +24,70 @@
 										<Insets />
 									</HBox.margin>
 									<content>
-										<VBox>
+										<VBox prefHeight="80.0">
 											<children>
-												<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" />
-												<HBox>
+                                    <HBox VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ToggleButton maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="R" />
+      												<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+												<HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
 													<children>
-														<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="63.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="116.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
+														<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
+														<Button layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
+														<Button layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
+														<Button layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
 													</children>
 												</HBox>
 											</children>
 										</VBox>
 									</content>
 								</TitledPane>
-								<TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" text="Taurus" HBox.hgrow="ALWAYS">
-									<content>
-										<VBox>
-											<children>
-												<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" />
-												<HBox>
-													<children>
-														<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="63.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="116.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
-													</children>
-												</HBox>
-											</children>
-										</VBox>
-									</content>
-								</TitledPane>
-								<TitledPane collapsible="false" layoutX="625.0" layoutY="10.0" text="Taurus" HBox.hgrow="ALWAYS">
-									<content>
-										<VBox>
-											<children>
-												<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" />
-												<HBox>
-													<children>
-														<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="63.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="116.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
-													</children>
-												</HBox>
-											</children>
-										</VBox>
-									</content>
-								</TitledPane>
+                        <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" text="SNCF" HBox.hgrow="ALWAYS">
+                           <content>
+                              <VBox prefHeight="80.0">
+                                 <children>
+                                    <HBox VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ToggleButton maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="R" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
+                                          <Button layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
+                                          <Button layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
+                                          <Button layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </TitledPane>
+                        <TitledPane collapsible="false" layoutX="625.0" layoutY="10.0" text="BR-204" HBox.hgrow="ALWAYS">
+                           <content>
+                              <VBox prefHeight="80.0">
+                                 <children>
+                                    <HBox VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ToggleButton maxHeight="1.7976931348623157E308" mnemonicParsing="false" text="R" />
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
+                                          <Button layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
+                                          <Button layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
+                                          <Button layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </TitledPane>
 							</children>
 						</HBox>
 					</children>
@@ -331,7 +346,11 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<VBox GridPane.columnIndex="7" GridPane.rowIndex="3" />
+								<VBox GridPane.columnIndex="7" GridPane.rowIndex="3">
+                           <children>
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="enabled" text="ON" VBox.vgrow="ALWAYS" />
+                              <Button layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="disabled" text="OFF" VBox.vgrow="ALWAYS" />
+                           </children></VBox>
 
 							</children>
 							<columnConstraints>
