@@ -23,6 +23,7 @@
     src: "{{playbook_dir}}/files/modes3-{{service_name}}.service"
     dest: "/etc/systemd/system/modes3-{{service_name}}.service"
     mode: 0644
+    force: yes
   become: true
 - name: Enable and start the service
   systemd:
