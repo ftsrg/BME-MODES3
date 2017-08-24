@@ -390,22 +390,22 @@
 												<ImageView id="turnout_2" pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_3" graphicTextGap="10.0" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T03" VBox.vgrow="ALWAYS">
+										<Button id="turnout_3" graphicTextGap="10.0" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="dualTurnout" text="T03" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_4" graphicTextGap="10.0" layoutX="20.0" layoutY="49.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="dualTurnout" text="T04" VBox.vgrow="ALWAYS">
+										<Button id="turnout_4" graphicTextGap="10.0" layoutX="20.0" layoutY="49.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T04" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_5" graphicTextGap="10.0" layoutX="20.0" layoutY="78.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="dualTurnout" text="T05" VBox.vgrow="ALWAYS">
+										<Button id="turnout_5" graphicTextGap="10.0" layoutX="20.0" layoutY="78.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T05" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_6" graphicTextGap="10.0" layoutX="20.0" layoutY="107.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="dualTurnout" text="T06" VBox.vgrow="ALWAYS">
+										<Button id="turnout_6" graphicTextGap="10.0" layoutX="20.0" layoutY="107.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T06" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
