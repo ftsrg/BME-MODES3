@@ -58,7 +58,7 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 		trackElementStateRegistry.segmentStateChangeListener = this
 		trackElementStateRegistry.turnoutStateChangeListener = this
 		
-		trainIdLookup = #{"taurus" -> 9, "sncf" -> 10, "db" -> 11}
+		trainIdLookup = #{"taurus" -> 9, "sncf" -> 10, "db" -> 8}
 		trains = new TreeMap
 		for (id : trainIdLookup.values.toSet) {
 			trains.put(id, new TrainEventHandler(id, trackElementCommander))
