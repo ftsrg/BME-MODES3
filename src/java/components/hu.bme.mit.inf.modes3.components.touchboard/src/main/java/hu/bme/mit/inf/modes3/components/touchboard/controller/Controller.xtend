@@ -160,6 +160,7 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 	def void setScene(Scene scene) {
 		initializeSegments(scene)
 		initializeTurnouts(scene)
+		trackElementCommander.sendAllStatusCommand
 	}
 
 	private def void executeHandler(Runnable handler) {
