@@ -10,6 +10,7 @@ import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperations
 import hu.bme.mit.inf.modes3.messaging.mms.messages.DccOperationsCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
+import hu.bme.mit.inf.modes3.messaging.mms.messages.SendAllStatus
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand
 import org.slf4j.ILoggerFactory
@@ -29,13 +30,17 @@ class TrackElementCommander extends Commander implements ITrackElementCommander 
 
 	override sendTurnoutCommandWithTurnoutId(int id, TurnoutState state){
 		logger.info('''TurnoutCommand message sent with id=«id»(=T«(id)») state=«state»''')
-		mms.sendMessage((TurnoutCommand.newBuilder => [turnoutID = id; it.state = EnumTransformator.toSpecific(state)]).build)
-		
+		mms.sendMessage((TurnoutCommand.newBuilder => [turnoutID = id; it.state = EnumTransformator.toSpecific(state)]).build)	
 	}
 
 	override sendTurnoutCommand(int id, TurnoutState state) {
 		logger.info('''TurnoutCommand message sent with id=«id»(=T«senseToTurnoutIDMap.get(id)») state=«state»''')
 		mms.sendMessage((TurnoutCommand.newBuilder => [turnoutID = senseToTurnoutIDMap.get(id); it.state = EnumTransformator.toSpecific(state)]).build)
+	}
+	
+	override sendAllStatusCommand() {
+		logger.trace('''SendAllStatus message sent to everyone''')
+		mms.sendMessage((SendAllStatus.newBuilder.build))
 	}
 
 	override setTrainReferenceSpeedAndDirection(int id, int speed, TrainDirection direction) {

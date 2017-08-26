@@ -11,11 +11,13 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnout
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
 import java.util.HashMap
 import java.util.List
+import java.util.Map.Entry
 import org.slf4j.ILoggerFactory
 
-class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
+class BBBComponent extends AbstractRailRoadCommunicationComponent implements IAllStatusUpdateListener, ISegmentCommandListener, ITurnoutCommandListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
 
 	Configuration config
 	val int id
@@ -69,6 +71,8 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 		// adding component as segmentCommandListener
 		locator.trackElementCommandCallback.segmentCommandListener = this;
 		locator.trackElementCommandCallback.turnoutCommandListener = this;
+		
+		locator.sendAllStatusCallback.statusUpdateListener = this;
 	}
 
 	override run() {
@@ -133,6 +137,15 @@ class BBBComponent extends AbstractRailRoadCommunicationComponent implements ISe
 			// need to send segmentState over network
 			locator.trackElementStateSender.sendTurnoutState(id, newState);
 
+		}
+	}
+	
+	override onAllStatusUpdate() {
+		for(Entry<Integer, PhysicalSegmentController> segment: segmentControllers.entrySet){
+			locator.trackElementStateSender.sendSegmentState(segment.key, segment.value.segmentState)
+		}
+		for(PhysicalTurnoutController turnoutController: turnoutControllers){
+			locator.trackElementStateSender.sendTurnoutState(id, turnoutController.turnoutState)
 		}
 	}
 
