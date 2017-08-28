@@ -48,7 +48,7 @@ public class NoTrainOnStationMatcher extends BaseMatcher<NoTrainOnStationMatch> 
     // check if matcher already exists
     NoTrainOnStationMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = (NoTrainOnStationMatcher)engine.getMatcher(querySpecification());
+        matcher = (NoTrainOnStationMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -89,30 +89,30 @@ public class NoTrainOnStationMatcher extends BaseMatcher<NoTrainOnStationMatch> 
   @Override
   protected NoTrainOnStationMatch tupleToMatch(final Tuple t) {
     try {
-    	return NoTrainOnStationMatch.newMatch();
+        return NoTrainOnStationMatch.newMatch();
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in tuple not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in tuple not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected NoTrainOnStationMatch arrayToMatch(final Object[] match) {
     try {
-    	return NoTrainOnStationMatch.newMatch();
+        return NoTrainOnStationMatch.newMatch();
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected NoTrainOnStationMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return NoTrainOnStationMatch.newMutableMatch();
+        return NoTrainOnStationMatch.newMutableMatch();
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   

@@ -66,7 +66,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
     // check if matcher already exists
     CurrentlyConnectedMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = (CurrentlyConnectedMatcher)engine.getMatcher(querySpecification());
+        matcher = (CurrentlyConnectedMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -184,7 +184,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfThis(final Object[] parameters) {
@@ -195,7 +195,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis() {
@@ -204,7 +204,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis(final CurrentlyConnectedMatch partialMatch) {
@@ -213,7 +213,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis(final RailRoadElement pConnectedTo) {
@@ -225,7 +225,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfconnectedTo(final Object[] parameters) {
@@ -236,7 +236,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfconnectedTo() {
@@ -245,7 +245,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfconnectedTo(final CurrentlyConnectedMatch partialMatch) {
@@ -254,7 +254,7 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfconnectedTo(final RailRoadElement pThis) {
@@ -267,30 +267,30 @@ public class CurrentlyConnectedMatcher extends BaseMatcher<CurrentlyConnectedMat
   @Override
   protected CurrentlyConnectedMatch tupleToMatch(final Tuple t) {
     try {
-    	return CurrentlyConnectedMatch.newMatch((RailRoadElement) t.get(POSITION_THIS), (RailRoadElement) t.get(POSITION_CONNECTEDTO));
+        return CurrentlyConnectedMatch.newMatch((RailRoadElement) t.get(POSITION_THIS), (RailRoadElement) t.get(POSITION_CONNECTEDTO));
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in tuple not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in tuple not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected CurrentlyConnectedMatch arrayToMatch(final Object[] match) {
     try {
-    	return CurrentlyConnectedMatch.newMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
+        return CurrentlyConnectedMatch.newMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected CurrentlyConnectedMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return CurrentlyConnectedMatch.newMutableMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
+        return CurrentlyConnectedMatch.newMutableMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
