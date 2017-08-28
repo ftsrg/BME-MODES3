@@ -2,4 +2,4 @@
 - hosts: bbb
   remote_user: debian
   tasks:
-  - include: deploy.yaml service_name=bbb
+  - include: utils/deploy-gradle.yaml service_name=bbb

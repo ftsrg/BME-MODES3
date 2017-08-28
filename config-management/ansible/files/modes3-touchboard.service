@@ -1,6 +1,6 @@
 [Unit]
 Description=MoDeS3 Touchboard
-Wants=syslog.target network.target
+After=syslog.target network.target mosquitto.service
 
 [Service]
 ExecStart=/modes3/hu.bme.mit.inf.modes3.components.touchboard/bin/hu.bme.mit.inf.modes3.components.touchboard -id touchboard -address root.modes3.intra -port 1883 -config production
