@@ -49,9 +49,9 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
    */
   public static ThreeConnectedRailRoadPartsQuerySpecification instance() throws ViatraQueryException {
     try{
-    	return LazyHolder.INSTANCE;
+        return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
-    	throw processInitializerError(err);
+        throw processInitializerError(err);
     }
   }
   
@@ -77,8 +77,8 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
   
   /**
    * Inner class allowing the singleton instance of {@link ThreeConnectedRailRoadPartsQuerySpecification} to be created 
-   * 	<b>not</b> at the class load time of the outer class, 
-   * 	but rather at the first call to {@link ThreeConnectedRailRoadPartsQuerySpecification#instance()}.
+   *     <b>not</b> at the class load time of the outer class, 
+   *     but rather at the first call to {@link ThreeConnectedRailRoadPartsQuerySpecification#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -132,31 +132,31 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
       setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
-      	{
-      		PBody body = new PBody(this);
-      		PVariable var_one = body.getOrCreateVariableByName("one");
-      		PVariable var_middle = body.getOrCreateVariableByName("middle");
-      		PVariable var_other = body.getOrCreateVariableByName("other");
-      		new TypeConstraint(body, new FlatTuple(var_one), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-      		new TypeConstraint(body, new FlatTuple(var_middle), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-      		new TypeConstraint(body, new FlatTuple(var_other), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_one, parameter_pOne),
-      		   new ExportedParameter(body, var_middle, parameter_pMiddle),
-      		   new ExportedParameter(body, var_other, parameter_pOther)
-      		));
-      		// 	find connected(middle, one)
-      		new PositivePatternCall(body, new FlatTuple(var_middle, var_one), ConnectedQuerySpecification.instance().getInternalQueryRepresentation());
-      		// 	find connected(middle, other)
-      		new PositivePatternCall(body, new FlatTuple(var_middle, var_other), ConnectedQuerySpecification.instance().getInternalQueryRepresentation());
-      		// 	one != other
-      		new Inequality(body, var_one, var_other);
-      		bodies.add(body);
-      	}
-      	// to silence compiler error
-      	if (false) throw new ViatraQueryException("Never", "happens");
+          {
+              PBody body = new PBody(this);
+              PVariable var_one = body.getOrCreateVariableByName("one");
+              PVariable var_middle = body.getOrCreateVariableByName("middle");
+              PVariable var_other = body.getOrCreateVariableByName("other");
+              new TypeConstraint(body, new FlatTuple(var_one), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              new TypeConstraint(body, new FlatTuple(var_middle), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              new TypeConstraint(body, new FlatTuple(var_other), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
+                 new ExportedParameter(body, var_one, parameter_pOne),
+                 new ExportedParameter(body, var_middle, parameter_pMiddle),
+                 new ExportedParameter(body, var_other, parameter_pOther)
+              ));
+              // 	find connected(middle, one)
+              new PositivePatternCall(body, new FlatTuple(var_middle, var_one), ConnectedQuerySpecification.instance().getInternalQueryRepresentation());
+              // 	find connected(middle, other)
+              new PositivePatternCall(body, new FlatTuple(var_middle, var_other), ConnectedQuerySpecification.instance().getInternalQueryRepresentation());
+              // 	one != other
+              new Inequality(body, var_one, var_other);
+              bodies.add(body);
+          }
+          // to silence compiler error
+          if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
-      	throw processDependencyException(ex);
+          throw processDependencyException(ex);
       }
       return bodies;
     }
