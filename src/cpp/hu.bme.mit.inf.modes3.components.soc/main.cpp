@@ -2,7 +2,7 @@
 #include "s88.h"
 
 //#define DEBUG
-#define WINDOW_SIZE 50
+#define WINDOW_SIZE 21
 
 uint32_t buffer[WINDOW_SIZE];
 
@@ -38,8 +38,8 @@ void loop() {
         uint8_t byte = (occ >> shift) & 0xFF;
         Serial.print(byte);
         Serial.print(' ');
+        Serial.println();
     }
-    Serial.println();
 #endif
 
     // Shifting the previous buffer values
@@ -49,9 +49,29 @@ void loop() {
     // Reading the occupancy vector into the buffer
     buffer[WINDOW_SIZE-1] = occ;
 
+    // majority decision for each section
     uint32_t max = 0;
-    for (uint8_t i = 0; i < WINDOW_SIZE; ++i) {
-        max = (max < buffer[i]) ? buffer[i] : max;
+    for (uint32_t sectionId = 0; sectionId < 32; ++sectionId){
+      uint32_t ones = 0;
+      uint32_t zeroes = 0;
+      for (uint32_t window = 0; window < WINDOW_SIZE; ++window){
+          uint32_t bit = buffer[window] & (static_cast<uint32_t>(1) << sectionId);
+          if(bit){
+             ones += 1;
+          } else {
+             zeroes += 1;
+          }
+      }
+#ifdef DEBUG
+      Serial.print(sectionId);
+      Serial.print(" ");
+      Serial.print(ones);
+      Serial.print(" ");
+      Serial.println(zeroes);
+#endif
+      if(ones > zeroes){
+        max |= (static_cast<uint32_t>(1) << sectionId);
+      }
     }
 
     // Sending header first
@@ -68,4 +88,5 @@ void loop() {
 #ifdef DEBUG
     Serial.println();
 #endif
+     delay(10);
 }
