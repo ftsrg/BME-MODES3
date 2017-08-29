@@ -1,0 +1,12 @@
+{
+  "application/javascript": {
+    "presets": ["es2017"],
+    "plugins": ["syntax-jsx", "inferno"],
+    "sourceMaps": "inline"
+  },
+  "application/jsx": {
+    "presets": ["es2017"],
+    "plugins": ["syntax-jsx", "inferno"],
+    "sourceMaps": "inline"
+  }
+}

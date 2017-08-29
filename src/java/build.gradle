@@ -8,11 +8,10 @@ plugins {
 	id 'com.diffplug.gradle.p2.asmaven' version '3.0.6'
 }
 
-
 //Used versions of dependencies
 subprojects{
 	ext{
-		viatraVersion = '1.5.2'
+		viatraVersion = '1.6.1'
 		xtendVersion = '2.9.0'
 	}
 }
@@ -47,33 +46,6 @@ subprojects {
 
 			testCompile 'junit:junit:4.12'
 			testCompile "org.mockito:mockito-core:1.10.19"
-		}
-	}
-
-	plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
-		sourceSets {
-			main {
-				java.srcDirs = [
-					'src/main/java',
-					'src/main/xtext-gen'
-				]
-				resources.srcDirs = [
-					'src/main/resources',
-					'src/main/xtext-gen'
-				]
-				xtendOutputDir = 'src/main/xtend-gen'
-			}
-			test {
-				java.srcDirs = [
-					'src/test/java',
-					'src/test/xtext-gen'
-				]
-				resources.srcDirs = [
-					'src/test/resources',
-					'src/test/xtext-gen'
-				]
-				xtendOutputDir = 'src/test/xtend-gen'
-			}
 		}
 	}
 }

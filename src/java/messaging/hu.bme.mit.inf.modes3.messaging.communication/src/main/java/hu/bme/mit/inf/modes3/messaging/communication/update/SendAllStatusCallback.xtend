@@ -21,7 +21,7 @@ class SendAllStatusCallback {
 	
 	
 	def onAllStatusUpdate(){
-		listener.onAllStatusUpdate
+		listener?.onAllStatusUpdate
 		
 	}
 }

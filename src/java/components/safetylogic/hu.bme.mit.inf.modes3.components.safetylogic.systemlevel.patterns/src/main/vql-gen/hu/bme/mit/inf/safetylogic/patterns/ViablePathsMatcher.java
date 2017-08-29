@@ -100,7 +100,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
     // check if matcher already exists
     ViablePathsMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = (ViablePathsMatcher)engine.getMatcher(querySpecification());
+        matcher = (ViablePathsMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -218,7 +218,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfThis(final Object[] parameters) {
@@ -229,7 +229,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis() {
@@ -238,7 +238,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis(final ViablePathsMatch partialMatch) {
@@ -247,7 +247,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis(final Path pPath) {
@@ -259,7 +259,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for path.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<Path> rawAccumulateAllValuesOfpath(final Object[] parameters) {
@@ -270,7 +270,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for path.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Path> getAllValuesOfpath() {
@@ -279,7 +279,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for path.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Path> getAllValuesOfpath(final ViablePathsMatch partialMatch) {
@@ -288,7 +288,7 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for path.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Path> getAllValuesOfpath(final RailRoadElement pThis) {
@@ -301,30 +301,30 @@ public class ViablePathsMatcher extends BaseMatcher<ViablePathsMatch> {
   @Override
   protected ViablePathsMatch tupleToMatch(final Tuple t) {
     try {
-    	return ViablePathsMatch.newMatch((RailRoadElement) t.get(POSITION_THIS), (Path) t.get(POSITION_PATH));
+        return ViablePathsMatch.newMatch((RailRoadElement) t.get(POSITION_THIS), (Path) t.get(POSITION_PATH));
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in tuple not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in tuple not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected ViablePathsMatch arrayToMatch(final Object[] match) {
     try {
-    	return ViablePathsMatch.newMatch((RailRoadElement) match[POSITION_THIS], (Path) match[POSITION_PATH]);
+        return ViablePathsMatch.newMatch((RailRoadElement) match[POSITION_THIS], (Path) match[POSITION_PATH]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected ViablePathsMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return ViablePathsMatch.newMutableMatch((RailRoadElement) match[POSITION_THIS], (Path) match[POSITION_PATH]);
+        return ViablePathsMatch.newMutableMatch((RailRoadElement) match[POSITION_THIS], (Path) match[POSITION_PATH]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   

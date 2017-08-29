@@ -2,7 +2,7 @@
 - hosts: root
   remote_user: pi
   tasks:
-  - debug: msg="Installing dashboard"
-  - include: deploy.yaml service_name=dashboard
-  - debug: msg="Installing occupancyquery"
-  - include: deploy.yaml service_name=occupancyquery
+  - include: utils/deploy-gradle.yaml service_name=dashboard
+  - include: utils/deploy-gradle.yaml service_name=occupancyquery
+  - include: utils/deploy-gradle.yaml service_name=touchboard
+  - include: utils/deploy-systemd.yaml service_name=xpressnet
