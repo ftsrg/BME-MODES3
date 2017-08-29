@@ -1,9 +1,10 @@
 [Unit]
 Description=MoDeS3 BBB Agent
-Wants=network-online.target
+After=syslog.target network.target 
 
 [Service]
-ExecStart=/modes3/hu.bme.mit.inf.modes3.components.bbb/bin/hu.bme.mit.inf.modes3.components.bbb --id %H --addr root.modes3.intra --port 1883
+ExecStartPre=/bin/bash -c "/bin/systemctl set-environment HOSTNAME=$(hostname)"
+ExecStart=/modes3/hu.bme.mit.inf.modes3.components.bbb/bin/hu.bme.mit.inf.modes3.components.bbb --id $HOSTNAME --addr root.modes3.intra --port 1883
 Restart=always
 
 [Install]

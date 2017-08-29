@@ -75,7 +75,7 @@ class OccupancyQuery extends AbstractRailRoadCommunicationComponent {
 	override run() {
 		// Opens up a serial port, given by the -serial application parameter 
 		val serial = SerialPort.getCommPort(registry.getParameterStringValue('serial'))
-		serial.baudRate = 9600
+		serial.baudRate = 115200
 		serial.openPort()
 
 		while (true) {
