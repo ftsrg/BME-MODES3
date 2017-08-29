@@ -1,11 +1,11 @@
-#define MQTT_KEEPALIVE 15
-#define MQTT_SOCKET_TIMEOUT 15
+#define MQTT_KEEPALIVE 15000
+#define MQTT_SOCKET_TIMEOUT 15000
 
 #include <string>
 #include <PubSubClient.h>
 #include <WiFi.h>
 #include <ArduinoJson.h>
-#include <sensor_monitor.h>
+//#include <sensor_monitor.h>
 
 #define DEVICE_NAME "Bela01"
 #define SSID    "MoDeS3"
@@ -26,7 +26,7 @@
 
 using namespace std;
 
-SensorMonitor monitor;
+//SensorMonitor monitor;
 
 struct HeaderData {
    const char* sender;
@@ -269,7 +269,7 @@ InfSensor Sensor[2]={InfSensor(34),InfSensor(35)};
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial initialized");
-
+  
   WifiConnect();
   MQTTConnect();
   for(int i=0;i<2;i++){
@@ -277,7 +277,7 @@ void setup() {
     Sensor[i].Reset();
   }
 
-  monitor.init();
+  //monitor.init();
 }
 
 double Speed(){
@@ -325,6 +325,7 @@ double atime;
 int tmp=0;
 
 void loop() {
+  ConnCheck();
   for(int i=0;i<2;i++){
     det[i]=Sensor[i].Update();
   }
