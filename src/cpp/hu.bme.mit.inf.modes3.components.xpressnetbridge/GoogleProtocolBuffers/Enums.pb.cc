@@ -20,43 +20,45 @@
 namespace modes3 {
 namespace protobuf {
 
+namespace protobuf_Enums_2eproto {
+
+
 namespace {
 
-const ::google::protobuf::EnumDescriptor* DccOperations_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* MessageType_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* SegmentStateValue_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* TrainDirectionValue_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* TurnoutStateValue_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* TrainFunctionValue_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* SegmentOccupancyValue_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* YakinduConnectionDirection_descriptor_ = NULL;
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[8];
 
 }  // namespace
 
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
+};
 
-void protobuf_AssignDesc_Enums_2eproto() GOOGLE_ATTRIBUTE_COLD;
-void protobuf_AssignDesc_Enums_2eproto() {
-  protobuf_AddDesc_Enums_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "Enums.proto");
-  GOOGLE_CHECK(file != NULL);
-  DccOperations_descriptor_ = file->enum_type(0);
-  MessageType_descriptor_ = file->enum_type(1);
-  SegmentStateValue_descriptor_ = file->enum_type(2);
-  TrainDirectionValue_descriptor_ = file->enum_type(3);
-  TurnoutStateValue_descriptor_ = file->enum_type(4);
-  TrainFunctionValue_descriptor_ = file->enum_type(5);
-  SegmentOccupancyValue_descriptor_ = file->enum_type(6);
-  YakinduConnectionDirection_descriptor_ = file->enum_type(7);
-}
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ::google::protobuf::internal::AuxillaryParseTableField(),
+};
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+};
 
+const ::google::protobuf::uint32 TableStruct::offsets[1] = {};
+static const ::google::protobuf::internal::MigrationSchema* schemas = NULL;
+static const ::google::protobuf::Message* const* file_default_instances = NULL;
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+void protobuf_AssignDescriptors() {
+  AddDescriptors();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "Enums.proto", schemas, file_default_instances, TableStruct::offsets, factory,
+      NULL, file_level_enum_descriptors, NULL);
+}
+
 void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_Enums_2eproto);
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
@@ -65,71 +67,72 @@ void protobuf_RegisterTypes(const ::std::string&) {
 }
 
 }  // namespace
-
-void protobuf_ShutdownFile_Enums_2eproto() {
-}
-
-void protobuf_InitDefaults_Enums_2eproto_impl() {
+void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+  ::google::protobuf::internal::InitProtobufDefaults();
 }
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_Enums_2eproto_once_);
-void protobuf_InitDefaults_Enums_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_InitDefaults_Enums_2eproto_once_,
-                 &protobuf_InitDefaults_Enums_2eproto_impl);
+void InitDefaults() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
-void protobuf_AddDesc_Enums_2eproto_impl() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  protobuf_InitDefaults_Enums_2eproto();
+namespace {
+void AddDescriptorsImpl() {
+  InitDefaults();
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+      "\n\013Enums.proto\022\017modes3.protobuf*U\n\rDccOpe"
+      "rations\022\025\n\021NORMAL_OPERATIONS\020\000\022\030\n\024STOP_A"
+      "LL_LOCOMOTIVES\020\001\022\023\n\017STOP_OPERATIONS\020\002*\321\004"
+      "\n\013MessageType\022\010\n\004NULL\020\000\022\023\n\017SEGMENT_COMMA"
+      "ND\020\001\022\021\n\rSEGMENT_STATE\020\002\022\031\n\025TRAIN_CURRENT"
+      "_SEGMENT\020\003\022\027\n\023TRAIN_CURRENT_SPEED\020\004\022\033\n\027T"
+      "RAIN_DIRECTION_COMMAND\020\005\022\031\n\025TRAIN_REFERE"
+      "NCE_SPEED\020\007\022!\n\035TRAIN_REFERENCE_SPEED_COM"
+      "MAND\020\010\022\023\n\017TURNOUT_COMMAND\020\t\022\021\n\rTURNOUT_S"
+      "TATE\020\n\022\025\n\021SEGMENT_OCCUPANCY\020\013\022\026\n\022YAKINDU"
+      "_RELEASE_TO\020\014\022\025\n\021YAKINDU_CAN_GO_TO\020\r\022\030\n\024"
+      "YAKINDU_CANNOT_GO_TO\020\016\022\026\n\022YAKINDU_RESERV"
+      "E_TO\020\017\022\035\n\031TURNOUT_REFERENCE_COMMAND\020\020\022\033\n"
+      "\027TURNOUT_REFERENCE_STATE\020\021\022\032\n\026TRAIN_FUNC"
+      "TION_COMMAND\020\022\022\030\n\024TRAIN_FUNCTION_STATE\020\023"
+      "\022\032\n\026DCC_OPERATIONS_COMMAND\020\024\022\030\n\024DCC_OPER"
+      "ATIONS_STATE\020\025\022\023\n\017SEND_ALL_STATUS\020\026\022$\n C"
+      "OMPUTER_VISION_OBJECT_POSITIONS\020\027*.\n\021Seg"
+      "mentStateValue\022\014\n\010DISABLED\020\000\022\013\n\007ENABLED\020"
+      "\001*0\n\023TrainDirectionValue\022\013\n\007FORWARD\020\000\022\014\n"
+      "\010BACKWARD\020\001*0\n\021TurnoutStateValue\022\014\n\010STRA"
+      "IGHT\020\000\022\r\n\tDIVERGENT\020\001*%\n\022TrainFunctionVa"
+      "lue\022\007\n\003OFF\020\000\022\006\n\002ON\020\001*/\n\025SegmentOccupancy"
+      "Value\022\010\n\004FREE\020\000\022\014\n\010OCCUPIED\020\001*Y\n\032Yakindu"
+      "ConnectionDirection\022\006\n\002CW\020\000\022\007\n\003CCW\020\001\022\t\n\005"
+      "Y_TOP\020\002\022\017\n\013Y_DIVERGENT\020\003\022\016\n\nY_STRAIGHT\020\004"
+      "B0\n,hu.bme.mit.inf.modes3.messaging.mms."
+      "messagesP\001b\006proto3"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\013Enums.proto\022\017modes3.protobuf*U\n\rDccOpe"
-    "rations\022\025\n\021NORMAL_OPERATIONS\020\000\022\030\n\024STOP_A"
-    "LL_LOCOMOTIVES\020\001\022\023\n\017STOP_OPERATIONS\020\002*\253\004"
-    "\n\013MessageType\022\010\n\004NULL\020\000\022\023\n\017SEGMENT_COMMA"
-    "ND\020\001\022\021\n\rSEGMENT_STATE\020\002\022\031\n\025TRAIN_CURRENT"
-    "_SEGMENT\020\003\022\027\n\023TRAIN_CURRENT_SPEED\020\004\022\033\n\027T"
-    "RAIN_DIRECTION_COMMAND\020\005\022\031\n\025TRAIN_REFERE"
-    "NCE_SPEED\020\007\022!\n\035TRAIN_REFERENCE_SPEED_COM"
-    "MAND\020\010\022\023\n\017TURNOUT_COMMAND\020\t\022\021\n\rTURNOUT_S"
-    "TATE\020\n\022\025\n\021SEGMENT_OCCUPANCY\020\013\022\026\n\022YAKINDU"
-    "_RELEASE_TO\020\014\022\025\n\021YAKINDU_CAN_GO_TO\020\r\022\030\n\024"
-    "YAKINDU_CANNOT_GO_TO\020\016\022\026\n\022YAKINDU_RESERV"
-    "E_TO\020\017\022\035\n\031TURNOUT_REFERENCE_COMMAND\020\020\022\033\n"
-    "\027TURNOUT_REFERENCE_STATE\020\021\022\032\n\026TRAIN_FUNC"
-    "TION_COMMAND\020\022\022\030\n\024TRAIN_FUNCTION_STATE\020\023"
-    "\022\032\n\026DCC_OPERATIONS_COMMAND\020\024\022\030\n\024DCC_OPER"
-    "ATIONS_STATE\020\025\022\023\n\017SEND_ALL_STATUS\020\026*.\n\021S"
-    "egmentStateValue\022\014\n\010DISABLED\020\000\022\013\n\007ENABLE"
-    "D\020\001*0\n\023TrainDirectionValue\022\013\n\007FORWARD\020\000\022"
-    "\014\n\010BACKWARD\020\001*0\n\021TurnoutStateValue\022\014\n\010ST"
-    "RAIGHT\020\000\022\r\n\tDIVERGENT\020\001*%\n\022TrainFunction"
-    "Value\022\007\n\003OFF\020\000\022\006\n\002ON\020\001*/\n\025SegmentOccupan"
-    "cyValue\022\010\n\004FREE\020\000\022\014\n\010OCCUPIED\020\001*Y\n\032Yakin"
-    "duConnectionDirection\022\006\n\002CW\020\000\022\007\n\003CCW\020\001\022\t"
-    "\n\005Y_TOP\020\002\022\017\n\013Y_DIVERGENT\020\003\022\016\n\nY_STRAIGHT"
-    "\020\004B0\n,hu.bme.mit.inf.modes3.messaging.mm"
-    "s.messagesP\001b\006proto3", 1060);
+      descriptor, 1098);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Enums.proto", &protobuf_RegisterTypes);
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_Enums_2eproto);
 }
+} // anonymous namespace
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_Enums_2eproto_once_);
-void protobuf_AddDesc_Enums_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_Enums_2eproto_once_,
-                 &protobuf_AddDesc_Enums_2eproto_impl);
+void AddDescriptors() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_Enums_2eproto {
-  StaticDescriptorInitializer_Enums_2eproto() {
-    protobuf_AddDesc_Enums_2eproto();
+// Force AddDescriptors() to be called at dynamic initialization time.
+struct StaticDescriptorInitializer {
+  StaticDescriptorInitializer() {
+    AddDescriptors();
   }
-} static_descriptor_initializer_Enums_2eproto_;
+} static_descriptor_initializer;
+
+}  // namespace protobuf_Enums_2eproto
+
 const ::google::protobuf::EnumDescriptor* DccOperations_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return DccOperations_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[0];
 }
 bool DccOperations_IsValid(int value) {
   switch (value) {
@@ -143,8 +146,8 @@ bool DccOperations_IsValid(int value) {
 }
 
 const ::google::protobuf::EnumDescriptor* MessageType_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MessageType_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[1];
 }
 bool MessageType_IsValid(int value) {
   switch (value) {
@@ -170,6 +173,7 @@ bool MessageType_IsValid(int value) {
     case 20:
     case 21:
     case 22:
+    case 23:
       return true;
     default:
       return false;
@@ -177,8 +181,8 @@ bool MessageType_IsValid(int value) {
 }
 
 const ::google::protobuf::EnumDescriptor* SegmentStateValue_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return SegmentStateValue_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[2];
 }
 bool SegmentStateValue_IsValid(int value) {
   switch (value) {
@@ -191,8 +195,8 @@ bool SegmentStateValue_IsValid(int value) {
 }
 
 const ::google::protobuf::EnumDescriptor* TrainDirectionValue_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TrainDirectionValue_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[3];
 }
 bool TrainDirectionValue_IsValid(int value) {
   switch (value) {
@@ -205,8 +209,8 @@ bool TrainDirectionValue_IsValid(int value) {
 }
 
 const ::google::protobuf::EnumDescriptor* TurnoutStateValue_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TurnoutStateValue_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[4];
 }
 bool TurnoutStateValue_IsValid(int value) {
   switch (value) {
@@ -219,8 +223,8 @@ bool TurnoutStateValue_IsValid(int value) {
 }
 
 const ::google::protobuf::EnumDescriptor* TrainFunctionValue_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TrainFunctionValue_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[5];
 }
 bool TrainFunctionValue_IsValid(int value) {
   switch (value) {
@@ -233,8 +237,8 @@ bool TrainFunctionValue_IsValid(int value) {
 }
 
 const ::google::protobuf::EnumDescriptor* SegmentOccupancyValue_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return SegmentOccupancyValue_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[6];
 }
 bool SegmentOccupancyValue_IsValid(int value) {
   switch (value) {
@@ -247,8 +251,8 @@ bool SegmentOccupancyValue_IsValid(int value) {
 }
 
 const ::google::protobuf::EnumDescriptor* YakinduConnectionDirection_descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return YakinduConnectionDirection_descriptor_;
+  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[7];
 }
 bool YakinduConnectionDirection_IsValid(int value) {
   switch (value) {

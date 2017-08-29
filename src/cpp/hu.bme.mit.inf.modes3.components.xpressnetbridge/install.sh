@@ -19,8 +19,8 @@ protoc --proto_path=java/messaging/hu.bme.mit.inf.modes3.messaging.proto/src/mai
 cd ./cpp/hu.bme.mit.inf.modes3.components.xpressnetbridge
 
 # build xpressnetbridge itself
-mkdir build
-cd build
-cmake ../
-make -j4
+#mkdir build
+#cd build
+#cmake ../
+#make -j2
 
