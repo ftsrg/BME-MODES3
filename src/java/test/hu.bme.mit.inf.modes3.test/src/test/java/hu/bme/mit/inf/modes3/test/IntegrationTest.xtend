@@ -32,7 +32,7 @@ class IntegrationTest {
 //		model = new ModelUtil(new NOPLoggerFactory)
 //		physicalThread = new Thread(new PhysicalEnvironmentOrchestrator(model.model))
 //		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model.model, new SimpleLoggerFactory))
-//		bbbThread = new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model.model, new SimpleLoggerFactory))
+//		bbbThread = new Thread(new TrackElementControllerModelComponent(CommunicationStackFactory::createLocalStack, model.model, new SimpleLoggerFactory))
 //		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
 //	}
 //
