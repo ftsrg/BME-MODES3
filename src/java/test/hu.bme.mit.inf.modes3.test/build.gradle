@@ -5,5 +5,4 @@ apply plugin: 'org.xtext.xtend'
 dependencies {
 	compile project(':components:hu.bme.mit.inf.modes3.components.common')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.event')
-	compile project(':components:hu.bme.mit.inf.modes3.components.bbb')
 }
