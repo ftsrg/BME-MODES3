@@ -2,15 +2,15 @@ package hu.bme.mit.inf.modes3.components.sample
 
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
 class SampleComponent extends AbstractCommunicationComponent {
 
 	val knownSegments = 1 ..< 10
 
-	new(CommunicationStack communicationStack, ILoggerFactory factory) {
-		super(communicationStack, factory)
+	new(MessagingService messagingService, ILoggerFactory factory) {
+		super(messagingService, factory)
 	}
 
 	def turnOffAll() {

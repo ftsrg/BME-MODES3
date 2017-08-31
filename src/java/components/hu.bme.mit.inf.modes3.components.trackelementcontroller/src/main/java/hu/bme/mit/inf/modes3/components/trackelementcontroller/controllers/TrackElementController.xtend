@@ -8,8 +8,8 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnout
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import java.util.HashMap
 import java.util.List
 import java.util.Map.Entry
@@ -26,8 +26,8 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 
 	Object turnoutStateChangedBarrier = new Object();
 
-	new(int turnoutID, CommunicationStack stack, ILoggerFactory factory) {
-		super(stack, factory)
+	new(int turnoutID, MessagingService messagingService, ILoggerFactory factory) {
+		super(messagingService, factory)
 
 		id = turnoutID
 

@@ -2,9 +2,9 @@ package hu.bme.mit.inf.safetylogic.event
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import org.slf4j.impl.SimpleLogger
 import org.slf4j.impl.SimpleLoggerFactory
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 
 class Main {
 
@@ -23,7 +23,7 @@ class Main {
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("port", "The oprt used by the transport server", Integer))
 		registry.parseArguments(args)
 		
-		val sl = new SafetyLogic(CommunicationStackFactory::createMQTTStack(registry, loggerFactory), loggerFactory)
+		val sl = new SafetyLogic(MessagingServiceFactory::createMQTTStack(registry, loggerFactory), loggerFactory)
 
 		sl.run // The component will run on this thread
 	}

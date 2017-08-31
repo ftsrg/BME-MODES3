@@ -7,14 +7,13 @@ import hu.bme.mit.inf.modes3.transports.config.loaders.ArgumentBasedTransportCon
 import hu.bme.mit.inf.modes3.transports.mqtt.MQTTTransport
 import org.slf4j.ILoggerFactory
 
-class CommunicationStackFactory {
+class MessagingServiceFactory {
 
 	def static createMQTTStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
-		return new CommunicationStack(
-			new MessagingService(factory),
-			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadMQTTConfiguration(argumentRegistry), factory),
-			new ProtobufMessageDispatcher(factory)
-		)
+		return new MessagingService(
+			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadMQTTConfiguration(argumentRegistry),factory), 
+			new ProtobufMessageDispatcher(factory), 
+			factory)
 	}
 
 }

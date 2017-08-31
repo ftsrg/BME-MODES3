@@ -5,7 +5,6 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnout
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
@@ -15,6 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
 import org.junit.Ignore
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 
 // FIXME reimplement this test with the new transport
 

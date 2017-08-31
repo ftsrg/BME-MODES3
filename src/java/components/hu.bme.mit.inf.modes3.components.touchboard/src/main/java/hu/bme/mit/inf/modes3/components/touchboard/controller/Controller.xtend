@@ -11,11 +11,11 @@ import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicatio
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import java.util.Map
 import java.util.TreeMap
 import java.util.concurrent.ExecutorService
@@ -44,8 +44,8 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 	var Map<Integer, SegmentEventHandler> segments
 	var Map<Integer, TurnoutEventHandler> turnouts
 
-	new(CommunicationStack stack, ILoggerFactory loggerFactory) {
-		super(stack, loggerFactory)
+	new(MessagingService messagingService, ILoggerFactory loggerFactory) {
+		super(messagingService, loggerFactory)
 
 		this.loggerFactory = loggerFactory
 		logger = loggerFactory.getLogger(Controller.name)

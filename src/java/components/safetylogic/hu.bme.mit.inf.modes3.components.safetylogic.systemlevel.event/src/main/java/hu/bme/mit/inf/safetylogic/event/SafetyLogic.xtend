@@ -8,11 +8,11 @@ import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicatio
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.IComputerVisionListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import java.util.HashSet
 import java.util.List
 import java.util.Set
@@ -47,8 +47,8 @@ class SafetyLogic extends AbstractCommunicationComponent implements INotifiable 
 	
 	val ComputerVisionEstimator computerVisionEstimator
 
-	new(CommunicationStack stack, ILoggerFactory factory) {
-		super(stack, factory)
+	new(MessagingService messagingService, ILoggerFactory factory) {
+		super(messagingService, factory)
 		this.factory = factory
 		logger.info('Construction started')
 		SafetyLogicRuleEngine.standaloneSetup

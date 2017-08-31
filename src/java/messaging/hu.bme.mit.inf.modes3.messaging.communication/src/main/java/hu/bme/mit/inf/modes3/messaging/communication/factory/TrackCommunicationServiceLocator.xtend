@@ -5,71 +5,44 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.TrackElementCommand
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.computervision.ComputerVisionCallback
+import hu.bme.mit.inf.modes3.messaging.communication.computervision.IComputerVisionCallback
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateSender
 import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState
 import hu.bme.mit.inf.modes3.messaging.communication.update.SendAllStatusCallback
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.messaging.communication.computervision.IComputerVisionCallback
 
 class TrackCommunicationServiceLocator {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 
-	val CommunicationStack stack
-	
-	val TrackElementStateSender tess
-	val TrackElementCommander tec
-	val TrackElementCommandCallback tecc
-	val TrackElementStateRegistry tsr
-	val TrainReferenceSpeedState trss 
-	val SendAllStatusCallback sasc
-	val ComputerVisionCallback cvc
+	val MessagingService messagingService
 
-	new(CommunicationStack _stack, ILoggerFactory factory) {
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ITrackElementStateSender trackElementStateSender
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ITrackElementCommander trackElementCommander
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ITrackElementCommandCallback trackElementCommandCallback
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ITrackElementStateRegistry trackElementStateRegistry
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val TrainReferenceSpeedState trainReferenceSpeedState
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val SendAllStatusCallback sendAllStatusCallback
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val IComputerVisionCallback computerVisionCallback
+
+	new(MessagingService messagingService, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
-		stack = _stack
-		stack.start
+		this.messagingService = messagingService
+		messagingService.start
 
-		tess = new TrackElementStateSender(stack.mms, factory)
-		tec = new TrackElementCommander(stack.mms, factory)
-		tecc = new TrackElementCommandCallback(stack.dispatcher as ProtobufMessageDispatcher, factory)
-		tsr = new TrackElementStateRegistry(stack.dispatcher as ProtobufMessageDispatcher, factory)
-		trss = new TrainReferenceSpeedState(stack.dispatcher as ProtobufMessageDispatcher, factory)
-		sasc = new SendAllStatusCallback(stack.dispatcher as ProtobufMessageDispatcher, factory)
-		cvc = new ComputerVisionCallback(stack.dispatcher as ProtobufMessageDispatcher, factory)
-	}
-
-	def ITrackElementStateSender getTrackElementStateSender() {
-		return tess
-	}
-
-	def ITrackElementCommander getTrackElementCommander() {
-		return tec
-	}
-
-	def ITrackElementCommandCallback getTrackElementCommandCallback() {
-		return tecc
-	}
-
-	def ITrackElementStateRegistry getTrackElementStateRegistry() {
-		return tsr
-	}
-	
-	def TrainReferenceSpeedState getTrainReferenceSpeedState(){
-		return trss
-	}
-	
-	def SendAllStatusCallback getSendAllStatusCallback(){
-		return sasc
-	}
-	
-	def IComputerVisionCallback getComputerVisionCallback(){
-		return cvc
+		trackElementStateSender = new TrackElementStateSender(messagingService, factory)
+		trackElementCommander = new TrackElementCommander(messagingService, factory)
+		trackElementCommandCallback = new TrackElementCommandCallback(messagingService.dispatcher as ProtobufMessageDispatcher, factory)
+		trackElementStateRegistry = new TrackElementStateRegistry(messagingService.dispatcher as ProtobufMessageDispatcher, factory)
+		trainReferenceSpeedState = new TrainReferenceSpeedState(messagingService.dispatcher as ProtobufMessageDispatcher, factory)
+		sendAllStatusCallback = new SendAllStatusCallback(messagingService.dispatcher as ProtobufMessageDispatcher, factory)
+		computerVisionCallback = new ComputerVisionCallback(messagingService.dispatcher as ProtobufMessageDispatcher, factory)
 	}
 }
