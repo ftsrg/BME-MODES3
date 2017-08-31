@@ -9,7 +9,7 @@ dependencies {
 	compile 'com.google.protobuf:protobuf-java:3.0.0'
 	compile 'com.google.protobuf:protobuf-java-util:3.0.0'
 	
-	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.proto')
 	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
 

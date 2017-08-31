@@ -36,7 +36,7 @@ dependencies {
 	
  	//compile 'org.eclipse.viatra-cep:org.eclipse.viatra.cep.core:+'
  	
- 	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+ 	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.patterns')

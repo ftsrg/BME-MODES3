@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.test
 
-import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadModel
+import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import java.util.HashMap
@@ -9,7 +9,7 @@ import org.eclipse.emf.common.notify.Notification
 import org.eclipse.emf.ecore.util.EContentAdapter
 import org.slf4j.ILoggerFactory
 
-class SegmentOccupancyReaderMock extends AbstractRailRoadCommunicationComponent {
+class SegmentOccupancyReaderMock extends AbstractCommunicationComponent {
 
 	val RailRoadModel model
 	val isOccupied = new HashMap<Integer, Boolean>

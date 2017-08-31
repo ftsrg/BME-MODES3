@@ -1,12 +1,13 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller
 
-import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement.SegmentEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement.TurnoutEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.controller.train.Direction
+import hu.bme.mit.inf.modes3.components.touchboard.controller.train.SpeedPercentageUtil
 import hu.bme.mit.inf.modes3.components.touchboard.controller.train.TrainEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
+import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
@@ -27,9 +28,8 @@ import javafx.scene.Scene
 import javafx.scene.control.ToggleButton
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.components.touchboard.controller.train.SpeedPercentageUtil
 
-class Controller extends AbstractRailRoadCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener, ITurnoutStateChangeListener {
+class Controller extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener, ITurnoutStateChangeListener {
 
 	val ILoggerFactory loggerFactory
 	val Logger logger

@@ -1,8 +1,8 @@
 package hu.bme.mit.inf.modes3.components.occupancyquery
 
 import com.fazecast.jSerialComm.SerialPort
-import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
+import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import org.slf4j.ILoggerFactory
@@ -21,7 +21,7 @@ import org.slf4j.ILoggerFactory
  * 
  */
 
-class OccupancyQuery extends AbstractRailRoadCommunicationComponent {
+class OccupancyQuery extends AbstractCommunicationComponent {
 
 	// The registry holding the application parameters
 	val ArgumentRegistry registry

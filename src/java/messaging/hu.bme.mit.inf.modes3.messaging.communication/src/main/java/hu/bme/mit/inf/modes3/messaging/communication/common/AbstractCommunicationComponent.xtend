@@ -1,19 +1,19 @@
-package hu.bme.mit.inf.modes3.components.common
+package hu.bme.mit.inf.modes3.messaging.communication.common
 
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
-import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
 abstract class AbstractCommunicationComponent implements Runnable {
 
-	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
+	protected val Logger logger
 
-	protected val CommunicationStack communication
+	protected val TrackCommunicationServiceLocator locator
 
 	new(CommunicationStack stack, ILoggerFactory factory) {
-		communication = stack
 		this.logger = factory.getLogger(this.class.name)
+		this.locator = new TrackCommunicationServiceLocator(stack, factory)
 	}
 
 }
