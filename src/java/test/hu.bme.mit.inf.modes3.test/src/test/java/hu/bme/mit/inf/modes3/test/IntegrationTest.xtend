@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.test
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import hu.bme.mit.inf.safetylogic.event.ModelUtil
 import hu.bme.mit.inf.safetylogic.event.SafetyLogic
 import org.junit.Assert
@@ -10,6 +9,7 @@ import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
 import org.slf4j.impl.SimpleLoggerFactory
 import org.junit.Ignore
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 
 // FIXME: reimplement this test with the new transport
 

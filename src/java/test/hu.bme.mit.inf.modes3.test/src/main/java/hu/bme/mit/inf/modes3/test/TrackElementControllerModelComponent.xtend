@@ -8,7 +8,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnout
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
 class TrackElementControllerModelComponent extends AbstractCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener {
@@ -18,8 +18,8 @@ class TrackElementControllerModelComponent extends AbstractCommunicationComponen
 	Iterable<Turnout> turnouts
 	
 	
-	new(CommunicationStack stack, RailRoadModel model, ILoggerFactory factory) {
-		super(stack, factory);
+	new(MessagingService messagingService, RailRoadModel model, ILoggerFactory factory) {
+		super(messagingService, factory);
 		println('''Initialization started''')
 		
 		this.model = model

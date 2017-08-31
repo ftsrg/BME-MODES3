@@ -12,17 +12,16 @@ class MessagingService {
 	Thread dispatchThread
 
 	Transport transport
-	IMessageDispatcher dispatcher
+	@Accessors(PUBLIC_GETTER) IMessageDispatcher dispatcher
 
-	new(ILoggerFactory factory) {
+	new(Transport transport, IMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
+		this.transport = transport
+		this.dispatcher = dispatcher
 	}
 
-	def start(Transport _transport, IMessageDispatcher _dispatcher) {
-		this.transport = _transport
-		this.dispatcher = _dispatcher
-
-		this.transport.connect()
+	def start() {
+		transport.connect
 		dispatchThread = new Thread(new DispatchThread(transport, dispatcher, logger))
 		dispatchThread.start
 	}

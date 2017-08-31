@@ -2,10 +2,10 @@ package hu.bme.mit.inf.modes3.components.trackelementcontroller
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import java.net.InetAddress
 import org.slf4j.impl.SimpleLoggerFactory
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.controllers.TrackElementController
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 
 class Main {
 
@@ -25,7 +25,7 @@ class Main {
 		logger.info("Hostname: " + hostname);
 		val turnoutID = Integer.valueOf(hostname.split("\\.").get(0).replace('t', ''));
 
-		val communicationStack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
+		val communicationStack = MessagingServiceFactory::createMQTTStack(registry, loggerFactory)
 		
 		val bbb = new TrackElementController(turnoutID, communicationStack, loggerFactory)
 		bbb.run // run on main thread

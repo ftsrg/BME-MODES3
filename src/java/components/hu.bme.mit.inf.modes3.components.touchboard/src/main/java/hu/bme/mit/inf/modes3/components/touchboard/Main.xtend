@@ -3,7 +3,6 @@ package hu.bme.mit.inf.modes3.components.touchboard
 import hu.bme.mit.inf.modes3.components.touchboard.controller.Controller
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import java.io.IOException
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
@@ -11,6 +10,7 @@ import javafx.scene.Scene
 import javafx.stage.Stage
 import org.slf4j.ILoggerFactory
 import org.slf4j.impl.SimpleLoggerFactory
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 
 class Main extends Application {
 
@@ -59,7 +59,7 @@ class Main extends Application {
 	}
 
 	private def static createController() {
-		val communicationStack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
+		val communicationStack = MessagingServiceFactory::createMQTTStack(registry, loggerFactory)
 		return new Controller(communicationStack, loggerFactory)
 	}
 }

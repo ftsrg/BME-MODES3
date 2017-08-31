@@ -18,9 +18,9 @@ import org.slf4j.impl.SimpleLoggerFactory;
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter;
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry;
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack;
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory;
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService;
 
 public class DashboardManager {
 
@@ -31,7 +31,7 @@ public class DashboardManager {
 
     private ArgumentRegistry registry;
 
-    private CommunicationStack communicationStack;
+    private MessagingService messagingService;
 
     private TrackCommunicationServiceLocator locator;
 
@@ -59,8 +59,8 @@ public class DashboardManager {
     }
 
     public void initialize() {
-        communicationStack = CommunicationStackFactory.createMQTTStack(registry, loggerFactory);
-        locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
+        messagingService = MessagingServiceFactory.createMQTTStack(registry, loggerFactory);
+        locator = new TrackCommunicationServiceLocator(messagingService, loggerFactory);
     }
 
     public void parseArguments(String[] args) {
@@ -105,8 +105,8 @@ public class DashboardManager {
         server.join();
     }
 
-    public CommunicationStack getCommunicationStack() {
-        return communicationStack;
+    public MessagingService getMessagingService() {
+        return messagingService;
     }
 
     public SimpleLoggerFactory getLoggerFactory() {

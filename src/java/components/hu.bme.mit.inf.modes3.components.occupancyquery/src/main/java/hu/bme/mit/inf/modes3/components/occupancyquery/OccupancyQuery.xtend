@@ -4,7 +4,7 @@ import com.fazecast.jSerialComm.SerialPort
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
 /*
@@ -31,8 +31,8 @@ class OccupancyQuery extends AbstractCommunicationComponent {
 	// The occupancy vector containing the current status
 	val SegmentOccupancy[] states = newArrayOfSize(31)
 
-	new(CommunicationStack stack, ILoggerFactory factory, ArgumentRegistry registry) {
-		super(stack, factory)
+	new(MessagingService messagingService, ILoggerFactory factory, ArgumentRegistry registry) {
+		super(messagingService, factory)
 		this.registry = registry
 	}
 	

@@ -2,8 +2,8 @@ package hu.bme.mit.inf.modes3.components.occupancyquery
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
 import org.slf4j.impl.SimpleLoggerFactory
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 
 class Main {
 
@@ -23,7 +23,7 @@ class Main {
 			new ArgumentDescriptorWithParameter("serial", "The serial port used by the SOC", String))
 		registry.parseArguments(args)
 
-		val stack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
+		val stack = MessagingServiceFactory::createMQTTStack(registry, loggerFactory)
 		val query = new OccupancyQuery(stack, loggerFactory, registry)
 		val queryThread = new Thread(query)
 		queryThread.run
