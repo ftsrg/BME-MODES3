@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.command
 
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
-import hu.bme.mit.inf.modes3.messaging.communication.common.Commander
 import hu.bme.mit.inf.modes3.messaging.communication.enums.EnumTransformator
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection
@@ -13,14 +12,20 @@ import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.SendAllStatus
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutCommand
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
-class TrackElementCommander extends Commander implements ITrackElementCommander {
+class TrackElementCommander implements ITrackElementCommander {
 
-	static val senseToTurnoutIDMap = #{14 -> 1, 28 -> 2, 25 -> 3, 32 -> 3, 3 -> 4, 9 -> 5, 21 -> 6}
+	static val SENSE_TO_TURNOUT_ID_MAP = #{14 -> 1, 28 -> 2, 25 -> 3, 32 -> 3, 3 -> 4, 9 -> 5, 21 -> 6}
+	
+	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
+	var protected MessagingService mms
 
 	new(MessagingService mms, ILoggerFactory factory) {
-		super(mms, factory)
+		this.mms = mms
+		this.logger = factory.getLogger(this.class.name)
 	}
 
 	override sendSegmentCommand(int id, SegmentState state) {
@@ -34,8 +39,8 @@ class TrackElementCommander extends Commander implements ITrackElementCommander 
 	}
 
 	override sendTurnoutCommand(int id, TurnoutState state) {
-		logger.info('''TurnoutCommand message sent with id=«id»(=T«senseToTurnoutIDMap.get(id)») state=«state»''')
-		mms.sendMessage((TurnoutCommand.newBuilder => [turnoutID = senseToTurnoutIDMap.get(id); it.state = EnumTransformator.toSpecific(state)]).build)
+		logger.info('''TurnoutCommand message sent with id=«id»(=T«TrackElementCommander.SENSE_TO_TURNOUT_ID_MAP.get(id)») state=«state»''')
+		mms.sendMessage((TurnoutCommand.newBuilder => [turnoutID = TrackElementCommander.SENSE_TO_TURNOUT_ID_MAP.get(id); it.state = EnumTransformator.toSpecific(state)]).build)
 	}
 	
 	override sendAllStatusCommand() {

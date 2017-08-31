@@ -6,5 +6,5 @@ mainClassName = "hu.bme.mit.inf.modes3.components.touchboard.Main"
 applicationDefaultJvmArgs = ["-Dcom.sun.javafx.touch=true -Dcom.sun.javafx.isEmbedded=true"]
 
 dependencies {
-	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 }

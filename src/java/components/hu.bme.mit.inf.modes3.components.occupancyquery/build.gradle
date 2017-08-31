@@ -4,7 +4,7 @@ apply plugin: 'org.xtext.xtend'
 
 dependencies {
 	compile group: 'com.fazecast', name: 'jSerialComm', version: '1.3.11'
-	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 }
 
 mainClassName = "hu.bme.mit.inf.modes3.components.occupancyquery.Main"

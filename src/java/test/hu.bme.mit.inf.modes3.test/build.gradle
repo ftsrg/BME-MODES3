@@ -3,6 +3,6 @@ apply plugin: 'org.xtext.xtend'
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.event')
 }

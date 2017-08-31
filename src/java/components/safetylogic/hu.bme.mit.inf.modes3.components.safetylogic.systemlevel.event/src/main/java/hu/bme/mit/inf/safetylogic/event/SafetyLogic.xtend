@@ -1,14 +1,15 @@
 package hu.bme.mit.inf.safetylogic.event
 
-import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.SafetyLogicRuleEngine
+import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.IComputerVisionListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
@@ -17,9 +18,8 @@ import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
 
-class SafetyLogic extends AbstractRailRoadCommunicationComponent implements INotifiable {
+class SafetyLogic extends AbstractCommunicationComponent implements INotifiable {
 
 	val initializeRailRoad = true
 

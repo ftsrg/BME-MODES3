@@ -7,7 +7,7 @@ mainClassName = "hu.bme.mit.inf.modes3.components.trackelementcontroller.Main"
 // In this section you declare the dependencies for your production and test code
 dependencies {
 	compile 'com.google.code.gson:gson:2.7'
-	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 	compile project(':components:hu.bme.mit.inf.modes3.components.gpiomanager')
 	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
 }

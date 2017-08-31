@@ -1,11 +1,11 @@
 package hu.bme.mit.inf.modes3.components.trackelementcontroller.controllers
 
-import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioManager
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.Configuration
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderConfigInterpreter
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
@@ -15,7 +15,7 @@ import java.util.List
 import java.util.Map.Entry
 import org.slf4j.ILoggerFactory
 
-class TrackElementController extends AbstractRailRoadCommunicationComponent implements IAllStatusUpdateListener, ISegmentCommandListener, ITurnoutCommandListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
+class TrackElementController extends AbstractCommunicationComponent implements IAllStatusUpdateListener, ISegmentCommandListener, ITurnoutCommandListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
 
 	Configuration config
 	val int id
