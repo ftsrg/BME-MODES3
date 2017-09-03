@@ -34,11 +34,18 @@ class TrackElementCommander implements ITrackElementCommander {
 		mms.sendMessage((SegmentCommand.newBuilder => [segmentID = id; it.state = EnumTransformator.toSpecific(state)]).build)
 	}
 
+
+	/**
+	 * Send a command to a turnout, denoted by its ID.
+	 */
 	override sendTurnoutCommandWithTurnoutId(int id, TurnoutState state){
 		logger.info('''TurnoutCommand message sent with id=«id»(=T«(id)») state=«state»''')
 		mms.sendMessage((TurnoutCommand.newBuilder => [turnoutID = id; it.state = EnumTransformator.toSpecific(state)]).build)	
 	}
 
+	/**
+	 * Send a command to a turnout, denoted by its segment ID. (The ID of the segment which indicates the turnout's occupancy.)
+	 */
 	override sendTurnoutCommand(int segmentId, TurnoutState state) {
 		val turnoutId = SEGMENT_ID_TO_TURNOUT_ID_MAPPING.get(segmentId)
 		logger.info('''TurnoutCommand message sent with segmentId=«segmentId»(=T«turnoutId») state=«state»''')

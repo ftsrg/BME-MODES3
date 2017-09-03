@@ -1,41 +1,32 @@
 package hu.bme.mit.inf.modes3.components.sample
 
+import hu.bme.mit.inf.modes3.components.sample.demo.SectionsDemo
+import hu.bme.mit.inf.modes3.components.sample.demo.SegmentsDemo
+import hu.bme.mit.inf.modes3.components.sample.demo.SendAllStatusDemo
+import hu.bme.mit.inf.modes3.components.sample.demo.TrainsDemo
+import hu.bme.mit.inf.modes3.components.sample.demo.TurnoutsDemo
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
+import java.util.Set
 import org.slf4j.ILoggerFactory
 
 class SampleComponent extends AbstractCommunicationComponent {
 
-	val knownSegments = 1 ..< 10
+	val ILoggerFactory factory
+	val Set<AbstractCommunicationComponent> demos
 
 	new(MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
-	}
-
-	def turnOffAll() {
-		for (i : knownSegments) {
-			locator.trackElementCommander.sendSegmentCommand(i, SegmentState.DISABLED)
+		this.factory = factory
+		this.demos = #{new SegmentsDemo(locator, factory), new SectionsDemo(locator, factory),
+			new TurnoutsDemo(locator, factory), new SendAllStatusDemo(locator, factory),
+			new TrainsDemo(locator, factory)}
 		}
-	}
 
-	def getStateOfAll() {
-		for (i : knownSegments) {
-			processState(locator.trackElementStateRegistry.getSegmentState(i), i)
+		// The 'main' method of the sample component
+		override run() {
+			demos.forEach[it.run]
 		}
-	}
 
-	def void processState(SegmentState state, int id) {
-		println(
-			'''Segment #«id» is «switch(state){case ENABLED: 'Enabled' case DISABLED: "Disabled"}»'''
-		)
 	}
 	
-	
-	//The 'main' method of the sample component
-	override run() {
-		turnOffAll
-		
-	}
-
-}

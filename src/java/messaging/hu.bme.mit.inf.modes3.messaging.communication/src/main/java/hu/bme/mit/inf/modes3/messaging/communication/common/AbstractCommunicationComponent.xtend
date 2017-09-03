@@ -16,4 +16,9 @@ abstract class AbstractCommunicationComponent implements Runnable {
 		this.locator = new TrackCommunicationServiceLocator(messagingService, factory)
 	}
 
+	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
+		this.logger = factory.getLogger(this.class.name)
+		this.locator = locator
+	}
+
 }
