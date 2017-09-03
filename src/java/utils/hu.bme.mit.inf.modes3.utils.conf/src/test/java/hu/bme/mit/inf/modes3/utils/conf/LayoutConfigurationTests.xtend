@@ -141,4 +141,43 @@ class LayoutConfigurationTests {
 			Assert.assertEquals(referenceTurnoutId, loadedTurnoutId)
 		}
 	}
+
+	@Test def void segmentIdToTurnoutIdMappingTest() {
+		val referenceSegmentIds = #{"25", "32"}
+		val referenceTurnoutId = "3"
+		val loadedSegmentIdToTurnoutIdMapping = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
+
+		for (referenceSegmentId : referenceSegmentIds) {
+			val loadedTurnoutId = loadedSegmentIdToTurnoutIdMapping.get(referenceSegmentId)
+			Assert.assertEquals(referenceTurnoutId, loadedTurnoutId)
+		}
+	}
+
+	@Test def void segmentIdToTurnoutIdMappingIntegerTest() {
+		val referenceSegmentIds = #{25, 32}
+		val referenceTurnoutId = 3
+		val loadedSegmentIdToTurnoutIdMapping = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMappingAsInteger
+
+		for (referenceSegmentId : referenceSegmentIds) {
+			val loadedTurnoutId = loadedSegmentIdToTurnoutIdMapping.get(referenceSegmentId)
+			Assert.assertEquals(referenceTurnoutId, loadedTurnoutId)
+		}
+	}
+
+	@Test def void turnoutIdToSegmentIdMappingTest() {
+		val referenceTurnoutId = "3"
+		val referenceSegmentIds = #{"25", "32"}
+
+		val loadedSegmentIds = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMapping.get(referenceTurnoutId)
+		Assert.assertEquals(referenceSegmentIds, loadedSegmentIds)
+	}
+
+	@Test def void turnoutIdToSegmentIdMappingIntegerTest() {
+		val referenceTurnoutId = 3
+		val referenceSegmentIds = #{25, 32}
+
+		val loadedSegmentIds = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMappingAsInteger.get(
+			referenceTurnoutId)
+		Assert.assertEquals(referenceSegmentIds, loadedSegmentIds)
+	}
 }

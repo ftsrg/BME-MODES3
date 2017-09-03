@@ -28,16 +28,16 @@
 											<children>
                                     <HBox VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ToggleButton id="taurus_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
-      												<Button id="taurus_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
+                                          <ToggleButton id="Taurus_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
+      												<Button id="Taurus_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
 												<HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
 													<children>
-														<Button id="taurus_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
-														<Button id="taurus_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
-														<Button id="taurus_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
-														<Button id="taurus_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
+														<Button id="Taurus_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
+														<Button id="Taurus_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
+														<Button id="Taurus_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
+														<Button id="Taurus_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
 													</children>
 												</HBox>
 											</children>
@@ -50,38 +50,38 @@
                                  <children>
                                     <HBox VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ToggleButton id="sncf_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
-                                          <Button id="sncf_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
+                                          <ToggleButton id="SNCF_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
+                                          <Button id="SNCF_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                     <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <Button id="sncf_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
-                                          <Button id="sncf_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
-                                          <Button id="sncf_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
-                                          <Button id="sncf_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
+                                          <Button id="SNCF_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
+                                          <Button id="SNCF_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
+                                          <Button id="SNCF_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
+                                          <Button id="SNCF_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
                            </content>
                         </TitledPane>
-                        <TitledPane collapsible="false" layoutX="625.0" layoutY="10.0" text="BR-204" HBox.hgrow="ALWAYS">
+                        <TitledPane collapsible="false" layoutX="625.0" layoutY="10.0" text="BR294" HBox.hgrow="ALWAYS">
                            <content>
                               <VBox prefHeight="80.0">
                                  <children>
                                     <HBox VBox.vgrow="ALWAYS">
                                        <children>
-                                          <ToggleButton id="db_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
-                                          <Button id="db_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
+                                          <ToggleButton id="BR294_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
+                                          <Button id="BR294_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                     <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <Button id="db_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
-                                          <Button id="db_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
-                                          <Button id="db_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
-                                          <Button id="db_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
+                                          <Button id="BR294_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
+                                          <Button id="BR294_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
+                                          <Button id="BR294_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
+                                          <Button id="BR294_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                  </children>

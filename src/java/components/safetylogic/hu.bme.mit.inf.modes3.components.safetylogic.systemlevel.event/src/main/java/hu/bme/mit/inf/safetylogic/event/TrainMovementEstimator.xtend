@@ -43,7 +43,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 		val removeKeys = new HashSet<RailRoadElement>
 		freedLongTimeAgo.forEach [ freedSection, timeStamp |
 			val train = model.enabledTrains.findFirst[it.currentlyOn == freedSection]
-			if(train != null) {
+			if(train !== null) {
 				logger.info('''Old train #«train.id» removed from «train.currentlyOn.id»''')
 				model.removeTrain(train)
 			}
@@ -71,9 +71,9 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 
 			val possibleTrainPositions = model.getCurrentlyConnected(changedSegment)
 			var train = enabledTrains.findFirst[possibleTrainPositions.contains(it.currentlyOn)] // Search for an enabled train in one of the connected railroad elements
-			if(train == null) { // There is no enabled train nearby
+			if(train === null) { // There is no enabled train nearby
 				train = model.trains.findFirst[possibleTrainPositions.contains(it.currentlyOn)] // Search for a disabled train, it must have moved somehow
-				if(train == null) { // There are not even disabled trains nearby
+				if(train === null) { // There are not even disabled trains nearby
 					train = model.addNewTrain
 					train.currentlyOn = changedSegment
 					logger.info('''New train estimated on «changedSegment.id». The new train's ID is «train.id»''')
@@ -122,7 +122,7 @@ class Poller {
 	}
 
 	def start() {
-		if(t != null) {
+		if(t !== null) {
 			throw new RuntimeException
 		}
 		t = new Thread(new Runnable() {

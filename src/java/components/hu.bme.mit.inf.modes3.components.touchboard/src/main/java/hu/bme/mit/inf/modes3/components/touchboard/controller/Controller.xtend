@@ -177,7 +177,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 	private def int getTrainIdFromSourceId(ActionEvent event) {
 		try {
 			val srcId = getSourceId(event)
-			val trainName = srcId.split("_").get(0)
+			val trainName = srcId.split("_").get(0).toLowerCase
 			return LocomotivesConfiguration.INSTANCE.getLocomotiveIdByNameAsInteger(trainName)
 		} catch (Exception ex) {
 			throw new IllegalArgumentException("Source ID does not contain a valid train name.", ex)
