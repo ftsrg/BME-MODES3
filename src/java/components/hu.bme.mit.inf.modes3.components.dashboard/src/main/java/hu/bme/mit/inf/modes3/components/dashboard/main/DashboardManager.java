@@ -68,7 +68,7 @@ public class DashboardManager {
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("config", "The configuration used", String.class));
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("id", "The ID of the component", String.class));
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("address", "The address of the transport server", String.class));
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<Integer>("port", "The oprt used by the transport server", Integer.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<Integer>("port", "The port used by the transport server", Integer.class));
         
         registry.parseArguments(args);
     }
