@@ -19,6 +19,8 @@ import org.slf4j.Logger
 
 class TrackElementCommander implements ITrackElementCommander {
 	
+	private static val SEGMENT_ID_TO_TURNOUT_ID_MAPPING = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMappingAsInteger
+	
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 	var protected MessagingService mms
 
@@ -38,7 +40,7 @@ class TrackElementCommander implements ITrackElementCommander {
 	}
 
 	override sendTurnoutCommand(int segmentId, TurnoutState state) {
-		val turnoutId = LayoutConfiguration.INSTANCE.getTurnoutIdFromSegmentIdAsInteger(String.valueOf(segmentId))
+		val turnoutId = SEGMENT_ID_TO_TURNOUT_ID_MAPPING.get(segmentId)
 		logger.info('''TurnoutCommand message sent with segmentId=«segmentId»(=T«turnoutId») state=«state»''')
 		mms.sendMessage((TurnoutCommand.newBuilder => [turnoutID = turnoutId; it.state = EnumTransformator.toSpecific(state)]).build)
 	}

@@ -6,7 +6,7 @@ import org.junit.Test
 class LocomotivesConfigurationTests {
 
 	@Test def void locomotiveNamesTest() {
-		val referenceNames = #{"br-204", "db", "sncf", "taurus"}
+		val referenceNames = #{"BR294", "SNCF", "Taurus"}
 		val loadedNames = LocomotivesConfiguration.INSTANCE.locomotiveNames
 		Assert.assertEquals(referenceNames, loadedNames)
 	}
@@ -24,26 +24,26 @@ class LocomotivesConfigurationTests {
 	}
 
 	@Test def void mappingsTest() {
-		val referenceMapping = #{"br-204" -> "8", "db" -> "8", "taurus" -> "9", "sncf" -> "10"}
+		val referenceMapping = #{"BR294" -> "8", "Taurus" -> "9", "SNCF" -> "10"}
 		val loadedMapping = LocomotivesConfiguration.INSTANCE.locomotivesWithNameAndId
 		Assert.assertEquals(referenceMapping, loadedMapping)
 	}
 
 	@Test def void mappingsIntegerTest() {
-		val referenceMapping = #{"br-204" -> 8, "db" -> 8, "taurus" -> 9, "sncf" -> 10}
+		val referenceMapping = #{"BR294" -> 8, "Taurus" -> 9, "SNCF" -> 10}
 		val loadedMapping = LocomotivesConfiguration.INSTANCE.locomotivesWithNameAndIdAsInteger
 		Assert.assertEquals(referenceMapping, loadedMapping)
 	}
 
 	@Test def void mappingTest() {
-		val referenceName = "taurus"
+		val referenceName = "Taurus"
 		val referenceId = "9"
 		val loadedId = LocomotivesConfiguration.INSTANCE.getLocomotiveIdByName(referenceName)
 		Assert.assertEquals(referenceId, loadedId)
 	}
 
 	@Test def void mappingIntegerTest() {
-		val referenceName = "taurus"
+		val referenceName = "Taurus"
 		val referenceId = 9
 		val loadedId = LocomotivesConfiguration.INSTANCE.getLocomotiveIdByNameAsInteger(referenceName)
 		Assert.assertEquals(referenceId, loadedId)

@@ -13,6 +13,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.IComputerV
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
+import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
 import java.util.HashSet
 import java.util.List
 import java.util.Set
@@ -29,8 +30,8 @@ class SafetyLogic extends AbstractCommunicationComponent implements INotifiable 
 	@Accessors(PUBLIC_GETTER)
 	private SafetyLogicRuleEngine rules
 
-	static val turnoutToSenseIDMap = #{1 -> #{14}, 2 -> #{28}, 3 -> #{25, 32}, 4 -> #{3}, 5 -> #{9}, 6 -> #{21}}
-	static val senseToTurnoutIDMap = #{14 -> 1, 28 -> 2, 25 -> 3, 32 -> 3, 3 -> 4, 9 -> 5, 21 -> 6}
+	static val turnoutToSenseIDMap = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMappingAsInteger
+	static val senseToTurnoutIDMap = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMappingAsInteger
 
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
 		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!

@@ -8,11 +8,14 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
+import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher
 import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatcher
+import java.util.List
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
@@ -23,8 +26,6 @@ import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import java.util.List
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
 
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
@@ -32,7 +33,9 @@ class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val RailRoadModel model
 	var ViatraQueryEngine engine
 	val Logger logger
-	val trainNameMapping = (new ImmutableBiMap.Builder<String, Integer> => [putAll(#{"BR294" -> 8,"Taurus" -> 9, "SNCF" -> 10})]).build
+	val trainNameMapping = (new ImmutableBiMap.Builder<String, Integer> => [
+		putAll(LocomotivesConfiguration.INSTANCE.locomotivesWithNameAndIdAsInteger)
+	]).build
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
@@ -44,7 +47,7 @@ class ModelUtil implements IModelInteractor {
 	}
 
 	override getEnabledTrains() {
-		synchronized(model) {
+		synchronized (model) {
 			model.trains.filter [
 				if(it.currentlyOn instanceof Segment) (currentlyOn as Segment).isEnabled else true
 			]
@@ -52,14 +55,14 @@ class ModelUtil implements IModelInteractor {
 	}
 
 	override getSegment(int segmentId) {
-		synchronized(model) {
+		synchronized (model) {
 			model.sections.findFirst[id == segmentId]
 		}
 	}
 
 	override addNewTrain() {
-		synchronized(model) {
-		val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
+		synchronized (model) {
+			val train = RailRoadModelFactory.eINSTANCE.createTrain => [it.id = getNewTrainID]
 			model.trains.add(train)
 			return train
 		}
@@ -67,7 +70,7 @@ class ModelUtil implements IModelInteractor {
 
 	def private getNewTrainID() {
 		for (trainID : trainNameMapping.values) {
-			if(model.trains.findFirst[it.id == trainID] == null) return trainID
+			if(model.trains.findFirst[it.id == trainID] === null) return trainID
 		}
 		logger.error("There can't be this much trains on the track")
 		model.trains.clear
@@ -75,25 +78,25 @@ class ModelUtil implements IModelInteractor {
 	}
 
 	def override removeTrain(Train t) {
-		synchronized(model) {
+		synchronized (model) {
 			model.trains.remove(t)
 		}
 	}
 
 	override getCurrentlyConnected(RailRoadElement what) {
-		synchronized(model) {
+		synchronized (model) {
 			CurrentlyConnectedMatcher.on(engine).getAllValuesOfconnectedTo(what)
 		}
 	}
 
 	override getTrailings() {
-		synchronized(model) {
+		synchronized (model) {
 			TrainTrailingTurnoutMatcher.on(engine).getAllMatches
 		}
 	}
 
 	override getHits() {
-		synchronized(model) {
+		synchronized (model) {
 			TrainHitsAnotherTrainMatcher.on(engine).getAllMatches
 		}
 	}
@@ -101,7 +104,8 @@ class ModelUtil implements IModelInteractor {
 	def private loadSectionResource() {
 		// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		RailRoadModelPackage.eINSTANCE.class
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel", new XMIResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel",
+			new XMIResourceFactoryImpl());
 		resourceSet.getResource(URI.createURI("instance.railroadmodel"), true);
 	}
 
@@ -138,27 +142,25 @@ class ModelUtil implements IModelInteractor {
 	}
 
 	override Iterable<Turnout> getTurnouts() {
-		synchronized(model) {
+		synchronized (model) {
 			model.sections.filter[it instanceof Turnout].map[it as Turnout]
-
 		}
 	}
 
 	override Iterable<Segment> getSegments() {
-		synchronized(model) {
+		synchronized (model) {
 			model.sections.filter[it instanceof Segment].map[it as Segment]
-
 		}
 	}
 
 	override getSections() {
-		synchronized(model) {
+		synchronized (model) {
 			model.sections
 		}
 	}
 
 	override getTrains() {
-		synchronized(model) {
+		synchronized (model) {
 			model.trains
 		}
 	}
@@ -166,7 +168,7 @@ class ModelUtil implements IModelInteractor {
 	override getNextSection(RailRoadElement old, RailRoadElement current) {
 		return NextSectionMatcher.on(engine).getAllMatches(old, current, null).head.next
 	}
-	
+
 	override ensureIds(List<Pair<RailRoadElement, ComputerVisionInformation>> pairs) {
 //		pairs.filter[value.tracked && trainNameMapping.keySet.contains(value.name)].forEach[ pair|
 //			val section = model.sections.findFirst[id === pair.key.id]
@@ -175,5 +177,5 @@ class ModelUtil implements IModelInteractor {
 //			logger.info('''A train got a new ID from the CV information. updated train on «train.currentlyOn» to ID «train.id»''')
 //		]
 	}
-	
+
 }
