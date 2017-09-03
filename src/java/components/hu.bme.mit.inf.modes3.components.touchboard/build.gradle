@@ -7,4 +7,5 @@ applicationDefaultJvmArgs = ["-Dcom.sun.javafx.touch=true -Dcom.sun.javafx.isEmb
 
 dependencies {
 	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
+	compile project(':utils:hu.bme.mit.inf.modes3.utils.conf')
 }

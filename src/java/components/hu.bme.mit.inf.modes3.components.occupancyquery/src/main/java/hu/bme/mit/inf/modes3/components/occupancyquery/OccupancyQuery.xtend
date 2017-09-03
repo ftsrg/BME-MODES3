@@ -5,6 +5,7 @@ import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
+import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
 import org.slf4j.ILoggerFactory
 
 /*
@@ -29,7 +30,7 @@ class OccupancyQuery extends AbstractCommunicationComponent {
 	// The byte vector storing the incoming data
 	val int[] occupancy = newIntArrayOfSize(8)
 	// The occupancy vector containing the current status
-	val SegmentOccupancy[] states = newArrayOfSize(31)
+	val SegmentOccupancy[] states = newArrayOfSize(32)
 
 	new(MessagingService messagingService, ILoggerFactory factory, ArgumentRegistry registry) {
 		super(messagingService, factory)
@@ -53,8 +54,10 @@ class OccupancyQuery extends AbstractCommunicationComponent {
 	}
 
 	def processOccupancy() {
-		// Segment 1 to 31
-		for (i : 0..30) {
+		for (segmentId : LayoutConfiguration.INSTANCE.segmentsAsInteger) {
+			// Segment 1 to 32, but on byte level we get them from 0 to 31
+			val i = segmentId - 1;
+			
 			// Because of the data order, we proceed backward, therefore the
 			// first segment is in the 8th byte
 			var byteIndex = 7 - i / 8;

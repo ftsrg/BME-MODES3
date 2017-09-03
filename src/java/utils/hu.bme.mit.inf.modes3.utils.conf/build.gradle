@@ -3,8 +3,7 @@ apply plugin: 'org.xtext.xtend'
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
+	compile 'com.google.code.gson:gson:2.7'
 	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
-	compile project(':utils:hu.bme.mit.inf.modes3.utils.conf')
-	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.mms')
-	compile project(':transports:hu.bme.mit.inf.modes3.transports.mqtt')
+	testCompile 'junit:junit:4.12'
 }

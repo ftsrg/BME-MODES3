@@ -16,6 +16,8 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentSt
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
+import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
 import java.util.Map
 import java.util.TreeMap
 import java.util.concurrent.ExecutorService
@@ -39,8 +41,6 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 	var ITrackElementCommander trackElementCommander
 
 	val Map<Integer, TrainEventHandler> trains
-	val Map<String, Integer> trainIdLookup
-
 	var Map<Integer, SegmentEventHandler> segments
 	var Map<Integer, TurnoutEventHandler> turnouts
 
@@ -57,10 +57,9 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 		trackElementStateRegistry.segmentOccupancyChangeListener = this
 		trackElementStateRegistry.segmentStateChangeListener = this
 		trackElementStateRegistry.turnoutStateChangeListener = this
-		
-		trainIdLookup = #{"taurus" -> 9, "sncf" -> 10, "db" -> 8}
+
 		trains = new TreeMap
-		for (id : trainIdLookup.values.toSet) {
+		for (id : LocomotivesConfiguration.INSTANCE.locomotiveIdsAsInteger) {
 			trains.put(id, new TrainEventHandler(id, trackElementCommander))
 		}
 	}
@@ -179,7 +178,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 		try {
 			val srcId = getSourceId(event)
 			val trainName = srcId.split("_").get(0)
-			return trainIdLookup.get(trainName)
+			return LocomotivesConfiguration.INSTANCE.getLocomotiveIdByNameAsInteger(trainName)
 		} catch (Exception ex) {
 			throw new IllegalArgumentException("Source ID does not contain a valid train name.", ex)
 		}
@@ -216,7 +215,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 
 	private def initializeSegments(Scene scene) {
 		segments = new TreeMap
-		for (i : 1 ..< 32) {
+		for (i : LayoutConfiguration.INSTANCE.segmentsAsInteger) {
 			val node = scene.lookup("#segment_" + i)
 			val eventHandler = new SegmentEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
@@ -226,7 +225,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 
 	private def initializeTurnouts(Scene scene) {
 		turnouts = new TreeMap
-		for (i : 1 ..< 7) {
+		for (i : LayoutConfiguration.INSTANCE.turnoutIdsAsInteger) {
 			val node = scene.lookup("#turnout_" + i)
 			val eventHandler = new TurnoutEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
@@ -241,7 +240,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 	private def onSetSectionState(SegmentStateSetter stateSetter) {
 		executeHandler(new Runnable() {
 			override run() {
-				val turnoutSegments = #[3, 9, 14, 16, 21, 25, 28]
+				val turnoutSegments = LayoutConfiguration.INSTANCE.turnoutSegmentIdsAsInteger
 				segments.forEach [ segmentId, handler |
 					if (!turnoutSegments.contains(segmentId)) {
 						stateSetter.onSetSegmentState(handler)
