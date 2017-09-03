@@ -51,7 +51,7 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 				// because we do know, that all pin that we will use will be low at this time,
 				// we could send an message over network about the segment's status (disabled)
 				locator.trackElementStateSender.sendSegmentState(segmentId, controller.segmentState);
-				
+
 			} catch (NumberFormatException exp) {
 				// TODO if section is not a number, it is a problem!
 			}
@@ -69,7 +69,7 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 		// adding component as segmentCommandListener
 		locator.trackElementCommandCallback.segmentCommandListener = this;
 		locator.trackElementCommandCallback.turnoutCommandListener = this;
-		
+
 		locator.sendAllStatusCallback.statusUpdateListener = this;
 	}
 
@@ -78,7 +78,6 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 	}
 
 	override onSegmentCommand(int id, SegmentState state) {
-
 		// if new segment command received on network, we need to check if it's our obligation to handle or not
 		if (!segmentControllers.keySet.contains(id)) {
 			return;
@@ -94,7 +93,6 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 	}
 
 	override onTurnoutCommand(int id, TurnoutState state) {
-
 		// if new turnout command received on network, we need to check if it's our obligation to handle or not
 		if (this.id != id) {
 			return;
@@ -109,12 +107,11 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 			}
 		}
 
-		// we do not need to send state back to the network, the pin change will trigger a state message
+	// we do not need to send state back to the network, the pin change will trigger a state message
 	}
 
 	override onStateChanged(TurnoutState newState) {
 		synchronized (turnoutStateChangedBarrier) {
-
 			logger.info('''state changed! new state: «newState»''')
 
 			if (newState == TurnoutState.ILLEGAL) {
@@ -134,15 +131,14 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 
 			// need to send segmentState over network
 			locator.trackElementStateSender.sendTurnoutState(id, newState);
-
 		}
 	}
-	
+
 	override onAllStatusUpdate() {
-		for(Entry<Integer, PhysicalSegmentController> segment: segmentControllers.entrySet){
+		for (Entry<Integer, PhysicalSegmentController> segment : segmentControllers.entrySet) {
 			locator.trackElementStateSender.sendSegmentState(segment.key, segment.value.segmentState)
 		}
-		for(PhysicalTurnoutController turnoutController: turnoutControllers){
+		for (PhysicalTurnoutController turnoutController : turnoutControllers) {
 			locator.trackElementStateSender.sendTurnoutState(id, turnoutController.turnoutState)
 		}
 	}

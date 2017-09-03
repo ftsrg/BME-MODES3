@@ -43,7 +43,6 @@ class PhysicalSegmentController {
 	}
 
 	def setSegmentState(SegmentState state) {
-
 		try {
 			switch state {
 				case ENABLED: {
@@ -62,7 +61,6 @@ class PhysicalSegmentController {
 	}
 
 	def getSegmentState() {
-
 		// segment is only enabled when all of these gpios are HIGH
 		if (appControl.level == Gpio.Level.HIGH && pruControl.level == Gpio.Level.HIGH) {
 			return SegmentState.ENABLED;

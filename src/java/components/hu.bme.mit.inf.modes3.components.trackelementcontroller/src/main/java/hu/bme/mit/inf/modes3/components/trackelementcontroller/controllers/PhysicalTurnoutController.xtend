@@ -11,9 +11,8 @@ import org.slf4j.Logger
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderConfigInterpreter
 
 class PhysicalTurnoutController implements InputStateListener {
-	
+
 	public interface ITurnoutStateChangedListener {
-		
 		def void onStateChanged(TurnoutState newState);
 	}
 
@@ -29,13 +28,13 @@ class PhysicalTurnoutController implements InputStateListener {
 	Gpio straightState;
 
 	Gpio divergentState;
-	
+
 	PhysicalTurnoutController.ITurnoutStateChangedListener listener;
 
 	private final static int TURNOUT_IMPULSE_WIDTH = 200;
 
 	val Logger logger
-	
+
 	String expander
 
 	new(ExpanderConfigInterpreter pinout, String expander, ILoggerFactory factory) {
@@ -52,32 +51,28 @@ class PhysicalTurnoutController implements InputStateListener {
 			// TODO this exception should be handled correctly!
 			logger.debug("GPIO pin could not be set!", ex);
 		}
-		
+
 		// there will be only one listener for both input, therefore we could handle the change
 		// correctly
 		straightState.addInputStateListener(this);
 		divergentState.addInputStateListener(this);
 	}
-	
+
 	def setTurnoutStateChangedListener(ITurnoutStateChangedListener listener) {
 		this.listener = listener;
 	}
-	
+
 	def getTurnoutState() {
-		
-		if( straightState.level == Level.HIGH ) {
-			
-			if( divergentState.level == Level.LOW ) {
+		if (straightState.level == Level.HIGH) {
+			if (divergentState.level == Level.LOW) {
 				// the turnout switch correctly to straight position, sending message
 				return TurnoutState.STRAIGHT;
 			} else {
 				// TODO what should we do, if both of the inputs are high??
 				return TurnoutState.ILLEGAL;
 			}
-			
 		} else {
-			
-			if( divergentState.level == Level.HIGH ) {
+			if (divergentState.level == Level.HIGH) {
 				// the turnout switch correctly to divergent position, sending message
 				return TurnoutState.DIVERGENT;
 			} else {
@@ -88,9 +83,7 @@ class PhysicalTurnoutController implements InputStateListener {
 	}
 
 	def setTurnoutState(TurnoutState state) {
-
 		try {
-
 			switch state {
 				case DIVERGENT: {
 					divergentControl.impulse(TURNOUT_IMPULSE_WIDTH, false);
@@ -106,12 +99,11 @@ class PhysicalTurnoutController implements InputStateListener {
 			// TODO this exception should be handled correctly!
 			logger.debug("Exception during turnout switching!", ex);
 		}
-
 	}
-	
+
 	override levelStateChanged(Level newLevel) {
 		logger.info('''level state changed! expander: «expander»''');
 		listener?.onStateChanged(turnoutState);
 	}
-	
+
 }

@@ -7,7 +7,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 interface ITrackElementCommander {
 	
 	def void sendSegmentCommand(int id, SegmentState state)
-	def void sendTurnoutCommand(int id, TurnoutState state)
+	def void sendTurnoutCommand(int segmentId, TurnoutState state)
 	def void sendTurnoutCommandWithTurnoutId(int id, TurnoutState state)
 	def void sendAllStatusCommand()
 	def void stopEntireRailRoad()

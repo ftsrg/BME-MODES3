@@ -2,8 +2,7 @@ package hu.bme.mit.inf.modes3.components.trackelementcontroller.config;
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.google.gson.stream.JsonReader
-import java.io.InputStreamReader
+import hu.bme.mit.inf.modes3.components.util.gson.GsonLoader
 import java.util.List
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -46,21 +45,14 @@ class Configuration {
 	 */
 	static def Configuration loadPinoutConfig(int id, ILoggerFactory factory) {
 		logger = factory.getLogger(ExpanderConfigInterpreter.name)
-
-		val gson = new Gson
-		var InputStreamReader isr = null
-		var JsonReader reader = null
+		
 		try {
-			isr = new InputStreamReader(Configuration.classLoader.getResourceAsStream("config.json"))
-			reader = new JsonReader(isr)
-			var JsonObject config = gson.fromJson(reader, JsonObject)
+			val gson = new Gson
+			var JsonObject config = GsonLoader.loadTypeFromInputStream(JsonObject, Configuration.classLoader.getResourceAsStream("config.json"))
 			gson.fromJson(config.get("t" + Integer.valueOf(id)), typeof(Configuration))
 		} catch(Exception ex){
 			logger.error(ex.message, ex)
 			throw ex
-		} finally {
-			isr?.close
-			reader?.close
 		}
 	}
 
