@@ -19,7 +19,7 @@ import org.slf4j.Logger
 
 class TrackElementCommander implements ITrackElementCommander {
 	
-	private static val SEGMENT_ID_TO_TURNOUT_ID_MAPPING = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMappingAsInteger
+	private static val SEGMENT_ID_TO_TURNOUT_ID_MAPPING = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
 	
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 	var protected MessagingService mms

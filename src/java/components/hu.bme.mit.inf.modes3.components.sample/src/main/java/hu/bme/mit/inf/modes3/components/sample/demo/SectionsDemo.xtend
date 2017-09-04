@@ -11,7 +11,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 
 class SectionsDemo extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener {
 
-	val knownSections = LayoutConfiguration.INSTANCE.sectionsAsInteger
+	val knownSections = LayoutConfiguration.INSTANCE.sections
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)

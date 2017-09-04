@@ -10,7 +10,7 @@ import org.slf4j.ILoggerFactory
 
 class TrainsDemo extends AbstractCommunicationComponent implements ITrainReferenceSpeedCallback {
 
-	val knownTrains = LocomotivesConfiguration.INSTANCE.locomotiveIdsAsInteger
+	val knownTrains = LocomotivesConfiguration.INSTANCE.locomotiveIds
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
@@ -43,8 +43,8 @@ class TrainsDemo extends AbstractCommunicationComponent implements ITrainReferen
 		logger.warn('''As of 03.09.2017, this feature (stopEntireRailRoad) is not sure to be already tested.''')
 		locator.trackElementCommander.stopEntireRailRoad
 	}
-	
-	private def initiateStopAllTrains(){
+
+	private def initiateStopAllTrains() {
 		logger.warn('''As of 03.09.2017, this feature (stopTrains) is not sure to be already tested.''')
 		locator.trackElementCommander.stopTrains
 	}

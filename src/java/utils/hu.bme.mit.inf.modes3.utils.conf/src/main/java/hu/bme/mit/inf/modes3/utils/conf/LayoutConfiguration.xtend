@@ -12,10 +12,10 @@ class LayoutConfiguration {
 
 	@Data
 	private static class LayoutConfigurationData {
-		private Set<String> segments
-		private Set<String> sections
-		private Map<String, Set<String>> turnoutsWithSegmentIds // map turnout ID to segment IDs (the turnout's occupancy can be sensed by this segment)
-		private Map<String, String> turnoutIdBySegmentId // map segment ID to turnout ID (the turnout's occupancy can be sensed by this segment)
+		private Set<Integer> segments
+		private Set<Integer> sections
+		private Map<String, Set<Integer>> turnoutsWithSegmentIds // map turnout ID to segment IDs (the turnout's occupancy can be sensed by this segment)
+		private Map<Integer, Integer> turnoutIdBySegmentId // map segment ID to turnout ID (the turnout's occupancy can be sensed by this segment)
 	}
 
 	public static val INSTANCE = new LayoutConfiguration
@@ -30,7 +30,7 @@ class LayoutConfiguration {
 		val inverseMapping = loadedConfiguration.turnoutsWithSegmentIds.entrySet.stream.flatMap(
 			entry |
 				entry.value.stream.map[new SimpleEntry(it, entry.key)]
-		).collect(Collectors::toMap([it.key], [it.value]))
+		).collect(Collectors::toMap([it.key], [Integer.valueOf(it.value)]))
 
 		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections,
 			loadedConfiguration.turnoutsWithSegmentIds, inverseMapping)
@@ -45,7 +45,7 @@ class LayoutConfiguration {
 	}
 
 	def getTurnoutIds() {
-		asUnmodifiableSet(layout.turnoutsWithSegmentIds.keySet)
+		asIntegerSet(asUnmodifiableSet(layout.turnoutsWithSegmentIds.keySet))
 	}
 
 	/**
@@ -57,17 +57,17 @@ class LayoutConfiguration {
 
 	/**
 	 * @return the segment IDs which belong to a particular turnout, aka the (particular) turnout's occupancy can be sensed by these segment IDs. If such turnout ID cannot be found, it returns null. 
-	 * E.g. turnout 3 has two segments, segment 25 and 32. By invoking this method with "3", it will return a Set<String> consisting of "25" and "32".
+	 * E.g. turnout 3 has two segments, segment 25 and 32. By invoking this method with 3, it will return a Set<String> consisting of 25 and 32.
 	 */
-	def getSegmentIdsOfTurnout(String turnoutId) {
-		layout.turnoutsWithSegmentIds.get(turnoutId)
+	def getSegmentIdsOfTurnout(Integer turnoutId) {
+		layout.turnoutsWithSegmentIds.get(String.valueOf(turnoutId))
 	}
 
 	/**
 	 * @return the turnout ID, if its occupancy can be sensed by the segmentId; otherwise it returns null
-	 * E.g. segment 25 belongs to turnout 3, so invoking this method by "25" it will return "3".
+	 * E.g. segment 25 belongs to turnout 3, so invoking this method by 25 it will return 3.
 	 */
-	def getTurnoutIdFromSegmentId(String segmentId) {
+	def getTurnoutIdFromSegmentId(Integer segmentId) {
 		layout.turnoutIdBySegmentId.get(segmentId)
 	}
 
@@ -75,7 +75,7 @@ class LayoutConfiguration {
 	 * @return the TurnoutID -> segmentID mapping for every turnout. Note, that more segments may belong to a turnout. 
 	 */
 	def getTurnoutIdToSegmentIdsMapping() {
-		asUnmodifiableMap(layout.turnoutsWithSegmentIds)
+		convertKeysToInteger(asUnmodifiableMap(layout.turnoutsWithSegmentIds))
 	}
 
 	/**
@@ -85,73 +85,21 @@ class LayoutConfiguration {
 		asUnmodifiableMap(layout.turnoutIdBySegmentId)
 	}
 
-	def getSectionsAsInteger() {
-		asIntegerSet(getSections)
-	}
-
-	def getSegmentsAsInteger() {
-		asIntegerSet(getSegments)
-	}
-
-	def getTurnoutIdsAsInteger() {
-		asIntegerSet(getTurnoutIds)
-	}
-
-	/**
-	 * See {@link #getTurnoutSegmentIds() getTurnoutSegmentIds}
-	 */
-	def getTurnoutSegmentIdsAsInteger() {
-		asIntegerSet(getTurnoutSegmentIds)
-	}
-
-	/**
-	 * See {@link #getSegmentIdsOfTurnout(String) getSegmentIdsOfTurnout(String turnoutId)}
-	 */
-	def getSegmentIdsOfTurnoutAsInteger(String turnoutId) {
-		asIntegerSet(getSegmentIdsOfTurnout(turnoutId))
-	}
-
-	/**
-	 * See {@link #getTurnoutIdFromSegmentId(String) getTurnoutIdFromSegmentId(String segmentId)}
-	 */
-	def getTurnoutIdFromSegmentIdAsInteger(String segmentId) {
-		Integer.valueOf(getTurnoutIdFromSegmentId(segmentId))
-	}
-
-	/**
-	 * See {@link #getTurnoutIdToSegmentIdsMapping() getTurnoutIdToSegmentIdsMapping}
-	 */
-	def getTurnoutIdToSegmentIdsMappingAsInteger() {
-		asIntegerKeysAndValuesMapFromSetMap(turnoutIdToSegmentIdsMapping)
-	}
-
-	/**
-	 * See {@link #getSegmentIdToTurnoutIdMapping() getSegmentIdToTurnoutIdMapping}
-	 */
-	def getSegmentIdToTurnoutIdMappingAsInteger() {
-		asIntegerKeysAndValuesMap(segmentIdToTurnoutIdMapping)
-	}
-
 	private def <T> asUnmodifiableSet(Set<T> set) {
 		Collections.unmodifiableSet(set)
-	}
-
-	private def asIntegerSet(Set<String> set) {
-		set.stream.map[Integer.valueOf(it)].collect(Collectors::toSet)
 	}
 
 	private def <T, U> asUnmodifiableMap(Map<T, U> map) {
 		Collections.unmodifiableMap(map)
 	}
 
-	private def asIntegerKeysAndValuesMapFromSetMap(Map<String, Set<String>> map) {
-		map.entrySet.stream.map [
-			new SimpleEntry(it.key, it.value.stream.map[Integer.valueOf(it)].collect(Collectors::toSet))
-		].collect(Collectors.toMap([Integer.valueOf(it.key)], [it.value]))
+	private def asIntegerSet(Set<String> set) {
+		set.stream.map[Integer.valueOf(it)].collect(Collectors::toSet)
 	}
 
-	private def asIntegerKeysAndValuesMap(Map<String, String> map) {
-		map.entrySet.stream.collect(Collectors.toMap([Integer.valueOf(it.key)], [Integer.valueOf(it.value)]))
+	private def convertKeysToInteger(Map<String, Set<Integer>> map) {
+		map.entrySet.stream.map[entry|new SimpleEntry(Integer.valueOf(entry.key), entry.value)].collect(
+			Collectors::toMap([it.key], [it.value]))
 	}
 
 }

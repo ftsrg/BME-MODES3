@@ -9,7 +9,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegment
 
 class SegmentsDemo extends AbstractCommunicationComponent implements ISegmentCommandListener {
 
-	val knownSegments = LayoutConfiguration.INSTANCE.segmentsAsInteger
+	val knownSegments = LayoutConfiguration.INSTANCE.segments
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)

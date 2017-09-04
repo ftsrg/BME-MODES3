@@ -34,7 +34,7 @@ class ModelUtil implements IModelInteractor {
 	var ViatraQueryEngine engine
 	val Logger logger
 	val trainNameMapping = (new ImmutableBiMap.Builder<String, Integer> => [
-		putAll(LocomotivesConfiguration.INSTANCE.locomotivesWithNameAndIdAsInteger)
+		putAll(LocomotivesConfiguration.INSTANCE.locomotivesWithNameAndId)
 	]).build
 
 	new(ILoggerFactory factory) {
