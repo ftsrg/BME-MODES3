@@ -1,10 +1,9 @@
 package hu.bme.mit.inf.modes3.components.sample.demo
 
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.ITrainReferenceSpeedCallback
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
 import org.slf4j.ILoggerFactory
 
@@ -49,7 +48,7 @@ class TrainsDemo extends AbstractCommunicationComponent implements ITrainReferen
 		locator.trackElementCommander.stopTrains
 	}
 
-	override onTrainReferenceSpeed(int id, int speed, TrainDirectionValue direction) {
+	override onTrainReferenceSpeed(int id, int speed, TrainDirection direction) {
 		logger.info('''Train #«id» is «speed» fast in «direction» direction''')
 	}
 

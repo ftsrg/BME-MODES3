@@ -19,6 +19,7 @@ include 'services:webservice'
 rootProject.name = 'hu.bme.mit.inf.modes3'
 
 include ':messaging:hu.bme.mit.inf.modes3.messaging.mms'
+include ':messaging:hu.bme.mit.inf.modes3.messaging.messages'
 include ':messaging:hu.bme.mit.inf.modes3.messaging.proto'
 include ':messaging:hu.bme.mit.inf.modes3.messaging.communication'
 

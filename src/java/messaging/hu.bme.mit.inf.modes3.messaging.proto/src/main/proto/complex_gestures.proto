@@ -2,7 +2,7 @@ syntax = "proto2";
 
 package leapmotion;
 
-option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
+option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_outer_classname = "ComplexGestures";
 
 message ComplexGesture {

@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.mms
 
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.Transport
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -12,9 +13,9 @@ class MessagingService {
 	Thread dispatchThread
 
 	Transport transport
-	@Accessors(PUBLIC_GETTER) IMessageDispatcher dispatcher
+	@Accessors(PUBLIC_GETTER) AbstractMessageDispatcher dispatcher
 
-	new(Transport transport, IMessageDispatcher dispatcher, ILoggerFactory factory) {
+	new(Transport transport, AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 		this.transport = transport
 		this.dispatcher = dispatcher
@@ -42,15 +43,16 @@ class MessagingService {
 		}
 
 		override run() {
-			while(!Thread.currentThread.isInterrupted) {
+			while (!Thread.currentThread.isInterrupted) {
 				try {
 					val rawMessage = transport.receiveMessage
 					this.dispatcher.dispatchMessage(rawMessage)
-				} catch(Exception e) {
+				} catch (InterruptedException e) {
 					logger.error(e.message, e)
 					Thread.currentThread.interrupt
+				} catch (Exception e) {
+					logger.error(e.message, e)
 				}
-
 			}
 		}
 

@@ -5,10 +5,10 @@ import hu.bme.mit.inf.modes3.components.gpiomanager.Gpio.InputStateListener
 import hu.bme.mit.inf.modes3.components.gpiomanager.Gpio.Level
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioManager
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioNotConfiguratedException
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderConfigInterpreter
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderConfigInterpreter
 
 class PhysicalTurnoutController implements InputStateListener {
 

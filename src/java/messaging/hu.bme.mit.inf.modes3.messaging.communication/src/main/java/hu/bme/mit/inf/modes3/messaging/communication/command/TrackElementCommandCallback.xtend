@@ -3,20 +3,20 @@ package hu.bme.mit.inf.modes3.messaging.communication.command
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
 class TrackElementCommandCallback implements ITrackElementCommandCallback {
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
-	
+
 	var ISegmentCommandListener segmentCommandListener
 	var ITurnoutCommandListener turnoutCommandListener
 
-	new(ProtobufMessageDispatcher dispatcher, ILoggerFactory factory) {
+	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		val segmentCommandClient = new SegmentCommandClient(this)
 		val turnoutCommandClient = new TurnoutCommandClient(this)
 
@@ -26,7 +26,7 @@ class TrackElementCommandCallback implements ITrackElementCommandCallback {
 	}
 
 	def onSegmentCommand(int id, SegmentState state) {
-		if(segmentCommandListener == null) {
+		if (segmentCommandListener === null) {
 			logger.trace('''SegmentCommand recieved, but the listener is not set''')
 		} else {
 			logger.trace('''SegmentCommand recieved, id=«id» state=«state»''')
@@ -36,7 +36,7 @@ class TrackElementCommandCallback implements ITrackElementCommandCallback {
 	}
 
 	def onTurnoutCommand(int id, TurnoutState state) {
-		if(turnoutCommandListener == null) {
+		if (turnoutCommandListener === null) {
 			logger.trace('''TurnoutCommand recieved, but the listener is not set''')
 		} else {
 			logger.trace('''TurnoutCommand recieved, id=«id» state=«state»''')

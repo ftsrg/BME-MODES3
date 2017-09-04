@@ -11,14 +11,12 @@ import org.atmosphere.cpr.MetaBroadcaster;
 
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
 import hu.bme.mit.inf.modes3.components.dashboard.utils.Utils;
-import hu.bme.mit.inf.modes3.messaging.communication.enums.EnumTransformator;
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy;
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState;
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection;
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState;
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry;
 import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState;
-import joptsimple.util.EnumConverter;;
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy;
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;;
 
 @Singleton
 @ManagedService(path = "/ws/allstate")
@@ -53,14 +51,15 @@ public class AllStateHandlerService {
 			TurnoutState state = registry.getTurnoutState(t);
 			Utils.sendTurnutStateChange(metaBroadcaster, t, state);
 		}
-		
+
 		// sending information about train speeds
-		TrainReferenceSpeedState referenceSpeedState = DashboardManager.INSTANCE.getLocator().getTrainReferenceSpeedState();
+		TrainReferenceSpeedState referenceSpeedState = DashboardManager.INSTANCE.getLocator()
+				.getTrainReferenceSpeedState();
 		List<Integer> addresses = referenceSpeedState.getTrainAddresses();
-		for(Integer id: addresses) {
+		for (Integer id : addresses) {
 			TrainDirection direction = referenceSpeedState.getDirection(id);
 			Integer speed = referenceSpeedState.getSpeed(id);
-			Utils.sendTrainReferenceSpeedChange(metaBroadcaster, id, speed, EnumTransformator.toSpecific(direction));
+			Utils.sendTrainReferenceSpeedChange(metaBroadcaster, id, speed, direction);
 		}
 	}
 

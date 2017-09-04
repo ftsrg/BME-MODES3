@@ -3,7 +3,7 @@ package hu.bme.mit.inf.modes3.components.occupancyquery
 import com.fazecast.jSerialComm.SerialPort
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
 import org.slf4j.ILoggerFactory

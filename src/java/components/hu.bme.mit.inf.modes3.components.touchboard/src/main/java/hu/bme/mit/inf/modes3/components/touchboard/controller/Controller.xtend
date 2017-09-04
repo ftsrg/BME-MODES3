@@ -8,13 +8,13 @@ import hu.bme.mit.inf.modes3.components.touchboard.controller.train.TrainEventHa
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
 import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration

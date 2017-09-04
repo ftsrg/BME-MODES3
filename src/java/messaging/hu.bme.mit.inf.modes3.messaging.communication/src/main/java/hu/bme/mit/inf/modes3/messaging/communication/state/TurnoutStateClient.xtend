@@ -1,20 +1,19 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state
 
-import hu.bme.mit.inf.modes3.messaging.communication.enums.EnumTransformator
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.TurnoutStateHandler
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TurnoutStateOrBuilder
+import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
+import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 
-package class TurnoutStateClient implements TurnoutStateHandler {
+package class TurnoutStateClient implements IMessageHandler<TurnoutStateMessage> {
 	private var TrackElementStateCallback callback
-	
-	new(TrackElementStateCallback controller){
+
+	new(TrackElementStateCallback controller) {
 		callback = controller
 	}
-	
-	override handleMessage(TurnoutStateOrBuilder message) {
-		val id = message.turnoutID
-		val state = EnumTransformator.toGeneral(message.state)
+
+	override handleMessage(TurnoutStateMessage message) {
+		val id = message.turnoutId
+		val state = message.state
 		callback.onTurnoutState(id, state)
 	}
-	
+
 }

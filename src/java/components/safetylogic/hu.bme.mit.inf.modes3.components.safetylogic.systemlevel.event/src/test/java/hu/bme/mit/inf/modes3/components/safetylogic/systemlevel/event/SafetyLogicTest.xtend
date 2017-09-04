@@ -1,17 +1,5 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.event
 
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
-import hu.bme.mit.inf.modes3.messaging.communication.state.TrackElementStateSender
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.safetylogic.event.SafetyLogic
-import java.util.List
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
-import org.slf4j.helpers.NOPLoggerFactory
-import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
-
 // FIXME: reimplement this test with the new transport
 
 class SafetyLogicTest {

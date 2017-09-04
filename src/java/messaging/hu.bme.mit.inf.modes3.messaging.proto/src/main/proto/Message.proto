@@ -25,7 +25,7 @@ import "YakinduReserveTo.proto";
 import "SendAllStatus.proto";
 import "ComputerVisionObjectPositions.proto";
 
-option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
+option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
 message Message {
