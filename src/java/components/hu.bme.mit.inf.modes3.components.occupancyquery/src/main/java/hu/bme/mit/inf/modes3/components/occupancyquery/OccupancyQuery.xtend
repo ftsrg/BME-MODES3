@@ -54,7 +54,7 @@ class OccupancyQuery extends AbstractCommunicationComponent {
 	}
 
 	def processOccupancy() {
-		for (segmentId : LayoutConfiguration.INSTANCE.segmentsAsInteger) {
+		for (segmentId : LayoutConfiguration.INSTANCE.segments) {
 			// Segment 1 to 32, but on byte level we get them from 0 to 31
 			val i = segmentId - 1;
 			

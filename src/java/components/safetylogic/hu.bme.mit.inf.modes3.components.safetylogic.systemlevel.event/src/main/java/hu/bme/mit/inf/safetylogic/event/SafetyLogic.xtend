@@ -30,8 +30,8 @@ class SafetyLogic extends AbstractCommunicationComponent implements INotifiable 
 	@Accessors(PUBLIC_GETTER)
 	private SafetyLogicRuleEngine rules
 
-	static val turnoutToSenseIDMap = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMappingAsInteger
-	static val senseToTurnoutIDMap = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMappingAsInteger
+	static val turnoutToSenseIDMap = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMapping
+	static val senseToTurnoutIDMap = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
 
 	val List<ISegmentDisableStrategy> segmentDisableStrategies = #[
 		new TrackDisableStrategy(locator.trackElementCommander) // BBB Config, like good ol' days!

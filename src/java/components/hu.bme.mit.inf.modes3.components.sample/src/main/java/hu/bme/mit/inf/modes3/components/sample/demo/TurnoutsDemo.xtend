@@ -10,8 +10,8 @@ import org.slf4j.ILoggerFactory
 
 class TurnoutsDemo extends AbstractCommunicationComponent implements ITurnoutCommandListener, ITurnoutStateChangeListener {
 
-	val knownTurnouts = LayoutConfiguration.INSTANCE.turnoutIdsAsInteger
-	val knownSegmentIdToTurnoutIdMapping = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMappingAsInteger
+	val knownTurnouts = LayoutConfiguration.INSTANCE.turnoutIds
+	val knownSegmentIdToTurnoutIdMapping = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
@@ -45,8 +45,8 @@ class TurnoutsDemo extends AbstractCommunicationComponent implements ITurnoutCom
 	override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
 		logger.info('''Turnout #«id» was «oldValue», but now it is «newValue»''')
 	}
-	
-		private def printSeparatorAndSleep() {
+
+	private def printSeparatorAndSleep() {
 		logger.info('''--------''')
 		Thread.sleep(40)
 	}
@@ -82,8 +82,8 @@ class TurnoutsDemo extends AbstractCommunicationComponent implements ITurnoutCom
 			locator.trackElementCommander.sendTurnoutCommand(it, TurnoutState.DIVERGENT)
 		]
 	}
-	
-	private def sendStateOfAll(){
+
+	private def sendStateOfAll() {
 		knownTurnouts.forEach [
 			val state = locator.trackElementStateRegistry.getTurnoutState(it)
 			locator.trackElementStateSender.sendTurnoutState(it, state)

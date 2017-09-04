@@ -1,7 +1,7 @@
 {
 	"locomotiveIds": {
-		"BR294": "8",
-		"Taurus": "9",
-		"SNCF": "10"
+		"BR294": 8,
+		"Taurus": 9,
+		"SNCF": 10
 	}
 }

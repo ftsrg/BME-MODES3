@@ -59,7 +59,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 		trackElementStateRegistry.turnoutStateChangeListener = this
 
 		trains = new TreeMap
-		for (id : LocomotivesConfiguration.INSTANCE.locomotiveIdsAsInteger) {
+		for (id : LocomotivesConfiguration.INSTANCE.locomotiveIds) {
 			trains.put(id, new TrainEventHandler(id, trackElementCommander))
 		}
 	}
@@ -178,7 +178,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 		try {
 			val srcId = getSourceId(event)
 			val trainName = srcId.split("_").get(0).toLowerCase
-			return LocomotivesConfiguration.INSTANCE.getLocomotiveIdByNameAsInteger(trainName)
+			return LocomotivesConfiguration.INSTANCE.getLocomotiveIdByName(trainName)
 		} catch (Exception ex) {
 			throw new IllegalArgumentException("Source ID does not contain a valid train name.", ex)
 		}
@@ -215,7 +215,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 
 	private def initializeSegments(Scene scene) {
 		segments = new TreeMap
-		for (i : LayoutConfiguration.INSTANCE.segmentsAsInteger) {
+		for (i : LayoutConfiguration.INSTANCE.segments) {
 			val node = scene.lookup("#segment_" + i)
 			val eventHandler = new SegmentEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
@@ -225,7 +225,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 
 	private def initializeTurnouts(Scene scene) {
 		turnouts = new TreeMap
-		for (i : LayoutConfiguration.INSTANCE.turnoutIdsAsInteger) {
+		for (i : LayoutConfiguration.INSTANCE.turnoutIds) {
 			val node = scene.lookup("#turnout_" + i)
 			val eventHandler = new TurnoutEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
@@ -240,7 +240,7 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 	private def onSetSectionState(SegmentStateSetter stateSetter) {
 		executeHandler(new Runnable() {
 			override run() {
-				val turnoutSegments = LayoutConfiguration.INSTANCE.turnoutSegmentIdsAsInteger
+				val turnoutSegments = LayoutConfiguration.INSTANCE.turnoutSegmentIds
 				segments.forEach [ segmentId, handler |
 					if (!turnoutSegments.contains(segmentId)) {
 						stateSetter.onSetSegmentState(handler)
