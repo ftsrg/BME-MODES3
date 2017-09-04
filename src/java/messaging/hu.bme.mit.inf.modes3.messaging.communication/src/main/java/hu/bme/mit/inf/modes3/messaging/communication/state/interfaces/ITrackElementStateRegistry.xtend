@@ -1,8 +1,8 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state.interfaces
 
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import java.util.List
 
 interface ITrackElementStateRegistry {

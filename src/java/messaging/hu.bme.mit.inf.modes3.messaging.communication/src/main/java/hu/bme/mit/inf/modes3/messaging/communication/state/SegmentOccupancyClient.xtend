@@ -1,19 +1,18 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state
 
-import hu.bme.mit.inf.modes3.messaging.communication.enums.EnumTransformator
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.SegmentOccupancyHandler
-import hu.bme.mit.inf.modes3.messaging.mms.messages.SegmentOccupancyOrBuilder
+import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
+import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 
-class SegmentOccupancyClient implements SegmentOccupancyHandler {
+class SegmentOccupancyClient implements IMessageHandler<SegmentOccupancyMessage> {
 	private var TrackElementStateCallback callback
-	
-	new(TrackElementStateCallback controller){
+
+	new(TrackElementStateCallback controller) {
 		callback = controller
 	}
-	
-	override handleMessage(SegmentOccupancyOrBuilder message) {
-		val id = message.segmentID
-		val state = EnumTransformator.toGeneral(message.state)
+
+	override handleMessage(SegmentOccupancyMessage message) {
+		val id = message.segmentId
+		val state = message.state
 		callback.onSegmentOccupancy(id, state)
 	}
 }

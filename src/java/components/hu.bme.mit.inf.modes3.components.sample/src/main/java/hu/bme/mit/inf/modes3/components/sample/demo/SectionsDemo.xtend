@@ -1,13 +1,13 @@
 package hu.bme.mit.inf.modes3.components.sample.demo
 
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
-import org.slf4j.ILoggerFactory
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
+import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import org.slf4j.ILoggerFactory
 
 class SectionsDemo extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener {
 

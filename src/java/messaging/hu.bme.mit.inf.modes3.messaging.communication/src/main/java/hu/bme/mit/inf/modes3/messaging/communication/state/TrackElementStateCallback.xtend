@@ -1,21 +1,21 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state
 
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateListener
-import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.ProtobufMessageDispatcher
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 
 class TrackElementStateCallback {
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ISegmentStateListener segmentStateListener
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITurnoutStateListener turnoutStateListener
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ISegmentOccupancyListener segmentOccupancyListener
-	var ProtobufMessageDispatcher dispatcher
+	var AbstractMessageDispatcher dispatcher
 	
-	new(ProtobufMessageDispatcher dispatcher, ISegmentStateListener segmentStateListener, ITurnoutStateListener turnoutStateListener, ISegmentOccupancyListener segmentOccupancyListener) {
+	new(AbstractMessageDispatcher dispatcher, ISegmentStateListener segmentStateListener, ITurnoutStateListener turnoutStateListener, ISegmentOccupancyListener segmentOccupancyListener) {
 		this.segmentStateListener = segmentStateListener
 		this.turnoutStateListener = turnoutStateListener
 		this.segmentOccupancyListener = segmentOccupancyListener

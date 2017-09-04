@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package modes3.protobuf;
-option java_package = "hu.bme.mit.inf.modes3.messaging.mms.messages";
+option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
 enum DccOperations {

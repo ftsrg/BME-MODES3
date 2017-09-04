@@ -6,16 +6,16 @@ import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderCo
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISendAllStatusListener
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import java.util.HashMap
 import java.util.List
 import java.util.Map.Entry
 import org.slf4j.ILoggerFactory
 
-class TrackElementController extends AbstractCommunicationComponent implements IAllStatusUpdateListener, ISegmentCommandListener, ITurnoutCommandListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
+class TrackElementController extends AbstractCommunicationComponent implements ISendAllStatusListener, ISegmentCommandListener, ITurnoutCommandListener, PhysicalTurnoutController.ITurnoutStateChangedListener {
 
 	Configuration config
 	val int id
@@ -134,7 +134,7 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 		}
 	}
 
-	override onAllStatusUpdate() {
+	override onSendAllStatus() {
 		for (Entry<Integer, PhysicalSegmentController> segment : segmentControllers.entrySet) {
 			locator.trackElementStateSender.sendSegmentState(segment.key, segment.value.segmentState)
 		}

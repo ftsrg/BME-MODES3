@@ -4,7 +4,7 @@ import hu.bme.mit.inf.modes3.components.gpiomanager.Gpio
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioManager
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioNotConfiguratedException
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderConfigInterpreter
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
@@ -32,11 +32,11 @@ class PhysicalSegmentController {
 		try {
 			appControl = GpioManager.getGpio(pins.get(0), Gpio.Direction.OUT);
 			pruControl = GpioManager.getGpio(pins.get(1), Gpio.Direction.OUT);
-			
+
 			appControl.level = Gpio.Level.LOW;
 			pruControl.level = Gpio.Level.LOW;
 
-		}catch(GpioNotConfiguratedException ex) {
+		} catch (GpioNotConfiguratedException ex) {
 			// TODO this exception should be handled correctly!
 			logger.debug("GPIO pin could not be setted!", ex);
 		}

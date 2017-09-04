@@ -1,37 +1,38 @@
 package hu.bme.mit.inf.modes3.messaging.communication.computervision
 
-import hu.bme.mit.inf.modes3.messaging.mms.handlers.signal.ComputerVisionHandler
-import hu.bme.mit.inf.modes3.messaging.mms.messages.ComputerVisionObjectPositionsOrBuilder
-import java.util.ArrayList
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.TwoDimensionalPosition
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ThreeDimensionalPosition
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.TwoDimensionalPosition
+import hu.bme.mit.inf.modes3.messaging.messages.status.ComputerVisionObjectPositionsMessage
+import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
+import java.util.ArrayList
 
-package class ComputerVisionClient implements ComputerVisionHandler {
-	
+package class ComputerVisionClient implements IMessageHandler<ComputerVisionObjectPositionsMessage> {
+
 	private var ComputerVisionCallback callback
 
 	new(ComputerVisionCallback controller) {
 		callback = controller
 	}
 
-	override handleMessage(ComputerVisionObjectPositionsOrBuilder message) {
+	override handleMessage(ComputerVisionObjectPositionsMessage message) {
 //		println('''DEBUG : «message»''')
 //		println('''MORE DEBUG «message.physicalObjectsMap.keySet.length»''')
 //		println('''EOF DEBUG''')
 		val information = new ArrayList<ComputerVisionInformation>
-		message.physicalObjectsMap.forEach[name,physicalObject |
-			physicalObject.markersMap.forEach[name_, marker |
+		message.physicalObjects.forEach [ name, physicalObject |
+			physicalObject.markers.forEach [ name_, marker |
 				information.add(new ComputerVisionInformation(marker.name, new TwoDimensionalPosition => [
-					x = marker.screenPositionsList.head.x; y = marker.screenPositionsList.head.y
-				] , new ThreeDimensionalPosition => [
+					x = marker.screenPositions.head.x;
+					y = marker.screenPositions.head.y
+				], new ThreeDimensionalPosition => [
 					x = marker.realposition.x
 					y = marker.realposition.y
 					z = marker.realposition.z
-				] , marker.trackedList.head))
+				], marker.tracked.head))
 			]
 		]
-		callback.onComputerVisionDetection(information, message.timestamp, message.frameindex)
+		callback.onComputerVisionDetection(information, message.timestamp, message.frameIndex)
 	}
-	
+
 }

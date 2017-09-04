@@ -2,10 +2,10 @@ package hu.bme.mit.inf.modes3.components.sample.demo
 
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
+import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISendAllStatusListener
 import org.slf4j.ILoggerFactory
-import hu.bme.mit.inf.modes3.messaging.communication.update.IAllStatusUpdateListener
 
-class SendAllStatusDemo extends AbstractCommunicationComponent implements IAllStatusUpdateListener {
+class SendAllStatusDemo extends AbstractCommunicationComponent implements ISendAllStatusListener {
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
@@ -20,7 +20,7 @@ class SendAllStatusDemo extends AbstractCommunicationComponent implements IAllSt
 		locator.trackElementCommander.sendAllStatusCommand
 	}
 
-	override onAllStatusUpdate() {
+	override onSendAllStatus() {
 		logger.info('''All status update command is received by «this.class.name»''')
 	}
 
