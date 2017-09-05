@@ -25,7 +25,7 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 	override dispatchMessage(byte[] raw_message) {
 		try {
 			val message = Message.parseFrom(raw_message)
-			switch (message.type as MessageType) {
+			switch (message.type) {
 				case MessageType.SEGMENT_COMMAND: {
 					val protoMessage = message.segmentCommand
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
