@@ -1,18 +1,18 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller.train
 
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
+import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.ITrainCommander
 
 class TrainEventHandler {
 
-	val ITrackElementCommander trackElementCommander
+	val ITrainCommander trainCommander
 	val int id
 
 	var Direction direction
 	var SpeedPercentage percentage
 
-	new(int id, ITrackElementCommander trackElementCommander) {
+	new(int id, ITrainCommander trainCommander) {
 		this.id = id
-		this.trackElementCommander = trackElementCommander
+		this.trainCommander = trainCommander
 
 		this.direction = Direction.FORWARD
 		this.percentage = SpeedPercentage.FIFTY
@@ -30,7 +30,7 @@ class TrainEventHandler {
 
 	private def setTrainSpeed() {
 		val speed = SpeedPercentageUtil.toSpeed(percentage)
-		trackElementCommander.setTrainReferenceSpeedAndDirection(id, speed, DirectionConverter.toDirection(direction))
+		trainCommander.setTrainReferenceSpeedAndDirection(id, speed, DirectionConverter.toDirection(direction))
 	}
 
 }

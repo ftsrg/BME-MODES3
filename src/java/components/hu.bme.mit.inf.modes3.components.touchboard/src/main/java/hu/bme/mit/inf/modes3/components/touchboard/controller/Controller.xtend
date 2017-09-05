@@ -6,12 +6,12 @@ import hu.bme.mit.inf.modes3.components.touchboard.controller.train.Direction
 import hu.bme.mit.inf.modes3.components.touchboard.controller.train.SpeedPercentageUtil
 import hu.bme.mit.inf.modes3.components.touchboard.controller.train.TrainEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentOccupancyChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
@@ -59,9 +59,10 @@ class Controller extends AbstractCommunicationComponent implements ISegmentOccup
 		trackElementStateRegistry.turnoutStateChangeListener = this
 
 		trains = new TreeMap
-		for (id : LocomotivesConfiguration.INSTANCE.locomotiveIds) {
-			trains.put(id, new TrainEventHandler(id, trackElementCommander))
-		}
+		val trainCommander = locator.trainCommander
+		LocomotivesConfiguration.INSTANCE.locomotiveIds.forEach [
+			trains.put(it, new TrainEventHandler(it, trainCommander))
+		]
 	}
 
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
