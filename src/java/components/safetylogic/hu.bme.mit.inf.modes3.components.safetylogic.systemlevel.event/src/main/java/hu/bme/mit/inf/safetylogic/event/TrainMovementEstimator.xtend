@@ -2,7 +2,7 @@ package hu.bme.mit.inf.safetylogic.event
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import java.util.HashMap
 import java.util.HashSet

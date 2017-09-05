@@ -8,7 +8,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
+import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.ComputerVisionInformation
 import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
 import hu.bme.mit.inf.safetylogic.patterns.CurrentlyConnectedMatcher
 import hu.bme.mit.inf.safetylogic.patterns.NextSectionMatcher

@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -11,8 +12,8 @@ import org.atmosphere.cpr.MetaBroadcaster;
 
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
 import hu.bme.mit.inf.modes3.components.dashboard.utils.Utils;
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry;
-import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState;
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry;
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateRegistry;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
@@ -53,12 +54,12 @@ public class AllStateHandlerService {
 		}
 
 		// sending information about train speeds
-		TrainReferenceSpeedState referenceSpeedState = DashboardManager.INSTANCE.getLocator()
-				.getTrainReferenceSpeedState();
-		List<Integer> addresses = referenceSpeedState.getTrainAddresses();
+		ITrainSpeedStateRegistry referenceSpeedState = DashboardManager.INSTANCE.getLocator()
+				.getTrainSpeedStateRegistry();
+		Set<Integer> addresses = referenceSpeedState.getReferenceTrainAddresses();
 		for (Integer id : addresses) {
-			TrainDirection direction = referenceSpeedState.getDirection(id);
-			Integer speed = referenceSpeedState.getSpeed(id);
+			TrainDirection direction = referenceSpeedState.getReferenceDirection(id);
+			Integer speed = referenceSpeedState.getReferenceSpeed(id);
 			Utils.sendTrainReferenceSpeedChange(metaBroadcaster, id, speed, direction);
 		}
 	}

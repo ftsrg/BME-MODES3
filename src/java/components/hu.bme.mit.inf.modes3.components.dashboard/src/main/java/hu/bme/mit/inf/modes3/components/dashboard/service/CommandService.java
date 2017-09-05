@@ -17,7 +17,8 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander;
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander;
+import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.ITrainCommander;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufEnumTransformator;
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentState;
@@ -42,6 +43,9 @@ public class CommandService {
 
 	@Inject
 	ITrackElementCommander commander;
+	
+	@Inject
+	ITrainCommander trainCommander;
 
 	@Inject
 	protected MetaBroadcaster metaBroadcaster;
@@ -57,7 +61,7 @@ public class CommandService {
 				JsonFormat.parser().merge(message, trainSpeedBuilder.clear());
 				TrainReferenceSpeed sm = trainSpeedBuilder.build();
 				logger.info("Train speed setup called, id: %d, speed: %d", sm.getTrainID(), sm.getReferenceSpeed());
-				commander.setTrainReferenceSpeedAndDirection(sm.getTrainID(), sm.getReferenceSpeed(),
+				trainCommander.setTrainReferenceSpeedAndDirection(sm.getTrainID(), sm.getReferenceSpeed(),
 						TrainDirection.valueOf(sm.getDirection().name()));
 				break;
 

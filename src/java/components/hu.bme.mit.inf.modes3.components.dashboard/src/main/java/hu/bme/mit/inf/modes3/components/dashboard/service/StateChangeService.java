@@ -10,10 +10,10 @@ import org.slf4j.Logger;
 
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
 import hu.bme.mit.inf.modes3.components.dashboard.utils.Utils;
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener;
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentStateChangeListener;
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener;
-import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.ITrainReferenceSpeedCallback;
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentOccupancyChangeListener;
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentStateChangeListener;
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener;
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.reference.ITrainReferenceSpeedListener;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
@@ -22,7 +22,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;
 @Singleton
 @ManagedService(path = "/ws/state/{source}")
 public class StateChangeService implements ISegmentOccupancyChangeListener, ITurnoutStateChangeListener,
-		ISegmentStateChangeListener, ITrainReferenceSpeedCallback {
+		ISegmentStateChangeListener, ITrainReferenceSpeedListener {
 
 	Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger(StateChangeService.class.getName());
 
@@ -36,7 +36,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentOccupancyChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentStateChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setTurnoutStateChangeListener(this);
-		DashboardManager.INSTANCE.getLocator().getTrainReferenceSpeedState().addTrainReferenceSpeedCallback(this);
+		DashboardManager.INSTANCE.getLocator().getTrainSpeedStateRegistry().addTrainReferenceSpeedListener(this);
 	}
 
 	@Override

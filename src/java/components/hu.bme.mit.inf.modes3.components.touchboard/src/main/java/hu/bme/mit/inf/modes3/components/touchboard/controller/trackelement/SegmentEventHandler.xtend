@@ -1,8 +1,8 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement
 
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger

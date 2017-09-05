@@ -3,10 +3,10 @@ package hu.bme.mit.inf.modes3.components.trackelementcontroller.controllers
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioManager
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.Configuration
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderConfigInterpreter
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ISegmentCommandListener
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITurnoutCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISegmentCommandListener
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusListener
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITurnoutCommandListener
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISendAllStatusListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService

@@ -4,11 +4,11 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.SafetyLogicRuleEngine
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusListener
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.IComputerVisionListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISendAllStatusListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.ComputerVisionInformation
+import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
@@ -38,7 +38,7 @@ class SafetyLogic extends AbstractCommunicationComponent implements INotifiable 
 	]
 	val Set<Train> stoppedTrains = new HashSet<Train>
 
-	val List<ITrainStopStrategy> trainStopStrategies = #[ // new XPressInvertDirectionStrategy(locator.trackElementCommander, locator.trainReferenceSpeedState, logger)
+	val List<ITrainStopStrategy> trainStopStrategies = #[ //new XPressInvertDirectionStrategy(locator.trainCommander, locator.trainSpeedStateRegistry, logger)
 	]
 
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
