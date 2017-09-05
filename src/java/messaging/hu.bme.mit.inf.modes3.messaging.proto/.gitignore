@@ -1,5 +1,5 @@
 # Ignore generated java code in this project
-/src/main/java
+/src/main/java/hu/bme/mit/inf/modes3/messaging/proto/messages/
 
 # Gradle
 # ------

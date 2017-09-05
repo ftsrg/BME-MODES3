@@ -9,9 +9,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
-// implement missing classes (DCC operations state) e.g.
-// and other missing commands also which are generic
-// TODO fix broken Dashboard...
 class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
