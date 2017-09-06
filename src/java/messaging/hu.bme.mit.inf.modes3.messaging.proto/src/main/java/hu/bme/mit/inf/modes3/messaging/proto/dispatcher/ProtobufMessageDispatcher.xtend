@@ -76,6 +76,11 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
 					turnoutStateHandler?.handleMessage(internalMessage)
 				}
+				case MessageType.TURNOUT_REFERENCE_STATE: {
+					val protoMessage = message.turnoutReferenceState
+					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
+					turnoutReferenceStateHandler?.handleMessage(internalMessage)
+				}
 				case MessageType.SEGMENT_OCCUPANCY: {
 					val protoMessage = message.segmentOccupancy
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)

@@ -10,7 +10,9 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.ThreeDPosition
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSegmentMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSpeedMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainReferenceSpeedMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TwoDPosition
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufEnumTransformator
@@ -28,9 +30,9 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutCommand
+import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutReferenceState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState
 import java.util.Map
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 
 class ProtobufToInternalConverter {
 
@@ -95,6 +97,12 @@ class ProtobufToInternalConverter {
 		val turnoutId = protoMessage.turnoutID
 		val state = ProtobufEnumTransformator::toGeneral(protoMessage.state)
 		new TurnoutStateMessage(turnoutId, state)
+	}
+
+	def convertToInternalMessage(TurnoutReferenceState protoMessage) {
+		val turnoutId = protoMessage.turnoutID
+		val state = ProtobufEnumTransformator::toGeneral(protoMessage.state)
+		new TurnoutReferenceStateMessage(turnoutId, state)
 	}
 
 	def convertToInternalMessage(SegmentOccupancy protoMessage) {
