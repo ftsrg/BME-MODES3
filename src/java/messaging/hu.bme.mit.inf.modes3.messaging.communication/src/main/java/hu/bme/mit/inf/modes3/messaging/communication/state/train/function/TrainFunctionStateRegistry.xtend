@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state.train.function
 
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.function.interfaces.ITrainFunctionCallback
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.function.interfaces.ITrainFunctionChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.function.interfaces.ITrainFunctionListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.function.interfaces.ITrainFunctionStateRegistry
@@ -14,12 +15,13 @@ class TrainFunctionStateRegistry implements ITrainFunctionStateRegistry {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	val trainFunctions = new ConcurrentHashMap<Integer, TrainFunction>
 
-	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val TrainFunctionCallback trainFunctionCallback
+	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val ITrainFunctionCallback trainFunctionCallback
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ITrainFunctionChangeListener trainFunctionChangeListener
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
-		trainFunctionCallback = new TrainFunctionCallback(dispatcher, new ITrainFunctionListener() {
+		trainFunctionCallback = new TrainFunctionCallback(dispatcher)
+		trainFunctionCallback.trainFunctionListener = new ITrainFunctionListener() {
 
 			override onTrainFunction(int trainId, TrainFunction trainFunction) {
 				logger.trace('''TrainFunctionMessage message arrived trainId=«trainId»''')
@@ -32,11 +34,16 @@ class TrainFunctionStateRegistry implements ITrainFunctionStateRegistry {
 				}
 			}
 
-		})
+		}
 	}
 
-	override getTrainFunction(int trainId) {
-		trainFunctions?.get(trainId)
+	override getTrainFunction(int id) {
+		if (trainFunctions.get(id) === null) {
+			logger.
+				trace('''The registry was asked for the function of Train #«id» but there is no information in the cache, default «TrainFunction.OFF» function is used instead''')
+			trainFunctions.put(id, TrainFunction.OFF)
+		}
+		trainFunctions.get(id)
 	}
 
 }

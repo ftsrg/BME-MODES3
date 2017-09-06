@@ -10,7 +10,7 @@ import org.slf4j.Logger
 class SendAllStatusCommandCallback implements ISendAllStatusCommandCallback, ISendAllStatusListener {
 
 	val Logger logger
-	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISendAllStatusListener sendAllStatusListener
+	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ISendAllStatusListener sendAllStatusListener
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		logger = factory.getLogger(this.class.name)
@@ -19,6 +19,5 @@ class SendAllStatusCommandCallback implements ISendAllStatusCommandCallback, ISe
 
 	override onSendAllStatus() {
 		sendAllStatusListener?.onSendAllStatus
-
 	}
 }

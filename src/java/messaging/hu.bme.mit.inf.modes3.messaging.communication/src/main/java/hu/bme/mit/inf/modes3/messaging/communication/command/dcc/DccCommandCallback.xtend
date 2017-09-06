@@ -11,7 +11,7 @@ import org.slf4j.Logger
 class DccCommandCallback implements IDccCommandListener, IDccCommandCallback {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
-	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var IDccCommandListener dccCommandListener
+	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var IDccCommandListener dccCommandListener
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		val dccCommandClient = new DccCommandClient(this)

@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.reference
 
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.reference.interfaces.ITurnoutReferenceStateSender
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService

@@ -4,6 +4,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfac
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentOccupancyListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentStateListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateCallback
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateListener
@@ -26,11 +27,12 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ITurnoutStateChangeListener turnoutStateChangeListener
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISegmentStateChangeListener segmentStateChangeListener
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISegmentOccupancyChangeListener segmentOccupancyChangeListener
-	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) TrackElementStateCallback trackElementStateCallback
+	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) ITrackElementStateCallback trackElementStateCallback
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
-		trackElementStateCallback = new TrackElementStateCallback(dispatcher, new ISegmentStateListener() {
+		trackElementStateCallback = new TrackElementStateCallback(dispatcher)
+		trackElementStateCallback.segmentStateListener = new ISegmentStateListener() {
 
 			override onSegmentState(int id, SegmentState state) {
 				logger.trace('''segmentState message arrived id=«id» state=«state»''')
@@ -42,7 +44,8 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 				}
 			}
 
-		}, new ITurnoutStateListener() {
+		}
+		trackElementStateCallback.turnoutStateListener = new ITurnoutStateListener() {
 
 			override onTurnoutState(int id, TurnoutState state) {
 				logger.trace('''turnoutState message arrived id=«id» state=«state»''')
@@ -54,7 +57,9 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 				}
 			}
 
-		}, new ISegmentOccupancyListener() {
+		}
+		trackElementStateCallback.segmentOccupancyListener = new ISegmentOccupancyListener() {
+
 			override onSegmentOccupancy(int id, SegmentOccupancy state) {
 				logger.trace('''segmentOccupancy message arrived id=«id» state=«state»''')
 				if (occupancy.get(id) != state) {
@@ -65,44 +70,32 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 				}
 			}
 
-		})
+		}
 	}
 
 	override getSegmentState(int id) {
 		if (segments.get(id) === null) {
-			synchronized (segments) {
-				if (segments.get(id) === null) {
-					logger.
-						trace('''The registry was asked for the state of Segment #«id» but there is no information in the cache''')
-					segments.put(id, SegmentState.ENABLED)
-				}
-			}
+			logger.
+				trace('''The registry was asked for the state of Segment #«id» but there is no information in the cache, default «SegmentState.ENABLED» state is used instead''')
+			segments.put(id, SegmentState.ENABLED)
 		}
 		segments.get(id)
 	}
 
 	override getTurnoutState(int id) {
 		if (turnouts.get(id) === null) {
-			synchronized (turnouts) {
-				if (turnouts.get(id) === null) {
-					logger.
-						trace('''The registry was asked for the state of Turnout #«id» but there is no information in the cache''')
-					turnouts.put(id, TurnoutState.DIVERGENT)
-				}
-			}
+			logger.
+				trace('''The registry was asked for the state of Turnout #«id» but there is no information in the cache, default «TurnoutState.DIVERGENT» state is used instead''')
+			turnouts.put(id, TurnoutState.DIVERGENT)
 		}
 		turnouts.get(id)
 	}
 
 	override getSegmentOccupancy(int id) {
 		if (occupancy.get(id) === null) {
-			synchronized (occupancy) {
-				if (occupancy.get(id) === null) {
-					logger.
-						trace('''The registry was asked for the occupancy of Segment #«id» but there is no information in the cache''')
-					occupancy.put(id, SegmentOccupancy.OCCUPIED)
-				}
-			}
+			logger.
+				trace('''The registry was asked for the occupancy of Segment #«id» but there is no information in the cache, default «SegmentOccupancy.OCCUPIED» state is used instead''')
+			occupancy.put(id, SegmentOccupancy.OCCUPIED)
 		}
 		occupancy.get(id)
 	}
