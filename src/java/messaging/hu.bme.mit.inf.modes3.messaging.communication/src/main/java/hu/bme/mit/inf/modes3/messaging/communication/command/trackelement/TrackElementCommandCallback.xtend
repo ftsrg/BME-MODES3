@@ -13,8 +13,8 @@ import org.slf4j.Logger
 class TrackElementCommandCallback implements ITrackElementCommandCallback, ITurnoutCommandListener, ISegmentCommandListener {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
-	var ISegmentCommandListener segmentCommandListener
-	var ITurnoutCommandListener turnoutCommandListener
+	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ISegmentCommandListener segmentCommandListener
+	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITurnoutCommandListener turnoutCommandListener
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		val segmentCommandClient = new SegmentCommandClient(this)
@@ -41,16 +41,6 @@ class TrackElementCommandCallback implements ITrackElementCommandCallback, ITurn
 			logger.trace('''TurnoutCommand recieved, id=«id» state=«state»''')
 			turnoutCommandListener.onTurnoutCommand(id, state)
 		}
-	}
-
-	override setSegmentCommandListener(ISegmentCommandListener listener) {
-		segmentCommandListener = listener
-		logger.trace('''segmentCommandListener changed''')
-	}
-
-	override setTurnoutCommandListener(ITurnoutCommandListener listener) {
-		turnoutCommandListener = listener
-		logger.trace('''turnoutCommandListener changed''')
 	}
 
 }

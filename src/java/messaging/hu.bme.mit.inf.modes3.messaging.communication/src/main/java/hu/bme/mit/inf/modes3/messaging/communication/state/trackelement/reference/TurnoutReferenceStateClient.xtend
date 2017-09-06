@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.reference
 
+import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.reference.interfaces.ITurnoutReferenceStateListener
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 

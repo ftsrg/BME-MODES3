@@ -14,13 +14,14 @@ class TrainCommandCallback implements ITrainCommandCallback, ITrainReferenceSpee
 
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
-	@Accessors(#[PRIVATE_GETTER,
+	@Accessors(#[PROTECTED_GETTER,
 		PUBLIC_SETTER]) var ITrainReferenceSpeedCommandListener trainReferenceSpeedCommandListener
-	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ITrainFunctionCommandListener trainFunctionCommandListener
+	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITrainFunctionCommandListener trainFunctionCommandListener
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		val trainFunctionClient = new TrainFunctionCommandClient(this)
 		val trainReferenceSpeedClient = new TrainReferenceSpeedCommandClient(this)
+
 		dispatcher.trainFunctionCommandHandler = trainFunctionClient
 		dispatcher.trainReferenceSpeedCommandHandler = trainReferenceSpeedClient
 

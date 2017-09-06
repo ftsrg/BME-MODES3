@@ -2,6 +2,7 @@ package hu.bme.mit.inf.modes3.messaging.communication.state.train.speed
 
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.current.ITrainCurrentSpeedChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.current.ITrainCurrentSpeedListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.current.ITrainSpeedStateCallback
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.reference.ITrainReferenceSpeedChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.reference.ITrainReferenceSpeedListener
@@ -18,7 +19,7 @@ import org.slf4j.Logger
 class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
-	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val TrainSpeedStateCallback callback
+	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val ITrainSpeedStateCallback callback
 
 	val referenceSpeeds = new ConcurrentHashMap<Integer, Map.Entry<Integer, TrainDirection>>
 	val referenceSpeedListeners = new CopyOnWriteArraySet<ITrainReferenceSpeedListener>
@@ -31,7 +32,8 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 
-		callback = new TrainSpeedStateCallback(dispatcher, new ITrainCurrentSpeedListener() {
+		callback = new TrainSpeedStateCallback(dispatcher)
+		callback.trainCurrentSpeedListener = new ITrainCurrentSpeedListener() {
 
 			override onTrainCurrentSpeed(int id, int speed, TrainDirection direction) {
 				logger.info('''TrainCurrentSpeed message recieved, id=«id», speed=«speed», direction=«direction»''')
@@ -50,7 +52,9 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 
 				currentSpeedListeners.forEach[it.onTrainCurrentSpeed(id, speed, direction)]
 			}
-		}, new ITrainReferenceSpeedListener() {
+
+		}
+		callback.trainReferenceSpeedListener = new ITrainReferenceSpeedListener() {
 
 			override onTrainReferenceSpeed(int id, int speed, TrainDirection direction) {
 				logger.info('''TrainReferenceSpeed message recieved, id=«id», speed=«speed», direction=«direction»''')
@@ -69,15 +73,30 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 
 				referenceSpeedListeners.forEach[it.onTrainReferenceSpeed(id, speed, direction)]
 			}
-		})
+
+		}
 	}
 
-	override getCurrentSpeed(int trainId) {
-		currentSpeeds.get(trainId)?.key
+	override getCurrentSpeed(int id) {
+		if (currentSpeeds.get(id) === null || currentSpeeds.get(id).key === null) {
+			logger.
+				trace('''The registry was asked for the current speed of Train #«id» but there is no information in the cache, default 0 speed is used instead''')
+			currentSpeeds.put(id, new SimpleEntry(0, TrainDirection.FORWARD))
+		}
+		currentSpeeds.get(id)?.key
 	}
 
-	override getCurrentDirection(int trainId) {
-		currentSpeeds.get(trainId)?.value
+	override getCurrentDirection(int id) {
+		if (currentSpeeds.get(id) === null || currentSpeeds.get(id).value === null) {
+			logger.
+				trace('''The registry was asked for the current direction of Train #«id» but there is no information in the cache, default «TrainDirection.FORWARD» direction is used instead''')
+
+			var currentSpeed = currentSpeeds.get(id)?.key
+			currentSpeed = if(currentSpeed === null) 0 else 0
+
+			currentSpeeds.put(id, new SimpleEntry(currentSpeed, TrainDirection.FORWARD))
+		}
+		currentSpeeds.get(id)?.value
 	}
 
 	override getCurrentTrainAddresses() {
@@ -92,12 +111,26 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 		currentSpeedChangeListeners.add(listener)
 	}
 
-	override getReferenceSpeed(int trainId) {
-		referenceSpeeds.get(trainId)?.key
+	override getReferenceSpeed(int id) {
+		if (referenceSpeeds.get(id) === null || referenceSpeeds.get(id).key === null) {
+			logger.
+				trace('''The registry was asked for the reference speed of Train #«id» but there is no information in the cache, default 0 speed is used instead''')
+			referenceSpeeds.put(id, new SimpleEntry(0, TrainDirection.FORWARD))
+		}
+		referenceSpeeds.get(id)?.key
 	}
 
-	override getReferenceDirection(int trainId) {
-		referenceSpeeds.get(trainId)?.value
+	override getReferenceDirection(int id) {
+		if (referenceSpeeds.get(id) === null || referenceSpeeds.get(id).value === null) {
+			logger.
+				trace('''The registry was asked for the reference direction of Train #«id» but there is no information in the cache, default «TrainDirection.FORWARD» direction is used instead''')
+
+			var referenceSpeed = referenceSpeeds.get(id)?.key
+			referenceSpeed = if(referenceSpeed === null) 0 else 0
+
+			referenceSpeeds.put(id, new SimpleEntry(referenceSpeed, TrainDirection.FORWARD))
+		}
+		referenceSpeeds.get(id)?.value
 	}
 
 	override getReferenceTrainAddresses() {

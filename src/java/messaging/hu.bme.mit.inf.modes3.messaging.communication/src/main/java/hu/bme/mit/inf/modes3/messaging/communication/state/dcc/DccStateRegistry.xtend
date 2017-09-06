@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state.dcc
 
+import hu.bme.mit.inf.modes3.messaging.communication.state.dcc.interfaces.IDccStateCallback
 import hu.bme.mit.inf.modes3.messaging.communication.state.dcc.interfaces.IDccStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.dcc.interfaces.IDccStateListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.dcc.interfaces.IDccStateRegistry
@@ -13,12 +14,14 @@ class DccStateRegistry implements IDccStateRegistry {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	@Accessors(#[PUBLIC_GETTER, PRIVATE_SETTER]) transient var DccOperations dccOperationsState
 
-	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val DccStateCallback dccStateCallback
+	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val IDccStateCallback dccStateCallback
 	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var IDccStateChangeListener dccOperationsChangeListener
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
-		dccStateCallback = new DccStateCallback(dispatcher, new IDccStateListener() {
+
+		dccStateCallback = new DccStateCallback(dispatcher)
+		dccStateCallback.dccStateListener = new IDccStateListener() {
 
 			override onDccOperationsState(DccOperations dccOperations) {
 				logger.trace('''DccOperationsMessage message arrived dccOperations=«dccOperations»''')
@@ -30,7 +33,7 @@ class DccStateRegistry implements IDccStateRegistry {
 				}
 			}
 
-		})
+		}
 	}
 
 }

@@ -5,12 +5,13 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interf
 import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionListener
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
 class ComputerVisionCallback implements IComputerVisionCallback, IComputerVisionListener {
 
-	var IComputerVisionListener listener
+	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var IComputerVisionListener computerVisionListener
 	Logger logger
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
@@ -18,17 +19,12 @@ class ComputerVisionCallback implements IComputerVisionCallback, IComputerVision
 		dispatcher.computerVisionObjectPositionsHandler = new ComputerVisionClient(this)
 	}
 
-	override setComputerVisionListener(IComputerVisionListener listener) {
-		this.listener = listener
-		logger.trace('''ComputerVisionListener changed''')
-	}
-
 	override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp, long frameindex) {
-		if (listener === null) {
+		if (computerVisionListener === null) {
 			logger.trace('''ComputerVisionInformation recieved, but the listener is not set''')
 		} else {
 			logger.trace('''ComputerVisionInformation recieved, «information»''')
-			listener.onComputerVisionDetection(information, timestamp, frameindex)
+			computerVisionListener.onComputerVisionDetection(information, timestamp, frameindex)
 		}
 	}
 

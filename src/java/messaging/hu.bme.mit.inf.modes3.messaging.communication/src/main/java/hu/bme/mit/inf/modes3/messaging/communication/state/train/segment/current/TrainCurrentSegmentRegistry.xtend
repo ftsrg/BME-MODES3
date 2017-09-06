@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state.train.segment.current
 
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.segment.current.interfaces.ITrainCurrentSegmentCallback
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.segment.current.interfaces.ITrainCurrentSegmentChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.segment.current.interfaces.ITrainCurrentSegmentListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.segment.current.interfaces.ITrainCurrentSegmentRegistry
@@ -13,13 +14,14 @@ class TrainCurrentSegmentRegistry implements ITrainCurrentSegmentRegistry {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	val currentSegments = new ConcurrentHashMap<Integer, Integer>
 
-	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val TrainCurrentSegmentCallback trainCurrentSegmentCallback
+	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) val ITrainCurrentSegmentCallback trainCurrentSegmentCallback
 	@Accessors(#[PRIVATE_GETTER,
 		PUBLIC_SETTER]) var ITrainCurrentSegmentChangeListener trainCurrentSegmentChangeListener
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
-		trainCurrentSegmentCallback = new TrainCurrentSegmentCallback(dispatcher, new ITrainCurrentSegmentListener() {
+		trainCurrentSegmentCallback = new TrainCurrentSegmentCallback(dispatcher)
+		trainCurrentSegmentCallback.trainCurrentSegmentListener = new ITrainCurrentSegmentListener() {
 
 			override onTrainCurrentSegment(int trainId, int segmentId) {
 				logger.trace('''TrainCurrentSegmentMessage message arrived trainId=«trainId»''')
@@ -32,10 +34,15 @@ class TrainCurrentSegmentRegistry implements ITrainCurrentSegmentRegistry {
 				}
 			}
 
-		})
+		}
 	}
 
-	override getCurrentSegmentId(int trainId) {
-		currentSegments.get(trainId)
+	override getCurrentSegmentId(int id) {
+		if (currentSegments.get(id) === null) {
+			logger.
+				trace('''The registry was asked for the current segment of Train #«id» but there is no information in the cache, default -1 segment is used instead.''')
+			currentSegments.put(id, -1)
+		}
+		currentSegments.get(id)
 	}
 }
