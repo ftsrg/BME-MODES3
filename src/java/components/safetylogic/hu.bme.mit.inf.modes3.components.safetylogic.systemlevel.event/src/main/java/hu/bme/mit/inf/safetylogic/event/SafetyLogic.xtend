@@ -38,7 +38,7 @@ class SafetyLogic extends AbstractCommunicationComponent implements INotifiable 
 	]
 	val Set<Train> stoppedTrains = new HashSet<Train>
 
-	val List<ITrainStopStrategy> trainStopStrategies = #[ //new XPressInvertDirectionStrategy(locator.trainCommander, locator.trainSpeedStateRegistry, logger)
+	val List<ITrainStopStrategy> trainStopStrategies = #[ // new XPressInvertDirectionStrategy(locator.trainCommander, locator.trainSpeedStateRegistry, logger)
 	]
 
 	val List<ISegmentEnableStrategy> segmentEnableStrategies = #[
@@ -60,7 +60,7 @@ class SafetyLogic extends AbstractCommunicationComponent implements INotifiable 
 //		rules = new SafetyLogicRuleEngine(model.resourceSet)
 		model.segments.map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
-		locator.sendAllStatusCallback.statusUpdateListener = new ISendAllStatusListener() {
+		locator.sendAllStatusCallback.sendAllStatusListener = new ISendAllStatusListener() {
 
 			// TODO : This part still requires some testing.
 			override onSendAllStatus() {

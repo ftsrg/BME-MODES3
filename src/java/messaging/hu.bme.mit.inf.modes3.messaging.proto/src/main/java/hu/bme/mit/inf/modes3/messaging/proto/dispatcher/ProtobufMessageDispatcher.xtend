@@ -61,6 +61,11 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
 					trainReferenceSpeedCommandHandler?.handleMessage(internalMessage)
 				}
+				case MessageType.TRAIN_FUNCTION_STATE: {
+					val protoMessage = message.trainFunctionState
+					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
+					trainFunctionStateHandler?.handleMessage(internalMessage)
+				}
 				case MessageType.TURNOUT_COMMAND: {
 					val protoMessage = message.turnoutCommand
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)

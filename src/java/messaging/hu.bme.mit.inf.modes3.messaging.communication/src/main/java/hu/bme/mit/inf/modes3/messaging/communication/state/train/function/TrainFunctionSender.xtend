@@ -2,11 +2,11 @@ package hu.bme.mit.inf.modes3.messaging.communication.state.train.function
 
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.function.interfaces.ITrainFunctionSender
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainFunction
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionMessage
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 
 class TrainFunctionSender implements ITrainFunctionSender {
 
@@ -20,7 +20,7 @@ class TrainFunctionSender implements ITrainFunctionSender {
 
 	override sendTrainFunction(int trainId, TrainFunction trainFunction) {
 		logger.trace('''TrainFunction message sent with trainId=«trainId», trainFunction=«trainFunction»''')
-		mms.sendMessage(new TrainFunctionMessage(trainId, trainFunction))
+		mms.sendMessage(new TrainFunctionStateMessage(trainId, trainFunction))
 	}
 
 }

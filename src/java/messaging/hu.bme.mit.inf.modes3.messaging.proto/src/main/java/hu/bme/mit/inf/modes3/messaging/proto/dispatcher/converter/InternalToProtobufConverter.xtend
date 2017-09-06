@@ -7,22 +7,33 @@ import hu.bme.mit.inf.modes3.messaging.messages.command.TrainFunctionCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.TurnoutCommand
 import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.ComputerVisionObjectPositionsMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.DccOperationsStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSegmentMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSpeedMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainReferenceSpeedMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufEnumTransformator
+import hu.bme.mit.inf.modes3.messaging.proto.messages.ComputerVisionObjectPositions
+import hu.bme.mit.inf.modes3.messaging.proto.messages.DccOperationsState
+import hu.bme.mit.inf.modes3.messaging.proto.messages.Marker
 import hu.bme.mit.inf.modes3.messaging.proto.messages.Message
 import hu.bme.mit.inf.modes3.messaging.proto.messages.MessageType
+import hu.bme.mit.inf.modes3.messaging.proto.messages.PhysicalObject
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SendAllStatus
+import hu.bme.mit.inf.modes3.messaging.proto.messages.ThreeDPosition
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSegment
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSpeed
+import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.proto.messages.TwoDPosition
+import java.util.Map
 
 class InternalToProtobufConverter {
 
@@ -81,6 +92,16 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	def dispatch Message internalConvertMessageToRaw(TrainFunctionStateMessage message) {
+		(Message.newBuilder => [
+			type = MessageType.TRAIN_FUNCTION_STATE;
+			trainFunctionState = (TrainFunctionState.newBuilder => [
+				trainID = message.trainId;
+				trainFunctionValue = ProtobufEnumTransformator::toSpecific(message.trainFunction)
+			]).build
+		]).build
+	}
+
 	def dispatch Message internalConvertMessageToRaw(TrainReferenceSpeedMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.TRAIN_REFERENCE_SPEED;
@@ -104,22 +125,22 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
-	def dispatch Message internalConvertMessageToRaw(TurnoutCommand _message) {
+	def dispatch Message internalConvertMessageToRaw(TurnoutCommand message) {
 		(Message.newBuilder => [
 			type = MessageType.TURNOUT_COMMAND;
 			turnoutCommand = (hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutCommand.newBuilder => [
-				turnoutID = _message.turnoutId;
-				state = ProtobufEnumTransformator::toSpecific(_message.state)
+				turnoutID = message.turnoutId;
+				state = ProtobufEnumTransformator::toSpecific(message.state)
 			]).build
 		]).build
 	}
 
-	def dispatch Message internalConvertMessageToRaw(TurnoutStateMessage _message) {
+	def dispatch Message internalConvertMessageToRaw(TurnoutStateMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.TURNOUT_STATE;
 			turnoutState = (TurnoutState.newBuilder => [
-				turnoutID = _message.turnoutId;
-				state = ProtobufEnumTransformator::toSpecific(_message.state)
+				turnoutID = message.turnoutId;
+				state = ProtobufEnumTransformator::toSpecific(message.state)
 			]).build
 		]).build
 	}
@@ -130,6 +151,53 @@ class InternalToProtobufConverter {
 			segmentOccupancy = (SegmentOccupancy.newBuilder => [
 				segmentID = message.segmentId;
 				state = ProtobufEnumTransformator::toSpecific(message.state)
+			]).build
+		]).build
+	}
+
+	def dispatch Message internalConvertMessageToRaw(ComputerVisionObjectPositionsMessage message) {
+		val Map<String, PhysicalObject> physicalObjects = message.physicalObjects.mapValues [ physicalObjectEntry |
+			val markers = physicalObjectEntry.markers.mapValues [ markersEntry |
+				val marker = (Marker.newBuilder => [
+					name = markersEntry.name;
+					realposition = (ThreeDPosition.newBuilder => [
+						x = markersEntry.realposition.x;
+						y = markersEntry.realposition.y;
+						z = markersEntry.realposition.z
+					]).build
+				]).build
+
+				markersEntry.screenPositions.forEach [
+					marker.screenPositionsList.add((TwoDPosition.newBuilder => [x = it.x; y = it.y] ).build)
+				]
+				markersEntry.tracked.forEach[marker.trackedList.add(it)]
+
+				marker
+			]
+
+			val physicalObject = (PhysicalObject.newBuilder => [name = physicalObjectEntry.name]).build
+			physicalObject.markersMap.putAll(markers)
+
+			physicalObject
+		]
+
+		val computerVisionPositions = (ComputerVisionObjectPositions.newBuilder => [
+			timestamp = message.timestamp;
+			frameindex = message.frameIndex
+		]).build
+		computerVisionPositions.physicalObjectsMap.putAll(physicalObjects)
+
+		(Message.newBuilder => [
+			type = MessageType.COMPUTER_VISION_OBJECT_POSITIONS;
+			computerVisionObjectPositions = computerVisionPositions
+		]).build
+	}
+
+	def dispatch Message internalConvertMessageToRaw(DccOperationsStateMessage message) {
+		(Message.newBuilder => [
+			type = MessageType.DCC_OPERATIONS_STATE;
+			dccOperationsState = (DccOperationsState.newBuilder => [
+				dccOperations = ProtobufEnumTransformator::toSpecific(message.dccOperations)
 			]).build
 		]).build
 	}
