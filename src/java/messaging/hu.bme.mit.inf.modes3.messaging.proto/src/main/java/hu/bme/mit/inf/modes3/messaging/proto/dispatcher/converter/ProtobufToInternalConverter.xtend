@@ -27,9 +27,7 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState
-import java.util.AbstractMap.SimpleEntry
 import java.util.Map
-import java.util.stream.Collectors
 
 class ProtobufToInternalConverter {
 
@@ -107,20 +105,18 @@ class ProtobufToInternalConverter {
 	}
 
 	def convertToInternalMessage(ComputerVisionObjectPositions protoMessage) {
-		val Map<String, PhysicalObject> physicalObjects = protoMessage.physicalObjectsMap.entrySet.stream.map [ physicalObjectEntry |
-			new SimpleEntry(physicalObjectEntry.key,
-				new PhysicalObject(physicalObjectEntry.value.name,
-					physicalObjectEntry.value.markersMap.entrySet.stream.map [ markersEntry |
-						new SimpleEntry(markersEntry.key, new Marker(markersEntry.value.name, new ThreeDPosition(
-							markersEntry.value.realposition.x,
-							markersEntry.value.realposition.y,
-							markersEntry.value.realposition.z
-						), #[new TwoDPosition(
-							markersEntry.value.screenPositionsList.head.x,
-							markersEntry.value.screenPositionsList.head.y
-						)], #[markersEntry.value.trackedList.head]))
-					].collect(Collectors::toMap([it.key], [it.value]))))
-		].collect(Collectors::toMap([it.key], [it.value]))
+		val Map<String, PhysicalObject> physicalObjects = protoMessage.physicalObjectsMap.mapValues [ physicalObjectEntry |
+			new PhysicalObject(physicalObjectEntry.name, physicalObjectEntry.markersMap.mapValues [ markersEntry |
+				new Marker(markersEntry.name, new ThreeDPosition(
+					markersEntry.realposition.x,
+					markersEntry.realposition.y,
+					markersEntry.realposition.z
+				), #[new TwoDPosition(
+					markersEntry.screenPositionsList.head.x,
+					markersEntry.screenPositionsList.head.y
+				)], #[markersEntry.trackedList.head])
+			])
+		]
 
 		val timestamp = protoMessage.timestamp
 		val frameIndex = protoMessage.frameindex
