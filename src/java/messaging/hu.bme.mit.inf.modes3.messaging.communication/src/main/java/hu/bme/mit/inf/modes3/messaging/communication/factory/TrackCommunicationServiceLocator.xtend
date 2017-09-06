@@ -5,6 +5,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.dcc.interfaces.IDcc
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.SendAllStatusCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.TrackElementCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.TrackElementCommander
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommandCallback
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.command.train.TrainCommander
@@ -36,7 +37,7 @@ class TrackCommunicationServiceLocator {
 	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ITrackElementCommandCallback trackElementCommandCallback
 	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ITrackElementStateRegistry trackElementStateRegistry
 	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ITrainSpeedStateRegistry trainSpeedStateRegistry
-	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val SendAllStatusCommandCallback sendAllStatusCallback
+	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val ISendAllStatusCommandCallback sendAllStatusCallback
 	@Accessors(PUBLIC_GETTER, PRIVATE_SETTER) val IComputerVisionCallback computerVisionCallback
 
 	new(MessagingService messagingService, ILoggerFactory factory) {

@@ -9,7 +9,7 @@ class SendAllStatusDemo extends AbstractCommunicationComponent implements ISendA
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
-		locator.sendAllStatusCallback.statusUpdateListener = this
+		locator.sendAllStatusCallback.sendAllStatusListener = this
 	}
 
 	override run() {

@@ -15,6 +15,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TwoDPosition
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufEnumTransformator
 import hu.bme.mit.inf.modes3.messaging.proto.messages.ComputerVisionObjectPositions
+import hu.bme.mit.inf.modes3.messaging.proto.messages.DccOperationsCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.DccOperationsState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentOccupancy
@@ -23,13 +24,20 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.SendAllStatus
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSegment
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSpeed
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionCommand
+import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState
 import java.util.Map
+import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 
 class ProtobufToInternalConverter {
+
+	def convertToInternalMessage(DccOperationsCommand protoMessage) {
+		val dccOperations = ProtobufEnumTransformator::toGeneral(protoMessage.dccOperations)
+		new hu.bme.mit.inf.modes3.messaging.messages.command.DccOperationsCommand(dccOperations)
+	}
 
 	def convertToInternalMessage(SegmentCommand protoMessage) {
 		val segmentId = protoMessage.segmentID
@@ -100,6 +108,12 @@ class ProtobufToInternalConverter {
 		new DccOperationsStateMessage(dccOperations)
 	}
 
+	def convertToInternalMessage(TrainFunctionState protoMessage) {
+		val trainId = protoMessage.trainID
+		val trainFunction = ProtobufEnumTransformator::toGeneral(protoMessage.trainFunctionValue)
+		new TrainFunctionStateMessage(trainId, trainFunction)
+	}
+
 	def convertToInternalMessage(SendAllStatus protoMessage) {
 		new SendAllStatusCommand
 	}
@@ -111,10 +125,7 @@ class ProtobufToInternalConverter {
 					markersEntry.realposition.x,
 					markersEntry.realposition.y,
 					markersEntry.realposition.z
-				), #[new TwoDPosition(
-					markersEntry.screenPositionsList.head.x,
-					markersEntry.screenPositionsList.head.y
-				)], #[markersEntry.trackedList.head])
+				), markersEntry.screenPositionsList.map[new TwoDPosition(it.x, it.y)], markersEntry.trackedList)
 			])
 		]
 

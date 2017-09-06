@@ -70,7 +70,7 @@ class TrackElementController extends AbstractCommunicationComponent implements I
 		locator.trackElementCommandCallback.segmentCommandListener = this;
 		locator.trackElementCommandCallback.turnoutCommandListener = this;
 
-		locator.sendAllStatusCallback.statusUpdateListener = this;
+		locator.sendAllStatusCallback.sendAllStatusListener = this;
 	}
 
 	override run() {
