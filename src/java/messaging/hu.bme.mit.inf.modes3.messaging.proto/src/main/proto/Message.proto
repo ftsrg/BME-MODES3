@@ -15,7 +15,6 @@ import "TrainReferenceSpeed.proto";
 import "TrainReferenceSpeedCommand.proto";
 import "TurnoutCommand.proto";
 import "TurnoutState.proto";
-import "TurnoutReferenceCommand.proto";
 import "TurnoutReferenceState.proto";
 import "SegmentOccupancy.proto";
 import "YakinduReleaseTo.proto";
@@ -45,7 +44,6 @@ message Message {
 	YakinduCanGoTo yakinduCanGoTo = 13;
 	YakinduCannotGoTo yakinduCannotGoTo = 14;
 	YakinduReserveTo yakinduReserveTo = 15;
-	TurnoutReferenceCommand turnoutReferenceCommand = 16;
 	TurnoutReferenceState turnoutReferenceState = 17;
 	TrainFunctionCommand trainFunctionCommand = 18;
 	TrainFunctionState trainFunctionState = 19;

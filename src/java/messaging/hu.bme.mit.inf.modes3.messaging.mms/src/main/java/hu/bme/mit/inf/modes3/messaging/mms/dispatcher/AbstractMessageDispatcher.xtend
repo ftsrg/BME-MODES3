@@ -12,11 +12,12 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSegmentMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSpeedMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainReferenceSpeedMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 import org.eclipse.xtend.lib.annotations.Accessors
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 
 abstract class AbstractMessageDispatcher implements IMessageDispatcher {
 
@@ -26,6 +27,7 @@ abstract class AbstractMessageDispatcher implements IMessageDispatcher {
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IMessageHandler<TrainCurrentSegmentMessage> trainCurrentSegmentHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IMessageHandler<TrainFunctionStateMessage> trainFunctionStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IMessageHandler<TurnoutStateMessage> turnoutStateHandler
+	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IMessageHandler<TurnoutReferenceStateMessage> turnoutReferenceStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IMessageHandler<SegmentStateMessage> segmentStateHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IMessageHandler<SegmentOccupancyMessage> segmentOccupancyHandler
 	@Accessors(PUBLIC_SETTER, PROTECTED_GETTER) var IMessageHandler<DccOperationsStateMessage> dccOperationStateHandler

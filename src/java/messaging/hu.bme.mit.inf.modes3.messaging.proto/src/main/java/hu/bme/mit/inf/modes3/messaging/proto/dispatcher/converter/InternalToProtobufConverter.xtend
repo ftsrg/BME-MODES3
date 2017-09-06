@@ -15,6 +15,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSegmentMessag
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSpeedMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainReferenceSpeedMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufEnumTransformator
 import hu.bme.mit.inf.modes3.messaging.proto.messages.ComputerVisionObjectPositions
@@ -129,6 +130,16 @@ class InternalToProtobufConverter {
 		(Message.newBuilder => [
 			type = MessageType.TURNOUT_COMMAND;
 			turnoutCommand = (hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutCommand.newBuilder => [
+				turnoutID = message.turnoutId;
+				state = ProtobufEnumTransformator::toSpecific(message.state)
+			]).build
+		]).build
+	}
+
+	def dispatch Message internalConvertMessageToRaw(TurnoutReferenceStateMessage message) {
+		(Message.newBuilder => [
+			type = MessageType.TURNOUT_REFERENCE_STATE;
+			turnoutState = (TurnoutState.newBuilder => [
 				turnoutID = message.turnoutId;
 				state = ProtobufEnumTransformator::toSpecific(message.state)
 			]).build
