@@ -53,7 +53,7 @@ class OccupancyQuery extends AbstractRailRoadCommunicationComponent {
 	}
 
 	def processOccupancy() {
-		// Segment 1 to 31
+		// Segment 1 to 32
 		for (i : 0..31) {
 			// Because of the data order, we proceed backward, therefore the
 			// first segment is in the 8th byte
