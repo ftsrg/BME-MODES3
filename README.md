@@ -2,17 +2,16 @@
 
 [![Build Status](https://travis-ci.org/FTSRG/BME-MODES3.svg?branch=gen3-arch)](https://travis-ci.org/FTSRG/BME-MODES3)
 
-- Table Of Contents
-  * [Structure of the repository](#structure-of-the-repository)
-    + [Configuration management scripts](#configuration-management-scripts)
-      - [Sources divided by programming language](#sources-divided-by-programming-language)
-        * [C++](#c--)
-        * [JavaScript](#javascript)
-        * [Java](#java)
-  * [Getting Started](#getting-started)
-    + [As a User](#as-a-user)
-    + [As a core developer](#as-a-core-developer)
-      - [Troubleshooting](#troubleshooting)
+- [Structure of the repository](#structure-of-the-repository)
+  * [Configuration management scripts](#configuration-management-scripts)
+    + [Sources divided by programming language](#sources-divided-by-programming-language)
+      - [C++](#c--)
+      - [JavaScript](#javascript)
+      - [Java](#java)
+- [Getting Started](#getting-started)
+  * [As a User](#as-a-user)
+  * [As a core developer](#as-a-core-developer)
+    + [Troubleshooting](#troubleshooting)
 
 A case study system using the cooperation of a model railway and a robot to demonstrate techniques and methods for developing IoT and CPS systems. See a [quick overview](https://inf.mit.bme.hu/en/research/projects/modes3) and our [blog](http://modes3.tumblr.com/) for more details.
 
