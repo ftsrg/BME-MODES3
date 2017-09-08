@@ -2,6 +2,18 @@
 
 [![Build Status](https://travis-ci.org/FTSRG/BME-MODES3.svg?branch=gen3-arch)](https://travis-ci.org/FTSRG/BME-MODES3)
 
+- Table Of Contents
+  * [Structure of the repository](#structure-of-the-repository)
+    + [Configuration management scripts](#configuration-management-scripts)
+      - [Sources divided by programming language](#sources-divided-by-programming-language)
+        * [C++](#c--)
+        * [JavaScript](#javascript)
+        * [Java](#java)
+  * [Getting Started](#getting-started)
+    + [As a User](#as-a-user)
+    + [As a core developer](#as-a-core-developer)
+      - [Troubleshooting](#troubleshooting)
+
 A case study system using the cooperation of a model railway and a robot to demonstrate techniques and methods for developing IoT and CPS systems. See a [quick overview](https://inf.mit.bme.hu/en/research/projects/modes3) and our [blog](http://modes3.tumblr.com/) for more details.
 
 *This repository extensively uses [Git-LFS](https://git-lfs.github.com/), hence install it and upgrade your Git to at least v2.7.0 for full compatibility.*
@@ -146,7 +158,7 @@ cd src/java
 
 5. Install Eclipse or your faviourite IDE, and install Xtend, Gradle plugins there. (Most of the code is implemented in Xtend, we use Gradle as a build system.)
 
-6. Import the Gradle projects in your IDE and try to build the projects there. _Note:_ Should you not need any project, please put a comment mark `#` in front of the lines, which include projects you do not need. Please do not commit these changes though.
+6. Import the Gradle projects in your IDE and try to build the projects there. _Note:_ Should you not need any project, please put a comment mark `#` in front of the lines, which include projects you do not need, in the root folder's `/src/java/build.gradle` file. Please do not commit these changes though.
 
 
 #### Troubleshooting
