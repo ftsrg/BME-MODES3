@@ -29,7 +29,7 @@ class OccupancyQuery extends AbstractRailRoadCommunicationComponent {
 	// The byte vector storing the incoming data
 	val int[] occupancy = newIntArrayOfSize(8)
 	// The occupancy vector containing the current status
-	val SegmentOccupancy[] states = newArrayOfSize(31)
+	val SegmentOccupancy[] states = newArrayOfSize(32)
 
 	new(CommunicationStack stack, ILoggerFactory factory, ArgumentRegistry registry) {
 		super(stack, factory)
@@ -54,7 +54,7 @@ class OccupancyQuery extends AbstractRailRoadCommunicationComponent {
 
 	def processOccupancy() {
 		// Segment 1 to 31
-		for (i : 0..30) {
+		for (i : 0..31) {
 			// Because of the data order, we proceed backward, therefore the
 			// first segment is in the 8th byte
 			var byteIndex = 7 - i / 8;
