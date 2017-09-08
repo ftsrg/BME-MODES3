@@ -66,6 +66,8 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 	}
 
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+		println('''«id» «oldValue» «newValue»''')
+		
 		val segment = segments?.get(id)
 		switch (newValue) {
 			case OCCUPIED:
@@ -216,7 +218,7 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 
 	private def initializeSegments(Scene scene) {
 		segments = new TreeMap
-		for (i : 1 ..< 32) {
+		for (i : 1 .. 32) {
 			val node = scene.lookup("#segment_" + i)
 			val eventHandler = new SegmentEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
@@ -226,7 +228,7 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 
 	private def initializeTurnouts(Scene scene) {
 		turnouts = new TreeMap
-		for (i : 1 ..< 7) {
+		for (i : 1 .. 6) {
 			val node = scene.lookup("#turnout_" + i)
 			val eventHandler = new TurnoutEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
@@ -241,7 +243,7 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 	private def onSetSectionState(SegmentStateSetter stateSetter) {
 		executeHandler(new Runnable() {
 			override run() {
-				val turnoutSegments = #[3, 9, 14, 16, 21, 25, 28]
+				val turnoutSegments = #[3, 9, 14, 16, 21, 25, 28, 32]
 				segments.forEach [ segmentId, handler |
 					if (!turnoutSegments.contains(segmentId)) {
 						stateSetter.onSetSegmentState(handler)
