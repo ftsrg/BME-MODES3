@@ -66,8 +66,6 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 	}
 
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
-		println('''«id» «oldValue» «newValue»''')
-		
 		val segment = segments?.get(id)
 		switch (newValue) {
 			case OCCUPIED:
