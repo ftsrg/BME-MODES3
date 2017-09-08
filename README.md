@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/FTSRG/BME-MODES3.svg?branch=gen3-arch)](https://travis-ci.org/FTSRG/BME-MODES3)
 
+Table of Contents
 - [Structure of the repository](#structure-of-the-repository)
   * [Configuration management scripts](#configuration-management-scripts)
     + [Sources divided by programming language](#sources-divided-by-programming-language)
@@ -45,7 +46,7 @@ cd src/java
 |imu                | <path_prefix>.components.imu     |           |     |
 |Section Occupancy Query   | <path_prefix>.components.soc | Reads the sections occupancy from the physical sensors.   | zsoltmazlo, hegyibalint    |
 |Turnout Actuator   | <path_prefix>.components.turnoutactuator | The actuator to set the turnouts' directions.   | hegyibalint    |
-|XPressNet Bridge   | <path_prefix>.components.xpressnetbridge | C++ implementation for the XPressNetBridge, in order to send DCC commands to the trains.   | Chorithian (Attila BirÛ)    |
+|XPressNet Bridge   | <path_prefix>.components.xpressnetbridge | C++ implementation for the XPressNetBridge, in order to send DCC commands to the trains.   | Chorithian (Attila Bir√≥)    |
 |train_sample_generator   | <path_prefix>.train_sample_generator |    |  FuzesiMate |
 
 ##### JavaScript
@@ -73,7 +74,7 @@ cd src/java
 | Common Components |  <components_path_prefix>.common | Common codes and helpers for all components| hegyibalint, baloghlaszlo, benedekh
 | Dashboard |  <components_path_prefix>.dashboard | Dashboard for the model railway track. | zsoltmazlo
 | GPIO Manager |  <components_path_prefix>.gpiomanager | To control the GPIO pins of the Beagle Bone Black embedded units from Java. | hegyibalint
-| Leapmotion |  <components_path_prefix>.leapmotion | Leapmotion sensor code in Java. | pappist (Papp Istv·n)
+| Leapmotion |  <components_path_prefix>.leapmotion | Leapmotion sensor code in Java. | pappist (Papp Istv√°n)
 | Section Occupancy Query   | <components_path_prefix>.occupancyquery | Reads the sections occupancy from the embededd system and boradcasts it on the network.   | hegyibalint, baloghlaszlo, benedekh    |
 | Sample Component | <components_path_prefix>.sample | A sample component which can be linked to a tutorial | hegyibalint, baloghlaszlo, benedekh
 | Touchboard |  <components_path_prefix>.touchboard | Dashboard for the model railway track, with focus on touchable elements. | hegyibalint, benedekh
