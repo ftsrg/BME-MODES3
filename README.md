@@ -13,13 +13,13 @@ cd src/java
 ./gradlew build
 ```
 
-## Structure of the repository:
+## Structure of the repository
 
-### Configuration management scripts:
+### Configuration management scripts
 
 |  Physical location      | Comments | Owner|
 |:------------------------|:--------:|:---:|
-|/config-management     | Scripts to deploy the code for the embedded systems.         |  @hegyibalint   |
+|/config-management     | Scripts to deploy the code for the embedded systems.         |  hegyibalint   |
 
 #### Sources divided by programming language
 
@@ -118,3 +118,39 @@ cd src/java
 | Serial monitor | <components_path_prefix>.serialmonitor | Utility project to monitor the serial (USB) port from Java. | zsoltmazlo |
 | SVG Transformer | <components_path_prefix>.svgtransformer | Utility project to transform SVG in Java. | hegyibalint |
 
+
+
+## Getting Started
+
+### As a User
+
+_Should you develop your own application and use 'MoDeS3 as a Service'._
+
+1. Install Java 8 at least.
+2. Download the corresponding jar on the [releases](https://github.com/FTSRG/BME-MODES3/releases) page.
+3. Read the Wiki pages, especially [Network messages](https://github.com/FTSRG/BME-MODES3/wiki/Network-messages), [On the communication component of the API](https://github.com/FTSRG/BME-MODES3/wiki/On-the-communication-component-of-the-API).
+
+### As a core developer
+
+_Should you develop something to the core library, aka things stored in this repository._
+
+1. Install Java 8 at least.
+2. Install Gradle.
+3. Clone this repository.
+4. Build the gradle projects:
+
+```
+cd src/java
+./gradlew build
+```
+
+5. Install Eclipse or your faviourite IDE, and install Xtend, Gradle plugins there. (Most of the code is implemented in Xtend, we use Gradle as a build system.)
+
+6. Import the Gradle projects in your IDE and try to build the projects there. _Note:_ Should you not need any project, please put a comment mark `#` in front of the lines, which include projects you do not need. Please do not commit these changes though.
+
+
+#### Troubleshooting
+
+- Should you use Eclipse with the Gradle plugin AND change something in any of the *.gradle files (either in the root `/src/java` folder or in your project's folder), do not forget to click on the project name with the right mouse button, and in the dropdown menu go to Gradle -> Plugin refresh. Otherwise, the plugin might not recognize the changes and will end up in an incorrect configuration.
+
+- Should some change notifications from the file system not arrive to Eclipse, don't forget to use the 'good old' right click on the project name -> Refresh project option. Restarting Eclipse might also solve problems sometimes.
