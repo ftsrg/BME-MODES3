@@ -9,8 +9,9 @@ class ArgumentBasedTransportConfigurationLoader {
 		val address = registry.getParameterStringValue('address')
 		val id = registry.getParameterStringValue('id')
 		val port = registry.getParameterIntegerValue('port')
+		val topic = registry.getParameterStringValue('topic')
 		
-		return new TransportConfiguration(id, address, port)
+		return new TransportConfiguration(id, address, port, topic)
 	}
 	
 }

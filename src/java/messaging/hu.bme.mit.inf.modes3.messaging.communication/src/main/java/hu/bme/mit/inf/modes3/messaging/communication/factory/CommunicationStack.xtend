@@ -11,12 +11,6 @@ class CommunicationStack {
 	val Transport transport
 	val IMessageDispatcher dispatcher
 
-	protected new(MessagingService mms, Transport transport, IMessageDispatcher dispatcher) {
-		this.mms = mms
-		this.transport = transport
-		this.dispatcher = dispatcher
-	}
-
 	def start() {
 		mms.start(transport, dispatcher)
 	}

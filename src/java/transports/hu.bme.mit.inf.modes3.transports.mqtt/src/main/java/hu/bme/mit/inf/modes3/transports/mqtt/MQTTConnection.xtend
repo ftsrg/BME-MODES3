@@ -18,7 +18,7 @@ class MQTTConnection implements MqttCallback {
 	val TransportConfiguration configuration
 	val LinkedBlockingQueue<byte[]> messages
 	var MqttAsyncClient client;
-	
+
 	new(TransportConfiguration configuration, Logger logger, LinkedBlockingQueue<byte[]> messages) {
 		this.configuration = configuration
 		this.logger = logger
@@ -32,32 +32,34 @@ class MQTTConnection implements MqttCallback {
 			configuration.id
 		)
 		client.callback = this
-		
+
 		val options = new MqttConnectOptions();
 		options.maxInflight = 100
-		
+
 		while (!client.connected) {
 			try {
 				client.connect(options).waitForCompletion(1000 * 60 * 5);
 				logger.info('''MQTT transport is connected to «this.configuration.addr»''')
 			} catch (Exception e) {
 				e.printStackTrace()
-				Thread.sleep(2500);	
+				Thread.sleep(2500);
 			}
-		} 
-		
+		}
+
 		client.subscribe(DEFAULT_TOPIC, 1).waitForCompletion(5000);
 		logger.info('''MQTT transport is subscribed to «DEFAULT_TOPIC»''')
 	}
-	
+
 	def close() {
 		client?.disconnect().waitForCompletion()
 		client = null
 	}
-	
+
 	def send(byte[] message) {
-		if (client.connected)
-			client.publish(DEFAULT_TOPIC, message, DEFAULT_QOS, false)
+		if (client.connected) {
+			val topic = if(!configuration.topic.isNullOrEmpty) configuration.topic else DEFAULT_TOPIC
+			client.publish(topic, message, DEFAULT_QOS, false)
+		}
 	}
 
 	override connectionLost(Throwable cause) {

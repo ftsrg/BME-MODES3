@@ -7,5 +7,6 @@ class TransportConfiguration {
 	String id;
 	String addr;
 	Integer port;
+	String topic;
 }
 
