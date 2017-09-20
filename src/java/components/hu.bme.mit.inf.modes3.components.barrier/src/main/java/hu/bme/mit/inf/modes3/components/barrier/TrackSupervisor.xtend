@@ -5,6 +5,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
 import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ISegmentOccupancyChangeListener
 import java.util.Map
+import java.util.concurrent.ConcurrentHashMap
 import org.slf4j.ILoggerFactory
 
 class TrackSupervisor extends AbstractRailRoadCommunicationComponent implements ISegmentOccupancyChangeListener {
@@ -17,6 +18,9 @@ class TrackSupervisor extends AbstractRailRoadCommunicationComponent implements 
 		super.locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
 
 		barrierCommander = new BarrierCommander(barrierStack, factory)
+		supervisedSections = new ConcurrentHashMap<Integer, SegmentOccupancy>
+		supervisedSections.put(15, SegmentOccupancy.FREE)
+		supervisedSections.put(24, SegmentOccupancy.FREE)
 	}
 
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
