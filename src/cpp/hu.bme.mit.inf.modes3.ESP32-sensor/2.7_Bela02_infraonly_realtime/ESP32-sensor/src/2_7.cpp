@@ -3,12 +3,13 @@
 #define MQTT_MAX_PACKET_SIZE 512
 
 #include <RealTimeSelect.hpp>
-//#include <RealTimeLength.h> Length.Update nem működik 
+#include <RealTimeLength.h> //Length.Update nem működik 
 #include <realtimespeed.hpp>
 #include <string>
 #include <PubSubClient.h>
 #include <WiFi.h>
 #include <ArduinoJson.h>
+#include <stdlib.h>
 //#include <sensor_monitor.h>
 
 #define DEVICE_NAME "Bela02"
@@ -19,16 +20,11 @@
 #define MQTT_US  ""
 #define MQTT_PW  ""
 
+#define BDATA_CH "/modes3/data/bela02"
 #define CONSOLE_CH "/modes3/console"
 #define DATA_CH  "/modes3/data"
-#define FLAG_CH "/modes3/flag"
-
-#define T_LENGTH 5
-#define T_SPEED 4
-#define T_DATA 3
-#define T_FLAG 2
-#define T_PONG 1
-#define T_PING 0
+#define BEVENT_CH "/modes3/event/bela02"
+#define EVENT_CH "/modes3/event"
 
 using namespace std;
 
@@ -37,53 +33,47 @@ using namespace std;
 struct HeaderData {
    const char* sender;
    int time;
-   int type;
+   char type[10];
 };
 int getTime() {
   return 100;
 }
 
 WiFiClient wifi;
-PubSubClient client(wifi);
 
-bool HeaderDeser(HeaderData& data, char* json)
-{
-    StaticJsonBuffer<200> jsonBuffer;
-    JsonObject& root = jsonBuffer.parseObject(json);
-    data.sender = root["sender"];
-    data.time = root["time"];
-    data.type = root["type"];
-    return root.success();
+void PongSend();
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.println("Callback running...");
+  StaticJsonBuffer<200> json;
+  char sender[20];
+  char type[10];
+  int time;
+  JsonObject& root = json.parseObject((char*)payload);
+  strcpy(sender, root["sender"]);
+  time = root["time"];
+  strcpy(type, root["type"]);
+  if (!strcmp(type,"Ping")) {
+    PongSend();
+  }
 }
 
-void PingSer(char* json, bool pong=false)
+PubSubClient client(wifi);
+
+void PongSend()
 {
-    size_t maxSize=100;
-    DynamicJsonBuffer jsonBuffer;
+    char json[800];
+    size_t maxSize = 800;
+    StaticJsonBuffer<800> jsonBuffer;
     JsonObject& root = jsonBuffer.createObject();
     root["sender"] = DEVICE_NAME;
     root["time"] = getTime();
-    if(pong){ root["type"] = T_PONG;
-    }else{root["type"] = T_PING;}
+    root["type"] = "Pong";
     root.printTo(json, maxSize);
+    Serial.println(json);
+    client.publish(BEVENT_CH, json);
+    client.publish(EVENT_CH, json);
 }
-
-void callback(char* topic, byte* payload, unsigned int length) {
-    HeaderData header;
-    HeaderDeser(header, (char*)payload);
-    switch(header.type){
-        case T_PING:
-          char pong[100];
-          PingSer(pong,false);
-          client.publish(DATA_CH,pong);
-        break;
-        case T_FLAG:
-        break;
-        case T_DATA:
-        break;
-    }
-}
-
 void WifiConnect(){
   Serial.println("");
   Serial.print("Connecting to WiFi");
@@ -113,7 +103,9 @@ void MQTTConnect(){
       Serial.println(client.state());
     }
   }
+  client.setCallback(callback);
   client.subscribe(DATA_CH);
+  client.subscribe(EVENT_CH);
   Serial.print("Message sent.");
 }
 
@@ -127,8 +119,7 @@ void ConnCheck(){
     MQTTConnect();
   }
 }
-
-void FlagSend(bool detect, bool direction)
+void TrainSend(char* train, int kocsiszam)
 {
     char json[800];
     size_t maxSize = 800;
@@ -136,12 +127,36 @@ void FlagSend(bool detect, bool direction)
     JsonObject& root = jsonBuffer.createObject();
     root["sender"] = DEVICE_NAME;
     root["time"] = getTime();
-    root["type"] = T_FLAG;
-    root["detect"] = detect;
-    root["direction"] = direction;
+    root["type"] = "Train";
+    root["counter"] = kocsiszam;
+    root["train"] = train;
+    root.printTo(json, maxSize);
+    client.publish(BDATA_CH, json);
+    client.publish(DATA_CH, json);
+    Serial.println(json);
+}
+
+void EventSend(bool detect, bool direction)
+{
+    char json[800];
+    size_t maxSize = 800;
+    StaticJsonBuffer<800> jsonBuffer;
+    JsonObject& root = jsonBuffer.createObject();
+    root["sender"] = DEVICE_NAME;
+    root["time"] = getTime();
+    root["type"] = "Event";
+    if (detect) {
+      if (direction) {
+        root["detect"] = "Left";
+      }
+      else {root["detect"] = "Right";}
+    }
+    else {root["detect"] = "False";}
+    //root["direction"] = direction;
     root.printTo(json, maxSize);
     Serial.println(json);
-    client.publish(FLAG_CH, json);
+    client.publish(BEVENT_CH, json);
+    client.publish(EVENT_CH, json);
 }
 
 void SpeedSend(double speed)
@@ -152,14 +167,15 @@ void SpeedSend(double speed)
     JsonObject& root = jsonBuffer.createObject();
     root["sender"] = DEVICE_NAME;
     root["time"] = getTime();
-    root["type"] = T_SPEED;
+    root["type"] = "Speed";
     root["speed"] = speed;
     root.printTo(json, maxSize);
+    client.publish(BDATA_CH, json);
     client.publish(DATA_CH, json);
     Serial.println(json);
 }
 
-void LengthSend(double length)
+void LengthSend(double length, int kocsiszam)
 {
     char json[800];
     size_t maxSize = 800;
@@ -167,14 +183,16 @@ void LengthSend(double length)
     JsonObject& root = jsonBuffer.createObject();
     root["sender"] = DEVICE_NAME;
     root["time"] = getTime();
-    root["type"] = T_LENGTH;
+    root["type"] = "Length";
+    root["counter"] = kocsiszam;
     root["length"] = length;
     root.printTo(json, maxSize);
+    client.publish(BDATA_CH, json);
     client.publish(DATA_CH, json);
     Serial.println(json);
 }
 
-void DataSend(double speed, int vagondb, double* vagonhosszok)
+/*void DataSend(double speed, int vagondb, double* vagonhosszok)
 {
     size_t maxSize = 800;
     char json[maxSize];
@@ -182,7 +200,7 @@ void DataSend(double speed, int vagondb, double* vagonhosszok)
     JsonObject& root = jsonBuffer.createObject();
     root["sender"] = DEVICE_NAME;
     root["time"] = getTime();
-    root["type"] = T_DATA;
+    root["type"] = "Data";
     root["speed"] = speed;
     JsonArray& hosszok = root.createNestedArray("hosszok");
     for (int i=0; i<vagondb; i++) {
@@ -190,8 +208,9 @@ void DataSend(double speed, int vagondb, double* vagonhosszok)
     }
     root.printTo(json, maxSize);
     Serial.println(json);
+    client.publish(BDATA_CH, json);
     client.publish(DATA_CH, json);
-}
+}*/
 
 double SecTime(){
     double ret=micros()/1000000.0;
@@ -291,7 +310,7 @@ public:
 
 InfSensor Sensor[2]={InfSensor(26),InfSensor(27)};
 RealTimeSpeed RTSpeed(Sensor[0].GetDexP(),Sensor[0].DATAstack,Sensor[1].GetDexP(),Sensor[1].DATAstack);
-//RealTimeLength Length(Sensor[0].GetDexP(),Sensor[0].DATAstack,Sensor[1].GetDexP(),Sensor[1].DATAstack);
+RealTimeLength Length(Sensor[0].GetDexP(),Sensor[0].DATAstack,Sensor[1].GetDexP(),Sensor[1].DATAstack);
 RealTimeSelect TrainSelect;
 
 
@@ -308,13 +327,14 @@ void setup() {
   TrainSelect.AddTrain("Taurus",21.5);
   TrainSelect.AddTrain("SNCF",18.5);
   TrainSelect.AddTrain("BR-204",14);
-  TrainSelect.AddTrain("Piros",12.5);
-  TrainSelect.AddTrain("Barna",12);
+  TrainSelect.AddTrain("Vagon",12.25);
+
+  PongSend();
 
   //monitor.init();
 }
 
-double Speed(){
+/*double Speed(){
     char irany='0';
     double avgtime=0;
     double deltatime=0;
@@ -328,9 +348,9 @@ double Speed(){
     avgtime=avgtime>0 ? avgtime : -1.0*avgtime;
     avgspeed=hossz/avgtime;
     return avgspeed;
-}
+}*/
 
-void Lenght(double speed){
+/*void Lenght(double speed){
   double lenarray[10];
   int lendb=Sensor[0].GetDex()/2;
   for(int i=0;i<lendb;i++){
@@ -343,7 +363,7 @@ void Lenght(double speed){
     Serial.println("\tMQTT-re kiirva");
   }
   DataSend(speed, lendb, lenarray);
-}
+}*/
 
 enum StateMachine{
   Trainwait,
@@ -356,11 +376,18 @@ StateMachine state=Trainwait;
 bool det[2], detect;
 double atime;
 
+int kocsiszam=0;
 int tmp=0;
 bool tmpb=false;
+unsigned long lastLoop = 0;
 
 void loop() {
   ConnCheck();
+  if ( millis() - lastLoop > 1000 ) {
+    //Serial.println("pubsubloop");
+    client.loop();
+    lastLoop = millis();
+  }
   for(int i=0;i<2;i++){
     det[i]=Sensor[i].Update();
   }
@@ -375,7 +402,7 @@ void loop() {
       }else{
         direction=true;
       }
-      FlagSend(true, direction);
+      EventSend(true, direction);
     break;
     case Trainwait:
       if(detect==1){
@@ -394,36 +421,33 @@ void loop() {
       }
       if(detect==0&&(SecTime()-atime>maxtime)){
         state=Datasend;
-        double speed=Speed();
-        snprintf(str, 30, "%s: Speed: %fcm/s;", DEVICE_NAME, speed);
-        Serial.println(str);
+        //double speed=Speed();
+        //snprintf(str, 30, "%s: Speed: %fcm/s;", DEVICE_NAME, speed);
+        //Serial.println(str);
         //client.publish(DATA_CH, str);
         Serial.println("\tMQTT-re kiirva");
-        Lenght(speed);
+        //Lenght(speed);
         for(int i=0;i<2;i++){
           Sensor[i].Reset();
         }
-        //Length.Reset();
+        kocsiszam = 0;
+        Length.Reset();
         RTSpeed.Reset();
       }
     break;
     case Datasend:
       //monitor.stop();
-      FlagSend(false, false);
+      EventSend(false, false);
       state=Trainwait;
     break;
   }
   tmp++;
-  if(tmpb){
-  //  client.publish("proba",TrainSelect.Search(Length.GetLastLength()));
-  //Serial.println(TrainSelect.Search(Length.GetLastLength()));
-    tmpb=!tmpb;
-  }
   if(RTSpeed.Update()){
     SpeedSend(RTSpeed.GetLastSpeed());
   }
-  /*if(Length.Update(Sensor[0].GetDex(), Sensor[1].GetDex())){
-    Serial.println(".........\n");
-    LengthSend(Length.GetLastLength());
-  }*/
+  if(Length.Update(Sensor[0].GetDex(), Sensor[1].GetDex())){
+    kocsiszam++;
+    LengthSend(Length.GetLastLength(), kocsiszam);
+    TrainSend(TrainSelect.Search(Length.GetLastLength()), kocsiszam);
+  }
 }
