@@ -218,7 +218,7 @@ double SecTime(){
 }
 
 const double hossz = 3.178; // sensor distance
-const double maxtime=4;
+const double maxtime=6;
 const double prelltime=0.01;
 char str[60];
 char strg[30];
@@ -324,6 +324,10 @@ void setup() {
     pinMode(Sensor[i].GetPin(), INPUT);
     Sensor[i].Reset();
   }
+
+  //mért hosszok:
+  //Taurus: 20.96, 20.89, 20.86, 20.84 
+  //piros vagon: 
   TrainSelect.AddTrain("Taurus",21.5);
   TrainSelect.AddTrain("SNCF",18.5);
   TrainSelect.AddTrain("BR-204",14);
