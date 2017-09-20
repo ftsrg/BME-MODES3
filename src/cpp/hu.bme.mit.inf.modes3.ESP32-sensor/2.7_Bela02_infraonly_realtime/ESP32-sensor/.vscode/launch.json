@@ -6,7 +6,7 @@
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "name": "PlatformIO Debugger",
-            "target": "/home/solarowl/Projects/railsensor_2.7/ESP32-sensor/.pioenvs/nodemcu-32s/firmware.elf",
+            "target": "/home/solarowl/Projects/git/BME-MODES3/src/cpp/hu.bme.mit.inf.modes3.ESP32-sensor/2.7_Bela02_infraonly_realtime/ESP32-sensor/.pioenvs/nodemcu-32s/firmware.elf",
             "gdbpath": "/home/solarowl/.platformio/penv/bin/piodebuggdb",
             "autorun": [ "source .pioinit" ]
         }
