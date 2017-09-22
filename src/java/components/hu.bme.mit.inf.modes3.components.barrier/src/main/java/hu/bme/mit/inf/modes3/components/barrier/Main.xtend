@@ -26,8 +26,10 @@ class Main {
 
 		val railwayTrackCommunicationStack = CommunicationStackFactory::createMQTTStack(registry, loggerFactory)
 		val barrierCommunicationStack = JsonDispatcherFactory::createMQTTStackWithJSON(registry, loggerFactory)
+		val supervisedSections = #{15, 24}
 
-		val component = new TrackSupervisor(railwayTrackCommunicationStack, barrierCommunicationStack, loggerFactory)
+		val component = new TrackSupervisor(railwayTrackCommunicationStack, barrierCommunicationStack, loggerFactory,
+			supervisedSections)
 		component.run // run on main thread
 	}
 }
