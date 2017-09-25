@@ -2,7 +2,7 @@ package hu.bme.mit.inf.modes3.messaging.communication.factory
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
+import hu.bme.mit.inf.modes3.messaging.mms.TopicBasedMessagingService
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
 import hu.bme.mit.inf.modes3.transports.config.loaders.ArgumentBasedTransportConfigurationLoader
@@ -13,7 +13,7 @@ import org.slf4j.ILoggerFactory
 class MessagingServiceFactory {
 
 	def static createMQTTStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
-		return new MessagingService(
+		return new TopicBasedMessagingService(
 			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadTopicBasedConfiguration(argumentRegistry),
 				factory), new ProtobufMessageDispatcher(factory), factory)
 	}
@@ -22,7 +22,7 @@ class MessagingServiceFactory {
 		val transportConfig = ArgumentBasedTransportConfigurationLoader::loadTransportConfiguration(argumentRegistry)
 		val initialConfig = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr,
 			transportConfig.port, topics.head)
-		val mms = new MessagingService(new MQTTTransport(initialConfig, factory),
+		val mms = new TopicBasedMessagingService(new MQTTTransport(initialConfig, factory),
 			new ProtobufMessageDispatcher(factory), factory)
 		topics.filter[it != topics.head].forEach [
 			val config = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr,
@@ -30,6 +30,7 @@ class MessagingServiceFactory {
 			val transport = new MQTTTransport(config, factory);
 			mms.addTransport(transport)
 		]
+		return mms
 	}
 
 	def static createStackForEveryTopic(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {

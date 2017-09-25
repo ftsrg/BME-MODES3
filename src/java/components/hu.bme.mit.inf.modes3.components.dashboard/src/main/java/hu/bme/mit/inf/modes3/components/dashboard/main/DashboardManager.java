@@ -24,100 +24,102 @@ import hu.bme.mit.inf.modes3.messaging.mms.MessagingService;
 
 public class DashboardManager {
 
-    private Server server;
+	private Server server;
 
-    private static SimpleLoggerFactory loggerFactory;
-    private static Logger logger;
+	private static SimpleLoggerFactory loggerFactory;
+	private static Logger logger;
 
-    private ArgumentRegistry registry;
+	private ArgumentRegistry registry;
 
-    private MessagingService messagingService;
+	private MessagingService messagingService;
 
-    private TrackCommunicationServiceLocator locator;
+	private TrackCommunicationServiceLocator locator;
 
-    public static final DashboardManager INSTANCE = new DashboardManager();
+	public static final DashboardManager INSTANCE = new DashboardManager();
 
-    private DashboardManager() {
-        server = new Server();
-    }
+	private DashboardManager() {
+		server = new Server();
+	}
 
-    public static void main(String[] args) {
-        loggerFactory = new SimpleLoggerFactory();
-        logger = loggerFactory.getLogger(DashboardManager.class.getName());
+	public static void main(String[] args) {
+		loggerFactory = new SimpleLoggerFactory();
+		logger = loggerFactory.getLogger(DashboardManager.class.getName());
 
-        INSTANCE.parseArguments(args);
+		INSTANCE.parseArguments(args);
 
-        INSTANCE.initialize();
+		INSTANCE.initialize();
 
-        try {
-            INSTANCE.startJetty();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-            System.exit(-1);
-        }
-    }
+		try {
+			INSTANCE.startJetty();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
 
-    public void initialize() {
-        messagingService = MessagingServiceFactory.createMQTTStack(registry, loggerFactory);
-        locator = new TrackCommunicationServiceLocator(messagingService, loggerFactory);
-    }
+	public void initialize() {
+		messagingService = MessagingServiceFactory.createStackForEveryTopic(registry, loggerFactory);
+		locator = new TrackCommunicationServiceLocator(messagingService, loggerFactory);
+	}
 
-    public void parseArguments(String[] args) {
-        registry = new ArgumentRegistry(loggerFactory);
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("config", "The configuration used", String.class));
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("id", "The ID of the component", String.class));
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("address", "The address of the transport server", String.class));
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<Integer>("port", "The port used by the transport server", Integer.class));
-        
-        registry.parseArguments(args);
-    }
+	public void parseArguments(String[] args) {
+		registry = new ArgumentRegistry(loggerFactory);
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("address",
+				"The address of the transport server", String.class));
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<Integer>("port",
+				"The port used by the transport server", Integer.class));
 
-    public void startJetty() throws Exception {
-        ServerConnector http = new ServerConnector(server, new HttpConnectionFactory());
-        http.setPort(7070);
-        http.setIdleTimeout(30000);
+		registry.parseArguments(args);
+	}
 
-        server.setConnectors(new Connector[]{http});
+	public void startJetty() throws Exception {
+		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory());
+		http.setPort(7070);
+		http.setIdleTimeout(30000);
 
-        ServletHolder atmosphereServletHolder = new ServletHolder(AtmosphereServlet.class);
-        atmosphereServletHolder.setInitParameter(ApplicationConfig.ANNOTATION_PACKAGE, "hu.bme.mit.inf.modes3.components.dashboard.service");
-        atmosphereServletHolder.setInitParameter(ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
-        atmosphereServletHolder.setInitParameter(ApplicationConfig.PROPERTY_COMET_SUPPORT, Jetty9AsyncSupportWithWebSocket.class.getName());
+		server.setConnectors(new Connector[] { http });
 
-        atmosphereServletHolder.setAsyncSupported(true);
+		ServletHolder atmosphereServletHolder = new ServletHolder(AtmosphereServlet.class);
+		atmosphereServletHolder.setInitParameter(ApplicationConfig.ANNOTATION_PACKAGE,
+				"hu.bme.mit.inf.modes3.components.dashboard.service");
+		atmosphereServletHolder.setInitParameter(ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
+		atmosphereServletHolder.setInitParameter(ApplicationConfig.PROPERTY_COMET_SUPPORT,
+				Jetty9AsyncSupportWithWebSocket.class.getName());
 
-        ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        servletContextHandler.setContextPath("/");
+		atmosphereServletHolder.setAsyncSupported(true);
 
-        servletContextHandler.addServlet(atmosphereServletHolder, "/ws/*");
+		ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		servletContextHandler.setContextPath("/");
 
-        ResourceHandler cpr = new ResourceHandler();
-        cpr.setBaseResource(Resource.newClassPathResource("/public_html/"));
-        cpr.setDirectoriesListed(true);
+		servletContextHandler.addServlet(atmosphereServletHolder, "/ws/*");
 
-        HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{cpr, servletContextHandler});
+		ResourceHandler cpr = new ResourceHandler();
+		cpr.setBaseResource(Resource.newClassPathResource("/public_html/"));
+		cpr.setDirectoriesListed(true);
 
-        server.setHandler(handlers);
-        server.setStopAtShutdown(true);
-        server.start();
-        server.join();
-    }
+		HandlerList handlers = new HandlerList();
+		handlers.setHandlers(new Handler[] { cpr, servletContextHandler });
 
-    public MessagingService getMessagingService() {
-        return messagingService;
-    }
+		server.setHandler(handlers);
+		server.setStopAtShutdown(true);
+		server.start();
+		server.join();
+	}
 
-    public SimpleLoggerFactory getLoggerFactory() {
-        return loggerFactory;
-    }
+	public MessagingService getMessagingService() {
+		return messagingService;
+	}
 
-    public Logger getLogger() {
-        return logger;
-    }
+	public SimpleLoggerFactory getLoggerFactory() {
+		return loggerFactory;
+	}
 
-    public TrackCommunicationServiceLocator getLocator() {
-        return locator;
-    }
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public TrackCommunicationServiceLocator getLocator() {
+		return locator;
+	}
 }
