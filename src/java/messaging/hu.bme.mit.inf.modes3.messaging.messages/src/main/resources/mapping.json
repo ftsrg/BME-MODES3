@@ -16,6 +16,7 @@
 		"TrainReferenceSpeedMessage": "/modes3/all",
 		"TurnoutReferenceStateMessage": "/modes3/all",
 		"TurnoutStateMessage": "/modes3/turnout",
+		"BarrierStateMessage": "barrier/gate",
 		"default": "/modes3/all"
 	}
 }
