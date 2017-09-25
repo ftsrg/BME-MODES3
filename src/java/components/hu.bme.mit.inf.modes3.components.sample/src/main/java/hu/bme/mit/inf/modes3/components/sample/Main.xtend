@@ -12,16 +12,12 @@ class Main {
 
 		val registry = new ArgumentRegistry(loggerFactory)
 		registry.registerArgumentWithOptions(
-			new ArgumentDescriptorWithParameter("config", "The configuration used", String))
-		registry.registerArgumentWithOptions(
-			new ArgumentDescriptorWithParameter("id", "The ID of the component", String))
-		registry.registerArgumentWithOptions(
 			new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
 		registry.registerArgumentWithOptions(
 			new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
 		registry.parseArguments(args)
 
-		val stack = MessagingServiceFactory::createMQTTStack(registry, loggerFactory)
+		val stack = MessagingServiceFactory::createStackForEveryTopic(registry, loggerFactory)
 		val sampleComponent = new SampleComponent(stack, loggerFactory)
 		val sampleComponentThread = new Thread(sampleComponent)
 		sampleComponentThread.run
