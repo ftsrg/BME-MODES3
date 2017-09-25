@@ -3,9 +3,9 @@ package hu.bme.mit.inf.modes3.transports.common
 import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 
 abstract class Transport {
-	protected val TransportConfiguration config;
+	protected var TransportConfiguration config;
 	
-	new(TransportConfiguration config) {
+	new(TransportConfiguration config){
 		this.config = config
 	}
 	

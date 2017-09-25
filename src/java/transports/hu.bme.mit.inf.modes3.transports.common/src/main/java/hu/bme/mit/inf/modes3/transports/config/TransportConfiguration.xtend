@@ -4,8 +4,8 @@ import org.eclipse.xtend.lib.annotations.Data
 
 @Data
 class TransportConfiguration {
-	String id;
-	String addr;
-	Integer port;
+	String id
+	String addr
+	Integer port
 }
 
