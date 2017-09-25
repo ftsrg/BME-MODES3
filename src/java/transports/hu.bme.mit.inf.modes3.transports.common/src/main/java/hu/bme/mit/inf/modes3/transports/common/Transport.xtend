@@ -13,4 +13,8 @@ abstract class Transport {
 	def byte[] receiveMessage();
 	def void sendMessage(byte[] message);
 	def void close();
+	
+	override toString(){
+		'''«config»'''
+	}
 }

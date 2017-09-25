@@ -2,5 +2,5 @@ apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 
 dependencies {
-
+	compile project(':utils:hu.bme.mit.inf.modes3.utils.common')
 }

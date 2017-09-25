@@ -32,9 +32,9 @@ class MQTTConnection implements MqttCallback {
 		this.postboxesByTopic = new ConcurrentHashMap
 	}
 
-	def connect() {
+	def synchronized connect() {
 		if (client === null || !client.connected) {
-			logger.debug('''Connection attempt to: «configuration.addr»:«configuration.port» as «configuration.id»''')
+			logger.debug('''«logMessagePrefix» connection attempt''')
 			client = new MqttAsyncClient('''tcp://«configuration.addr»''', configuration.id)
 			client.callback = this
 
@@ -44,7 +44,7 @@ class MQTTConnection implements MqttCallback {
 			while (!client.connected) {
 				try {
 					client.connect(options).waitForCompletion(CONNECTION_WAIT_FOR_COMPLETION_TIMEOUT)
-					logger.info('''MQTT transport is connected to «configuration.addr»''')
+					logger.info('''«logMessagePrefix» is connected''')
 				} catch (Exception e) {
 					logger.error(e.message, e)
 					Thread.sleep(2500)
@@ -62,7 +62,7 @@ class MQTTConnection implements MqttCallback {
 			postboxes = ConcurrentHashMap.newKeySet
 			postboxes.add(postbox)
 			postboxesByTopic.put(topic, postboxes)
-			logger.info('''MQTT transport is subscribed to «topic»''')
+			logger.info('''«logMessagePrefix» is subscribed to «topic»''')
 		} else {
 			postboxes.add(postbox)
 		}
@@ -78,13 +78,21 @@ class MQTTConnection implements MqttCallback {
 			if (postboxes.isEmpty) {
 				client.unsubscribe(topic)
 				postboxes.remove(topic)
-				logger.info('''MQTT transport is unsubscribed from «topic»''')
+				logger.info('''«logMessagePrefix» is unsubscribed from «topic»''')
 			}
 		}
 	}
 
-	def close() {
-		client?.disconnect.waitForCompletion
+	def synchronized close() {
+		if (!postboxesByTopic.isEmpty) {
+			val subscribedTopics = String.join(", ", postboxesByTopic.keySet)
+			logger.warn('''«logMessagePrefix» is not unsubscribed from the following topics: «subscribedTopics»''')
+			postboxesByTopic.keySet.forEach[client.unsubscribe(it)]
+			logger.warn('''«logMessagePrefix» is unsubscribed from the following topics: «subscribedTopics»''')
+		}
+		if (client.isConnected) {
+			client.disconnect.waitForCompletion
+		}
 	}
 
 	def send(String topic, byte[] message) {
@@ -94,9 +102,9 @@ class MQTTConnection implements MqttCallback {
 	}
 
 	override connectionLost(Throwable cause) {
-		logger.info('''MQTT connection lost with cause: «cause»''')
+		logger.info('''«logMessagePrefix» lost connection with cause: «cause»''')
 		Thread.sleep(CONNECTION_LOST_RETRY_TIMEOUT)
-		client.connect
+		connect
 	}
 
 	override deliveryComplete(IMqttDeliveryToken token) {
@@ -105,6 +113,10 @@ class MQTTConnection implements MqttCallback {
 
 	override messageArrived(String topic, MqttMessage message) throws Exception {
 		postboxesByTopic.get(topic)?.forEach[it.add(message.payload)]
+	}
+
+	private def getLogMessagePrefix() {
+		return '''MQTT transport («configuration»)'''
 	}
 
 }
