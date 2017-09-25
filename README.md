@@ -166,6 +166,7 @@ cd src/java
 
 - Should you use Eclipse with the Gradle plugin AND change something in any of the *.gradle files (either in the root `/src/java` folder or in your project's folder), do not forget to click on the project name with the right mouse button, and in the dropdown menu go to Gradle -> Plugin refresh. Otherwise, the plugin might not recognize the changes and will end up in an incorrect configuration.
 
-- Should you have build problems in Eclipse with Xtend, check if there is a `build/xtend/main` folder in the project. If so, remove the folder.
+- Should you have build problems in Eclipse with Xtend, check if there is a `build/xtend/main` and `build/xtend/test` folders in the project. If so, remove the folders. In addition to that, remove the `	<classpathentry kind="src" path="build/xtend/main"/>
+	<classpathentry kind="src" path="build/xtend/test"/>` lines from the `.classpath` file in the corresponding project.
 
 - Should some change notifications from the file system not arrive to Eclipse, don't forget to use the 'good old' right click on the project name -> Refresh project option. Restarting Eclipse might also solve problems sometimes.
