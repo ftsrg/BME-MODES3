@@ -4,7 +4,7 @@ import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
 import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
 
 abstract class TopicBasedTransport extends Transport {
-	
+
 	protected val TopicBasedTransportConfiguration config
 
 	@Deprecated
@@ -21,4 +21,12 @@ abstract class TopicBasedTransport extends Transport {
 	def void subscribe()
 
 	def void unsubscribe()
+
+	def getTopic() {
+		config.topic
+	}
+
+	override toString() {
+		'''«config»'''
+	}
 }

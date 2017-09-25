@@ -1,0 +1,21 @@
+{
+	"messageToTopicMap": {
+		"DccOperationsCommand": "/modes3/all",
+		"SegmentCommand": "/modes3/segment",
+		"SendAllStatusCommand": "/modes3/all",
+		"TrainFunctionCommand": "/modes3/all",
+		"TrainReferenceSpeedCommand": "/modes3/all",
+		"TurnoutCommand": "/modes3/turnout",
+		"ComputerVisionObjectPositionsMessage": "/modes3/all",
+		"DccOperationsStateMessage": "/modes3/all",
+		"SegmentOccupancyMessage": "/modes3/segment",
+		"SegmentStateMessage": "/modes3/segment",
+		"TrainCurrentSegmentMessage": "/modes3/all",
+		"TrainCurrentSpeedMessage": "/modes3/all",
+		"TrainFunctionStateMessage": "/modes3/all",
+		"TrainReferenceSpeedMessage": "/modes3/all",
+		"TurnoutReferenceStateMessage": "/modes3/all",
+		"TurnoutStateMessage": "/modes3/turnout",
+		"default": "/modes3/all"
+	}
+}
