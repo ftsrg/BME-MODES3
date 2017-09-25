@@ -28,5 +28,9 @@ class InternalMessageToTopicMapper {
 	def getTopic(String messageType) {
 		mapping.messageToTopicMap.get(messageType)
 	}
+	
+	def getTopics(){
+		mapping.messageToTopicMap.values.toSet
+	}
 
 }
