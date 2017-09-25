@@ -11,7 +11,7 @@ class MessagingServiceFactory {
 
 	def static createMQTTStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		return new MessagingService(
-			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadTransportConfiguration(argumentRegistry),
+			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadTopicBasedConfiguration(argumentRegistry),
 				factory), new ProtobufMessageDispatcher(factory), factory)
 	}
 
