@@ -22,8 +22,10 @@ class MessagingServiceFactory {
 		val transportConfig = ArgumentBasedTransportConfigurationLoader::loadTransportConfiguration(argumentRegistry)
 		val initialConfig = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr,
 			transportConfig.port, topics.head)
+		// create the messaging service with the first configuration
 		val mms = new TopicBasedMessagingService(new MQTTTransport(initialConfig, factory),
 			new ProtobufMessageDispatcher(factory), factory)
+		// create the other transport layers with the remaining configurations
 		topics.filter[it != topics.head].forEach [
 			val config = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr,
 				transportConfig.port, it);
