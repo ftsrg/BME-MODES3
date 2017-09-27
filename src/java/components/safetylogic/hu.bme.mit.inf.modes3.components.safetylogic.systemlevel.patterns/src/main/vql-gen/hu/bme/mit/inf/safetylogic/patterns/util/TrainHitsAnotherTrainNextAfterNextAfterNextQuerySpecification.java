@@ -4,25 +4,24 @@
 package hu.bme.mit.inf.safetylogic.patterns.util;
 
 import com.google.common.collect.Sets;
-import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch;
-import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainNextAfterNextQuerySpecification;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainNextQuerySpecification;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainsAreTooCloseQuerySpecification;
+import hu.bme.mit.inf.safetylogic.patterns.util.NextSectionQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
+import org.eclipse.viatra.query.runtime.api.ViatraQueryMatcher;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFPQuery;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecification;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
+import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory;
 import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
+import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.PositivePatternCall;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicenumerables.TypeConstraint;
@@ -32,15 +31,15 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.queries.QueryInitializa
 import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
 
 /**
- * A pattern-specific query specification that can instantiate TrainHitsAnotherTrainMatcher in a type-safe way.
+ * A pattern-specific query specification that can instantiate TrainHitsAnotherTrainNextAfterNextAfterNextMatcher in a type-safe way.
  * 
- * @see TrainHitsAnotherTrainMatcher
- * @see TrainHitsAnotherTrainMatch
+ * @see TrainHitsAnotherTrainNextAfterNextAfterNextMatcher
+ * @see TrainHitsAnotherTrainNextAfterNextAfterNextMatch
  * 
  */
 @SuppressWarnings("all")
-public final class TrainHitsAnotherTrainQuerySpecification extends BaseGeneratedEMFQuerySpecification<TrainHitsAnotherTrainMatcher> {
-  private TrainHitsAnotherTrainQuerySpecification() {
+final class TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification extends BaseGeneratedEMFQuerySpecification<ViatraQueryMatcher<IPatternMatch>> {
+  private TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification() {
     super(GeneratedPQuery.INSTANCE);
   }
   
@@ -49,7 +48,7 @@ public final class TrainHitsAnotherTrainQuerySpecification extends BaseGenerated
    * @throws ViatraQueryException if the pattern definition could not be loaded
    * 
    */
-  public static TrainHitsAnotherTrainQuerySpecification instance() throws ViatraQueryException {
+  public static TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification instance() throws ViatraQueryException {
     try{
     	return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
@@ -58,35 +57,35 @@ public final class TrainHitsAnotherTrainQuerySpecification extends BaseGenerated
   }
   
   @Override
-  protected TrainHitsAnotherTrainMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
-    return TrainHitsAnotherTrainMatcher.on(engine);
+  protected ViatraQueryMatcher instantiate(final ViatraQueryEngine engine) throws ViatraQueryException {
+    throw new UnsupportedOperationException();
   }
   
   @Override
-  public TrainHitsAnotherTrainMatcher instantiate() throws ViatraQueryException {
-    return TrainHitsAnotherTrainMatcher.create();
+  public ViatraQueryMatcher instantiate() throws ViatraQueryException {
+    throw new UnsupportedOperationException();
   }
   
   @Override
-  public TrainHitsAnotherTrainMatch newEmptyMatch() {
-    return TrainHitsAnotherTrainMatch.newEmptyMatch();
+  public IPatternMatch newEmptyMatch() {
+    throw new UnsupportedOperationException();
   }
   
   @Override
-  public TrainHitsAnotherTrainMatch newMatch(final Object... parameters) {
-    return TrainHitsAnotherTrainMatch.newMatch((hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train) parameters[0], (hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train) parameters[1]);
+  public IPatternMatch newMatch(final Object... parameters) {
+    throw new UnsupportedOperationException();
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link TrainHitsAnotherTrainQuerySpecification} to be created 
+   * Inner class allowing the singleton instance of {@link TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification} to be created 
    * 	<b>not</b> at the class load time of the outer class, 
-   * 	but rather at the first call to {@link TrainHitsAnotherTrainQuerySpecification#instance()}.
+   * 	but rather at the first call to {@link TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
    */
   private static class LazyHolder {
-    private final static TrainHitsAnotherTrainQuerySpecification INSTANCE = new TrainHitsAnotherTrainQuerySpecification();
+    private final static TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification INSTANCE = new TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification();
     
     /**
      * Statically initializes the query specification <b>after</b> the field {@link #INSTANCE} is assigned.
@@ -104,7 +103,7 @@ public final class TrainHitsAnotherTrainQuerySpecification extends BaseGenerated
   }
   
   private static class GeneratedPQuery extends BaseGeneratedEMFPQuery {
-    private final static TrainHitsAnotherTrainQuerySpecification.GeneratedPQuery INSTANCE = new GeneratedPQuery();
+    private final static TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification.GeneratedPQuery INSTANCE = new GeneratedPQuery();
     
     private final PParameter parameter_pOffender = new PParameter("Offender", "hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train", new EClassTransitiveInstancesKey((EClass)getClassifierLiteralSafe("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")), PParameterDirection.INOUT);
     
@@ -114,7 +113,7 @@ public final class TrainHitsAnotherTrainQuerySpecification extends BaseGenerated
     
     @Override
     public String getFullyQualifiedName() {
-      return "hu.bme.mit.inf.safetylogic.patterns.trainHitsAnotherTrain";
+      return "hu.bme.mit.inf.safetylogic.patterns.trainHitsAnotherTrainNextAfterNextAfterNext";
     }
     
     @Override
@@ -136,56 +135,38 @@ public final class TrainHitsAnotherTrainQuerySpecification extends BaseGenerated
       		PBody body = new PBody(this);
       		PVariable var_Offender = body.getOrCreateVariableByName("Offender");
       		PVariable var_Victim = body.getOrCreateVariableByName("Victim");
+      		PVariable var_CurrentPosition = body.getOrCreateVariableByName("CurrentPosition");
+      		PVariable var_OldPosition = body.getOrCreateVariableByName("OldPosition");
+      		PVariable var_NextPosition = body.getOrCreateVariableByName("NextPosition");
+      		PVariable var_NextPositionAfterNextPosition = body.getOrCreateVariableByName("NextPositionAfterNextPosition");
+      		PVariable var_NextPositionAfterNextPositionAfterNextPosition = body.getOrCreateVariableByName("NextPositionAfterNextPositionAfterNextPosition");
       		new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
       		new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
       		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
       		   new ExportedParameter(body, var_Offender, parameter_pOffender),
       		   new ExportedParameter(body, var_Victim, parameter_pVictim)
       		));
-      		// 	find trainHitsAnotherTrainNext(Offender, Victim)
-      		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainHitsAnotherTrainNextQuerySpecification.instance().getInternalQueryRepresentation());
-      		bodies.add(body);
-      	}
-      	{
-      		PBody body = new PBody(this);
-      		PVariable var_Offender = body.getOrCreateVariableByName("Offender");
-      		PVariable var_Victim = body.getOrCreateVariableByName("Victim");
+      		// 	Train.currentlyOn(Offender, CurrentPosition)
       		new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-      		new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_Offender, parameter_pOffender),
-      		   new ExportedParameter(body, var_Victim, parameter_pVictim)
-      		));
-      		// 	find trainHitsAnotherTrainNextAfterNext(Offender, Victim)
-      		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainHitsAnotherTrainNextAfterNextQuerySpecification.instance().getInternalQueryRepresentation());
-      		bodies.add(body);
-      	}
-      	{
-      		PBody body = new PBody(this);
-      		PVariable var_Offender = body.getOrCreateVariableByName("Offender");
-      		PVariable var_Victim = body.getOrCreateVariableByName("Victim");
+      		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
+      		new TypeConstraint(body, new FlatTuple(var_Offender, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+      		new Equality(body, var__virtual_0_, var_CurrentPosition);
+      		// 	Train.previouslyOn(Offender, OldPosition)
       		new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
+      		new TypeConstraint(body, new FlatTuple(var_Offender, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "previouslyOn")));
+      		new Equality(body, var__virtual_1_, var_OldPosition);
+      		// 		find nextSection(OldPosition, CurrentPosition, NextPosition)
+      		new PositivePatternCall(body, new FlatTuple(var_OldPosition, var_CurrentPosition, var_NextPosition), NextSectionQuerySpecification.instance().getInternalQueryRepresentation());
+      		// 	find nextSection(CurrentPosition, NextPosition, NextPositionAfterNextPosition)
+      		new PositivePatternCall(body, new FlatTuple(var_CurrentPosition, var_NextPosition, var_NextPositionAfterNextPosition), NextSectionQuerySpecification.instance().getInternalQueryRepresentation());
+      		// 	find nextSection(NextPosition, NextPositionAfterNextPosition, NextPositionAfterNextPositionAfterNextPosition)
+      		new PositivePatternCall(body, new FlatTuple(var_NextPosition, var_NextPositionAfterNextPosition, var_NextPositionAfterNextPositionAfterNextPosition), NextSectionQuerySpecification.instance().getInternalQueryRepresentation());
+      		// 		Train.currentlyOn(Victim, NextPositionAfterNextPositionAfterNextPosition)
       		new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_Offender, parameter_pOffender),
-      		   new ExportedParameter(body, var_Victim, parameter_pVictim)
-      		));
-      		// 	find trainsAreTooClose(Offender, Victim)
-      		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainsAreTooCloseQuerySpecification.instance().getInternalQueryRepresentation());
-      		bodies.add(body);
-      	}
-      	{
-      		PBody body = new PBody(this);
-      		PVariable var_Offender = body.getOrCreateVariableByName("Offender");
-      		PVariable var_Victim = body.getOrCreateVariableByName("Victim");
-      		new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-      		new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-      		   new ExportedParameter(body, var_Offender, parameter_pOffender),
-      		   new ExportedParameter(body, var_Victim, parameter_pVictim)
-      		));
-      		// 	find trainHitsAnotherTrainNextAfterNextAfterNext(Offender, Victim)
-      		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainHitsAnotherTrainNextAfterNextAfterNextQuerySpecification.instance().getInternalQueryRepresentation());
+      		PVariable var__virtual_2_ = body.getOrCreateVariableByName(".virtual{2}");
+      		new TypeConstraint(body, new FlatTuple(var_Victim, var__virtual_2_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+      		new Equality(body, var__virtual_2_, var_NextPositionAfterNextPositionAfterNextPosition);
       		bodies.add(body);
       	}
       	// to silence compiler error

@@ -3,8 +3,9 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainQuerySpecification;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainTrailingTurnoutQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
@@ -12,27 +13,27 @@ import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 
 /**
- * Pattern-specific match representation of the hu.bme.mit.inf.safetylogic.patterns.trainHitsAnotherTrain pattern,
- * to be used in conjunction with {@link TrainHitsAnotherTrainMatcher}.
+ * Pattern-specific match representation of the hu.bme.mit.inf.safetylogic.patterns.trainTrailingTurnout pattern,
+ * to be used in conjunction with {@link TrainTrailingTurnoutMatcher}.
  * 
  * <p>Class fields correspond to parameters of the pattern. Fields with value null are considered unassigned.
  * Each instance is a (possibly partial) substitution of pattern parameters,
  * usable to represent a match of the pattern in the result of a query,
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
- * @see TrainHitsAnotherTrainMatcher
- * @see TrainHitsAnotherTrainProcessor
+ * @see TrainTrailingTurnoutMatcher
+ * @see TrainTrailingTurnoutProcessor
  * 
  */
 @SuppressWarnings("all")
-public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
+public abstract class TrainTrailingTurnoutMatch extends BasePatternMatch {
   private Train fOffender;
   
-  private Train fVictim;
+  private RailRoadElement fVictim;
   
   private static List<String> parameterNames = makeImmutableList("Offender", "Victim");
   
-  private TrainHitsAnotherTrainMatch(final Train pOffender, final Train pVictim) {
+  private TrainTrailingTurnoutMatch(final Train pOffender, final RailRoadElement pVictim) {
     this.fOffender = pOffender;
     this.fVictim = pVictim;
   }
@@ -48,7 +49,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
     return this.fOffender;
   }
   
-  public Train getVictim() {
+  public RailRoadElement getVictim() {
     return this.fVictim;
   }
   
@@ -60,7 +61,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
     	return true;
     }
     if ("Victim".equals(parameterName) ) {
-    	this.fVictim = (Train) newValue;
+    	this.fVictim = (RailRoadElement) newValue;
     	return true;
     }
     return false;
@@ -71,19 +72,19 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
     this.fOffender = pOffender;
   }
   
-  public void setVictim(final Train pVictim) {
+  public void setVictim(final RailRoadElement pVictim) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     this.fVictim = pVictim;
   }
   
   @Override
   public String patternName() {
-    return "hu.bme.mit.inf.safetylogic.patterns.trainHitsAnotherTrain";
+    return "hu.bme.mit.inf.safetylogic.patterns.trainTrailingTurnout";
   }
   
   @Override
   public List<String> parameterNames() {
-    return TrainHitsAnotherTrainMatch.parameterNames;
+    return TrainTrailingTurnoutMatch.parameterNames;
   }
   
   @Override
@@ -92,7 +93,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
   }
   
   @Override
-  public TrainHitsAnotherTrainMatch toImmutable() {
+  public TrainTrailingTurnoutMatch toImmutable() {
     return isMutable() ? newMatch(fOffender, fVictim) : this;
   }
   
@@ -119,7 +120,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
   public boolean equals(final Object obj) {
     if (this == obj)
     	return true;
-    if (!(obj instanceof TrainHitsAnotherTrainMatch)) { // this should be infrequent
+    if (!(obj instanceof TrainTrailingTurnoutMatch)) { // this should be infrequent
     	if (obj == null) {
     		return false;
     	}
@@ -131,7 +132,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
     		return false;
     	return Arrays.deepEquals(toArray(), otherSig.toArray());
     }
-    TrainHitsAnotherTrainMatch other = (TrainHitsAnotherTrainMatch) obj;
+    TrainTrailingTurnoutMatch other = (TrainTrailingTurnoutMatch) obj;
     if (fOffender == null) {if (other.fOffender != null) return false;}
     else if (!fOffender.equals(other.fOffender)) return false;
     if (fVictim == null) {if (other.fVictim != null) return false;}
@@ -140,9 +141,9 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
   }
   
   @Override
-  public TrainHitsAnotherTrainQuerySpecification specification() {
+  public TrainTrailingTurnoutQuerySpecification specification() {
     try {
-    	return TrainHitsAnotherTrainQuerySpecification.instance();
+    	return TrainTrailingTurnoutQuerySpecification.instance();
     } catch (ViatraQueryException ex) {
      	// This cannot happen, as the match object can only be instantiated if the query specification exists
      	throw new IllegalStateException (ex);
@@ -156,7 +157,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
    * @return the empty match.
    * 
    */
-  public static TrainHitsAnotherTrainMatch newEmptyMatch() {
+  public static TrainTrailingTurnoutMatch newEmptyMatch() {
     return new Mutable(null, null);
   }
   
@@ -169,7 +170,7 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
    * @return the new, mutable (partial) match object.
    * 
    */
-  public static TrainHitsAnotherTrainMatch newMutableMatch(final Train pOffender, final Train pVictim) {
+  public static TrainTrailingTurnoutMatch newMutableMatch(final Train pOffender, final RailRoadElement pVictim) {
     return new Mutable(pOffender, pVictim);
   }
   
@@ -182,12 +183,12 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
    * @return the (partial) match object.
    * 
    */
-  public static TrainHitsAnotherTrainMatch newMatch(final Train pOffender, final Train pVictim) {
+  public static TrainTrailingTurnoutMatch newMatch(final Train pOffender, final RailRoadElement pVictim) {
     return new Immutable(pOffender, pVictim);
   }
   
-  private static final class Mutable extends TrainHitsAnotherTrainMatch {
-    Mutable(final Train pOffender, final Train pVictim) {
+  private static final class Mutable extends TrainTrailingTurnoutMatch {
+    Mutable(final Train pOffender, final RailRoadElement pVictim) {
       super(pOffender, pVictim);
     }
     
@@ -197,8 +198,8 @@ public abstract class TrainHitsAnotherTrainMatch extends BasePatternMatch {
     }
   }
   
-  private static final class Immutable extends TrainHitsAnotherTrainMatch {
-    Immutable(final Train pOffender, final Train pVictim) {
+  private static final class Immutable extends TrainTrailingTurnoutMatch {
+    Immutable(final Train pOffender, final RailRoadElement pVictim) {
       super(pOffender, pVictim);
     }
     

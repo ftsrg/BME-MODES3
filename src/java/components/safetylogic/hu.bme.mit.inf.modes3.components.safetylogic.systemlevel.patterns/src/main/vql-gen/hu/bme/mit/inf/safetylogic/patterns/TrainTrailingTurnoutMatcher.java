@@ -3,9 +3,10 @@
  */
 package hu.bme.mit.inf.safetylogic.patterns;
 
+import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.RailRoadElement;
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train;
-import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch;
-import hu.bme.mit.inf.safetylogic.patterns.util.TrainHitsAnotherTrainQuerySpecification;
+import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatch;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainTrailingTurnoutQuerySpecification;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,34 +20,30 @@ import org.eclipse.viatra.query.runtime.matchers.tuple.Tuple;
 import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
 
 /**
- * Generated pattern matcher API of the hu.bme.mit.inf.safetylogic.patterns.trainHitsAnotherTrain pattern,
+ * Generated pattern matcher API of the hu.bme.mit.inf.safetylogic.patterns.trainTrailingTurnout pattern,
  * providing pattern-specific query methods.
  * 
  * <p>Use the pattern matcher on a given model via {@link #on(ViatraQueryEngine)},
  * e.g. in conjunction with {@link ViatraQueryEngine#on(Notifier)}.
  * 
- * <p>Matches of the pattern will be represented as {@link TrainHitsAnotherTrainMatch}.
+ * <p>Matches of the pattern will be represented as {@link TrainTrailingTurnoutMatch}.
  * 
  * <p>Original source:
  * <code><pre>
- * pattern trainHitsAnotherTrain(Offender : Train, Victim : Train){
- * 	find trainHitsAnotherTrainNext(Offender, Victim);
+ * pattern trainTrailingTurnout(Offender : Train, Victim : RailRoadElement){
+ * 	find trainDerailsOnNextTurnout(Offender, Victim);
  * } or {
- * 	find trainHitsAnotherTrainNextAfterNext(Offender, Victim);
- * } or {
- * 	find trainsAreTooClose(Offender, Victim);
- * } or {
- * 	find trainHitsAnotherTrainNextAfterNextAfterNext(Offender, Victim);
+ * 	find trainDerailsOnTurnoutNextAfterNext(Offender, Victim);
  * }
  * </pre></code>
  * 
- * @see TrainHitsAnotherTrainMatch
- * @see TrainHitsAnotherTrainProcessor
- * @see TrainHitsAnotherTrainQuerySpecification
+ * @see TrainTrailingTurnoutMatch
+ * @see TrainTrailingTurnoutProcessor
+ * @see TrainTrailingTurnoutQuerySpecification
  * 
  */
 @SuppressWarnings("all")
-public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTrainMatch> {
+public class TrainTrailingTurnoutMatcher extends BaseMatcher<TrainTrailingTurnoutMatch> {
   /**
    * Initializes the pattern matcher within an existing VIATRA Query engine.
    * If the pattern matcher is already constructed in the engine, only a light-weight reference is returned.
@@ -55,11 +52,11 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  public static TrainHitsAnotherTrainMatcher on(final ViatraQueryEngine engine) throws ViatraQueryException {
+  public static TrainTrailingTurnoutMatcher on(final ViatraQueryEngine engine) throws ViatraQueryException {
     // check if matcher already exists
-    TrainHitsAnotherTrainMatcher matcher = engine.getExistingMatcher(querySpecification());
+    TrainTrailingTurnoutMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = (TrainHitsAnotherTrainMatcher)engine.getMatcher(querySpecification());
+    	matcher = (TrainTrailingTurnoutMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -70,15 +67,15 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @noreference This method is for internal matcher initialization by the framework, do not call it manually.
    * 
    */
-  public static TrainHitsAnotherTrainMatcher create() throws ViatraQueryException {
-    return new TrainHitsAnotherTrainMatcher();
+  public static TrainTrailingTurnoutMatcher create() throws ViatraQueryException {
+    return new TrainTrailingTurnoutMatcher();
   }
   
   private final static int POSITION_OFFENDER = 0;
   
   private final static int POSITION_VICTIM = 1;
   
-  private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(TrainHitsAnotherTrainMatcher.class);
+  private final static Logger LOGGER = ViatraQueryLoggingUtil.getLogger(TrainTrailingTurnoutMatcher.class);
   
   /**
    * Initializes the pattern matcher within an existing VIATRA Query engine.
@@ -88,7 +85,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @throws ViatraQueryException if an error occurs during pattern matcher creation
    * 
    */
-  private TrainHitsAnotherTrainMatcher() throws ViatraQueryException {
+  private TrainTrailingTurnoutMatcher() throws ViatraQueryException {
     super(querySpecification());
   }
   
@@ -96,10 +93,10 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * Returns the set of all matches of the pattern that conform to the given fixed values of some parameters.
    * @param pOffender the fixed value of pattern parameter Offender, or null if not bound.
    * @param pVictim the fixed value of pattern parameter Victim, or null if not bound.
-   * @return matches represented as a TrainHitsAnotherTrainMatch object.
+   * @return matches represented as a TrainTrailingTurnoutMatch object.
    * 
    */
-  public Collection<TrainHitsAnotherTrainMatch> getAllMatches(final Train pOffender, final Train pVictim) {
+  public Collection<TrainTrailingTurnoutMatch> getAllMatches(final Train pOffender, final RailRoadElement pVictim) {
     return rawGetAllMatches(new Object[]{pOffender, pVictim});
   }
   
@@ -108,10 +105,10 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * Neither determinism nor randomness of selection is guaranteed.
    * @param pOffender the fixed value of pattern parameter Offender, or null if not bound.
    * @param pVictim the fixed value of pattern parameter Victim, or null if not bound.
-   * @return a match represented as a TrainHitsAnotherTrainMatch object, or null if no match is found.
+   * @return a match represented as a TrainTrailingTurnoutMatch object, or null if no match is found.
    * 
    */
-  public TrainHitsAnotherTrainMatch getOneArbitraryMatch(final Train pOffender, final Train pVictim) {
+  public TrainTrailingTurnoutMatch getOneArbitraryMatch(final Train pOffender, final RailRoadElement pVictim) {
     return rawGetOneArbitraryMatch(new Object[]{pOffender, pVictim});
   }
   
@@ -123,7 +120,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return true if the input is a valid (partial) match of the pattern.
    * 
    */
-  public boolean hasMatch(final Train pOffender, final Train pVictim) {
+  public boolean hasMatch(final Train pOffender, final RailRoadElement pVictim) {
     return rawHasMatch(new Object[]{pOffender, pVictim});
   }
   
@@ -134,7 +131,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the number of pattern matches found.
    * 
    */
-  public int countMatches(final Train pOffender, final Train pVictim) {
+  public int countMatches(final Train pOffender, final RailRoadElement pVictim) {
     return rawCountMatches(new Object[]{pOffender, pVictim});
   }
   
@@ -145,7 +142,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @param processor the action that will process each pattern match.
    * 
    */
-  public void forEachMatch(final Train pOffender, final Train pVictim, final IMatchProcessor<? super TrainHitsAnotherTrainMatch> processor) {
+  public void forEachMatch(final Train pOffender, final RailRoadElement pVictim, final IMatchProcessor<? super TrainTrailingTurnoutMatch> processor) {
     rawForEachMatch(new Object[]{pOffender, pVictim}, processor);
   }
   
@@ -158,7 +155,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return true if the pattern has at least one match with the given parameter values, false if the processor was not invoked
    * 
    */
-  public boolean forOneArbitraryMatch(final Train pOffender, final Train pVictim, final IMatchProcessor<? super TrainHitsAnotherTrainMatch> processor) {
+  public boolean forOneArbitraryMatch(final Train pOffender, final RailRoadElement pVictim, final IMatchProcessor<? super TrainTrailingTurnoutMatch> processor) {
     return rawForOneArbitraryMatch(new Object[]{pOffender, pVictim}, processor);
   }
   
@@ -171,8 +168,8 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the (partial) match object.
    * 
    */
-  public TrainHitsAnotherTrainMatch newMatch(final Train pOffender, final Train pVictim) {
-    return TrainHitsAnotherTrainMatch.newMatch(pOffender, pVictim);
+  public TrainTrailingTurnoutMatch newMatch(final Train pOffender, final RailRoadElement pVictim) {
+    return TrainTrailingTurnoutMatch.newMatch(pOffender, pVictim);
   }
   
   /**
@@ -200,7 +197,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<Train> getAllValuesOfOffender(final TrainHitsAnotherTrainMatch partialMatch) {
+  public Set<Train> getAllValuesOfOffender(final TrainTrailingTurnoutMatch partialMatch) {
     return rawAccumulateAllValuesOfOffender(partialMatch.toArray());
   }
   
@@ -209,7 +206,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<Train> getAllValuesOfOffender(final Train pVictim) {
+  public Set<Train> getAllValuesOfOffender(final RailRoadElement pVictim) {
     return rawAccumulateAllValuesOfOffender(new Object[]{
     null, 
     pVictim
@@ -221,8 +218,8 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  protected Set<Train> rawAccumulateAllValuesOfVictim(final Object[] parameters) {
-    Set<Train> results = new HashSet<Train>();
+  protected Set<RailRoadElement> rawAccumulateAllValuesOfVictim(final Object[] parameters) {
+    Set<RailRoadElement> results = new HashSet<RailRoadElement>();
     rawAccumulateAllValues(POSITION_VICTIM, parameters, results);
     return results;
   }
@@ -232,7 +229,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<Train> getAllValuesOfVictim() {
+  public Set<RailRoadElement> getAllValuesOfVictim() {
     return rawAccumulateAllValuesOfVictim(emptyArray());
   }
   
@@ -241,7 +238,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<Train> getAllValuesOfVictim(final TrainHitsAnotherTrainMatch partialMatch) {
+  public Set<RailRoadElement> getAllValuesOfVictim(final TrainTrailingTurnoutMatch partialMatch) {
     return rawAccumulateAllValuesOfVictim(partialMatch.toArray());
   }
   
@@ -250,7 +247,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
-  public Set<Train> getAllValuesOfVictim(final Train pOffender) {
+  public Set<RailRoadElement> getAllValuesOfVictim(final Train pOffender) {
     return rawAccumulateAllValuesOfVictim(new Object[]{
     pOffender, 
     null
@@ -258,9 +255,9 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   }
   
   @Override
-  protected TrainHitsAnotherTrainMatch tupleToMatch(final Tuple t) {
+  protected TrainTrailingTurnoutMatch tupleToMatch(final Tuple t) {
     try {
-    	return TrainHitsAnotherTrainMatch.newMatch((Train) t.get(POSITION_OFFENDER), (Train) t.get(POSITION_VICTIM));
+    	return TrainTrailingTurnoutMatch.newMatch((Train) t.get(POSITION_OFFENDER), (RailRoadElement) t.get(POSITION_VICTIM));
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in tuple not properly typed!",e);
     	return null;
@@ -268,9 +265,9 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   }
   
   @Override
-  protected TrainHitsAnotherTrainMatch arrayToMatch(final Object[] match) {
+  protected TrainTrailingTurnoutMatch arrayToMatch(final Object[] match) {
     try {
-    	return TrainHitsAnotherTrainMatch.newMatch((Train) match[POSITION_OFFENDER], (Train) match[POSITION_VICTIM]);
+    	return TrainTrailingTurnoutMatch.newMatch((Train) match[POSITION_OFFENDER], (RailRoadElement) match[POSITION_VICTIM]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -278,9 +275,9 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
   }
   
   @Override
-  protected TrainHitsAnotherTrainMatch arrayToMatchMutable(final Object[] match) {
+  protected TrainTrailingTurnoutMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TrainHitsAnotherTrainMatch.newMutableMatch((Train) match[POSITION_OFFENDER], (Train) match[POSITION_VICTIM]);
+    	return TrainTrailingTurnoutMatch.newMutableMatch((Train) match[POSITION_OFFENDER], (RailRoadElement) match[POSITION_VICTIM]);
     } catch(ClassCastException e) {
     	LOGGER.error("Element(s) in array not properly typed!",e);
     	return null;
@@ -292,7 +289,7 @@ public class TrainHitsAnotherTrainMatcher extends BaseMatcher<TrainHitsAnotherTr
    * @throws ViatraQueryException if the pattern definition could not be loaded
    * 
    */
-  public static IQuerySpecification<TrainHitsAnotherTrainMatcher> querySpecification() throws ViatraQueryException {
-    return TrainHitsAnotherTrainQuerySpecification.instance();
+  public static IQuerySpecification<TrainTrailingTurnoutMatcher> querySpecification() throws ViatraQueryException {
+    return TrainTrailingTurnoutQuerySpecification.instance();
   }
 }
