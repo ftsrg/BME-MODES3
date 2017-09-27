@@ -18,7 +18,7 @@ before_script:
 script:
 - cd src/java
 - ./gradlew clean assemble
-- ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarqube.com
+- ./gradlew sonarqube -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarqube.com -x test
 before_cache:
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
 - rm -fr $HOME/.gradle/caches/*/plugin-resolution/

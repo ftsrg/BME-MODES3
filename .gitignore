@@ -90,3 +90,6 @@ atlassian-ide-plugin.xml
 # ----
 **/*.log
 
+# VS Code
+# -------
+**/.lck
