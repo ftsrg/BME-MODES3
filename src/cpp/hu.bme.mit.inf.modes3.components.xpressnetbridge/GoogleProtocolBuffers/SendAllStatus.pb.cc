@@ -19,108 +19,114 @@
 
 namespace modes3 {
 namespace protobuf {
+class SendAllStatusDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<SendAllStatus>
+     _instance;
+} _SendAllStatus_default_instance_;
+
+namespace protobuf_SendAllStatus_2eproto {
+
 
 namespace {
 
-const ::google::protobuf::Descriptor* SendAllStatus_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  SendAllStatus_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
 
 }  // namespace
 
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
+};
 
-void protobuf_AssignDesc_SendAllStatus_2eproto() GOOGLE_ATTRIBUTE_COLD;
-void protobuf_AssignDesc_SendAllStatus_2eproto() {
-  protobuf_AddDesc_SendAllStatus_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "SendAllStatus.proto");
-  GOOGLE_CHECK(file != NULL);
-  SendAllStatus_descriptor_ = file->message_type(0);
-  static const int SendAllStatus_offsets_[1] = {
-  };
-  SendAllStatus_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      SendAllStatus_descriptor_,
-      SendAllStatus::internal_default_instance(),
-      SendAllStatus_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(SendAllStatus),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SendAllStatus, _internal_metadata_));
-}
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ::google::protobuf::internal::AuxillaryParseTableField(),
+};
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+};
+
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SendAllStatus, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+};
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, sizeof(SendAllStatus)},
+};
+
+static ::google::protobuf::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::google::protobuf::Message*>(&_SendAllStatus_default_instance_),
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+void protobuf_AssignDescriptors() {
+  AddDescriptors();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "SendAllStatus.proto", schemas, file_default_instances, TableStruct::offsets, factory,
+      file_level_metadata, NULL, NULL);
+}
+
 void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_SendAllStatus_2eproto);
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      SendAllStatus_descriptor_, SendAllStatus::internal_default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
-
-void protobuf_ShutdownFile_SendAllStatus_2eproto() {
-  SendAllStatus_default_instance_.Shutdown();
-  delete SendAllStatus_reflection_;
-}
-
-void protobuf_InitDefaults_SendAllStatus_2eproto_impl() {
+void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::modes3::protobuf::protobuf_InitDefaults_Enums_2eproto();
-  SendAllStatus_default_instance_.DefaultConstruct();
-  SendAllStatus_default_instance_.get_mutable()->InitAsDefaultInstance();
-}
+  ::google::protobuf::internal::InitProtobufDefaults();
+  ::modes3::protobuf::protobuf_Enums_2eproto::InitDefaults();
+  _SendAllStatus_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_SendAllStatus_default_instance_);}
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_SendAllStatus_2eproto_once_);
-void protobuf_InitDefaults_SendAllStatus_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_InitDefaults_SendAllStatus_2eproto_once_,
-                 &protobuf_InitDefaults_SendAllStatus_2eproto_impl);
+void InitDefaults() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
-void protobuf_AddDesc_SendAllStatus_2eproto_impl() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  protobuf_InitDefaults_SendAllStatus_2eproto();
+namespace {
+void AddDescriptorsImpl() {
+  InitDefaults();
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+      "\n\023SendAllStatus.proto\022\017modes3.protobuf\032\013"
+      "Enums.proto\"\017\n\rSendAllStatusB0\n,hu.bme.m"
+      "it.inf.modes3.messaging.mms.messagesP\001b\006"
+      "proto3"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\023SendAllStatus.proto\022\017modes3.protobuf\032\013"
-    "Enums.proto\"\017\n\rSendAllStatusB0\n,hu.bme.m"
-    "it.inf.modes3.messaging.mms.messagesP\001b\006"
-    "proto3", 126);
+      descriptor, 126);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SendAllStatus.proto", &protobuf_RegisterTypes);
-  ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_SendAllStatus_2eproto);
+  ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();
 }
+} // anonymous namespace
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_SendAllStatus_2eproto_once_);
-void protobuf_AddDesc_SendAllStatus_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_SendAllStatus_2eproto_once_,
-                 &protobuf_AddDesc_SendAllStatus_2eproto_impl);
+void AddDescriptors() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_SendAllStatus_2eproto {
-  StaticDescriptorInitializer_SendAllStatus_2eproto() {
-    protobuf_AddDesc_SendAllStatus_2eproto();
+// Force AddDescriptors() to be called at dynamic initialization time.
+struct StaticDescriptorInitializer {
+  StaticDescriptorInitializer() {
+    AddDescriptors();
   }
-} static_descriptor_initializer_SendAllStatus_2eproto_;
+} static_descriptor_initializer;
 
-namespace {
-
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD GOOGLE_ATTRIBUTE_NORETURN;
-static void MergeFromFail(int line) {
-  ::google::protobuf::internal::MergeFromFail(__FILE__, line);
-}
-
-}  // namespace
+}  // namespace protobuf_SendAllStatus_2eproto
 
 
 // ===================================================================
@@ -130,19 +136,17 @@ static void MergeFromFail(int line) {
 
 SendAllStatus::SendAllStatus()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_SendAllStatus_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_SendAllStatus_2eproto::InitDefaults();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:modes3.protobuf.SendAllStatus)
 }
-
-void SendAllStatus::InitAsDefaultInstance() {
-}
-
 SendAllStatus::SendAllStatus(const SendAllStatus& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:modes3.protobuf.SendAllStatus)
 }
 
@@ -164,16 +168,14 @@ void SendAllStatus::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
 const ::google::protobuf::Descriptor* SendAllStatus::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return SendAllStatus_descriptor_;
+  protobuf_SendAllStatus_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_SendAllStatus_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
 const SendAllStatus& SendAllStatus::default_instance() {
-  protobuf_InitDefaults_SendAllStatus_2eproto();
+  protobuf_SendAllStatus_2eproto::InitDefaults();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<SendAllStatus> SendAllStatus_default_instance_;
 
 SendAllStatus* SendAllStatus::New(::google::protobuf::Arena* arena) const {
   SendAllStatus* n = new SendAllStatus;
@@ -185,6 +187,11 @@ SendAllStatus* SendAllStatus::New(::google::protobuf::Arena* arena) const {
 
 void SendAllStatus::Clear() {
 // @@protoc_insertion_point(message_clear_start:modes3.protobuf.SendAllStatus)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _internal_metadata_.Clear();
 }
 
 bool SendAllStatus::MergePartialFromCodedStream(
@@ -193,16 +200,15 @@ bool SendAllStatus::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:modes3.protobuf.SendAllStatus)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
   handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+    if (tag == 0) {
       goto success;
     }
-    DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, _internal_metadata_.mutable_unknown_fields()));
   }
 success:
   // @@protoc_insertion_point(parse_success:modes3.protobuf.SendAllStatus)
@@ -216,6 +222,13 @@ failure:
 void SendAllStatus::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:modes3.protobuf.SendAllStatus)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
   // @@protoc_insertion_point(serialize_end:modes3.protobuf.SendAllStatus)
 }
 
@@ -223,6 +236,13 @@ void SendAllStatus::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.SendAllStatus)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.SendAllStatus)
   return target;
 }
@@ -231,6 +251,11 @@ size_t SendAllStatus::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.SendAllStatus)
   size_t total_size = 0;
 
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -240,7 +265,7 @@ size_t SendAllStatus::ByteSizeLong() const {
 
 void SendAllStatus::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.SendAllStatus)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const SendAllStatus* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const SendAllStatus>(
           &from);
@@ -249,21 +274,17 @@ void SendAllStatus::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.SendAllStatus)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void SendAllStatus::MergeFrom(const SendAllStatus& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.SendAllStatus)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
 
-void SendAllStatus::UnsafeMergeFrom(const SendAllStatus& from) {
-  GOOGLE_DCHECK(&from != this);
 }
 
 void SendAllStatus::CopyFrom(const ::google::protobuf::Message& from) {
@@ -277,11 +298,10 @@ void SendAllStatus::CopyFrom(const SendAllStatus& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.SendAllStatus)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool SendAllStatus::IsInitialized() const {
-
   return true;
 }
 
@@ -290,24 +310,19 @@ void SendAllStatus::Swap(SendAllStatus* other) {
   InternalSwap(other);
 }
 void SendAllStatus::InternalSwap(SendAllStatus* other) {
+  using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SendAllStatus::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SendAllStatus_descriptor_;
-  metadata.reflection = SendAllStatus_reflection_;
-  return metadata;
+  protobuf_SendAllStatus_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_SendAllStatus_2eproto::file_level_metadata[kIndexInFileMessages];
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // SendAllStatus
 
-inline const SendAllStatus* SendAllStatus::internal_default_instance() {
-  return &SendAllStatus_default_instance_.get();
-}
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)

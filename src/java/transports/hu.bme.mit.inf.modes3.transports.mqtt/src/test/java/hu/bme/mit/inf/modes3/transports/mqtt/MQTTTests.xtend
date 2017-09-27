@@ -8,7 +8,6 @@ import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
 
 // FIXME: Redo the local testing of the MQTT
-
 class MQTTTests {
 
 	var MQTTTransport sender
@@ -16,12 +15,12 @@ class MQTTTests {
 
 	@Before
 	def void init() {
-		val senderConfig = new TransportConfiguration("MQTT-TEST-SENDER", "root.modes3.intra", 1883)
+		val senderConfig = new TransportConfiguration("MQTT-TEST-SENDER", "root.modes3.intra", 1883, '''''')
 		sender = new MQTTTransport(senderConfig, new NOPLoggerFactory)
 		sender.connect
 		println("Sender connected")
 
-		val receiverConfig = new TransportConfiguration("MQTT-TEST-RECEIVER", "root.modes3.intra", 1883)
+		val receiverConfig = new TransportConfiguration("MQTT-TEST-RECEIVER", "root.modes3.intra", 1883, '''''')
 		receiver = new MQTTTransport(receiverConfig, new NOPLoggerFactory)
 		receiver.connect
 		println("Receiver connected")

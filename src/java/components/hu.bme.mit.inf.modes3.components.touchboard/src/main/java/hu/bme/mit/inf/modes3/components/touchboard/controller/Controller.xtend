@@ -1,6 +1,10 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller
 
 import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
+import hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement.SegmentEventHandler
+import hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement.TurnoutEventHandler
+import hu.bme.mit.inf.modes3.components.touchboard.controller.train.Direction
+import hu.bme.mit.inf.modes3.components.touchboard.controller.train.TrainEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
@@ -18,10 +22,12 @@ import java.util.concurrent.Executors
 import java.util.regex.Pattern
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
+import javafx.scene.Node
 import javafx.scene.Scene
-import javafx.scene.control.Button
+import javafx.scene.control.ToggleButton
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.modes3.components.touchboard.controller.train.SpeedPercentageUtil
 
 class Controller extends AbstractRailRoadCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener, ITurnoutStateChangeListener {
 
@@ -31,6 +37,9 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 
 	var ITrackElementStateRegistry trackElementStateRegistry
 	var ITrackElementCommander trackElementCommander
+
+	val Map<Integer, TrainEventHandler> trains
+	val Map<String, Integer> trainIdLookup
 
 	var Map<Integer, SegmentEventHandler> segments
 	var Map<Integer, TurnoutEventHandler> turnouts
@@ -48,6 +57,12 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 		trackElementStateRegistry.segmentOccupancyChangeListener = this
 		trackElementStateRegistry.segmentStateChangeListener = this
 		trackElementStateRegistry.turnoutStateChangeListener = this
+		
+		trainIdLookup = #{"taurus" -> 9, "sncf" -> 10, "db" -> 8}
+		trains = new TreeMap
+		for (id : trainIdLookup.values.toSet) {
+			trains.put(id, new TrainEventHandler(id, trackElementCommander))
+		}
 	}
 
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
@@ -82,45 +97,110 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 		}
 	}
 
-	@FXML def void handleTurnoutPress(ActionEvent event) {
-		executor.execute(new Runnable() {
+	@FXML def void onTurnoutPress(ActionEvent event) {
+		executeHandler(new Runnable() {
 			override run() {
-				try {
-					val turnoutId = getSourceId(event)
-					turnouts.get(turnoutId)?.onTurnoutClicked
-				} catch (Exception ex) {
-					logger.error(ex.message, ex)
-				}
+				val turnoutId = getNumberFromSourceId(event)
+				turnouts.get(turnoutId)?.onTurnoutClicked
 			}
 		})
 	}
 
-	@FXML def void handleSegmentPress(ActionEvent event) {
-		executor.execute(new Runnable() {
+	@FXML def void onSegmentPress(ActionEvent event) {
+		executeHandler(new Runnable() {
 			override run() {
-				try {
-					val segmentId = getSourceId(event)
-					segments.get(segmentId)?.onSegmentClicked
-				} catch (Exception ex) {
-					logger.error(ex.message, ex)
-				}
+				val segmentId = getNumberFromSourceId(event)
+				segments.get(segmentId)?.onSegmentClicked
 			}
 		})
+	}
+
+	@FXML def void onEnableAllSegment(ActionEvent event) {
+		onSetSectionState(new SegmentStateSetter() {
+			override onSetSegmentState(SegmentEventHandler handler) {
+				handler.onEnableSegment
+			}
+		})
+	}
+
+	@FXML def void onDisableAllSegment(ActionEvent event) {
+		onSetSectionState(new SegmentStateSetter() {
+			override onSetSegmentState(SegmentEventHandler handler) {
+				handler.onDisableSegment
+			}
+		})
+	}
+
+	@FXML def void onTrainDirectionChange(ActionEvent event) {
+		executeHandler(
+			new Runnable() {
+				override run() {
+					val isSelected = (event.source as ToggleButton).selected
+					val direction = if(isSelected) Direction.BACKWARD else Direction.FORWARD
+					val trainId = getTrainIdFromSourceId(event)
+					trains.get(trainId)?.setDirection(direction)
+				}
+			}
+		)
+	}
+
+	@FXML def void onTrainSpeedChange(ActionEvent event) {
+		executeHandler(
+			new Runnable() {
+				override run() {
+					val trainId = getTrainIdFromSourceId(event)
+					val speedPercentageInt = getNumberFromSourceId(event)
+					val speedPercentage = SpeedPercentageUtil.toSpeedPercentage(speedPercentageInt)
+					trains.get(trainId)?.setSpeedPercentage(speedPercentage)
+				}
+			}
+		)
 	}
 
 	def void setScene(Scene scene) {
 		initializeSegments(scene)
 		initializeTurnouts(scene)
+		trackElementCommander.sendAllStatusCommand
 	}
 
-	private def int getSourceId(ActionEvent event) throws IllegalArgumentException{
+	private def void executeHandler(Runnable handler) {
+		executor.execute(new Runnable() {
+			override run() {
+				try {
+					handler.run
+				} catch (Exception ex) {
+					logger.error(ex.message, ex)
+				}
+			}
+		})
+	}
+
+	private def int getTrainIdFromSourceId(ActionEvent event) {
+		try {
+			val srcId = getSourceId(event)
+			val trainName = srcId.split("_").get(0)
+			return trainIdLookup.get(trainName)
+		} catch (Exception ex) {
+			throw new IllegalArgumentException("Source ID does not contain a valid train name.", ex)
+		}
+	}
+
+	private def int getNumberFromSourceId(ActionEvent event) {
+		try {
+			val srcId = getSourceId(event)
+			return getNumbersFromString(srcId)
+		} catch (Exception ex) {
+			throw new IllegalArgumentException("Source ID does not contain a number.", ex)
+		}
+	}
+
+	private def getSourceId(ActionEvent event) {
 		try {
 			val eventSrc = event.source
-			if (eventSrc instanceof Button) {
-				val btnId = (eventSrc as Button).id
-				getNumbersFromString(btnId)
+			if (eventSrc instanceof Node) {
+				return (eventSrc as Node).id
 			} else {
-				throw new Exception("Event source is not a Button.")
+				throw new Exception
 			}
 		} catch (Exception ex) {
 			throw new IllegalArgumentException("Source ID does not exist.", ex)
@@ -136,7 +216,7 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 
 	private def initializeSegments(Scene scene) {
 		segments = new TreeMap
-		for (i : 1 ..< 32) {
+		for (i : 1 .. 32) {
 			val node = scene.lookup("#segment_" + i)
 			val eventHandler = new SegmentEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
@@ -146,12 +226,29 @@ class Controller extends AbstractRailRoadCommunicationComponent implements ISegm
 
 	private def initializeTurnouts(Scene scene) {
 		turnouts = new TreeMap
-		for (i : 1 ..< 7) {
+		for (i : 1 .. 6) {
 			val node = scene.lookup("#turnout_" + i)
 			val eventHandler = new TurnoutEventHandler(loggerFactory, new ThreadSafeNode(node, i),
 				trackElementStateRegistry, trackElementCommander)
 			turnouts.put(i, eventHandler)
 		}
+	}
+
+	private interface SegmentStateSetter {
+		def void onSetSegmentState(SegmentEventHandler handler)
+	}
+
+	private def onSetSectionState(SegmentStateSetter stateSetter) {
+		executeHandler(new Runnable() {
+			override run() {
+				val turnoutSegments = #[3, 9, 14, 16, 21, 25, 28, 32]
+				segments.forEach [ segmentId, handler |
+					if (!turnoutSegments.contains(segmentId)) {
+						stateSetter.onSetSegmentState(handler)
+					}
+				]
+			}
+		})
 	}
 
 	override run() {

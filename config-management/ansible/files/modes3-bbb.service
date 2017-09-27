@@ -1,7 +1,6 @@
 [Unit]
 Description=MoDeS3 BBB Agent
-Wants=syslog.target network.target
-After=syslog.target network.target
+After=syslog.target network.target 
 
 [Service]
 ExecStartPre=/bin/bash -c "/bin/systemctl set-environment HOSTNAME=$(hostname)"

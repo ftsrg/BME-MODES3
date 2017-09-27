@@ -57,7 +57,7 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
     // check if matcher already exists
     TrainOnStationMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-    	matcher = (TrainOnStationMatcher)engine.getMatcher(querySpecification());
+        matcher = (TrainOnStationMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -166,7 +166,7 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for t.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   protected Set<Train> rawAccumulateAllValuesOft(final Object[] parameters) {
@@ -177,7 +177,7 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for t.
-   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
+   * @return the Set of all values or empty set if there are no matches
    * 
    */
   public Set<Train> getAllValuesOft() {
@@ -187,30 +187,30 @@ public class TrainOnStationMatcher extends BaseMatcher<TrainOnStationMatch> {
   @Override
   protected TrainOnStationMatch tupleToMatch(final Tuple t) {
     try {
-    	return TrainOnStationMatch.newMatch((Train) t.get(POSITION_T));
+        return TrainOnStationMatch.newMatch((Train) t.get(POSITION_T));
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in tuple not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in tuple not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected TrainOnStationMatch arrayToMatch(final Object[] match) {
     try {
-    	return TrainOnStationMatch.newMatch((Train) match[POSITION_T]);
+        return TrainOnStationMatch.newMatch((Train) match[POSITION_T]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   
   @Override
   protected TrainOnStationMatch arrayToMatchMutable(final Object[] match) {
     try {
-    	return TrainOnStationMatch.newMutableMatch((Train) match[POSITION_T]);
+        return TrainOnStationMatch.newMutableMatch((Train) match[POSITION_T]);
     } catch(ClassCastException e) {
-    	LOGGER.error("Element(s) in array not properly typed!",e);
-    	return null;
+        LOGGER.error("Element(s) in array not properly typed!",e);
+        return null;
     }
   }
   

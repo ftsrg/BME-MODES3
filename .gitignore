@@ -74,8 +74,8 @@ atlassian-ide-plugin.xml
 
 # OS X
 # ----
-.DS_Store
-._.DS_Store
+**/.DS_Store
+**/._.DS_Store
 
 # HPROF
 # -----
