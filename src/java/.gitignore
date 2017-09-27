@@ -1,3 +1,4 @@
-/.gradle/
-/build/
+# Work dirs
+# ---------
 **/xtend-gen/
+**/*.java._trace
