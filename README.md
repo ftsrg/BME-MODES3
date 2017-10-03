@@ -66,7 +66,7 @@ cd src/java
 
 - Components folder path: `<root_path>/components/`
 - Components project prefix: `hu.bme.mit.inf.modes3.components`
-- Components path prefix: `<root_path> + <components_folder_path> + <components_project_prefix>`
+- Components path prefix: `<components_folder_path> + <components_project_prefix>`
 
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
