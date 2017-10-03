@@ -11,7 +11,7 @@ Table of Contents
       - [Java](#java)
 - [Getting Started](#getting-started)
   * [As a User](#as-a-user)
-  * [As a core developer](#as-a-core-developer)
+  * [As a Core Developer](#as-a-core-developer)
     + [Troubleshooting](#troubleshooting)
 
 A case study system using the cooperation of a model railway and a robot to demonstrate techniques and methods for developing IoT and CPS systems. See a [quick overview](https://inf.mit.bme.hu/en/research/projects/modes3) and our [blog](http://modes3.tumblr.com/) for more details.
@@ -70,14 +70,13 @@ cd src/java
 
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
-| Codes for the BBBs  | <components_path_prefix>.bbb | Implementation of the platform-specific actuator code of disabling and enabling sections and setting turnout directions for the BeagleBone Black embedded units. | benedekh, hegyibalint |
-| Common Components |  <components_path_prefix>.common | Common codes and helpers for all components| hegyibalint, baloghlaszlo, benedekh
 | Dashboard |  <components_path_prefix>.dashboard | Dashboard for the model railway track. | zsoltmazlo
 | GPIO Manager |  <components_path_prefix>.gpiomanager | To control the GPIO pins of the Beagle Bone Black embedded units from Java. | hegyibalint
 | Leapmotion |  <components_path_prefix>.leapmotion | Leapmotion sensor code in Java. | pappist (Papp István)
 | Section Occupancy Query   | <components_path_prefix>.occupancyquery | Reads the sections occupancy from the embededd system and boradcasts it on the network.   | hegyibalint, baloghlaszlo, benedekh    |
 | Sample Component | <components_path_prefix>.sample | A sample component which can be linked to a tutorial | hegyibalint, baloghlaszlo, benedekh
 | Touchboard |  <components_path_prefix>.touchboard | Dashboard for the model railway track, with focus on touchable elements. | hegyibalint, benedekh
+| Track Element Controller  | <components_path_prefix>.trackelementcontroller | Implementation of the platform-specific actuator code of disabling and enabling sections and setting turnout directions for the BeagleBone Black embedded units. | benedekh, hegyibalint |
 
 - Safetylogic folder path: `<components_folder_path>/safetylogic/`
 - Safetylogic project prefix: `hu.bme.mit.inf.modes3.components.safetylogic`
@@ -100,8 +99,9 @@ cd src/java
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
 | High-level API designed for communication with the railroad system | <messaging_path_prefix>.communication | Communication technology independent API designed for further use in the components. | baloghlaszlo | 
+| Common messages | <messaging_path_prefix>.messages | Common representation for the messages used over the network in Java. | benedekh | 
 | Messaging service + Dispatcher | <messaging_path_prefix>.mms | Messaging service and message dispatcher to dispatch different messages. | baloghlaszlo, benedekh | 
-| Protobuf message definitions | <messaging_path_prefix>.proto | Message definitions in protobuf representation. | hegyibalint | 
+| Protobuf specific classes and message definitions | <messaging_path_prefix>.proto | Message definitions in protobuf representation and protobuf specific transformators for the messages. | hegyibalint, benedekh | 
 
 - Test folder path: `<root_path>/test/`
 - Test project prefix: `hu.bme.mit.inf.modes3.test`
@@ -127,6 +127,7 @@ cd src/java
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
 | Utility classes for components | <utils_path_prefix>.common | Utility classes that can be used by every component. E.g. handling command-line arguments in Java. | benedekh |
+| Common configuration files | <utils_path_prefix>.conf | Common configuration files for the model railway track. E.g. files containing information about segment, turnout, locomotive IDs | benedekh |
 | Serial monitor | <utils_path_prefix>.serialmonitor | Utility project to monitor the serial (USB) port from Java. | zsoltmazlo |
 | SVG Transformer | <utils_path_prefix>.svgtransformer | Utility project to transform SVG in Java. | hegyibalint |
 
@@ -142,7 +143,7 @@ _Should you develop your own application and use 'MoDeS3 as a Service'._
 2. Download the corresponding jar on the [releases](https://github.com/FTSRG/BME-MODES3/releases) page.
 3. Read the Wiki pages, especially [Network messages](https://github.com/FTSRG/BME-MODES3/wiki/Network-messages), [On the communication component of the API](https://github.com/FTSRG/BME-MODES3/wiki/On-the-communication-component-of-the-API).
 
-### As a core developer
+### As a Core Developer
 
 _Should you develop something to the core library, aka things stored in this repository._
 
@@ -157,6 +158,8 @@ cd src/java
 ```
 
 5. Install Eclipse or your faviourite IDE, and install Xtend, Gradle plugins there. (Most of the code is implemented in Xtend, we use Gradle as a build system.)
+
+    - Should you develop any project which have dependency for JavaFX in Eclipse, install the [e(fx)clipse](https://wiki.eclipse.org/Efxclipse/Tutorials/AddingE(fx)clipse_to_eclipse) plugin.
 
 6. Import the Gradle projects in your IDE and try to build the projects there. _Note:_ Should you not need any project, please put a comment mark `#` in front of the lines, which include projects you do not need, in the root folder's `/src/java/build.gradle` file. Please do not commit these changes though.
 
