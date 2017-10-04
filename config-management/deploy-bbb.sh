@@ -1,2 +1,2 @@
 #!/bin/bash
-ansible-playbook ansible/deploy-bbb.yaml -i ansible/hosts
+ansible-playbook ansible/deploy-trackelementcontroller.yaml -i ansible/hosts

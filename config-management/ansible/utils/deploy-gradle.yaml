@@ -6,6 +6,7 @@
     state: stopped
     name: "modes3-{{service_name}}"
   become: true
+  ignore_errors: yes
 - name: Create the root folder containing the {{service_name}} binaries
   file: 
     path: /modes3/ 
