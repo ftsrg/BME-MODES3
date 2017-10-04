@@ -48,4 +48,31 @@ subprojects {
 			testCompile "org.mockito:mockito-core:1.10.19"
 		}
 	}
+
+	plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
+		sourceSets {
+			main {
+				java.srcDirs = [
+					'src/main/java',
+					'src/main/xtext-gen'
+				]
+				resources.srcDirs = [
+					'src/main/resources',
+					'src/main/xtext-gen'
+				]
+				xtendOutputDir = 'src/main/xtend-gen'
+			}
+			test {
+				java.srcDirs = [
+					'src/test/java',
+					'src/test/xtext-gen'
+				]
+				resources.srcDirs = [
+					'src/test/resources',
+					'src/test/xtext-gen'
+				]
+				xtendOutputDir = 'src/test/xtend-gen'
+			}
+		}
+	}
 }
