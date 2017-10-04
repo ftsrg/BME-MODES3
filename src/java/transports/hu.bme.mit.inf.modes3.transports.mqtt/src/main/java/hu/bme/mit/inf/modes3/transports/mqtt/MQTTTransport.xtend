@@ -7,18 +7,13 @@ import hu.bme.mit.inf.modes3.transports.mqtt.connection.MQTTConnectionLookup
 import java.util.concurrent.LinkedBlockingQueue
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import org.slf4j.impl.SimpleLoggerFactory
 
 class MQTTTransport extends TopicBasedTransport {
 
 	val Logger logger
 	val MQTTConnection connection
 	var LinkedBlockingQueue<byte[]> messages
-
-	new(TopicBasedTransportConfiguration config) {
-		this(config, new SimpleLoggerFactory)
-	}
-
+	
 	new(TopicBasedTransportConfiguration config, ILoggerFactory loggerFactory) {
 		super(config)
 		this.logger = loggerFactory.getLogger(this.class.name)

@@ -1,5 +1,6 @@
-package hu.bme.mit.inf.modes3.transports.common
+package hu.bme.mit.inf.modes3.transports.local
 
+import hu.bme.mit.inf.modes3.transports.common.Transport
 import java.util.ArrayList
 import java.util.Collections
 import java.util.concurrent.LinkedBlockingQueue
