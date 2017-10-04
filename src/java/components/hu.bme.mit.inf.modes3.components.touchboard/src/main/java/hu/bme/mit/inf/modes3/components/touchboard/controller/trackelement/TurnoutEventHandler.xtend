@@ -1,8 +1,7 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement
 
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
-import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
-import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry
+import hu.bme.mit.inf.modes3.components.touchboard.wrapper.ITouchboardWrapper
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -15,15 +14,12 @@ class TurnoutEventHandler {
 	val Logger logger
 	val ThreadSafeNode node
 
-	val ITrackElementStateRegistry trackElementStateRegistry
-	val ITrackElementCommander trackElementCommander
+	val ITouchboardWrapper touchboardWrapper
 	
-	new(ILoggerFactory loggerFactory, ThreadSafeNode node, ITrackElementStateRegistry trackElementStateRegistry,
-		ITrackElementCommander trackElementCommander) {
+	new(ITouchboardWrapper touchboardWrapper, ThreadSafeNode node, ILoggerFactory loggerFactory) {
 		this.logger = loggerFactory.getLogger(this.class.name)
 		this.node = node
-		this.trackElementStateRegistry = trackElementStateRegistry
-		this.trackElementCommander = trackElementCommander
+		this.touchboardWrapper = touchboardWrapper
 	}
 
 	def setStraight() {
@@ -39,10 +35,10 @@ class TurnoutEventHandler {
 	def onTurnoutClicked() {
 		try {
 			val turnoutId = node.nodeId
-			val state = trackElementStateRegistry.getTurnoutState(turnoutId)
+			val state = touchboardWrapper.getTurnoutState(turnoutId)
 			val newState = getTurnoutOppositeState(state)
 
-			trackElementCommander.sendTurnoutCommandWithTurnoutId(turnoutId, newState)
+			touchboardWrapper.sendTurnoutCommandWithTurnoutId(turnoutId, newState)
 			updateTurnoutState(newState)
 
 			logger.info('''Turnout «turnoutId» is «newState»''')

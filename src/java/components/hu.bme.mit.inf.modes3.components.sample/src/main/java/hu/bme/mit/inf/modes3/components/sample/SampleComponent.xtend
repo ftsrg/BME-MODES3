@@ -1,32 +1,46 @@
 package hu.bme.mit.inf.modes3.components.sample
 
-import hu.bme.mit.inf.modes3.components.sample.demo.SectionsDemo
-import hu.bme.mit.inf.modes3.components.sample.demo.SegmentsDemo
-import hu.bme.mit.inf.modes3.components.sample.demo.SendAllStatusDemo
-import hu.bme.mit.inf.modes3.components.sample.demo.TrainsDemo
-import hu.bme.mit.inf.modes3.components.sample.demo.TurnoutsDemo
-import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import java.util.Set
-import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.components.sample.util.ChangeCounter
+import hu.bme.mit.inf.modes3.components.sample.wrapper.ISampleComponentWrapper
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
+import java.util.concurrent.ConcurrentHashMap
+import org.eclipse.xtend.lib.annotations.Accessors
 
-class SampleComponent extends AbstractCommunicationComponent {
+class SampleComponent implements ISampleComponent {
 
-	val ILoggerFactory factory
-	val Set<AbstractCommunicationComponent> demos
+	val ConcurrentHashMap<Integer, ChangeCounter> segmentOccupancyChanges
 
-	new(MessagingService messagingService, ILoggerFactory factory) {
-		super(messagingService, factory)
-		this.factory = factory
-		this.demos = #{new SegmentsDemo(locator, factory), new SectionsDemo(locator, factory),
-			new TurnoutsDemo(locator, factory), new SendAllStatusDemo(locator, factory),
-			new TrainsDemo(locator, factory)}
-		}
+	@Accessors(PUBLIC_SETTER) var ISampleComponentWrapper sampleComponentWrapper
 
-		// The 'main' method of the sample component
-		override run() {
-			demos.forEach[it.run]
-		}
-
+	new() {
+		this.segmentOccupancyChanges = new ConcurrentHashMap
 	}
-	
+
+	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+		val changeCounter = getNumberOfChanges(id)
+		val changes = changeCounter.increment
+		if (changes > 2) {
+			sampleComponentWrapper.disableSegment(id)
+			changeCounter.reset
+		}
+	}
+
+	private def getNumberOfChanges(int id) {
+		var changes = segmentOccupancyChanges.get(id)
+		if (changes === null) {
+			synchronized (segmentOccupancyChanges) {
+				changes = segmentOccupancyChanges.get(id)
+				if (changes === null) {
+					changes = new ChangeCounter
+					segmentOccupancyChanges.put(id, changes)
+				}
+			}
+		}
+		return changes
+	}
+
+	override run() {
+		Thread.currentThread.join
+	}
+
+}
