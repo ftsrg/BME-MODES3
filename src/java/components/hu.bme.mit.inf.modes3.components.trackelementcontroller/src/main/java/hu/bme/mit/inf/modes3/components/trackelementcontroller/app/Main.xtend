@@ -16,6 +16,8 @@ class Main {
 
 		val registry = new ArgumentRegistry(loggerFactory)
 		registry.registerArgumentWithOptions(
+			new ArgumentDescriptorWithParameter("id", "ID of the turnout", String))
+		registry.registerArgumentWithOptions(
 			new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
 		registry.registerArgumentWithOptions(
 			new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
