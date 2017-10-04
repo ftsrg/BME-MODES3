@@ -11,7 +11,7 @@ Table of Contents
       - [Java](#java)
 - [Getting Started](#getting-started)
   * [As a User](#as-a-user)
-  * [As a core developer](#as-a-core-developer)
+  * [As a Core Developer](#as-a-core-developer)
     + [Troubleshooting](#troubleshooting)
 
 A case study system using the cooperation of a model railway and a robot to demonstrate techniques and methods for developing IoT and CPS systems. See a [quick overview](https://inf.mit.bme.hu/en/research/projects/modes3) and our [blog](http://modes3.tumblr.com/) for more details.
@@ -66,14 +66,14 @@ cd src/java
 
 - Components folder path: `<root_path>/components/`
 - Components project prefix: `hu.bme.mit.inf.modes3.components`
-- Components path prefix: `<root_path> + <components_folder_path> + <components_project_prefix>`
+- Components path prefix: `<components_folder_path> + <components_project_prefix>`
 
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
 | Dashboard |  <components_path_prefix>.dashboard | Dashboard for the model railway track. | zsoltmazlo
 | GPIO Manager |  <components_path_prefix>.gpiomanager | To control the GPIO pins of the Beagle Bone Black embedded units from Java. | hegyibalint
 | Leapmotion |  <components_path_prefix>.leapmotion | Leapmotion sensor code in Java. | pappist (Papp István)
-| Section Occupancy Query   | <components_path_prefix>.occupancyquery | Reads the sections occupancy from the embededd system and boradcasts it on the network.   | hegyibalint, baloghlaszlo, benedekh    |
+| Section Occupancy Query   | <components_path_prefix>.occupancyquery | Reads the sections occupancy from the embededd system and broadcasts it on the network.   | hegyibalint, baloghlaszlo, benedekh    |
 | Sample Component | <components_path_prefix>.sample | A sample component which can be linked to a tutorial | hegyibalint, baloghlaszlo, benedekh
 | Touchboard |  <components_path_prefix>.touchboard | Dashboard for the model railway track, with focus on touchable elements. | hegyibalint, benedekh
 | Track Element Controller  | <components_path_prefix>.trackelementcontroller | Implementation of the platform-specific actuator code of disabling and enabling sections and setting turnout directions for the BeagleBone Black embedded units. | benedekh, hegyibalint |
@@ -109,7 +109,7 @@ cd src/java
 
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
-| Test project | <test_path_prefix> |  | baloghlaszlo | 
+| Test project | <test_path_prefix> | Project for testing purposes. To show, how a system test might be implemented. | baloghlaszlo | 
 
 - Transports folder path: `<root_path>/transports/`
 - Transports project prefix: `hu.bme.mit.inf.modes3.transports`
@@ -143,7 +143,7 @@ _Should you develop your own application and use 'MoDeS3 as a Service'._
 2. Download the corresponding jar on the [releases](https://github.com/FTSRG/BME-MODES3/releases) page.
 3. Read the Wiki pages, especially [Network messages](https://github.com/FTSRG/BME-MODES3/wiki/Network-messages), [On the communication component of the API](https://github.com/FTSRG/BME-MODES3/wiki/On-the-communication-component-of-the-API).
 
-### As a core developer
+### As a Core Developer
 
 _Should you develop something to the core library, aka things stored in this repository._
 
@@ -158,6 +158,8 @@ cd src/java
 ```
 
 5. Install Eclipse or your faviourite IDE, and install Xtend, Gradle plugins there. (Most of the code is implemented in Xtend, we use Gradle as a build system.)
+
+    - Should you develop any project which have dependency for JavaFX in Eclipse, install the [e(fx)clipse](https://wiki.eclipse.org/Efxclipse/Tutorials/AddingE(fx)clipse_to_eclipse) plugin.
 
 6. Import the Gradle projects in your IDE and try to build the projects there. _Note:_ Should you not need any project, please put a comment mark `#` in front of the lines, which include projects you do not need, in the root folder's `/src/java/build.gradle` file. Please do not commit these changes though.
 
