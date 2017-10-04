@@ -18,6 +18,7 @@ class TopicBasedMessagingService extends MessagingService {
 		super(transport, dispatcher, factory)
 		this.logger = factory.getLogger(this.class.name)
 		this.transports = newHashSet
+		addTransport(transport)
 	}
 
 	def addTransport(TopicBasedTransport transport) {
@@ -25,7 +26,7 @@ class TopicBasedMessagingService extends MessagingService {
 	}
 
 	override start() {
-		try {
+		try {			
 			transports.forEach [
 				it.connect;
 				it.subscribe;
