@@ -1,25 +1,18 @@
 package hu.bme.mit.inf.modes3.components.barrier
 
-import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
-import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentOccupancyChangeListener
+import hu.bme.mit.inf.modes3.components.barrier.wrapper.ITrackSupervisorWrapper
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import java.util.Set
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
-import org.slf4j.ILoggerFactory
+import org.eclipse.xtend.lib.annotations.Accessors
 
-class TrackSupervisor extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener {
+class TrackSupervisor implements ITrackSupervisor {
 
-	var ConcurrentMap<Integer, SegmentOccupancy> supervisedSections
-	val BarrierCommander barrierCommander
+	val ConcurrentMap<Integer, SegmentOccupancy> supervisedSections
+	@Accessors(PUBLIC_SETTER) var ITrackSupervisorWrapper supervisorWrapper
 
-	new(MessagingService railwayTrackStack, MessagingService barrierStack, ILoggerFactory factory,
-		Set<Integer> supervisedSections) {
-		super(railwayTrackStack, factory)
-		super.locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
-
-		barrierCommander = new BarrierCommander(barrierStack, factory)
+	new(Set<Integer> supervisedSections) {
 		this.supervisedSections = new ConcurrentHashMap<Integer, SegmentOccupancy>
 		supervisedSections.forEach[this.supervisedSections.put(it, SegmentOccupancy.FREE)]
 	}
@@ -31,15 +24,10 @@ class TrackSupervisor extends AbstractCommunicationComponent implements ISegment
 			supervisedSections.put(id, newValue)
 
 			if (newValue == SegmentOccupancy.OCCUPIED) {
-				barrierCommander.sendBarrierMessage("closed")
+				supervisorWrapper.sendBarrierMessage("closed")
 			} else if (supervisedSections.entrySet.forall[it.value == SegmentOccupancy.FREE]) {
-				barrierCommander.sendBarrierMessage("opened")
+				supervisorWrapper.sendBarrierMessage("opened")
 			}
 		}
 	}
-
-	override run() {
-		Thread.currentThread.join
-	}
-
 }

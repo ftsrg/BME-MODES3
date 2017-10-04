@@ -2,7 +2,7 @@ apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 
-mainClassName = "hu.bme.mit.inf.modes3.components.touchboard.Main"
+mainClassName = "hu.bme.mit.inf.modes3.components.touchboard.app.Main"
 applicationDefaultJvmArgs = ["-Dcom.sun.javafx.touch=true -Dcom.sun.javafx.isEmbedded=true"]
 
 dependencies {

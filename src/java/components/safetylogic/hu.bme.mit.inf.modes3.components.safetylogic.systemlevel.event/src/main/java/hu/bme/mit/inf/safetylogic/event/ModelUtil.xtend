@@ -39,7 +39,7 @@ class ModelUtil implements IModelInteractor {
 
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
-		resourceSet = new ResourceSetImpl()
+		resourceSet = new ResourceSetImpl
 		resource = loadModel
 		model = resource.modelFromResource
 		engine = ViatraQueryEngine.on(new EMFScope(resource))

@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 apply plugin: 'application'
 
-mainClassName = "hu.bme.mit.inf.safetylogic.event.Main"
+mainClassName = "hu.bme.mit.inf.safetylogic.event.app.Main"
 run {
 	args = ['--config', 'production',
 		'--address', '127.0.0.1',
