@@ -6,3 +6,4 @@
 !.settings
 !/src/main/vql-gen/**
 !/vql-gen/**
+!/src-gen/**

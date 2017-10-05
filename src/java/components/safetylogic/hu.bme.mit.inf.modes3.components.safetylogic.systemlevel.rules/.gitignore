@@ -1,1 +1,2 @@
-!/src-gen/*
+!/src-gen/**
+!/src/main/vql-gen/**
