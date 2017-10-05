@@ -6,7 +6,7 @@ import org.junit.Test
 class LocomotivesConfigurationTests {
 
 	@Test def void locomotiveNamesTest() {
-		val referenceNames = #{"BR294", "SNCF", "Taurus"}
+		val referenceNames = #{"br294", "sncf", "taurus"}
 		val loadedNames = LocomotivesConfiguration.INSTANCE.locomotiveNames
 		Assert.assertEquals(referenceNames, loadedNames)
 	}
@@ -18,7 +18,7 @@ class LocomotivesConfigurationTests {
 	}
 
 	@Test def void mappingsTest() {
-		val referenceMapping = #{"BR294" -> 8, "Taurus" -> 9, "SNCF" -> 10}
+		val referenceMapping = #{"br294" -> 8, "taurus" -> 9, "sncf" -> 10}
 		val loadedMapping = LocomotivesConfiguration.INSTANCE.locomotivesWithNameAndId
 		Assert.assertEquals(referenceMapping, loadedMapping)
 	}
