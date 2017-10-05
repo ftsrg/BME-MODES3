@@ -34,6 +34,7 @@
 *.classpath
 *.project
 *.settings
+**/.lck
 **/bin
 **/xtend-gen
 **/subprojects/*/bin
