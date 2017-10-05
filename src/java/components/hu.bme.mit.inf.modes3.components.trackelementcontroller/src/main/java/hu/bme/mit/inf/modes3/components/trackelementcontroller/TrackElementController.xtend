@@ -29,7 +29,6 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 
 	val HashMap<Integer, PhysicalSegmentController> segmentControllers = newHashMap
 	val List<PhysicalTurnoutController> turnoutControllers = newArrayList
-	val Object turnoutStateChangedBarrier = new Object
 
 	new(int turnoutID, ILoggerFactory factory) {
 		this.factory = factory
@@ -44,15 +43,6 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 
 		logger.info('''segments: «config.sectionNames»''')
 		logger.info('''turnout expander: «config.turnoutExpanders»''')
-
-		// we will have an turnoutController class as well
-		// in only one case, there will be two turnout controller to work with, therefore
-		// we need a list of the controllers also
-		config.turnoutExpanders.forEach [
-			var controller = new PhysicalTurnoutController(pinout, it, factory)
-			controller.turnoutStateChangedListener = this
-			turnoutControllers.add(controller)
-		]
 	}
 
 	override setTrackElementControllerWrapper(ITrackElementControllerWrapper wrapper) {
@@ -72,6 +62,15 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 			} catch (NumberFormatException exp) {
 				logger.warn('''«it» is not a valid number as a segement ID. Error message: «exp.message»''', exp)
 			}
+		]
+
+		// we will have an turnoutController class as well
+		// in only one case, there will be two turnout controller to work with, therefore
+		// we need a list of the controllers also
+		config.turnoutExpanders.forEach [
+			var controller = new PhysicalTurnoutController(pinout, it, factory)
+			controller.turnoutStateChangedListener = this
+			turnoutControllers.add(controller)
 		]
 	}
 
@@ -103,29 +102,28 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 		logger.info('''Turnout state change command received on turnout #«id»: «state»''')
 
 		// sending for every controller the new state
+		turnoutControllers.forEach[logger.info('''«it.turnoutState»''')]
 		turnoutControllers.filter[it.turnoutState != state].forEach[it.turnoutState = state]
 
 	// we do not need to send state back to the network, the pin change will trigger a state message
 	}
 
-	override onStateChanged(TurnoutState newState) {
-		synchronized (turnoutStateChangedBarrier) {
-			logger.info('''state changed! new state: «newState»''')
+	override synchronized onStateChanged(TurnoutState newState) {
+		logger.info('''Turnout state changed! new state: «newState»''')
 
-			if (newState == TurnoutState.ILLEGAL) {
-				// TODO handle it in a correct
-				return
-			}
-
-			// we have to set all the turnout controllers to the new state to be absolutely sure
-			// that all turnout are in the same position (it is vital in the case of T3)
-			if (id == 3) {
-				turnoutControllers.filter[it.turnoutState != newState].forEach[it.turnoutState = newState]
-			}
-
-			// need to send segmentState over network
-			trackElementControllerWrapper.sendTurnoutState(id, newState);
+		if (newState == TurnoutState.ILLEGAL) {
+			// TODO handle it in a correct
+			return
 		}
+
+		// we have to set all the turnout controllers to the new state to be absolutely sure
+		// that all turnout are in the same position (it is vital in the case of T3)
+		if (id == 3) {
+			turnoutControllers.filter[it.turnoutState != newState].forEach[it.turnoutState = newState]
+		}
+
+		// need to send segmentState over network
+		trackElementControllerWrapper.sendTurnoutState(id, newState)
 	}
 
 	override onSendAllStatus() {
