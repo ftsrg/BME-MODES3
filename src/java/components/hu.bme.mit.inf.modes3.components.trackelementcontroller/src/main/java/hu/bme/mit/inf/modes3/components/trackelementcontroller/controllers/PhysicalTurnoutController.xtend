@@ -49,7 +49,7 @@ class PhysicalTurnoutController implements InputStateListener {
 			divergentState = GpioManager.getGpio(pins.get(3), Gpio.Direction.IN);
 		} catch (GpioNotConfiguratedException ex) {
 			// TODO this exception should be handled correctly!
-			logger.debug("GPIO pin could not be set!", ex);
+			logger.error("GPIO pin could not be set!", ex);
 		}
 
 		// there will be only one listener for both input, therefore we could handle the change
@@ -63,22 +63,12 @@ class PhysicalTurnoutController implements InputStateListener {
 	}
 
 	def getTurnoutState() {
-		if (straightState.level == Level.HIGH) {
-			if (divergentState.level == Level.LOW) {
-				// the turnout switch correctly to straight position, sending message
-				return TurnoutState.STRAIGHT;
-			} else {
-				// TODO what should we do, if both of the inputs are high??
-				return TurnoutState.ILLEGAL;
-			}
+		if ((straightState.level == Level.HIGH) && (divergentState.level == Level.LOW)) {
+			return TurnoutState.STRAIGHT;
+		} else if ((straightState.level == Level.LOW) && (divergentState.level == Level.HIGH)) {
+			return TurnoutState.DIVERGENT;
 		} else {
-			if (divergentState.level == Level.HIGH) {
-				// the turnout switch correctly to divergent position, sending message
-				return TurnoutState.DIVERGENT;
-			} else {
-				// TODO what should we do, if both of the inputs are low??
-				return TurnoutState.ILLEGAL;
-			}
+			return TurnoutState.ILLEGAL;
 		}
 	}
 
@@ -105,5 +95,7 @@ class PhysicalTurnoutController implements InputStateListener {
 		logger.info('''level state changed! expander: «expander»''');
 		listener?.onStateChanged(turnoutState);
 	}
+	
+	
 
 }
