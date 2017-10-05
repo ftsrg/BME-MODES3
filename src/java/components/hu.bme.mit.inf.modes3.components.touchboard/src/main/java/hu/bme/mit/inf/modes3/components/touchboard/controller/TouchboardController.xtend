@@ -86,7 +86,8 @@ class TouchboardController implements ITouchboardController {
 	@FXML def void onTurnoutPress(ActionEvent event) {
 		executeHandler(new Runnable() {
 			override run() {
-				val turnoutId = getNumberFromSourceId(event)
+				val srcId = getSourceId(event)
+				val turnoutId = getNumberFromSourceId(srcId)
 				turnouts.get(turnoutId)?.onTurnoutClicked
 			}
 		})
@@ -95,7 +96,8 @@ class TouchboardController implements ITouchboardController {
 	@FXML def void onSegmentPress(ActionEvent event) {
 		executeHandler(new Runnable() {
 			override run() {
-				val segmentId = getNumberFromSourceId(event)
+				val srcId = getSourceId(event)
+				val segmentId = getNumberFromSourceId(srcId)
 				segments.get(segmentId)?.onSegmentClicked
 			}
 		})
@@ -123,7 +125,8 @@ class TouchboardController implements ITouchboardController {
 				override run() {
 					val isSelected = (event.source as ToggleButton).selected
 					val direction = if(isSelected) Direction.BACKWARD else Direction.FORWARD
-					val trainId = getTrainIdFromSourceId(event)
+					val srcId = getSourceId(event)
+					val trainId = getTrainIdFromSourceId(srcId)
 					trains.get(trainId)?.setDirection(direction)
 				}
 			}
@@ -134,8 +137,10 @@ class TouchboardController implements ITouchboardController {
 		executeHandler(
 			new Runnable() {
 				override run() {
-					val trainId = getTrainIdFromSourceId(event)
-					val speedPercentageInt = getNumberFromSourceId(event)
+					val srcId = getSourceId(event)
+					val trainId = getTrainIdFromSourceId(srcId)
+					val speedPercentageStr = srcId.split("_").get(1)
+					val speedPercentageInt = getNumbersFromString(speedPercentageStr)
 					val speedPercentage = SpeedPercentageUtil.toSpeedPercentage(speedPercentageInt)
 					trains.get(trainId)?.setSpeedPercentage(speedPercentage)
 				}
@@ -161,35 +166,32 @@ class TouchboardController implements ITouchboardController {
 		})
 	}
 
-	private def int getTrainIdFromSourceId(ActionEvent event) {
+	private def int getTrainIdFromSourceId(String srcId) {
 		try {
-			val srcId = getSourceId(event)
-			val trainName = srcId.split("_").get(0).toLowerCase
+			val trainName = srcId.split("_").get(0)
 			return LocomotivesConfiguration.INSTANCE.getLocomotiveIdByName(trainName)
 		} catch (Exception ex) {
-			throw new IllegalArgumentException("Source ID does not contain a valid train name.", ex)
+			throw new IllegalArgumentException('''Source ID («srcId») does not contain a valid train name.''', ex)
 		}
 	}
 
-	private def int getNumberFromSourceId(ActionEvent event) {
+	private def int getNumberFromSourceId(String srcId) {
 		try {
-			val srcId = getSourceId(event)
 			return getNumbersFromString(srcId)
 		} catch (Exception ex) {
-			throw new IllegalArgumentException("Source ID does not contain a number.", ex)
+			throw new IllegalArgumentException('''Source ID («srcId») does not contain a number.''', ex)
 		}
 	}
 
 	private def getSourceId(ActionEvent event) {
 		try {
 			val eventSrc = event.source
-			if (eventSrc instanceof Node) {
-				return (eventSrc as Node).id
-			} else {
-				throw new Exception
+			switch (eventSrc) {
+				Node: eventSrc.id
+				default: throw new Exception
 			}
 		} catch (Exception ex) {
-			throw new IllegalArgumentException("Source ID does not exist.", ex)
+			throw new IllegalArgumentException('''Event («event») does not have a source ID.''', ex)
 		}
 	}
 
@@ -202,20 +204,20 @@ class TouchboardController implements ITouchboardController {
 
 	private def initializeSegments(Scene scene) {
 		segments = new TreeMap
-		for (i : LayoutConfiguration.INSTANCE.segments) {
-			val node = scene.lookup("#segment_" + i)
-			val eventHandler = new SegmentEventHandler(touchboardWrapper, new ThreadSafeNode(node, i), loggerFactory)
-			segments.put(i, eventHandler)
-		}
+		LayoutConfiguration.INSTANCE.segments.forEach [
+			val node = scene.lookup("#segment_" + it)
+			val eventHandler = new SegmentEventHandler(touchboardWrapper, new ThreadSafeNode(node, it), loggerFactory)
+			segments.put(it, eventHandler)
+		]
 	}
 
 	private def initializeTurnouts(Scene scene) {
 		turnouts = new TreeMap
-		for (i : LayoutConfiguration.INSTANCE.turnoutIds) {
-			val node = scene.lookup("#turnout_" + i)
-			val eventHandler = new TurnoutEventHandler(touchboardWrapper, new ThreadSafeNode(node, i), loggerFactory)
-			turnouts.put(i, eventHandler)
-		}
+		LayoutConfiguration.INSTANCE.turnoutIds.forEach [
+			val node = scene.lookup("#turnout_" + it)
+			val eventHandler = new TurnoutEventHandler(touchboardWrapper, new ThreadSafeNode(node, it), loggerFactory)
+			turnouts.put(it, eventHandler)
+		]
 	}
 
 	private interface SegmentStateSetter {

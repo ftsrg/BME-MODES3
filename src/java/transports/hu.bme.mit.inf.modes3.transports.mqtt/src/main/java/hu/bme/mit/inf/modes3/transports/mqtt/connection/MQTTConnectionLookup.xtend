@@ -30,7 +30,7 @@ class MQTTConnectionLookup {
 		synchronized (connections) {
 			connection = connections.get(simplifiedConfiguration)
 			if (connection === null) {
-				connection = new MQTTConnection(configuration, loggerFactory)
+				connection = new MQTTConnection(simplifiedConfiguration, loggerFactory)
 				connections.put(simplifiedConfiguration, connection)
 			}
 		}
