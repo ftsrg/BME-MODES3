@@ -31,9 +31,9 @@ cd src/java
 |:------------------------|:--------:|:---:|
 |/config-management     | Scripts to deploy the code for the embedded systems.         |  hegyibalint   |
 
-#### Sources divided by programming language
+### Sources divided by programming language
 
-##### C++
+#### C++
 
 - Root path: `/src/cpp/`
 - Folder prefix: `hu.bme.mit.inf.modes3.`
@@ -47,7 +47,7 @@ cd src/java
 |XPressNet Bridge   | <path_prefix>.components.xpressnetbridge | C++ implementation for the XPressNetBridge, in order to send DCC commands to the trains.   | Chorithian (Attila Biró)    |
 |train_sample_generator   | <path_prefix>.train_sample_generator |    |  FuzesiMate |
 
-##### JavaScript
+#### JavaScript
 
 - Root path: `/src/js/`
 - Folder prefix: `modes3`
@@ -58,7 +58,7 @@ cd src/java
 |Dashboard UI      | <path_prefix>-dashboard  | Dashboard for the model railway track.  |   zsoltmazlo  |
 |Touchboard UI   | <path_prefix>-touchboard | Dashboard for the model railway track, with focus on touchable elements.   | hegyibalint    |
 
-##### Java
+#### Java
 
 - Root path: `/src/java/`
 
@@ -101,7 +101,6 @@ cd src/java
 | Common messages | <messaging_path_prefix>.messages | Common representation for the messages used over the network in Java. | benedekh | 
 | Messaging service + Dispatcher | <messaging_path_prefix>.mms | Messaging service and message dispatcher to dispatch different messages. | baloghlaszlo, benedekh | 
 | Protobuf specific classes | <messaging_path_prefix>.proto | Protobuf specific transformators and dispatcher for the messages. | benedekh | 
-
 | Protobuf message definitions | <messaging_path_prefix>.proto.messages | Message definitions in protobuf representation and Java classes generated from them. | hegyibalint, benedekh | 
 
 - Test folder path: `<root_path>/test/`
