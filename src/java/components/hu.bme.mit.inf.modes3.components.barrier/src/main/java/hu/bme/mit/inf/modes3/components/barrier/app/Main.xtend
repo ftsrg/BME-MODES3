@@ -17,10 +17,8 @@ class Main {
 			new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
 		registry.registerArgumentWithOptions(
 			new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
-		registry.registerArgumentWithOptions(
-			new ArgumentDescriptorWithParameter("barriertopic", "Topic to be used by the barrier controller", String))
 
-		registry.parseArguments(args);
+		registry.parseArguments(args)
 
 		val railwayTrackCommunicationStack = MessagingServiceFactory::createStackForEveryTopic(registry, loggerFactory)
 		val barrierCommunicationStack = JsonDispatcherFactory::createMQTTStackWithJSON(registry, loggerFactory)

@@ -68,6 +68,7 @@ cd src/java
 
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
+| Barrier |  <components_path_prefix>.barrier | Sends open/close commands to the barrier over the network, depnending on the occupancy of certain segments. | benedekh
 | Dashboard |  <components_path_prefix>.dashboard | Dashboard for the model railway track. | zsoltmazlo
 | GPIO Manager |  <components_path_prefix>.gpiomanager | To control the GPIO pins of the Beagle Bone Black embedded units from Java. | hegyibalint
 | Leapmotion |  <components_path_prefix>.leapmotion | Leapmotion sensor code in Java. | pappist (Papp István)

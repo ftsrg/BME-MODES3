@@ -1,0 +1,10 @@
+[Unit]
+Description=MoDeS3 Barrier Server
+After=syslog.target network.target mosquitto.service
+
+[Service]
+ExecStart=/modes3/hu.bme.mit.inf.modes3.components.barrier/bin/hu.bme.mit.inf.modes3.components.barrier -address root.modes3.intra -port 1883
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

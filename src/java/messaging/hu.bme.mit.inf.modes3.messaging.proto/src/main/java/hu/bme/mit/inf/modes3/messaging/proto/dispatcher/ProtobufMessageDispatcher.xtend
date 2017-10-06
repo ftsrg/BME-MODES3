@@ -106,7 +106,7 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 				}
 			}
 		} catch (Exception e) {
-			logger.error(e.message, e)
+			logger.trace(e.message, e)
 		}
 	}
 

@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.components.barrier.comm
 
-import hu.bme.mit.inf.modes3.components.barrier.comm.json.BarrierStateMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.BarrierStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger

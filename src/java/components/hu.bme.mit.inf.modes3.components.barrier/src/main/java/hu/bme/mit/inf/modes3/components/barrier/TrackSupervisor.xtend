@@ -26,6 +26,7 @@ class TrackSupervisor implements ITrackSupervisor {
 			if (newValue == SegmentOccupancy.OCCUPIED) {
 				supervisorWrapper.sendBarrierMessage("closed")
 			} else if (supervisedSections.entrySet.forall[it.value == SegmentOccupancy.FREE]) {
+				println("OPENED IS SENT")
 				supervisorWrapper.sendBarrierMessage("opened")
 			}
 		}

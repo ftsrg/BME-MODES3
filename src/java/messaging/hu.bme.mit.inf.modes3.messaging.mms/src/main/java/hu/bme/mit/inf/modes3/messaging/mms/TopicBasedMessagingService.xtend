@@ -13,16 +13,19 @@ class TopicBasedMessagingService extends MessagingService {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 	val Set<TopicBasedTransport> transports
+	val Set<String> topics
 
 	new(TopicBasedTransport transport, AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		super(transport, dispatcher, factory)
 		this.logger = factory.getLogger(this.class.name)
+		this.topics = newHashSet
 		this.transports = newHashSet
 		addTransport(transport)
 	}
 
 	def addTransport(TopicBasedTransport transport) {
 		transports.add(transport)
+		topics.add(transport.topic)
 	}
 
 	override start() {
