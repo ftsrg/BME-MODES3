@@ -5,7 +5,7 @@ static int ID_COUNTER = 0;
 const TrainDetection &TrainDetector::handleEdge(SensorSide side, EdgeDirection dir, time_t timestamp) {
     for (TrainDetection &td : this->detections) {
         if (td.step(side, dir, timestamp)) {
-            if (td.state == COMPL_STR) {
+            if (td.getState() == COMPL) {
                 std::cout << td << std::endl;
             }
             return td;

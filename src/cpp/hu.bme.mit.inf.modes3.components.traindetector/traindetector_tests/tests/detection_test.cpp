@@ -11,7 +11,7 @@ TEST(DetectionTest, RegularLocomotive) {
 
     auto detections = detector.getDetections();
     ASSERT_EQ(detections.size(), 1);
-    ASSERT_EQ(detections[0].state, DetectionState::COMPL_STR);
+    ASSERT_EQ(detections[0].getState(), DetectionState::COMPL);
 }
 
 TEST(DetectionTest, DoubleLocomotive) {
@@ -28,32 +28,9 @@ TEST(DetectionTest, DoubleLocomotive) {
 
     auto detections = detector.getDetections();
     ASSERT_EQ(detections.size(), 2);
-    ASSERT_EQ(detections[0].state, DetectionState::COMPL_STR);
-    ASSERT_EQ(detections[1].state, DetectionState::COMPL_STR);
+    ASSERT_EQ(detections[0].getState(), DetectionState::COMPL);
+    ASSERT_EQ(detections[1].getState(), DetectionState::COMPL);
 }
-
-//TEST(DetectionTest, RevStrtLocomotive) {
-//    TrainDetector detector;
-//
-//    // Invalid train movement, moving in reverse after
-//    // covering both sensors
-//    // Should not detect, but detections after should
-//    // be valid
-//    detector.handleEdge(RIGHT, RISING);  // 1
-//    detector.handleEdge(LEFT, RISING);   // 1
-//    detector.handleEdge(LEFT, FALLING);  // 1
-//    detector.handleEdge(RIGHT, FALLING); // 1
-//    // Corrent train movement, should be detected
-//    detector.handleEdge(LEFT, RISING);   // 2
-//    detector.handleEdge(RIGHT, RISING);  // 2
-//    detector.handleEdge(LEFT, FALLING);  // 2
-//    detector.handleEdge(RIGHT, FALLING); // 2
-//
-//    auto detections = detector.getDetections();
-//    ASSERT_EQ(detections.size(), 2);
-//    ASSERT_EQ(detections[0].state, DetectionState::COMPL_STR);
-//    ASSERT_EQ(detections[1].state, DetectionState::COMPL_REV);
-//}
 
 TEST(DetectionTest, TrainWithTwoCars) {
     TrainDetector detector;
@@ -69,8 +46,8 @@ TEST(DetectionTest, TrainWithTwoCars) {
 
     auto detections = detector.getDetections();
     ASSERT_EQ(detections.size(), 2);
-    ASSERT_EQ(detections[0].state, DetectionState::COMPL_STR);
-    ASSERT_EQ(detections[1].state, DetectionState::COMPL_STR);
+    ASSERT_EQ(detections[0].getState(), DetectionState::COMPL);
+    ASSERT_EQ(detections[1].getState(), DetectionState::COMPL);
 }
 
 
@@ -86,7 +63,7 @@ TEST(DetectionTest, TrainWithThreeCars) {
     // Train one should be completed by now
     detections = detector.getDetections();
     ASSERT_EQ(detections.size(), 2);
-    ASSERT_EQ(detections[0].state, DetectionState::COMPL_STR);
+    ASSERT_EQ(detections[0].getState(), DetectionState::COMPL);
 
     detector.handleEdge(LEFT, RISING);   // 2
     detector.handleEdge(RIGHT, FALLING); // 2
@@ -95,8 +72,8 @@ TEST(DetectionTest, TrainWithThreeCars) {
     // Train two should be completed by now
     detections = detector.getDetections();
     ASSERT_EQ(detections.size(), 3);
-    ASSERT_EQ(detections[0].state, DetectionState::COMPL_STR);
-    ASSERT_EQ(detections[1].state, DetectionState::COMPL_STR);
+    ASSERT_EQ(detections[0].getState(), DetectionState::COMPL);
+    ASSERT_EQ(detections[1].getState(), DetectionState::COMPL);
 
     detector.handleEdge(LEFT, RISING);   // 3
     detector.handleEdge(RIGHT, FALLING); // 3
@@ -104,7 +81,7 @@ TEST(DetectionTest, TrainWithThreeCars) {
     // Train three should be completed by now
     detections = detector.getDetections();
     ASSERT_EQ(detections.size(), 3);
-    ASSERT_EQ(detections[0].state, DetectionState::COMPL_STR);
-    ASSERT_EQ(detections[1].state, DetectionState::COMPL_STR);
-    ASSERT_EQ(detections[2].state, DetectionState::COMPL_STR);
+    ASSERT_EQ(detections[0].getState(), DetectionState::COMPL);
+    ASSERT_EQ(detections[1].getState(), DetectionState::COMPL);
+    ASSERT_EQ(detections[2].getState(), DetectionState::COMPL);
 }
