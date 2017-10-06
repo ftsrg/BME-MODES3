@@ -36,9 +36,6 @@
 
 # Eclipse
 # -------
-*.classpath
-*.project
-*.settings
 **/bin
 **/xtend-gen
 **/subprojects/*/bin
