@@ -99,7 +99,9 @@ cd src/java
 | High-level API designed for communication with the railroad system | <messaging_path_prefix>.communication | Communication technology independent API designed for further use in the components. | baloghlaszlo | 
 | Common messages | <messaging_path_prefix>.messages | Common representation for the messages used over the network in Java. | benedekh | 
 | Messaging service + Dispatcher | <messaging_path_prefix>.mms | Messaging service and message dispatcher to dispatch different messages. | baloghlaszlo, benedekh | 
-| Protobuf specific classes and message definitions | <messaging_path_prefix>.proto | Message definitions in protobuf representation and protobuf specific transformators for the messages. | hegyibalint, benedekh | 
+| Protobuf specific classes | <messaging_path_prefix>.proto | Protobuf specific transformators and dispatcher for the messages. | benedekh | 
+
+| Protobuf message definitions | <messaging_path_prefix>.proto.messages | Message definitions in protobuf representation and Java classes generated from them. | hegyibalint, benedekh | 
 
 - Test folder path: `<root_path>/test/`
 - Test project prefix: `hu.bme.mit.inf.modes3.test`
@@ -166,7 +168,11 @@ cd src/java
 
 - Should you use Eclipse with the Gradle plugin AND change something in any of the *.gradle files (either in the root `/src/java` folder or in your project's folder), do not forget to click on the project name with the right mouse button, and in the dropdown menu go to Gradle -> Plugin refresh. Otherwise, the plugin might not recognize the changes and will end up in an incorrect configuration.
 
+- Should you use [VIATRA](https://www.eclipse.org/viatra/) in Eclipse in any project, do not forget to set the folder into which VIATRA generates the Java classes. To do so go to `Window -> Preferences -> VIATRA -> Query Language -> Compiler` and set the `Output Folder / Directory` for `./src/main/vql-gen`. After that, set that folder as a source folder of the project and exclude it from the .gitignore file in the project folder: write `!/src/main/vql-gen/*` in the .gitignore file. However, this last step might be unnecessary if there is a VIATRA compiler available as a gradle plugin. (As of writing these lines, it is done available yet.)
+
 - Should you have build problems in Eclipse with Xtend, check if there is a `build/xtend/main` and `build/xtend/test` folders in the project. If so, remove the folders. In addition to that, remove the `	<classpathentry kind="src" path="build/xtend/main"/>
 	<classpathentry kind="src" path="build/xtend/test"/>` lines from the `.classpath` file in the corresponding project.
+	
+- Never combine Xtend and pure Java files in the same source folder, because the Xtend / Xtext Compiler's Gradle plugin will get crazy and either end up in a stack overflow exception or show error markers at references for java classes in xtend files.
 
 - Should some change notifications from the file system not arrive to Eclipse, don't forget to use the 'good old' right click on the project name -> Refresh project option. Restarting Eclipse might also solve problems sometimes.
