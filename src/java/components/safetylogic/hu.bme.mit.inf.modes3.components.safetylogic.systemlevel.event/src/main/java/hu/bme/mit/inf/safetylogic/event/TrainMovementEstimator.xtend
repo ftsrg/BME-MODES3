@@ -30,7 +30,11 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	}
 
 	private def print(SegmentOccupancy value) {
-		if(value == SegmentOccupancy.FREE) 'FREE' else 'OCCUPIED'
+		switch(value){
+			case FREE: 'FREE'
+			case OCCUPIED: 'OCCUPIED'
+			default: 'NULL'
+		}
 	}
 
 	def synchronized checkFreedSections() {
