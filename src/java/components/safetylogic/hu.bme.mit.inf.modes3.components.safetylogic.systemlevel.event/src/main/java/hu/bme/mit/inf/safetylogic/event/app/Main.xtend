@@ -3,6 +3,7 @@ package hu.bme.mit.inf.safetylogic.event.app
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
 import hu.bme.mit.inf.safetylogic.event.sl.SafetyLogic
 import hu.bme.mit.inf.safetylogic.event.wrapper.SafetyLogicWrapper
 import org.slf4j.impl.SimpleLogger
@@ -24,7 +25,8 @@ class Main {
 			new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
 		registry.parseArguments(args)
 
-		val communicationStack = MessagingServiceFactory::createStackForEveryTopic(registry, loggerFactory)
+		val topics = TopicFactory::createEveryTopic
+		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
 
 		val safetyLogic = new SafetyLogic(loggerFactory)
 		val slWrapper = new SafetyLogicWrapper(safetyLogic, communicationStack, loggerFactory)

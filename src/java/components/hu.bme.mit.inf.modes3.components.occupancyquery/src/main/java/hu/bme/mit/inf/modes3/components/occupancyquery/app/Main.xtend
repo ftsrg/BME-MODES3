@@ -5,6 +5,7 @@ import hu.bme.mit.inf.modes3.components.occupancyquery.wrapper.OccupancyQueryWra
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
 import org.slf4j.impl.SimpleLoggerFactory
 
 class Main {
@@ -21,7 +22,8 @@ class Main {
 			new ArgumentDescriptorWithParameter("serial", "The serial port used by the SOC", String))
 		registry.parseArguments(args)
 
-		val communicationStack = MessagingServiceFactory::createStackForEveryTopic(registry, loggerFactory)
+		val occupancyTopics = TopicFactory::createSegmentTopics.filter[it.contains("occupancy")].toSet
+		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, occupancyTopics)
 
 		val component = new OccupancyQuery(registry, loggerFactory)
 		val queryWrapper = new OccupancyQueryWrapper(component, communicationStack, loggerFactory)

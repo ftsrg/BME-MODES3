@@ -1,12 +1,12 @@
 package hu.bme.mit.inf.modes3.components.barrier.comm.json
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
 import hu.bme.mit.inf.modes3.messaging.messages.status.BarrierStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.TopicBasedMessagingService
 import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
 import hu.bme.mit.inf.modes3.transports.mqtt.MQTTTransport
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
 
 class JsonDispatcherFactory {
 
@@ -22,7 +22,9 @@ class JsonDispatcherFactory {
 		val address = registry.getParameterStringValue('address')
 		val id = registry.getParameterStringValue('id')
 		val port = registry.getParameterIntegerValue('port')
-		val barriertopic = InternalMessageToTopicMapper.INSTANCE.getTopic(BarrierStateMessage.simpleName)
+		val barriertopic = InternalMessageToTopicMapper.INSTANCE.getTopics(BarrierStateMessage.simpleName).filter [
+			it == "barrier/gate"
+		].head
 
 		return new TopicBasedTransportConfiguration(id, address, port, barriertopic)
 	}

@@ -1,11 +1,11 @@
 package hu.bme.mit.inf.modes3.components.touchboard.app
 
 import hu.bme.mit.inf.modes3.components.touchboard.controller.TouchboardController
-import hu.bme.mit.inf.modes3.components.touchboard.wrapper.ITouchboardWrapper
 import hu.bme.mit.inf.modes3.components.touchboard.wrapper.TouchboardWrapper
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
 import java.io.IOException
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
@@ -42,7 +42,7 @@ class Main extends Application {
 	def static void main(String[] args) {
 		loggerFactory = new SimpleLoggerFactory
 		registry = createArgumentRegistry(loggerFactory)
-		registry.parseArguments(args);
+		registry.parseArguments(args)
 
 		launch(args)
 	}
@@ -57,7 +57,8 @@ class Main extends Application {
 	}
 
 	private def static createController() {
-		val communicationStack = MessagingServiceFactory::createStackForEveryTopic(registry, loggerFactory)
+		val topics = TopicFactory::createEveryTopic
+		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
 		val controller = new TouchboardController(loggerFactory)
 		val touchboardWrapper = new TouchboardWrapper(controller, communicationStack, loggerFactory)
 		return controller

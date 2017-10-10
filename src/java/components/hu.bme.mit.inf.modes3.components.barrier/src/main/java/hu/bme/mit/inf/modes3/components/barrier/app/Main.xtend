@@ -6,6 +6,7 @@ import hu.bme.mit.inf.modes3.components.barrier.wrapper.TrackSupervisorWrapper
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
 import org.slf4j.impl.SimpleLoggerFactory
 
 class Main {
@@ -20,7 +21,10 @@ class Main {
 
 		registry.parseArguments(args)
 
-		val railwayTrackCommunicationStack = MessagingServiceFactory::createStackForEveryTopic(registry, loggerFactory)
+		val occupancyTopics = TopicFactory::createSegmentTopics.filter[it.contains("occupancy")].toSet
+		val railwayTrackCommunicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory,
+			occupancyTopics)
+
 		val barrierCommunicationStack = JsonDispatcherFactory::createMQTTStackWithJSON(registry, loggerFactory)
 		val supervisedSections = #{15, 24}
 

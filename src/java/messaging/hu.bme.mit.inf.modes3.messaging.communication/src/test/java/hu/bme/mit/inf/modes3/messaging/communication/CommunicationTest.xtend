@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication
 
 // FIXME reimplement this test with the new transport
-
 class CommunicationTest {
 //	var TrackCommunicationServiceLocator locator
 //	val waitTime = 500

@@ -1,7 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.communication.factory
 
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
 import hu.bme.mit.inf.modes3.messaging.mms.TopicBasedMessagingService
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
@@ -33,11 +32,6 @@ class MessagingServiceFactory {
 			mms.addTransport(transport)
 		]
 		return mms
-	}
-
-	def static createStackForEveryTopic(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
-		val topics = InternalMessageToTopicMapper.INSTANCE.topics
-		createStackForTopics(argumentRegistry, factory, topics)
 	}
 
 }

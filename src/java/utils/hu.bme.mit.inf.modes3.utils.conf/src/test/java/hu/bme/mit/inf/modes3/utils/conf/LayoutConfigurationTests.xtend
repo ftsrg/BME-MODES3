@@ -92,4 +92,16 @@ class LayoutConfigurationTests {
 		Assert.assertEquals(referenceSegmentIds, loadedSegmentIds)
 	}
 
+	@Test def void turnoutControlsSectionsTest() {
+		val referenceSectionIds = #{20, 26, 30, 19}
+		val loadedSectionIds = LayoutConfiguration.INSTANCE.getControlledSections(3)
+		Assert.assertEquals(referenceSectionIds, loadedSectionIds)
+	}
+
+	@Test def void everySectionIsControlledByAtLeastOneTurnoutTest() {
+		val referenceSectionIds = LayoutConfiguration.INSTANCE.sections
+		val loadedSectionIds = LayoutConfiguration.INSTANCE.controlledSectionIds
+		Assert.assertEquals(referenceSectionIds, loadedSectionIds)
+	}
+
 }

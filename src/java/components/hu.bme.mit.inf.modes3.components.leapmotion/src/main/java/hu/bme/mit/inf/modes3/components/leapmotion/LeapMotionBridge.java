@@ -15,6 +15,7 @@ import hu.bme.mit.inf.modes3.components.leapmotion.processor.IGestureProcessor;
 import hu.bme.mit.inf.modes3.components.leapmotion.processor.impl.TrainSpeedHandler;
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory;
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService;
 import hu.bme.mit.inf.modes3.messaging.proto.messages.ComplexGestures.ComplexGesture;
@@ -35,7 +36,8 @@ public class LeapMotionBridge implements Runnable {
 	private Set<IGestureProcessor> processors;
 	
 	public LeapMotionBridge(ArgumentRegistry registry, ILoggerFactory loggerFactory) {
-		communicationStack = MessagingServiceFactory.createStackForEveryTopic(registry, loggerFactory);
+		Set<String> unparametrizedTopics = TopicFactory.createEveryUnparametrizedTopic();
+		communicationStack = MessagingServiceFactory.createStackForTopics(registry, loggerFactory, unparametrizedTopics);
 		locator = new TrackCommunicationServiceLocator(communicationStack, loggerFactory);
 		logger = loggerFactory.getLogger(this.getClass().getName());
 		

@@ -14,8 +14,9 @@ class LayoutConfiguration {
 	private static class LayoutConfigurationData {
 		private Set<Integer> segments
 		private Set<Integer> sections
-		private Map<String, Set<Integer>> turnoutsWithSegmentIds // map turnout ID to segment IDs (the turnout's occupancy can be sensed by this segment)
+		private Map<String, Set<Integer>> turnoutsSegmentIds // map turnout ID to segment IDs (the turnout's occupancy can be sensed by this segment)
 		private Map<Integer, Integer> turnoutIdBySegmentId // map segment ID to turnout ID (the turnout's occupancy can be sensed by this segment)
+		private Map<String, Set<Integer>> turnoutsResponsibilities // which turnout is responsible for which sections
 	}
 
 	public static val INSTANCE = new LayoutConfiguration
@@ -27,13 +28,13 @@ class LayoutConfiguration {
 		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData,
 			LayoutConfiguration.classLoader.getResourceAsStream(LAYOUT_CONFIG))
 
-		val inverseMapping = loadedConfiguration.turnoutsWithSegmentIds.entrySet.stream.flatMap(
+		val inverseMapping = loadedConfiguration.turnoutsSegmentIds.entrySet.stream.flatMap(
 			entry |
 				entry.value.stream.map[new SimpleEntry(it, entry.key)]
 		).collect(Collectors::toMap([it.key], [Integer.valueOf(it.value)]))
 
 		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections,
-			loadedConfiguration.turnoutsWithSegmentIds, inverseMapping)
+			loadedConfiguration.turnoutsSegmentIds, inverseMapping, loadedConfiguration.turnoutsResponsibilities)
 	}
 
 	def getSections() {
@@ -45,44 +46,58 @@ class LayoutConfiguration {
 	}
 
 	def getTurnoutIds() {
-		asIntegerSet(asUnmodifiableSet(layout.turnoutsWithSegmentIds.keySet))
+		asUnmodifiableSet(asIntegerSet(layout.turnoutsSegmentIds.keySet))
 	}
 
 	/**
 	 * @return the segment IDs which belong to the turnouts, aka the turnouts occupancies can be sensed by these segment IDs
 	 */
 	def getTurnoutSegmentIds() {
-		asUnmodifiableSet(layout.turnoutsWithSegmentIds.values.stream.flatMap[it.stream].collect(Collectors::toSet))
+		asUnmodifiableSet(layout.turnoutsSegmentIds.values.stream.flatMap[it.stream].collect(Collectors::toSet))
 	}
 
 	/**
 	 * @return the segment IDs which belong to a particular turnout, aka the (particular) turnout's occupancy can be sensed by these segment IDs. If such turnout ID cannot be found, it returns null. 
 	 * E.g. turnout 3 has two segments, segment 25 and 32. By invoking this method with 3, it will return a Set<String> consisting of 25 and 32.
 	 */
-	def getSegmentIdsOfTurnout(Integer turnoutId) {
-		layout.turnoutsWithSegmentIds.get(String.valueOf(turnoutId))
+	def getSegmentIdsOfTurnout(int turnoutId) {
+		layout.turnoutsSegmentIds.get(String.valueOf(turnoutId))
 	}
 
 	/**
 	 * @return the turnout ID, if its occupancy can be sensed by the segmentId; otherwise it returns null
 	 * E.g. segment 25 belongs to turnout 3, so invoking this method by 25 it will return 3.
 	 */
-	def getTurnoutIdFromSegmentId(Integer segmentId) {
+	def getTurnoutIdFromSegmentId(int segmentId) {
 		layout.turnoutIdBySegmentId.get(segmentId)
 	}
 
 	/**
-	 * @return the TurnoutID -> segmentID mapping for every turnout. Note, that more segments may belong to a turnout. 
+	 * @return the TurnoutID -> SegmentID mapping for every turnout. The turnout's occupancy can be sensed by this segment. Note, that more segments may belong to a turnout. 
 	 */
 	def getTurnoutIdToSegmentIdsMapping() {
-		convertKeysToInteger(asUnmodifiableMap(layout.turnoutsWithSegmentIds))
+		asUnmodifiableMap(convertKeysToInteger(layout.turnoutsSegmentIds))
 	}
 
 	/**
-	 * @return the SegmentID -> turnout ID mapping for every segment that belongs to a turnout. Note that a particular turnout may belong to more segments.
+	 * @return the SegmentID -> TurnoutID mapping for every segment that belongs to a turnout. The turnout's occupancy can be sensed by this segment. Note that a particular turnout may belong to more segments.
 	 */
 	def getSegmentIdToTurnoutIdMapping() {
 		asUnmodifiableMap(layout.turnoutIdBySegmentId)
+	}
+
+	/**
+	 * @return sections are controlled by the turnout, identified by its ID
+	 */
+	def getControlledSections(int turnoutId) {
+		asUnmodifiableSet(layout.turnoutsResponsibilities.get(String.valueOf(turnoutId)))
+	}
+
+	/**
+	 * @return section IDs that are controlled by either turnout
+	 */
+	def getControlledSectionIds() {
+		asUnmodifiableSet(layout.turnoutsResponsibilities.values.flatten.toSet)
 	}
 
 	private def <T> asUnmodifiableSet(Set<T> set) {

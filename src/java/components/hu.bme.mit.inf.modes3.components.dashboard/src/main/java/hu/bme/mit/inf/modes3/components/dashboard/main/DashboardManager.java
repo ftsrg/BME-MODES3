@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.modes3.components.dashboard.main;
 
+import java.util.Set;
+
 import org.atmosphere.container.Jetty9AsyncSupportWithWebSocket;
 import org.atmosphere.cpr.ApplicationConfig;
 import org.atmosphere.cpr.AtmosphereServlet;
@@ -19,6 +21,7 @@ import org.slf4j.impl.SimpleLoggerFactory;
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter;
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory;
+import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService;
 
@@ -59,7 +62,8 @@ public class DashboardManager {
 	}
 
 	public void initialize() {
-		messagingService = MessagingServiceFactory.createStackForEveryTopic(registry, loggerFactory);
+		Set<String> topics = TopicFactory.createEveryTopic();
+		messagingService = MessagingServiceFactory.createStackForTopics(registry, loggerFactory, topics);
 		locator = new TrackCommunicationServiceLocator(messagingService, loggerFactory);
 	}
 
