@@ -171,3 +171,5 @@ cd src/java
 - Never combine Xtend and pure Java files in the same source folder, because the Xtend / Xtext Compiler's Gradle plugin will get crazy and either end up in a stack overflow exception or show error markers at references for java classes in xtend files.
 
 - Should some change notifications from the file system not arrive to Eclipse, don't forget to use the 'good old' right click on the project name -> Refresh project option. Restarting Eclipse might also solve problems sometimes.
+
+- Should you configure Eclipse for using Java jdk library instead of jre. For doing this open the project's properties and in the Java Build Path / Libraries setting add or edit the default System Library's Execution environment for JavaSE-1.8(jdk1.8).
