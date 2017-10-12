@@ -4,8 +4,8 @@ import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParamete
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
+import hu.bme.mit.inf.safetylogic.event.bridge.SafetyLogicBridge
 import hu.bme.mit.inf.safetylogic.event.sl.SafetyLogic
-import hu.bme.mit.inf.safetylogic.event.wrapper.SafetyLogicWrapper
 import org.slf4j.impl.SimpleLogger
 import org.slf4j.impl.SimpleLoggerFactory
 
@@ -29,7 +29,7 @@ class Main {
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
 
 		val safetyLogic = new SafetyLogic(loggerFactory)
-		val slWrapper = new SafetyLogicWrapper(safetyLogic, communicationStack, loggerFactory)
+		val slWrapper = new SafetyLogicBridge(safetyLogic, communicationStack, loggerFactory)
 		slWrapper.run // The component will run on this thread
 	}
 

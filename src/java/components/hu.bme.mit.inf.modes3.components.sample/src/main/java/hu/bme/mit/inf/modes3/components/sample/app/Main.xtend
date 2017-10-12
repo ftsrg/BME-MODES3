@@ -1,12 +1,12 @@
 package hu.bme.mit.inf.modes3.components.sample.app
 
 import hu.bme.mit.inf.modes3.components.sample.SampleComponent
-import hu.bme.mit.inf.modes3.components.sample.wrapper.SampleComponentWrapper
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
 import org.slf4j.impl.SimpleLoggerFactory
+import hu.bme.mit.inf.modes3.components.sample.bridge.SampleComponentBridge
 
 class Main {
 
@@ -24,7 +24,7 @@ class Main {
 		val stack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, occupancyTopics)
 
 		val sampleComponent = new SampleComponent
-		val componentWrapper = new SampleComponentWrapper(sampleComponent, stack, loggerFactory)
+		val componentWrapper = new SampleComponentBridge(sampleComponent, stack, loggerFactory)
 		componentWrapper.run
 	}
 }

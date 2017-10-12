@@ -1,12 +1,12 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller
 
+import hu.bme.mit.inf.modes3.components.touchboard.bridge.ITouchboardBridge
 import hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement.SegmentEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement.TurnoutEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.controller.train.Direction
 import hu.bme.mit.inf.modes3.components.touchboard.controller.train.SpeedPercentageUtil
 import hu.bme.mit.inf.modes3.components.touchboard.controller.train.TrainEventHandler
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
-import hu.bme.mit.inf.modes3.components.touchboard.wrapper.ITouchboardWrapper
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
@@ -35,7 +35,7 @@ class TouchboardController implements ITouchboardController {
 	var Map<Integer, SegmentEventHandler> segments
 	var Map<Integer, TurnoutEventHandler> turnouts
 
-	var ITouchboardWrapper touchboardWrapper
+	var ITouchboardBridge touchboardBridge
 
 	new(ILoggerFactory loggerFactory) {
 		this.loggerFactory = loggerFactory
@@ -44,10 +44,10 @@ class TouchboardController implements ITouchboardController {
 		this.trains = new TreeMap
 	}
 
-	override setTouchboardWrapper(ITouchboardWrapper touchboardWrapper) {
-		this.touchboardWrapper = touchboardWrapper
+	override setTouchboardBridge(ITouchboardBridge touchboardBridge) {
+		this.touchboardBridge = touchboardBridge
 		LocomotivesConfiguration.INSTANCE.locomotiveIds.forEach [
-			trains.put(it, new TrainEventHandler(it, touchboardWrapper.trainCommander))
+			trains.put(it, new TrainEventHandler(it, touchboardBridge.trainCommander))
 		]
 	}
 
@@ -151,7 +151,7 @@ class TouchboardController implements ITouchboardController {
 	def void setScene(Scene scene) {
 		initializeSegments(scene)
 		initializeTurnouts(scene)
-		touchboardWrapper.sendAllStatusCommand
+		touchboardBridge.sendAllStatusCommand
 	}
 
 	private def void executeHandler(Runnable handler) {
@@ -206,7 +206,7 @@ class TouchboardController implements ITouchboardController {
 		segments = new TreeMap
 		LayoutConfiguration.INSTANCE.segments.forEach [
 			val node = scene.lookup("#segment_" + it)
-			val eventHandler = new SegmentEventHandler(touchboardWrapper, new ThreadSafeNode(node, it), loggerFactory)
+			val eventHandler = new SegmentEventHandler(touchboardBridge, new ThreadSafeNode(node, it), loggerFactory)
 			segments.put(it, eventHandler)
 		]
 	}
@@ -215,7 +215,7 @@ class TouchboardController implements ITouchboardController {
 		turnouts = new TreeMap
 		LayoutConfiguration.INSTANCE.turnoutIds.forEach [
 			val node = scene.lookup("#turnout_" + it)
-			val eventHandler = new TurnoutEventHandler(touchboardWrapper, new ThreadSafeNode(node, it), loggerFactory)
+			val eventHandler = new TurnoutEventHandler(touchboardBridge, new ThreadSafeNode(node, it), loggerFactory)
 			turnouts.put(it, eventHandler)
 		]
 	}

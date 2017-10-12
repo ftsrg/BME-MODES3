@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.components.touchboard.app
 
+import hu.bme.mit.inf.modes3.components.touchboard.bridge.TouchboardBridge
 import hu.bme.mit.inf.modes3.components.touchboard.controller.TouchboardController
-import hu.bme.mit.inf.modes3.components.touchboard.wrapper.TouchboardWrapper
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
@@ -60,7 +60,7 @@ class Main extends Application {
 		val topics = TopicFactory::createEveryTopic
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
 		val controller = new TouchboardController(loggerFactory)
-		val touchboardWrapper = new TouchboardWrapper(controller, communicationStack, loggerFactory)
+		val touchboardWrapper = new TouchboardBridge(controller, communicationStack, loggerFactory)
 		return controller
 	}
 }

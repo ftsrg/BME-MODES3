@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.components.occupancyquery.app
 
 import hu.bme.mit.inf.modes3.components.occupancyquery.OccupancyQuery
-import hu.bme.mit.inf.modes3.components.occupancyquery.wrapper.OccupancyQueryWrapper
+import hu.bme.mit.inf.modes3.components.occupancyquery.bridge.OccupancyQueryBridge
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
@@ -26,7 +26,7 @@ class Main {
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, occupancyTopics)
 
 		val component = new OccupancyQuery(registry, loggerFactory)
-		val queryWrapper = new OccupancyQueryWrapper(component, communicationStack, loggerFactory)
+		val queryWrapper = new OccupancyQueryBridge(component, communicationStack, loggerFactory)
 		queryWrapper.run
 	}
 }

@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.components.occupancyquery
 
 import com.fazecast.jSerialComm.SerialPort
-import hu.bme.mit.inf.modes3.components.occupancyquery.wrapper.IOccupancyQueryWrapper
+import hu.bme.mit.inf.modes3.components.occupancyquery.bridge.IOccupancyQueryBridge
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
@@ -28,7 +28,7 @@ class OccupancyQuery implements IOccupancyQuery {
 	val ArgumentRegistry registry
 
 	// Wrapper around the component
-	@Accessors(PUBLIC_SETTER) var IOccupancyQueryWrapper occupancyQueryWrapper
+	@Accessors(PUBLIC_SETTER) var IOccupancyQueryBridge occupancyQueryBridge
 
 	val Logger logger
 
@@ -53,7 +53,7 @@ class OccupancyQuery implements IOccupancyQuery {
 			// Log the change
 			logger.info('''«segmentID+1» «occupancy»''')
 			// Send out the information
-			occupancyQueryWrapper.sendSegmentOccupation(segmentID + 1, occupancy);
+			occupancyQueryBridge.sendSegmentOccupation(segmentID + 1, occupancy);
 		}
 	}
 

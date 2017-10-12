@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.barrier.wrapper
+package hu.bme.mit.inf.modes3.components.barrier.bridge
 
 import hu.bme.mit.inf.modes3.components.barrier.ITrackSupervisor
 import hu.bme.mit.inf.modes3.components.barrier.comm.BarrierCommander
@@ -8,7 +8,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
-class TrackSupervisorWrapper extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ITrackSupervisorWrapper {
+class TrackSupervisorBridge extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ITrackSupervisorBridge {
 
 	val BarrierCommander barrierCommander
 	val ITrackSupervisor trackSupervisor
@@ -19,7 +19,7 @@ class TrackSupervisorWrapper extends AbstractCommunicationComponent implements I
 		super.locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
 		this.barrierCommander = new BarrierCommander(barrierStack, factory)
 		this.trackSupervisor = trackSupervisor
-		this.trackSupervisor.supervisorWrapper = this
+		this.trackSupervisor.supervisorBridge = this
 	}
 
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {

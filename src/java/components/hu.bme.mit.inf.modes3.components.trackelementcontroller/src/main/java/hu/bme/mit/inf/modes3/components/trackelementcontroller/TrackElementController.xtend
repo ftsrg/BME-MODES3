@@ -1,11 +1,11 @@
 package hu.bme.mit.inf.modes3.components.trackelementcontroller
 
 import hu.bme.mit.inf.modes3.components.gpiomanager.GpioManager
+import hu.bme.mit.inf.modes3.components.trackelementcontroller.bridge.ITrackElementControllerBridge
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.Configuration
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.config.ExpanderConfigInterpreter
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.controllers.PhysicalSegmentController
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.controllers.PhysicalTurnoutController
-import hu.bme.mit.inf.modes3.components.trackelementcontroller.wrapper.ITrackElementControllerWrapper
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import java.util.HashMap
@@ -25,7 +25,7 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 	val ILoggerFactory factory
 	val Logger logger
 
-	@Accessors(PUBLIC_SETTER) var ITrackElementControllerWrapper trackElementControllerWrapper
+	@Accessors(PUBLIC_SETTER) var ITrackElementControllerBridge trackElementControllerBridge
 
 	val HashMap<Integer, PhysicalSegmentController> segmentControllers = newHashMap
 	val List<PhysicalTurnoutController> turnoutControllers = newArrayList
@@ -45,8 +45,8 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 		logger.info('''turnout expander: «config.turnoutExpanders»''')
 	}
 
-	override setTrackElementControllerWrapper(ITrackElementControllerWrapper wrapper) {
-		this.trackElementControllerWrapper = wrapper
+	override setTrackElementControllerBridge(ITrackElementControllerBridge Bridge) {
+		this.trackElementControllerBridge = Bridge
 
 		// for each and every segment we need to create a segmentController class
 		config.sectionNames.forEach [
@@ -58,7 +58,7 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 
 				// because we do know, that all pin that we will use will be low at this time,
 				// we could send an message over network about the segment's status (disabled)
-				trackElementControllerWrapper.sendSegmentState(segmentId, controller.segmentState)
+				trackElementControllerBridge.sendSegmentState(segmentId, controller.segmentState)
 			} catch (NumberFormatException exp) {
 				logger.warn('''«it» is not a valid number as a segement ID. Error message: «exp.message»''', exp)
 			}
@@ -90,7 +90,7 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 		segmentControllers.get(id).segmentState = state
 
 		// also we need to send segmentState over network
-		trackElementControllerWrapper.sendSegmentState(id, segmentControllers.get(id).segmentState)
+		trackElementControllerBridge.sendSegmentState(id, segmentControllers.get(id).segmentState)
 	}
 
 	override onTurnoutCommand(int id, TurnoutState state) {
@@ -123,14 +123,14 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 		}
 
 		// need to send segmentState over network
-		trackElementControllerWrapper.sendTurnoutState(id, newState)
+		trackElementControllerBridge.sendTurnoutState(id, newState)
 	}
 
 	override onSendAllStatus() {
 		segmentControllers.entrySet.forEach [
-			trackElementControllerWrapper.sendSegmentState(it.key, it.value.segmentState)
+			trackElementControllerBridge.sendSegmentState(it.key, it.value.segmentState)
 		]
-		turnoutControllers.forEach[trackElementControllerWrapper.sendTurnoutState(id, it.turnoutState)]
+		turnoutControllers.forEach[trackElementControllerBridge.sendTurnoutState(id, it.turnoutState)]
 	}
 
 }

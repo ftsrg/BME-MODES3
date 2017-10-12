@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.trackelementcontroller.wrapper
+package hu.bme.mit.inf.modes3.components.trackelementcontroller.bridge
 
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.ITrackElementController
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISegmentCommandListener
@@ -10,14 +10,14 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
-class TrackElementControllerWrapper extends AbstractCommunicationComponent implements ISendAllStatusListener, ISegmentCommandListener, ITurnoutCommandListener, ITrackElementControllerWrapper {
+class TrackElementControllerBridge extends AbstractCommunicationComponent implements ISendAllStatusListener, ISegmentCommandListener, ITurnoutCommandListener, ITrackElementControllerBridge {
 
 	val ITrackElementController trackElementController
 
 	new(ITrackElementController trackElementController, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.trackElementController = trackElementController
-		this.trackElementController.trackElementControllerWrapper = this
+		this.trackElementController.trackElementControllerBridge = this
 
 		locator.sendAllStatusCallback.sendAllStatusListener = this
 		locator.trackElementCommandCallback.segmentCommandListener = this

@@ -1,16 +1,16 @@
 package hu.bme.mit.inf.modes3.components.sample
 
 import hu.bme.mit.inf.modes3.components.sample.util.ChangeCounter
-import hu.bme.mit.inf.modes3.components.sample.wrapper.ISampleComponentWrapper
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import java.util.concurrent.ConcurrentHashMap
 import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.components.sample.bridge.ISampleComponentBridge
 
 class SampleComponent implements ISampleComponent {
 
 	val ConcurrentHashMap<Integer, ChangeCounter> segmentOccupancyChanges
 
-	@Accessors(PUBLIC_SETTER) var ISampleComponentWrapper sampleComponentWrapper
+	@Accessors(PUBLIC_SETTER) var ISampleComponentBridge sampleComponentBridge
 
 	new() {
 		this.segmentOccupancyChanges = new ConcurrentHashMap
@@ -20,7 +20,7 @@ class SampleComponent implements ISampleComponent {
 		val changeCounter = getNumberOfChanges(id)
 		val changes = changeCounter.increment
 		if (changes > 2) {
-			sampleComponentWrapper.disableSegment(id)
+			sampleComponentBridge.disableSegment(id)
 			changeCounter.reset
 		}
 	}

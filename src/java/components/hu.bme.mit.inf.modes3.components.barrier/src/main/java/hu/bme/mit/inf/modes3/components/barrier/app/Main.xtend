@@ -1,8 +1,8 @@
 package hu.bme.mit.inf.modes3.components.barrier.app
 
 import hu.bme.mit.inf.modes3.components.barrier.TrackSupervisor
+import hu.bme.mit.inf.modes3.components.barrier.bridge.TrackSupervisorBridge
 import hu.bme.mit.inf.modes3.components.barrier.comm.json.JsonDispatcherFactory
-import hu.bme.mit.inf.modes3.components.barrier.wrapper.TrackSupervisorWrapper
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
@@ -29,7 +29,7 @@ class Main {
 		val supervisedSections = #{15, 24}
 
 		val component = new TrackSupervisor(supervisedSections)
-		val componentWrapper = new TrackSupervisorWrapper(component, railwayTrackCommunicationStack,
+		val componentWrapper = new TrackSupervisorBridge(component, railwayTrackCommunicationStack,
 			barrierCommunicationStack, loggerFactory)
 		componentWrapper.run // run on main thread
 	}

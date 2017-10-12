@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.touchboard.wrapper
+package hu.bme.mit.inf.modes3.components.touchboard.bridge
 
 import hu.bme.mit.inf.modes3.components.touchboard.controller.ITouchboardController
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
@@ -11,14 +11,14 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
-class TouchboardWrapper extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener, ITurnoutStateChangeListener, ITouchboardWrapper {
+class TouchboardBridge extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener, ITurnoutStateChangeListener, ITouchboardBridge {
 
 	val ITouchboardController touchboardController
 
 	new(ITouchboardController touchboardController, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.touchboardController = touchboardController
-		this.touchboardController.touchboardWrapper = this
+		this.touchboardController.touchboardBridge = this
 
 		locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
 		locator.trackElementStateRegistry.segmentStateChangeListener = this

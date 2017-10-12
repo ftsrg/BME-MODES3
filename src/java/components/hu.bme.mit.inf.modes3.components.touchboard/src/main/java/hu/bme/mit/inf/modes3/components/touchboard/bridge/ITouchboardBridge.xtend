@@ -1,10 +1,10 @@
-package hu.bme.mit.inf.modes3.components.touchboard.wrapper
+package hu.bme.mit.inf.modes3.components.touchboard.bridge
 
 import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.ITrainCommander
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 
-interface ITouchboardWrapper {
+interface ITouchboardBridge {
 	def ITrainCommander getTrainCommander()
 
 	def SegmentState getSegmentState(int segmentId)

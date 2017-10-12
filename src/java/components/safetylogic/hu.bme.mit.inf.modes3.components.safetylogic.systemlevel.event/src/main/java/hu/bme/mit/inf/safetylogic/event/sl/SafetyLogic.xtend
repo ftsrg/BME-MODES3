@@ -22,13 +22,13 @@ import hu.bme.mit.inf.safetylogic.event.ModelUtil
 import hu.bme.mit.inf.safetylogic.event.TrackDisableStrategy
 import hu.bme.mit.inf.safetylogic.event.TrackEnableStrategy
 import hu.bme.mit.inf.safetylogic.event.TrainMovementEstimator
-import hu.bme.mit.inf.safetylogic.event.wrapper.ISafetyLogicWrapper
 import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.safetylogic.event.bridge.ISafetyLogicBridge
 
 class SafetyLogic implements INotifiable, ISafetyLogic {
 
@@ -51,7 +51,7 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 	var List<ISegmentDisableStrategy> segmentDisableStrategies
 	var List<ITrainStopStrategy> trainStopStrategies
 
-	var ISafetyLogicWrapper safetyLogicWrapper
+	var ISafetyLogicBridge safetyLogicBridge
 
 	new(ILoggerFactory factory) {
 		this.factory = factory
@@ -68,37 +68,37 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 		logger.info('Construction finished')
 	}
 
-	override setSafetyLogicWrapper(ISafetyLogicWrapper safetyLogicWrapper) {
-		this.safetyLogicWrapper = safetyLogicWrapper
+	override setSafetyLogicBridge(ISafetyLogicBridge safetyLogicBridge) {
+		this.safetyLogicBridge = safetyLogicBridge
 
 		this.segmentDisableStrategies = #[
-			new TrackDisableStrategy(this.safetyLogicWrapper.trackElementCommander)
+			new TrackDisableStrategy(this.safetyLogicBridge.trackElementCommander)
 		]
 		this.segmentEnableStrategies = #[
-			new TrackEnableStrategy(this.safetyLogicWrapper.trackElementCommander)
+			new TrackEnableStrategy(this.safetyLogicBridge.trackElementCommander)
 		]
-		this.trainStopStrategies = #[ // new XPressInvertDirectionStrategy(this.safetyLogicWrapper.trainCommander, this.safetyLogicWrapper.trainSpeedStateRegistry, logger)
+		this.trainStopStrategies = #[ // new XPressInvertDirectionStrategy(this.safetyLogicBridge.trainCommander, this.safetyLogicBridge.trainSpeedStateRegistry, logger)
 		]
 
-		this.safetyLogicWrapper.sendAllStatusListener = new ISendAllStatusListener() {
+		this.safetyLogicBridge.sendAllStatusListener = new ISendAllStatusListener() {
 
 			// TODO : This part still requires some testing.
 			override onSendAllStatus() {
 				model.turnouts.forEach [
-					safetyLogicWrapper.sendTurnoutState(id,
+					safetyLogicBridge.sendTurnoutState(id,
 						if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT)
 				]
 				model.segments.forEach [
-					safetyLogicWrapper.sendSegmentState(id,
+					safetyLogicBridge.sendSegmentState(id,
 						if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
 				]
 				val occupiedSections = model.sections.filter[model.trains.map[currentlyOn].toList.contains(it)]
 				occupiedSections.forEach [
-					safetyLogicWrapper.sendSegmentOccupation(id, SegmentOccupancy.OCCUPIED)
+					safetyLogicBridge.sendSegmentOccupation(id, SegmentOccupancy.OCCUPIED)
 				]
 				val freeSections = model.sections.filter[!occupiedSections.toList.contains(it)]
 				freeSections.forEach [
-					safetyLogicWrapper.sendSegmentOccupation(id, SegmentOccupancy.FREE)
+					safetyLogicBridge.sendSegmentOccupation(id, SegmentOccupancy.FREE)
 				]
 			}
 
@@ -114,28 +114,28 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		logger.info('Disabling all sections')
 		segments.forEach [
-			this.safetyLogicWrapper.sendSegmentCommand(id, SegmentState.DISABLED)
+			this.safetyLogicBridge.sendSegmentCommand(id, SegmentState.DISABLED)
 		]
 
 		Thread.sleep(initSleepTimes)
 
 		logger.info('Setting turnouts to divergent')
 		turnouts.forEach [
-			this.safetyLogicWrapper.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
+			this.safetyLogicBridge.sendTurnoutCommand(id, TurnoutState.DIVERGENT)
 		]
 
 		Thread.sleep(initSleepTimes)
 
 		logger.info('Setting all turnouts to straight')
 		turnouts.forEach [
-			this.safetyLogicWrapper.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
+			this.safetyLogicBridge.sendTurnoutCommand(id, TurnoutState.STRAIGHT)
 		]
 
 		Thread.sleep(initSleepTimes)
 
 		logger.info('Enabling all sections')
 		segments.forEach [
-			this.safetyLogicWrapper.sendSegmentCommand(id, SegmentState.ENABLED)
+			this.safetyLogicBridge.sendSegmentCommand(id, SegmentState.ENABLED)
 		]
 
 		logger.info('Railroad initialization finished')
@@ -146,8 +146,8 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		this.logger.info("Running started...")
 
-		this.safetyLogicWrapper.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
-		this.safetyLogicWrapper.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
+		this.safetyLogicBridge.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
+		this.safetyLogicBridge.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
 				val senseID = turnoutToSenseIDMap.get(id)
@@ -172,7 +172,7 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		logger.info('adding the cv callback')
 
-		this.safetyLogicWrapper.computerVisionListener = new IComputerVisionListener() {
+		this.safetyLogicBridge.computerVisionListener = new IComputerVisionListener() {
 
 			override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp,
 				long frameindex) {

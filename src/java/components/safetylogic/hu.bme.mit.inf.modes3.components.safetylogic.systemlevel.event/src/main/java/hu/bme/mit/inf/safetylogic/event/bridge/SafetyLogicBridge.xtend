@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.safetylogic.event.wrapper
+package hu.bme.mit.inf.safetylogic.event.bridge
 
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusListener
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
@@ -12,14 +12,14 @@ import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.safetylogic.event.sl.ISafetyLogic
 import org.slf4j.ILoggerFactory
 
-class SafetyLogicWrapper extends AbstractCommunicationComponent implements ISafetyLogicWrapper {
+class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafetyLogicBridge {
 
 	val ISafetyLogic safetyLogic
 
 	new(ISafetyLogic safetyLogic, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.safetyLogic = safetyLogic
-		this.safetyLogic.safetyLogicWrapper = this
+		this.safetyLogic.safetyLogicBridge = this
 	}
 
 	override run() {

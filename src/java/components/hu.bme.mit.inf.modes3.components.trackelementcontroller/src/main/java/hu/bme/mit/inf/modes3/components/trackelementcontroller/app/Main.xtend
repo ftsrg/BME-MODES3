@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.components.trackelementcontroller.app
 
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.TrackElementController
-import hu.bme.mit.inf.modes3.components.trackelementcontroller.wrapper.TrackElementControllerWrapper
+import hu.bme.mit.inf.modes3.components.trackelementcontroller.bridge.TrackElementControllerBridge
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
@@ -43,7 +43,7 @@ class Main {
 
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
 		val component = new TrackElementController(turnoutID, loggerFactory)
-		val bbb = new TrackElementControllerWrapper(component, communicationStack, loggerFactory)
+		val bbb = new TrackElementControllerBridge(component, communicationStack, loggerFactory)
 		bbb.run // run on main thread
 	}
 

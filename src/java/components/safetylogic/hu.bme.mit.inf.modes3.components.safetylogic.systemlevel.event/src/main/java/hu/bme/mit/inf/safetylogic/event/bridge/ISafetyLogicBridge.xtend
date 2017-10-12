@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.safetylogic.event.wrapper
+package hu.bme.mit.inf.safetylogic.event.bridge
 
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusListener
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
@@ -6,12 +6,12 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.IT
 import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentOccupancyChangeListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateRegistry
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateRegistry
 
-interface ISafetyLogicWrapper {
+interface ISafetyLogicBridge {
 	def void sendSegmentOccupation(int id, SegmentOccupancy state)
 
 	def void sendSegmentState(int id, SegmentState state)

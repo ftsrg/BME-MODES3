@@ -1,7 +1,7 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement
 
+import hu.bme.mit.inf.modes3.components.touchboard.bridge.ITouchboardBridge
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
-import hu.bme.mit.inf.modes3.components.touchboard.wrapper.ITouchboardWrapper
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -16,13 +16,13 @@ class SegmentEventHandler {
 	val ThreadSafeNode node
 	val int segmentId
 
-	val ITouchboardWrapper touchboardWrapper
+	val ITouchboardBridge touchboardBridge
 
-	new(ITouchboardWrapper touchboardWrapper, ThreadSafeNode node, ILoggerFactory loggerFactory) {
+	new(ITouchboardBridge touchboardBridge, ThreadSafeNode node, ILoggerFactory loggerFactory) {
 		this.logger = loggerFactory.getLogger(this.class.name)
 		this.node = node
 		this.segmentId = node.nodeId
-		this.touchboardWrapper = touchboardWrapper
+		this.touchboardBridge = touchboardBridge
 	}
 
 	def setDisabled() {
@@ -45,7 +45,7 @@ class SegmentEventHandler {
 
 	def void onSegmentClicked() {
 		try {
-			val state = touchboardWrapper.getSegmentState(segmentId)
+			val state = touchboardBridge.getSegmentState(segmentId)
 			val newState = getSegmentOppositeState(state)
 			setSegmentState(newState)
 		} catch (Exception ex) {
@@ -70,7 +70,7 @@ class SegmentEventHandler {
 	}
 
 	private def setSegmentState(SegmentState state) {
-		touchboardWrapper.sendSegmentCommand(segmentId, state)
+		touchboardBridge.sendSegmentCommand(segmentId, state)
 		updateSectionState(state)
 
 		logger.info('''Segment «segmentId» is «state»''')

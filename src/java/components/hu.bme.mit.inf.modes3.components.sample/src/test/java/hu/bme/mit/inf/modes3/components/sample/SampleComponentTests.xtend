@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.components.sample
 
-import hu.bme.mit.inf.modes3.components.sample.wrapper.ISampleComponentWrapper
+import hu.bme.mit.inf.modes3.components.sample.bridge.ISampleComponentBridge
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import org.junit.Test
 import org.mockito.Mockito
@@ -9,9 +9,9 @@ class SampleComponentTests {
 
 	@Test
 	def void testWrapperInvocation() {
-		val sampleComponentMock = Mockito.mock(ISampleComponentWrapper)
+		val sampleComponentMock = Mockito.mock(ISampleComponentBridge)
 		val ISampleComponent sampleComponent = new SampleComponent
-		sampleComponent.sampleComponentWrapper = sampleComponentMock
+		sampleComponent.sampleComponentBridge = sampleComponentMock
 
 		var previousState = SegmentOccupancy.FREE
 		var recentState = SegmentOccupancy.OCCUPIED
