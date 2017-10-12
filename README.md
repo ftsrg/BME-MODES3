@@ -124,7 +124,7 @@ This repository uses [Gradle](https://gradle.org/) for build management. To buil
 | Utility classes for components | <utils_path_prefix>.common | Utility classes that can be used by every component. E.g. handling command-line arguments in Java. | benedekh |
 | Common configuration files | <utils_path_prefix>.conf | Common configuration files for the model railway track. E.g. files containing information about segment, turnout, locomotive IDs | benedekh |
 | Serial monitor | <utils_path_prefix>.serialmonitor | Utility project to monitor the serial (USB) port from Java. | zsoltmazlo |
-| SVG Transformer | <utils_path_prefix>.svgtransformer | Utility project to transform SVG in Java. | hegyibalint |
+| SVG Transformer | <utils_path_prefix>.svgtransformer | Utility project to transform SVG in Java, in order to map the Open CV coordinates for segments on the railway track. | hegyibalint |
 
 
 

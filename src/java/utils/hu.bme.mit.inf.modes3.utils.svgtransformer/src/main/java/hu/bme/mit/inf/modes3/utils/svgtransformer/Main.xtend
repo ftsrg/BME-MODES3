@@ -21,46 +21,45 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 
 class Main {
-	
+
 	static val RATIO = 28.34f;
-	
+
 	def static void main(String[] args) {
 		try {
-			val parser = XMLResourceDescriptor.getXMLParserClassName()
+			val parser = XMLResourceDescriptor.XMLParserClassName
 			val sax = new SAXSVGDocumentFactory(parser)
 			val doc = sax.createSVGDocument(Main.classLoader.getResource("layout-new-2.svg").toString)
 
-			var UserAgentAdapter userAgent = new UserAgentAdapter()
-			var GVTBuilder builder = new GVTBuilder()
+			var UserAgentAdapter userAgent = new UserAgentAdapter
+			var GVTBuilder builder = new GVTBuilder
 			var BridgeContext ctx = new BridgeContext(userAgent)
-			ctx.setDynamic(true)
+			ctx.dynamic = true
 			builder.build(ctx, doc)
 
 			// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 			RailRoadModelPackage.eINSTANCE.class
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel",
-				new XMIResourceFactoryImpl());
+			Resource.Factory.Registry.INSTANCE.extensionToFactoryMap.put("railroadmodel", new XMIResourceFactoryImpl);
 
 			println(Main.classLoader.getResource("base.railroadmodel").toString)
-	
-			val ResourceSet resourceSet = new ResourceSetImpl()
+
+			val ResourceSet resourceSet = new ResourceSetImpl
 			val resource = resourceSet.getResource(
 				URI.createURI(Main.classLoader.getResource("base.railroadmodel").toString), true);
 			val model = resource.contents.get(0) as RailRoadModel
 
 			val segmentGroup = doc.getElementById("segments")
 			for (var i = 0; i < segmentGroup.childNodes.length; i++) {
-				val svgElement = segmentGroup.childNodes.item(i);
+				val svgElement = segmentGroup.childNodes.item(i)
 				if (svgElement instanceof SVGOMPathElement) {
 					val path = svgElement as SVGOMPathElement
-					val id = Integer.parseInt(path.id.substring(1), 10);
-					println(path.id.substring(1));
-					println(path.totalLength);
+					val id = Integer.parseInt(path.id.substring(1), 10)
+					println(path.id.substring(1))
+					println(path.totalLength)
 					println("------------------")
 
 					val modelElement = model.sections.findFirst[s|s.id == id] as Segment
 					for (var p = 0.0; p <= path.totalLength; p += path.totalLength / 10.0) {
-						val svgPoint = svgElement.getPointAtLength(p as float);
+						val svgPoint = svgElement.getPointAtLength(p as float)
 						println('''x: «svgPoint.x» y: «svgPoint.y»''')
 						val modelPoint = RailRoadModelFactory.eINSTANCE.createPoint => [
 							x = svgPoint.x / RATIO
@@ -68,18 +67,18 @@ class Main {
 						]
 						modelElement.points += modelPoint
 					}
-					
+
 					println("++++++++++++++++++")
 				}
 			}
 
 			val turnoutGroup = doc.getElementById("turnouts")
 			for (var i = 0; i < turnoutGroup.childNodes.length; i++) {
-				val svgElement = turnoutGroup.childNodes.item(i);
+				val svgElement = turnoutGroup.childNodes.item(i)
 				if (svgElement instanceof SVGOMRectElement) {
 					val svgRectangle = svgElement as SVGOMRectElement
 					val id = Integer.parseInt(svgRectangle.id.substring(1), 10);
-					println(svgRectangle.id.substring(1));
+					println(svgRectangle.id.substring(1))
 
 					val modelElement = model.sections.findFirst[s|s.id == id] as Turnout
 					modelElement.rectangle = RailRoadModelFactory.eINSTANCE.createRectangle => [
@@ -95,13 +94,13 @@ class Main {
 				}
 			}
 
-			var ResourceSet resSet = new ResourceSetImpl()
+			var ResourceSet resSet = new ResourceSetImpl
 			var Resource outResource = resSet.createResource(URI.createURI("instance.railroadmodel"))
-			outResource.getContents().add(model)
+			outResource.contents.add(model)
 			try {
 				outResource.save(Collections.EMPTY_MAP)
 			} catch (IOException e) {
-				e.printStackTrace()
+				e.printStackTrace
 			}
 
 		} catch (IOException ex) {
