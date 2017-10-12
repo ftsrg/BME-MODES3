@@ -45,7 +45,7 @@ class Main {
 			val ResourceSet resourceSet = new ResourceSetImpl
 			val resource = resourceSet.getResource(
 				URI.createURI(Main.classLoader.getResource("base.railroadmodel").toString), true);
-			val model = resource.contents.get(0) as RailRoadModel
+			val model = resource.contents.head as RailRoadModel
 
 			val segmentGroup = doc.getElementById("segments")
 			for (var i = 0; i < segmentGroup.childNodes.length; i++) {
