@@ -17,9 +17,6 @@ package class ComputerVisionClient implements IMessageHandler<ComputerVisionObje
 	}
 
 	override handleMessage(ComputerVisionObjectPositionsMessage message) {
-//		println('''DEBUG : «message»''')
-//		println('''MORE DEBUG «message.physicalObjectsMap.keySet.length»''')
-//		println('''EOF DEBUG''')
 		val information = new ArrayList<ComputerVisionInformation>
 		message.physicalObjects.forEach [ name, physicalObject |
 			physicalObject.markers.forEach [ name_, marker |

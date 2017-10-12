@@ -6,7 +6,7 @@
 		"TrainFunctionCommand": ["/modes3/all"],
 		"TrainReferenceSpeedCommand": ["/modes3/all"],
 		"TurnoutCommand": ["/modes3/turnout/{id}/command"],
-		"ComputerVisionObjectPositionsMessage": ["/modes3/all"],
+		"ComputerVisionObjectPositionsMessage": ["/modes3/cv"],
 		"DccOperationsStateMessage": ["/modes3/all"],
 		"SegmentOccupancyMessage": ["/modes3/segment/{id}/occupancy"],
 		"SegmentStateMessage": ["/modes3/segment/{id}/status"],
