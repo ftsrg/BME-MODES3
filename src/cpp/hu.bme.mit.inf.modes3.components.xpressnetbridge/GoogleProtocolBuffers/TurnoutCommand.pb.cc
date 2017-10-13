@@ -19,111 +19,117 @@
 
 namespace modes3 {
 namespace protobuf {
+class TurnoutCommandDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<TurnoutCommand>
+     _instance;
+} _TurnoutCommand_default_instance_;
+
+namespace protobuf_TurnoutCommand_2eproto {
+
 
 namespace {
 
-const ::google::protobuf::Descriptor* TurnoutCommand_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TurnoutCommand_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
 
 }  // namespace
 
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
+};
 
-void protobuf_AssignDesc_TurnoutCommand_2eproto() GOOGLE_ATTRIBUTE_COLD;
-void protobuf_AssignDesc_TurnoutCommand_2eproto() {
-  protobuf_AddDesc_TurnoutCommand_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "TurnoutCommand.proto");
-  GOOGLE_CHECK(file != NULL);
-  TurnoutCommand_descriptor_ = file->message_type(0);
-  static const int TurnoutCommand_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnoutCommand, turnoutid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnoutCommand, state_),
-  };
-  TurnoutCommand_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      TurnoutCommand_descriptor_,
-      TurnoutCommand::internal_default_instance(),
-      TurnoutCommand_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(TurnoutCommand),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnoutCommand, _internal_metadata_));
-}
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ::google::protobuf::internal::AuxillaryParseTableField(),
+};
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+};
+
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnoutCommand, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnoutCommand, turnoutid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TurnoutCommand, state_),
+};
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, sizeof(TurnoutCommand)},
+};
+
+static ::google::protobuf::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::google::protobuf::Message*>(&_TurnoutCommand_default_instance_),
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+void protobuf_AssignDescriptors() {
+  AddDescriptors();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "TurnoutCommand.proto", schemas, file_default_instances, TableStruct::offsets, factory,
+      file_level_metadata, NULL, NULL);
+}
+
 void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_TurnoutCommand_2eproto);
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      TurnoutCommand_descriptor_, TurnoutCommand::internal_default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
-
-void protobuf_ShutdownFile_TurnoutCommand_2eproto() {
-  TurnoutCommand_default_instance_.Shutdown();
-  delete TurnoutCommand_reflection_;
-}
-
-void protobuf_InitDefaults_TurnoutCommand_2eproto_impl() {
+void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::modes3::protobuf::protobuf_InitDefaults_Enums_2eproto();
-  TurnoutCommand_default_instance_.DefaultConstruct();
-  TurnoutCommand_default_instance_.get_mutable()->InitAsDefaultInstance();
-}
+  ::google::protobuf::internal::InitProtobufDefaults();
+  ::modes3::protobuf::protobuf_Enums_2eproto::InitDefaults();
+  _TurnoutCommand_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_TurnoutCommand_default_instance_);}
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_TurnoutCommand_2eproto_once_);
-void protobuf_InitDefaults_TurnoutCommand_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_InitDefaults_TurnoutCommand_2eproto_once_,
-                 &protobuf_InitDefaults_TurnoutCommand_2eproto_impl);
+void InitDefaults() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
-void protobuf_AddDesc_TurnoutCommand_2eproto_impl() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  protobuf_InitDefaults_TurnoutCommand_2eproto();
+namespace {
+void AddDescriptorsImpl() {
+  InitDefaults();
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+      "\n\024TurnoutCommand.proto\022\017modes3.protobuf\032"
+      "\013Enums.proto\"V\n\016TurnoutCommand\022\021\n\tturnou"
+      "tID\030\001 \001(\r\0221\n\005state\030\002 \001(\0162\".modes3.protob"
+      "uf.TurnoutStateValueB0\n,hu.bme.mit.inf.m"
+      "odes3.messaging.mms.messagesP\001b\006proto3"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\024TurnoutCommand.proto\022\017modes3.protobuf\032"
-    "\013Enums.proto\"V\n\016TurnoutCommand\022\021\n\tturnou"
-    "tID\030\001 \001(\r\0221\n\005state\030\002 \001(\0162\".modes3.protob"
-    "uf.TurnoutStateValueB0\n,hu.bme.mit.inf.m"
-    "odes3.messaging.mms.messagesP\001b\006proto3", 198);
+      descriptor, 198);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TurnoutCommand.proto", &protobuf_RegisterTypes);
-  ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_TurnoutCommand_2eproto);
+  ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();
 }
+} // anonymous namespace
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_TurnoutCommand_2eproto_once_);
-void protobuf_AddDesc_TurnoutCommand_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_TurnoutCommand_2eproto_once_,
-                 &protobuf_AddDesc_TurnoutCommand_2eproto_impl);
+void AddDescriptors() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_TurnoutCommand_2eproto {
-  StaticDescriptorInitializer_TurnoutCommand_2eproto() {
-    protobuf_AddDesc_TurnoutCommand_2eproto();
+// Force AddDescriptors() to be called at dynamic initialization time.
+struct StaticDescriptorInitializer {
+  StaticDescriptorInitializer() {
+    AddDescriptors();
   }
-} static_descriptor_initializer_TurnoutCommand_2eproto_;
+} static_descriptor_initializer;
 
-namespace {
-
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD GOOGLE_ATTRIBUTE_NORETURN;
-static void MergeFromFail(int line) {
-  ::google::protobuf::internal::MergeFromFail(__FILE__, line);
-}
-
-}  // namespace
+}  // namespace protobuf_TurnoutCommand_2eproto
 
 
 // ===================================================================
@@ -135,25 +141,27 @@ const int TurnoutCommand::kStateFieldNumber;
 
 TurnoutCommand::TurnoutCommand()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_TurnoutCommand_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_TurnoutCommand_2eproto::InitDefaults();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:modes3.protobuf.TurnoutCommand)
 }
-
-void TurnoutCommand::InitAsDefaultInstance() {
-}
-
 TurnoutCommand::TurnoutCommand(const TurnoutCommand& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&turnoutid_, &from.turnoutid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&state_) -
+    reinterpret_cast<char*>(&turnoutid_)) + sizeof(state_));
   // @@protoc_insertion_point(copy_constructor:modes3.protobuf.TurnoutCommand)
 }
 
 void TurnoutCommand::SharedCtor() {
-  ::memset(&turnoutid_, 0, reinterpret_cast<char*>(&state_) -
-    reinterpret_cast<char*>(&turnoutid_) + sizeof(state_));
+  ::memset(&turnoutid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&state_) -
+      reinterpret_cast<char*>(&turnoutid_)) + sizeof(state_));
   _cached_size_ = 0;
 }
 
@@ -171,16 +179,14 @@ void TurnoutCommand::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
 const ::google::protobuf::Descriptor* TurnoutCommand::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TurnoutCommand_descriptor_;
+  protobuf_TurnoutCommand_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_TurnoutCommand_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
 const TurnoutCommand& TurnoutCommand::default_instance() {
-  protobuf_InitDefaults_TurnoutCommand_2eproto();
+  protobuf_TurnoutCommand_2eproto::InitDefaults();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<TurnoutCommand> TurnoutCommand_default_instance_;
 
 TurnoutCommand* TurnoutCommand::New(::google::protobuf::Arena* arena) const {
   TurnoutCommand* n = new TurnoutCommand;
@@ -192,27 +198,14 @@ TurnoutCommand* TurnoutCommand::New(::google::protobuf::Arena* arena) const {
 
 void TurnoutCommand::Clear() {
 // @@protoc_insertion_point(message_clear_start:modes3.protobuf.TurnoutCommand)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(TurnoutCommand, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<TurnoutCommand*>(16)->f)
-#endif
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
 
-#define ZR_(first, last) do {\
-  ::memset(&(first), 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(turnoutid_, state_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
+  ::memset(&turnoutid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&state_) -
+      reinterpret_cast<char*>(&turnoutid_)) + sizeof(state_));
+  _internal_metadata_.Clear();
 }
 
 bool TurnoutCommand::MergePartialFromCodedStream(
@@ -221,13 +214,14 @@ bool TurnoutCommand::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:modes3.protobuf.TurnoutCommand)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 turnoutID = 1;
+      // uint32 turnoutID = 1;
       case 1: {
-        if (tag == 8) {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -235,14 +229,13 @@ bool TurnoutCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_state;
         break;
       }
 
-      // optional .modes3.protobuf.TurnoutStateValue state = 2;
+      // .modes3.protobuf.TurnoutStateValue state = 2;
       case 2: {
-        if (tag == 16) {
-         parse_state:
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -251,18 +244,16 @@ bool TurnoutCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -279,17 +270,24 @@ failure:
 void TurnoutCommand::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:modes3.protobuf.TurnoutCommand)
-  // optional uint32 turnoutID = 1;
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 turnoutID = 1;
   if (this->turnoutid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->turnoutid(), output);
   }
 
-  // optional .modes3.protobuf.TurnoutStateValue state = 2;
+  // .modes3.protobuf.TurnoutStateValue state = 2;
   if (this->state() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->state(), output);
   }
 
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
   // @@protoc_insertion_point(serialize_end:modes3.protobuf.TurnoutCommand)
 }
 
@@ -297,17 +295,24 @@ void TurnoutCommand::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.TurnoutCommand)
-  // optional uint32 turnoutID = 1;
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 turnoutID = 1;
   if (this->turnoutid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->turnoutid(), target);
   }
 
-  // optional .modes3.protobuf.TurnoutStateValue state = 2;
+  // .modes3.protobuf.TurnoutStateValue state = 2;
   if (this->state() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->state(), target);
   }
 
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.TurnoutCommand)
   return target;
 }
@@ -316,14 +321,19 @@ size_t TurnoutCommand::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.TurnoutCommand)
   size_t total_size = 0;
 
-  // optional uint32 turnoutID = 1;
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 turnoutID = 1;
   if (this->turnoutid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->turnoutid());
   }
 
-  // optional .modes3.protobuf.TurnoutStateValue state = 2;
+  // .modes3.protobuf.TurnoutStateValue state = 2;
   if (this->state() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->state());
@@ -338,7 +348,7 @@ size_t TurnoutCommand::ByteSizeLong() const {
 
 void TurnoutCommand::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.TurnoutCommand)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const TurnoutCommand* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const TurnoutCommand>(
           &from);
@@ -347,21 +357,17 @@ void TurnoutCommand::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.TurnoutCommand)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void TurnoutCommand::MergeFrom(const TurnoutCommand& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.TurnoutCommand)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
 
-void TurnoutCommand::UnsafeMergeFrom(const TurnoutCommand& from) {
-  GOOGLE_DCHECK(&from != this);
   if (from.turnoutid() != 0) {
     set_turnoutid(from.turnoutid());
   }
@@ -381,11 +387,10 @@ void TurnoutCommand::CopyFrom(const TurnoutCommand& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.TurnoutCommand)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool TurnoutCommand::IsInitialized() const {
-
   return true;
 }
 
@@ -394,24 +399,22 @@ void TurnoutCommand::Swap(TurnoutCommand* other) {
   InternalSwap(other);
 }
 void TurnoutCommand::InternalSwap(TurnoutCommand* other) {
-  std::swap(turnoutid_, other->turnoutid_);
-  std::swap(state_, other->state_);
+  using std::swap;
+  swap(turnoutid_, other->turnoutid_);
+  swap(state_, other->state_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata TurnoutCommand::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TurnoutCommand_descriptor_;
-  metadata.reflection = TurnoutCommand_reflection_;
-  return metadata;
+  protobuf_TurnoutCommand_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_TurnoutCommand_2eproto::file_level_metadata[kIndexInFileMessages];
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // TurnoutCommand
 
-// optional uint32 turnoutID = 1;
+// uint32 turnoutID = 1;
 void TurnoutCommand::clear_turnoutid() {
   turnoutid_ = 0u;
 }
@@ -425,7 +428,7 @@ void TurnoutCommand::set_turnoutid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:modes3.protobuf.TurnoutCommand.turnoutID)
 }
 
-// optional .modes3.protobuf.TurnoutStateValue state = 2;
+// .modes3.protobuf.TurnoutStateValue state = 2;
 void TurnoutCommand::clear_state() {
   state_ = 0;
 }
@@ -439,9 +442,6 @@ void TurnoutCommand::set_state(::modes3::protobuf::TurnoutStateValue value) {
   // @@protoc_insertion_point(field_set:modes3.protobuf.TurnoutCommand.state)
 }
 
-inline const TurnoutCommand* TurnoutCommand::internal_default_instance() {
-  return &TurnoutCommand_default_instance_.get();
-}
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)

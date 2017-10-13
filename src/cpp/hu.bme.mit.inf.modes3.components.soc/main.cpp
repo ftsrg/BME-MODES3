@@ -2,7 +2,7 @@
 #include "s88.h"
 
 //#define DEBUG
-#define WINDOW_SIZE 10
+#define WINDOW_SIZE 21
 
 uint32_t buffer[WINDOW_SIZE];
 
@@ -38,43 +38,55 @@ void loop() {
         uint8_t byte = (occ >> shift) & 0xFF;
         Serial.print(byte);
         Serial.print(' ');
+        Serial.println();
     }
-    Serial.println();
 #endif
 
     // Shifting the previous buffer values
-    for (uint8_t i = 1; i < WINDOW_SIZE - 1; i++) {
-        buffer[i-1] = buffer[i];
+    for (uint8_t i = 0; i < WINDOW_SIZE - 1; i++) {
+        buffer[i] = buffer[i+1];
     }
     // Reading the occupancy vector into the buffer
-    buffer[WINDOW_SIZE-1] = S88_readOccupancy();
+    buffer[WINDOW_SIZE-1] = occ;
 
+    // majority decision for each section
     uint32_t max = 0;
-    for (uint8_t i = 0; i < WINDOW_SIZE; ++i) {
-        max = (max < buffer[i]) ? buffer[i] : max;
+    for (uint32_t sectionId = 0; sectionId < 32; ++sectionId){
+      uint32_t ones = 0;
+      uint32_t zeroes = 0;
+      for (uint32_t window = 0; window < WINDOW_SIZE; ++window){
+          uint32_t bit = buffer[window] & (static_cast<uint32_t>(1) << sectionId);
+          if(bit){
+             ones += 1;
+          } else {
+             zeroes += 1;
+          }
+      }
+#ifdef DEBUG
+      Serial.print(sectionId);
+      Serial.print(" ");
+      Serial.print(ones);
+      Serial.print(" ");
+      Serial.println(zeroes);
+#endif
+      if(ones > zeroes){
+        max |= (static_cast<uint32_t>(1) << sectionId);
+      }
     }
 
     // Sending header first
-    for (uint8_t i = 0; i < 7; ++i) {
+    for (uint8_t i = 0; i < 4; ++i) {
         send(0xFF);
     }
-    send(0xAA);
 
-    // 
-    uint8_t arr[4];
     // We always transfer 4 bytes
     for (uint8_t i = 0; i < 4; ++i) {
         // Cut the lowest 8 bits
-        arr[i] = (max >> (i * 8));
+        send(max >> (i * 8));
     }
 
-    // Sending for the first time
-    for(uint8_t i = 0; i < 4; ++i) {
-        send(arr[i]);
-    }
-
-    // Sending for the second time
-    for(uint8_t i = 0; i < 4; ++i) {
-        send(arr[i]);
-    }
+#ifdef DEBUG
+    Serial.println();
+#endif
+     delay(10);
 }

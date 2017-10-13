@@ -24,55 +24,70 @@
 										<Insets />
 									</HBox.margin>
 									<content>
-										<VBox>
+										<VBox prefHeight="80.0">
 											<children>
-												<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" />
-												<HBox>
+                                    <HBox VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ToggleButton id="taurus_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
+      												<Button id="taurus_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+												<HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
 													<children>
-														<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="63.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="116.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
+														<Button id="taurus_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
+														<Button id="taurus_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
+														<Button id="taurus_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
+														<Button id="taurus_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
 													</children>
 												</HBox>
 											</children>
 										</VBox>
 									</content>
 								</TitledPane>
-								<TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" text="Taurus" HBox.hgrow="ALWAYS">
-									<content>
-										<VBox>
-											<children>
-												<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" />
-												<HBox>
-													<children>
-														<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="63.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="116.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
-													</children>
-												</HBox>
-											</children>
-										</VBox>
-									</content>
-								</TitledPane>
-								<TitledPane collapsible="false" layoutX="625.0" layoutY="10.0" text="Taurus" HBox.hgrow="ALWAYS">
-									<content>
-										<VBox>
-											<children>
-												<Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="STOP" />
-												<HBox>
-													<children>
-														<Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="25%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="50%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="63.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="75%" HBox.hgrow="ALWAYS" />
-														<Button layoutX="116.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="100%" HBox.hgrow="ALWAYS" />
-													</children>
-												</HBox>
-											</children>
-										</VBox>
-									</content>
-								</TitledPane>
+                        <TitledPane collapsible="false" layoutX="10.0" layoutY="10.0" text="SNCF" HBox.hgrow="ALWAYS">
+                           <content>
+                              <VBox prefHeight="80.0">
+                                 <children>
+                                    <HBox VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ToggleButton id="sncf_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
+                                          <Button id="sncf_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Button id="sncf_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
+                                          <Button id="sncf_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
+                                          <Button id="sncf_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
+                                          <Button id="sncf_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </TitledPane>
+                        <TitledPane collapsible="false" layoutX="625.0" layoutY="10.0" text="BR-204" HBox.hgrow="ALWAYS">
+                           <content>
+                              <VBox prefHeight="80.0">
+                                 <children>
+                                    <HBox VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <ToggleButton id="db_reverse" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainDirectionChange" text="R" />
+                                          <Button id="db_0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="STOP" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                    <HBox maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Button id="db_25" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="25%" HBox.hgrow="ALWAYS" />
+                                          <Button id="db_50" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="50%" HBox.hgrow="ALWAYS" />
+                                          <Button id="db_75" layoutX="63.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="75%" HBox.hgrow="ALWAYS" />
+                                          <Button id="db_100" layoutX="116.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onTrainSpeedChange" text="100%" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </content>
+                        </TitledPane>
 							</children>
 						</HBox>
 					</children>
@@ -83,7 +98,7 @@
 					<content>
 						<GridPane id="segmentContainer" hgap="4.0" vgap="4.0" BorderPane.alignment="CENTER">
 							<children>
-								<Button id="segment_1" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S01" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+								<Button id="segment_1" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S01" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -91,7 +106,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_2" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S02" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+								<Button id="segment_2" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S02" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -107,7 +122,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_4" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S04" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+								<Button id="segment_4" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S04" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -115,7 +130,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_5" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S05" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+								<Button id="segment_5" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S05" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -123,7 +138,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_6" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S06" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+								<Button id="segment_6" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S06" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -131,7 +146,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_7" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S07" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+								<Button id="segment_7" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S07" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -139,7 +154,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_8" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S08" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+								<Button id="segment_8" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S08" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -155,7 +170,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_10" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S10" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+								<Button id="segment_10" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S10" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -163,7 +178,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_11" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S11" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+								<Button id="segment_11" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S11" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -171,7 +186,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_12" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S12" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+								<Button id="segment_12" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S12" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -179,7 +194,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_13" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S13" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+								<Button id="segment_13" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S13" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -195,7 +210,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_15" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S15" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+								<Button id="segment_15" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S15" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -203,7 +218,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_16" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S16" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
+								<Button id="segment_17" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S17" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -211,7 +226,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_17" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S17" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_18" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S18" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -219,7 +234,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_18" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S18" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_19" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S19" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -227,7 +242,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_19" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S19" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_20" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S20" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -235,7 +250,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_20" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S20" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_21" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S21" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -243,7 +258,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_21" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S21" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_22" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S22" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -251,7 +266,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_22" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S22" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_23" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S23" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -259,7 +274,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_23" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S23" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_24" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S24" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -267,7 +282,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_24" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S24" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
+								<Button id="segment_25" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S25" GridPane.columnIndex="7" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -275,7 +290,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_25" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S25" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+								<Button id="segment_26" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S26" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -283,7 +298,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_26" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S26" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+								<Button id="segment_27" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S27" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -291,7 +306,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_27" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S27" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+								<Button id="segment_28" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S28" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -299,7 +314,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_28" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S28" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+								<Button id="segment_29" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="S29" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -307,7 +322,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_29" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S29" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+								<Button id="segment_30" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S30" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -315,7 +330,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_30" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S30" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+								<Button id="segment_31" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S31" GridPane.columnIndex="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -323,7 +338,7 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<Button id="segment_31" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSegmentPress" text="S31" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
+								<Button id="segment_32" contentDisplay="TOP" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSegmentPress" text="S32" GridPane.columnIndex="6" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3">
 									<graphic>
 										<ImageView opacity="0.19" pickOnBounds="true" preserveRatio="true" />
 									</graphic>
@@ -331,7 +346,11 @@
 										<Insets />
 									</GridPane.margin>
 								</Button>
-								<VBox GridPane.columnIndex="7" GridPane.rowIndex="3" />
+								<VBox GridPane.columnIndex="7" GridPane.rowIndex="3">
+                           <children>
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onEnableAllSegment" styleClass="enabled" text="ON" VBox.vgrow="ALWAYS" />
+                              <Button layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onDisableAllSegment" styleClass="disabled" text="OFF" VBox.vgrow="ALWAYS" />
+                           </children></VBox>
 
 							</children>
 							<columnConstraints>
@@ -361,32 +380,32 @@
 							<content>
 								<VBox prefHeight="200.0" prefWidth="100.0" spacing="4.0">
 									<children>
-										<Button id="turnout_1" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTurnoutPress" styleClass="regularTurnout" text="T01" VBox.vgrow="ALWAYS">
+										<Button id="turnout_1" graphicTextGap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T01" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_2" graphicTextGap="10.0" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTurnoutPress" styleClass="regularTurnout" text="T02" VBox.vgrow="ALWAYS">
+										<Button id="turnout_2" graphicTextGap="10.0" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T02" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView id="turnout_2" pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_3" graphicTextGap="10.0" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTurnoutPress" styleClass="regularTurnout" text="T03" VBox.vgrow="ALWAYS">
+										<Button id="turnout_3" graphicTextGap="10.0" layoutX="20.0" layoutY="20.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="dualTurnout" text="T03" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_4" graphicTextGap="10.0" layoutX="20.0" layoutY="49.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTurnoutPress" styleClass="dualTurnout" text="T04" VBox.vgrow="ALWAYS">
+										<Button id="turnout_4" graphicTextGap="10.0" layoutX="20.0" layoutY="49.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T04" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_5" graphicTextGap="10.0" layoutX="20.0" layoutY="78.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTurnoutPress" styleClass="dualTurnout" text="T05" VBox.vgrow="ALWAYS">
+										<Button id="turnout_5" graphicTextGap="10.0" layoutX="20.0" layoutY="78.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T05" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>
 										</Button>
-										<Button id="turnout_6" graphicTextGap="10.0" layoutX="20.0" layoutY="107.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleTurnoutPress" styleClass="dualTurnout" text="T06" VBox.vgrow="ALWAYS">
+										<Button id="turnout_6" graphicTextGap="10.0" layoutX="20.0" layoutY="107.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onTurnoutPress" styleClass="regularTurnout" text="T06" VBox.vgrow="ALWAYS">
 											<graphic>
 												<ImageView pickOnBounds="true" preserveRatio="true" />
 											</graphic>

@@ -19,110 +19,116 @@
 
 namespace modes3 {
 namespace protobuf {
+class DccOperationsStateDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<DccOperationsState>
+     _instance;
+} _DccOperationsState_default_instance_;
+
+namespace protobuf_DccOperationsState_2eproto {
+
 
 namespace {
 
-const ::google::protobuf::Descriptor* DccOperationsState_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  DccOperationsState_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
 
 }  // namespace
 
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
+};
 
-void protobuf_AssignDesc_DccOperationsState_2eproto() GOOGLE_ATTRIBUTE_COLD;
-void protobuf_AssignDesc_DccOperationsState_2eproto() {
-  protobuf_AddDesc_DccOperationsState_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "DccOperationsState.proto");
-  GOOGLE_CHECK(file != NULL);
-  DccOperationsState_descriptor_ = file->message_type(0);
-  static const int DccOperationsState_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(DccOperationsState, dccoperations_),
-  };
-  DccOperationsState_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      DccOperationsState_descriptor_,
-      DccOperationsState::internal_default_instance(),
-      DccOperationsState_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(DccOperationsState),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(DccOperationsState, _internal_metadata_));
-}
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ::google::protobuf::internal::AuxillaryParseTableField(),
+};
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+};
+
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(DccOperationsState, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(DccOperationsState, dccoperations_),
+};
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, sizeof(DccOperationsState)},
+};
+
+static ::google::protobuf::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::google::protobuf::Message*>(&_DccOperationsState_default_instance_),
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+void protobuf_AssignDescriptors() {
+  AddDescriptors();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "DccOperationsState.proto", schemas, file_default_instances, TableStruct::offsets, factory,
+      file_level_metadata, NULL, NULL);
+}
+
 void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_DccOperationsState_2eproto);
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      DccOperationsState_descriptor_, DccOperationsState::internal_default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
-
-void protobuf_ShutdownFile_DccOperationsState_2eproto() {
-  DccOperationsState_default_instance_.Shutdown();
-  delete DccOperationsState_reflection_;
-}
-
-void protobuf_InitDefaults_DccOperationsState_2eproto_impl() {
+void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::modes3::protobuf::protobuf_InitDefaults_Enums_2eproto();
-  DccOperationsState_default_instance_.DefaultConstruct();
-  DccOperationsState_default_instance_.get_mutable()->InitAsDefaultInstance();
-}
+  ::google::protobuf::internal::InitProtobufDefaults();
+  ::modes3::protobuf::protobuf_Enums_2eproto::InitDefaults();
+  _DccOperationsState_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_DccOperationsState_default_instance_);}
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_DccOperationsState_2eproto_once_);
-void protobuf_InitDefaults_DccOperationsState_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_InitDefaults_DccOperationsState_2eproto_once_,
-                 &protobuf_InitDefaults_DccOperationsState_2eproto_impl);
+void InitDefaults() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
-void protobuf_AddDesc_DccOperationsState_2eproto_impl() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  protobuf_InitDefaults_DccOperationsState_2eproto();
+namespace {
+void AddDescriptorsImpl() {
+  InitDefaults();
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+      "\n\030DccOperationsState.proto\022\017modes3.proto"
+      "buf\032\013Enums.proto\"K\n\022DccOperationsState\0225"
+      "\n\rdccOperations\030\001 \001(\0162\036.modes3.protobuf."
+      "DccOperationsB0\n,hu.bme.mit.inf.modes3.m"
+      "essaging.mms.messagesP\001b\006proto3"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\030DccOperationsState.proto\022\017modes3.proto"
-    "buf\032\013Enums.proto\"K\n\022DccOperationsState\0225"
-    "\n\rdccOperations\030\001 \001(\0162\036.modes3.protobuf."
-    "DccOperationsB0\n,hu.bme.mit.inf.modes3.m"
-    "essaging.mms.messagesP\001b\006proto3", 191);
+      descriptor, 191);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DccOperationsState.proto", &protobuf_RegisterTypes);
-  ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_DccOperationsState_2eproto);
+  ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();
 }
+} // anonymous namespace
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_DccOperationsState_2eproto_once_);
-void protobuf_AddDesc_DccOperationsState_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_DccOperationsState_2eproto_once_,
-                 &protobuf_AddDesc_DccOperationsState_2eproto_impl);
+void AddDescriptors() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_DccOperationsState_2eproto {
-  StaticDescriptorInitializer_DccOperationsState_2eproto() {
-    protobuf_AddDesc_DccOperationsState_2eproto();
+// Force AddDescriptors() to be called at dynamic initialization time.
+struct StaticDescriptorInitializer {
+  StaticDescriptorInitializer() {
+    AddDescriptors();
   }
-} static_descriptor_initializer_DccOperationsState_2eproto_;
+} static_descriptor_initializer;
 
-namespace {
-
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD GOOGLE_ATTRIBUTE_NORETURN;
-static void MergeFromFail(int line) {
-  ::google::protobuf::internal::MergeFromFail(__FILE__, line);
-}
-
-}  // namespace
+}  // namespace protobuf_DccOperationsState_2eproto
 
 
 // ===================================================================
@@ -133,19 +139,18 @@ const int DccOperationsState::kDccOperationsFieldNumber;
 
 DccOperationsState::DccOperationsState()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_DccOperationsState_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_DccOperationsState_2eproto::InitDefaults();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:modes3.protobuf.DccOperationsState)
 }
-
-void DccOperationsState::InitAsDefaultInstance() {
-}
-
 DccOperationsState::DccOperationsState(const DccOperationsState& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  dccoperations_ = from.dccoperations_;
   // @@protoc_insertion_point(copy_constructor:modes3.protobuf.DccOperationsState)
 }
 
@@ -168,16 +173,14 @@ void DccOperationsState::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
 const ::google::protobuf::Descriptor* DccOperationsState::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return DccOperationsState_descriptor_;
+  protobuf_DccOperationsState_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_DccOperationsState_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
 const DccOperationsState& DccOperationsState::default_instance() {
-  protobuf_InitDefaults_DccOperationsState_2eproto();
+  protobuf_DccOperationsState_2eproto::InitDefaults();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<DccOperationsState> DccOperationsState_default_instance_;
 
 DccOperationsState* DccOperationsState::New(::google::protobuf::Arena* arena) const {
   DccOperationsState* n = new DccOperationsState;
@@ -189,7 +192,12 @@ DccOperationsState* DccOperationsState::New(::google::protobuf::Arena* arena) co
 
 void DccOperationsState::Clear() {
 // @@protoc_insertion_point(message_clear_start:modes3.protobuf.DccOperationsState)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
   dccoperations_ = 0;
+  _internal_metadata_.Clear();
 }
 
 bool DccOperationsState::MergePartialFromCodedStream(
@@ -198,13 +206,14 @@ bool DccOperationsState::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:modes3.protobuf.DccOperationsState)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .modes3.protobuf.DccOperations dccOperations = 1;
+      // .modes3.protobuf.DccOperations dccOperations = 1;
       case 1: {
-        if (tag == 8) {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -213,18 +222,16 @@ bool DccOperationsState::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -241,12 +248,19 @@ failure:
 void DccOperationsState::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:modes3.protobuf.DccOperationsState)
-  // optional .modes3.protobuf.DccOperations dccOperations = 1;
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .modes3.protobuf.DccOperations dccOperations = 1;
   if (this->dccoperations() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->dccoperations(), output);
   }
 
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
   // @@protoc_insertion_point(serialize_end:modes3.protobuf.DccOperationsState)
 }
 
@@ -254,12 +268,19 @@ void DccOperationsState::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.DccOperationsState)
-  // optional .modes3.protobuf.DccOperations dccOperations = 1;
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .modes3.protobuf.DccOperations dccOperations = 1;
   if (this->dccoperations() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->dccoperations(), target);
   }
 
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.DccOperationsState)
   return target;
 }
@@ -268,7 +289,12 @@ size_t DccOperationsState::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.DccOperationsState)
   size_t total_size = 0;
 
-  // optional .modes3.protobuf.DccOperations dccOperations = 1;
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // .modes3.protobuf.DccOperations dccOperations = 1;
   if (this->dccoperations() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->dccoperations());
@@ -283,7 +309,7 @@ size_t DccOperationsState::ByteSizeLong() const {
 
 void DccOperationsState::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.DccOperationsState)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const DccOperationsState* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const DccOperationsState>(
           &from);
@@ -292,21 +318,17 @@ void DccOperationsState::MergeFrom(const ::google::protobuf::Message& from) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.DccOperationsState)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void DccOperationsState::MergeFrom(const DccOperationsState& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.DccOperationsState)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
 
-void DccOperationsState::UnsafeMergeFrom(const DccOperationsState& from) {
-  GOOGLE_DCHECK(&from != this);
   if (from.dccoperations() != 0) {
     set_dccoperations(from.dccoperations());
   }
@@ -323,11 +345,10 @@ void DccOperationsState::CopyFrom(const DccOperationsState& from) {
 // @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.DccOperationsState)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool DccOperationsState::IsInitialized() const {
-
   return true;
 }
 
@@ -336,23 +357,21 @@ void DccOperationsState::Swap(DccOperationsState* other) {
   InternalSwap(other);
 }
 void DccOperationsState::InternalSwap(DccOperationsState* other) {
-  std::swap(dccoperations_, other->dccoperations_);
+  using std::swap;
+  swap(dccoperations_, other->dccoperations_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata DccOperationsState::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = DccOperationsState_descriptor_;
-  metadata.reflection = DccOperationsState_reflection_;
-  return metadata;
+  protobuf_DccOperationsState_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_DccOperationsState_2eproto::file_level_metadata[kIndexInFileMessages];
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // DccOperationsState
 
-// optional .modes3.protobuf.DccOperations dccOperations = 1;
+// .modes3.protobuf.DccOperations dccOperations = 1;
 void DccOperationsState::clear_dccoperations() {
   dccoperations_ = 0;
 }
@@ -366,9 +385,6 @@ void DccOperationsState::set_dccoperations(::modes3::protobuf::DccOperations val
   // @@protoc_insertion_point(field_set:modes3.protobuf.DccOperationsState.dccOperations)
 }
 
-inline const DccOperationsState* DccOperationsState::internal_default_instance() {
-  return &DccOperationsState_default_instance_.get();
-}
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
