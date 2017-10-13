@@ -44,19 +44,52 @@ public class QueryEngine2ViatraCep {
   
   public EventDrivenTransformationRuleGroup getRules() {
     EventDrivenTransformationRuleGroup ruleGroup = new EventDrivenTransformationRuleGroup(
-    	createmultipleTrainsOnStation_MappingRule(), 
-    	createtrainOnStation_MappingRule(), 
-    	createnoTrainOnStation_MappingRule()
+        createnoTrainOnStation_MappingRule(), 
+        createmultipleTrainsOnStation_MappingRule(), 
+        createtrainOnStation_MappingRule()
     );
     return ruleGroup;
   }
   
   private void registerRules() {
     try {
-    	transformation = EventDrivenTransformation.forScope(new EMFScope(resourceSet)).addRules(getRules()).build();
+        transformation = EventDrivenTransformation.forScope(new EMFScope(resourceSet)).addRules(getRules()).build();
     } catch (ViatraQueryException e) {
-    	e.printStackTrace();
+        e.printStackTrace();
     }
+  }
+  
+  public EventDrivenTransformationRule<NoTrainOnStationMatch, NoTrainOnStationMatcher> createnoTrainOnStation_MappingRule() {
+    try{
+      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<NoTrainOnStationMatch, NoTrainOnStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
+      builder.addLifeCycle(Lifecycles.getDefault(false, true));
+      builder.precondition(NoTrainOnStationMatcher.querySpecification());
+      
+      IMatchProcessor<NoTrainOnStationMatch> actionOnAppear_0 = new IMatchProcessor<NoTrainOnStationMatch>() {
+        public void process(final NoTrainOnStationMatch matchedPattern) {
+          NoTrainOnStation_Event event = new NoTrainOnStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
+      
+      IMatchProcessor<NoTrainOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<NoTrainOnStationMatch>() {
+        public void process(final NoTrainOnStationMatch matchedPattern) {
+          NoMultipleTrainsOnStation_Event event = new NoMultipleTrainsOnStation_Event(null);
+          event.setQueryMatch(matchedPattern);
+          eventStream.push(event);
+        }
+      };
+      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
+      
+      return builder.build();
+    } catch (ViatraQueryException e) {
+      e.printStackTrace();
+    } catch (InconsistentEventSemanticsException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
   
   public EventDrivenTransformationRule<MultipleTrainsOnStationMatch, MultipleTrainsOnStationMatcher> createmultipleTrainsOnStation_MappingRule() {
@@ -107,39 +140,6 @@ public class QueryEngine2ViatraCep {
       IMatchProcessor<TrainOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<TrainOnStationMatch>() {
         public void process(final TrainOnStationMatch matchedPattern) {
           TrainLeftStation_Event event = new TrainLeftStation_Event(null);
-          event.setQueryMatch(matchedPattern);
-          eventStream.push(event);
-        }
-      };
-      builder.action(CRUDActivationStateEnum.DELETED, actionOnDisappear_0);
-      
-      return builder.build();
-    } catch (ViatraQueryException e) {
-      e.printStackTrace();
-    } catch (InconsistentEventSemanticsException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-  
-  public EventDrivenTransformationRule<NoTrainOnStationMatch, NoTrainOnStationMatcher> createnoTrainOnStation_MappingRule() {
-    try{
-      EventDrivenTransformationRuleFactory.EventDrivenTransformationRuleBuilder<NoTrainOnStationMatch, NoTrainOnStationMatcher> builder = new EventDrivenTransformationRuleFactory().createRule();
-      builder.addLifeCycle(Lifecycles.getDefault(false, true));
-      builder.precondition(NoTrainOnStationMatcher.querySpecification());
-      
-      IMatchProcessor<NoTrainOnStationMatch> actionOnAppear_0 = new IMatchProcessor<NoTrainOnStationMatch>() {
-        public void process(final NoTrainOnStationMatch matchedPattern) {
-          NoTrainOnStation_Event event = new NoTrainOnStation_Event(null);
-          event.setQueryMatch(matchedPattern);
-          eventStream.push(event);
-        }
-      };
-      builder.action(CRUDActivationStateEnum.CREATED, actionOnAppear_0);
-      
-      IMatchProcessor<NoTrainOnStationMatch> actionOnDisappear_0 = new IMatchProcessor<NoTrainOnStationMatch>() {
-        public void process(final NoTrainOnStationMatch matchedPattern) {
-          NoMultipleTrainsOnStation_Event event = new NoMultipleTrainsOnStation_Event(null);
           event.setQueryMatch(matchedPattern);
           eventStream.push(event);
         }

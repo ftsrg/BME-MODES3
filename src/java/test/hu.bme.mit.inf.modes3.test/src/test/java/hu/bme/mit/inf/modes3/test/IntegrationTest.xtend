@@ -1,16 +1,5 @@
 package hu.bme.mit.inf.modes3.test
 
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStackFactory
-import hu.bme.mit.inf.safetylogic.event.ModelUtil
-import hu.bme.mit.inf.safetylogic.event.SafetyLogic
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
-import org.slf4j.helpers.NOPLoggerFactory
-import org.slf4j.impl.SimpleLoggerFactory
-import org.junit.Ignore
-
 // FIXME: reimplement this test with the new transport
 
 class IntegrationTest {
@@ -32,7 +21,7 @@ class IntegrationTest {
 //		model = new ModelUtil(new NOPLoggerFactory)
 //		physicalThread = new Thread(new PhysicalEnvironmentOrchestrator(model.model))
 //		arduinoThread = new Thread(new SegmentOccupancyReaderMock(CommunicationStackFactory::createLocalStack, model.model, new SimpleLoggerFactory))
-//		bbbThread = new Thread(new BBBModelComponent(CommunicationStackFactory::createLocalStack, model.model, new SimpleLoggerFactory))
+//		bbbThread = new Thread(new TrackElementControllerModelComponent(CommunicationStackFactory::createLocalStack, model.model, new SimpleLoggerFactory))
 //		model.model.sections.filter[it instanceof Segment].map[it as Segment].forEach[isEnabled = true]
 //	}
 //

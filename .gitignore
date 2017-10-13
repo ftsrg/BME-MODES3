@@ -4,6 +4,11 @@
 **/moquette_store.mapdb.p
 **/moquette_store.mapdb.t
 
+# MQTT
+# ----
+**/.lck
+**/*.msg
+
 # Gradle
 /# ------
 .gradle
@@ -31,9 +36,6 @@
 
 # Eclipse
 # -------
-*.classpath
-*.project
-*.settings
 **/bin
 **/xtend-gen
 **/subprojects/*/bin

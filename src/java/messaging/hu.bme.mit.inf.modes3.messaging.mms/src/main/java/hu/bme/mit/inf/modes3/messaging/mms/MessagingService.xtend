@@ -1,7 +1,11 @@
 package hu.bme.mit.inf.modes3.messaging.mms
 
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.IMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.Transport
+import java.util.Set
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -9,26 +13,58 @@ import org.slf4j.Logger
 class MessagingService {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
-	Thread dispatchThread
+	protected val ExecutorService dispatcherThreads
 
-	Transport transport
-	IMessageDispatcher dispatcher
+	protected val Set<Transport> transports
+	@Accessors(PUBLIC_GETTER) AbstractMessageDispatcher dispatcher
 
-	new(ILoggerFactory factory) {
+	new(Transport transport, AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
+		this.dispatcherThreads = Executors.newCachedThreadPool
+		this.dispatcher = dispatcher
+		this.transports = newHashSet
+		addTransport(transport)
 	}
 
-	def start(Transport _transport, IMessageDispatcher _dispatcher) {
-		this.transport = _transport
-		this.dispatcher = _dispatcher
+	def addTransport(Transport transport) {
+		this.transports.add(transport)
+	}
 
-		this.transport.connect()
-		dispatchThread = new Thread(new DispatchThread(transport, dispatcher, logger))
-		dispatchThread.start
+	def start() {
+		try {
+			transports.forEach [
+				it.connect;
+				dispatcherThreads.execute(new DispatchThread(it, dispatcher, logger))
+			]
+		} catch (Exception ex) {
+			logger.error(ex.message, ex)
+		}
 	}
 
 	def sendMessage(Object message) throws IllegalArgumentException {
-		transport.sendMessage(dispatcher.convertMessageToRaw(message))
+		val rawMessage = dispatcher.convertMessageToRaw(message)
+		transports.forEach [
+			try {
+				it.sendMessage(rawMessage)
+			} catch (Exception ex) {
+				logger.error(ex.message, ex)
+			}
+		]
+	}
+
+	def stop() {
+		try {
+			dispatcherThreads.shutdown()
+			transports.forEach [
+				try {
+					it.close
+				} catch (Exception ex) {
+					logger.error(ex.message, ex)
+				}
+			]
+		} catch (Exception ex) {
+			logger.error(ex.message, ex)
+		}
 	}
 
 	static class DispatchThread implements Runnable {
@@ -43,22 +79,18 @@ class MessagingService {
 		}
 
 		override run() {
-			while(!Thread.currentThread.isInterrupted) {
+			while (!Thread.currentThread.isInterrupted) {
 				try {
 					val rawMessage = transport.receiveMessage
-					this.dispatcher.dispatchMessage(rawMessage)
-				} catch(Exception e) {
-					logger.error(e.message, e)
-					Thread.currentThread.interrupt
+					dispatcher.dispatchMessage(rawMessage)
+				} catch (Exception e) {
+					logger.error('''transport: «transport», errorMessage: «e.message»''', e)
+					if (Thread.currentThread.isInterrupted) {
+						Thread.currentThread.interrupt
+					}
 				}
-
 			}
 		}
-
-	}
-
-	def stop() {
-		dispatchThread?.interrupt
 	}
 
 }

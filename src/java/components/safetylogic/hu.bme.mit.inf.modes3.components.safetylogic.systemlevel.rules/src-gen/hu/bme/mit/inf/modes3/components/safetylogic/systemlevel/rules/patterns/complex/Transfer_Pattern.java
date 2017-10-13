@@ -15,6 +15,7 @@ public class Transfer_Pattern extends ParameterizableComplexEventPattern {
     // contained event patterns
     addEventPatternRefrence(new NoTrainOnStation_Pattern(), 1);
     addEventPatternRefrence(new _AnonymousPattern_2(), 1);
-    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.transfer_pattern");setEventContext(EventContext.CHRONICLE);
+    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.transfer_pattern");
+    setEventContext(EventContext.CHRONICLE);
   }
 }

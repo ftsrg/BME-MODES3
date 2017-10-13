@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.transports.mqtt
 
-import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
+import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
@@ -15,12 +15,12 @@ class MQTTTests {
 
 	@Before
 	def void init() {
-		val senderConfig = new TransportConfiguration("MQTT-TEST-SENDER", "root.modes3.intra", 1883, '''''')
+		val senderConfig = new TopicBasedTransportConfiguration("MQTT-TEST-SENDER", "root.modes3.intra", 1883, '''''')
 		sender = new MQTTTransport(senderConfig, new NOPLoggerFactory)
 		sender.connect
 		println("Sender connected")
 
-		val receiverConfig = new TransportConfiguration("MQTT-TEST-RECEIVER", "root.modes3.intra", 1883, '''''')
+		val receiverConfig = new TopicBasedTransportConfiguration("MQTT-TEST-RECEIVER", "root.modes3.intra", 1883, '''''')
 		receiver = new MQTTTransport(receiverConfig, new NOPLoggerFactory)
 		receiver.connect
 		println("Receiver connected")

@@ -1,0 +1,9 @@
+#Keep the Eclipse-specific stuff as these are plugins.
+!/META-INF/MANIFEST.MF
+!plugin.xml
+!build.properties
+!.project
+!.settings
+!/src/main/vql-gen/**
+!/vql-gen/**
+!/src-gen/**

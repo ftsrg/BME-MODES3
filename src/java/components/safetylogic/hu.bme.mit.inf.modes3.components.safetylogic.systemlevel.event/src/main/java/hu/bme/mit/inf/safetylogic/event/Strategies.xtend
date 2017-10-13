@@ -1,14 +1,15 @@
 package hu.bme.mit.inf.safetylogic.event
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.trainreferencespeed.TrainReferenceSpeedState
+import hu.bme.mit.inf.modes3.messaging.communication.command.dcc.interfaces.IDccCommander
+import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
+import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.ITrainCommander
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateRegistry
+import hu.bme.mit.inf.modes3.messaging.messages.command.TrainReferenceSpeedCommand
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainDirectionValue
-import hu.bme.mit.inf.modes3.messaging.mms.messages.TrainReferenceSpeedCommand
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TrainDirection
 
 public interface ITrainStopStrategy {
 	def void stopTrain(Train train)
@@ -45,31 +46,33 @@ public class XPressZeroSpeedDisableStrategy implements ITrainStopStrategy {
 	}
 
 	override stopTrain(Train train) {
-		mms.sendMessage((TrainReferenceSpeedCommand.newBuilder => [trainID = train.id; referenceSpeed = 0; it.direction = TrainDirectionValue.FORWARD]).build)
+		mms.sendMessage(new TrainReferenceSpeedCommand(train.id, 0, TrainDirection.FORWARD))
 	}
 }
 
 public class XPressInvertDirectionStrategy implements ITrainStopStrategy {
-	ITrackElementCommander mms
-	TrainReferenceSpeedState referenceSpeedState
+	ITrainCommander mms
+	ITrainSpeedStateRegistry speedRegistry
 	Logger logger
- 
-	new(ITrackElementCommander mms, TrainReferenceSpeedState referenceSpeedState, Logger logger) {
+
+	new(ITrainCommander mms, ITrainSpeedStateRegistry speedRegistry, Logger logger) {
 		this.mms = mms
-		this.referenceSpeedState = referenceSpeedState
+		this.speedRegistry = speedRegistry
 		this.logger = logger
 	}
 
 	override stopTrain(Train train) {
-		mms.setTrainReferenceSpeedAndDirection(train.id, 0, if(referenceSpeedState.getDirection(train.id) == TrainDirection.FORWARD) TrainDirection.BACKWARD else TrainDirection.FORWARD)
+		mms.setTrainReferenceSpeedAndDirection(train.id, 0,
+			if(speedRegistry.getReferenceDirection(train.id) == TrainDirection.FORWARD) TrainDirection.
+				BACKWARD else TrainDirection.FORWARD)
 	}
 
 }
 
 public class XPressStopAllStrategy implements ISegmentDisableStrategy, ITrainStopStrategy {
-	ITrackElementCommander trc
+	IDccCommander trc
 
-	new(ITrackElementCommander trc) {
+	new(IDccCommander trc) {
 		this.trc = trc
 	}
 
@@ -88,8 +91,8 @@ public class XPressStopAllStrategy implements ISegmentDisableStrategy, ITrainSto
 
 public class TrackEnableStrategy implements ISegmentEnableStrategy {
 	ITrackElementCommander commander
-	
-	new(ITrackElementCommander commander){
+
+	new(ITrackElementCommander commander) {
 		this.commander = commander
 	}
 

@@ -5,4 +5,5 @@
   - include: utils/deploy-gradle.yaml service_name=dashboard
   - include: utils/deploy-gradle.yaml service_name=occupancyquery
   - include: utils/deploy-gradle.yaml service_name=touchboard
+  - include: utils/deploy-gradle.yaml service_name=barrier
   - include: utils/deploy-systemd.yaml service_name=xpressnet
