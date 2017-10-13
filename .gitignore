@@ -10,7 +10,7 @@
 **/*.msg
 
 # Gradle
-/# ------
+# ------
 .gradle
 **/.gradle
 **/build
@@ -95,3 +95,8 @@ atlassian-ide-plugin.xml
 # VS Code
 # -------
 **/.lck
+
+# Travis
+# -------
+.travis.yml
+!/.travis.yml
