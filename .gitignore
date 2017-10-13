@@ -100,3 +100,7 @@ atlassian-ide-plugin.xml
 # -------
 .travis.yml
 !/.travis.yml
+
+# CodeBlocks
+# ----------
+*.cbp
