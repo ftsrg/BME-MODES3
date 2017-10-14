@@ -55,17 +55,19 @@ struct HeaderData {
 };
 
 class MQTT_JSON {
+private:
+  const size_t maxSize;
+  char json[800];
 public:
   PubSubClient client;
   MQTT_JSON(WiFiClient*);
   int getTime();
   void PongSend();
-  void MQTTConnect();
-  void ConnCheck();
   void TrainSend(char* train, int kocsiszam);
   void EventSend(bool detect, bool direction);
   void SpeedSend(double speed);
   void LengthSend(double length, int kocsiszam);
+  void ConnCheck();
 };
 
 #endif

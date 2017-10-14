@@ -38,6 +38,7 @@ void setup() {
   {
     delay(500);
   }
+  delay(1000);
 
   send.client.setServer(MQTT_IP, MQTT_PT);      // MQTT connection init
   while (!send.client.connected())
@@ -47,31 +48,25 @@ void setup() {
   send.client.setCallback(callback);
   send.client.subscribe(DATA_CH);
   send.client.subscribe(EVENT_CH);
-
+  
   TrainSelect.AddTrain("UNKNOWN",25.0);         // TrainSelect init
   TrainSelect.AddTrain("Taurus",21.5);
   TrainSelect.AddTrain("SNCF",18.5);
   TrainSelect.AddTrain("Vagon",12.25);
-  TrainSelect.AddTrain("UNKNOWN",8.0);
+  TrainSelect.AddTrain("NOTHING",8.0);
 
   stateMachine.Init(13,27);                    // stateMachine init
-
-  while (1)
-  {
-    Serial.println("Kakadu");
-    delay(1000);
-  }
 }
 
-//unsigned long lastLoop = 0;
+unsigned long lastLoop = 0;
 
-void loop() {/*
+void loop() {
   send.ConnCheck();
-  /*if ( millis() - lastLoop > 100 ) {
+  if ( millis() - lastLoop > 100 ) {
     send.client.loop();
     lastLoop = millis();
-  }*/
-  /*
+  }
+
   stateMachine.Update();
   if(stateMachine.GetState()==Datasend){
     Length.Reset();
@@ -81,12 +76,14 @@ void loop() {/*
   if(stateMachine.GetState()==Firstdetect){
     send.EventSend(true, stateMachine.GetDirection());
   }
+  
   if(RTSpeed.Update()){
     send.SpeedSend(RTSpeed.GetLastSpeed());
   }
-  if(Length.Update(Sensor[0].GetDex(), Sensor[1].GetDex())){
+
+  if(Length.Update(stateMachine.sensor[0].GetDex(), stateMachine.sensor[1].GetDex())){
     stateMachine.IncKocsiszam();
     send.LengthSend(Length.GetLastLength(), stateMachine.GetKocsiszam());
     send.TrainSend(TrainSelect.Search(Length.GetLastLength()), stateMachine.GetKocsiszam());
-  }*/
+  }
 }

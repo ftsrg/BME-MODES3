@@ -72,8 +72,6 @@ public:
       if (detect == 0 && (SecTime() - atime > maxtime))
       {
         state = Datasend;
-
-        Serial.println("\tMQTT-re kiirva");
         for (int i = 0; i < 2; i++)
         {
           sensor[i].Reset();

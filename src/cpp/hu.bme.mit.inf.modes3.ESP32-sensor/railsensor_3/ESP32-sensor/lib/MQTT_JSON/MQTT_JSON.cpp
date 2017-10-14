@@ -1,12 +1,12 @@
 #include <MQTT_JSON.hpp>
 
 void callback(char *topic, byte *payload, unsigned int length)
-{
+{/*
   StaticJsonBuffer<200> json;
   JsonObject &root = json.parseObject((char *)payload);
-  /*if (!strcmp(type, "Ping"))
+  if (!strcmp(type, "Ping"))
   {
-    PongSend();
+    //PongSend();
   }*/
 }
 
@@ -15,14 +15,27 @@ int MQTT_JSON::getTime()
   return 100;
 }
 
-MQTT_JSON::MQTT_JSON(WiFiClient *wifi) : client(*wifi)
-{
+MQTT_JSON::MQTT_JSON(WiFiClient *wifi) :client(*wifi),
+                                        maxSize(800){}
+
+
+void MQTT_JSON::ConnCheck()
+{/*
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("WiFi connection lost.");
+    //WifiConnect();
+  }
+  if (!client.connected())
+  {
+    Serial.println("MQTT connection lost.");
+    MQTTConnect();
+  }*/
 }
 
 void MQTT_JSON::PongSend()
 {
-  char json[800];
-  size_t maxSize = 800;
+  Serial.println("PongSend");
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
@@ -34,24 +47,9 @@ void MQTT_JSON::PongSend()
   client.publish(EVENT_CH, json);
 }
 
-void MQTT_JSON::ConnCheck()
-{
-  if (WiFi.status() != WL_CONNECTED)
-  {
-    Serial.println("WiFi connection lost.");
-    //WifiConnect();
-  }
-  if (!client.connected())
-  {
-    Serial.println("MQTT connection lost.");
-    MQTTConnect();
-  }
-}
-
 void MQTT_JSON::TrainSend(char *train, int kocsiszam)
 {
-  char json[800];
-  size_t maxSize = 800;
+  Serial.println("TrainSend");
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
@@ -66,8 +64,7 @@ void MQTT_JSON::TrainSend(char *train, int kocsiszam)
 
 void MQTT_JSON::EventSend(bool detect, bool direction)
 {
-  char json[800];
-  size_t maxSize = 800;
+  Serial.println("EventSend");
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
@@ -88,7 +85,6 @@ void MQTT_JSON::EventSend(bool detect, bool direction)
   {
     root["detect"] = "False";
   }
-  //root["direction"] = direction;
   root.printTo(json, maxSize);
   Serial.println(json);
   client.publish(BEVENT_CH, json);
@@ -97,8 +93,7 @@ void MQTT_JSON::EventSend(bool detect, bool direction)
 
 void MQTT_JSON::SpeedSend(double speed)
 {
-  char json[800];
-  size_t maxSize = 800;
+  Serial.println("SpeedSend");
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
@@ -113,8 +108,7 @@ void MQTT_JSON::SpeedSend(double speed)
 
 void MQTT_JSON::LengthSend(double length, int kocsiszam)
 {
-  char json[800];
-  size_t maxSize = 800;
+  Serial.println("LengthSend");
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
