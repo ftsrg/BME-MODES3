@@ -1,3 +1,6 @@
+#ifndef MQTT_JSON_HPP
+#define MQTT_JSON_HPP
+
 #ifndef MQTT_KEEPALIVE
   #define MQTT_KEEPALIVE 15000
 #endif
@@ -9,12 +12,6 @@
 #endif
 #ifndef DEVICE_NAME
   #define DEVICE_NAME "Bakter02"
-#endif
-#ifndef CONF_SSID
-  #define CONF_SSID "MoDeS3"
-#endif
-#ifndef PASS
-  #define PASS "LaborImage"
 #endif
 #ifndef MQTT_IP
   #define MQTT_IP "192.168.1.2"
@@ -49,8 +46,7 @@
 #include <WiFi.h>
 #include <ArduinoJson.h>
 
-#ifndef MQTT_JSON_HPP
-#define MQTT_JSON_HPP
+void callback(char*, byte*, unsigned int);
 
 struct HeaderData {
     const char* sender;
@@ -63,9 +59,7 @@ public:
   PubSubClient client;
   MQTT_JSON(WiFiClient*);
   int getTime();
-  void callback(char*, byte*, unsigned int);
   void PongSend();
-  void WifiConnect();
   void MQTTConnect();
   void ConnCheck();
   void TrainSend(char* train, int kocsiszam);
