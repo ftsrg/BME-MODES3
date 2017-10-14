@@ -2,3 +2,5 @@
 # ---------
 **/xtend-gen/
 **/*.java._trace
+
+**/org.eclipse.buildship.core.prefs

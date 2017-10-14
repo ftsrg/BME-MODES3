@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+var stream_url = "https://www.youtube.com/embed/5o_uF1L5l6o";
+
 var segments = new Map();
 
 var turnouts = new Map();
@@ -12,56 +14,20 @@ var locomotives = new Map();
 
 var segment_index = 0;
 
-
-var added_trains_cookie = [];
-var cookie_locomotives = 'locomotives';
-
-var locomotiveList = getLocomotiveList();
-
-function setCookie(cname, cvalue, exdays) {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) === 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-function getLocomotiveList() {
-    var ids = getCookie(cookie_locomotives);
-    if (ids !== "") {
-        return eval("["+ids+"]");
-    } else {
-        ids = [];
-        setCookie(cookie_locomotives, "[]", 365);
-        return ids;
-    }
-}
-
-
-
 function updateSegmentStateCallback(segmentState) {
+	console.log("segment state: ", segmentState);
     window.segments[segmentState.segmentID].setSegmentState(segmentState.state);
 }
 
 function updateTurnoutStateCallback(turnoutState) {
+	console.log("turnout state: ", turnoutState);
 	window.turnouts[turnoutState.turnoutID].setTurnoutState(turnoutState.state);
 }
 
 function updateSegmentOccupancyCallback(segmentOccupancy) {
+	// occupancy is temporarily disabled
+    return;
+	
 
 	// if segment is not find in the segments hash, then it must be a turnout
 	var segment = window.segments[segmentOccupancy.segmentID];
@@ -98,6 +64,27 @@ function updateTrainSpeedCallback(trainSpeed) {
 	}
 }
 
+function updateTrainPositionCallback(trainPosition) {
+	if( window.locomotives[trainPosition.name] == undefined ) {
+		
+		// search for configuration, if it found, push it into the registry
+		var config = new Map(window.settings.locomotives).forEach(function(value, key, map) {
+			if(key == trainPosition.name) {
+				window.locomotives[trainPosition.name] = new LocomotiveController(value, trainController);
+				// must update DOM twice to enable background too
+				updateDOM();
+				updateDOM();
+			}
+		});
+	}
+	
+	// from here train must be in the registry, no need for check
+	var train = window.locomotives[trainPosition.name].positionInformationReceived(trainPosition);
+}
+
+// this must be moved to the global scope to use in position updater callback
+var trainController = new TrainSpeedController();
+
 $(document).ready(function () {
 
     // creating controllers to able to communicate through the transport layer
@@ -107,8 +94,10 @@ $(document).ready(function () {
     // creating state updaters to able to get information from transport layer
     var segmentStateUpdater = new SegmentStateUpdater(updateSegmentStateCallback);
     var turnoutStateUpdater = new TurnoutStateUpdater(updateTurnoutStateCallback);
+    
     var segmentOccupancyUpdater = new SegmentOccupancyUpdater(updateSegmentOccupancyCallback);
     var trainSpeedStateUpdater = new TrainSpeedStateUpdater(updateTrainSpeedCallback);
+    var trainPositionUpdater = new TrainPositionUpdater(updateTrainPositionCallback);
     
     // setup every segment objects
     new Map(window.settings.segments).forEach(function (value, key, map) {
@@ -119,20 +108,6 @@ $(document).ready(function () {
     new Map(window.settings.turnouts).forEach(function (value, key, map) {
         window.turnouts[key] = new TurnoutController(value, turnoutStateController, key);
     });
-	
-	
-	
-    //ezt a gomb után kell majd, ha már kiválogattuk mi kell
-	
-    // setup locomotive objects
-
-    var trainController = new TrainSpeedController();
-    new Map(window.settings.locomotives).forEach(function(value, key, map) {
-    	if( locomotiveList.indexOf(key) !== -1 ) {
-    		window.locomotives[key] = new LocomotiveController(value, trainController);
-    	}
-    })
-
 
     updateDOM();
 
@@ -160,10 +135,6 @@ $(document).ready(function () {
             window.turnouts[i].pushTurnoutState("DIVERGENT");
         }
     });
-
-
-
-
 
     $("#add-train").bind('click', function() {
     	
@@ -245,9 +216,27 @@ $(document).ready(function () {
     	$('input[type="range"]').trigger('change');
     });
     
-
-
-    $("#test").remove();
+    
+    // implement tabs
+    var tabs = ["layout-tab", "devices-tab", "stream-tab"];
+    for(var i in tabs) {
+    	console.log(tabs[i]);
+    	$('#'+tabs[i]+"-header").bind('click', {tab: tabs[i]}, function (event) {
+    		for(var k in tabs) {
+    			$('#'+tabs[k]).removeClass('active');
+    			$('#'+tabs[k]+"-header").removeClass('active');
+    		}
+    		console.log(event.data.tab);
+			$('#'+event.data.tab).addClass('active');
+			$('#'+event.data.tab+"-header").addClass('active');
+    	});
+    }
+    
+    // iframe in stream have the width of the parent
+    $("#stream-tab").find('iframe')
+    .attr('width', $("#stream-tab").width()+20)
+    .attr('height', $("#stream-tab").height()-40)
+    .attr('src', stream_url);
     
     // sending all state request one time
     var allStateWS = new WSConnection("allstate", "");

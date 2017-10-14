@@ -2,19 +2,23 @@ package hu.bme.mit.inf.modes3.components.dashboard.utils;
 
 import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SEGMENT_OCCUPACY;
 import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SEGMENT_STATE;
-import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TRAIN_SPEED;
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TRAINPOSITION_STATE;
 import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TURNOUT_STATE;
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.TRAIN_SPEED;
 
 import org.atmosphere.cpr.MetaBroadcaster;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 
+import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.ComputerVisionInformation;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufEnumTransformator;
+import hu.bme.mit.inf.modes3.messaging.proto.messages.ThreeDPosition;
+import hu.bme.mit.inf.modes3.messaging.proto.messages.TwoDPosition;
 
 public class Utils {
 
@@ -22,6 +26,7 @@ public class Utils {
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentState.Builder segmentStateBuilder;
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState.Builder turnoutStateBuilder;
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSpeed.Builder trainSpeedBuilder;
+	static hu.bme.mit.inf.modes3.messaging.proto.messages.Marker.Builder cvObjectBuilder; 
 
 	public static void sendSegmentStateChange(MetaBroadcaster metaBroadcaster, int id, SegmentState state) {
 
@@ -94,9 +99,34 @@ public class Utils {
 			System.out.println(trainSpeedBuilder.getCurrentSpeed());
 			metaBroadcaster.broadcastTo("/ws/state/" + TRAIN_SPEED, stateAsJson);
 		} catch (InvalidProtocolBufferException e) {
-			System.err.println("Unable to convert & push turnout state message " + e.getMessage());
+			System.err.println("Unable to convert & push train position state message " + e.getMessage());
 		}
 
+	}
+	
+	public static void sendComputerVisionState(MetaBroadcaster metaBroadcaster, ComputerVisionInformation info) {
+
+		if (cvObjectBuilder == null) {
+			cvObjectBuilder = hu.bme.mit.inf.modes3.messaging.proto.messages.Marker.newBuilder();
+		}
+		
+		String stateAsJson;
+		try {
+			cvObjectBuilder.clear();
+			cvObjectBuilder.setName(info.getName());
+			cvObjectBuilder.setRealposition(ThreeDPosition.newBuilder()
+					.setX(info.getRealPosition().x)
+					.setY(info.getRealPosition().y)
+					.setZ(info.getRealPosition().z).build());
+			cvObjectBuilder.addScreenPositions(TwoDPosition.newBuilder()
+					.setX(info.getRealPosition().x)
+					.setY(info.getRealPosition().y).build());
+			cvObjectBuilder.addTracked(info.isTracked());
+			stateAsJson = JsonFormat.printer().includingDefaultValueFields().print(cvObjectBuilder.build());
+			metaBroadcaster.broadcastTo("/ws/state/" + TRAINPOSITION_STATE, stateAsJson);
+		} catch (InvalidProtocolBufferException e) {
+			System.err.println("Unable to convert & push turnout state message " + e.getMessage());
+		}
 	}
 
 }

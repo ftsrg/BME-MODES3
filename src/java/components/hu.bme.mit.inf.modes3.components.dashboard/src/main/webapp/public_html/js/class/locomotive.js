@@ -7,13 +7,70 @@ function LocomotiveController(locomotiveConfig, controller) {
     // setting up instance variables
     this.config = locomotiveConfig;
     this.speed = 0;
-    this.currentSegment = null;
     this.isAnimationInProgress = false;
+    this.position = {
+		x: 0,
+		y: 0
+    };
     this.controller = controller;
 
     // then create DOM in trains list
     this.createDOMrepresentation();
-}
+    
+    // add svg representation as well
+    this.svgElemGroup = $('<g />').attr('id', this.config.svgGroup);
+    
+	 // adding position circle
+	this.svgElemPosition = $('<circle />').attr({
+		id: 'position',
+	    style: window.settings.locomotiveCircleStyle,
+	    cx: 0,
+	    cy: 0,
+	    r: 100.91698
+	});
+	this.svgTitle = $('<text />').attr({
+		id: "title",
+		style: window.settings.locomotiveTextStyle,
+		x: 120,
+		y: 0
+	}).append($('<tspan />').text(this.config.name));
+	this.svgSpeedText = $('<text />').attr({
+		id: "title",
+		style: window.settings.locomotiveSpeedTextStyle,
+		x: 120,
+		y: 120
+	}).append($('<tspan />').text('0.00 m/s'));
+//	
+	// adding background to all of these 
+	var background = $('<rect />').attr({
+		id: "bg-"+this.config.svgGroup,
+		x: 115,
+		y: -125,
+		width: 0,
+		height: 0,
+		style: "fill:#FFFFFF;fill-opacity:0.6;"
+	});
+	
+	this.svgElemGroup.attr('transform', 'translate(100,100)');
+	this.svgElemGroup.append(background);
+	this.svgElemGroup.append(this.svgElemPosition);
+	this.svgElemGroup.append(this.svgTitle);
+	this.svgElemGroup.append(this.svgSpeedText);
+
+  // adding svgElement to it parent
+  $('#layer4').append(this.svgElemGroup);
+};
+
+LocomotiveController.prototype.positionInformationReceived = function (info) {
+	this.position = info.realposition;
+	
+	// transform coordinates to 8858.2677 4960.63
+	this.position.x *= 10*8858.2677/2500.0;
+	this.position.y *= 10*4960.63/1400.0;
+	
+	var pos = 'translate('+this.position.x+','+this.position.y+')';
+	this.svgElemGroup.attr('transform', pos);
+};
 
 LocomotiveController.prototype.pushSpeed = function (speed) {
 	if (speed < 0) {
@@ -66,5 +123,17 @@ LocomotiveController.prototype.createDOMrepresentation = function () {
 };
 
 LocomotiveController.prototype.DOMUpdatedCallback = function () {
-
+	this.svgElemGroup = $('#layout').find("#"+this.config.svgGroup);
+	this.svgTitle = this.svgElemGroup.find("#title");
+	
+	var bg = $(this.svgElemGroup).find("#bg-"+this.config.svgGroup);
+	console.log('background', bg);
+	
+	// im not sure why I should do this, but in that way the background
+	// will fill the whole textual area
+	var w = $(this.svgElemGroup).width()*8858.2677/2500.0*2+20;
+	var h = $(this.svgElemGroup).height()*4960.63/1400.0*2+20;
+	
+	bg.attr('width', w).attr('height', h);
+	
 };
