@@ -14,11 +14,12 @@ public class TrainPassThroughStation_Pattern extends ParameterizableComplexEvent
     
     // contained event patterns
     addEventPatternRefrence(new _AnonymousPattern_3(), 1);
-    						
+                            
     Timewindow timewindow = EventsFactory.eINSTANCE.createTimewindow();
     timewindow.setTime(10000);
     setTimewindow(timewindow);
-    	
-    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.trainpassthroughstation_pattern");setEventContext(EventContext.CHRONICLE);
+        
+    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.trainpassthroughstation_pattern");
+    setEventContext(EventContext.CHRONICLE);
   }
 }

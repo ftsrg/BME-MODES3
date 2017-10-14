@@ -1,0 +1,10 @@
+[Unit]
+Description=MoDeS3 Occupancy Detector Agent
+After=syslog.target network.target mosquitto.service
+
+[Service]
+ExecStart=/modes3/hu.bme.mit.inf.modes3.components.occupancyquery/bin/hu.bme.mit.inf.modes3.components.occupancyquery -address root.modes3.intra -port 1883 -serial /dev/ttyUSB0
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

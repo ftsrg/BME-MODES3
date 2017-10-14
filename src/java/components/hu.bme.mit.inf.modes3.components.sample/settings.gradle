@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'hu.bme.mit.inf.modes3.components.sample'
+rootProject.name = 'hu.bme.mit.inf.modes3.components.sample.Main'

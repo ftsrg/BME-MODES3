@@ -19,114 +19,120 @@
 
 namespace modes3 {
 namespace protobuf {
+class TrainReferenceSpeedCommandDefaultTypeInternal {
+public:
+ ::google::protobuf::internal::ExplicitlyConstructed<TrainReferenceSpeedCommand>
+     _instance;
+} _TrainReferenceSpeedCommand_default_instance_;
+
+namespace protobuf_TrainReferenceSpeedCommand_2eproto {
+
 
 namespace {
 
-const ::google::protobuf::Descriptor* TrainReferenceSpeedCommand_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  TrainReferenceSpeedCommand_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
 
 }  // namespace
 
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTableField
+    const TableStruct::entries[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  {0, 0, 0, ::google::protobuf::internal::kInvalidMask, 0, 0},
+};
 
-void protobuf_AssignDesc_TrainReferenceSpeedCommand_2eproto() GOOGLE_ATTRIBUTE_COLD;
-void protobuf_AssignDesc_TrainReferenceSpeedCommand_2eproto() {
-  protobuf_AddDesc_TrainReferenceSpeedCommand_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "TrainReferenceSpeedCommand.proto");
-  GOOGLE_CHECK(file != NULL);
-  TrainReferenceSpeedCommand_descriptor_ = file->message_type(0);
-  static const int TrainReferenceSpeedCommand_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, trainid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, referencespeed_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, direction_),
-  };
-  TrainReferenceSpeedCommand_reflection_ =
-    ::google::protobuf::internal::GeneratedMessageReflection::NewGeneratedMessageReflection(
-      TrainReferenceSpeedCommand_descriptor_,
-      TrainReferenceSpeedCommand::internal_default_instance(),
-      TrainReferenceSpeedCommand_offsets_,
-      -1,
-      -1,
-      -1,
-      sizeof(TrainReferenceSpeedCommand),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, _internal_metadata_));
-}
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::AuxillaryParseTableField
+    const TableStruct::aux[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ::google::protobuf::internal::AuxillaryParseTableField(),
+};
+PROTOBUF_CONSTEXPR_VAR ::google::protobuf::internal::ParseTable const
+    TableStruct::schema[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { NULL, NULL, 0, -1, -1, -1, -1, NULL, false },
+};
+
+const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  ~0u,  // no _has_bits_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, trainid_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, referencespeed_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(TrainReferenceSpeedCommand, direction_),
+};
+static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+  { 0, -1, sizeof(TrainReferenceSpeedCommand)},
+};
+
+static ::google::protobuf::Message const * const file_default_instances[] = {
+  reinterpret_cast<const ::google::protobuf::Message*>(&_TrainReferenceSpeedCommand_default_instance_),
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
+void protobuf_AssignDescriptors() {
+  AddDescriptors();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "TrainReferenceSpeedCommand.proto", schemas, file_default_instances, TableStruct::offsets, factory,
+      file_level_metadata, NULL, NULL);
+}
+
 void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_TrainReferenceSpeedCommand_2eproto);
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
 }
 
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-      TrainReferenceSpeedCommand_descriptor_, TrainReferenceSpeedCommand::internal_default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
-
-void protobuf_ShutdownFile_TrainReferenceSpeedCommand_2eproto() {
-  TrainReferenceSpeedCommand_default_instance_.Shutdown();
-  delete TrainReferenceSpeedCommand_reflection_;
-}
-
-void protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto_impl() {
+void TableStruct::InitDefaultsImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::modes3::protobuf::protobuf_InitDefaults_Enums_2eproto();
-  TrainReferenceSpeedCommand_default_instance_.DefaultConstruct();
-  TrainReferenceSpeedCommand_default_instance_.get_mutable()->InitAsDefaultInstance();
-}
+  ::google::protobuf::internal::InitProtobufDefaults();
+  ::modes3::protobuf::protobuf_Enums_2eproto::InitDefaults();
+  _TrainReferenceSpeedCommand_default_instance_._instance.DefaultConstruct();
+  ::google::protobuf::internal::OnShutdownDestroyMessage(
+      &_TrainReferenceSpeedCommand_default_instance_);}
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto_once_);
-void protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto_once_,
-                 &protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto_impl);
+void InitDefaults() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &TableStruct::InitDefaultsImpl);
 }
-void protobuf_AddDesc_TrainReferenceSpeedCommand_2eproto_impl() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto();
+namespace {
+void AddDescriptorsImpl() {
+  InitDefaults();
+  static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
+      "\n TrainReferenceSpeedCommand.proto\022\017mode"
+      "s3.protobuf\032\013Enums.proto\"~\n\032TrainReferen"
+      "ceSpeedCommand\022\017\n\007trainID\030\001 \001(\r\022\026\n\016refer"
+      "enceSpeed\030\002 \001(\005\0227\n\tdirection\030\003 \001(\0162$.mod"
+      "es3.protobuf.TrainDirectionValueB0\n,hu.b"
+      "me.mit.inf.modes3.messaging.mms.messages"
+      "P\001b\006proto3"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n TrainReferenceSpeedCommand.proto\022\017mode"
-    "s3.protobuf\032\013Enums.proto\"~\n\032TrainReferen"
-    "ceSpeedCommand\022\017\n\007trainID\030\001 \001(\r\022\026\n\016refer"
-    "enceSpeed\030\002 \001(\005\0227\n\tdirection\030\003 \001(\0162$.mod"
-    "es3.protobuf.TrainDirectionValueB0\n,hu.b"
-    "me.mit.inf.modes3.messaging.mms.messages"
-    "P\001b\006proto3", 250);
+      descriptor, 250);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TrainReferenceSpeedCommand.proto", &protobuf_RegisterTypes);
-  ::modes3::protobuf::protobuf_AddDesc_Enums_2eproto();
-  ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_TrainReferenceSpeedCommand_2eproto);
+  ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();
 }
+} // anonymous namespace
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_TrainReferenceSpeedCommand_2eproto_once_);
-void protobuf_AddDesc_TrainReferenceSpeedCommand_2eproto() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_TrainReferenceSpeedCommand_2eproto_once_,
-                 &protobuf_AddDesc_TrainReferenceSpeedCommand_2eproto_impl);
+void AddDescriptors() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &AddDescriptorsImpl);
 }
-// Force AddDescriptors() to be called at static initialization time.
-struct StaticDescriptorInitializer_TrainReferenceSpeedCommand_2eproto {
-  StaticDescriptorInitializer_TrainReferenceSpeedCommand_2eproto() {
-    protobuf_AddDesc_TrainReferenceSpeedCommand_2eproto();
+// Force AddDescriptors() to be called at dynamic initialization time.
+struct StaticDescriptorInitializer {
+  StaticDescriptorInitializer() {
+    AddDescriptors();
   }
-} static_descriptor_initializer_TrainReferenceSpeedCommand_2eproto_;
+} static_descriptor_initializer;
 
-namespace {
-
-static void MergeFromFail(int line) GOOGLE_ATTRIBUTE_COLD GOOGLE_ATTRIBUTE_NORETURN;
-static void MergeFromFail(int line) {
-  ::google::protobuf::internal::MergeFromFail(__FILE__, line);
-}
-
-}  // namespace
+}  // namespace protobuf_TrainReferenceSpeedCommand_2eproto
 
 
 // ===================================================================
@@ -139,25 +145,27 @@ const int TrainReferenceSpeedCommand::kDirectionFieldNumber;
 
 TrainReferenceSpeedCommand::TrainReferenceSpeedCommand()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (this != internal_default_instance()) protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto();
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_TrainReferenceSpeedCommand_2eproto::InitDefaults();
+  }
   SharedCtor();
   // @@protoc_insertion_point(constructor:modes3.protobuf.TrainReferenceSpeedCommand)
 }
-
-void TrainReferenceSpeedCommand::InitAsDefaultInstance() {
-}
-
 TrainReferenceSpeedCommand::TrainReferenceSpeedCommand(const TrainReferenceSpeedCommand& from)
   : ::google::protobuf::Message(),
-    _internal_metadata_(NULL) {
-  SharedCtor();
-  UnsafeMergeFrom(from);
+      _internal_metadata_(NULL),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&trainid_, &from.trainid_,
+    static_cast<size_t>(reinterpret_cast<char*>(&direction_) -
+    reinterpret_cast<char*>(&trainid_)) + sizeof(direction_));
   // @@protoc_insertion_point(copy_constructor:modes3.protobuf.TrainReferenceSpeedCommand)
 }
 
 void TrainReferenceSpeedCommand::SharedCtor() {
-  ::memset(&trainid_, 0, reinterpret_cast<char*>(&direction_) -
-    reinterpret_cast<char*>(&trainid_) + sizeof(direction_));
+  ::memset(&trainid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&direction_) -
+      reinterpret_cast<char*>(&trainid_)) + sizeof(direction_));
   _cached_size_ = 0;
 }
 
@@ -175,16 +183,14 @@ void TrainReferenceSpeedCommand::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
 const ::google::protobuf::Descriptor* TrainReferenceSpeedCommand::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return TrainReferenceSpeedCommand_descriptor_;
+  protobuf_TrainReferenceSpeedCommand_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_TrainReferenceSpeedCommand_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
 const TrainReferenceSpeedCommand& TrainReferenceSpeedCommand::default_instance() {
-  protobuf_InitDefaults_TrainReferenceSpeedCommand_2eproto();
+  protobuf_TrainReferenceSpeedCommand_2eproto::InitDefaults();
   return *internal_default_instance();
 }
-
-::google::protobuf::internal::ExplicitlyConstructed<TrainReferenceSpeedCommand> TrainReferenceSpeedCommand_default_instance_;
 
 TrainReferenceSpeedCommand* TrainReferenceSpeedCommand::New(::google::protobuf::Arena* arena) const {
   TrainReferenceSpeedCommand* n = new TrainReferenceSpeedCommand;
@@ -196,27 +202,14 @@ TrainReferenceSpeedCommand* TrainReferenceSpeedCommand::New(::google::protobuf::
 
 void TrainReferenceSpeedCommand::Clear() {
 // @@protoc_insertion_point(message_clear_start:modes3.protobuf.TrainReferenceSpeedCommand)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(TrainReferenceSpeedCommand, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<TrainReferenceSpeedCommand*>(16)->f)
-#endif
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
 
-#define ZR_(first, last) do {\
-  ::memset(&(first), 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(trainid_, direction_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
+  ::memset(&trainid_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&direction_) -
+      reinterpret_cast<char*>(&trainid_)) + sizeof(direction_));
+  _internal_metadata_.Clear();
 }
 
 bool TrainReferenceSpeedCommand::MergePartialFromCodedStream(
@@ -225,13 +218,14 @@ bool TrainReferenceSpeedCommand::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:modes3.protobuf.TrainReferenceSpeedCommand)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 trainID = 1;
+      // uint32 trainID = 1;
       case 1: {
-        if (tag == 8) {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -239,14 +233,13 @@ bool TrainReferenceSpeedCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_referenceSpeed;
         break;
       }
 
-      // optional int32 referenceSpeed = 2;
+      // int32 referenceSpeed = 2;
       case 2: {
-        if (tag == 16) {
-         parse_referenceSpeed:
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
 
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -254,14 +247,13 @@ bool TrainReferenceSpeedCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_direction;
         break;
       }
 
-      // optional .modes3.protobuf.TrainDirectionValue direction = 3;
+      // .modes3.protobuf.TrainDirectionValue direction = 3;
       case 3: {
-        if (tag == 24) {
-         parse_direction:
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -270,18 +262,16 @@ bool TrainReferenceSpeedCommand::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
       handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+        if (tag == 0) {
           goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
         break;
       }
     }
@@ -298,22 +288,29 @@ failure:
 void TrainReferenceSpeedCommand::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:modes3.protobuf.TrainReferenceSpeedCommand)
-  // optional uint32 trainID = 1;
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 trainID = 1;
   if (this->trainid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->trainid(), output);
   }
 
-  // optional int32 referenceSpeed = 2;
+  // int32 referenceSpeed = 2;
   if (this->referencespeed() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->referencespeed(), output);
   }
 
-  // optional .modes3.protobuf.TrainDirectionValue direction = 3;
+  // .modes3.protobuf.TrainDirectionValue direction = 3;
   if (this->direction() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       3, this->direction(), output);
   }
 
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), output);
+  }
   // @@protoc_insertion_point(serialize_end:modes3.protobuf.TrainReferenceSpeedCommand)
 }
 
@@ -321,22 +318,29 @@ void TrainReferenceSpeedCommand::SerializeWithCachedSizes(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
   // @@protoc_insertion_point(serialize_to_array_start:modes3.protobuf.TrainReferenceSpeedCommand)
-  // optional uint32 trainID = 1;
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 trainID = 1;
   if (this->trainid() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->trainid(), target);
   }
 
-  // optional int32 referenceSpeed = 2;
+  // int32 referenceSpeed = 2;
   if (this->referencespeed() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->referencespeed(), target);
   }
 
-  // optional .modes3.protobuf.TrainDirectionValue direction = 3;
+  // .modes3.protobuf.TrainDirectionValue direction = 3;
   if (this->direction() != 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       3, this->direction(), target);
   }
 
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()), target);
+  }
   // @@protoc_insertion_point(serialize_to_array_end:modes3.protobuf.TrainReferenceSpeedCommand)
   return target;
 }
@@ -345,21 +349,26 @@ size_t TrainReferenceSpeedCommand::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:modes3.protobuf.TrainReferenceSpeedCommand)
   size_t total_size = 0;
 
-  // optional uint32 trainID = 1;
+  if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        (::google::protobuf::internal::GetProto3PreserveUnknownsDefault()   ? _internal_metadata_.unknown_fields()   : _internal_metadata_.default_instance()));
+  }
+  // uint32 trainID = 1;
   if (this->trainid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->trainid());
   }
 
-  // optional int32 referenceSpeed = 2;
+  // int32 referenceSpeed = 2;
   if (this->referencespeed() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->referencespeed());
   }
 
-  // optional .modes3.protobuf.TrainDirectionValue direction = 3;
+  // .modes3.protobuf.TrainDirectionValue direction = 3;
   if (this->direction() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->direction());
@@ -374,7 +383,7 @@ size_t TrainReferenceSpeedCommand::ByteSizeLong() const {
 
 void TrainReferenceSpeedCommand::MergeFrom(const ::google::protobuf::Message& from) {
 // @@protoc_insertion_point(generalized_merge_from_start:modes3.protobuf.TrainReferenceSpeedCommand)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) MergeFromFail(__LINE__);
+  GOOGLE_DCHECK_NE(&from, this);
   const TrainReferenceSpeedCommand* source =
       ::google::protobuf::internal::DynamicCastToGenerated<const TrainReferenceSpeedCommand>(
           &from);
@@ -383,21 +392,17 @@ void TrainReferenceSpeedCommand::MergeFrom(const ::google::protobuf::Message& fr
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
   // @@protoc_insertion_point(generalized_merge_from_cast_success:modes3.protobuf.TrainReferenceSpeedCommand)
-    UnsafeMergeFrom(*source);
+    MergeFrom(*source);
   }
 }
 
 void TrainReferenceSpeedCommand::MergeFrom(const TrainReferenceSpeedCommand& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:modes3.protobuf.TrainReferenceSpeedCommand)
-  if (GOOGLE_PREDICT_TRUE(&from != this)) {
-    UnsafeMergeFrom(from);
-  } else {
-    MergeFromFail(__LINE__);
-  }
-}
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
 
-void TrainReferenceSpeedCommand::UnsafeMergeFrom(const TrainReferenceSpeedCommand& from) {
-  GOOGLE_DCHECK(&from != this);
   if (from.trainid() != 0) {
     set_trainid(from.trainid());
   }
@@ -420,11 +425,10 @@ void TrainReferenceSpeedCommand::CopyFrom(const TrainReferenceSpeedCommand& from
 // @@protoc_insertion_point(class_specific_copy_from_start:modes3.protobuf.TrainReferenceSpeedCommand)
   if (&from == this) return;
   Clear();
-  UnsafeMergeFrom(from);
+  MergeFrom(from);
 }
 
 bool TrainReferenceSpeedCommand::IsInitialized() const {
-
   return true;
 }
 
@@ -433,25 +437,23 @@ void TrainReferenceSpeedCommand::Swap(TrainReferenceSpeedCommand* other) {
   InternalSwap(other);
 }
 void TrainReferenceSpeedCommand::InternalSwap(TrainReferenceSpeedCommand* other) {
-  std::swap(trainid_, other->trainid_);
-  std::swap(referencespeed_, other->referencespeed_);
-  std::swap(direction_, other->direction_);
+  using std::swap;
+  swap(trainid_, other->trainid_);
+  swap(referencespeed_, other->referencespeed_);
+  swap(direction_, other->direction_);
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  std::swap(_cached_size_, other->_cached_size_);
+  swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata TrainReferenceSpeedCommand::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = TrainReferenceSpeedCommand_descriptor_;
-  metadata.reflection = TrainReferenceSpeedCommand_reflection_;
-  return metadata;
+  protobuf_TrainReferenceSpeedCommand_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_TrainReferenceSpeedCommand_2eproto::file_level_metadata[kIndexInFileMessages];
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // TrainReferenceSpeedCommand
 
-// optional uint32 trainID = 1;
+// uint32 trainID = 1;
 void TrainReferenceSpeedCommand::clear_trainid() {
   trainid_ = 0u;
 }
@@ -465,7 +467,7 @@ void TrainReferenceSpeedCommand::set_trainid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:modes3.protobuf.TrainReferenceSpeedCommand.trainID)
 }
 
-// optional int32 referenceSpeed = 2;
+// int32 referenceSpeed = 2;
 void TrainReferenceSpeedCommand::clear_referencespeed() {
   referencespeed_ = 0;
 }
@@ -479,7 +481,7 @@ void TrainReferenceSpeedCommand::set_referencespeed(::google::protobuf::int32 va
   // @@protoc_insertion_point(field_set:modes3.protobuf.TrainReferenceSpeedCommand.referenceSpeed)
 }
 
-// optional .modes3.protobuf.TrainDirectionValue direction = 3;
+// .modes3.protobuf.TrainDirectionValue direction = 3;
 void TrainReferenceSpeedCommand::clear_direction() {
   direction_ = 0;
 }
@@ -493,9 +495,6 @@ void TrainReferenceSpeedCommand::set_direction(::modes3::protobuf::TrainDirectio
   // @@protoc_insertion_point(field_set:modes3.protobuf.TrainReferenceSpeedCommand.direction)
 }
 
-inline const TrainReferenceSpeedCommand* TrainReferenceSpeedCommand::internal_default_instance() {
-  return &TrainReferenceSpeedCommand_default_instance_.get();
-}
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)

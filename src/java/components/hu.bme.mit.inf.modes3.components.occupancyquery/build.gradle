@@ -2,10 +2,9 @@ apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 
-// In this section you declare the dependencies for your production and test code
 dependencies {
-	compile 'com.pi4j:pi4j-core:1.1'
-	compile project(':components:hu.bme.mit.inf.modes3.components.common')
+	compile group: 'com.fazecast', name: 'jSerialComm', version: '1.3.11'
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 }
 
-mainClassName = "hu.bme.mit.inf.modes3.components.occupancyquery.main.Main"
+mainClassName = "hu.bme.mit.inf.modes3.components.occupancyquery.app.Main"

@@ -30,7 +30,7 @@ void receivedDataFromSerialPort(const char* data, unsigned int len) {
 int main(int argc, char** argv) {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-    MosquittoppClient mosquittoppClient = MosquittoppClient(NULL, "modes3/all", "192.168.1.2", 1883);
+    MosquittoppClient mosquittoppClient = MosquittoppClient(NULL, "/modes3/all", "192.168.1.2", 1883);
     NetworkInterface::setMqttClient(&mosquittoppClient);
     // std::cout << argc << std::endl;
 

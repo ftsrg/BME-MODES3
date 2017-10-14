@@ -28,7 +28,7 @@ public class CepFactory {
   
   public static CepFactory getInstance() {
     if(instance == null){
-    	instance = new CepFactory();
+        instance = new CepFactory();
     }
     return instance;
   }

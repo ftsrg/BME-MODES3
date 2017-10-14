@@ -1,0 +1,36 @@
+---
+- name: Stop the {{service_name}} service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: stopped
+    name: "modes3-{{service_name}}"
+  become: true
+  ignore_errors: yes
+- name: Create the root folder containing the {{service_name}} binaries
+  file: 
+    path: /modes3/ 
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+- name: "Deploy the {{service_name}} service distribution"
+  unarchive:
+    src: "{{playbook_dir}}/../../src/java/components/hu.bme.mit.inf.modes3.components.{{service_name}}/build/distributions/hu.bme.mit.inf.modes3.components.{{service_name}}.tar"
+    dest: /modes3
+  become: true
+- name: Copy the new {{service_name}} systemd unit
+  copy:
+    src: "{{playbook_dir}}/files/modes3-{{service_name}}.service"
+    dest: "/etc/systemd/system/modes3-{{service_name}}.service"
+    mode: 0755
+    force: yes
+  become: true
+- name: Enable and start the {{service_name}} service
+  systemd:
+    daemon_reload: yes
+    enabled: yes
+    state: started
+    name: "modes3-{{service_name}}"
+  become: true

@@ -1,0 +1,28 @@
+syntax = "proto2";
+
+package leapmotion;
+
+option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
+option java_outer_classname = "ComplexGestures";
+
+message ComplexGesture {
+  optional int32 id = 1;
+  optional bool valid = 7;
+
+  enum Type {
+    TYPE_INVALID = 0;
+    TYPE_SWIPE = 1;
+    TYPE_CIRCLE = 2;
+    TYPE_SCREEN_TAP = 3;
+    TYPE_KEY_TAP = 4;
+    TYPE_GRAB = 5;
+    TYPE_SPEED_UP = 6;
+    TYPE_SLOW_DOWN = 7;
+    TYPE_SELECTION = 8;
+    TYPE_STOP = 9;
+  }
+
+  optional Type type = 9;
+  optional int64 timestamp = 10;
+
+}

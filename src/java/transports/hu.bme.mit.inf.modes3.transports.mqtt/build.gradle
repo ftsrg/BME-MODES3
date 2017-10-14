@@ -4,7 +4,6 @@ apply plugin: 'org.xtext.xtend'
 // In this section you declare the dependencies for your production and test code
 dependencies {
 	compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
-	compile 'io.moquette:moquette-broker:0.8'
 	compile project(':transports:hu.bme.mit.inf.modes3.transports.common')
 	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.proto')
 }

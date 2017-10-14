@@ -1,70 +1,54 @@
 package hu.bme.mit.inf.modes3.transports.mqtt
 
-import hu.bme.mit.inf.modes3.transports.common.Transport
-import hu.bme.mit.inf.modes3.transports.config.TransportConfiguration
-import hu.bme.mit.inf.modes3.transports.mqtt.connect.MQTTConnectionBridge
+import hu.bme.mit.inf.modes3.transports.common.TopicBasedTransport
+import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
+import hu.bme.mit.inf.modes3.transports.mqtt.connection.MQTTConnection
+import hu.bme.mit.inf.modes3.transports.mqtt.connection.MQTTConnectionLookup
 import java.util.concurrent.LinkedBlockingQueue
 import org.slf4j.ILoggerFactory
-import org.slf4j.impl.SimpleLoggerFactory
+import org.slf4j.Logger
 
-/**
- * Creates a transport over MQTT.
- * 
- * Every MQTTTransport instance Fregisters itself for the {@ref MQTTConnectionBridge} class which stores
- * the MQTT connection.
- * 
- * Everyone who use MQTTTransport in the same JVM will use the same MQTT connection. It is guaranteed by the
- * fact that MQTTConnectionBridge is a singleton class.
- */
-class MQTTTransport extends Transport {
+class MQTTTransport extends TopicBasedTransport {
 
-	protected MQTTConnectionBridge bridge
-	protected val messages = new LinkedBlockingQueue<byte[]>
-
-	/**
-	 * Everyone who uses MQTTTransport in the same JVM will uses the same MQTT connection. It is guaranteed by the
-	 * fact that MQTTConnectionBridge is a singleton class.
-	 * 
-	 * The parameter config object's allEndpoints field indicates which endpoints may be brokers.
-	 * 
-	 * The TransportEndpoint objects' that are stored in allEndpoints indicate the connection parameters to the 
-	 * respective remote brokers. Those TransportEndpoint objects' addr and pubPort fields are used only for 
-	 * identification. They shall store the address of the broker (without the tcp prefix!) and the pubPort 
-	 * should store the port number through which we may connect to the broker. The first successful broker 
-	 * connection will be used as a broker.
-	 * 
-	 * If none of the allEndpoints could be connected, then it starts a broker locally on localhost. The port number
-	 * is stored in config.localEndpoint's pubPort field.
-	 * 
-	 * The client id that will be used for identifying the connection is stored in config.localEndpoint's id field.
-	 */
-	new(TransportConfiguration config) {
-		this(config, new SimpleLoggerFactory)
+	val Logger logger
+	val MQTTConnection connection
+	var LinkedBlockingQueue<byte[]> messages
+	
+	new(TopicBasedTransportConfiguration config, ILoggerFactory loggerFactory) {
+		super(config)
+		this.logger = loggerFactory.getLogger(this.class.name)
+		this.connection = MQTTConnectionLookup.INSTANCE.getConnection(config)
 	}
 
-	new(TransportConfiguration config, ILoggerFactory factory) {
-		super(config)
-		bridge = MQTTConnectionBridge.getInstance(factory, config)
+	override subscribe() {
+		if (messages === null) {
+			messages = connection.subscribe(config.topic)
+		} else {
+			throw new Exception('''«config» is already subscribed for «config.topic»''')
+		}
+	}
+
+	override unsubscribe() {
+		if (messages !== null) {
+			connection.unsubscribe(config.topic, messages)
+			messages = null
+		}
+	}
+
+	override sendMessage(byte[] message) {
+		connection.send(config.topic, message)
 	}
 
 	override connect() {
-		bridge.subscribe(this)
+		connection.connect
+	}
+
+	override close() {
+		connection.close
 	}
 
 	override receiveMessage() {
 		messages.take
-	}
-
-	override sendMessage(byte[] message) {
-		bridge.sendMessage(message)
-	}
-
-	override close() {
-		bridge.removeSubscriber(this)
-	}
-
-	def putMessage(byte[] message) {
-		messages.put(message)
 	}
 
 }

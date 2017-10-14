@@ -4,6 +4,11 @@
 **/moquette_store.mapdb.p
 **/moquette_store.mapdb.t
 
+# MQTT
+# ----
+**/.lck
+**/*.msg
+
 # Gradle
 /# ------
 .gradle
@@ -31,9 +36,6 @@
 
 # Eclipse
 # -------
-*.classpath
-*.project
-*.settings
 **/bin
 **/xtend-gen
 **/subprojects/*/bin
@@ -74,8 +76,8 @@ atlassian-ide-plugin.xml
 
 # OS X
 # ----
-.DS_Store
-._.DS_Store
+**/.DS_Store
+**/._.DS_Store
 
 # HPROF
 # -----
@@ -90,3 +92,6 @@ atlassian-ide-plugin.xml
 # ----
 **/*.log
 
+# VS Code
+# -------
+**/.lck

@@ -4,12 +4,12 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
+import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.ComputerVisionInformation
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatch
 import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatch
 import java.util.Collection
-import java.util.Set
 import java.util.List
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ComputerVisionInformation
+import java.util.Set
 
 interface IModelInteractor {
 	def Iterable<Train> getEnabledTrains()

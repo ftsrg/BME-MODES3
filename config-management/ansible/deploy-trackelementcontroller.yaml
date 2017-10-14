@@ -1,0 +1,5 @@
+---
+- hosts: bbb
+  remote_user: debian
+  tasks:
+  - include: utils/deploy-gradle.yaml service_name=trackelementcontroller

@@ -12,6 +12,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,16 +45,16 @@ public final class Gpio {
 
 	private final Direction _direction;
 
-	private final ArrayList<InputStateListener> listeners = new ArrayList<>();
+	private final List<InputStateListener> listeners = Collections.synchronizedList(new ArrayList<>());
 
 	private String _gpioFolder;
 
-	private Level _level;
+	private volatile Level _level;
 
 	private volatile boolean _isInputListenerRunning = false;
 
 	private Timer _inputListener;
-	
+
 	private TimerTask _inputListenerTask;
 
 	public Gpio(int pin, Direction direction) throws IOException, GpioNotConfiguratedException {
@@ -174,16 +176,24 @@ public final class Gpio {
 						Logger.info(TAG, "Pin state changed! Pin: %d Value: %s", _pin, newLevel.toString());
 						_level = newLevel;
 						listeners.stream().forEach((listener) -> {
-							listener.levelStateChanged(_level);
+							try {
+								listener.levelStateChanged(_level);
+							} catch (Exception ex) {
+								Logger.error(TAG, "Error while notifying the InputStateChangeListener (%s)",
+										listener.toString());
+								Logger.error(TAG, ex.getMessage());
+							}
 						});
 					}
 				}
 
 			} catch (FileNotFoundException ex) {
-				Logger.error(TAG, "Pin #%d's value file not found!", _pin);
+				Logger.error(TAG, "InputStateChangeListenerTask is aborted, because pin #%d's value file not found!",
+						_pin);
 				Logger.error(TAG, ex.getMessage());
 			} catch (IOException ex) {
-				Logger.error(TAG, "IO error during file read on pin #%d", _pin);
+				Logger.error(TAG, "InputStateChangeListenerTask is aborted, IO error during file read on pin #%d",
+						_pin);
 				Logger.error(TAG, ex.getMessage());
 			}
 		}
