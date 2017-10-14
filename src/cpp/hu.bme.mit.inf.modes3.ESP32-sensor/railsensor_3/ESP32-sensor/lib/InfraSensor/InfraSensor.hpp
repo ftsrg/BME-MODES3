@@ -20,13 +20,17 @@ enum InfSensorState{
 class InfSensor{
 private:
   const int prelltime;
-  const int pin;
+  int pin;
   int value;
   InfSensorState state;
   int sindex;
 public:
   double DATAstack[20];
   InfSensor(int p):pin(p), prelltime(SENSOR_PRELLTIME){}
+  InfSensor():prelltime(SENSOR_PRELLTIME){}
+  void SetPin(int pin){
+    this->pin=pin;
+  }
   bool Update(){
   value=(digitalRead(pin)==0);
     switch (state){
