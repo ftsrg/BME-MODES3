@@ -18,29 +18,28 @@ struct Serl {
 };
 Serl s;
 
-InfSensor Sensor[2]={InfSensor(13),InfSensor(27)};
-SensorStateMachine stateMachine(Sensor);
-RealTimeSpeed RTSpeed(Sensor[0].GetDexP(),Sensor[0].DATAstack,Sensor[1].GetDexP(),Sensor[1].DATAstack);
-RealTimeLength Length(Sensor[0].GetDexP(),Sensor[0].DATAstack,Sensor[1].GetDexP(),Sensor[1].DATAstack);
+SensorStateMachine stateMachine;
+RealTimeSpeed RTSpeed(stateMachine.sensor[0].GetDexP(),stateMachine.sensor[0].DATAstack,stateMachine.sensor[1].GetDexP(),stateMachine.sensor[1].DATAstack);
+RealTimeLength Length(stateMachine.sensor[0].GetDexP(),stateMachine.sensor[0].DATAstack,stateMachine.sensor[1].GetDexP(),stateMachine.sensor[1].DATAstack);
 RealTimeSelect TrainSelect;
 WiFiClient wifi;
 MQTT_JSON send(&wifi);
 
 void setup() {
-  Serial.begin(9600);                     // Serial init
+  Serial.begin(9600);                           // Serial init
 
-  for(int i=0;i<2;i++){                   // Sensors input init
-    pinMode(Sensor[i].GetPin(), INPUT);
-    Sensor[i].Reset();
+  for(int i=0;i<2;i++){                         // Sensors input init
+    pinMode(stateMachine.sensor[i].GetPin(), INPUT);
+    stateMachine.sensor[i].Reset();
   }
   
-  WiFi.begin(CONF_SSID, PASS);            // WiFi connection init
+  WiFi.begin(CONF_SSID, PASS);                  // WiFi connection init
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
   }
 
-  send.client.setServer(MQTT_IP, MQTT_PT);   // MQTT connection init
+  send.client.setServer(MQTT_IP, MQTT_PT);      // MQTT connection init
   while (!send.client.connected())
   {
     send.client.connect(DEVICE_NAME, MQTT_US, MQTT_PW);
@@ -49,18 +48,17 @@ void setup() {
   send.client.subscribe(DATA_CH);
   send.client.subscribe(EVENT_CH);
 
-  Serial.println("Kakadu0");
-
-  TrainSelect.AddTrain("UNKNOWN",25.0);
+  TrainSelect.AddTrain("UNKNOWN",25.0);         // TrainSelect init
   TrainSelect.AddTrain("Taurus",21.5);
   TrainSelect.AddTrain("SNCF",18.5);
   TrainSelect.AddTrain("Vagon",12.25);
   TrainSelect.AddTrain("UNKNOWN",8.0);
 
+  stateMachine.Init(13,27);                    // stateMachine init
+
   while (1)
   {
     Serial.println("Kakadu");
-    send.client.publish(EVENT_CH,"KAKADU");
     delay(1000);
   }
 }
