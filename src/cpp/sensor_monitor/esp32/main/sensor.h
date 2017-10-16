@@ -13,8 +13,8 @@
 #define GPIO_INPUT_IO_1     27
 #define GPIO_INPUT_PIN_SEL  ((1<<GPIO_INPUT_IO_0) | (1<<GPIO_INPUT_IO_1))
 #define ESP_INTR_FLAG_DEFAULT 0
-#define EPS 10
-#define EPS_MEASURE 200
+#define EPS 20
+#define EPS_MEASURE 20
 #define SENSOR_DISTANCE 7
 
 static void IRAM_ATTR gpio_isr_handler(void*);

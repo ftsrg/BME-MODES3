@@ -4,10 +4,10 @@
 #include <esp_mqtt.h>
 #include <esp_wifi.h>
 
-#define WIFI_SSID "Router"
-#define WIFI_PASS "19670227"
+#define WIFI_SSID "SSID"
+#define WIFI_PASS "PASS"
 
-#define MQTT_HOST "192.168.1.105"
+#define MQTT_HOST "HOST"
 #define MQTT_PORT 1883
 #define MQTT_USER ""
 #define MQTT_PASS ""

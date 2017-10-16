@@ -10,12 +10,6 @@ static void IRAM_ATTR gpio_isr_handler(void* arg)
     xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
 }
 
-typedef struct sens sens;
-
-struct sens{
-    uint64_t d_time;
-    uint64_t f_time;
-};
 uint64_t * carriages; // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
                       // |=========1. sensor times=========| |=========0. sensor times=========|
                       // |t__out| |t__out| |tstart| |tstart| |t__out| |t__out| |tstart| |tstart|
@@ -36,7 +30,7 @@ void calculate(uint64_t *carriage){
     char* payload = (char*)malloc(sizeof(char)*50);
     double speed = ((double)SENSOR_DISTANCE) * 100 /dt;
     double length = speed * t_block / 100;
-    sprintf(payload, "speed: %010.3lfcm/s length: %010.3lfcm\n", speed, length);
+    sprintf(payload, "speed: %010.3lfcm/s length: %010.3lfcm\n", speed, length); 
     mqtt_write(payload, "test");
 }
 
@@ -51,7 +45,6 @@ static void sensor() {
 
     carriages = (uint64_t*)malloc(sizeof(uint64_t)*5);
     for(int i = 0; i<5; i++)carriages[i] = 0;
-    uint8_t a = 0;
     uint8_t i = 0;
     
     while (1){
@@ -63,21 +56,13 @@ static void sensor() {
                 switch(level[id] - last_level[id]){
                     case -1: //LOW vezérlés esetén jön a vonat
                         i = 0;
-                        while(carriages[i] & ((uint64_t)(0b1111111111111111)<<(2*id*16))) {
-                            
-                            i++;
-                        
-                        }
-                       
-                        carriages[i] |= (uint64_t)((uint16_t)(clock() * 100 / CLOCKS_PER_SEC)) << (2*id*16);
+                        while(carriages[i] & ((uint64_t)((1<<16) - 1)<<(2*id*16))) i++;
+                        carriages[i] |= ((uint64_t)(clock() * 100 / CLOCKS_PER_SEC)) << (2*id*16); //shifting the current time (on 16 bits) to its correct place (in 'centiseconds') -> max is reached after cca 10 minutes
                         break;
                     case 1:
                         i = 0;
-                        while(carriages[i] & ((uint64_t)(0b1111111111111111)<<((2*id+1)*16))) {
-                           
-                            i++;
-                        }
-                        carriages[i] |= (uint64_t)((uint64_t)(clock() * 100 / CLOCKS_PER_SEC - (uint64_t)((carriages[i] & ((uint64_t)0b1111111111111111<<(2*id*16)))>>(2*id*16)))) << ((2*id+1)*16);
+                        while(carriages[i] & ((uint64_t)((1<<16) - 1)<<((2*id+1)*16))) i++;
+                        carriages[i] |= ((uint64_t)(clock() * 100 / CLOCKS_PER_SEC - (uint64_t)((carriages[i] & ((uint64_t)((1<<16) - 1)<<(2*id*16)))>>(2*id*16)))) << ((2*id+1)*16); //shifting the time difference (on 16 bits) to its correct place
                         if(is_full(carriages[i])) calculate(&(carriages[i]));
                         break;
                     default:
@@ -85,7 +70,6 @@ static void sensor() {
                 }
                 time[id] = clock();
                 last_level[id] = level[id];
-                 
             }
             
         }

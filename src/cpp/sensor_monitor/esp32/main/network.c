@@ -3,9 +3,6 @@
 static TaskHandle_t task = NULL;
 static void networking(void *p) {
     char *payload = "ping               \n";
-
-  
-    double* data;
     for (;;) {
       
       mqtt_write(payload, "ping");
@@ -51,6 +48,7 @@ static void status_callback(esp_mqtt_status_t status) {
     switch (status) {
       case ESP_MQTT_STATUS_CONNECTED:
         esp_mqtt_subscribe("test", 0);
+        esp_mqtt_subscribe("ping", 0);
         xTaskCreatePinnedToCore(networking, "networking", 4096, NULL, 10, &task, 1);
         break;
       case ESP_MQTT_STATUS_DISCONNECTED:
@@ -60,7 +58,7 @@ static void status_callback(esp_mqtt_status_t status) {
   }
   
 static void message_callback(const char *topic, uint8_t *payload, size_t len) {
-    //printf("incoming: %s => %s (%d)\n", topic, payload, (int)len);
+    printf("incoming: %s => %s (%d)\n", topic, payload, (int)len);
   }
 
 static esp_err_t event_handler(void *ctx, system_event_t *event) {
