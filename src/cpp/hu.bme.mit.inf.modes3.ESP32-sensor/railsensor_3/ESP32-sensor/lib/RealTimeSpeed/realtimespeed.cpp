@@ -1,28 +1,33 @@
 #include "realtimespeed.hpp"
 
-RealTimeSpeed::RealTimeSpeed(int* Asindex, double* Astack, int* Bsindex, double* Bstack){
-    sindex=0;
-	lastspeed=0.0;
-	difference=SENSOR_DISTANCE;
-	sstack[0]=Astack;
-	sstack[1]=Bstack;
-	ssindex[0]=Asindex;
-	ssindex[1]=Bsindex;
+RealTimeSpeed::RealTimeSpeed(int *aStackIndex, double *aStack, int *bStackIndex, double *bStack)
+{
+	stackIndex = 0;
+	lastSpeed = 0.0;
+	difference = SENSOR_DISTANCE;
+	sensorStack[0] = aStack;
+	sensorStack[1] = bStack;
+	sensorStackIndex[0] = aStackIndex;
+	sensorStackIndex[1] = bStackIndex;
 }
-bool RealTimeSpeed::Update(){
-	if((sindex<*ssindex[0])&&(sindex<*ssindex[1])){
-		double deltatime=sstack[0][sindex]-sstack[1][sindex];
-		deltatime<0 ? deltatime=-deltatime : deltatime;
-		lastspeed=difference/deltatime;
-		sindex++;
+bool RealTimeSpeed::Update()
+{
+	if ((stackIndex < *sensorStackIndex[0]) && (stackIndex < *sensorStackIndex[1]))
+	{
+		double deltatime = sensorStack[0][stackIndex] - sensorStack[1][stackIndex];
+		deltatime < 0 ? deltatime = -deltatime : deltatime;
+		lastSpeed = difference / deltatime;
+		stackIndex++;
 		return true;
 	}
 	return false;
 }
-double RealTimeSpeed::GetLastSpeed(){
-	return lastspeed;
+double RealTimeSpeed::GetLastSpeed()
+{
+	return lastSpeed;
 }
-bool RealTimeSpeed::Reset(){
-	sindex=0;
+bool RealTimeSpeed::Reset()
+{
+	stackIndex = 0;
 	return true;
 }

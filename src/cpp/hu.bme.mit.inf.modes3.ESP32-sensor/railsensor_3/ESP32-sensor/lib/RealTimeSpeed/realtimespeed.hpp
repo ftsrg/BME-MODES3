@@ -7,18 +7,19 @@
 
 #define DEBUG
 
-class RealTimeSpeed{
+class RealTimeSpeed
+{
 private:
-	int sindex;                                     //processed data index
-	double* sstack[2];                              //infra sensor datastack pointers
-	int* ssindex[2];                                //infra sensor datastack index pointers
-	double difference;                              //infra sensor distance
-	double lastspeed;                               //last calculated speed
+	int 		stackIndex;		   					//processed data index
+	double*	sensorStack[2]; 					//infra sensor datastack pointers
+	int*		sensorStackIndex[2];   		//infra sensor datastack index pointers
+	double 	difference; 							//infra sensor distance
+	double 	lastSpeed;  							//last calculated speed
 public:
-	RealTimeSpeed(int*, double*, int*, double*);    //RTS Constructor
-	bool Update();                                  //calculating speed if available
-	double GetLastSpeed();                          //getting last calculated speed
-	bool Reset();                                   //resetting calculation
+	RealTimeSpeed(int *, double *, int *, double *); //RTS Constructor
+	bool Update();									 //calculating speed if available
+	double GetLastSpeed();							 //getting last calculated speed
+	bool Reset();									 //resetting calculation
 };
 
 #endif // REALTIMESPEED_HPP_INCLUDED
