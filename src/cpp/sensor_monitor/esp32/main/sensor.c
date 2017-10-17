@@ -16,30 +16,43 @@ struct sens{
     uint64_t d_time;
     uint64_t f_time;
 };
+uint64_t * carriages; // 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+                      // |=========1. sensor times=========| |=========0. sensor times=========|
+                      // |t__out| |t__out| |tstart| |tstart| |t__out| |t__out| |tstart| |tstart|
 
-void calculate(sens * sensors){
-    if(fabs(sensors[1].d_time - sensors[0].d_time) > EPS_MEASURE) return;
-    int dt = sensors[1].f_time - sensors[0].f_time;
-    int t_block = (sensors[1].d_time + sensors[0].d_time)/2;
+void calculate(uint64_t *carriage){
+    uint16_t t_out[2];
+    uint16_t t_start[2];
+    for(int i = 0; i<2; i++){
+        t_out[i] = (*carriage>>((2*i + 1) * 16));
+        t_start[i] = (*carriage>>((2*i) * 16));
+        
+    }
+    *carriage = 0;
+
+    if(fabs(t_out[1] - t_out[0]) > EPS_MEASURE) return;
+    uint8_t dt = fabs(t_start[1] - t_start[0]);
+    uint8_t t_block = (t_out[1] + t_out[0])/2;
     char* payload = (char*)malloc(sizeof(char)*50);
-    double speed = ((double)SENSOR_DISTANCE) * 1000 /dt; //[cm/s]
-    double length = speed * t_block / 1000;
+    double speed = ((double)SENSOR_DISTANCE) * 100 /dt;
+    double length = speed * t_block / 100;
     sprintf(payload, "speed: %010.3lfcm/s length: %010.3lfcm\n", speed, length);
-    mqtt_write(payload);
+    mqtt_write(payload, "test");
 }
 
 
 static void sensor() {  
     init_sensor();
     
-    uint8_t level[2], last_level[2] = {0, 0};
+    uint8_t level[2], last_level[2] = {1, 1};
     uint64_t time[2] = {0, 0};
     uint32_t io_num;
     uint8_t id;
 
+    carriages = (uint64_t*)malloc(sizeof(uint64_t)*5);
+    for(int i = 0; i<5; i++)carriages[i] = 0;
     uint8_t a = 0;
-
-    sens sensors[2];
+    uint8_t i = 0;
     
     while (1){
         if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
@@ -49,13 +62,23 @@ static void sensor() {
                 
                 switch(level[id] - last_level[id]){
                     case -1: //LOW vezérlés esetén jön a vonat
-                        sensors[id].f_time = clock() * 1000 / CLOCKS_PER_SEC;
+                        i = 0;
+                        while(carriages[i] & ((uint64_t)(0b1111111111111111)<<(2*id*16))) {
+                            
+                            i++;
+                        
+                        }
+                       
+                        carriages[i] |= (uint64_t)((uint16_t)(clock() * 100 / CLOCKS_PER_SEC)) << (2*id*16);
                         break;
                     case 1:
-                        sensors[id].d_time = clock() * 1000 / CLOCKS_PER_SEC - sensors[id].f_time;
-                        printf("%d\n", (int)sensors[id].d_time);
-                        if(a != id) calculate(sensors);
-                        a = id;
+                        i = 0;
+                        while(carriages[i] & ((uint64_t)(0b1111111111111111)<<((2*id+1)*16))) {
+                           
+                            i++;
+                        }
+                        carriages[i] |= (uint64_t)((uint64_t)(clock() * 100 / CLOCKS_PER_SEC - (uint64_t)((carriages[i] & ((uint64_t)0b1111111111111111<<(2*id*16)))>>(2*id*16)))) << ((2*id+1)*16);
+                        if(is_full(carriages[i])) calculate(&(carriages[i]));
                         break;
                     default:
                         break;
@@ -67,6 +90,14 @@ static void sensor() {
             
         }
     }
+}
+
+uint8_t is_full(uint64_t carriage)
+{
+    for(int i = 0; i<4; i++){
+        if(!(uint16_t)(carriage>>i*16)) return 0;
+    }
+    return 1;
 }
 
 uint8_t getId(uint32_t pin){

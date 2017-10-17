@@ -8,14 +8,14 @@ static void networking(void *p) {
     double* data;
     for (;;) {
       
-      mqtt_write(payload);
+      mqtt_write(payload, "ping");
       vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
-void mqtt_write(char* payload)
+void mqtt_write(char* payload, char* channel)
 {
-  esp_mqtt_publish("test", (void *)payload, (int)strlen(payload), 0, false);
+  esp_mqtt_publish(channel, (void *)payload, (int)strlen(payload), 0, false);
   printf("%s", payload);
 }
 

@@ -22,3 +22,5 @@ static void sensor();
 void start_sensor();
 void init_sensor();
 uint8_t getId(uint32_t);
+void calculate(uint64_t*);
+uint8_t is_full(uint64_t);
