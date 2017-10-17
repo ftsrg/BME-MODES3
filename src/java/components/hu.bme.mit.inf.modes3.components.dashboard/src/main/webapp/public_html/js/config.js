@@ -189,36 +189,6 @@ var settings = {
 				connections : [ "s20", "s26" ]
 			}
 		}],
-//		[ 3, {
-//			id : "t03a",
-//
-//			div : {
-//				id : "t03a-div",
-//				length : 237,
-//				connections : [ "s20", "t03b-div" ]
-//			},
-//
-//			str : {
-//				id : "t03a-str",
-//				length : 239,
-//				connections : [ "s20", "s26" ]
-//			}
-//		}],
-//		[ 4, {
-//			id : "t03b",
-//
-//			div : {
-//				id : "t03b-div",
-//				length : 237,
-//				connections : [ "t03a-div", "s30" ]
-//			},
-//
-//			str : {
-//				id : "t03b-str",
-//				length : 239,
-//				connections : [ "s19", "s30" ]
-//			}
-//		}],
 		[ 4, {
 			id : "t04",
 			senseID: [3],
@@ -378,9 +348,8 @@ var settings = {
 //			svgGroup : "nohab",
 //		}]
 	],
-	locomotiveArrowStyle : 'color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:21.25984192;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate',
-	locomotiveCircleStyle : 'color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#1e2141;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:31.88976288;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate',
-	locomotiveTextStyle : "font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:150px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;enable-background:accumulate",
-	locomotiveTextPathStyle : "color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#1e2141;stroke-width:21.25984192;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate",
-	locomotiveSpeedTextStyle: "font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:140px;line-height:125%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1",
+	locomotiveCircleStyle : 'fill:#1e2141;fill-opacity:1',
+	locomotiveNotTrackedCircleStyle : 'fill:#ffffff;fill-opacity:1;stroke:#1e2141;stroke-width:15;stroke-dasharray:30,30;stroke-opacity:1',
+	locomotiveTextStyle : "font-weight:300;font-size:150px;line-height:125%;font-family:Roboto;text-align:start",
+	locomotiveSpeedTextStyle: "font-weight:300;font-size:140px;line-height:125%;font-family:Roboto;text-align:start",
 };
