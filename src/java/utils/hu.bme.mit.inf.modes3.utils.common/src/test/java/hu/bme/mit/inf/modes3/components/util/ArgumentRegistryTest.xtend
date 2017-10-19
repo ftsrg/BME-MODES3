@@ -6,8 +6,6 @@ import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import java.io.ByteArrayOutputStream
 import java.util.Arrays
 import java.util.HashSet
-import java.util.stream.Collectors
-import java.util.stream.Stream
 import joptsimple.OptionException
 import org.junit.Before
 import org.junit.Test

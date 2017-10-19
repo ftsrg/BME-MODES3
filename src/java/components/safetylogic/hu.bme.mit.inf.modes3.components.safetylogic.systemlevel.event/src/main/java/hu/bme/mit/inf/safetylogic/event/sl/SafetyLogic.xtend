@@ -3,7 +3,6 @@ package hu.bme.mit.inf.safetylogic.event.sl
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.SafetyLogicRuleEngine
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
@@ -35,7 +34,6 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 	@Accessors(PUBLIC_GETTER) protected IModelInteractor model val ILoggerFactory factory
 	val Logger logger
-	@Accessors(PUBLIC_GETTER) private SafetyLogicRuleEngine rules
 
 	static val turnoutToSenseIDMap = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMapping
 	static val senseToTurnoutIDMap = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
