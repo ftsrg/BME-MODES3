@@ -77,7 +77,7 @@ LocomotiveController.prototype.positionInformationReceived = function(info) {
 	// CV is sending position information with a fix rate even if objects are
 	// not tracked at the moment. If that occurs, we show on the UI with
 	// different style
-	if (info.tracked) {
+	if (info.tracked[0]) {
 		this.svgElemPosition.attr('style', window.settings.locomotiveCircleStyle);
 	} else {
 		this.svgElemPosition.attr('style', window.settings.locomotiveNotTrackedCircleStyle);

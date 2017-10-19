@@ -264,8 +264,8 @@ var settings = {
 			svgGroup : 2,
 		}],
 		
-		[ "BR204", {
-	        name: "BR-204",
+		[ "BR294", {
+	        name: "BR-294",
 	        address: 8,
 	        image: "br-204.jpg",
 			preview: "br-204-preview-2.jpg",

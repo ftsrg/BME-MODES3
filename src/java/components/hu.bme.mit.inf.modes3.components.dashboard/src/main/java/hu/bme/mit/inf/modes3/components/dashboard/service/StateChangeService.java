@@ -69,7 +69,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 			long frameindex) {
 	
 		for(ComputerVisionInformation cvInfo: information) {
-			if( cvInfo.getName().contains("SNCF") || cvInfo.getName().contains("Taurus")) {
+			if( cvInfo.getName().contains("SNCF") || cvInfo.getName().contains("Taurus") || cvInfo.getName().equals("BR294")) {
 				Utils.sendComputerVisionState(metaBroadcaster, cvInfo);
 			}
 		}

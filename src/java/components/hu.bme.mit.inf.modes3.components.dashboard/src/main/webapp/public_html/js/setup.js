@@ -65,7 +65,14 @@ function updateTrainSpeedCallback(trainSpeed) {
 }
 
 function updateTrainPositionCallback(trainPosition) {
+	
 	if( window.locomotives[trainPosition.name] == undefined ) {
+	
+		if( trainPosition.realposition.x == 0 
+				&& trainPosition.realposition.y == 0 
+				&& !trainPosition.tracked[0] ) {
+			return;
+		}
 		
 		// search for configuration, if it found, push it into the registry
 		var config = new Map(window.settings.locomotives).forEach(function(value, key, map) {
@@ -77,6 +84,7 @@ function updateTrainPositionCallback(trainPosition) {
 			}
 		});
 	}
+	
 	
 	// from here train must be in the registry, no need for check
 	var train = window.locomotives[trainPosition.name].positionInformationReceived(trainPosition);

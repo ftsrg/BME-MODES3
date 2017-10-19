@@ -79,7 +79,7 @@ public class DashboardManager {
 
 	public void startJetty() throws Exception {
 		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory());
-		http.setPort(7070);
+		http.setPort(8080);
 		http.setIdleTimeout(30000);
 
 		server.setConnectors(new Connector[] { http });
