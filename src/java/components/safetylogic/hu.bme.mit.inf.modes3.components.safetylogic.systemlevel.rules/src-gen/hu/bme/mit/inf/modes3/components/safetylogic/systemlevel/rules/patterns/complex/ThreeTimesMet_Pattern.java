@@ -13,7 +13,6 @@ public class ThreeTimesMet_Pattern extends ParameterizableComplexEventPattern {
     
     // contained event patterns
     addEventPatternRefrence(new MultipleTrainsOnStation_Pattern(), 3);
-    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.threetimesmet_pattern");
-    setEventContext(EventContext.CHRONICLE);
+    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.threetimesmet_pattern");setEventContext(EventContext.CHRONICLE);
   }
 }

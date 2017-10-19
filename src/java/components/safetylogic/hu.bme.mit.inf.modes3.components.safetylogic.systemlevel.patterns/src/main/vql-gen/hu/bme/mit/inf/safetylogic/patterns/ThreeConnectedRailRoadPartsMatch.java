@@ -64,16 +64,16 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("one".equals(parameterName) ) {
-        this.fOne = (RailRoadElement) newValue;
-        return true;
+    	this.fOne = (RailRoadElement) newValue;
+    	return true;
     }
     if ("middle".equals(parameterName) ) {
-        this.fMiddle = (RailRoadElement) newValue;
-        return true;
+    	this.fMiddle = (RailRoadElement) newValue;
+    	return true;
     }
     if ("other".equals(parameterName) ) {
-        this.fOther = (RailRoadElement) newValue;
-        return true;
+    	this.fOther = (RailRoadElement) newValue;
+    	return true;
     }
     return false;
   }
@@ -138,18 +138,18 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
-        return true;
+    	return true;
     if (!(obj instanceof ThreeConnectedRailRoadPartsMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof IPatternMatch)) {
-            return false;
-        }
-        IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+    	if (obj == null) {
+    		return false;
+    	}
+    	if (!(obj instanceof IPatternMatch)) {
+    		return false;
+    	}
+    	IPatternMatch otherSig  = (IPatternMatch) obj;
+    	if (!specification().equals(otherSig.specification()))
+    		return false;
+    	return Arrays.deepEquals(toArray(), otherSig.toArray());
     }
     ThreeConnectedRailRoadPartsMatch other = (ThreeConnectedRailRoadPartsMatch) obj;
     if (fOne == null) {if (other.fOne != null) return false;}
@@ -164,10 +164,10 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
   @Override
   public ThreeConnectedRailRoadPartsQuerySpecification specification() {
     try {
-        return ThreeConnectedRailRoadPartsQuerySpecification.instance();
+    	return ThreeConnectedRailRoadPartsQuerySpecification.instance();
     } catch (ViatraQueryException ex) {
-         // This cannot happen, as the match object can only be instantiated if the query specification exists
-         throw new IllegalStateException (ex);
+     	// This cannot happen, as the match object can only be instantiated if the query specification exists
+     	throw new IllegalStateException (ex);
     }
   }
   

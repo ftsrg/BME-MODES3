@@ -3,7 +3,7 @@ plugins {
 	id "org.xtext.xtend" version "1.0.12" apply false
 	id "com.google.protobuf" version "0.8.0" apply false
 
-	id "org.sonarqube" version "2.5"
+//	id "org.sonarqube" version "2.5"
 	id 'org.hidetake.ssh' version '2.7.0'
 	id 'com.diffplug.gradle.p2.asmaven' version '3.0.6'
 	
@@ -20,9 +20,9 @@ subprojects{
 
 ssh.settings { knownHosts = allowAnyHosts }
 
-sonarqube {
-	properties { property "sonar.projectName", "MoDeS3" }
-}
+//sonarqube {
+//	properties { property "sonar.projectName", "MoDeS3" }
+//}
 
 subprojects {
 

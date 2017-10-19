@@ -66,7 +66,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
     // check if matcher already exists
     ConnectedMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-        matcher = (ConnectedMatcher)engine.getMatcher(querySpecification());
+    	matcher = (ConnectedMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -184,7 +184,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfThis(final Object[] parameters) {
@@ -195,7 +195,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis() {
@@ -204,7 +204,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis(final ConnectedMatch partialMatch) {
@@ -213,7 +213,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for This.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfThis(final RailRoadElement pConnectedTo) {
@@ -225,7 +225,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfconnectedTo(final Object[] parameters) {
@@ -236,7 +236,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfconnectedTo() {
@@ -245,7 +245,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfconnectedTo(final ConnectedMatch partialMatch) {
@@ -254,7 +254,7 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   
   /**
    * Retrieve the set of values that occur in matches for connectedTo.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfconnectedTo(final RailRoadElement pThis) {
@@ -267,30 +267,30 @@ public class ConnectedMatcher extends BaseMatcher<ConnectedMatch> {
   @Override
   protected ConnectedMatch tupleToMatch(final Tuple t) {
     try {
-        return ConnectedMatch.newMatch((RailRoadElement) t.get(POSITION_THIS), (RailRoadElement) t.get(POSITION_CONNECTEDTO));
+    	return ConnectedMatch.newMatch((RailRoadElement) t.get(POSITION_THIS), (RailRoadElement) t.get(POSITION_CONNECTEDTO));
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in tuple not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in tuple not properly typed!",e);
+    	return null;
     }
   }
   
   @Override
   protected ConnectedMatch arrayToMatch(final Object[] match) {
     try {
-        return ConnectedMatch.newMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
+    	return ConnectedMatch.newMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in array not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in array not properly typed!",e);
+    	return null;
     }
   }
   
   @Override
   protected ConnectedMatch arrayToMatchMutable(final Object[] match) {
     try {
-        return ConnectedMatch.newMutableMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
+    	return ConnectedMatch.newMutableMatch((RailRoadElement) match[POSITION_THIS], (RailRoadElement) match[POSITION_CONNECTEDTO]);
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in array not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in array not properly typed!",e);
+    	return null;
     }
   }
   

@@ -55,7 +55,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
     // check if matcher already exists
     ThreeConnectedRailRoadPartsMatcher matcher = engine.getExistingMatcher(querySpecification());
     if (matcher == null) {
-        matcher = (ThreeConnectedRailRoadPartsMatcher)engine.getMatcher(querySpecification());
+    	matcher = (ThreeConnectedRailRoadPartsMatcher)engine.getMatcher(querySpecification());
     }
     return matcher;
   }
@@ -182,7 +182,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for one.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfone(final Object[] parameters) {
@@ -193,7 +193,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for one.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfone() {
@@ -202,7 +202,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for one.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfone(final ThreeConnectedRailRoadPartsMatch partialMatch) {
@@ -211,7 +211,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for one.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfone(final RailRoadElement pMiddle, final RailRoadElement pOther) {
@@ -224,7 +224,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for middle.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfmiddle(final Object[] parameters) {
@@ -235,7 +235,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for middle.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfmiddle() {
@@ -244,7 +244,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for middle.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfmiddle(final ThreeConnectedRailRoadPartsMatch partialMatch) {
@@ -253,7 +253,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for middle.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfmiddle(final RailRoadElement pOne, final RailRoadElement pOther) {
@@ -266,7 +266,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for other.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   protected Set<RailRoadElement> rawAccumulateAllValuesOfother(final Object[] parameters) {
@@ -277,7 +277,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for other.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfother() {
@@ -286,7 +286,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for other.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfother(final ThreeConnectedRailRoadPartsMatch partialMatch) {
@@ -295,7 +295,7 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   
   /**
    * Retrieve the set of values that occur in matches for other.
-   * @return the Set of all values or empty set if there are no matches
+   * @return the Set of all values, null if no parameter with the given name exists, empty set if there are no matches
    * 
    */
   public Set<RailRoadElement> getAllValuesOfother(final RailRoadElement pOne, final RailRoadElement pMiddle) {
@@ -309,30 +309,30 @@ public class ThreeConnectedRailRoadPartsMatcher extends BaseMatcher<ThreeConnect
   @Override
   protected ThreeConnectedRailRoadPartsMatch tupleToMatch(final Tuple t) {
     try {
-        return ThreeConnectedRailRoadPartsMatch.newMatch((RailRoadElement) t.get(POSITION_ONE), (RailRoadElement) t.get(POSITION_MIDDLE), (RailRoadElement) t.get(POSITION_OTHER));
+    	return ThreeConnectedRailRoadPartsMatch.newMatch((RailRoadElement) t.get(POSITION_ONE), (RailRoadElement) t.get(POSITION_MIDDLE), (RailRoadElement) t.get(POSITION_OTHER));
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in tuple not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in tuple not properly typed!",e);
+    	return null;
     }
   }
   
   @Override
   protected ThreeConnectedRailRoadPartsMatch arrayToMatch(final Object[] match) {
     try {
-        return ThreeConnectedRailRoadPartsMatch.newMatch((RailRoadElement) match[POSITION_ONE], (RailRoadElement) match[POSITION_MIDDLE], (RailRoadElement) match[POSITION_OTHER]);
+    	return ThreeConnectedRailRoadPartsMatch.newMatch((RailRoadElement) match[POSITION_ONE], (RailRoadElement) match[POSITION_MIDDLE], (RailRoadElement) match[POSITION_OTHER]);
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in array not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in array not properly typed!",e);
+    	return null;
     }
   }
   
   @Override
   protected ThreeConnectedRailRoadPartsMatch arrayToMatchMutable(final Object[] match) {
     try {
-        return ThreeConnectedRailRoadPartsMatch.newMutableMatch((RailRoadElement) match[POSITION_ONE], (RailRoadElement) match[POSITION_MIDDLE], (RailRoadElement) match[POSITION_OTHER]);
+    	return ThreeConnectedRailRoadPartsMatch.newMutableMatch((RailRoadElement) match[POSITION_ONE], (RailRoadElement) match[POSITION_MIDDLE], (RailRoadElement) match[POSITION_OTHER]);
     } catch(ClassCastException e) {
-        LOGGER.error("Element(s) in array not properly typed!",e);
-        return null;
+    	LOGGER.error("Element(s) in array not properly typed!",e);
+    	return null;
     }
   }
   

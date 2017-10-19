@@ -57,12 +57,12 @@ public abstract class TrainTrailingTurnoutMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("Offender".equals(parameterName) ) {
-        this.fOffender = (Train) newValue;
-        return true;
+    	this.fOffender = (Train) newValue;
+    	return true;
     }
     if ("Victim".equals(parameterName) ) {
-        this.fVictim = (RailRoadElement) newValue;
-        return true;
+    	this.fVictim = (RailRoadElement) newValue;
+    	return true;
     }
     return false;
   }
@@ -119,18 +119,18 @@ public abstract class TrainTrailingTurnoutMatch extends BasePatternMatch {
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
-        return true;
+    	return true;
     if (!(obj instanceof TrainTrailingTurnoutMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof IPatternMatch)) {
-            return false;
-        }
-        IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+    	if (obj == null) {
+    		return false;
+    	}
+    	if (!(obj instanceof IPatternMatch)) {
+    		return false;
+    	}
+    	IPatternMatch otherSig  = (IPatternMatch) obj;
+    	if (!specification().equals(otherSig.specification()))
+    		return false;
+    	return Arrays.deepEquals(toArray(), otherSig.toArray());
     }
     TrainTrailingTurnoutMatch other = (TrainTrailingTurnoutMatch) obj;
     if (fOffender == null) {if (other.fOffender != null) return false;}
@@ -143,10 +143,10 @@ public abstract class TrainTrailingTurnoutMatch extends BasePatternMatch {
   @Override
   public TrainTrailingTurnoutQuerySpecification specification() {
     try {
-        return TrainTrailingTurnoutQuerySpecification.instance();
+    	return TrainTrailingTurnoutQuerySpecification.instance();
     } catch (ViatraQueryException ex) {
-         // This cannot happen, as the match object can only be instantiated if the query specification exists
-         throw new IllegalStateException (ex);
+     	// This cannot happen, as the match object can only be instantiated if the query specification exists
+     	throw new IllegalStateException (ex);
     }
   }
   

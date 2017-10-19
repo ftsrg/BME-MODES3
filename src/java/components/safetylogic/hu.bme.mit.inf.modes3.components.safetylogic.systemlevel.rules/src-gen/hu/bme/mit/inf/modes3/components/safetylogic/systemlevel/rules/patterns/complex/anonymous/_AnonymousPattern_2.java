@@ -15,7 +15,6 @@ public class _AnonymousPattern_2 extends ParameterizableComplexEventPattern {
     // contained event patterns
     addEventPatternRefrence(new TrainOnStation_Pattern(), 1);
     addEventPatternRefrence(new _AnonymousPattern_1(), 1);
-    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.anonymous._anonymouspattern_2");
-    setEventContext(EventContext.CHRONICLE);
+    setId("hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.patterns.complex.anonymous._anonymouspattern_2");setEventContext(EventContext.CHRONICLE);
   }
 }

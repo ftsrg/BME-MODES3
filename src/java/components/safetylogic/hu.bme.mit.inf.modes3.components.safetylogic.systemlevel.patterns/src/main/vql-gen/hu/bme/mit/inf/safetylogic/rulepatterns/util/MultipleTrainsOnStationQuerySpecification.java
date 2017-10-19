@@ -51,9 +51,9 @@ public final class MultipleTrainsOnStationQuerySpecification extends BaseGenerat
    */
   public static MultipleTrainsOnStationQuerySpecification instance() throws ViatraQueryException {
     try{
-        return LazyHolder.INSTANCE;
+    	return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
-        throw processInitializerError(err);
+    	throw processInitializerError(err);
     }
   }
   
@@ -79,8 +79,8 @@ public final class MultipleTrainsOnStationQuerySpecification extends BaseGenerat
   
   /**
    * Inner class allowing the singleton instance of {@link MultipleTrainsOnStationQuerySpecification} to be created 
-   *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link MultipleTrainsOnStationQuerySpecification#instance()}.
+   * 	<b>not</b> at the class load time of the outer class, 
+   * 	but rather at the first call to {@link MultipleTrainsOnStationQuerySpecification#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -132,41 +132,39 @@ public final class MultipleTrainsOnStationQuerySpecification extends BaseGenerat
       setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
-          {
-              PBody body = new PBody(this);
-              PVariable var_t1 = body.getOrCreateVariableByName("t1");
-              PVariable var_t2 = body.getOrCreateVariableByName("t2");
-              PVariable var_railroad = body.getOrCreateVariableByName("railroad");
-              new TypeConstraint(body, new FlatTuple(var_t1), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-              new TypeConstraint(body, new FlatTuple(var_t2), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-              body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-                 new ExportedParameter(body, var_t1, parameter_pT1),
-                 new ExportedParameter(body, var_t2, parameter_pT2)
-              ));
-              // 	RailRoadModel.trains(railroad, t1)
-              new TypeConstraint(body, new FlatTuple(var_railroad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));
-              PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-              new TypeConstraint(body, new FlatTuple(var_railroad, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel", "trains")));
-              new TypeConstraint(body, new FlatTuple(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-              new Equality(body, var__virtual_0_, var_t1);
-              // 	RailRoadModel.trains(railroad, t2)
-              new TypeConstraint(body, new FlatTuple(var_railroad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));
-              PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-              new TypeConstraint(body, new FlatTuple(var_railroad, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel", "trains")));
-              new TypeConstraint(body, new FlatTuple(var__virtual_1_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-              new Equality(body, var__virtual_1_, var_t2);
-              // 	find trainOnStation(t1)
-              new PositivePatternCall(body, new FlatTuple(var_t1), TrainOnStationQuerySpecification.instance().getInternalQueryRepresentation());
-              // 	find trainOnStation(t2)
-              new PositivePatternCall(body, new FlatTuple(var_t2), TrainOnStationQuerySpecification.instance().getInternalQueryRepresentation());
-              // 	t1 != t2
-              new Inequality(body, var_t1, var_t2);
-              bodies.add(body);
-          }
-          // to silence compiler error
-          if (false) throw new ViatraQueryException("Never", "happens");
+      	{
+      		PBody body = new PBody(this);
+      		PVariable var_t1 = body.getOrCreateVariableByName("t1");
+      		PVariable var_t2 = body.getOrCreateVariableByName("t2");
+      		PVariable var_railroad = body.getOrCreateVariableByName("railroad");
+      		new TypeConstraint(body, new FlatTuple(var_t1), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		new TypeConstraint(body, new FlatTuple(var_t2), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
+      		   new ExportedParameter(body, var_t1, parameter_pT1),
+      		   new ExportedParameter(body, var_t2, parameter_pT2)
+      		));
+      		// 	RailRoadModel.trains(railroad, t1)
+      		new TypeConstraint(body, new FlatTuple(var_railroad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));
+      		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
+      		new TypeConstraint(body, new FlatTuple(var_railroad, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel", "trains")));
+      		new Equality(body, var__virtual_0_, var_t1);
+      		// 	RailRoadModel.trains(railroad, t2)
+      		new TypeConstraint(body, new FlatTuple(var_railroad), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel")));
+      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
+      		new TypeConstraint(body, new FlatTuple(var_railroad, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadModel", "trains")));
+      		new Equality(body, var__virtual_1_, var_t2);
+      		// 	find trainOnStation(t1)
+      		new PositivePatternCall(body, new FlatTuple(var_t1), TrainOnStationQuerySpecification.instance().getInternalQueryRepresentation());
+      		// 	find trainOnStation(t2)
+      		new PositivePatternCall(body, new FlatTuple(var_t2), TrainOnStationQuerySpecification.instance().getInternalQueryRepresentation());
+      		// 	t1 != t2
+      		new Inequality(body, var_t1, var_t2);
+      		bodies.add(body);
+      	}
+      	// to silence compiler error
+      	if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
-          throw processDependencyException(ex);
+      	throw processDependencyException(ex);
       }
       return bodies;
     }

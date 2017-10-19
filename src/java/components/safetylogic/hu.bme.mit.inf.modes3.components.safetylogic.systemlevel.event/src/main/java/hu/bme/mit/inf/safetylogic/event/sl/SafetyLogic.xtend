@@ -5,14 +5,12 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules.SafetyLogicRuleEngine
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.ComputerVisionInformation
-import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
-import hu.bme.mit.inf.safetylogic.event.ComputerVisionEstimator
+import hu.bme.mit.inf.safetylogic.event.ComputerVisionTrainMovementEstimator
 import hu.bme.mit.inf.safetylogic.event.IModelInteractor
 import hu.bme.mit.inf.safetylogic.event.INotifiable
 import hu.bme.mit.inf.safetylogic.event.ISegmentDisableStrategy
@@ -22,48 +20,46 @@ import hu.bme.mit.inf.safetylogic.event.ModelUtil
 import hu.bme.mit.inf.safetylogic.event.TrackDisableStrategy
 import hu.bme.mit.inf.safetylogic.event.TrackEnableStrategy
 import hu.bme.mit.inf.safetylogic.event.TrainMovementEstimator
+import hu.bme.mit.inf.safetylogic.event.bridge.ISafetyLogicBridge
 import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.safetylogic.event.bridge.ISafetyLogicBridge
 
 class SafetyLogic implements INotifiable, ISafetyLogic {
 
-	val initializeRailRoad = true
+	val boolean initializeRailRoad
+	val boolean useComputerVision
 
-	@Accessors(PUBLIC_GETTER) protected IModelInteractor model
-	val ILoggerFactory factory
+	@Accessors(PUBLIC_GETTER) protected IModelInteractor model val ILoggerFactory factory
 	val Logger logger
-
-	@Accessors(PUBLIC_GETTER)
-	private SafetyLogicRuleEngine rules
+	@Accessors(PUBLIC_GETTER) private SafetyLogicRuleEngine rules
 
 	static val turnoutToSenseIDMap = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMapping
 	static val senseToTurnoutIDMap = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
 
 	val Set<Train> stoppedTrains = newHashSet
-	val ComputerVisionEstimator computerVisionEstimator
 
 	var List<ISegmentEnableStrategy> segmentEnableStrategies
 	var List<ISegmentDisableStrategy> segmentDisableStrategies
 	var List<ITrainStopStrategy> trainStopStrategies
-
+	
 	var ISafetyLogicBridge safetyLogicBridge
 
-	new(ILoggerFactory factory) {
+	new(ILoggerFactory factory, boolean initializeRailRoad, boolean useComputerVision) {
 		this.factory = factory
 		this.logger = factory.getLogger(this.class.name)
+		
+		
+		this.initializeRailRoad = initializeRailRoad
+		this.useComputerVision = useComputerVision
 
 		logger.info('Construction started')
-		SafetyLogicRuleEngine.standaloneSetup
 
 		model = new ModelUtil(factory)
-		this.computerVisionEstimator = new ComputerVisionEstimator(model)
 
-//		rules = new SafetyLogicRuleEngine(model.resourceSet)
 		model.segments.map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
 	}
@@ -146,18 +142,21 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		this.logger.info("Running started...")
 
-		this.safetyLogicBridge.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
+		if(useComputerVision){
+			this.safetyLogicBridge.computerVisionListener = new ComputerVisionTrainMovementEstimator(model, this, factory)
+		} else {
+			this.safetyLogicBridge.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
+		}
+		
 		this.safetyLogicBridge.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
 				val senseID = turnoutToSenseIDMap.get(id)
-				logger.
-					info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
-				println(model.turnouts.filter[senseID.contains(it.id)].size) // .map[it as Turnout].size)
+				logger.info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
+				println(model.turnouts.filter[senseID.contains(it.id)].size)
 				model.turnouts.filter[senseID.contains(it.id)].map[it as Turnout].forEach [
 					it.currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
-					logger.
-						info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
+					logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
 				]
 				logger.info('''Turnout States: <«FOR turnout : model.turnouts.map[it as Turnout] SEPARATOR ";\t "»
 				Sense=«turnout.id»,TurnoutID=«senseToTurnoutIDMap.get(turnout.id)»,State=«if(turnout.currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»
@@ -169,48 +168,21 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 		if (initializeRailRoad) {
 			initRailRoad
 		}
-
-		logger.info('adding the cv callback')
-
-		this.safetyLogicBridge.computerVisionListener = new IComputerVisionListener() {
-
-			override onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp,
-				long frameindex) {
-				val segmentIds = information.map [
-					computerVisionEstimator.getElementByCoordinates(it.realPosition.x, it.realPosition.y)
-				]
-				val infoIter = information.iterator
-				val combined = segmentIds.map[it -> infoIter.next]
-				println('''
-					Information recieved @ «timestamp» frame #«frameindex»
-					«FOR info : information»
-						CV Estimated train «info.name» on segment #«computerVisionEstimator.getElementByCoordinates(info.realPosition.x, info.realPosition.y).id»
-					«ENDFOR»
-				''')
-				model.ensureIds(combined)
-			}
-		}
-
-		logger.info('cv callback added')
 	}
 
 	def public void refreshSafetyLogicState() {
-		logger.
-			info('''Refreshing state: #of trains «model.trains.size», #of trailings «model.trailings.size», #of hits «model.hits.size»''')
-		logger.
-			info('''Trains «FOR train : model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		logger.info('''Refreshing state: #of trains «model.trains.size», #of trailings «model.trailings.size», #of hits «model.hits.size»''')
+		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 
 		val offenders = new HashSet<Train>
 
 		model.trailings.forEach [ trailing |
-			logger.
-				info('''TRAILING TURNOUT: Train on «trailing.offender.currentlyOn.id» will trail turnout «trailing.victim.id»''')
+			logger.info('''TRAILING TURNOUT: Train on «trailing.offender.currentlyOn.id» will trail turnout «trailing.victim.id»''')
 			offenders.add(trailing.offender)
 		]
 
 		model.hits.forEach [ hit |
-			logger.
-				info('''HIT: offender on «hit.offender.currentlyOn.id», hits victim on «hit.victim.currentlyOn.id»''')
+			logger.info('''HIT: offender on «hit.offender.currentlyOn.id», hits victim on «hit.victim.currentlyOn.id»''')
 			offenders.add(hit.offender)
 		]
 
