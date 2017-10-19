@@ -25,21 +25,21 @@ class SegmentEventHandler {
 		this.touchboardBridge = touchboardBridge
 	}
 
-	def setDisabled() {
+	def synchronized setDisabled() {
 		node.removeCssClass(ENABLED)
 		node.addCssClass(DISABLED)
 	}
 
-	def setEnabled() {
+	def synchronized setEnabled() {
 		node.removeCssClass(DISABLED)
 		node.addCssClass(ENABLED)
 	}
 
-	def setOccupied() {
+	def synchronized setOccupied() {
 		node.addCssClass(OCCUPIED)
 	}
 
-	def setFree() {
+	def  synchronized setFree() {
 		node.removeCssClass(OCCUPIED)
 	}
 
@@ -71,20 +71,9 @@ class SegmentEventHandler {
 
 	private def setSegmentState(SegmentState state) {
 		touchboardBridge.sendSegmentCommand(segmentId, state)
-		updateSectionState(state)
-
 		logger.info('''Segment «segmentId» is «state»''')
 	}
-
-	private def void updateSectionState(SegmentState newState) {
-		switch (newState) {
-			case ENABLED:
-				setEnabled
-			case DISABLED:
-				setDisabled
-		}
-	}
-
+	
 	private def getSegmentOppositeState(SegmentState state) {
 		switch (state) {
 			case ENABLED:
