@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.messages.core
 
-import hu.bme.mit.inf.modes3.components.util.gson.GsonLoader
+import hu.bme.mit.inf.modes3.utils.common.gson.GsonLoader
 import java.util.Collections
 import java.util.Map
 import java.util.Set

@@ -1,20 +1,19 @@
 package hu.bme.mit.inf.modes3.utils.conf
 
-import java.util.stream.Collectors
 import org.junit.Assert
 import org.junit.Test
 
 class LayoutConfigurationTests {
 
 	@Test def void segmentsTest() {
-		val referenceSegments = (1 .. 32).toSet.stream.filter[it != 16].collect(Collectors::toSet)
+		val referenceSegments = (1 .. 32).filter[it != 16].toSet
 		val loadedSegments = LayoutConfiguration.INSTANCE.segments
 		Assert.assertEquals(referenceSegments, loadedSegments)
 	}
 
 	@Test def void sectionsTest() {
 		val exclusions = #{3, 9, 14, 16, 21, 25, 28, 32}
-		val referenceSections = (1 .. 32).toSet.stream.filter[!exclusions.contains(it)].collect(Collectors::toSet)
+		val referenceSections = (1 .. 32).filter[!exclusions.contains(it)].toSet
 		val loadedSections = LayoutConfiguration.INSTANCE.sections
 		Assert.assertEquals(referenceSections, loadedSections)
 	}

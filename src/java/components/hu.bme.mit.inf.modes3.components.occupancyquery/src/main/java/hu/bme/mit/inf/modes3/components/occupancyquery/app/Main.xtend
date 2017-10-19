@@ -2,10 +2,10 @@ package hu.bme.mit.inf.modes3.components.occupancyquery.app
 
 import hu.bme.mit.inf.modes3.components.occupancyquery.OccupancyQuery
 import hu.bme.mit.inf.modes3.components.occupancyquery.bridge.OccupancyQueryBridge
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import org.slf4j.impl.SimpleLoggerFactory
 
 class Main {
