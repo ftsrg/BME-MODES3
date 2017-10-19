@@ -2,7 +2,7 @@ package hu.bme.mit.inf.modes3.components.trackelementcontroller.config;
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import hu.bme.mit.inf.modes3.components.util.gson.GsonLoader
+import hu.bme.mit.inf.modes3.utils.common.gson.GsonLoader
 import java.util.List
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors

@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.util.jopt
+package hu.bme.mit.inf.modes3.utils.common.jopt
 
 import java.io.IOException
 import java.io.OutputStream
@@ -20,34 +20,35 @@ import org.slf4j.Logger
  * 
  * Beware, that after registering the arguments, the String[] args array should
  * be parsed by
- * {@link hu.bme.mit.inf.mqtt.common.parameters.ArgumentRegistrar#parseArguments(String[])}.
+ * {@link hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry#parseArguments(String[])}.
  * 
  * A registered argument's value can be get by the
- * {@link hu.bme.mit.inf.mqtt.common.parameters.ArgumentRegistrar#getParameterStringValue(String)}
+ * {@link hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry#getParameterStringValue(String)}
  * and
- * {@link hu.bme.mit.inf.mqtt.common.parameters.ArgumentRegistrar#getParameterIntegerValue(String)}
+ * {@link hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry#getParameterIntegerValue(String)}
  * methods.
  * 
  * The presence of mandatory arguments can be checked by
- * {@link hu.bme.mit.inf.mqtt.common.parameters.ArgumentRegistrar#hasMandatoryArguments(Set<String>)}.
+ * {@link hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry#hasMandatoryArguments(Set<String>)}.
  * 
  * @author benedekh
  */
 public class ArgumentRegistry {
 
-	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
+	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
 	// stores the registered arguments with optons (key: name, value: argumentObj)
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Map<String, ArgumentAcceptingOptionSpec<?>> registrar = new HashMap
+	@Accessors(#[PROTECTED_GETTER,
+		PROTECTED_SETTER]) val Map<String, ArgumentAcceptingOptionSpec<?>> registrar = new HashMap
 
 	// stored registered arguments without options
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val Set<String> registrarNoOptions = new HashSet
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) val Set<String> registrarNoOptions = new HashSet
 
 	// the arguments are registered here
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) val OptionParser parser = new OptionParser
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) val OptionParser parser = new OptionParser
 
 	// parsed arguments
-	@Accessors(PROTECTED_GETTER, PROTECTED_SETTER) var OptionSet parsed
+	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var OptionSet parsed
 
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)

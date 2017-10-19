@@ -1,9 +1,9 @@
 package hu.bme.mit.inf.modes3.test.demo.app
 
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import org.slf4j.impl.SimpleLoggerFactory
 
 class Main {

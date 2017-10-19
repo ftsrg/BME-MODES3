@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.components.trackelementcontroller.config;
 
-import hu.bme.mit.inf.modes3.components.util.gson.GsonLoader
+import hu.bme.mit.inf.modes3.utils.common.gson.GsonLoader
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory

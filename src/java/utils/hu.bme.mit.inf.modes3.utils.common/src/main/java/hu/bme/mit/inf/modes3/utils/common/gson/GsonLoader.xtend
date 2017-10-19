@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.util.gson
+package hu.bme.mit.inf.modes3.utils.common.gson
 
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader

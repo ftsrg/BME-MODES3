@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.util.jopt
+package hu.bme.mit.inf.modes3.utils.common.jopt
 
 import org.eclipse.xtend.lib.annotations.Data
 

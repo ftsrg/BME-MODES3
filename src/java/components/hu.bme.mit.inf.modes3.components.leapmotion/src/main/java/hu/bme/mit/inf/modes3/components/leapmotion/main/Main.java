@@ -6,8 +6,8 @@ import java.util.concurrent.Executors;
 import org.slf4j.impl.SimpleLoggerFactory;
 
 import hu.bme.mit.inf.modes3.components.leapmotion.LeapMotionBridge;
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter;
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry;
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter;
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry;
 
 public class Main {
 	

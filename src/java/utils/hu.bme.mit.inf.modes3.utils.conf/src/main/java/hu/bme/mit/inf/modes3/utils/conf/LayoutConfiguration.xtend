@@ -1,12 +1,13 @@
 package hu.bme.mit.inf.modes3.utils.conf
 
-import hu.bme.mit.inf.modes3.components.util.gson.GsonLoader
-import java.util.AbstractMap.SimpleEntry
+import hu.bme.mit.inf.modes3.utils.common.gson.GsonLoader
 import java.util.Collections
 import java.util.Map
 import java.util.Set
-import java.util.stream.Collectors
 import org.eclipse.xtend.lib.annotations.Data
+
+import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensions.flatMap
+import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensions.map
 
 class LayoutConfiguration {
 
@@ -28,10 +29,7 @@ class LayoutConfiguration {
 		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData,
 			LayoutConfiguration.classLoader.getResourceAsStream(LAYOUT_CONFIG))
 
-		val inverseMapping = loadedConfiguration.turnoutsSegmentIds.entrySet.stream.flatMap(
-			entry |
-				entry.value.stream.map[new SimpleEntry(it, entry.key)]
-		).collect(Collectors::toMap([it.key], [Integer.valueOf(it.value)]))
+		val inverseMapping = loadedConfiguration.turnoutsSegmentIds.flatMap([key, value|value -> Integer.valueOf(key)])
 
 		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections,
 			loadedConfiguration.turnoutsSegmentIds, inverseMapping, loadedConfiguration.turnoutsResponsibilities)
@@ -53,7 +51,7 @@ class LayoutConfiguration {
 	 * @return the segment IDs which belong to the turnouts, aka the turnouts occupancies can be sensed by these segment IDs
 	 */
 	def getTurnoutSegmentIds() {
-		asUnmodifiableSet(layout.turnoutsSegmentIds.values.stream.flatMap[it.stream].collect(Collectors::toSet))
+		asUnmodifiableSet(layout.turnoutsSegmentIds.values.flatten.toSet)
 	}
 
 	/**
@@ -109,12 +107,11 @@ class LayoutConfiguration {
 	}
 
 	private def asIntegerSet(Set<String> set) {
-		set.stream.map[Integer.valueOf(it)].collect(Collectors::toSet)
+		set.map[Integer.valueOf(it)].toSet
 	}
 
 	private def convertKeysToInteger(Map<String, Set<Integer>> map) {
-		map.entrySet.stream.map[entry|new SimpleEntry(Integer.valueOf(entry.key), entry.value)].collect(
-			Collectors::toMap([it.key], [it.value]))
+		map.map([key, value|Integer.valueOf(key) -> value])
 	}
 
 }

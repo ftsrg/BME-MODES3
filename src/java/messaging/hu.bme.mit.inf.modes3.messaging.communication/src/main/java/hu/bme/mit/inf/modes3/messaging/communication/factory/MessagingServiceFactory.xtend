@@ -1,11 +1,11 @@
 package hu.bme.mit.inf.modes3.messaging.communication.factory
 
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.messaging.mms.TopicBasedMessagingService
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
 import hu.bme.mit.inf.modes3.transports.config.loaders.ArgumentBasedTransportConfigurationLoader
 import hu.bme.mit.inf.modes3.transports.mqtt.MQTTTransport
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import java.util.Set
 import org.slf4j.ILoggerFactory
 
