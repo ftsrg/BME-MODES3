@@ -121,3 +121,34 @@ void MQTT_JSON::LengthSend(double length, int kocsiszam)
   client.publish(DATA_CH, json);
   Serial.println(json);
 };
+
+
+//send the collected data of a sensor driver to the server via MQTT
+void MQTT_JSON::sensorDataSend(SensorDriver* driver)
+{
+  debugOut("send the collected data...");
+  StaticJsonBuffer<800> jsonBuffer;
+  JsonObject &root = jsonBuffer.createObject();
+  root["sender"] = DEVICE_NAME;
+  root["time"] = getTime();
+  root["type"] = driver->typeName;
+  root["data"] = driver->generateOut();
+  root.printTo(json, maxSize);
+  client.publish(BDATA_CH, json);
+  client.publish(DATA_CH, json);
+}
+
+//send the driver error to the server via MQTT
+void MQTT_JSON::sensorErrorSend(SensorDriver* driver)
+{
+  debugOut("send the error...");
+  StaticJsonBuffer<800> jsonBuffer;
+  JsonObject &root = jsonBuffer.createObject();
+  root["sender"] = DEVICE_NAME;
+  root["time"] = getTime();
+  root["type"] = "error";
+  root["data"] = driver->typeName+" sensor is frosen, attempting to restart";
+  root.printTo(json, maxSize);
+  client.publish(BDATA_CH, json);
+  client.publish(DATA_CH, json);
+}
