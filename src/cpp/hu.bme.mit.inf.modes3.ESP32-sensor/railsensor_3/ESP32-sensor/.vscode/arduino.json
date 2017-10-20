@@ -1,0 +1,5 @@
+{
+    "board": "espressif:esp32:lolin32",
+    "configuration": "FlashFreq=80,UploadSpeed=921600",
+    "sketch": "src\\3.ino"
+}

@@ -5,6 +5,8 @@
 #ifndef INFRASENSOR_HPP
 #define INFRASENSOR_HPP
 
+#include <Arduino.h>
+
 double SecTime()
 {
   double ret = micros() / 1000000.0;

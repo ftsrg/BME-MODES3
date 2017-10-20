@@ -6,7 +6,7 @@
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "name": "PlatformIO Debugger",
-            "target": "c:/Users/simon5521/Documents/FTSRG/src/cpp/hu.bme.mit.inf.modes3.ESP32-sensor/railsensor_3/ESP32-sensor/.pioenvs/nodemcu-32s/firmware.elf",
+            "target": "c:/Users/simon5521/Documents/FTSRG/src/cpp/sensor_interface/.pioenvs/lolin32/firmware.elf",
             "gdbpath": "C:/Users/simon5521/.platformio/penv/Scripts/piodebuggdb",
             "autorun": [ "source .pioinit" ]
         }

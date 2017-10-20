@@ -96,4 +96,5 @@ void loop()
     send.LengthSend(Length.GetLastLength(), stateMachine.GetKocsiszam());
     send.TrainSend(TrainSelect.Search(Length.GetLastLength()), stateMachine.GetKocsiszam());
   }
+  
 }
