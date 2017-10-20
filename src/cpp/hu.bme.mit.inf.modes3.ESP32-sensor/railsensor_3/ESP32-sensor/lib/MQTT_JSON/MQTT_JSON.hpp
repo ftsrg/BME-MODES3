@@ -45,6 +45,8 @@
 #include <PubSubClient.h>
 #include <WiFi.h>
 #include <ArduinoJson.h>
+//main interface of the sensor drivers by Simon
+#include "sensor_driver.h"
 
 void callback(char*, byte*, unsigned int);
 
@@ -67,6 +69,9 @@ public:
   void EventSend(bool detect, bool direction);
   void SpeedSend(double speed);
   void LengthSend(double length, int kocsiszam);
+  //new communication functions for sensor drivers
+  void sensorDataSend(SensorDriver*);
+  void sensorErrorSend(SensorDriver*);
   void ConnCheck();
 };
 
