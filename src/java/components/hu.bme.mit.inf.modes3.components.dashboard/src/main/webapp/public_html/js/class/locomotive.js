@@ -9,6 +9,7 @@ function LocomotiveController(locomotiveConfig, controller) {
 	this.config = locomotiveConfig;
 	this.speed = 0;
 	this.isAnimationInProgress = false;
+	this.maxSpeed = 128;
 	this.position = {
 		x : 0,
 		y : 0
@@ -98,11 +99,15 @@ LocomotiveController.prototype.pushSpeed = function(speed) {
 LocomotiveController.prototype.setSpeed = function(speed) {
 	this.speed = speed;
 	this.rangeInput.val(speed);
-	
-	if( speed < 0 ) {
-		this.indicatorElem.text((speed/48*-100)+"% (R)");
+
+	// If speed is a negative number (in case of reverse movement), show
+	// positive number and an R letter instead of a negative number. Also,
+	// maximum speed of the trains are defined to be 48 (previously it was 50),
+	// and makes a percentage value based on the full speed.
+	if (speed < 0) {
+		this.indicatorElem.text((speed / this.maxSpeed * -100) + "% (R)");
 	} else {
-		this.indicatorElem.text(speed/48*100+"%");
+		this.indicatorElem.text(speed / this.maxSpeed * 100 + "%");
 	}
 
 };
@@ -114,10 +119,10 @@ LocomotiveController.prototype.createDOMrepresentation = function() {
 	var image = $('<img />').attr('src', 'images/locomotives/' + this.config.image);
 	this.rangeInput = $('<input />').attr({
 		type : 'range',
-		min : -48,
-		max : +48,
+		min : -this.maxSpeed,
+		max : +this.maxSpeed,
 		value : 0,
-		step: 12
+		step : this.maxSpeed/4
 	});
 	this.indicatorElem = $('<div />').addClass('train-control-speed-indicator').text('0');
 	var controls = $('<div />').addClass('train-control-speed').append(this.rangeInput).append(this.indicatorElem);
@@ -152,8 +157,8 @@ LocomotiveController.prototype.DOMUpdatedCallback = function() {
 
 	// im not sure why I should do this, but in that way the background
 	// will fill the whole textual area
-	var w = $(this.svgElemGroup).width() * 8858.2677 / 2500.0*1.35;
-	var h = $(this.svgElemGroup).height() * 4960.63 / 1400.0*1.5;
+	var w = $(this.svgElemGroup).width() * 8858.2677 / 2500.0 * 1.35;
+	var h = $(this.svgElemGroup).height() * 4960.63 / 1400.0 * 1.5;
 
 	bg.attr('width', w).attr('height', h);
 
