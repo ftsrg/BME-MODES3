@@ -18,6 +18,6 @@ void sensorErrorSend(SensorDriver* );
 
 void startMeasurement();
 void stopMeasurement();
-void initalise();
+void initalise(MQTT_JSON*);
 
 #endif
