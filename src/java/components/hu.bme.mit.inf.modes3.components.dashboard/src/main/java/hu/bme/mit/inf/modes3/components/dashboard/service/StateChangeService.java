@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -29,6 +31,8 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		ISegmentStateChangeListener, ITrainReferenceSpeedListener, IComputerVisionListener {
 
 	Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger(StateChangeService.class.getName());
+	
+	List<String> locomotives = Arrays.asList("Taurus", "BR294", "SNCF");
 
 	@Inject
 	protected MetaBroadcaster metaBroadcaster;
@@ -69,7 +73,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 			long frameindex) {
 	
 		for(ComputerVisionInformation cvInfo: information) {
-			if( cvInfo.getName().contains("SNCF") || cvInfo.getName().contains("Taurus") || cvInfo.getName().equals("BR294")) {
+			if( locomotives.contains(cvInfo.getName()) ) {
 				Utils.sendComputerVisionState(metaBroadcaster, cvInfo);
 			}
 		}
