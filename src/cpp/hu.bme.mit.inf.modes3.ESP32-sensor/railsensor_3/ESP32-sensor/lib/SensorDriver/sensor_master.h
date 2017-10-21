@@ -11,6 +11,7 @@
 #include "color_driver.h"
 #include "gyro_driver.h"
 #include "force_driver.h"
+#include <MQTT_JSON>
 
 void sensorDataSend(SensorDriver* );
 void sensorErrorSend(SensorDriver* );
