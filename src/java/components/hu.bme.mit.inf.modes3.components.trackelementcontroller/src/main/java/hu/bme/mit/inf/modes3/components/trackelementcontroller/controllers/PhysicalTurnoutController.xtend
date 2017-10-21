@@ -47,7 +47,7 @@ class PhysicalTurnoutController implements InputStateListener {
 
 			straightState = GpioManager.getGpio(pins.get(2), Gpio.Direction.IN);
 			divergentState = GpioManager.getGpio(pins.get(3), Gpio.Direction.IN);
-		} catch (GpioNotConfiguratedException ex) {
+		} catch(GpioNotConfiguratedException ex) {
 			// TODO this exception should be handled correctly!
 			logger.error("GPIO pin could not be set!", ex);
 		}
@@ -63,9 +63,9 @@ class PhysicalTurnoutController implements InputStateListener {
 	}
 
 	def getTurnoutState() {
-		if ((straightState.level == Level.HIGH) && (divergentState.level == Level.LOW)) {
+		if((straightState.level == Level.HIGH) && (divergentState.level == Level.LOW)) {
 			return TurnoutState.STRAIGHT;
-		} else if ((straightState.level == Level.LOW) && (divergentState.level == Level.HIGH)) {
+		} else if((straightState.level == Level.LOW) && (divergentState.level == Level.HIGH)) {
 			return TurnoutState.DIVERGENT;
 		} else {
 			return TurnoutState.ILLEGAL;
@@ -85,7 +85,7 @@ class PhysicalTurnoutController implements InputStateListener {
 					throw new RuntimeException("ILLEGAL state received, simply ignoring it")
 				}
 			}
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			// TODO this exception should be handled correctly!
 			logger.debug("Exception during turnout switching!", ex);
 		}
@@ -95,7 +95,5 @@ class PhysicalTurnoutController implements InputStateListener {
 		logger.info('''level state changed! expander: «expander»''');
 		listener?.onStateChanged(turnoutState);
 	}
-	
-	
 
 }

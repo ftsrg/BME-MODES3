@@ -23,7 +23,7 @@ class TrackElementControllerBridge extends AbstractCommunicationComponent implem
 		locator.trackElementCommandCallback.segmentCommandListener = this
 		locator.trackElementCommandCallback.turnoutCommandListener = this
 	}
-	
+
 	override run() {
 		trackElementController.run
 	}
@@ -39,13 +39,17 @@ class TrackElementControllerBridge extends AbstractCommunicationComponent implem
 	override onTurnoutCommand(int id, TurnoutState state) {
 		trackElementController.onTurnoutCommand(id, state)
 	}
-	
+
 	override sendSegmentState(int id, SegmentState state) {
 		locator.trackElementStateSender.sendSegmentState(id, state)
 	}
-	
+
 	override sendTurnoutState(int id, TurnoutState state) {
 		locator.trackElementStateSender.sendTurnoutState(id, state)
+	}
+
+	override getTrackElementStateRegistry() {
+		locator.trackElementStateRegistry
 	}
 
 }

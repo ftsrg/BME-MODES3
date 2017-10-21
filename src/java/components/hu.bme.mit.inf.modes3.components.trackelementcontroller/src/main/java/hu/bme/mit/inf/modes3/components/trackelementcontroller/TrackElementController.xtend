@@ -22,10 +22,11 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 	val ExpanderConfigInterpreter pinout
 	val int id
 
+	@Accessors(PUBLIC_SETTER) var ITrackElementControllerBridge trackElementControllerBridge
+	var TurnoutChangeGuard guard
+
 	val ILoggerFactory factory
 	val Logger logger
-
-	@Accessors(PUBLIC_SETTER) var ITrackElementControllerBridge trackElementControllerBridge
 
 	val HashMap<Integer, PhysicalSegmentController> segmentControllers = newHashMap
 	val List<PhysicalTurnoutController> turnoutControllers = newArrayList
@@ -39,14 +40,15 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 		// loading configurations
 		config = Configuration::loadPinoutConfig(turnoutID, factory)
 		pinout = ExpanderConfigInterpreter.loadPinoutConfig(factory)
-		GpioManager.loadGpioMappingFromFile(GPIO_JSON)
+		GpioManager::loadGpioMappingFromFile(GPIO_JSON)
 
 		logger.info('''segments: «config.sectionNames»''')
 		logger.info('''turnout expander: «config.turnoutExpanders»''')
 	}
 
-	override setTrackElementControllerBridge(ITrackElementControllerBridge Bridge) {
-		this.trackElementControllerBridge = Bridge
+	override setTrackElementControllerBridge(ITrackElementControllerBridge bridge) {
+		this.trackElementControllerBridge = bridge
+		this.guard = new TurnoutChangeGuard(id, trackElementControllerBridge.trackElementStateRegistry)
 
 		// for each and every segment we need to create a segmentController class
 		config.sectionNames.forEach [
@@ -59,7 +61,7 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 				// because we do know, that all pin that we will use will be low at this time,
 				// we could send an message over network about the segment's status (disabled)
 				trackElementControllerBridge.sendSegmentState(segmentId, controller.segmentState)
-			} catch (NumberFormatException exp) {
+			} catch(NumberFormatException exp) {
 				logger.warn('''«it» is not a valid number as a segement ID. Error message: «exp.message»''', exp)
 			}
 		]
@@ -80,7 +82,7 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 
 	override onSegmentCommand(int id, SegmentState state) {
 		// if new segment command received on network, we need to check if it's our obligation to handle or not
-		if (!segmentControllers.keySet.contains(id)) {
+		if(!segmentControllers.keySet.contains(id)) {
 			return
 		}
 
@@ -94,8 +96,11 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 	}
 
 	override onTurnoutCommand(int id, TurnoutState state) {
+		// if it is an illegal state
 		// if new turnout command received on network, we need to check if it's our obligation to handle or not
-		if (this.id != id) {
+		// if we handle this turnout, but the direction change is not allowed
+		val recentDirection = turnoutControllers.head.turnoutState
+		if((state == TurnoutState.ILLEGAL) || (this.id != id) || (this.id == id && !guard.isDirectionChangeAllowed(recentDirection))) {
 			return
 		}
 
@@ -111,14 +116,13 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 	override synchronized onStateChanged(TurnoutState newState) {
 		logger.info('''Turnout state changed! new state: «newState»''')
 
-		if (newState == TurnoutState.ILLEGAL) {
-			// TODO handle it in a correct
+		if(newState == TurnoutState.ILLEGAL) {
 			return
 		}
 
 		// we have to set all the turnout controllers to the new state to be absolutely sure
 		// that all turnout are in the same position (it is vital in the case of T3)
-		if (id == 3) {
+		if(id == 3) {
 			turnoutControllers.filter[it.turnoutState != newState].forEach[it.turnoutState = newState]
 		}
 

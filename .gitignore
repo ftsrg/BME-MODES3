@@ -36,6 +36,8 @@
 
 # Eclipse
 # -------
+**/.classpath
+**/org.eclipse.buildship.core.prefs
 **/bin
 **/xtend-gen
 **/subprojects/*/bin

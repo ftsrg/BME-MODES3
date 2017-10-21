@@ -36,7 +36,7 @@ class PhysicalSegmentController {
 			appControl.level = Gpio.Level.LOW;
 			pruControl.level = Gpio.Level.LOW;
 
-		} catch (GpioNotConfiguratedException ex) {
+		} catch(GpioNotConfiguratedException ex) {
 			// TODO this exception should be handled correctly!
 			logger.debug("GPIO pin could not be setted!", ex);
 		}
@@ -54,7 +54,7 @@ class PhysicalSegmentController {
 					pruControl.level = Gpio.Level.LOW
 				}
 			}
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			// TODO this exception should be handled correctly!
 			logger.debug("Exception during segment state setting!", ex);
 		}
@@ -62,7 +62,7 @@ class PhysicalSegmentController {
 
 	def getSegmentState() {
 		// segment is only enabled when all of these gpios are HIGH
-		if (appControl.level == Gpio.Level.HIGH && pruControl.level == Gpio.Level.HIGH) {
+		if(appControl.level == Gpio.Level.HIGH && pruControl.level == Gpio.Level.HIGH) {
 			return SegmentState.ENABLED;
 		}
 

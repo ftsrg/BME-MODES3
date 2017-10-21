@@ -35,6 +35,17 @@ class TopicFactory {
 	}
 
 	/**
+	 * @return every possible topic, with the topic parameters being substituted, except those whose name is contains a fragment denoted by argument
+	 * 
+	 * E.g. for every section status topic the {id} will be substituted with the respective section's ID.
+	 *   
+	 * WARNING: many topics!
+	 */
+	def static createEveryTopicExcept(String... excludedTopicFragments) {
+		createEveryTopic.filter[topic|excludedTopicFragments.forall[!topic.contains(it)]].toSet
+	}
+
+	/**
 	 * @return the default topics which are not assigned to any InternalMessage
 	 */
 	def static createDefaultTopics() {
@@ -105,10 +116,8 @@ class TopicFactory {
 		return messageTypes.map[createTopicsWithSubstitutedParameters(it, #{String.valueOf(segmentId)})].flatten.toSet
 	}
 
-	private def static substituteTopicIdParametersWithValues(Set<String> parametrizedTopics,
-		Set<String> substitutions) {
-		return parametrizedTopics.map[parametrizedTopic|substitutions.map[parametrizedTopic.replace("{id}", it)]].
-			flatten.toSet
+	private def static substituteTopicIdParametersWithValues(Set<String> parametrizedTopics, Set<String> substitutions) {
+		return parametrizedTopics.map[parametrizedTopic|substitutions.map[parametrizedTopic.replace("{id}", it)]].flatten.toSet
 	}
 
 }

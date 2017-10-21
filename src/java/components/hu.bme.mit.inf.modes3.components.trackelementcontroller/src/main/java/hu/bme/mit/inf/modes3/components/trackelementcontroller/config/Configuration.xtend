@@ -45,12 +45,12 @@ class Configuration {
 	 */
 	static def Configuration loadPinoutConfig(int id, ILoggerFactory factory) {
 		logger = factory.getLogger(ExpanderConfigInterpreter.name)
-		
+
 		try {
 			val gson = new Gson
 			var JsonObject config = GsonLoader.loadTypeFromInputStream(JsonObject, Configuration.classLoader.getResourceAsStream("config.json"))
 			gson.fromJson(config.get("t" + Integer.valueOf(id)), typeof(Configuration))
-		} catch(Exception ex){
+		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 			throw ex
 		}

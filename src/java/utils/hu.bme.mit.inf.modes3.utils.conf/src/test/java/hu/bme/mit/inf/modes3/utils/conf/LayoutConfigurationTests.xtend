@@ -103,4 +103,28 @@ class LayoutConfigurationTests {
 		Assert.assertEquals(referenceSectionIds, loadedSectionIds)
 	}
 
+	@Test def void turnout1VicinitiesStraightTest() {
+		val referenceSegmentIds = #{12, 15}
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(1, "straight")
+		Assert.assertEquals(referenceSegmentIds, controlledSegments)
+	}
+
+	@Test def void turnout1VicinitiesDivergentTest() {
+		val referenceSegmentIds = #{11, 15}
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(1, "divergent")
+		Assert.assertEquals(referenceSegmentIds, controlledSegments)
+	}
+
+	@Test def void turnout3VicinitiesStraightTest() {
+		val referenceSegmentIds = #{20, 26, 19, 30}
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(3, "straight")
+		Assert.assertEquals(referenceSegmentIds, controlledSegments)
+	}
+
+	@Test def void turnout3VicinitiesDivergentTest() {
+		val referenceSegmentIds = #{20, 30, 25, 32}
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(3, "divergent")
+		Assert.assertEquals(referenceSegmentIds, controlledSegments)
+	}
+
 }

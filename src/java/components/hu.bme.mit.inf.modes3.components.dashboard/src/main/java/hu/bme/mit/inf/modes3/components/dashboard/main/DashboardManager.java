@@ -62,9 +62,10 @@ public class DashboardManager {
 	}
 
 	public void initialize() {
-		Set<String> topics = TopicFactory.createEveryTopic();
+		Set<String> topics = TopicFactory.createEveryTopicExcept("cv");
 		messagingService = MessagingServiceFactory.createStackForTopics(registry, loggerFactory, topics);
 		locator = new TrackCommunicationServiceLocator(messagingService, loggerFactory);
+		locator.getTrackElementCommander().sendAllStatusCommand();
 	}
 
 	public void parseArguments(String[] args) {

@@ -36,9 +36,8 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 			override onSegmentState(int id, SegmentState state) {
 				logger.trace('''segmentState message arrived id=«id» state=«state»''')
-				if (segments.get(id) != state) {
-					logger.
-						trace('''segmentState changed compared to cached values. Cached = «segments.get(id)» new =«state»''')
+				if(segments.get(id) != state) {
+					logger.trace('''segmentState changed compared to cached values. Cached = «segments.get(id)» new =«state»''')
 					segmentStateChangeListener?.onSegmentStateChange(id, segments.get(id), state)
 					segments.put(id, state)
 				}
@@ -49,9 +48,8 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 			override onTurnoutState(int id, TurnoutState state) {
 				logger.trace('''turnoutState message arrived id=«id» state=«state»''')
-				if (turnouts.get(id) != state) {
-					logger.
-						trace('''turnoutState changed compared to cached values. Cached = «turnouts.get(id)» new =«state»''')
+				if(turnouts.get(id) != state) {
+					logger.trace('''turnoutState changed compared to cached values. Cached = «turnouts.get(id)» new =«state»''')
 					turnoutStateChangeListener?.onTurnoutStateChange(id, turnouts.get(id), state)
 					turnouts.put(id, state)
 				}
@@ -62,9 +60,8 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 			override onSegmentOccupancy(int id, SegmentOccupancy state) {
 				logger.trace('''segmentOccupancy message arrived id=«id» state=«state»''')
-				if (occupancy.get(id) != state) {
-					logger.
-						trace('''segmentOccupancy changed compared to cached values. Cached = «occupancy.get(id)» new =«state»''')
+				if(occupancy.get(id) != state) {
+					logger.trace('''segmentOccupancy changed compared to cached values. Cached = «occupancy.get(id)» new =«state»''')
 					segmentOccupancyChangeListener?.onSegmentOccupancyChange(id, occupancy.get(id), state)
 					occupancy.put(id, state)
 				}
@@ -74,40 +71,40 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	}
 
 	override getSegmentState(int id) {
-		if (segments.get(id) === null) {
-			logger.
-				trace('''The registry was asked for the state of Segment #«id» but there is no information in the cache, default «SegmentState.ENABLED» state is used instead''')
-			segments.put(id, SegmentState.ENABLED)
+		if(segments.get(id) === null) {
+			val defaultValue = SegmentState.ENABLED
+			logger.trace('''The registry was asked for the state of Segment #«id» but there is no information in the cache, default «defaultValue» state is used instead''')
+			segments.put(id, defaultValue)
 		}
 		segments.get(id)
 	}
 
 	override getTurnoutState(int id) {
-		if (turnouts.get(id) === null) {
-			logger.
-				trace('''The registry was asked for the state of Turnout #«id» but there is no information in the cache, default «TurnoutState.DIVERGENT» state is used instead''')
-			turnouts.put(id, TurnoutState.DIVERGENT)
+		if(turnouts.get(id) === null) {
+			val defaultValue = TurnoutState.DIVERGENT
+			logger.trace('''The registry was asked for the state of Turnout #«id» but there is no information in the cache, default «defaultValue» state is used instead''')
+			turnouts.put(id, defaultValue)
 		}
 		turnouts.get(id)
 	}
 
 	override getSegmentOccupancy(int id) {
-		if (occupancy.get(id) === null) {
-			logger.
-				trace('''The registry was asked for the occupancy of Segment #«id» but there is no information in the cache, default «SegmentOccupancy.OCCUPIED» state is used instead''')
-			occupancy.put(id, SegmentOccupancy.OCCUPIED)
+		if(occupancy.get(id) === null) {
+			val defaultValue = SegmentOccupancy.FREE
+			logger.trace('''The registry was asked for the occupancy of Segment #«id» but there is no information in the cache, default «defaultValue» state is used instead''')
+			occupancy.put(id, defaultValue)
 		}
 		occupancy.get(id)
 	}
 
 	override getSegments() {
-		synchronized (segments) {
+		synchronized(segments) {
 			return new ArrayList<Integer>(Collections.list(segments.keys));
 		}
 	}
 
 	override getTurnouts() {
-		synchronized (turnouts) {
+		synchronized(turnouts) {
 			return new ArrayList<Integer>(Collections.list(turnouts.keys));
 		}
 	}

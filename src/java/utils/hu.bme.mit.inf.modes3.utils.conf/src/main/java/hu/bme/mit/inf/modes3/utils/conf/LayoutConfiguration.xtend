@@ -18,6 +18,7 @@ class LayoutConfiguration {
 		private Map<String, Set<Integer>> turnoutsSegmentIds // map turnout ID to segment IDs (the turnout's occupancy can be sensed by this segment)
 		private Map<Integer, Integer> turnoutIdBySegmentId // map segment ID to turnout ID (the turnout's occupancy can be sensed by this segment)
 		private Map<String, Set<Integer>> turnoutsResponsibilities // which turnout is responsible for which sections
+		private Map<String, TurnoutVicinity> turnoutVicinities
 	}
 
 	public static val INSTANCE = new LayoutConfiguration
@@ -26,13 +27,11 @@ class LayoutConfiguration {
 	private var LayoutConfigurationData layout
 
 	private new() {
-		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData,
-			LayoutConfiguration.classLoader.getResourceAsStream(LAYOUT_CONFIG))
+		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData, LayoutConfiguration.classLoader.getResourceAsStream(LAYOUT_CONFIG))
 
 		val inverseMapping = loadedConfiguration.turnoutsSegmentIds.flatMap([key, value|value -> Integer.valueOf(key)])
 
-		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections,
-			loadedConfiguration.turnoutsSegmentIds, inverseMapping, loadedConfiguration.turnoutsResponsibilities)
+		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections, loadedConfiguration.turnoutsSegmentIds, inverseMapping, loadedConfiguration.turnoutsResponsibilities, loadedConfiguration.turnoutVicinities)
 	}
 
 	def getSections() {
@@ -96,6 +95,46 @@ class LayoutConfiguration {
 	 */
 	def getControlledSectionIds() {
 		asUnmodifiableSet(layout.turnoutsResponsibilities.values.flatten.toSet)
+	}
+
+	/**
+	 * get the IDs of the segments that are connected, if the turnout's direction is the given direction
+	 */
+	def getConnectedSegmentsByTurnoutVicinities(int turnoutId, String direction) {
+		val supportedDirections = #{"straight", "divergent"}
+		val lowercased = if(direction.isNullOrEmpty) direction else direction.toLowerCase
+		
+		if(!supportedDirections.contains(lowercased)) {
+			return null
+		}
+
+		val vicinities = layout.turnoutVicinities.get(String.valueOf(turnoutId))
+		val strOrDivSegments = switch (lowercased) {
+			case "straight": vicinities.straight
+			case "divergent": vicinities.divergent
+		}
+
+		val segmentIds = newHashSet
+		segmentIds.addAll(strOrDivSegments)
+		segmentIds.addAll(vicinities.facing)
+
+		segmentIds
+	}
+	
+	/**
+	 * Get the IDs of segments which are in the vicinity of a turnout, including the turnout's ID as segment itself.
+	 */
+	def getTurnoutVicinitySegments(int turnoutId){
+		val segmentsInVicinity = newHashSet
+		val turnoutVicinity = layout.turnoutVicinities.get(String.valueOf(turnoutId))
+		val turnoutSegmentIds = getSegmentIdsOfTurnout(turnoutId)
+		
+		segmentsInVicinity.addAll(turnoutVicinity.straight)
+		segmentsInVicinity.addAll(turnoutVicinity.divergent)
+		segmentsInVicinity.addAll(turnoutVicinity.facing)
+		segmentsInVicinity.addAll(turnoutSegmentIds)
+		
+		segmentsInVicinity
 	}
 
 	private def <T> asUnmodifiableSet(Set<T> set) {

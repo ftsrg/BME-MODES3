@@ -30,9 +30,8 @@ class ExpanderConfigInterpreter {
 		logger = factory.getLogger(ExpanderConfigInterpreter.name)
 
 		try {
-			GsonLoader.loadTypeFromInputStream(ExpanderConfigInterpreter,
-				ExpanderConfigInterpreter.classLoader.getResourceAsStream("pinouts.json"))
-		} catch (Exception ex) {
+			GsonLoader.loadTypeFromInputStream(ExpanderConfigInterpreter, ExpanderConfigInterpreter.classLoader.getResourceAsStream("pinouts.json"))
+		} catch(Exception ex) {
 			logger.error(ex.message, ex)
 			throw ex
 		}
@@ -41,9 +40,9 @@ class ExpanderConfigInterpreter {
 	def String[] getHeaderPins(String headerName) {
 		val pins = headers.get(headerName.replaceAll("[HL]", ""))
 
-		if (headerName.endsWith('L')) {
+		if(headerName.endsWith('L')) {
 			#[pins.get(0), pins.get(2)]
-		} else if (headerName.endsWith('H')) {
+		} else if(headerName.endsWith('H')) {
 			#[pins.get(1), pins.get(3)]
 		} else {
 			pins

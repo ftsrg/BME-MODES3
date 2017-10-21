@@ -49,15 +49,13 @@ class Main extends Application {
 
 	private def static createArgumentRegistry(ILoggerFactory loggerFactory) {
 		val registry = new ArgumentRegistry(loggerFactory)
-		registry.registerArgumentWithOptions(
-			new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
-		registry.registerArgumentWithOptions(
-			new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
 		return registry
 	}
 
 	private def static createController() {
-		val topics = TopicFactory::createEveryTopic
+		val topics = TopicFactory::createEveryTopicExcept("cv")
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
 		val controller = new TouchboardController(loggerFactory)
 		val touchboardWrapper = new TouchboardBridge(controller, communicationStack, loggerFactory)
