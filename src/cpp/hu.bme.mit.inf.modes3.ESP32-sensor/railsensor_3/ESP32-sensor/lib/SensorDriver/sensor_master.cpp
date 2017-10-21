@@ -12,6 +12,7 @@ SensorDriver* driverStage[driverCount];
 const int priority=0;
 const int core=1;
 const int stackSize=8192;
+MQTT_JSON* mqttMaster;
 
 
 //send the collected data of a sensor driver to the server via MQTT
@@ -51,12 +52,13 @@ void startMeasurement(){
 void stopMeasurement(){
   for(int i=0;i<driverCount;i++){
     driverStage[i]->stop();
-    sensorDataSend(driverStage[i]);
+    mqttMaster->sensorDataSend(driverStage[i]);
     driverStage[i]->clear();
   }
 }
 
-void initalise(){
+void initalise(MQTT_JSON* param){
+  mqttMaster=param;
   //initalise the drivers
   driverStage[0]=&colorSensor;
   driverStage[1]=&gyroSensor;
