@@ -4,7 +4,4 @@
 !build.properties
 !.project
 !.settings
-!/src/main/vql-gen/**
-!/vql-gen/**
-!/src-gen/**
 **/*._trace

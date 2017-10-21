@@ -39,7 +39,6 @@
 **/.classpath
 **/org.eclipse.buildship.core.prefs
 **/bin
-**/xtend-gen
 **/subprojects/*/bin
 atlassian-ide-plugin.xml
 
