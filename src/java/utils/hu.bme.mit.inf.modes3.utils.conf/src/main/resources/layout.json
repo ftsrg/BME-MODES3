@@ -79,6 +79,38 @@
 			21
 		]
 	},
+	"turnoutVicinities": {
+		"1": {
+			"straight": [12],
+			"divergent": [11],
+			"facing": [15]
+		},
+		"2": {
+			"straight": [31],
+			"divergent": [30],
+			"facing": [29]
+		},
+		"3": {
+			"straight": [26, 19],
+			"divergent": [25, 32],
+			"facing": [20, 30]
+		},
+		"4": {
+			"straight": [4],
+			"divergent": [5],
+			"facing": [2]
+		},
+		"5": {
+			"straight": [11],
+			"divergent": [10],
+			"facing": [8]
+		},
+		"6": {
+			"straight": [23],
+			"divergent": [22],
+			"facing": [17]
+		}
+	},
 	"turnoutsResponsibilities": {
 		"1": [
 			12,
