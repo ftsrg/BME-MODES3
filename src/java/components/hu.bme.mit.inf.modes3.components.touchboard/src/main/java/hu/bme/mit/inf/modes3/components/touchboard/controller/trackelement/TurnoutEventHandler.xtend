@@ -15,19 +15,19 @@ class TurnoutEventHandler {
 	val ThreadSafeNode node
 
 	val ITouchboardBridge touchboardBridge
-	
+
 	new(ITouchboardBridge touchboardBridge, ThreadSafeNode node, ILoggerFactory loggerFactory) {
 		this.logger = loggerFactory.getLogger(this.class.name)
 		this.node = node
 		this.touchboardBridge = touchboardBridge
 	}
 
-	def setStraight() {
+	def synchronized setStraight() {
 		node.removeCssClass(DIVERGENT)
 		node.addCssClass(STRAIGHT)
 	}
 
-	def setDivergent() {
+	def synchronized setDivergent() {
 		node.removeCssClass(STRAIGHT)
 		node.addCssClass(DIVERGENT)
 	}
@@ -39,22 +39,10 @@ class TurnoutEventHandler {
 			val newState = getTurnoutOppositeState(state)
 
 			touchboardBridge.sendTurnoutCommandWithTurnoutId(turnoutId, newState)
-			updateTurnoutState(newState)
 
 			logger.info('''Turnout «turnoutId» is «newState»''')
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			logger.error(ex.message, ex)
-		}
-	}
-
-	private def void updateTurnoutState(TurnoutState newState) {
-		switch (newState) {
-			case STRAIGHT:
-				setStraight()
-			case DIVERGENT:
-				setDivergent()
-			case ILLEGAL: {
-			}
 		}
 	}
 

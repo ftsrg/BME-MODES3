@@ -1,12 +1,13 @@
 package hu.bme.mit.inf.modes3.utils.conf
 
-import hu.bme.mit.inf.modes3.components.util.gson.GsonLoader
+import hu.bme.mit.inf.modes3.utils.common.gson.GsonLoader
 import java.util.Collections
 import java.util.HashSet
 import java.util.Map
 import java.util.Set
-import java.util.stream.Collectors
 import org.eclipse.xtend.lib.annotations.Data
+
+import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensions.map
 
 class LocomotivesConfiguration {
 
@@ -52,9 +53,7 @@ class LocomotivesConfiguration {
 	}
 
 	private def lowercaseEveryTrainName() {
-		val lowercasedNames = locomotives.locomotiveIds.entrySet.stream.collect(Collectors.toMap([it.key.toLowerCase], [
-			it.value
-		]))
+		val lowercasedNames = locomotives.locomotiveIds.map([key, value|key.toLowerCase -> value])
 		locomotives.locomotiveIds.clear
 		locomotives.locomotiveIds.putAll(lowercasedNames)
 	}

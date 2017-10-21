@@ -13,6 +13,7 @@ generateManifestEntries=true
 generateSuppressWarnings=true
 generatedAnnotationComment=
 includeDateInGenerated=false
+org.eclipse.viatra.query.patternlanguage.emf.EMFPatternLanguage.useProjectSettings=true
 outlet.DEFAULT_OUTPUT.cleanDirectory=false
 outlet.DEFAULT_OUTPUT.cleanupDerived=true
 outlet.DEFAULT_OUTPUT.createDirectory=true

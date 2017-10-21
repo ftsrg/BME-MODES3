@@ -48,8 +48,8 @@ public abstract class TrainIsNotInStationMatch extends BasePatternMatch {
   public boolean set(final String parameterName, final Object newValue) {
     if (!isMutable()) throw new java.lang.UnsupportedOperationException();
     if ("t".equals(parameterName) ) {
-        this.fT = (Train) newValue;
-        return true;
+    	this.fT = (Train) newValue;
+    	return true;
     }
     return false;
   }
@@ -98,18 +98,18 @@ public abstract class TrainIsNotInStationMatch extends BasePatternMatch {
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
-        return true;
+    	return true;
     if (!(obj instanceof TrainIsNotInStationMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
-        if (!(obj instanceof IPatternMatch)) {
-            return false;
-        }
-        IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+    	if (obj == null) {
+    		return false;
+    	}
+    	if (!(obj instanceof IPatternMatch)) {
+    		return false;
+    	}
+    	IPatternMatch otherSig  = (IPatternMatch) obj;
+    	if (!specification().equals(otherSig.specification()))
+    		return false;
+    	return Arrays.deepEquals(toArray(), otherSig.toArray());
     }
     TrainIsNotInStationMatch other = (TrainIsNotInStationMatch) obj;
     if (fT == null) {if (other.fT != null) return false;}
@@ -120,10 +120,10 @@ public abstract class TrainIsNotInStationMatch extends BasePatternMatch {
   @Override
   public TrainIsNotInStationQuerySpecification specification() {
     try {
-        return TrainIsNotInStationQuerySpecification.instance();
+    	return TrainIsNotInStationQuerySpecification.instance();
     } catch (ViatraQueryException ex) {
-         // This cannot happen, as the match object can only be instantiated if the query specification exists
-         throw new IllegalStateException (ex);
+     	// This cannot happen, as the match object can only be instantiated if the query specification exists
+     	throw new IllegalStateException (ex);
     }
   }
   

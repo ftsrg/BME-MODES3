@@ -6,8 +6,8 @@ package hu.bme.mit.inf.safetylogic.patterns.util;
 import com.google.common.collect.Sets;
 import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatch;
 import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatcher;
-import hu.bme.mit.inf.safetylogic.patterns.internal.TrainDerailsOnNextTurnoutQuerySpecification;
-import hu.bme.mit.inf.safetylogic.patterns.internal.TrainDerailsOnTurnoutNextAfterNextQuerySpecification;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainDerailsOnNextTurnoutQuerySpecification;
+import hu.bme.mit.inf.safetylogic.patterns.util.TrainDerailsOnTurnoutNextAfterNextQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -49,9 +49,9 @@ public final class TrainTrailingTurnoutQuerySpecification extends BaseGeneratedE
    */
   public static TrainTrailingTurnoutQuerySpecification instance() throws ViatraQueryException {
     try{
-        return LazyHolder.INSTANCE;
+    	return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
-        throw processInitializerError(err);
+    	throw processInitializerError(err);
     }
   }
   
@@ -77,8 +77,8 @@ public final class TrainTrailingTurnoutQuerySpecification extends BaseGeneratedE
   
   /**
    * Inner class allowing the singleton instance of {@link TrainTrailingTurnoutQuerySpecification} to be created 
-   *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link TrainTrailingTurnoutQuerySpecification#instance()}.
+   * 	<b>not</b> at the class load time of the outer class, 
+   * 	but rather at the first call to {@link TrainTrailingTurnoutQuerySpecification#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -130,38 +130,38 @@ public final class TrainTrailingTurnoutQuerySpecification extends BaseGeneratedE
       setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
-          {
-              PBody body = new PBody(this);
-              PVariable var_Offender = body.getOrCreateVariableByName("Offender");
-              PVariable var_Victim = body.getOrCreateVariableByName("Victim");
-              new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-              new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-              body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-                 new ExportedParameter(body, var_Offender, parameter_pOffender),
-                 new ExportedParameter(body, var_Victim, parameter_pVictim)
-              ));
-              // 	find trainDerailsOnNextTurnout(Offender, Victim)
-              new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainDerailsOnNextTurnoutQuerySpecification.instance().getInternalQueryRepresentation());
-              bodies.add(body);
-          }
-          {
-              PBody body = new PBody(this);
-              PVariable var_Offender = body.getOrCreateVariableByName("Offender");
-              PVariable var_Victim = body.getOrCreateVariableByName("Victim");
-              new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-              new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-              body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-                 new ExportedParameter(body, var_Offender, parameter_pOffender),
-                 new ExportedParameter(body, var_Victim, parameter_pVictim)
-              ));
-              // 	find trainDerailsOnTurnoutNextAfterNext(Offender, Victim)
-              new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainDerailsOnTurnoutNextAfterNextQuerySpecification.instance().getInternalQueryRepresentation());
-              bodies.add(body);
-          }
-          // to silence compiler error
-          if (false) throw new ViatraQueryException("Never", "happens");
+      	{
+      		PBody body = new PBody(this);
+      		PVariable var_Offender = body.getOrCreateVariableByName("Offender");
+      		PVariable var_Victim = body.getOrCreateVariableByName("Victim");
+      		new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
+      		   new ExportedParameter(body, var_Offender, parameter_pOffender),
+      		   new ExportedParameter(body, var_Victim, parameter_pVictim)
+      		));
+      		// 	find trainDerailsOnNextTurnout(Offender, Victim)
+      		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainDerailsOnNextTurnoutQuerySpecification.instance().getInternalQueryRepresentation());
+      		bodies.add(body);
+      	}
+      	{
+      		PBody body = new PBody(this);
+      		PVariable var_Offender = body.getOrCreateVariableByName("Offender");
+      		PVariable var_Victim = body.getOrCreateVariableByName("Victim");
+      		new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+      		new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
+      		   new ExportedParameter(body, var_Offender, parameter_pOffender),
+      		   new ExportedParameter(body, var_Victim, parameter_pVictim)
+      		));
+      		// 	find trainDerailsOnTurnoutNextAfterNext(Offender, Victim)
+      		new PositivePatternCall(body, new FlatTuple(var_Offender, var_Victim), TrainDerailsOnTurnoutNextAfterNextQuerySpecification.instance().getInternalQueryRepresentation());
+      		bodies.add(body);
+      	}
+      	// to silence compiler error
+      	if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
-          throw processDependencyException(ex);
+      	throw processDependencyException(ex);
       }
       return bodies;
     }

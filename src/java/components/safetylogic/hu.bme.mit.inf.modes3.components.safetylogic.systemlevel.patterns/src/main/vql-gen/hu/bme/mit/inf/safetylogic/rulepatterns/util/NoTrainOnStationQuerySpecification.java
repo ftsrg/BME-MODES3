@@ -46,9 +46,9 @@ public final class NoTrainOnStationQuerySpecification extends BaseGeneratedEMFQu
    */
   public static NoTrainOnStationQuerySpecification instance() throws ViatraQueryException {
     try{
-        return LazyHolder.INSTANCE;
+    	return LazyHolder.INSTANCE;
     } catch (ExceptionInInitializerError err) {
-        throw processInitializerError(err);
+    	throw processInitializerError(err);
     }
   }
   
@@ -74,8 +74,8 @@ public final class NoTrainOnStationQuerySpecification extends BaseGeneratedEMFQu
   
   /**
    * Inner class allowing the singleton instance of {@link NoTrainOnStationQuerySpecification} to be created 
-   *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link NoTrainOnStationQuerySpecification#instance()}.
+   * 	<b>not</b> at the class load time of the outer class, 
+   * 	but rather at the first call to {@link NoTrainOnStationQuerySpecification#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -123,23 +123,23 @@ public final class NoTrainOnStationQuerySpecification extends BaseGeneratedEMFQu
       setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
-          {
-              PBody body = new PBody(this);
-              PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
-              body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
-              ));
-              // 	count find trainIsNotInStation(_) == 0
-              PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-              new PatternMatchCounter(body, new FlatTuple(var___0_), TrainIsNotInStationQuerySpecification.instance().getInternalQueryRepresentation(), var__virtual_0_);
-              PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-              new ConstantValue(body, var__virtual_1_, 0);
-              new Equality(body, var__virtual_0_, var__virtual_1_);
-              bodies.add(body);
-          }
-          // to silence compiler error
-          if (false) throw new ViatraQueryException("Never", "happens");
+      	{
+      		PBody body = new PBody(this);
+      		PVariable var___0_ = body.getOrCreateVariableByName("_<0>");
+      		body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
+      		));
+      		// 	count find trainIsNotInStation(_) == 0
+      		PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
+      		new PatternMatchCounter(body, new FlatTuple(var___0_), TrainIsNotInStationQuerySpecification.instance().getInternalQueryRepresentation(), var__virtual_0_);
+      		PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
+      		new ConstantValue(body, var__virtual_1_, 0);
+      		new Equality(body, var__virtual_0_, var__virtual_1_);
+      		bodies.add(body);
+      	}
+      	// to silence compiler error
+      	if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
-          throw processDependencyException(ex);
+      	throw processDependencyException(ex);
       }
       return bodies;
     }

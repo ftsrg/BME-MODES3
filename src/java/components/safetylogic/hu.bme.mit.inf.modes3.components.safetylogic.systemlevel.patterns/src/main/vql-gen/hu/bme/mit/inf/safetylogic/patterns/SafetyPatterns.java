@@ -14,15 +14,22 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPatternGroup;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
 
 /**
- * A pattern group formed of all public patterns defined in SafetyPatterns.vql.
+ * A pattern group formed of all patterns defined in SafetyPatterns.vql.
  * 
  * <p>Use the static instance as any {@link org.eclipse.viatra.query.runtime.api.IPatternGroup}, to conveniently prepare
  * a VIATRA Query engine for matching all patterns originally defined in file SafetyPatterns.vql,
  * in order to achieve better performance than one-by-one on-demand matcher initialization.
  * 
  * <p> From package hu.bme.mit.inf.safetylogic.patterns, the group contains the definition of the following patterns: <ul>
+ * <li>notNull</li>
  * <li>nextSection</li>
+ * <li>trainsAreTooClose</li>
+ * <li>trainHitsAnotherTrainNextAfterNext</li>
+ * <li>trainHitsAnotherTrainNextAfterNextAfterNext</li>
+ * <li>trainHitsAnotherTrainNext</li>
  * <li>trainHitsAnotherTrain</li>
+ * <li>trainDerailsOnNextTurnout</li>
+ * <li>trainDerailsOnTurnoutNextAfterNext</li>
  * <li>trainTrailingTurnout</li>
  * </ul>
  * 
@@ -40,7 +47,7 @@ public final class SafetyPatterns extends BaseGeneratedPatternGroup {
    */
   public static SafetyPatterns instance() throws ViatraQueryException {
     if (INSTANCE == null) {
-        INSTANCE = new SafetyPatterns();
+    	INSTANCE = new SafetyPatterns();
     }
     return INSTANCE;
   }
