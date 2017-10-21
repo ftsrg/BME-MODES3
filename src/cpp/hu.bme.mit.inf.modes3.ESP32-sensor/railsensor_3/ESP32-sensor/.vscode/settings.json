@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "functional": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "*.tcc": "cpp"
+    },
+    "arduino.path": "C:\\Program Files (x86)\\Arduino"
+}
