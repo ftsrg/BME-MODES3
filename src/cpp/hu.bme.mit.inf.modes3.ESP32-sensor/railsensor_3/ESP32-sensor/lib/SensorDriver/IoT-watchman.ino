@@ -1,19 +1,22 @@
-#include "force_driver.h"
+#include "sensor_master.h"
+//#include "gyro_driver.h"
 
-ForceDriver force;
+void ping(){
+  Serial.println("Ping!");
+}
+
 
 void setup() {
   Serial.begin(115200);
-  initaliseDriver(&force);
+  initalise();
 
 }
 
 void loop() {
-
-  force.start();
+  ping();
+  startMeasurement();
   vTaskDelay(5000);
-  force.stop();
-  Serial.println(force.generateOut());
-  vTaskDelay(5000);
+  ping();
+  stopMeasurement();
 
 }

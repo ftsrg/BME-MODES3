@@ -7,7 +7,7 @@
 
 #include <Arduino.h>
 
-double SecTime()
+inline double SecTime()
 {
   double ret = micros() / 1000000.0;
   return ret;

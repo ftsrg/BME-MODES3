@@ -15,20 +15,25 @@ void taskLoop(void* v_driver){
 
   SensorDriver* driver=(SensorDriver*) v_driver;
   
-  debugOut("call the init func of the driver..");
+  debugOut("call the init func of the driver...");
 
   //init the sensor
   driver->init();
 
+  debugOut("sensor driver successfully initalised...");
+
   while(1){
+    driver->lastTime=millis();
     if(driver->shouldRun){
       driver->isRunning=true;
-      driver->lastTime=millis();
       driver->update();
       driver->isRunning=false;
     }
     vTaskDelay(1);
   }
+
+  debugOut("something wrong here");
+  
 }
 
 bool SensorDriver::isAlive(){
@@ -47,7 +52,7 @@ void initaliseDriver(SensorDriver* driver){
   //convert the ID of the driver to string
   char stringID[25]="Sensor Driver Task: ----";
   int localID=driver->ID;
-  for(int i=24;i>=21;i--){
+  for(int i=23;i>=20;i--){
     stringID[i]=(char)('0'+localID%10);
     localID/=10;
   }
@@ -58,7 +63,7 @@ void initaliseDriver(SensorDriver* driver){
 
   //init and start the freeRTOS thread
   void* param=(void*) driver;
-  xTaskCreatePinnedToCore(taskLoop,stringID,5000,param,driver->priority,&(driver->handle),driver->core); 
+  xTaskCreatePinnedToCore(taskLoop,stringID,driver->stackSize,param,driver->priority,&(driver->handle),driver->core); 
  
   
 }
@@ -72,6 +77,8 @@ void SensorDriver::cancel(){
 SensorDriver::~SensorDriver(){
   debugOut("cancel the thread of the sensor driver...");
   cancel();
+  debugOut("free the allocated dinamic memory");
+  clear();
 }
 
 //restart the thread
@@ -82,6 +89,11 @@ void SensorDriver::restart(){
 }
 
 void SensorDriver::start(){
+  //restart the task if it is frozen
+  clear();
+  if(!isAlive()){
+    restart();
+  }
   debugOut("thread started...");
   shouldRun=true;
 }

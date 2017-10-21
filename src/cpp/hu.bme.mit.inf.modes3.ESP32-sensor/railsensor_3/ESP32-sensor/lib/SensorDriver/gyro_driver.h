@@ -20,7 +20,7 @@ typedef std::list<GyroData> GyroList;
 class GyroDriver : public SensorDriver{
   private:
     GyroList data;
-    const int ssPinGyro=16;
+    const int ssPinGyro=14;
   public:
     void init();
     void update();
