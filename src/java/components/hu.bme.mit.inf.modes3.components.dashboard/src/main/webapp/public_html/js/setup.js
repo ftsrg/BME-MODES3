@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-var stream_url = "https://www.youtube.com/embed/5o_uF1L5l6o";
-
 var segments = new Map();
 
 var turnouts = new Map();
