@@ -13,12 +13,10 @@ var locomotives = new Map();
 var segment_index = 0;
 
 function updateSegmentStateCallback(segmentState) {
-	console.log("segment state: ", segmentState);
     window.segments[segmentState.segmentID].setSegmentState(segmentState.state);
 }
 
 function updateTurnoutStateCallback(turnoutState) {
-	console.log("turnout state: ", turnoutState);
 	window.turnouts[turnoutState.turnoutID].setTurnoutState(turnoutState.state);
 }
 
@@ -48,13 +46,10 @@ function updateSegmentOccupancyCallback(segmentOccupancy) {
 }
 
 function updateTrainSpeedCallback(trainSpeed) {
-	console.log(trainSpeed);
 	var train = window.locomotives[trainSpeed.trainID];
 	
 	if( train !== undefined ) {
-		console.log(trainSpeed.currentSpeed);
 		var speed = trainSpeed.currentSpeed;
-		console.log(speed);
 		if( trainSpeed.direction !== "FORWARD" ) {
 			speed *= -1;
 		}
@@ -149,15 +144,12 @@ $(document).ready(function () {
     	
     	// 2. add all train with DOM
     	for(var i=9; i<20; ++i) {
-			
 			var locoObject = new Map(window.settings.locomotives).get(i);
-			console.log(locoObject);
 			
 			var urlstr= "background-image: url('/images/locomotives/";
 			var prev = locoObject.preview;
 			var res = urlstr.concat(prev);
 			var urlres = res.concat("')");
-			console.log(urlres);
 			
     		var div = $('<div />').addClass('train-list-item');
     		var header = $('<h3/>').text(locoObject.name);
@@ -226,13 +218,13 @@ $(document).ready(function () {
     // implement tabs
     var tabs = ["layout-tab", "devices-tab", "stream-tab"];
     for(var i in tabs) {
-    	console.log(tabs[i]);
     	$('#'+tabs[i]+"-header").bind('click', {tab: tabs[i]}, function (event) {
+    		
     		for(var k in tabs) {
     			$('#'+tabs[k]).removeClass('active');
     			$('#'+tabs[k]+"-header").removeClass('active');
     		}
-    		console.log(event.data.tab);
+    		
 			$('#'+event.data.tab).addClass('active');
 			$('#'+event.data.tab+"-header").addClass('active');
     	});
@@ -247,8 +239,6 @@ $(document).ready(function () {
     // sending all state request one time
     var allStateWS = new WSConnection("allstate", "");
     allStateWS.request.onOpen = function(response) {
-		console.log("Connection opened: " + response.request.uuid);
-    	
 		// send message immediately
 		this.wsconnection.publish({});
     };

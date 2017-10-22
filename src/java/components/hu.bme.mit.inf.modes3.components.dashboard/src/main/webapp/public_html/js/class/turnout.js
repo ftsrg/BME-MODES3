@@ -130,7 +130,6 @@ TurnoutController.prototype.DOMUpdatedCallback = function() {
         // and set the group on the segment
         var position = getCoordinatesOfSegment(branch, 0.5);
         
-        console.log(branch, position);
         var x = position[0] - this.svgElemPosition.attr('cx');
         var y = position[1] - this.svgElemPosition.attr('cy');
         

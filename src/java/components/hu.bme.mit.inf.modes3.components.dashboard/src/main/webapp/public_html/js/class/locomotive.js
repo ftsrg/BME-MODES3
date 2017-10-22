@@ -153,7 +153,6 @@ LocomotiveController.prototype.DOMUpdatedCallback = function() {
 	this.svgElemPosition = this.svgElemGroup.find('#position');
 
 	var bg = $(this.svgElemGroup).find("#bg-" + this.config.svgGroup);
-	console.log('background', bg);
 
 	// im not sure why I should do this, but in that way the background
 	// will fill the whole textual area

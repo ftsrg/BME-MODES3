@@ -1,7 +1,9 @@
 package hu.bme.mit.inf.modes3.components.dashboard.main;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.atmosphere.container.Jetty9AsyncSupportWithWebSocket;
 import org.atmosphere.cpr.ApplicationConfig;
@@ -66,7 +68,7 @@ public class DashboardManager {
 	}
 
 	public void initialize() throws IOException {
-		Set<String> topics = TopicFactory.createEveryTopic();
+		Set<String> topics = createTopics(true);
 		trackMessagingService = MessagingServiceFactory.createStackForTopics(registry, loggerFactory, topics);
 		locator = new TrackCommunicationServiceLocator(trackMessagingService, loggerFactory);
 
@@ -128,5 +130,13 @@ public class DashboardManager {
 
 	public SensorsJsonDispatcher getSensorsDispatcher() {
 		return sensorsDispatcher;
+	}
+
+	private Set<String> createTopics(boolean useCVInsteadOfTraditionalOccupancies) {
+		if (useCVInsteadOfTraditionalOccupancies) {
+			return TopicFactory.createEveryTopicExcept("occupancy");
+		} else {
+			return TopicFactory.createEveryTopicExcept("cv");
+		}
 	}
 }
