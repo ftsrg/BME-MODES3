@@ -43,7 +43,7 @@ public class CommandService {
 
 	@Inject
 	ITrackElementCommander commander;
-	
+
 	@Inject
 	ITrainCommander trainCommander;
 
@@ -81,7 +81,7 @@ public class CommandService {
 				break;
 			}
 		} catch (InvalidProtocolBufferException e) {
-			DashboardManager.INSTANCE.getLogger().error("Unable to parse message: " + message);
+			logger.error("Unable to parse message: " + message);
 			e.printStackTrace();
 		}
 	}

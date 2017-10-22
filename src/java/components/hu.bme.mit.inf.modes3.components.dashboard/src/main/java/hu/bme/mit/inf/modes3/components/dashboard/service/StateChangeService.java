@@ -1,6 +1,5 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,6 +11,9 @@ import org.atmosphere.config.service.Singleton;
 import org.atmosphere.cpr.MetaBroadcaster;
 import org.slf4j.Logger;
 
+import hu.bme.mit.inf.modes3.components.dashboard.comm.json.LengthSensorMessage;
+import hu.bme.mit.inf.modes3.components.dashboard.comm.json.SpeedSensorMessage;
+import hu.bme.mit.inf.modes3.components.dashboard.comm.json.TrainSensorMessage;
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
 import hu.bme.mit.inf.modes3.components.dashboard.utils.Utils;
 import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.ComputerVisionInformation;
@@ -31,7 +33,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		ISegmentStateChangeListener, ITrainReferenceSpeedListener, IComputerVisionListener {
 
 	Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger(StateChangeService.class.getName());
-	
+
 	List<String> locomotives = Arrays.asList("Taurus", "BR294", "SNCF");
 
 	@Inject
@@ -46,6 +48,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setTurnoutStateChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrainSpeedStateRegistry().addTrainReferenceSpeedListener(this);
 		DashboardManager.INSTANCE.getLocator().getComputerVisionCallback().setComputerVisionListener(this);
+		DashboardManager.INSTANCE.getSensorsDispatcher().setStateChangeService(this);
 	}
 
 	@Override
@@ -71,12 +74,24 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	@Override
 	public void onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp,
 			long frameindex) {
-	
-		for(ComputerVisionInformation cvInfo: information) {
-			if( locomotives.contains(cvInfo.getName()) ) {
+
+		for (ComputerVisionInformation cvInfo : information) {
+			if (locomotives.contains(cvInfo.getName())) {
 				Utils.sendComputerVisionState(metaBroadcaster, cvInfo);
 			}
 		}
+	}
+
+	public void onSpeedSensorMessage(SpeedSensorMessage message) {
+		Utils.sendSpeedSensorMessage(metaBroadcaster, message);
+	}
+
+	public void onLengthSensorMessage(LengthSensorMessage message) {
+		Utils.sendLengthSensorMessage(metaBroadcaster, message);
+	}
+
+	public void onTrainSensorMessage(TrainSensorMessage message) {
+		Utils.sendTrainSensorMessage(metaBroadcaster, message);
 	}
 
 }
