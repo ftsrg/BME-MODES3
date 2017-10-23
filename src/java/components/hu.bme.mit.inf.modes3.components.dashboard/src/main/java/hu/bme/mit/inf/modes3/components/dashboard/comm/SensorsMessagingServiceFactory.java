@@ -25,6 +25,7 @@ public class SensorsMessagingServiceFactory {
 		Integer port = registry.getParameterIntegerValue("port");
 
 		return new TopicBasedTransportConfiguration(id, address, port, topic);
+		
 	}
 
 }

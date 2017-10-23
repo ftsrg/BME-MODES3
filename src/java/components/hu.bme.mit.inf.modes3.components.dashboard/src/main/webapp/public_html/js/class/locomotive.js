@@ -37,11 +37,11 @@ function LocomotiveController(locomotiveConfig, controller) {
 		y : 0
 	}).append($('<tspan />').text(this.config.name));
 	this.svgSpeedText = $('<text />').attr({
-		id : "title",
+		id : "speed",
 		style : window.settings.locomotiveSpeedTextStyle,
 		x : 120,
 		y : 120
-	}).append($('<tspan />').text('0.00 m/s'));
+	}).append($('<tspan />').text('speed: n/a'));
 	//	
 	// adding background to all of these
 	var background = $('<rect />').attr({
@@ -84,6 +84,15 @@ LocomotiveController.prototype.positionInformationReceived = function(info) {
 		this.svgElemPosition.attr('style', window.settings.locomotiveNotTrackedCircleStyle);
 	}
 };
+
+LocomotiveController.prototype.showSensorSpeed = function(speedInfo) {
+	
+	// sanity check for speed info
+	if( speedInfo > 0.0 && speedInfo < 100.0 ) {
+		this.svgSpeedText.find('tspan').text("speed: "+speedInfo.toFixed(2)+" cm/s");
+	}
+	
+}
 
 LocomotiveController.prototype.pushSpeed = function(speed) {
 	if (speed < 0) {
@@ -151,6 +160,7 @@ LocomotiveController.prototype.DOMUpdatedCallback = function() {
 	this.svgElemGroup = $('#layout').find("#" + this.config.svgGroup);
 	this.svgTitle = this.svgElemGroup.find("#title");
 	this.svgElemPosition = this.svgElemGroup.find('#position');
+	this.svgSpeedText = this.svgElemGroup.find('#speed');
 
 	var bg = $(this.svgElemGroup).find("#bg-" + this.config.svgGroup);
 

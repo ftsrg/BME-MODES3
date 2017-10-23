@@ -123,6 +123,7 @@ public class DashboardManager {
 
 	public SimpleLoggerFactory getLoggerFactory() {
 		return loggerFactory;
+		
 	}
 
 	public TrackCommunicationServiceLocator getLocator() {

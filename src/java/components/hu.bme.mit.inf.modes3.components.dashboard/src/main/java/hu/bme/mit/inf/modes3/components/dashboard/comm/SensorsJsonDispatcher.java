@@ -24,6 +24,7 @@ public class SensorsJsonDispatcher extends AbstractMessageDispatcher {
 	}
 
 	public void setStateChangeService(StateChangeService stateChangeService) {
+		logger.info("Setting stateChangeListener");
 		this.stateChangeService = stateChangeService;
 	}
 
@@ -41,21 +42,34 @@ public class SensorsJsonDispatcher extends AbstractMessageDispatcher {
 			switch (type) {
 			case "Speed":
 				SpeedSensorMessage speedMessage = new Gson().fromJson(json, SpeedSensorMessage.class);
-				stateChangeService.onSpeedSensorMessage(speedMessage);
+				if( stateChangeService != null ) {
+					stateChangeService.onSpeedSensorMessage(speedMessage);
+				} else {
+					logger.warn("StateChangeService was not setted for SensorsJsonDispatcher!");
+				}
+				
 				break;
 			case "Length":
 				LengthSensorMessage lengthMessage = new Gson().fromJson(json, LengthSensorMessage.class);
-				stateChangeService.onLengthSensorMessage(lengthMessage);
+				if( stateChangeService != null ) {
+					stateChangeService.onLengthSensorMessage(lengthMessage);
+				} else {
+					logger.warn("StateChangeService was not setted for SensorsJsonDispatcher!");
+				}
 				break;
 			case "Train":
 				TrainSensorMessage trainMessage = new Gson().fromJson(json, TrainSensorMessage.class);
-				stateChangeService.onTrainSensorMessage(trainMessage);
+				if( stateChangeService != null ) {
+					stateChangeService.onTrainSensorMessage(trainMessage);
+				} else {
+					logger.warn("StateChangeService was not setted for SensorsJsonDispatcher!");
+				}
 				break;
 			default:
-				logger.error("No suitable message type is found for %s%n", type);
+				logger.error("No suitable message type is found for %s\n", type);
 			}
 		} catch (Exception ex) {
-			logger.error("Unable to deserialize json message (%s). Problem is %s %n", json, ex.getMessage());
+			logger.error(String.format("Unable to deserialize json message (%s). Problem is %s \n", json, ex.getClass().getName()));
 		}
 
 	}

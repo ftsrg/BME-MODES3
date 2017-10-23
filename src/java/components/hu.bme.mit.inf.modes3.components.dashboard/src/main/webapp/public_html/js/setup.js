@@ -57,20 +57,13 @@ function updateTrainSpeedCallback(trainSpeed) {
 	}
 }
 
-function updateTrainPositionCallback(trainPosition) {
-	
-	if( window.locomotives[trainPosition.name] == undefined ) {
-	
-		if( trainPosition.realposition.x == 0 
-				&& trainPosition.realposition.y == 0 
-				&& !trainPosition.tracked[0] ) {
-			return;
-		}
+function getOrCreateTrainByName(trainName) {
+	if( window.locomotives[trainName] == undefined ) {
 		
 		// search for configuration, if it found, push it into the registry
 		var config = new Map(window.settings.locomotives).forEach(function(value, key, map) {
-			if(key == trainPosition.name) {
-				window.locomotives[trainPosition.name] = new LocomotiveController(value, trainController);
+			if(key == trainName) {
+				window.locomotives[trainName] = new LocomotiveController(value, trainController);
 				// must update DOM twice to enable background too
 				updateDOM();
 				updateDOM();
@@ -78,9 +71,25 @@ function updateTrainPositionCallback(trainPosition) {
 		});
 	}
 	
+	return window.locomotives[trainName];
+}
+
+function updateTrainPositionCallback(trainPosition) {
 	
-	// from here train must be in the registry, no need for check
-	var train = window.locomotives[trainPosition.name].positionInformationReceived(trainPosition);
+	// if we getting zero values and notracking information, halt anything
+	if( trainPosition.realposition.x == 0 
+			&& trainPosition.realposition.y == 0 
+			&& !trainPosition.tracked[0] ) {
+		return;
+	}
+	
+	var train = getOrCreateTrainByName(trainPosition.name);
+	train.positionInformationReceived(trainPosition);
+}
+
+function sensorStateReceivedCallback(sensorState) {
+	var train = getOrCreateTrainByName(sensorState.locomotiveName);
+	train.showSensorSpeed(sensorState.speed);
 }
 
 // this must be moved to the global scope to use in position updater callback
@@ -99,6 +108,8 @@ $(document).ready(function () {
     var segmentOccupancyUpdater = new SegmentOccupancyUpdater(updateSegmentOccupancyCallback);
     var trainSpeedStateUpdater = new TrainSpeedStateUpdater(updateTrainSpeedCallback);
     var trainPositionUpdater = new TrainPositionUpdater(updateTrainPositionCallback);
+    
+    var sensorStateReceiver = new SensorStateReceiver(sensorStateReceivedCallback);
     
     // setup every segment objects
     new Map(window.settings.segments).forEach(function (value, key, map) {
@@ -229,12 +240,6 @@ $(document).ready(function () {
 			$('#'+event.data.tab+"-header").addClass('active');
     	});
     }
-    
-    // iframe in stream have the width of the parent
-    $("#stream-tab").find('iframe')
-    .attr('width', $("#stream-tab").width()+20)
-    .attr('height', $("#stream-tab").height()-40)
-    .attr('src', stream_url);
     
     // sending all state request one time
     var allStateWS = new WSConnection("allstate", "");

@@ -11,10 +11,13 @@ import org.atmosphere.config.service.Singleton;
 import org.atmosphere.cpr.MetaBroadcaster;
 import org.slf4j.Logger;
 
+import com.google.gson.Gson;
+
 import hu.bme.mit.inf.modes3.components.dashboard.comm.json.LengthSensorMessage;
 import hu.bme.mit.inf.modes3.components.dashboard.comm.json.SpeedSensorMessage;
 import hu.bme.mit.inf.modes3.components.dashboard.comm.json.TrainSensorMessage;
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
+import hu.bme.mit.inf.modes3.components.dashboard.utils.SensorDataMessage;
 import hu.bme.mit.inf.modes3.components.dashboard.utils.Utils;
 import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.ComputerVisionInformation;
 import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionListener;
@@ -27,6 +30,8 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;
 
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SENSOR_STATE;
+
 @Singleton
 @ManagedService(path = "/ws/state/{source}")
 public class StateChangeService implements ISegmentOccupancyChangeListener, ITurnoutStateChangeListener,
@@ -35,6 +40,12 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger(StateChangeService.class.getName());
 
 	List<String> locomotives = Arrays.asList("Taurus", "BR294", "SNCF");
+
+	// two speed value, length and train comes on sensors' channel. Thus, we have to
+	// wait all of these to be able to send normal message to the dashboard
+	private SensorDataMessage sensorDataMessage = new SensorDataMessage();
+
+	private String sensorDataSender;
 
 	@Inject
 	protected MetaBroadcaster metaBroadcaster;
@@ -83,15 +94,56 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	}
 
 	public void onSpeedSensorMessage(SpeedSensorMessage message) {
-		Utils.sendSpeedSensorMessage(metaBroadcaster, message);
+
+		// yeah, i'm in aware of the fact that this solution will only work with one
+		// sensor, but hey, I'm trying my best here.
+		if (!message.getSender().equals(sensorDataSender)) {
+			// starting a new circle
+			sensorDataSender = message.getSender();
+			sensorDataMessage.reset();
+		}
+		sensorDataMessage.setSpeed(message.getSpeed());
+
+		if (sensorDataMessage.isObjectReady()) {
+			String jsonMessage = new Gson().toJson(sensorDataMessage);
+			metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+		}
+
 	}
 
 	public void onLengthSensorMessage(LengthSensorMessage message) {
-		Utils.sendLengthSensorMessage(metaBroadcaster, message);
+
+		// yeah, i'm in aware of the fact that this solution will only work with one
+		// sensor, but hey, I'm trying my best here.
+		if (!message.getSender().equals(sensorDataSender)) {
+			// starting a new circle
+			sensorDataSender = message.getSender();
+			sensorDataMessage.reset();
+		}
+		sensorDataMessage.setLength(message.getLength());
+
+		if (sensorDataMessage.isObjectReady()) {
+			String jsonMessage = new Gson().toJson(sensorDataMessage);
+			metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+		}
+
 	}
 
 	public void onTrainSensorMessage(TrainSensorMessage message) {
-		Utils.sendTrainSensorMessage(metaBroadcaster, message);
+
+		// yeah, i'm in aware of the fact that this solution will only work with one
+		// sensor, but hey, I'm trying my best here.
+		if (!message.getSender().equals(sensorDataSender)) {
+			// starting a new circle
+			sensorDataSender = message.getSender();
+			sensorDataMessage.reset();
+		}
+		sensorDataMessage.setLocomotiveName(message.getTrain());
+
+		if (sensorDataMessage.isObjectReady()) {
+			String jsonMessage = new Gson().toJson(sensorDataMessage);
+			metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+		}
 	}
 
 }
