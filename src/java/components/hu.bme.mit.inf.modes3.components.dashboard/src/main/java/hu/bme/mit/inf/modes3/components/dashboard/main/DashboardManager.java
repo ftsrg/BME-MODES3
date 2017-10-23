@@ -75,6 +75,7 @@ public class DashboardManager {
 		String sensorsTopic = "/modes3/data";
 		sensorsMessagingService = SensorsMessagingServiceFactory.createMQTTStackWithJSON(registry, loggerFactory,
 				sensorsTopic);
+		sensorsMessagingService.start();
 		sensorsDispatcher = (SensorsJsonDispatcher) sensorsMessagingService.getDispatcher();
 	}
 
@@ -134,9 +135,9 @@ public class DashboardManager {
 
 	private Set<String> createTopics(boolean useCVInsteadOfTraditionalOccupancies) {
 		if (useCVInsteadOfTraditionalOccupancies) {
-			return TopicFactory.createEveryTopicExcept("occupancy");
+			return TopicFactory.createEveryTopicExcept("occupancy", "barrier/gate");
 		} else {
-			return TopicFactory.createEveryTopicExcept("cv");
+			return TopicFactory.createEveryTopicExcept("cv", "barrier/gate");
 		}
 	}
 }
