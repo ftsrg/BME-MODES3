@@ -1,6 +1,9 @@
 package hu.bme.mit.inf.modes3.components.dashboard.main;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.atmosphere.container.Jetty9AsyncSupportWithWebSocket;
 import org.atmosphere.cpr.ApplicationConfig;
@@ -18,6 +21,8 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLoggerFactory;
 
+import hu.bme.mit.inf.modes3.components.dashboard.comm.SensorsJsonDispatcher;
+import hu.bme.mit.inf.modes3.components.dashboard.comm.SensorsMessagingServiceFactory;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory;
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator;
@@ -27,6 +32,8 @@ import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry;
 
 public class DashboardManager {
 
+	public static final DashboardManager INSTANCE = new DashboardManager();
+
 	private Server server;
 
 	private static SimpleLoggerFactory loggerFactory;
@@ -34,11 +41,11 @@ public class DashboardManager {
 
 	private ArgumentRegistry registry;
 
-	private MessagingService messagingService;
-
+	private MessagingService trackMessagingService;
 	private TrackCommunicationServiceLocator locator;
 
-	public static final DashboardManager INSTANCE = new DashboardManager();
+	private MessagingService sensorsMessagingService;
+	private SensorsJsonDispatcher sensorsDispatcher;
 
 	private DashboardManager() {
 		server = new Server();
@@ -50,9 +57,8 @@ public class DashboardManager {
 
 		INSTANCE.parseArguments(args);
 
-		INSTANCE.initialize();
-
 		try {
+			INSTANCE.initialize();
 			INSTANCE.startJetty();
 		} catch (Exception e) {
 			logger.error(e.getMessage());
@@ -61,11 +67,16 @@ public class DashboardManager {
 		}
 	}
 
-	public void initialize() {
-		Set<String> topics = TopicFactory.createEveryTopic();
-		messagingService = MessagingServiceFactory.createStackForTopics(registry, loggerFactory, topics);
-		locator = new TrackCommunicationServiceLocator(messagingService, loggerFactory);
-		locator.getTrackElementCommander().sendAllStatusCommand();
+	public void initialize() throws IOException {
+		Set<String> topics = createTopics(true);
+		trackMessagingService = MessagingServiceFactory.createStackForTopics(registry, loggerFactory, topics);
+		locator = new TrackCommunicationServiceLocator(trackMessagingService, loggerFactory);
+
+		String sensorsTopic = "/modes3/data";
+		sensorsMessagingService = SensorsMessagingServiceFactory.createMQTTStackWithJSON(registry, loggerFactory,
+				sensorsTopic);
+		sensorsMessagingService.start();
+		sensorsDispatcher = (SensorsJsonDispatcher) sensorsMessagingService.getDispatcher();
 	}
 
 	public void parseArguments(String[] args) {
@@ -91,12 +102,10 @@ public class DashboardManager {
 		atmosphereServletHolder.setInitParameter(ApplicationConfig.WEBSOCKET_CONTENT_TYPE, "application/json");
 		atmosphereServletHolder.setInitParameter(ApplicationConfig.PROPERTY_COMET_SUPPORT,
 				Jetty9AsyncSupportWithWebSocket.class.getName());
-
 		atmosphereServletHolder.setAsyncSupported(true);
 
 		ServletContextHandler servletContextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		servletContextHandler.setContextPath("/");
-
 		servletContextHandler.addServlet(atmosphereServletHolder, "/ws/*");
 
 		ResourceHandler cpr = new ResourceHandler();
@@ -112,19 +121,24 @@ public class DashboardManager {
 		server.join();
 	}
 
-	public MessagingService getMessagingService() {
-		return messagingService;
-	}
-
 	public SimpleLoggerFactory getLoggerFactory() {
 		return loggerFactory;
-	}
-
-	public Logger getLogger() {
-		return logger;
+		
 	}
 
 	public TrackCommunicationServiceLocator getLocator() {
 		return locator;
+	}
+
+	public SensorsJsonDispatcher getSensorsDispatcher() {
+		return sensorsDispatcher;
+	}
+
+	private Set<String> createTopics(boolean useCVInsteadOfTraditionalOccupancies) {
+		if (useCVInsteadOfTraditionalOccupancies) {
+			return TopicFactory.createEveryTopicExcept("occupancy", "barrier/gate");
+		} else {
+			return TopicFactory.createEveryTopicExcept("cv", "barrier/gate");
+		}
 	}
 }

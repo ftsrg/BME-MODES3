@@ -13,12 +13,10 @@ var locomotives = new Map();
 var segment_index = 0;
 
 function updateSegmentStateCallback(segmentState) {
-	console.log("segment state: ", segmentState);
     window.segments[segmentState.segmentID].setSegmentState(segmentState.state);
 }
 
 function updateTurnoutStateCallback(turnoutState) {
-	console.log("turnout state: ", turnoutState);
 	window.turnouts[turnoutState.turnoutID].setTurnoutState(turnoutState.state);
 }
 
@@ -48,13 +46,10 @@ function updateSegmentOccupancyCallback(segmentOccupancy) {
 }
 
 function updateTrainSpeedCallback(trainSpeed) {
-	console.log(trainSpeed);
 	var train = window.locomotives[trainSpeed.trainID];
 	
 	if( train !== undefined ) {
-		console.log(trainSpeed.currentSpeed);
 		var speed = trainSpeed.currentSpeed;
-		console.log(speed);
 		if( trainSpeed.direction !== "FORWARD" ) {
 			speed *= -1;
 		}
@@ -62,20 +57,13 @@ function updateTrainSpeedCallback(trainSpeed) {
 	}
 }
 
-function updateTrainPositionCallback(trainPosition) {
-	
-	if( window.locomotives[trainPosition.name] == undefined ) {
-	
-		if( trainPosition.realposition.x == 0 
-				&& trainPosition.realposition.y == 0 
-				&& !trainPosition.tracked[0] ) {
-			return;
-		}
+function getOrCreateTrainByName(trainName) {
+	if( window.locomotives[trainName] == undefined ) {
 		
 		// search for configuration, if it found, push it into the registry
 		var config = new Map(window.settings.locomotives).forEach(function(value, key, map) {
-			if(key == trainPosition.name) {
-				window.locomotives[trainPosition.name] = new LocomotiveController(value, trainController);
+			if(key == trainName) {
+				window.locomotives[trainName] = new LocomotiveController(value, trainController);
 				// must update DOM twice to enable background too
 				updateDOM();
 				updateDOM();
@@ -83,9 +71,25 @@ function updateTrainPositionCallback(trainPosition) {
 		});
 	}
 	
+	return window.locomotives[trainName];
+}
+
+function updateTrainPositionCallback(trainPosition) {
 	
-	// from here train must be in the registry, no need for check
-	var train = window.locomotives[trainPosition.name].positionInformationReceived(trainPosition);
+	// if we getting zero values and notracking information, halt anything
+	if( trainPosition.realposition.x == 0 
+			&& trainPosition.realposition.y == 0 
+			&& !trainPosition.tracked[0] ) {
+		return;
+	}
+	
+	var train = getOrCreateTrainByName(trainPosition.name);
+	train.positionInformationReceived(trainPosition);
+}
+
+function sensorStateReceivedCallback(sensorState) {
+	var train = getOrCreateTrainByName(sensorState.locomotiveName);
+	train.showSensorSpeed(sensorState.speed);
 }
 
 // this must be moved to the global scope to use in position updater callback
@@ -104,6 +108,8 @@ $(document).ready(function () {
     var segmentOccupancyUpdater = new SegmentOccupancyUpdater(updateSegmentOccupancyCallback);
     var trainSpeedStateUpdater = new TrainSpeedStateUpdater(updateTrainSpeedCallback);
     var trainPositionUpdater = new TrainPositionUpdater(updateTrainPositionCallback);
+    
+    var sensorStateReceiver = new SensorStateReceiver(sensorStateReceivedCallback);
     
     // setup every segment objects
     new Map(window.settings.segments).forEach(function (value, key, map) {
@@ -149,15 +155,12 @@ $(document).ready(function () {
     	
     	// 2. add all train with DOM
     	for(var i=9; i<20; ++i) {
-			
 			var locoObject = new Map(window.settings.locomotives).get(i);
-			console.log(locoObject);
 			
 			var urlstr= "background-image: url('/images/locomotives/";
 			var prev = locoObject.preview;
 			var res = urlstr.concat(prev);
 			var urlres = res.concat("')");
-			console.log(urlres);
 			
     		var div = $('<div />').addClass('train-list-item');
     		var header = $('<h3/>').text(locoObject.name);
@@ -226,29 +229,21 @@ $(document).ready(function () {
     // implement tabs
     var tabs = ["layout-tab", "devices-tab", "stream-tab"];
     for(var i in tabs) {
-    	console.log(tabs[i]);
     	$('#'+tabs[i]+"-header").bind('click', {tab: tabs[i]}, function (event) {
+    		
     		for(var k in tabs) {
     			$('#'+tabs[k]).removeClass('active');
     			$('#'+tabs[k]+"-header").removeClass('active');
     		}
-    		console.log(event.data.tab);
+    		
 			$('#'+event.data.tab).addClass('active');
 			$('#'+event.data.tab+"-header").addClass('active');
     	});
     }
     
-    // iframe in stream have the width of the parent
-    $("#stream-tab").find('iframe')
-    .attr('width', $("#stream-tab").width()+20)
-    .attr('height', $("#stream-tab").height()-40)
-    .attr('src', stream_url);
-    
     // sending all state request one time
     var allStateWS = new WSConnection("allstate", "");
     allStateWS.request.onOpen = function(response) {
-		console.log("Connection opened: " + response.request.uuid);
-    	
 		// send message immediately
 		this.wsconnection.publish({});
     };

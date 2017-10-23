@@ -10,6 +10,8 @@ var TRAINPOSITION_STATE = "trainpositionstate";
 var STATE = "state";
 var COMMAND = "command";
 
+var SENSOR_STATE = "sensorstate";
+
 
 // controller weben control -> hálózat
 
@@ -79,4 +81,11 @@ function TrainPositionUpdater(callback) {
 	var tuws = new WSConnection(STATE, TRAINPOSITION_STATE);
 	tuws.connect();
 	tuws.onMessageArrived = callback;
+}
+
+function SensorStateReceiver(callback) {
+	
+	var suws = new WSConnection(STATE, SENSOR_STATE);
+	suws.connect();
+	suws.onMessageArrived = callback;
 }

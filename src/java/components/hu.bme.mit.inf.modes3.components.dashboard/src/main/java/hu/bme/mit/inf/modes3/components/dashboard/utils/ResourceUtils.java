@@ -9,4 +9,6 @@ public class ResourceUtils {
 	public final static String TRAINPOSITION_STATE = "trainpositionstate";
 	public final static String ALL_STATE = "allstate";
 	
+	public final static String SENSOR_STATE = "sensorstate";
+	
 }
