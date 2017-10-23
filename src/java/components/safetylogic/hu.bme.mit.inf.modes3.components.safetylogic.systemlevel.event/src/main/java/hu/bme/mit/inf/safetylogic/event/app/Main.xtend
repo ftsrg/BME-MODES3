@@ -27,8 +27,9 @@ class Main {
 
 		val topics = TopicFactory::createEveryTopic
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
-
-		val safetyLogic = new SafetyLogic(loggerFactory, true, true)
+		
+											//Logger   , initializeRailRoad, and useCV
+		val safetyLogic = new SafetyLogic(loggerFactory, true,                   false)
 		val slWrapper = new SafetyLogicBridge(safetyLogic, communicationStack, loggerFactory)
 		slWrapper.run // The component will run on this thread
 	}

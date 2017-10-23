@@ -31,6 +31,10 @@ class LocomotivesConfiguration {
 		val lowercased = if(name.isNullOrEmpty) name else name.toLowerCase
 		locomotives.locomotiveIds.get(lowercased)
 	}
+	
+	def getLocomotiveNameById(int id){
+		locomotives.locomotiveIds.entrySet.findFirst[entry | entry.value === id].key
+	}
 
 	def getLocomotiveNames() {
 		asUnmodifiableSet(locomotives.locomotiveIds.keySet)

@@ -69,9 +69,11 @@ class ModelUtil implements IModelInteractor {
 	}
 
 	def private getNewTrainID() {
-		for (trainID : trainNameMapping.values) {
-			if(model.trains.findFirst[it.id == trainID] === null) return trainID
+		val nextTrainId = trainNameMapping.values.findFirst[potentialId| !model.trains.map[id].contains(potentialId)] 
+		if(nextTrainId !== null){
+			return nextTrainId
 		}
+		
 		logger.error("There can't be this much trains on the track")
 		model.trains.clear
 		throw new RuntimeException("There can't be this much trains on the track")

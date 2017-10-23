@@ -83,16 +83,17 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 					logger.info('''New train estimated on «changedSegment.id». The new train's ID is «train.id»''')
 					return
 				}
-
-			} else { // There is an enabled or disabled train nearby
-				if (changedSegment instanceof Turnout) { // If we move on a turnout
-					val next = nextSegment(train.currentlyOn, changedSegment) // We skip the turnout as a railroadelement, as the train can not be stopped on it
-					logger.info('''Train arrived on turnout «changedSegment.id» so it is moved to «next.id»''')
-					train.previouslyOn = changedSegment
-					train.currentlyOn = next
-					return
-				}
 			}
+			
+			  
+			if (changedSegment instanceof Turnout) { // If we move on a turnout
+				val next = nextSegment(train.currentlyOn, changedSegment) // We skip the turnout as a railroadelement, as the train can not be stopped on it
+				logger.info('''Train arrived on turnout «changedSegment.id» so it is moved to «next.id»''')
+				train.previouslyOn = changedSegment
+				train.currentlyOn = next
+				return
+			}
+			
 			logger.info('''Train moved from «train.currentlyOn.id» to «changedSegment.id»''')
 			train.previouslyOn = train.currentlyOn // Set the previous on the model
 			train.currentlyOn = changedSegment // And update the train position

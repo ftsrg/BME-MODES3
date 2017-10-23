@@ -3,12 +3,11 @@ package hu.bme.mit.inf.safetylogic.event.sl
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
-import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusListener
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
-import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
 import hu.bme.mit.inf.safetylogic.event.ComputerVisionTrainMovementEstimator
 import hu.bme.mit.inf.safetylogic.event.IModelInteractor
 import hu.bme.mit.inf.safetylogic.event.INotifiable
@@ -32,25 +31,25 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 	val boolean initializeRailRoad
 	val boolean useComputerVision
 
-	@Accessors(PUBLIC_GETTER) protected IModelInteractor model val ILoggerFactory factory
+	@Accessors(PUBLIC_GETTER) protected IModelInteractor model
+	val ILoggerFactory factory
 	val Logger logger
 
 	static val turnoutToSenseIDMap = LayoutConfiguration.INSTANCE.turnoutIdToSegmentIdsMapping
-	static val senseToTurnoutIDMap = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
+//	static val senseToTurnoutIDMap = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
 
 	val Set<Train> stoppedTrains = newHashSet
 
 	var List<ISegmentEnableStrategy> segmentEnableStrategies
 	var List<ISegmentDisableStrategy> segmentDisableStrategies
 	var List<ITrainStopStrategy> trainStopStrategies
-	
+
 	var ISafetyLogicBridge safetyLogicBridge
 
 	new(ILoggerFactory factory, boolean initializeRailRoad, boolean useComputerVision) {
 		this.factory = factory
 		this.logger = factory.getLogger(this.class.name)
-		
-		
+
 		this.initializeRailRoad = initializeRailRoad
 		this.useComputerVision = useComputerVision
 
@@ -74,29 +73,6 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 		this.trainStopStrategies = #[ // new XPressInvertDirectionStrategy(this.safetyLogicBridge.trainCommander, this.safetyLogicBridge.trainSpeedStateRegistry, logger)
 		]
 
-		this.safetyLogicBridge.sendAllStatusListener = new ISendAllStatusListener() {
-
-			// TODO : This part still requires some testing.
-			override onSendAllStatus() {
-				model.turnouts.forEach [
-					safetyLogicBridge.sendTurnoutState(id,
-						if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT)
-				]
-				model.segments.forEach [
-					safetyLogicBridge.sendSegmentState(id,
-						if(isIsEnabled) SegmentState.ENABLED else SegmentState.DISABLED)
-				]
-				val occupiedSections = model.sections.filter[model.trains.map[currentlyOn].toList.contains(it)]
-				occupiedSections.forEach [
-					safetyLogicBridge.sendSegmentOccupation(id, SegmentOccupancy.OCCUPIED)
-				]
-				val freeSections = model.sections.filter[!occupiedSections.toList.contains(it)]
-				freeSections.forEach [
-					safetyLogicBridge.sendSegmentOccupation(id, SegmentOccupancy.FREE)
-				]
-			}
-
-		}
 	}
 
 	private def void initRailRoad() {
@@ -140,37 +116,39 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		this.logger.info("Running started...")
 
-		if(useComputerVision){
-			this.safetyLogicBridge.computerVisionListener = new ComputerVisionTrainMovementEstimator(model, this, factory)
+		if(useComputerVision) {
+			this.safetyLogicBridge.computerVisionListener = new ComputerVisionTrainMovementEstimator(model, this, factory, false)
 		} else {
 			this.safetyLogicBridge.segmentOccupancyChangeListener = new TrainMovementEstimator(model, this, factory)
 		}
-		
+
 		this.safetyLogicBridge.turnoutStateChangeListener = new ITurnoutStateChangeListener() {
 
 			override onTurnoutStateChange(int id, TurnoutState oldValue, TurnoutState newValue) {
-				val senseID = turnoutToSenseIDMap.get(id)
-				logger.info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
-				println(model.turnouts.filter[senseID.contains(it.id)].size)
-				model.turnouts.filter[senseID.contains(it.id)].map[it as Turnout].forEach [
-					it.currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
-					logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
-				]
-				logger.info('''Turnout States: <«FOR turnout : model.turnouts.map[it as Turnout] SEPARATOR ";\t "»
-				Sense=«turnout.id»,TurnoutID=«senseToTurnoutIDMap.get(turnout.id)»,State=«if(turnout.currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»
-				«ENDFOR»>''')
-				refreshSafetyLogicState
+				synchronized(model) {
+					val senseID = turnoutToSenseIDMap.get(id)
+					logger.info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
+					println(model.turnouts.filter[senseID.contains(it.id)].size)
+					model.turnouts.filter[senseID.contains(it.id)].map[it as Turnout].forEach [
+						it.currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
+						logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
+					]
+					// logger.info('''Turnout States: <«FOR turnout : model.turnouts.map[it as Turnout] SEPARATOR ";\t "»
+					// Sense=«turnout.id»,TurnoutID=«senseToTurnoutIDMap.get(turnout.id)»,State=«if(turnout.currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»
+					// «ENDFOR»>''')
+					refreshSafetyLogicState
+				}
 			}
 		}
 
-		if (initializeRailRoad) {
+		if(initializeRailRoad) {
 			initRailRoad
 		}
 	}
 
 	def public void refreshSafetyLogicState() {
 		logger.info('''Refreshing state: #of trains «model.trains.size», #of trailings «model.trailings.size», #of hits «model.hits.size»''')
-		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» NAME=«LocomotivesConfiguration::INSTANCE.getLocomotiveNameById(train.id)» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 
 		val offenders = new HashSet<Train>
 
@@ -204,13 +182,11 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 				strategy.disableSection(segment.id)
 			]
 		]
-		if (!sectionsToEnable.empty) {
-			logger.
-				info('''SectionToEnable = «FOR enable : sectionsToEnable BEFORE '{' SEPARATOR ', ' AFTER '}'» «enable.id» «ENDFOR»''')
+		if(!sectionsToEnable.empty) {
+			logger.info('''SectionToEnable = «FOR enable : sectionsToEnable BEFORE '{' SEPARATOR ', ' AFTER '}'» «enable.id» «ENDFOR»''')
 		}
-		if (!sectionsToDisable.empty) {
-			logger.
-				info('''SectionToDisable = «FOR disable : sectionsToDisable BEFORE '{' SEPARATOR ', ' AFTER '}'» «disable.id» «ENDFOR»''')
+		if(!sectionsToDisable.empty) {
+			logger.info('''SectionToDisable = «FOR disable : sectionsToDisable BEFORE '{' SEPARATOR ', ' AFTER '}'» «disable.id» «ENDFOR»''')
 		}
 
 		sectionsToEnable.filter[it instanceof Segment].map[it as Segment].forEach [
@@ -222,7 +198,7 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		stoppedTrains.clear
 
-		if (trainStopStrategies.empty) {
+		if(trainStopStrategies.empty) {
 			stoppedTrains.addAll(offenders.filter[currentlyOn instanceof Segment]) // As if we have no train stopping strategies 			
 		} else {
 			stoppedTrains.addAll(offenders)
