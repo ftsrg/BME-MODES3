@@ -7,9 +7,9 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel,
- hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl,
- hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.util
+  hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.impl,
+  hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.util
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport
+  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

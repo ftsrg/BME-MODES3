@@ -1,9 +1,8 @@
 package hu.bme.mit.inf.modes3.components.touchboard.controller.trackelement
 
+import hu.bme.mit.inf.modes3.components.touchboard.bridge.ITouchboardBridge
 import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
-import hu.bme.mit.inf.modes3.messaging.communication.command.interfaces.ITrackElementCommander
-import hu.bme.mit.inf.modes3.messaging.communication.enums.TurnoutState
-import hu.bme.mit.inf.modes3.messaging.communication.state.interfaces.ITrackElementStateRegistry
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
@@ -15,23 +14,20 @@ class TurnoutEventHandler {
 	val Logger logger
 	val ThreadSafeNode node
 
-	val ITrackElementStateRegistry trackElementStateRegistry
-	val ITrackElementCommander trackElementCommander
-	
-	new(ILoggerFactory loggerFactory, ThreadSafeNode node, ITrackElementStateRegistry trackElementStateRegistry,
-		ITrackElementCommander trackElementCommander) {
+	val ITouchboardBridge touchboardBridge
+
+	new(ITouchboardBridge touchboardBridge, ThreadSafeNode node, ILoggerFactory loggerFactory) {
 		this.logger = loggerFactory.getLogger(this.class.name)
 		this.node = node
-		this.trackElementStateRegistry = trackElementStateRegistry
-		this.trackElementCommander = trackElementCommander
+		this.touchboardBridge = touchboardBridge
 	}
 
-	def setStraight() {
+	def synchronized setStraight() {
 		node.removeCssClass(DIVERGENT)
 		node.addCssClass(STRAIGHT)
 	}
 
-	def setDivergent() {
+	def synchronized setDivergent() {
 		node.removeCssClass(STRAIGHT)
 		node.addCssClass(DIVERGENT)
 	}
@@ -39,26 +35,14 @@ class TurnoutEventHandler {
 	def onTurnoutClicked() {
 		try {
 			val turnoutId = node.nodeId
-			val state = trackElementStateRegistry.getTurnoutState(turnoutId)
+			val state = touchboardBridge.getTurnoutState(turnoutId)
 			val newState = getTurnoutOppositeState(state)
 
-			trackElementCommander.sendTurnoutCommandWithTurnoutId(turnoutId, newState)
-			updateTurnoutState(newState)
+			touchboardBridge.sendTurnoutCommandWithTurnoutId(turnoutId, newState)
 
 			logger.info('''Turnout «turnoutId» is «newState»''')
-		} catch (Exception ex) {
+		} catch(Exception ex) {
 			logger.error(ex.message, ex)
-		}
-	}
-
-	private def void updateTurnoutState(TurnoutState newState) {
-		switch (newState) {
-			case STRAIGHT:
-				setStraight()
-			case DIVERGENT:
-				setDivergent()
-			case ILLEGAL: {
-			}
 		}
 	}
 

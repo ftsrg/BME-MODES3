@@ -1,56 +1,59 @@
 # Moquette
 # --------
-**/moquette_store.mapdb
-**/moquette_store.mapdb.p
-**/moquette_store.mapdb.t
+moquette_store.mapdb
+moquette_store.mapdb.p
+moquette_store.mapdb.t
+
+# MQTT
+# ----
+.lck
+*.msg
 
 # Gradle
 /# ------
 .gradle
-**/.gradle
-**/build
-**/buildSrc/build
-**/subprojects/*/build
-**/subprojects/docs/src/samples/*/*/build
-**/subprojects/internal-android-performance-testing/build-android-libs
+.gradle
+build
+buildSrc/build
+subprojects/*/build
+subprojects/docs/src/samples/*/*/build
+subprojects/internal-android-performance-testing/build-android-libs
 
 # IDEA
 # ----
 .idea
 .shelf
-**/*.iml
-**/*.ipr
-**/*.iws
-**/buildSrc/*.iml
-**/buildSrc/*.ipr
-**/buildSrc/*.iws
-**/buildSrc/out
-**/out
-**/subprojects/*/*.iml
-**/subprojects/*/out
+*.iml
+*.ipr
+*.iws
+buildSrc/*.iml
+buildSrc/*.ipr
+buildSrc/*.iws
+buildSrc/out
+out
+subprojects/*/*.iml
+subprojects/*/out
 
 # Eclipse
 # -------
-*.classpath
-*.project
-*.settings
-**/bin
-**/xtend-gen
-**/subprojects/*/bin
+.classpath
+org.eclipse.buildship.core.prefs
+bin
+subprojects/*/bin
 atlassian-ide-plugin.xml
 
 # NetBeans
 # --------
-**/.nb-gradle
-**/.nb-gradle-properties
-**/nbproject
-**/nbproject/private
-**/build/
-**/nbbuild/
-**/dist/
-**/nbdist/
-**/nbactions.xml
-**/nb-configuration.xml
+.nb-gradle
+.nb-gradle-properties
+nbproject
+nbproject/private
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
 
 # Vim
 # ---
@@ -74,8 +77,8 @@ atlassian-ide-plugin.xml
 
 # OS X
 # ----
-**/.DS_Store
-**/._.DS_Store
+.DS_Store
+._.DS_Store
 
 # HPROF
 # -----
@@ -83,13 +86,13 @@ atlassian-ide-plugin.xml
 
 # Work dirs
 # ---------
-**/incoming-distributions
-**/intTestHomeDir
+incoming-distributions
+intTestHomeDir
 
 # Logs
 # ----
-**/*.log
+*.log
 
 # VS Code
 # -------
-**/.lck
+.lck

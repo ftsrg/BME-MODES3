@@ -1,6 +1,6 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.event
 
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentOccupancy
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.safetylogic.event.INotifiable
 import hu.bme.mit.inf.safetylogic.event.ModelUtil
 import hu.bme.mit.inf.safetylogic.event.TrainMovementEstimator

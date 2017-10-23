@@ -20,7 +20,6 @@ function WSConnection(type, path) {
 	}
 
 	this.request.onOpen = function(response) {
-		console.log("Connection opened: " + response.request.uuid);
 	};
 
 	WSConnection.prototype.onMessageArrived = function(msg) {};
@@ -32,8 +31,7 @@ function WSConnection(type, path) {
 		}
 	}
 	
-	this.request.onClose = function(response) {
-	    console.log("Connection closed: " + response.responseBody);
+	this.request.onClose = function(response){
 	};
 	
 	this.request.onClientTimeout = function(response) {
@@ -44,7 +42,6 @@ function WSConnection(type, path) {
     
     WSConnection.prototype.publish = function(jsonMessage) {
 		var strMessage = JSON.stringify(jsonMessage);
-		console.log("Publishing message: " + strMessage);
 		this.clientSocket.push(strMessage);
 	}
 

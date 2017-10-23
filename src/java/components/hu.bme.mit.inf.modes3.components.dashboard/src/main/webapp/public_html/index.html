@@ -6,7 +6,8 @@
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <script type="text/javascript" src="js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="js/jquery.svgstyle.min.js"></script>
@@ -25,9 +26,10 @@
 		<div id="tab-controls">
 			<a id="layout-tab-header" class="tab-control-item active">Layout</a>
 			<a id="devices-tab-header" class="tab-control-item">Devices</a>
+			<a id="stream-tab-header" class="tab-control-item">Stream</a>
 		</div>
 		<div id="tab-content">
-			<div id="layout-tab" class="tab-content-item">
+			<div id="layout-tab" class="tab-content-item active">
 				<div id="train-control-button">
 					Control<br />trains
 				</div>
@@ -463,7 +465,6 @@
 							id="s23" />
             <path
 							style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#1e2141;stroke-width:56.69291306;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
-
 							d="M 4317.7254,527.24719 C 4035.4419,527.24719 3753.1585,527.24719 3470.875,527.24719"
 							id="t01-str" />
         </g>
@@ -484,11 +485,6 @@
 						<tspan id="tspan38931" x="353.39322" y="826.09174"
 							style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:57.5px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#1e2141">442,10 mm</tspan>
 						<tspan x="353.39322" y="883.59174" id="tspan38933"
-												
-						
-						
-						
-
 							style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:57.5px;line-height:100%;font-family:Roboto;-inkscape-font-specification:'Roboto, Light';text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#1e2141">T4</tspan></text>
                 </g>
             </g>
@@ -955,24 +951,45 @@ SVG CONTENT ENDS HERE
 
 
 -->
-					
+
 				</div>
 				<div id="train-control">
 					<div style="background-color: #1e2141; padding: 12px">
 						<h2>Layout Controls</h2>
 
-						<button type="button" title="Enable all segments" id="control-all-segments-en"><i class="material-icons md-dark md-36">grid_on</i></button>
-						<button type="button" title="Disable all segments" id="control-all-segments-dis"><i class="material-icons md-dark md-36">grid_off</i></button>
-						<button type="button" title="Set all turnouts to straight" id="control-all-turnouts-str"><i class="material-icons md-dark md-36">call_made</i></button>
-						<button type="button" title="Set all turnouts to divergent" id="control-all-turnouts-div"><i class="material-icons md-dark md-36">call_missed_outgoing</i></button>
-						<button type="button" title="Stop all trains" id="stop-all-trains"><i class="material-icons md-dark md-36">pan_tool</i></button>
-						<button type="button" title="Add train" id="add-train"><i class="material-icons md-dark md-36">train</i></button>
+						<button type="button" title="Enable all segments"
+							id="control-all-segments-en">
+							<i class="material-icons md-dark md-36">grid_on</i>
+						</button>
+						<button type="button" title="Disable all segments"
+							id="control-all-segments-dis">
+							<i class="material-icons md-dark md-36">grid_off</i>
+						</button>
+						<button type="button" title="Set all turnouts to straight"
+							id="control-all-turnouts-str">
+							<i class="material-icons md-dark md-36">call_made</i>
+						</button>
+						<button type="button" title="Set all turnouts to divergent"
+							id="control-all-turnouts-div">
+							<i class="material-icons md-dark md-36">call_missed_outgoing</i>
+						</button>
+						<button type="button" title="Stop all trains" id="stop-all-trains">
+							<i class="material-icons md-dark md-36">pan_tool</i>
+						</button>
+<!-- 						<button type="button" title="Add train" id="add-train"> -->
+<!-- 							<i class="material-icons md-dark md-36">train</i> -->
+<!-- 						</button> -->
 
-	</div>
-	</div>
-	</div>
-	<div id="devices-tab" class="tab-content-item">TODO</div>
-	</div>
+					</div>
+				</div>
+			</div>
+			<div id="devices-tab" class="tab-content-item">
+				
+			</div>
+			<div id="stream-tab" class="tab-content-item">
+				
+			</div>
+		</div>
 	</div>
 
 	<div id="dialog-container">
@@ -1031,7 +1048,7 @@ SVG CONTENT ENDS HERE
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 
 </body>

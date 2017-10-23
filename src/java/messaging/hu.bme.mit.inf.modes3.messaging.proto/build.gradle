@@ -1,15 +1,7 @@
 apply plugin: 'java'
-apply plugin: 'com.google.protobuf'
+apply plugin: 'org.xtext.xtend'
 
 dependencies {
-	compile 'com.google.protobuf:protobuf-java:3.1.0'
-	compile 'com.google.protobuf:protobuf-gradle-plugin:0.8.1'
-}
-
-protobuf {
-	protoc {
-		path = '/usr/local/bin/protoc'
-		artifact = 'com.google.protobuf:protoc:3.1.0'
-	}
-	generatedFilesBaseDir = "$projectDir/src/"
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.mms')
+	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.proto.messages')
 }

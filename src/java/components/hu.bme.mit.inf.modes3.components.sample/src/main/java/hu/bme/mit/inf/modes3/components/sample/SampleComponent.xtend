@@ -1,41 +1,46 @@
 package hu.bme.mit.inf.modes3.components.sample
 
-import hu.bme.mit.inf.modes3.messaging.communication.enums.SegmentState
-import hu.bme.mit.inf.modes3.messaging.communication.factory.CommunicationStack
-import hu.bme.mit.inf.modes3.components.common.AbstractRailRoadCommunicationComponent
-import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.components.sample.util.ChangeCounter
+import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
+import java.util.concurrent.ConcurrentHashMap
+import org.eclipse.xtend.lib.annotations.Accessors
+import hu.bme.mit.inf.modes3.components.sample.bridge.ISampleComponentBridge
 
-class SampleComponent extends AbstractRailRoadCommunicationComponent {
+class SampleComponent implements ISampleComponent {
 
-	val knownSegments = 1 ..< 10
+	val ConcurrentHashMap<Integer, ChangeCounter> segmentOccupancyChanges
 
-	new(CommunicationStack communicationStack, ILoggerFactory factory) {
-		super(communicationStack, factory)
+	@Accessors(PUBLIC_SETTER) var ISampleComponentBridge sampleComponentBridge
+
+	new() {
+		this.segmentOccupancyChanges = new ConcurrentHashMap
 	}
 
-	def turnOffAll() {
-		for (i : knownSegments) {
-			locator.trackElementCommander.sendSegmentCommand(i, SegmentState.DISABLED)
+	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
+		val changeCounter = getNumberOfChanges(id)
+		val changes = changeCounter.increment
+		if (changes > 2) {
+			sampleComponentBridge.disableSegment(id)
+			changeCounter.reset
 		}
 	}
 
-	def getStateOfAll() {
-		for (i : knownSegments) {
-			processState(locator.trackElementStateRegistry.getSegmentState(i), i)
+	private def getNumberOfChanges(int id) {
+		var changes = segmentOccupancyChanges.get(id)
+		if (changes === null) {
+			synchronized (segmentOccupancyChanges) {
+				changes = segmentOccupancyChanges.get(id)
+				if (changes === null) {
+					changes = new ChangeCounter
+					segmentOccupancyChanges.put(id, changes)
+				}
+			}
 		}
+		return changes
 	}
 
-	def void processState(SegmentState state, int id) {
-		println(
-			'''Segment #«id» is «switch(state){case ENABLED: 'Enabled' case DISABLED: "Disabled"}»'''
-		)
-	}
-	
-	
-	//The 'main' method of the sample component
 	override run() {
-		turnOffAll
-		
+		Thread.currentThread.join
 	}
 
 }

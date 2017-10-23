@@ -1,4 +1,8 @@
 # Work dirs
 # ---------
+**/src-gen/
+**/vql-gen/
 **/xtend-gen/
 **/*.java._trace
+**/*.xtendbin
+**/org.eclipse.buildship.core.prefs

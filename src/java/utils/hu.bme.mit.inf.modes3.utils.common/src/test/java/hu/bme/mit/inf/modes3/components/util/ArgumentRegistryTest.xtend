@@ -1,13 +1,11 @@
 package hu.bme.mit.inf.modes3.components.util
 
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithParameter
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentDescriptorWithoutParameter
-import hu.bme.mit.inf.modes3.components.util.jopt.ArgumentRegistry
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithoutParameter
+import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import java.io.ByteArrayOutputStream
 import java.util.Arrays
 import java.util.HashSet
-import java.util.stream.Collectors
-import java.util.stream.Stream
 import joptsimple.OptionException
 import org.junit.Before
 import org.junit.Test
@@ -80,9 +78,9 @@ class ArgumentRegistryTest {
 		assertTrue(expectedLines.forall[line|outputString.contains(line)])
 
 		// split output by new lines and trim each line
-		val outputStringSplitByLine = (outputString.split("\\r?\\n").stream as Stream<String>).map(line|line.trim).collect(Collectors.toList)
+		val outputStringSplitByLine = outputString.split("\\r?\\n").map[it.trim]
 		// verify each printed line is expected
-		assertTrue(outputStringSplitByLine.forall[line|expectedLines.contains(line)])
+		assertTrue(outputStringSplitByLine.forall[expectedLines.contains(it)])
 	}
 
 	@Test
