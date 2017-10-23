@@ -1,7 +1,9 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -11,6 +13,7 @@ import org.atmosphere.config.service.Singleton;
 import org.atmosphere.cpr.MetaBroadcaster;
 import org.slf4j.Logger;
 
+import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 
 import hu.bme.mit.inf.modes3.components.dashboard.comm.json.LengthSensorMessage;
@@ -43,9 +46,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 
 	// two speed value, length and train comes on sensors' channel. Thus, we have to
 	// wait all of these to be able to send normal message to the dashboard
-	private SensorDataMessage sensorDataMessage = new SensorDataMessage();
-
-	private String sensorDataSender;
+	private Map<String, SensorDataMessage> sensorDataMessages = new HashMap<>();
 
 	@Inject
 	protected MetaBroadcaster metaBroadcaster;
@@ -54,6 +55,9 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	protected String source;
 
 	public StateChangeService() {
+		sensorDataMessages.put("Bakter01", new SensorDataMessage());
+		sensorDataMessages.put("Bakter02", new SensorDataMessage());
+
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentOccupancyChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentStateChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setTurnoutStateChangeListener(this);
@@ -95,54 +99,51 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 
 	public void onSpeedSensorMessage(SpeedSensorMessage message) {
 
-		// yeah, i'm in aware of the fact that this solution will only work with one
-		// sensor, but hey, I'm trying my best here.
-		if (!message.getSender().equals(sensorDataSender)) {
-			// starting a new circle
-			sensorDataSender = message.getSender();
-			sensorDataMessage.reset();
-		}
-		sensorDataMessage.setSpeed(message.getSpeed());
+		// if message received from either of our sensors, then add the new value and if
+		// object is ready to send, then send it and reset it
+		if (sensorDataMessages.containsKey(message.getSender())) {
+			SensorDataMessage m = sensorDataMessages.get(message.getSender());
+			m.setSpeed(message.getSpeed());
 
-		if (sensorDataMessage.isObjectReady()) {
-			String jsonMessage = new Gson().toJson(sensorDataMessage);
-			metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+			if (m.isObjectReady()) {
+				String jsonMessage = new Gson().toJson(m);
+				metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+				m.reset();
+			}
 		}
 
 	}
 
 	public void onLengthSensorMessage(LengthSensorMessage message) {
 
-		// yeah, i'm in aware of the fact that this solution will only work with one
-		// sensor, but hey, I'm trying my best here.
-		if (!message.getSender().equals(sensorDataSender)) {
-			// starting a new circle
-			sensorDataSender = message.getSender();
-			sensorDataMessage.reset();
-		}
-		sensorDataMessage.setLength(message.getLength());
+		// if message received from either of our sensors, then add the new value and if
+		// object is ready to send, then send it and reset it
+		if (sensorDataMessages.containsKey(message.getSender())) {
+			SensorDataMessage m = sensorDataMessages.get(message.getSender());
+			m.setLength(message.getLength());
 
-		if (sensorDataMessage.isObjectReady()) {
-			String jsonMessage = new Gson().toJson(sensorDataMessage);
-			metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+			if (m.isObjectReady()) {
+				String jsonMessage = new Gson().toJson(m);
+				metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+				m.reset();
+			}
 		}
 
 	}
 
 	public void onTrainSensorMessage(TrainSensorMessage message) {
 
-		// yeah, i'm in aware of the fact that this solution will only work with one
-		// sensor, but hey, I'm trying my best here.
-		if (!message.getSender().equals(sensorDataSender)) {
-			// starting a new circle
-			sensorDataSender = message.getSender();
-			sensorDataMessage.reset();
-		}
-		sensorDataMessage.setLocomotiveName(message.getTrain());
+		// if message received from either of our sensors, then add the new value and if
+		// object is ready to send, then send it and reset it
+		if (sensorDataMessages.containsKey(message.getSender())) {
+			SensorDataMessage m = sensorDataMessages.get(message.getSender());
+			m.setLocomotiveName(message.getTrain());
 
-		if (sensorDataMessage.isObjectReady()) {
-			String jsonMessage = new Gson().toJson(sensorDataMessage);
-			metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+			if (m.isObjectReady()) {
+				String jsonMessage = new Gson().toJson(m);
+				metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+				m.reset();
+			}
 		}
 	}
 
