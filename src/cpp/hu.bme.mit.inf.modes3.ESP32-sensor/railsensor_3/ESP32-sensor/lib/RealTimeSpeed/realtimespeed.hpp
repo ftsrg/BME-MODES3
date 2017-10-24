@@ -2,7 +2,7 @@
 #define REALTIMESPEED_HPP_INCLUDED
 
 #ifndef SENSOR_DISTANCE
-#define SENSOR_DISTANCE 3.178
+#define SENSOR_DISTANCE 7.0
 #endif
 
 #define DEBUG

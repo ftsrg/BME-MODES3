@@ -26,12 +26,15 @@ WiFiClient wifi;
 MQTT_JSON send(&wifi);
 
 void setup() {
+  Serial.println("");
   Serial.begin(9600);                           // Serial init
+  Serial.println("Serial init");
 
   for(int i=0;i<2;i++){                         // Sensors input init
     pinMode(stateMachine.sensor[i].GetPin(), INPUT);
     stateMachine.sensor[i].Reset();
   }
+  Serial.println("IO init");
   
   WiFi.begin(CONF_SSID, PASS);                  // WiFi connection init
   while (WiFi.status() != WL_CONNECTED)
@@ -39,6 +42,7 @@ void setup() {
     delay(500);
   }
   delay(1000);
+  Serial.println("Wifi init");
 
   send.client.setServer(MQTT_IP, MQTT_PT);      // MQTT connection init
   while (!send.client.connected())
@@ -48,14 +52,17 @@ void setup() {
   send.client.setCallback(callback);
   send.client.subscribe(DATA_CH);
   send.client.subscribe(EVENT_CH);
+  Serial.println("MQTT init");
   
   TrainSelect.AddTrain("UNKNOWN",25.0);         // TrainSelect init
   TrainSelect.AddTrain("Taurus",21.5);
   TrainSelect.AddTrain("SNCF",18.5);
   TrainSelect.AddTrain("Vagon",12.25);
   TrainSelect.AddTrain("NOTHING",8.0);
+  Serial.println("Selector init");
 
   stateMachine.Init(13,27);                    // stateMachine init
+  Serial.println("Statemachine init");
 }
 
 unsigned long lastLoop = 0;

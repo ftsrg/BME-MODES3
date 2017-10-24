@@ -58,6 +58,7 @@ void MQTT_JSON::TrainSend(char *train, int kocsiszam)
   root["counter"] = kocsiszam;
   root["train"] = train;
   root.printTo(json, maxSize);
+  Serial.println(json);
   client.publish(BDATA_CH, json);
   client.publish(DATA_CH, json);
 }
