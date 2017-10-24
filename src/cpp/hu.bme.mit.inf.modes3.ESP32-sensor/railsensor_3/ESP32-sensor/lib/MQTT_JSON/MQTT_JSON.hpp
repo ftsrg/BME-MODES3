@@ -11,7 +11,7 @@
   #define MQTT_MAX_PACKET_SIZE 512
 #endif
 #ifndef DEVICE_NAME
-  #define DEVICE_NAME "sensor02"
+  #define DEVICE_NAME "sensor01"
 #endif
 #ifndef MQTT_IP
   #define MQTT_IP "192.168.1.2"
@@ -45,6 +45,9 @@
 #include <PubSubClient.h>
 #include <WiFi.h>
 #include <ArduinoJson.h>
+//#include <HTTPClient.h>
+
+//HTTPClient http;
 
 void callback(char*, byte*, unsigned int);
 

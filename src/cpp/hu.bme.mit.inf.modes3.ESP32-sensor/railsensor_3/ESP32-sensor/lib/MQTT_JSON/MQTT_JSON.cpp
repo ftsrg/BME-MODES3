@@ -11,7 +11,14 @@ void callback(char *topic, byte *payload, unsigned int length)
 }
 
 int MQTT_JSON::getTime()
-{
+{/*
+  http.begin("http://jsonplaceholder.typicode.com/comments?id=10"); //Specify the URL
+  int httpCode = http.GET();
+  if (httpCode > 0) { //Check for the returning code
+    String payload = http.getString();
+    Serial.println(httpCode);
+    Serial.println(payload);
+  }*/
   return 100;
 }
 
@@ -50,7 +57,7 @@ void MQTT_JSON::PongSend()
 void MQTT_JSON::TrainSend(char *train, int kocsiszam)
 {
   Serial.println("TrainSend");
-  if(strcmp(train,"UNKNOWN")) return;
+  //if(strcmp(train,"UNKNOWN")) return;
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
