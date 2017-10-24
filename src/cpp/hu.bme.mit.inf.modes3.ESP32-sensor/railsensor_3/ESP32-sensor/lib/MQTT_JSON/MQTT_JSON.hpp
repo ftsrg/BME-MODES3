@@ -11,7 +11,7 @@
   #define MQTT_MAX_PACKET_SIZE 512
 #endif
 #ifndef DEVICE_NAME
-  #define DEVICE_NAME "Bakter02"
+  #define DEVICE_NAME "sensor02"
 #endif
 #ifndef MQTT_IP
   #define MQTT_IP "192.168.1.2"
@@ -68,6 +68,8 @@ public:
   void SpeedSend(double speed);
   void LengthSend(double length, int kocsiszam);
   void ConnCheck();
+
+  void MozdonySend(char* train, double length, double speed);
 };
 
 #endif

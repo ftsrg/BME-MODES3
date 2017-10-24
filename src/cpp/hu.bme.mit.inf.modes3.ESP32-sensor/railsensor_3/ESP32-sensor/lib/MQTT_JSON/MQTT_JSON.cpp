@@ -50,6 +50,7 @@ void MQTT_JSON::PongSend()
 void MQTT_JSON::TrainSend(char *train, int kocsiszam)
 {
   Serial.println("TrainSend");
+  if(strcmp(train,"UNKNOWN")) return;
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
@@ -110,6 +111,7 @@ void MQTT_JSON::SpeedSend(double speed)
 void MQTT_JSON::LengthSend(double length, int kocsiszam)
 {
   Serial.println("LengthSend");
+  if((length<10.0)||(length>23.0)) return;
   StaticJsonBuffer<800> jsonBuffer;
   JsonObject &root = jsonBuffer.createObject();
   root["sender"] = DEVICE_NAME;
@@ -122,3 +124,20 @@ void MQTT_JSON::LengthSend(double length, int kocsiszam)
   client.publish(DATA_CH, json);
   Serial.println(json);
 };
+
+void MQTT_JSON::MozdonySend(char *train, double length, double speed)
+{
+  Serial.println("MozdonySend");
+  if((length<10.0)||(length>23.0)) return;
+  StaticJsonBuffer<800> jsonBuffer;
+  JsonObject &root = jsonBuffer.createObject();
+  root["sender"] = DEVICE_NAME;
+  root["time"] = getTime();
+  root["locomotive"] = train;
+  root["length"] = length;
+  root["speed"] = speed;
+  root["unit"] = "cm";
+  root.printTo(json, maxSize);
+  Serial.println(json);
+  client.publish("/modes3/locomotives", json);
+}

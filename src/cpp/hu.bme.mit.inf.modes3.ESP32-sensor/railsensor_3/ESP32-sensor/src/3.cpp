@@ -58,7 +58,7 @@ void setup() {
   TrainSelect.AddTrain("Taurus",21.5);
   TrainSelect.AddTrain("SNCF",18.5);
   TrainSelect.AddTrain("Vagon",12.25);
-  TrainSelect.AddTrain("NOTHING",8.0);
+  TrainSelect.AddTrain("UNKNOWN",8.0);
   Serial.println("Selector init");
 
   stateMachine.Init(13,27);                    // stateMachine init
@@ -92,5 +92,6 @@ void loop() {
     stateMachine.IncKocsiszam();
     send.LengthSend(Length.GetLastLength(), stateMachine.GetKocsiszam());
     send.TrainSend(TrainSelect.Search(Length.GetLastLength()), stateMachine.GetKocsiszam());
+    send.MozdonySend(TrainSelect.Search(Length.GetLastLength()),Length.GetLastLength(),RTSpeed.GetLastSpeed());
   }
 }
