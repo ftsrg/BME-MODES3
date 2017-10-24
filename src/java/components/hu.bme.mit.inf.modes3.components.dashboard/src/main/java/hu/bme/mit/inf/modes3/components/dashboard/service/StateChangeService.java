@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.modes3.components.dashboard.service;
 
+import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SENSOR_STATE;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +14,6 @@ import org.atmosphere.config.service.PathParam;
 import org.atmosphere.config.service.Singleton;
 import org.atmosphere.cpr.MetaBroadcaster;
 import org.slf4j.Logger;
-
-import com.google.common.collect.Maps;
-import com.google.gson.Gson;
 
 import hu.bme.mit.inf.modes3.components.dashboard.comm.json.LengthSensorMessage;
 import hu.bme.mit.inf.modes3.components.dashboard.comm.json.SpeedSensorMessage;
@@ -32,8 +31,6 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;
-
-import static hu.bme.mit.inf.modes3.components.dashboard.utils.ResourceUtils.SENSOR_STATE;
 
 @Singleton
 @ManagedService(path = "/ws/state/{source}")
@@ -55,8 +52,8 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	protected String source;
 
 	public StateChangeService() {
-		sensorDataMessages.put("Bakter01", new SensorDataMessage());
-		sensorDataMessages.put("Bakter02", new SensorDataMessage());
+		sensorDataMessages.put("sensor01", new SensorDataMessage());
+		sensorDataMessages.put("sensor02", new SensorDataMessage());
 
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentOccupancyChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentStateChangeListener(this);
@@ -89,61 +86,39 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	@Override
 	public void onComputerVisionDetection(List<ComputerVisionInformation> information, long timestamp,
 			long frameindex) {
-
-		for (ComputerVisionInformation cvInfo : information) {
-			if (locomotives.contains(cvInfo.getName())) {
-				Utils.sendComputerVisionState(metaBroadcaster, cvInfo);
-			}
-		}
+		information.stream().filter(cvInfo -> locomotives.contains(cvInfo.getName()))
+				.forEach(cvInfo -> Utils.sendComputerVisionState(metaBroadcaster, cvInfo));
 	}
 
 	public void onSpeedSensorMessage(SpeedSensorMessage message) {
-
-		// if message received from either of our sensors, then add the new value and if
-		// object is ready to send, then send it and reset it
-		if (sensorDataMessages.containsKey(message.getSender())) {
-			SensorDataMessage m = sensorDataMessages.get(message.getSender());
+		SensorDataMessage m = sensorDataMessages.get(message.getSender());
+		if (m != null) {
 			m.setSpeed(message.getSpeed());
-
-			if (m.isObjectReady()) {
-				String jsonMessage = new Gson().toJson(m);
-				metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
-				m.reset();
-			}
+			broadcastSensorMessage(m);
 		}
-
 	}
 
 	public void onLengthSensorMessage(LengthSensorMessage message) {
-
-		// if message received from either of our sensors, then add the new value and if
-		// object is ready to send, then send it and reset it
-		if (sensorDataMessages.containsKey(message.getSender())) {
-			SensorDataMessage m = sensorDataMessages.get(message.getSender());
+		SensorDataMessage m = sensorDataMessages.get(message.getSender());
+		if (m != null) {
 			m.setLength(message.getLength());
-
-			if (m.isObjectReady()) {
-				String jsonMessage = new Gson().toJson(m);
-				metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
-				m.reset();
-			}
+			broadcastSensorMessage(m);
 		}
-
 	}
 
 	public void onTrainSensorMessage(TrainSensorMessage message) {
-
-		// if message received from either of our sensors, then add the new value and if
-		// object is ready to send, then send it and reset it
-		if (sensorDataMessages.containsKey(message.getSender())) {
-			SensorDataMessage m = sensorDataMessages.get(message.getSender());
+		SensorDataMessage m = sensorDataMessages.get(message.getSender());
+		if (m != null) {
 			m.setLocomotiveName(message.getTrain());
+			broadcastSensorMessage(m);
+		}
+	}
 
-			if (m.isObjectReady()) {
-				String jsonMessage = new Gson().toJson(m);
-				metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
-				m.reset();
-			}
+	private void broadcastSensorMessage(SensorDataMessage message) {
+		if (message.isObjectReady()) {
+			String jsonMessage = message.toJson();
+			metaBroadcaster.broadcastTo("/ws/state/" + SENSOR_STATE, jsonMessage);
+			message.reset();
 		}
 	}
 
