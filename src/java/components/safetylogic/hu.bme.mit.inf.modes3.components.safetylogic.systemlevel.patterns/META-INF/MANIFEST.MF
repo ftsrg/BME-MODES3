@@ -4,6 +4,7 @@ Bundle-Name: Patterns
 Bundle-SymbolicName: hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.patterns;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Export-Package: hu.bme.mit.inf.safetylogic.patterns,
+  hu.bme.mit.inf.safetylogic.patterns.internal,
   hu.bme.mit.inf.safetylogic.patterns.util,
   hu.bme.mit.inf.safetylogic.rulepatterns,
   hu.bme.mit.inf.safetylogic.rulepatterns.util
