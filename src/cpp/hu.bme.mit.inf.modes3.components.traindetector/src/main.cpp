@@ -34,11 +34,7 @@ static auto edgeToString = [](td::EdgeDirection edgeDir){
         case td::NOEDGE:
             return "NOEDGE";
     }
-    return "OHNONONO";
-};
-
-static auto quantitize = [](int voltage){
-    return voltage < 1750 ? td::LOW : td::HIGH;
+    return "INVALID";
 };
 
 void IRAM_ATTR timerISR(void *para)
@@ -62,29 +58,26 @@ void IRAM_ATTR timerISR(void *para)
 void samplingTask(void *pvParameter)
 {
     td::TrainDetector trainDetector;
-    td::EdgeDetector rightEdgeDetector;
-    td::EdgeDetector leftEdgeDetector;
+    td::EdgeDetector<4> rightEdgeDetector;
+    td::EdgeDetector<4> leftEdgeDetector;
 
-    SampleItem currentSample, previousSample;
+    SampleItem sample;
     for (;;) {
         xQueueReceive(sampleQueue, &sample, portMAX_DELAY);
 
-        td::SignalLevel rightLevel = quantitize(sample.rightVoltage);
-        td::EdgeDirection rightEdge = rightEdgeDetector.detectEdge(rightLevel);
+        td::EdgeDirection rightEdge = rightEdgeDetector.detectEdge(sample.rightVoltage);
         if (rightEdge != td::NOEDGE) {
             trainDetector.handleEdge(td::RIGHT, rightEdge, xTaskGetTickCount());
         }
         
-        td::SignalLevel leftLevel = quantitize(sample.leftVoltage);
-        td::EdgeDirection leftEdge = leftEdgeDetector.detectEdge(leftLevel);
+        td::EdgeDirection leftEdge = leftEdgeDetector.detectEdge(sample.leftVoltage);
         if (leftEdge != td::NOEDGE) {
             trainDetector.handleEdge(td::LEFT, leftEdge, xTaskGetTickCount());
         }
 
-        std::cout << sample.timestamp << ": ";
-        std::cout << "R: " << sample.rightVoltage << "/" << rightLevel << ", ";
-        std::cout << "L: " << sample.leftVoltage << "/" << leftLevel << " = ";
-        std::cout << edgeToString(rightEdge) << " " << edgeToString(leftEdge) << std::endl;
+        //std::cout << sample.timestamp << ": ";
+        //std::cout << "R: " << sample.rightVoltage << "/" << edgeToString(rightEdge) << " | ";
+        //std::cout << "L: " << sample.leftVoltage << "/" << edgeToString(leftEdge) << std::endl;
     }
 }
 
