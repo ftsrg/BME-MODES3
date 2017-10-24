@@ -36,8 +36,6 @@ subprojects/*/out
 
 # Eclipse
 # -------
-.classpath
-org.eclipse.buildship.core.prefs
 bin
 subprojects/*/bin
 atlassian-ide-plugin.xml

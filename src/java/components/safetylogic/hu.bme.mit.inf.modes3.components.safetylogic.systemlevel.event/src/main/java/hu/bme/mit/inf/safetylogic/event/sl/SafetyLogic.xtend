@@ -136,7 +136,9 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 					// logger.info('''Turnout States: <«FOR turnout : model.turnouts.map[it as Turnout] SEPARATOR ";\t "»
 					// Sense=«turnout.id»,TurnoutID=«senseToTurnoutIDMap.get(turnout.id)»,State=«if(turnout.currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»
 					// «ENDFOR»>''')
+					println('Refreshing sl state')
 					refreshSafetyLogicState
+					println('sl state refreshed')
 				}
 			}
 		}
@@ -148,7 +150,7 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 	def public void refreshSafetyLogicState() {
 		logger.info('''Refreshing state: #of trains «model.trains.size», #of trailings «model.trailings.size», #of hits «model.hits.size»''')
-		logger.info('''Trains «FOR train : model.trains»{ID=«train.id» NAME=«LocomotivesConfiguration::INSTANCE.getLocomotiveNameById(train.id)» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
+		logger.info('''Trains «FOR train : model.trains.filter[currentlyOn !== null]»{ID=«train.id» NAME=«LocomotivesConfiguration::INSTANCE.getLocomotiveNameById(train.id)» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 
 		val offenders = new HashSet<Train>
 
@@ -169,8 +171,8 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 		]
 
 		val trainsToRelease = stoppedTrains.filter[!offenders.contains(it)]
-		val sectionsToEnable = trainsToRelease.map[it.currentlyOn]
-		val sectionsToDisable = trainsToStop.map[it.currentlyOn]
+		val sectionsToEnable = trainsToRelease.map[it.currentlyOn].toList
+		val sectionsToDisable = trainsToStop.map[it.currentlyOn].toList
 
 		segmentEnableStrategies.forEach [ strategy |
 			sectionsToEnable.forEach [ segment |

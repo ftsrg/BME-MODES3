@@ -21,8 +21,8 @@ class ComputerVisionEstimator {
 		]
 
 		val matchingTurnout = turnouts.findFirst [
-			Math.abs(it.rectangle.origin.x - x) <= it.rectangle.size.width / 2 &&
-				Math.abs(it.rectangle.origin.y - y) <= it.rectangle.size.height / 2
+			rectangle.origin.x < x && x < rectangle.size.width + rectangle.origin.x &&
+			rectangle.origin.y < y && y < rectangle.size.height + rectangle.origin.y 
 		]
 		if (matchingTurnout !== null) {
 			return matchingTurnout

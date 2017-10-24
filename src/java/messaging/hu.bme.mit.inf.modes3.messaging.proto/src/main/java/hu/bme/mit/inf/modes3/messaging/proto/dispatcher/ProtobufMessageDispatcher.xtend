@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.messaging.proto.dispatcher
 
+import com.google.protobuf.InvalidProtocolBufferException
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.converter.InternalToProtobufConverter
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.converter.ProtobufToInternalConverter
@@ -105,8 +106,12 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 					logger.warn('''Unknown message type: «message.type»''')
 				}
 			}
+		} catch (InvalidProtocolBufferException ipbe){
+			logger.trace(ipbe.message, ipbe)
 		} catch (Exception e) {
-			logger.trace(e.message, e)
+			logger.error(e.message, e)
+			e.printStackTrace
+			
 		}
 	}
 
