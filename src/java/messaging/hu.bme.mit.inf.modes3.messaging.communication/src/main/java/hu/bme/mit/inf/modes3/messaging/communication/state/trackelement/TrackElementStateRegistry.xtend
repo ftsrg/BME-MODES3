@@ -36,10 +36,11 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 			override onSegmentState(int id, SegmentState state) {
 				logger.trace('''segmentState message arrived id=«id» state=«state»''')
-				if(segments.get(id) != state) {
-					logger.trace('''segmentState changed compared to cached values. Cached = «segments.get(id)» new =«state»''')
-					segmentStateChangeListener?.onSegmentStateChange(id, segments.get(id), state)
+				val oldState = segments.get(id)
+				if(oldState != state) {
+					logger.trace('''segmentState changed compared to cached values. Cached = «oldState» new =«state»''')
 					segments.put(id, state)
+					segmentStateChangeListener?.onSegmentStateChange(id, oldState, state)
 				}
 			}
 
@@ -48,10 +49,11 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 			override onTurnoutState(int id, TurnoutState state) {
 				logger.trace('''turnoutState message arrived id=«id» state=«state»''')
-				if(turnouts.get(id) != state) {
-					logger.trace('''turnoutState changed compared to cached values. Cached = «turnouts.get(id)» new =«state»''')
-					turnoutStateChangeListener?.onTurnoutStateChange(id, turnouts.get(id), state)
+				val oldState = turnouts.get(id)
+				if(oldState != state) {
+					logger.trace('''turnoutState changed compared to cached values. Cached = «oldState» new =«state»''')
 					turnouts.put(id, state)
+					turnoutStateChangeListener?.onTurnoutStateChange(id, oldState, state)
 				}
 			}
 
@@ -60,10 +62,11 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 
 			override onSegmentOccupancy(int id, SegmentOccupancy state) {
 				logger.trace('''segmentOccupancy message arrived id=«id» state=«state»''')
-				if(occupancy.get(id) != state) {
-					logger.trace('''segmentOccupancy changed compared to cached values. Cached = «occupancy.get(id)» new =«state»''')
-					segmentOccupancyChangeListener?.onSegmentOccupancyChange(id, occupancy.get(id), state)
+				val oldState = occupancy.get(id)
+				if(oldState != state) {
+					logger.trace('''segmentOccupancy changed compared to cached values. Cached = «oldState» new =«state»''')
 					occupancy.put(id, state)
+					segmentOccupancyChangeListener?.onSegmentOccupancyChange(id, oldState, state)
 				}
 			}
 

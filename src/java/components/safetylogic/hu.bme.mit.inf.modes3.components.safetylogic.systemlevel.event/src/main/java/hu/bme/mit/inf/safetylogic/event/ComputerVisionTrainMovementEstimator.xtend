@@ -65,7 +65,7 @@ class ComputerVisionTrainMovementEstimator implements IComputerVisionListener {
 				it.currentlyOn = estimatedInformation.get(it.id)
 				logger.info('''Train «LocomotivesConfiguration::INSTANCE.getLocomotiveNameById(it.id)» has arrived at «it.currentlyOn.id»''')
  			]
-			val movedTrains = model.trains.filter[it.currentlyOn !== null && it.currentlyOn.id !== estimatedInformation.get(it.id).id].toList()
+			val movedTrains = model.trains.filter[estimatedInformation.get(it.id) !== null && it.currentlyOn !== null && it.currentlyOn.id !== estimatedInformation.get(it.id).id].toList()
 			if(!movedTrains.empty && extensiveLogging) {
 				logger.info('''moved Trains = 
 				«movedTrains»''')
