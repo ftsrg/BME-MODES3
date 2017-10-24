@@ -21,7 +21,7 @@ private:
   StateMachine state;
 
 public:
-  InfSensor sensor[2];
+  InfraSensor sensor[2];
   void Init(int pinA, int pinB)
   {
     kocsiszam=0;
@@ -100,7 +100,7 @@ public:
   {
     kocsiszam++;
   }
-  InfSensor getSensor(int i){
+  InfraSensor getSensor(int i){
     return sensor[i];
   }
 };

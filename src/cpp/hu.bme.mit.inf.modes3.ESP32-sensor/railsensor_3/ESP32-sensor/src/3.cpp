@@ -3,7 +3,7 @@
 #define PASS "LaborImage"
 
 #include <MQTT_JSON.hpp>
-#include <InfraSensor.hpp>
+#include <InfraSensor.h>
 #include <SensorStatemachine.hpp>
 #include <RealTimeSelect.hpp>
 #include <RealTimeLength.h>
