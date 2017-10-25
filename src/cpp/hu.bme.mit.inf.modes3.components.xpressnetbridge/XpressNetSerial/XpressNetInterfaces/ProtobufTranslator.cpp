@@ -41,7 +41,6 @@ bool ProtobufTranslator::processMessage(std::string messageString)
         else if(message.mutable_turnoutcommand()->state() == modes3::protobuf::TurnoutStateValue::STRAIGHT) {
             turnoutState = TurnoutState::STRAIGHT;
         }
-        // ???
         else {
             return false;
         }
@@ -61,7 +60,6 @@ bool ProtobufTranslator::processMessage(std::string messageString)
             modes3::protobuf::TrainDirectionValue::FORWARD) {
             trainDirection = TrainDirection::FORWARD;
         }
-        //???
         else {
             return false;
         }
@@ -69,12 +67,6 @@ bool ProtobufTranslator::processMessage(std::string messageString)
         int trainSpeed = message.mutable_trainreferencespeedcommand()->referencespeed();
         ProtobufTranslator::setTrainSpeed(1, trainAddress, trainDirection, trainSpeed);
     }
-    // TrainFunction
-    else if(message.type() == modes3::protobuf::TRAIN_FUNCTION_COMMAND) {
-        // Not yet implemented.
-        return false;
-    }
-    // ???
     else {
         return false;
     }
@@ -235,7 +227,6 @@ bool ProtobufTranslator::sendCustomCommand(int messagePriority, int commandBytes
 void ProtobufTranslator::powerStateChanged(TrackPowerState powerState)
 {
     modes3::protobuf::Message wrapperMessage = modes3::protobuf::Message();
-    wrapperMessage.set_type(modes3::protobuf::DCC_OPERATIONS_STATE);
     wrapperMessage.set_type(modes3::protobuf::DCC_OPERATIONS_STATE);
 
     modes3::protobuf::DccOperations dccOperations;
