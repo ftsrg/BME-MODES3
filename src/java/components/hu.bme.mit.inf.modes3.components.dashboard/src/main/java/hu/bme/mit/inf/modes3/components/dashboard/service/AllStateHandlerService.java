@@ -56,10 +56,10 @@ public class AllStateHandlerService {
 		// sending information about train speeds
 		ITrainSpeedStateRegistry referenceSpeedState = DashboardManager.INSTANCE.getLocator()
 				.getTrainSpeedStateRegistry();
-		Set<Integer> addresses = referenceSpeedState.getReferenceTrainAddresses();
+		Set<Integer> addresses = referenceSpeedState.getTrainIds();
 		for (Integer id : addresses) {
-			TrainDirection direction = referenceSpeedState.getReferenceDirection(id);
-			Integer speed = referenceSpeedState.getReferenceSpeed(id);
+			TrainDirection direction = referenceSpeedState.getDirection(id);
+			Integer speed = referenceSpeedState.getSpeed(id);
 			Utils.sendTrainReferenceSpeedChange(metaBroadcaster, id, speed, direction);
 		}
 	}

@@ -2,18 +2,18 @@ package hu.bme.mit.inf.modes3.test.demo
 
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.reference.ITrainReferenceSpeedListener
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
 import org.slf4j.ILoggerFactory
 
-class TrainsDemo extends AbstractCommunicationComponent implements ITrainReferenceSpeedListener {
+class TrainsDemo extends AbstractCommunicationComponent implements ITrainSpeedStateListener {
 
 	val knownTrains = LocomotivesConfiguration.INSTANCE.locomotiveIds
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
-		locator.trainSpeedStateRegistry.addTrainReferenceSpeedListener(this)
+		locator.trainSpeedStateRegistry.addTrainSpeedStateListener(this)
 	}
 
 	override run() {
@@ -48,7 +48,7 @@ class TrainsDemo extends AbstractCommunicationComponent implements ITrainReferen
 		locator.dccCommander.stopTrains
 	}
 
-	override onTrainReferenceSpeed(int id, int speed, TrainDirection direction) {
+	override onTrainSpeedState(int id, int speed, TrainDirection direction) {
 		logger.info('''Train #«id» is «speed» fast in «direction» direction''')
 	}
 

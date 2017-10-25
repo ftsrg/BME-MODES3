@@ -26,7 +26,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interf
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentOccupancyChangeListener;
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentStateChangeListener;
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener;
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.reference.ITrainReferenceSpeedListener;
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateListener;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
@@ -35,7 +35,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;
 @Singleton
 @ManagedService(path = "/ws/state/{source}")
 public class StateChangeService implements ISegmentOccupancyChangeListener, ITurnoutStateChangeListener,
-		ISegmentStateChangeListener, ITrainReferenceSpeedListener, IComputerVisionListener {
+		ISegmentStateChangeListener, ITrainSpeedStateListener, IComputerVisionListener {
 
 	Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger(StateChangeService.class.getName());
 
@@ -58,7 +58,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentOccupancyChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentStateChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setTurnoutStateChangeListener(this);
-		DashboardManager.INSTANCE.getLocator().getTrainSpeedStateRegistry().addTrainReferenceSpeedListener(this);
+		DashboardManager.INSTANCE.getLocator().getTrainSpeedStateRegistry().addTrainSpeedStateListener(this);
 		DashboardManager.INSTANCE.getLocator().getComputerVisionCallback().setComputerVisionListener(this);
 		DashboardManager.INSTANCE.getSensorsDispatcher().setStateChangeService(this);
 	}
@@ -79,7 +79,7 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 	}
 
 	@Override
-	public void onTrainReferenceSpeed(int id, int speed, TrainDirection direction) {
+	public void onTrainSpeedState(int id, int speed, TrainDirection direction) {
 		Utils.sendTrainReferenceSpeedChange(metaBroadcaster, id, speed, direction);
 	}
 
