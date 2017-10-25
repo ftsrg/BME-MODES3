@@ -106,8 +106,7 @@ class ModelUtil implements IModelInteractor {
 	def private loadSectionResource() {
 		// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
 		RailRoadModelPackage.eINSTANCE.class
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel",
-			new XMIResourceFactoryImpl());
+		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel", new XMIResourceFactoryImpl());
 		resourceSet.getResource(URI.createURI("instance.railroadmodel"), true);
 	}
 

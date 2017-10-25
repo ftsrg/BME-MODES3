@@ -41,9 +41,8 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 				val oldSpeed = previousRecord?.key
 				val oldDirection = previousRecord?.value
 
-				if (previousRecord === null || oldSpeed != speed || oldDirection != direction) {
-					logger.
-						info('''TrainCurrentSpeed cached values are different from the new ones, id=«id», cachedSpeed=«oldSpeed», cachedDirection=«oldDirection»''')
+				if(previousRecord === null || oldSpeed != speed || oldDirection != direction) {
+					logger.info('''TrainCurrentSpeed cached values are different from the new ones, id=«id», cachedSpeed=«oldSpeed», cachedDirection=«oldDirection»''')
 					currentSpeedChangeListeners.forEach [
 						it.onTrainCurrentSpeedChange(id, oldSpeed, oldDirection, speed, direction)
 					]
@@ -62,9 +61,8 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 				val oldSpeed = previousRecord?.key
 				val oldDirection = previousRecord?.value
 
-				if (previousRecord === null || oldSpeed != speed || oldDirection != direction) {
-					logger.
-						info('''TrainReferenceSpeed cached values are different from the new ones, id=«id», cachedSpeed=«oldSpeed», cachedDirection=«oldDirection»''')
+				if(previousRecord === null || oldSpeed != speed || oldDirection != direction) {
+					logger.info('''TrainReferenceSpeed cached values are different from the new ones, id=«id», cachedSpeed=«oldSpeed», cachedDirection=«oldDirection»''')
 					referenceSpeedChangeListeners.forEach [
 						it.onTrainReferenceSpeedChange(id, oldSpeed, oldDirection, speed, direction)
 					]
@@ -78,18 +76,16 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	}
 
 	override getCurrentSpeed(int id) {
-		if (currentSpeeds.get(id) === null || currentSpeeds.get(id).key === null) {
-			logger.
-				trace('''The registry was asked for the current speed of Train #«id» but there is no information in the cache, default 0 speed is used instead''')
+		if(currentSpeeds.get(id) === null || currentSpeeds.get(id).key === null) {
+			logger.trace('''The registry was asked for the current speed of Train #«id» but there is no information in the cache, default 0 speed is used instead''')
 			currentSpeeds.put(id, new SimpleEntry(0, TrainDirection.FORWARD))
 		}
 		currentSpeeds.get(id)?.key
 	}
 
 	override getCurrentDirection(int id) {
-		if (currentSpeeds.get(id) === null || currentSpeeds.get(id).value === null) {
-			logger.
-				trace('''The registry was asked for the current direction of Train #«id» but there is no information in the cache, default «TrainDirection.FORWARD» direction is used instead''')
+		if(currentSpeeds.get(id) === null || currentSpeeds.get(id).value === null) {
+			logger.trace('''The registry was asked for the current direction of Train #«id» but there is no information in the cache, default «TrainDirection.FORWARD» direction is used instead''')
 
 			var currentSpeed = currentSpeeds.get(id)?.key
 			currentSpeed = if(currentSpeed === null) 0 else 0
@@ -112,18 +108,16 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	}
 
 	override getReferenceSpeed(int id) {
-		if (referenceSpeeds.get(id) === null || referenceSpeeds.get(id).key === null) {
-			logger.
-				trace('''The registry was asked for the reference speed of Train #«id» but there is no information in the cache, default 0 speed is used instead''')
+		if(referenceSpeeds.get(id) === null || referenceSpeeds.get(id).key === null) {
+			logger.trace('''The registry was asked for the reference speed of Train #«id» but there is no information in the cache, default 0 speed is used instead''')
 			referenceSpeeds.put(id, new SimpleEntry(0, TrainDirection.FORWARD))
 		}
 		referenceSpeeds.get(id)?.key
 	}
 
 	override getReferenceDirection(int id) {
-		if (referenceSpeeds.get(id) === null || referenceSpeeds.get(id).value === null) {
-			logger.
-				trace('''The registry was asked for the reference direction of Train #«id» but there is no information in the cache, default «TrainDirection.FORWARD» direction is used instead''')
+		if(referenceSpeeds.get(id) === null || referenceSpeeds.get(id).value === null) {
+			logger.trace('''The registry was asked for the reference direction of Train #«id» but there is no information in the cache, default «TrainDirection.FORWARD» direction is used instead''')
 
 			var referenceSpeed = referenceSpeeds.get(id)?.key
 			referenceSpeed = if(referenceSpeed === null) 0 else 0
