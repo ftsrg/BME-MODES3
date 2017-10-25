@@ -109,11 +109,11 @@ void AddDescriptorsImpl() {
       "obuf\032\013Enums.proto\"w\n\023TrainReferenceSpeed"
       "\022\017\n\007trainID\030\001 \001(\r\022\026\n\016referenceSpeed\030\002 \001("
       "\005\0227\n\tdirection\030\003 \001(\0162$.modes3.protobuf.T"
-      "rainDirectionValueB0\n,hu.bme.mit.inf.mod"
-      "es3.messaging.mms.messagesP\001b\006proto3"
+      "rainDirectionValueB2\n.hu.bme.mit.inf.mod"
+      "es3.messaging.proto.messagesP\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 236);
+      descriptor, 238);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TrainReferenceSpeed.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();

@@ -78,26 +78,16 @@ enum MessageType {
   NULL_ = 0,
   SEGMENT_COMMAND = 1,
   SEGMENT_STATE = 2,
-  TRAIN_CURRENT_SEGMENT = 3,
-  TRAIN_CURRENT_SPEED = 4,
-  TRAIN_DIRECTION_COMMAND = 5,
-  TRAIN_REFERENCE_SPEED = 7,
-  TRAIN_REFERENCE_SPEED_COMMAND = 8,
-  TURNOUT_COMMAND = 9,
-  TURNOUT_STATE = 10,
-  SEGMENT_OCCUPANCY = 11,
-  YAKINDU_RELEASE_TO = 12,
-  YAKINDU_CAN_GO_TO = 13,
-  YAKINDU_CANNOT_GO_TO = 14,
-  YAKINDU_RESERVE_TO = 15,
-  TURNOUT_REFERENCE_COMMAND = 16,
-  TURNOUT_REFERENCE_STATE = 17,
-  TRAIN_FUNCTION_COMMAND = 18,
-  TRAIN_FUNCTION_STATE = 19,
-  DCC_OPERATIONS_COMMAND = 20,
-  DCC_OPERATIONS_STATE = 21,
-  SEND_ALL_STATUS = 22,
-  COMPUTER_VISION_OBJECT_POSITIONS = 23,
+  TRAIN_REFERENCE_SPEED = 3,
+  TRAIN_REFERENCE_SPEED_COMMAND = 4,
+  TURNOUT_COMMAND = 5,
+  TURNOUT_STATE = 6,
+  SEGMENT_OCCUPANCY = 7,
+  TURNOUT_REFERENCE_STATE = 8,
+  DCC_OPERATIONS_COMMAND = 9,
+  DCC_OPERATIONS_STATE = 10,
+  SEND_ALL_STATUS = 11,
+  COMPUTER_VISION_OBJECT_POSITIONS = 12,
   MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
 };
@@ -179,27 +169,6 @@ inline bool TurnoutStateValue_Parse(
   return ::google::protobuf::internal::ParseNamedEnum<TurnoutStateValue>(
     TurnoutStateValue_descriptor(), name, value);
 }
-enum TrainFunctionValue {
-  OFF = 0,
-  ON = 1,
-  TrainFunctionValue_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  TrainFunctionValue_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool TrainFunctionValue_IsValid(int value);
-const TrainFunctionValue TrainFunctionValue_MIN = OFF;
-const TrainFunctionValue TrainFunctionValue_MAX = ON;
-const int TrainFunctionValue_ARRAYSIZE = TrainFunctionValue_MAX + 1;
-
-const ::google::protobuf::EnumDescriptor* TrainFunctionValue_descriptor();
-inline const ::std::string& TrainFunctionValue_Name(TrainFunctionValue value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    TrainFunctionValue_descriptor(), value);
-}
-inline bool TrainFunctionValue_Parse(
-    const ::std::string& name, TrainFunctionValue* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<TrainFunctionValue>(
-    TrainFunctionValue_descriptor(), name, value);
-}
 enum SegmentOccupancyValue {
   FREE = 0,
   OCCUPIED = 1,
@@ -220,30 +189,6 @@ inline bool SegmentOccupancyValue_Parse(
     const ::std::string& name, SegmentOccupancyValue* value) {
   return ::google::protobuf::internal::ParseNamedEnum<SegmentOccupancyValue>(
     SegmentOccupancyValue_descriptor(), name, value);
-}
-enum YakinduConnectionDirection {
-  CW = 0,
-  CCW = 1,
-  Y_TOP = 2,
-  Y_DIVERGENT = 3,
-  Y_STRAIGHT = 4,
-  YakinduConnectionDirection_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
-  YakinduConnectionDirection_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
-};
-bool YakinduConnectionDirection_IsValid(int value);
-const YakinduConnectionDirection YakinduConnectionDirection_MIN = CW;
-const YakinduConnectionDirection YakinduConnectionDirection_MAX = Y_STRAIGHT;
-const int YakinduConnectionDirection_ARRAYSIZE = YakinduConnectionDirection_MAX + 1;
-
-const ::google::protobuf::EnumDescriptor* YakinduConnectionDirection_descriptor();
-inline const ::std::string& YakinduConnectionDirection_Name(YakinduConnectionDirection value) {
-  return ::google::protobuf::internal::NameOfEnum(
-    YakinduConnectionDirection_descriptor(), value);
-}
-inline bool YakinduConnectionDirection_Parse(
-    const ::std::string& name, YakinduConnectionDirection* value) {
-  return ::google::protobuf::internal::ParseNamedEnum<YakinduConnectionDirection>(
-    YakinduConnectionDirection_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -297,20 +242,10 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TurnoutStateValue>() {
   return ::modes3::protobuf::TurnoutStateValue_descriptor();
 }
-template <> struct is_proto_enum< ::modes3::protobuf::TrainFunctionValue> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::TrainFunctionValue>() {
-  return ::modes3::protobuf::TrainFunctionValue_descriptor();
-}
 template <> struct is_proto_enum< ::modes3::protobuf::SegmentOccupancyValue> : ::google::protobuf::internal::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::SegmentOccupancyValue>() {
   return ::modes3::protobuf::SegmentOccupancyValue_descriptor();
-}
-template <> struct is_proto_enum< ::modes3::protobuf::YakinduConnectionDirection> : ::google::protobuf::internal::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::modes3::protobuf::YakinduConnectionDirection>() {
-  return ::modes3::protobuf::YakinduConnectionDirection_descriptor();
 }
 
 }  // namespace protobuf
