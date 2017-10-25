@@ -10,6 +10,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interface
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 
 interface ISafetyLogicBridge {
 	def void sendSegmentOccupation(int id, SegmentOccupancy state)
@@ -19,6 +20,8 @@ interface ISafetyLogicBridge {
 	def void sendTurnoutState(int id, TurnoutState state)
 
 	def void sendSegmentCommand(int id, SegmentState state)
+	
+	def void sendTrainReferenceSpeed(int id, int speed, TrainDirection trainDirection)
 
 	/**
 	 * Send a command to a turnout, denoted by its segment ID. (The ID of the segment which indicates the turnout's occupancy.)

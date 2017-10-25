@@ -11,6 +11,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import hu.bme.mit.inf.safetylogic.event.sl.ISafetyLogic
 import org.slf4j.ILoggerFactory
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 
 class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafetyLogicBridge {
 
@@ -72,6 +73,10 @@ class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafet
 
 	override getTrainSpeedStateRegistry() {
 		locator.trainSpeedStateRegistry
+	}
+	
+	override sendTrainReferenceSpeed(int id, int speed, TrainDirection trainDirection) {
+		locator.trainCommander.setTrainReferenceSpeedAndDirection(id, speed, trainDirection)
 	}
 
 }
