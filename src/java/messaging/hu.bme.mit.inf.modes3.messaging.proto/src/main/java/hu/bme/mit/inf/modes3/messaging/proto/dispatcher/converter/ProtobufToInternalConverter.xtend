@@ -8,9 +8,6 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.PhysicalObject
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.ThreeDPosition
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSegmentMessage
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSpeedMessage
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainReferenceSpeedMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
@@ -23,10 +20,6 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SendAllStatus
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSegment
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSpeed
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionCommand
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutCommand
@@ -47,18 +40,11 @@ class ProtobufToInternalConverter {
 		new hu.bme.mit.inf.modes3.messaging.messages.command.SegmentCommand(segmentId, state)
 	}
 
-	def convertToInternalMessage(TrainFunctionCommand protoMessage) {
-		val trainId = protoMessage.trainID
-		val trainFunction = ProtobufEnumTransformator::toGeneral(protoMessage.trainFunctionValue)
-		new hu.bme.mit.inf.modes3.messaging.messages.command.TrainFunctionCommand(trainId, trainFunction)
-	}
-
 	def convertToInternalMessage(TrainReferenceSpeedCommand protoMessage) {
 		val trainId = protoMessage.trainID
 		val referenceSpeed = protoMessage.referenceSpeed
 		val direction = ProtobufEnumTransformator::toGeneral(protoMessage.direction)
-		new hu.bme.mit.inf.modes3.messaging.messages.command.TrainReferenceSpeedCommand(trainId, referenceSpeed,
-			direction)
+		new hu.bme.mit.inf.modes3.messaging.messages.command.TrainReferenceSpeedCommand(trainId, referenceSpeed, direction)
 	}
 
 	def convertToInternalMessage(TurnoutCommand protoMessage) {
@@ -71,19 +57,6 @@ class ProtobufToInternalConverter {
 		val segmentId = protoMessage.segmentID
 		val state = ProtobufEnumTransformator::toGeneral(protoMessage.state)
 		new SegmentStateMessage(segmentId, state)
-	}
-
-	def convertToInternalMessage(TrainCurrentSegment protoMessage) {
-		val trainId = protoMessage.trainID
-		val segmentId = protoMessage.segmentID
-		new TrainCurrentSegmentMessage(trainId, segmentId)
-	}
-
-	def convertToInternalMessage(TrainCurrentSpeed protoMessage) {
-		val trainId = protoMessage.trainID
-		val currentSpeed = protoMessage.currentSpeed
-		val direction = ProtobufEnumTransformator::toGeneral(protoMessage.direction)
-		new TrainCurrentSpeedMessage(trainId, currentSpeed, direction)
 	}
 
 	def convertToInternalMessage(TrainReferenceSpeed protoMessage) {
@@ -114,12 +87,6 @@ class ProtobufToInternalConverter {
 	def convertToInternalMessage(DccOperationsState protoMessage) {
 		val dccOperations = ProtobufEnumTransformator::toGeneral(protoMessage.dccOperations)
 		new DccOperationsStateMessage(dccOperations)
-	}
-
-	def convertToInternalMessage(TrainFunctionState protoMessage) {
-		val trainId = protoMessage.trainID
-		val trainFunction = ProtobufEnumTransformator::toGeneral(protoMessage.trainFunctionValue)
-		new TrainFunctionStateMessage(trainId, trainFunction)
 	}
 
 	def convertToInternalMessage(SendAllStatus protoMessage) {

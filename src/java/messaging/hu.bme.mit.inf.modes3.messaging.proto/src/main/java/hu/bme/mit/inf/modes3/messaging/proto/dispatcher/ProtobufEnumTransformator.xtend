@@ -4,12 +4,10 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.DccOperations
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
-import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainFunction
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentOccupancyValue
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentStateValue
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainDirectionValue
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionValue
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutStateValue
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
@@ -18,8 +16,7 @@ import org.slf4j.LoggerFactory
 
 class ProtobufEnumTransformator {
 
-	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger = LoggerFactory.getLogger(
-		ProtobufEnumTransformator.name)
+	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger = LoggerFactory.getLogger(ProtobufEnumTransformator.name)
 
 	def static setLogger(ILoggerFactory factory) {
 		logger = factory.getLogger(ProtobufEnumTransformator.name)
@@ -56,13 +53,6 @@ class ProtobufEnumTransformator {
 		switch (direction) {
 			case FORWARD: TrainDirectionValue.FORWARD
 			case BACKWARD: TrainDirectionValue.BACKWARD
-		}
-	}
-
-	def static TrainFunctionValue toSpecific(TrainFunction function) {
-		switch (function) {
-			case OFF: TrainFunctionValue.OFF
-			case ON: TrainFunctionValue.ON
 		}
 	}
 
@@ -122,19 +112,6 @@ class ProtobufEnumTransformator {
 			case UNRECOGNIZED: {
 				logger.warn("TrainDirection is UNRECOGNIZED, default trainDirection.FORWARD is used instead")
 				TrainDirection.FORWARD
-			}
-		}
-	}
-
-	def static TrainFunction toGeneral(TrainFunctionValue function) {
-		switch (function) {
-			case OFF:
-				TrainFunction.OFF
-			case ON:
-				TrainFunction.ON
-			case UNRECOGNIZED: {
-				logger.warn("TrainFunction is UNRECOGNIZED, default trainFunction.OFF is used instead")
-				TrainFunction.OFF
 			}
 		}
 	}

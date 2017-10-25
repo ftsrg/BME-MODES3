@@ -37,21 +37,6 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
 					segmentStateHandler?.handleMessage(internalMessage)
 				}
-				case MessageType.TRAIN_CURRENT_SEGMENT: {
-					val protoMessage = message.trainCurrentSegment
-					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
-					trainCurrentSegmentHandler?.handleMessage(internalMessage)
-				}
-				case MessageType.TRAIN_CURRENT_SPEED: {
-					val protoMessage = message.trainCurrentSpeed
-					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
-					trainCurrentSpeedHandler?.handleMessage(internalMessage)
-				}
-				case MessageType.TRAIN_FUNCTION_COMMAND: {
-					val protoMessage = message.trainFunctionCommand
-					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
-					trainFunctionCommandHandler?.handleMessage(internalMessage)
-				}
 				case MessageType.TRAIN_REFERENCE_SPEED: {
 					val protoMessage = message.trainReferenceSpeed
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
@@ -61,11 +46,6 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 					val protoMessage = message.trainReferenceSpeedCommand
 					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
 					trainReferenceSpeedCommandHandler?.handleMessage(internalMessage)
-				}
-				case MessageType.TRAIN_FUNCTION_STATE: {
-					val protoMessage = message.trainFunctionState
-					val internalMessage = protobufToInternalConverter.convertToInternalMessage(protoMessage)
-					trainFunctionStateHandler?.handleMessage(internalMessage)
 				}
 				case MessageType.TURNOUT_COMMAND: {
 					val protoMessage = message.turnoutCommand
