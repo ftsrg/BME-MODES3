@@ -39,10 +39,12 @@ public class TrackDisableStrategy implements ISegmentDisableStrategy {
 public class XPressZeroSpeedDisableStrategy implements ITrainStopStrategy {
 	MessagingService mms
 	Logger logger
+	ITrainSpeedStateRegistry speedRegistry
 
-	new(MessagingService mms, Logger logger) {
+	new(MessagingService mms, Logger logger, ITrainSpeedStateRegistry speedRegistry) {
 		this.mms = mms
 		this.logger = logger
+		this.speedRegistry = speedRegistry
 	}
 
 	override stopTrain(Train train) {
@@ -62,7 +64,7 @@ public class XPressInvertDirectionStrategy implements ITrainStopStrategy {
 	}
 
 	override stopTrain(Train train) {
-		mms.setTrainReferenceSpeedAndDirection(train.id, 0,
+		mms.setTrainReferenceSpeedAndDirection(train.id, speedRegistry.getReferenceSpeed(train.id),
 			if(speedRegistry.getReferenceDirection(train.id) == TrainDirection.FORWARD) TrainDirection.
 				BACKWARD else TrainDirection.FORWARD)
 	}
