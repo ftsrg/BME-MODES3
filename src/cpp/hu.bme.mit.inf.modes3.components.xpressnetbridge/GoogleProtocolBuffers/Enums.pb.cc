@@ -25,7 +25,7 @@ namespace protobuf_Enums_2eproto {
 
 namespace {
 
-const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[8];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[6];
 
 }  // namespace
 
@@ -83,35 +83,25 @@ void AddDescriptorsImpl() {
   static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\013Enums.proto\022\017modes3.protobuf*U\n\rDccOpe"
       "rations\022\025\n\021NORMAL_OPERATIONS\020\000\022\030\n\024STOP_A"
-      "LL_LOCOMOTIVES\020\001\022\023\n\017STOP_OPERATIONS\020\002*\321\004"
+      "LL_LOCOMOTIVES\020\001\022\023\n\017STOP_OPERATIONS\020\002*\312\002"
       "\n\013MessageType\022\010\n\004NULL\020\000\022\023\n\017SEGMENT_COMMA"
-      "ND\020\001\022\021\n\rSEGMENT_STATE\020\002\022\031\n\025TRAIN_CURRENT"
-      "_SEGMENT\020\003\022\027\n\023TRAIN_CURRENT_SPEED\020\004\022\033\n\027T"
-      "RAIN_DIRECTION_COMMAND\020\005\022\031\n\025TRAIN_REFERE"
-      "NCE_SPEED\020\007\022!\n\035TRAIN_REFERENCE_SPEED_COM"
-      "MAND\020\010\022\023\n\017TURNOUT_COMMAND\020\t\022\021\n\rTURNOUT_S"
-      "TATE\020\n\022\025\n\021SEGMENT_OCCUPANCY\020\013\022\026\n\022YAKINDU"
-      "_RELEASE_TO\020\014\022\025\n\021YAKINDU_CAN_GO_TO\020\r\022\030\n\024"
-      "YAKINDU_CANNOT_GO_TO\020\016\022\026\n\022YAKINDU_RESERV"
-      "E_TO\020\017\022\035\n\031TURNOUT_REFERENCE_COMMAND\020\020\022\033\n"
-      "\027TURNOUT_REFERENCE_STATE\020\021\022\032\n\026TRAIN_FUNC"
-      "TION_COMMAND\020\022\022\030\n\024TRAIN_FUNCTION_STATE\020\023"
-      "\022\032\n\026DCC_OPERATIONS_COMMAND\020\024\022\030\n\024DCC_OPER"
-      "ATIONS_STATE\020\025\022\023\n\017SEND_ALL_STATUS\020\026\022$\n C"
-      "OMPUTER_VISION_OBJECT_POSITIONS\020\027*.\n\021Seg"
-      "mentStateValue\022\014\n\010DISABLED\020\000\022\013\n\007ENABLED\020"
-      "\001*0\n\023TrainDirectionValue\022\013\n\007FORWARD\020\000\022\014\n"
-      "\010BACKWARD\020\001*0\n\021TurnoutStateValue\022\014\n\010STRA"
-      "IGHT\020\000\022\r\n\tDIVERGENT\020\001*%\n\022TrainFunctionVa"
-      "lue\022\007\n\003OFF\020\000\022\006\n\002ON\020\001*/\n\025SegmentOccupancy"
-      "Value\022\010\n\004FREE\020\000\022\014\n\010OCCUPIED\020\001*Y\n\032Yakindu"
-      "ConnectionDirection\022\006\n\002CW\020\000\022\007\n\003CCW\020\001\022\t\n\005"
-      "Y_TOP\020\002\022\017\n\013Y_DIVERGENT\020\003\022\016\n\nY_STRAIGHT\020\004"
-      "B0\n,hu.bme.mit.inf.modes3.messaging.mms."
-      "messagesP\001b\006proto3"
+      "ND\020\001\022\021\n\rSEGMENT_STATE\020\002\022\031\n\025TRAIN_REFEREN"
+      "CE_SPEED\020\003\022!\n\035TRAIN_REFERENCE_SPEED_COMM"
+      "AND\020\004\022\023\n\017TURNOUT_COMMAND\020\005\022\021\n\rTURNOUT_ST"
+      "ATE\020\006\022\025\n\021SEGMENT_OCCUPANCY\020\007\022\033\n\027TURNOUT_"
+      "REFERENCE_STATE\020\010\022\032\n\026DCC_OPERATIONS_COMM"
+      "AND\020\t\022\030\n\024DCC_OPERATIONS_STATE\020\n\022\023\n\017SEND_"
+      "ALL_STATUS\020\013\022$\n COMPUTER_VISION_OBJECT_P"
+      "OSITIONS\020\014*.\n\021SegmentStateValue\022\014\n\010DISAB"
+      "LED\020\000\022\013\n\007ENABLED\020\001*0\n\023TrainDirectionValu"
+      "e\022\013\n\007FORWARD\020\000\022\014\n\010BACKWARD\020\001*0\n\021TurnoutS"
+      "tateValue\022\014\n\010STRAIGHT\020\000\022\r\n\tDIVERGENT\020\001*/"
+      "\n\025SegmentOccupancyValue\022\010\n\004FREE\020\000\022\014\n\010OCC"
+      "UPIED\020\001B2\n.hu.bme.mit.inf.modes3.messagi"
+      "ng.proto.messagesP\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1098);
+      descriptor, 707);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Enums.proto", &protobuf_RegisterTypes);
 }
@@ -157,23 +147,13 @@ bool MessageType_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+    case 6:
     case 7:
     case 8:
     case 9:
     case 10:
     case 11:
     case 12:
-    case 13:
-    case 14:
-    case 15:
-    case 16:
-    case 17:
-    case 18:
-    case 19:
-    case 20:
-    case 21:
-    case 22:
-    case 23:
       return true;
     default:
       return false;
@@ -222,45 +202,14 @@ bool TurnoutStateValue_IsValid(int value) {
   }
 }
 
-const ::google::protobuf::EnumDescriptor* TrainFunctionValue_descriptor() {
-  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_Enums_2eproto::file_level_enum_descriptors[5];
-}
-bool TrainFunctionValue_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-      return true;
-    default:
-      return false;
-  }
-}
-
 const ::google::protobuf::EnumDescriptor* SegmentOccupancyValue_descriptor() {
   protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_Enums_2eproto::file_level_enum_descriptors[6];
+  return protobuf_Enums_2eproto::file_level_enum_descriptors[5];
 }
 bool SegmentOccupancyValue_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
-      return true;
-    default:
-      return false;
-  }
-}
-
-const ::google::protobuf::EnumDescriptor* YakinduConnectionDirection_descriptor() {
-  protobuf_Enums_2eproto::protobuf_AssignDescriptorsOnce();
-  return protobuf_Enums_2eproto::file_level_enum_descriptors[7];
-}
-bool YakinduConnectionDirection_IsValid(int value) {
-  switch (value) {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-    case 4:
       return true;
     default:
       return false;

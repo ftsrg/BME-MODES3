@@ -103,12 +103,12 @@ void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\023SendAllStatus.proto\022\017modes3.protobuf\032\013"
-      "Enums.proto\"\017\n\rSendAllStatusB0\n,hu.bme.m"
-      "it.inf.modes3.messaging.mms.messagesP\001b\006"
-      "proto3"
+      "Enums.proto\"\017\n\rSendAllStatusB2\n.hu.bme.m"
+      "it.inf.modes3.messaging.proto.messagesP\001"
+      "b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 126);
+      descriptor, 128);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SendAllStatus.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();

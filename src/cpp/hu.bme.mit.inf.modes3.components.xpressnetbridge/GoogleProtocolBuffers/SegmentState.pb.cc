@@ -107,11 +107,11 @@ void AddDescriptorsImpl() {
       "\n\022SegmentState.proto\022\017modes3.protobuf\032\013E"
       "nums.proto\"T\n\014SegmentState\022\021\n\tsegmentID\030"
       "\001 \001(\r\0221\n\005state\030\002 \001(\0162\".modes3.protobuf.S"
-      "egmentStateValueB0\n,hu.bme.mit.inf.modes"
-      "3.messaging.mms.messagesP\001b\006proto3"
+      "egmentStateValueB2\n.hu.bme.mit.inf.modes"
+      "3.messaging.proto.messagesP\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 194);
+      descriptor, 196);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SegmentState.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();

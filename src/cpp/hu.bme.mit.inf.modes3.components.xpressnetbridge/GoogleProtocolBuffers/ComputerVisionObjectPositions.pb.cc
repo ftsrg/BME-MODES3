@@ -219,11 +219,11 @@ void AddDescriptorsImpl() {
       "uf.TwoDPosition\022\017\n\007tracked\030\004 \003(\010\"1\n\016Thre"
       "eDPosition\022\t\n\001x\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\t\n\001z\030\003 "
       "\001(\001\"$\n\014TwoDPosition\022\t\n\001x\030\001 \001(\001\022\t\n\001y\030\002 \001("
-      "\001B0\n,hu.bme.mit.inf.modes3.messaging.mms"
-      ".messagesP\001b\006proto3"
+      "\001B2\n.hu.bme.mit.inf.modes3.messaging.pro"
+      "to.messagesP\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 779);
+      descriptor, 781);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ComputerVisionObjectPositions.proto", &protobuf_RegisterTypes);
 }

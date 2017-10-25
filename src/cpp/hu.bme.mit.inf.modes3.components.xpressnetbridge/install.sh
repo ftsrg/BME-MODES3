@@ -13,14 +13,14 @@ cd ../../
 pwd
 
 # generate protoc files
-protoc --proto_path=java/messaging/hu.bme.mit.inf.modes3.messaging.proto/src/main/proto --cpp_out=cpp/hu.bme.mit.inf.modes3.components.xpressnetbridge/GoogleProtocolBuffers/ java/messaging/hu.bme.mit.inf.modes3.messaging.proto/src/main/proto/*
+protoc --proto_path=java/messaging/hu.bme.mit.inf.modes3.messaging.proto.messages/src/main/proto --cpp_out=cpp/hu.bme.mit.inf.modes3.components.xpressnetbridge/GoogleProtocolBuffers/ java/messaging/hu.bme.mit.inf.modes3.messaging.proto.messages/src/main/proto/*
 
 # go back to xpressnetbridge folder
 cd ./cpp/hu.bme.mit.inf.modes3.components.xpressnetbridge
 
 # build xpressnetbridge itself
-#mkdir build
-#cd build
-#cmake ../
-#make -j2
+mkdir build
+cd build
+cmake ../
+make -j4
 
