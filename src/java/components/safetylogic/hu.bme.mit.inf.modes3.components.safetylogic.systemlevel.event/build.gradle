@@ -20,10 +20,17 @@ dependencies {
 	compile project(':messaging:hu.bme.mit.inf.modes3.messaging.communication')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model')
 	compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.patterns')
-	// compile project(':components:safetylogic:hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.rules')
 }
 
 /*
+
+distZip {
+    into(project.name) {
+        from '.'
+        include 'instance.railroadmodel'
+    }
+}
+
 remotes {
 	safetylogic {
 		role('turnout')

@@ -2,7 +2,6 @@ package hu.bme.mit.inf.safetylogic.event.sl
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
@@ -57,7 +56,7 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		model = new ModelUtil(factory)
 
-		model.segments.map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
+		model.segments.forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
 	}
 
@@ -133,7 +132,7 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 					val senseID = turnoutToSenseIDMap.get(id)
 					logger.info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
 					println(model.turnouts.filter[senseID.contains(it.id)].size)
-					model.turnouts.filter[senseID.contains(it.id)].map[it as Turnout].forEach [
+					model.turnouts.filter[senseID.contains(it.id)].forEach [
 						it.currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
 						logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
 					]
