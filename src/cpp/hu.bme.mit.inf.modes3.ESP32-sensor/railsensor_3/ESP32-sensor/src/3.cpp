@@ -60,6 +60,8 @@ void setup()
   TrainSelect.AddTrain("NOTHING", 8.0);
 
   stateMachine.Init(13, 27); // stateMachine init
+
+  initialize(send); // Simon's sensor init
 }
 
 unsigned long lastLoop = 0;
@@ -74,15 +76,17 @@ void loop()
   }
 
   stateMachine.Update();
-  if (stateMachine.GetState() == Datasend)
+  if (stateMachine.GetState() == Datasend)            //Train left
   {
     Length.Reset();
     RTSpeed.Reset();
     send.EventSend(false, false);
+    stopMeasurement();
   }
-  if (stateMachine.GetState() == Firstdetect)
+  if (stateMachine.GetState() == Firstdetect)         //Train arrived
   {
     send.EventSend(true, stateMachine.GetDirection());
+    startMeasurement();
   }
 
   if (RTSpeed.Update())
