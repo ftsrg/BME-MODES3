@@ -28,7 +28,7 @@ String ForceDriver::generateOut(){
   return buffer;
 }
 
-ForceDriver::ForceDriver():SensorDriver("Force"){
+ForceDriver::ForceDriver():SensorDriver("force"){
   
 }
 
