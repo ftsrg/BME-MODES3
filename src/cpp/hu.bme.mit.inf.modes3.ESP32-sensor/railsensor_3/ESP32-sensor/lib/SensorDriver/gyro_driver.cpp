@@ -2,7 +2,7 @@
 #include "gyro_driver.h"
 
 
-GyroDriver::GyroDriver():SensorDriver("Gyro"){
+GyroDriver::GyroDriver():SensorDriver("gyro"){
   
 }
 
