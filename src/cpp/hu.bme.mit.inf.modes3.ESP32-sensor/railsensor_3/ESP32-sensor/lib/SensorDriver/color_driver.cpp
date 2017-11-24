@@ -36,7 +36,7 @@ String ColorDriver::generateOut(){
 }
 
 
-ColorDriver::ColorDriver():SensorDriver("Color"){
+ColorDriver::ColorDriver():SensorDriver("color"){
   
 }
 
