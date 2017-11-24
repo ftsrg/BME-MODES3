@@ -147,7 +147,7 @@ void MQTT_JSON::sensorErrorSend(SensorDriver* driver)
   root["sender"] = DEVICE_NAME;
   root["time"] = getTime();
   root["type"] = "error";
-  root["data"] = driver->typeName+" sensor is frosen, attempting to restart";
+  root["data"] = driver->typeName;
   root.printTo(json, maxSize);
   client.publish(BDATA_CH, json);
   client.publish(DATA_CH, json);
