@@ -1,0 +1,41 @@
+{
+	"cameratype": "ximea",
+	"numberofcameras": 2,
+	"exposure": 10000,
+	"gain": 5,
+	"fps": 40,
+	"path_to_matrices": "matrices.yml",
+	"imageprocessors": [{
+		"type": "irtd",
+		"specificvalues": {
+			"threshold": 150,
+			"duration" : 50,
+			"setuptime": 20
+		}
+	}
+	],
+	"show_window": "true",
+	"send_raw_data": "false",
+	"send_data": "false",
+	"objects": [{
+		"name": "human",
+		"numberofparts": 4,
+		"markertype": "irtd",
+		"limit": -1,
+		"markers": [{
+			"name": "la",
+			"id": 0
+		}, {
+			"name": "ra",
+			"id": 1
+		}, {
+			"name": "ll",
+			"id": 2
+		},
+		{
+			"name": "rl",
+			"id": 3
+		}]
+
+	}]
+}

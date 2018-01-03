@@ -1,0 +1,39 @@
+{
+	"cameratype": "ximea",
+	"numberofcameras": 1,
+	"exposure": 10000,
+	"gain": 5,
+	"fps": 30,
+	"path_to_matrices": "matrices.yml",
+	"imageprocessors": [{
+		"type": "aruco",
+		"specificvalues": [{
+			"dictionary": 0
+			}]
+		}
+	],
+	"show_window": "true",
+	"send_raw_data": "false",
+	"send_data": "false",
+	"objects": [{
+		"name": "human",
+		"numberofparts": 4,
+		"markertype": "aruco",
+		"limit": -1,
+		"markers": [{
+			"name": "la",
+			"id": 40
+		}, {
+			"name": "ra",
+			"id": 1
+		}, {
+			"name": "ll",
+			"id": 2
+		},
+		{
+			"name": "rl",
+			"id": 3
+		}]
+
+	}]
+}

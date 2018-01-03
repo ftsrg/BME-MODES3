@@ -1,0 +1,93 @@
+{
+  "frameprovider": {
+    "type": "default",
+	"number":1,
+    "exposure":-8,
+	"fps":30,
+	"gain":0,
+	"width":1920,
+	"height":1080
+  },
+  "visualizer": {
+    "type": "simple",
+    "windowname": "camera",
+    "delay": 500
+  },
+  "objects": [
+    {
+      "name": "train_1",
+      "markertype": "aruco",
+      "markers": [
+        {
+          "name": "train_1",
+          "id": 0
+        }
+      ]
+    },
+	{
+      "name": "train_2",
+      "markertype": "aruco",
+      "markers": [
+        {
+          "name": "train_2",
+          "id": 1
+        }
+      ]
+    },
+	{
+      "name": "train_3",
+      "markertype": "aruco",
+      "markers": [
+        {
+          "name": "train_3",
+          "id": 2
+        }
+      ]
+    },
+	{
+      "name": "table",
+	  "limit":1,
+      "markertype": "aruco",
+      "markers": [
+        {
+          "name": "top_left",
+          "id": 3
+        },
+		{
+		  "name":"top_right",
+		  "id": 4
+		},
+		{
+		  "name":"bottom_left",
+		  "id": 5
+		},
+		{
+		  "name":"bottom_right",
+		  "id": 6
+		}
+      ]
+    }
+	],
+  "imageprocessors": [
+    {
+      "type": "aruco",
+      "dictionary": 0
+    }
+  ],
+  "datasenders": [
+    {
+      "type": "zeromq",
+      "topic": "train_positions",
+      "bind_addresses": [ "tcp://*:5557" ]
+    }
+  ],
+  ,
+  "datasenders": [
+    {
+      "type": "mqtt",
+	  "clientid":"computervision",
+      "topic": "train_positions",
+      "brokerurl": "tcp://localhost:1883"
+    }
+  ]
+}
