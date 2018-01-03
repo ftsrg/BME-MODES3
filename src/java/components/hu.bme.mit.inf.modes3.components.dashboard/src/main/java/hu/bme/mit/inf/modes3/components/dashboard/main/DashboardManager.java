@@ -1,9 +1,7 @@
 package hu.bme.mit.inf.modes3.components.dashboard.main;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.atmosphere.container.Jetty9AsyncSupportWithWebSocket;
 import org.atmosphere.cpr.ApplicationConfig;
