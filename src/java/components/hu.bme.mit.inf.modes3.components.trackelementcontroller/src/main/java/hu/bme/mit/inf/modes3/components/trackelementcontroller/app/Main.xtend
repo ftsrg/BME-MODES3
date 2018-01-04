@@ -4,9 +4,13 @@ import hu.bme.mit.inf.modes3.components.trackelementcontroller.TrackElementContr
 import hu.bme.mit.inf.modes3.components.trackelementcontroller.bridge.TrackElementControllerBridge
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
+import hu.bme.mit.inf.modes3.messaging.messages.command.SegmentCommand
+import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
+import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.SegmentDirection
 import java.net.InetAddress
 import org.slf4j.impl.SimpleLoggerFactory
 
@@ -27,10 +31,13 @@ class Main {
 		logger.info("Hostname: " + hostname);
 		val turnoutID = Integer.valueOf(hostname.split("\\.").head.replace('t', ''));
 		val controlledSections = LayoutConfiguration.INSTANCE.getControlledSections(turnoutID)
-		val segmentsInVicinity = LayoutConfiguration.INSTANCE.getTurnoutVicinitySegments(turnoutID)
+		val facingSegment = LayoutConfiguration.INSTANCE.getTurnoutVicinitySegmentsByDirection(turnoutID, SegmentDirection.FACING)
+		val turnoutSegmentItself = LayoutConfiguration.INSTANCE.getSegmentIdsOfTurnout(turnoutID)
 
-		val sectionTopics = controlledSections.map[TopicFactory::createSegmentTopics(it)].flatten.toSet
-		val segmentVicinityOccupancyTopics = segmentsInVicinity.map[TopicFactory::createSegmentTopics(it)].flatten.filter[it.contains("occupancy")].toSet
+		val sectionTopics = controlledSections.map[TopicFactory::createSegmentTopics(it, #{SegmentCommand, SegmentStateMessage})].flatten.toSet
+		val facingSegmentOccupancyTopic = facingSegment.map[TopicFactory::createSegmentTopics(it, #{SegmentOccupancyMessage})].flatten.toSet
+		val turnoutOccupancyTopic = turnoutSegmentItself.map[TopicFactory::createSegmentTopics(it, #{SegmentOccupancyMessage})].flatten.toSet
+
 		val turnoutTopics = TopicFactory::createTurnoutTopics(turnoutID)
 		val defaultTopics = TopicFactory::createDefaultTopics
 
@@ -38,7 +45,8 @@ class Main {
 		topics.addAll(turnoutTopics)
 		topics.addAll(sectionTopics)
 		topics.addAll(defaultTopics)
-		topics.addAll(segmentVicinityOccupancyTopics)
+		topics.addAll(facingSegmentOccupancyTopic)
+		topics.addAll(turnoutOccupancyTopic)
 
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
 		val component = new TrackElementController(turnoutID, loggerFactory)

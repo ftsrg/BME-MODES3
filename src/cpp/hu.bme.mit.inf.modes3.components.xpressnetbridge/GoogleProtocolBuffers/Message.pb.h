@@ -34,21 +34,12 @@
 #include "Enums.pb.h"
 #include "SegmentCommand.pb.h"
 #include "SegmentState.pb.h"
-#include "TrainCurrentSegment.pb.h"
-#include "TrainCurrentSpeed.pb.h"
-#include "TrainFunctionCommand.pb.h"
-#include "TrainFunctionState.pb.h"
 #include "TrainReferenceSpeed.pb.h"
 #include "TrainReferenceSpeedCommand.pb.h"
 #include "TurnoutCommand.pb.h"
 #include "TurnoutState.pb.h"
-#include "TurnoutReferenceCommand.pb.h"
 #include "TurnoutReferenceState.pb.h"
 #include "SegmentOccupancy.pb.h"
-#include "YakinduReleaseTo.pb.h"
-#include "YakinduCanGoTo.pb.h"
-#include "YakinduCannotGoTo.pb.h"
-#include "YakinduReserveTo.pb.h"
 #include "SendAllStatus.pb.h"
 #include "ComputerVisionObjectPositions.pb.h"
 // @@protoc_insertion_point(includes)
@@ -179,172 +170,91 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::modes3::protobuf::SegmentState* release_segmentstate();
   void set_allocated_segmentstate(::modes3::protobuf::SegmentState* segmentstate);
 
-  // .modes3.protobuf.TrainCurrentSegment trainCurrentSegment = 4;
-  bool has_traincurrentsegment() const;
-  void clear_traincurrentsegment();
-  static const int kTrainCurrentSegmentFieldNumber = 4;
-  const ::modes3::protobuf::TrainCurrentSegment& traincurrentsegment() const;
-  ::modes3::protobuf::TrainCurrentSegment* mutable_traincurrentsegment();
-  ::modes3::protobuf::TrainCurrentSegment* release_traincurrentsegment();
-  void set_allocated_traincurrentsegment(::modes3::protobuf::TrainCurrentSegment* traincurrentsegment);
-
-  // .modes3.protobuf.TrainCurrentSpeed trainCurrentSpeed = 5;
-  bool has_traincurrentspeed() const;
-  void clear_traincurrentspeed();
-  static const int kTrainCurrentSpeedFieldNumber = 5;
-  const ::modes3::protobuf::TrainCurrentSpeed& traincurrentspeed() const;
-  ::modes3::protobuf::TrainCurrentSpeed* mutable_traincurrentspeed();
-  ::modes3::protobuf::TrainCurrentSpeed* release_traincurrentspeed();
-  void set_allocated_traincurrentspeed(::modes3::protobuf::TrainCurrentSpeed* traincurrentspeed);
-
-  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 7;
+  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 4;
   bool has_trainreferencespeed() const;
   void clear_trainreferencespeed();
-  static const int kTrainReferenceSpeedFieldNumber = 7;
+  static const int kTrainReferenceSpeedFieldNumber = 4;
   const ::modes3::protobuf::TrainReferenceSpeed& trainreferencespeed() const;
   ::modes3::protobuf::TrainReferenceSpeed* mutable_trainreferencespeed();
   ::modes3::protobuf::TrainReferenceSpeed* release_trainreferencespeed();
   void set_allocated_trainreferencespeed(::modes3::protobuf::TrainReferenceSpeed* trainreferencespeed);
 
-  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
+  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 5;
   bool has_trainreferencespeedcommand() const;
   void clear_trainreferencespeedcommand();
-  static const int kTrainReferenceSpeedCommandFieldNumber = 8;
+  static const int kTrainReferenceSpeedCommandFieldNumber = 5;
   const ::modes3::protobuf::TrainReferenceSpeedCommand& trainreferencespeedcommand() const;
   ::modes3::protobuf::TrainReferenceSpeedCommand* mutable_trainreferencespeedcommand();
   ::modes3::protobuf::TrainReferenceSpeedCommand* release_trainreferencespeedcommand();
   void set_allocated_trainreferencespeedcommand(::modes3::protobuf::TrainReferenceSpeedCommand* trainreferencespeedcommand);
 
-  // .modes3.protobuf.TurnoutCommand turnoutCommand = 9;
+  // .modes3.protobuf.TurnoutCommand turnoutCommand = 6;
   bool has_turnoutcommand() const;
   void clear_turnoutcommand();
-  static const int kTurnoutCommandFieldNumber = 9;
+  static const int kTurnoutCommandFieldNumber = 6;
   const ::modes3::protobuf::TurnoutCommand& turnoutcommand() const;
   ::modes3::protobuf::TurnoutCommand* mutable_turnoutcommand();
   ::modes3::protobuf::TurnoutCommand* release_turnoutcommand();
   void set_allocated_turnoutcommand(::modes3::protobuf::TurnoutCommand* turnoutcommand);
 
-  // .modes3.protobuf.TurnoutState turnoutState = 10;
+  // .modes3.protobuf.TurnoutState turnoutState = 7;
   bool has_turnoutstate() const;
   void clear_turnoutstate();
-  static const int kTurnoutStateFieldNumber = 10;
+  static const int kTurnoutStateFieldNumber = 7;
   const ::modes3::protobuf::TurnoutState& turnoutstate() const;
   ::modes3::protobuf::TurnoutState* mutable_turnoutstate();
   ::modes3::protobuf::TurnoutState* release_turnoutstate();
   void set_allocated_turnoutstate(::modes3::protobuf::TurnoutState* turnoutstate);
 
-  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 11;
+  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 8;
   bool has_segmentoccupancy() const;
   void clear_segmentoccupancy();
-  static const int kSegmentOccupancyFieldNumber = 11;
+  static const int kSegmentOccupancyFieldNumber = 8;
   const ::modes3::protobuf::SegmentOccupancy& segmentoccupancy() const;
   ::modes3::protobuf::SegmentOccupancy* mutable_segmentoccupancy();
   ::modes3::protobuf::SegmentOccupancy* release_segmentoccupancy();
   void set_allocated_segmentoccupancy(::modes3::protobuf::SegmentOccupancy* segmentoccupancy);
 
-  // .modes3.protobuf.YakinduReleaseTo yakinduReleaseTo = 12;
-  bool has_yakindureleaseto() const;
-  void clear_yakindureleaseto();
-  static const int kYakinduReleaseToFieldNumber = 12;
-  const ::modes3::protobuf::YakinduReleaseTo& yakindureleaseto() const;
-  ::modes3::protobuf::YakinduReleaseTo* mutable_yakindureleaseto();
-  ::modes3::protobuf::YakinduReleaseTo* release_yakindureleaseto();
-  void set_allocated_yakindureleaseto(::modes3::protobuf::YakinduReleaseTo* yakindureleaseto);
-
-  // .modes3.protobuf.YakinduCanGoTo yakinduCanGoTo = 13;
-  bool has_yakinducangoto() const;
-  void clear_yakinducangoto();
-  static const int kYakinduCanGoToFieldNumber = 13;
-  const ::modes3::protobuf::YakinduCanGoTo& yakinducangoto() const;
-  ::modes3::protobuf::YakinduCanGoTo* mutable_yakinducangoto();
-  ::modes3::protobuf::YakinduCanGoTo* release_yakinducangoto();
-  void set_allocated_yakinducangoto(::modes3::protobuf::YakinduCanGoTo* yakinducangoto);
-
-  // .modes3.protobuf.YakinduCannotGoTo yakinduCannotGoTo = 14;
-  bool has_yakinducannotgoto() const;
-  void clear_yakinducannotgoto();
-  static const int kYakinduCannotGoToFieldNumber = 14;
-  const ::modes3::protobuf::YakinduCannotGoTo& yakinducannotgoto() const;
-  ::modes3::protobuf::YakinduCannotGoTo* mutable_yakinducannotgoto();
-  ::modes3::protobuf::YakinduCannotGoTo* release_yakinducannotgoto();
-  void set_allocated_yakinducannotgoto(::modes3::protobuf::YakinduCannotGoTo* yakinducannotgoto);
-
-  // .modes3.protobuf.YakinduReserveTo yakinduReserveTo = 15;
-  bool has_yakindureserveto() const;
-  void clear_yakindureserveto();
-  static const int kYakinduReserveToFieldNumber = 15;
-  const ::modes3::protobuf::YakinduReserveTo& yakindureserveto() const;
-  ::modes3::protobuf::YakinduReserveTo* mutable_yakindureserveto();
-  ::modes3::protobuf::YakinduReserveTo* release_yakindureserveto();
-  void set_allocated_yakindureserveto(::modes3::protobuf::YakinduReserveTo* yakindureserveto);
-
-  // .modes3.protobuf.TurnoutReferenceCommand turnoutReferenceCommand = 16;
-  bool has_turnoutreferencecommand() const;
-  void clear_turnoutreferencecommand();
-  static const int kTurnoutReferenceCommandFieldNumber = 16;
-  const ::modes3::protobuf::TurnoutReferenceCommand& turnoutreferencecommand() const;
-  ::modes3::protobuf::TurnoutReferenceCommand* mutable_turnoutreferencecommand();
-  ::modes3::protobuf::TurnoutReferenceCommand* release_turnoutreferencecommand();
-  void set_allocated_turnoutreferencecommand(::modes3::protobuf::TurnoutReferenceCommand* turnoutreferencecommand);
-
-  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 17;
+  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 9;
   bool has_turnoutreferencestate() const;
   void clear_turnoutreferencestate();
-  static const int kTurnoutReferenceStateFieldNumber = 17;
+  static const int kTurnoutReferenceStateFieldNumber = 9;
   const ::modes3::protobuf::TurnoutReferenceState& turnoutreferencestate() const;
   ::modes3::protobuf::TurnoutReferenceState* mutable_turnoutreferencestate();
   ::modes3::protobuf::TurnoutReferenceState* release_turnoutreferencestate();
   void set_allocated_turnoutreferencestate(::modes3::protobuf::TurnoutReferenceState* turnoutreferencestate);
 
-  // .modes3.protobuf.TrainFunctionCommand trainFunctionCommand = 18;
-  bool has_trainfunctioncommand() const;
-  void clear_trainfunctioncommand();
-  static const int kTrainFunctionCommandFieldNumber = 18;
-  const ::modes3::protobuf::TrainFunctionCommand& trainfunctioncommand() const;
-  ::modes3::protobuf::TrainFunctionCommand* mutable_trainfunctioncommand();
-  ::modes3::protobuf::TrainFunctionCommand* release_trainfunctioncommand();
-  void set_allocated_trainfunctioncommand(::modes3::protobuf::TrainFunctionCommand* trainfunctioncommand);
-
-  // .modes3.protobuf.TrainFunctionState trainFunctionState = 19;
-  bool has_trainfunctionstate() const;
-  void clear_trainfunctionstate();
-  static const int kTrainFunctionStateFieldNumber = 19;
-  const ::modes3::protobuf::TrainFunctionState& trainfunctionstate() const;
-  ::modes3::protobuf::TrainFunctionState* mutable_trainfunctionstate();
-  ::modes3::protobuf::TrainFunctionState* release_trainfunctionstate();
-  void set_allocated_trainfunctionstate(::modes3::protobuf::TrainFunctionState* trainfunctionstate);
-
-  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 20;
+  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 10;
   bool has_dccoperationscommand() const;
   void clear_dccoperationscommand();
-  static const int kDccOperationsCommandFieldNumber = 20;
+  static const int kDccOperationsCommandFieldNumber = 10;
   const ::modes3::protobuf::DccOperationsCommand& dccoperationscommand() const;
   ::modes3::protobuf::DccOperationsCommand* mutable_dccoperationscommand();
   ::modes3::protobuf::DccOperationsCommand* release_dccoperationscommand();
   void set_allocated_dccoperationscommand(::modes3::protobuf::DccOperationsCommand* dccoperationscommand);
 
-  // .modes3.protobuf.DccOperationsState dccOperationsState = 21;
+  // .modes3.protobuf.DccOperationsState dccOperationsState = 11;
   bool has_dccoperationsstate() const;
   void clear_dccoperationsstate();
-  static const int kDccOperationsStateFieldNumber = 21;
+  static const int kDccOperationsStateFieldNumber = 11;
   const ::modes3::protobuf::DccOperationsState& dccoperationsstate() const;
   ::modes3::protobuf::DccOperationsState* mutable_dccoperationsstate();
   ::modes3::protobuf::DccOperationsState* release_dccoperationsstate();
   void set_allocated_dccoperationsstate(::modes3::protobuf::DccOperationsState* dccoperationsstate);
 
-  // .modes3.protobuf.SendAllStatus allStatus = 22;
+  // .modes3.protobuf.SendAllStatus allStatus = 12;
   bool has_allstatus() const;
   void clear_allstatus();
-  static const int kAllStatusFieldNumber = 22;
+  static const int kAllStatusFieldNumber = 12;
   const ::modes3::protobuf::SendAllStatus& allstatus() const;
   ::modes3::protobuf::SendAllStatus* mutable_allstatus();
   ::modes3::protobuf::SendAllStatus* release_allstatus();
   void set_allocated_allstatus(::modes3::protobuf::SendAllStatus* allstatus);
 
-  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 23;
+  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 13;
   bool has_computervisionobjectpositions() const;
   void clear_computervisionobjectpositions();
-  static const int kComputerVisionObjectPositionsFieldNumber = 23;
+  static const int kComputerVisionObjectPositionsFieldNumber = 13;
   const ::modes3::protobuf::ComputerVisionObjectPositions& computervisionobjectpositions() const;
   ::modes3::protobuf::ComputerVisionObjectPositions* mutable_computervisionobjectpositions();
   ::modes3::protobuf::ComputerVisionObjectPositions* release_computervisionobjectpositions();
@@ -362,21 +272,12 @@ class Message : public ::google::protobuf::Message /* @@protoc_insertion_point(c
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::modes3::protobuf::SegmentCommand* segmentcommand_;
   ::modes3::protobuf::SegmentState* segmentstate_;
-  ::modes3::protobuf::TrainCurrentSegment* traincurrentsegment_;
-  ::modes3::protobuf::TrainCurrentSpeed* traincurrentspeed_;
   ::modes3::protobuf::TrainReferenceSpeed* trainreferencespeed_;
   ::modes3::protobuf::TrainReferenceSpeedCommand* trainreferencespeedcommand_;
   ::modes3::protobuf::TurnoutCommand* turnoutcommand_;
   ::modes3::protobuf::TurnoutState* turnoutstate_;
   ::modes3::protobuf::SegmentOccupancy* segmentoccupancy_;
-  ::modes3::protobuf::YakinduReleaseTo* yakindureleaseto_;
-  ::modes3::protobuf::YakinduCanGoTo* yakinducangoto_;
-  ::modes3::protobuf::YakinduCannotGoTo* yakinducannotgoto_;
-  ::modes3::protobuf::YakinduReserveTo* yakindureserveto_;
-  ::modes3::protobuf::TurnoutReferenceCommand* turnoutreferencecommand_;
   ::modes3::protobuf::TurnoutReferenceState* turnoutreferencestate_;
-  ::modes3::protobuf::TrainFunctionCommand* trainfunctioncommand_;
-  ::modes3::protobuf::TrainFunctionState* trainfunctionstate_;
   ::modes3::protobuf::DccOperationsCommand* dccoperationscommand_;
   ::modes3::protobuf::DccOperationsState* dccoperationsstate_;
   ::modes3::protobuf::SendAllStatus* allstatus_;
@@ -491,87 +392,7 @@ inline void Message::set_allocated_segmentstate(::modes3::protobuf::SegmentState
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.segmentState)
 }
 
-// .modes3.protobuf.TrainCurrentSegment trainCurrentSegment = 4;
-inline bool Message::has_traincurrentsegment() const {
-  return this != internal_default_instance() && traincurrentsegment_ != NULL;
-}
-inline void Message::clear_traincurrentsegment() {
-  if (GetArenaNoVirtual() == NULL && traincurrentsegment_ != NULL) delete traincurrentsegment_;
-  traincurrentsegment_ = NULL;
-}
-inline const ::modes3::protobuf::TrainCurrentSegment& Message::traincurrentsegment() const {
-  const ::modes3::protobuf::TrainCurrentSegment* p = traincurrentsegment_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainCurrentSegment)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainCurrentSegment*>(
-      &::modes3::protobuf::_TrainCurrentSegment_default_instance_);
-}
-inline ::modes3::protobuf::TrainCurrentSegment* Message::mutable_traincurrentsegment() {
-  
-  if (traincurrentsegment_ == NULL) {
-    traincurrentsegment_ = new ::modes3::protobuf::TrainCurrentSegment;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainCurrentSegment)
-  return traincurrentsegment_;
-}
-inline ::modes3::protobuf::TrainCurrentSegment* Message::release_traincurrentsegment() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainCurrentSegment)
-  
-  ::modes3::protobuf::TrainCurrentSegment* temp = traincurrentsegment_;
-  traincurrentsegment_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_traincurrentsegment(::modes3::protobuf::TrainCurrentSegment* traincurrentsegment) {
-  delete traincurrentsegment_;
-  traincurrentsegment_ = traincurrentsegment;
-  if (traincurrentsegment) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainCurrentSegment)
-}
-
-// .modes3.protobuf.TrainCurrentSpeed trainCurrentSpeed = 5;
-inline bool Message::has_traincurrentspeed() const {
-  return this != internal_default_instance() && traincurrentspeed_ != NULL;
-}
-inline void Message::clear_traincurrentspeed() {
-  if (GetArenaNoVirtual() == NULL && traincurrentspeed_ != NULL) delete traincurrentspeed_;
-  traincurrentspeed_ = NULL;
-}
-inline const ::modes3::protobuf::TrainCurrentSpeed& Message::traincurrentspeed() const {
-  const ::modes3::protobuf::TrainCurrentSpeed* p = traincurrentspeed_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainCurrentSpeed)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainCurrentSpeed*>(
-      &::modes3::protobuf::_TrainCurrentSpeed_default_instance_);
-}
-inline ::modes3::protobuf::TrainCurrentSpeed* Message::mutable_traincurrentspeed() {
-  
-  if (traincurrentspeed_ == NULL) {
-    traincurrentspeed_ = new ::modes3::protobuf::TrainCurrentSpeed;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainCurrentSpeed)
-  return traincurrentspeed_;
-}
-inline ::modes3::protobuf::TrainCurrentSpeed* Message::release_traincurrentspeed() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainCurrentSpeed)
-  
-  ::modes3::protobuf::TrainCurrentSpeed* temp = traincurrentspeed_;
-  traincurrentspeed_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_traincurrentspeed(::modes3::protobuf::TrainCurrentSpeed* traincurrentspeed) {
-  delete traincurrentspeed_;
-  traincurrentspeed_ = traincurrentspeed;
-  if (traincurrentspeed) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainCurrentSpeed)
-}
-
-// .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 7;
+// .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 4;
 inline bool Message::has_trainreferencespeed() const {
   return this != internal_default_instance() && trainreferencespeed_ != NULL;
 }
@@ -611,7 +432,7 @@ inline void Message::set_allocated_trainreferencespeed(::modes3::protobuf::Train
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainReferenceSpeed)
 }
 
-// .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
+// .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 5;
 inline bool Message::has_trainreferencespeedcommand() const {
   return this != internal_default_instance() && trainreferencespeedcommand_ != NULL;
 }
@@ -651,7 +472,7 @@ inline void Message::set_allocated_trainreferencespeedcommand(::modes3::protobuf
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainReferenceSpeedCommand)
 }
 
-// .modes3.protobuf.TurnoutCommand turnoutCommand = 9;
+// .modes3.protobuf.TurnoutCommand turnoutCommand = 6;
 inline bool Message::has_turnoutcommand() const {
   return this != internal_default_instance() && turnoutcommand_ != NULL;
 }
@@ -691,7 +512,7 @@ inline void Message::set_allocated_turnoutcommand(::modes3::protobuf::TurnoutCom
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutCommand)
 }
 
-// .modes3.protobuf.TurnoutState turnoutState = 10;
+// .modes3.protobuf.TurnoutState turnoutState = 7;
 inline bool Message::has_turnoutstate() const {
   return this != internal_default_instance() && turnoutstate_ != NULL;
 }
@@ -731,7 +552,7 @@ inline void Message::set_allocated_turnoutstate(::modes3::protobuf::TurnoutState
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutState)
 }
 
-// .modes3.protobuf.SegmentOccupancy segmentOccupancy = 11;
+// .modes3.protobuf.SegmentOccupancy segmentOccupancy = 8;
 inline bool Message::has_segmentoccupancy() const {
   return this != internal_default_instance() && segmentoccupancy_ != NULL;
 }
@@ -771,207 +592,7 @@ inline void Message::set_allocated_segmentoccupancy(::modes3::protobuf::SegmentO
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.segmentOccupancy)
 }
 
-// .modes3.protobuf.YakinduReleaseTo yakinduReleaseTo = 12;
-inline bool Message::has_yakindureleaseto() const {
-  return this != internal_default_instance() && yakindureleaseto_ != NULL;
-}
-inline void Message::clear_yakindureleaseto() {
-  if (GetArenaNoVirtual() == NULL && yakindureleaseto_ != NULL) delete yakindureleaseto_;
-  yakindureleaseto_ = NULL;
-}
-inline const ::modes3::protobuf::YakinduReleaseTo& Message::yakindureleaseto() const {
-  const ::modes3::protobuf::YakinduReleaseTo* p = yakindureleaseto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduReleaseTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduReleaseTo*>(
-      &::modes3::protobuf::_YakinduReleaseTo_default_instance_);
-}
-inline ::modes3::protobuf::YakinduReleaseTo* Message::mutable_yakindureleaseto() {
-  
-  if (yakindureleaseto_ == NULL) {
-    yakindureleaseto_ = new ::modes3::protobuf::YakinduReleaseTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduReleaseTo)
-  return yakindureleaseto_;
-}
-inline ::modes3::protobuf::YakinduReleaseTo* Message::release_yakindureleaseto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduReleaseTo)
-  
-  ::modes3::protobuf::YakinduReleaseTo* temp = yakindureleaseto_;
-  yakindureleaseto_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_yakindureleaseto(::modes3::protobuf::YakinduReleaseTo* yakindureleaseto) {
-  delete yakindureleaseto_;
-  yakindureleaseto_ = yakindureleaseto;
-  if (yakindureleaseto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduReleaseTo)
-}
-
-// .modes3.protobuf.YakinduCanGoTo yakinduCanGoTo = 13;
-inline bool Message::has_yakinducangoto() const {
-  return this != internal_default_instance() && yakinducangoto_ != NULL;
-}
-inline void Message::clear_yakinducangoto() {
-  if (GetArenaNoVirtual() == NULL && yakinducangoto_ != NULL) delete yakinducangoto_;
-  yakinducangoto_ = NULL;
-}
-inline const ::modes3::protobuf::YakinduCanGoTo& Message::yakinducangoto() const {
-  const ::modes3::protobuf::YakinduCanGoTo* p = yakinducangoto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduCanGoTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduCanGoTo*>(
-      &::modes3::protobuf::_YakinduCanGoTo_default_instance_);
-}
-inline ::modes3::protobuf::YakinduCanGoTo* Message::mutable_yakinducangoto() {
-  
-  if (yakinducangoto_ == NULL) {
-    yakinducangoto_ = new ::modes3::protobuf::YakinduCanGoTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduCanGoTo)
-  return yakinducangoto_;
-}
-inline ::modes3::protobuf::YakinduCanGoTo* Message::release_yakinducangoto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduCanGoTo)
-  
-  ::modes3::protobuf::YakinduCanGoTo* temp = yakinducangoto_;
-  yakinducangoto_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_yakinducangoto(::modes3::protobuf::YakinduCanGoTo* yakinducangoto) {
-  delete yakinducangoto_;
-  yakinducangoto_ = yakinducangoto;
-  if (yakinducangoto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduCanGoTo)
-}
-
-// .modes3.protobuf.YakinduCannotGoTo yakinduCannotGoTo = 14;
-inline bool Message::has_yakinducannotgoto() const {
-  return this != internal_default_instance() && yakinducannotgoto_ != NULL;
-}
-inline void Message::clear_yakinducannotgoto() {
-  if (GetArenaNoVirtual() == NULL && yakinducannotgoto_ != NULL) delete yakinducannotgoto_;
-  yakinducannotgoto_ = NULL;
-}
-inline const ::modes3::protobuf::YakinduCannotGoTo& Message::yakinducannotgoto() const {
-  const ::modes3::protobuf::YakinduCannotGoTo* p = yakinducannotgoto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduCannotGoTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduCannotGoTo*>(
-      &::modes3::protobuf::_YakinduCannotGoTo_default_instance_);
-}
-inline ::modes3::protobuf::YakinduCannotGoTo* Message::mutable_yakinducannotgoto() {
-  
-  if (yakinducannotgoto_ == NULL) {
-    yakinducannotgoto_ = new ::modes3::protobuf::YakinduCannotGoTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduCannotGoTo)
-  return yakinducannotgoto_;
-}
-inline ::modes3::protobuf::YakinduCannotGoTo* Message::release_yakinducannotgoto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduCannotGoTo)
-  
-  ::modes3::protobuf::YakinduCannotGoTo* temp = yakinducannotgoto_;
-  yakinducannotgoto_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_yakinducannotgoto(::modes3::protobuf::YakinduCannotGoTo* yakinducannotgoto) {
-  delete yakinducannotgoto_;
-  yakinducannotgoto_ = yakinducannotgoto;
-  if (yakinducannotgoto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduCannotGoTo)
-}
-
-// .modes3.protobuf.YakinduReserveTo yakinduReserveTo = 15;
-inline bool Message::has_yakindureserveto() const {
-  return this != internal_default_instance() && yakindureserveto_ != NULL;
-}
-inline void Message::clear_yakindureserveto() {
-  if (GetArenaNoVirtual() == NULL && yakindureserveto_ != NULL) delete yakindureserveto_;
-  yakindureserveto_ = NULL;
-}
-inline const ::modes3::protobuf::YakinduReserveTo& Message::yakindureserveto() const {
-  const ::modes3::protobuf::YakinduReserveTo* p = yakindureserveto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduReserveTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduReserveTo*>(
-      &::modes3::protobuf::_YakinduReserveTo_default_instance_);
-}
-inline ::modes3::protobuf::YakinduReserveTo* Message::mutable_yakindureserveto() {
-  
-  if (yakindureserveto_ == NULL) {
-    yakindureserveto_ = new ::modes3::protobuf::YakinduReserveTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduReserveTo)
-  return yakindureserveto_;
-}
-inline ::modes3::protobuf::YakinduReserveTo* Message::release_yakindureserveto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduReserveTo)
-  
-  ::modes3::protobuf::YakinduReserveTo* temp = yakindureserveto_;
-  yakindureserveto_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_yakindureserveto(::modes3::protobuf::YakinduReserveTo* yakindureserveto) {
-  delete yakindureserveto_;
-  yakindureserveto_ = yakindureserveto;
-  if (yakindureserveto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduReserveTo)
-}
-
-// .modes3.protobuf.TurnoutReferenceCommand turnoutReferenceCommand = 16;
-inline bool Message::has_turnoutreferencecommand() const {
-  return this != internal_default_instance() && turnoutreferencecommand_ != NULL;
-}
-inline void Message::clear_turnoutreferencecommand() {
-  if (GetArenaNoVirtual() == NULL && turnoutreferencecommand_ != NULL) delete turnoutreferencecommand_;
-  turnoutreferencecommand_ = NULL;
-}
-inline const ::modes3::protobuf::TurnoutReferenceCommand& Message::turnoutreferencecommand() const {
-  const ::modes3::protobuf::TurnoutReferenceCommand* p = turnoutreferencecommand_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.turnoutReferenceCommand)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TurnoutReferenceCommand*>(
-      &::modes3::protobuf::_TurnoutReferenceCommand_default_instance_);
-}
-inline ::modes3::protobuf::TurnoutReferenceCommand* Message::mutable_turnoutreferencecommand() {
-  
-  if (turnoutreferencecommand_ == NULL) {
-    turnoutreferencecommand_ = new ::modes3::protobuf::TurnoutReferenceCommand;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.turnoutReferenceCommand)
-  return turnoutreferencecommand_;
-}
-inline ::modes3::protobuf::TurnoutReferenceCommand* Message::release_turnoutreferencecommand() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.turnoutReferenceCommand)
-  
-  ::modes3::protobuf::TurnoutReferenceCommand* temp = turnoutreferencecommand_;
-  turnoutreferencecommand_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_turnoutreferencecommand(::modes3::protobuf::TurnoutReferenceCommand* turnoutreferencecommand) {
-  delete turnoutreferencecommand_;
-  turnoutreferencecommand_ = turnoutreferencecommand;
-  if (turnoutreferencecommand) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutReferenceCommand)
-}
-
-// .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 17;
+// .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 9;
 inline bool Message::has_turnoutreferencestate() const {
   return this != internal_default_instance() && turnoutreferencestate_ != NULL;
 }
@@ -1011,87 +632,7 @@ inline void Message::set_allocated_turnoutreferencestate(::modes3::protobuf::Tur
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutReferenceState)
 }
 
-// .modes3.protobuf.TrainFunctionCommand trainFunctionCommand = 18;
-inline bool Message::has_trainfunctioncommand() const {
-  return this != internal_default_instance() && trainfunctioncommand_ != NULL;
-}
-inline void Message::clear_trainfunctioncommand() {
-  if (GetArenaNoVirtual() == NULL && trainfunctioncommand_ != NULL) delete trainfunctioncommand_;
-  trainfunctioncommand_ = NULL;
-}
-inline const ::modes3::protobuf::TrainFunctionCommand& Message::trainfunctioncommand() const {
-  const ::modes3::protobuf::TrainFunctionCommand* p = trainfunctioncommand_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainFunctionCommand)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainFunctionCommand*>(
-      &::modes3::protobuf::_TrainFunctionCommand_default_instance_);
-}
-inline ::modes3::protobuf::TrainFunctionCommand* Message::mutable_trainfunctioncommand() {
-  
-  if (trainfunctioncommand_ == NULL) {
-    trainfunctioncommand_ = new ::modes3::protobuf::TrainFunctionCommand;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainFunctionCommand)
-  return trainfunctioncommand_;
-}
-inline ::modes3::protobuf::TrainFunctionCommand* Message::release_trainfunctioncommand() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainFunctionCommand)
-  
-  ::modes3::protobuf::TrainFunctionCommand* temp = trainfunctioncommand_;
-  trainfunctioncommand_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_trainfunctioncommand(::modes3::protobuf::TrainFunctionCommand* trainfunctioncommand) {
-  delete trainfunctioncommand_;
-  trainfunctioncommand_ = trainfunctioncommand;
-  if (trainfunctioncommand) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainFunctionCommand)
-}
-
-// .modes3.protobuf.TrainFunctionState trainFunctionState = 19;
-inline bool Message::has_trainfunctionstate() const {
-  return this != internal_default_instance() && trainfunctionstate_ != NULL;
-}
-inline void Message::clear_trainfunctionstate() {
-  if (GetArenaNoVirtual() == NULL && trainfunctionstate_ != NULL) delete trainfunctionstate_;
-  trainfunctionstate_ = NULL;
-}
-inline const ::modes3::protobuf::TrainFunctionState& Message::trainfunctionstate() const {
-  const ::modes3::protobuf::TrainFunctionState* p = trainfunctionstate_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainFunctionState)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainFunctionState*>(
-      &::modes3::protobuf::_TrainFunctionState_default_instance_);
-}
-inline ::modes3::protobuf::TrainFunctionState* Message::mutable_trainfunctionstate() {
-  
-  if (trainfunctionstate_ == NULL) {
-    trainfunctionstate_ = new ::modes3::protobuf::TrainFunctionState;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainFunctionState)
-  return trainfunctionstate_;
-}
-inline ::modes3::protobuf::TrainFunctionState* Message::release_trainfunctionstate() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainFunctionState)
-  
-  ::modes3::protobuf::TrainFunctionState* temp = trainfunctionstate_;
-  trainfunctionstate_ = NULL;
-  return temp;
-}
-inline void Message::set_allocated_trainfunctionstate(::modes3::protobuf::TrainFunctionState* trainfunctionstate) {
-  delete trainfunctionstate_;
-  trainfunctionstate_ = trainfunctionstate;
-  if (trainfunctionstate) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainFunctionState)
-}
-
-// .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 20;
+// .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 10;
 inline bool Message::has_dccoperationscommand() const {
   return this != internal_default_instance() && dccoperationscommand_ != NULL;
 }
@@ -1131,7 +672,7 @@ inline void Message::set_allocated_dccoperationscommand(::modes3::protobuf::DccO
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.dccOperationsCommand)
 }
 
-// .modes3.protobuf.DccOperationsState dccOperationsState = 21;
+// .modes3.protobuf.DccOperationsState dccOperationsState = 11;
 inline bool Message::has_dccoperationsstate() const {
   return this != internal_default_instance() && dccoperationsstate_ != NULL;
 }
@@ -1171,7 +712,7 @@ inline void Message::set_allocated_dccoperationsstate(::modes3::protobuf::DccOpe
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.dccOperationsState)
 }
 
-// .modes3.protobuf.SendAllStatus allStatus = 22;
+// .modes3.protobuf.SendAllStatus allStatus = 12;
 inline bool Message::has_allstatus() const {
   return this != internal_default_instance() && allstatus_ != NULL;
 }
@@ -1211,7 +752,7 @@ inline void Message::set_allocated_allstatus(::modes3::protobuf::SendAllStatus* 
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.allStatus)
 }
 
-// .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 23;
+// .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 13;
 inline bool Message::has_computervisionobjectpositions() const {
   return this != internal_default_instance() && computervisionobjectpositions_ != NULL;
 }

@@ -100,41 +100,51 @@ class LayoutConfiguration {
 	/**
 	 * get the IDs of the segments that are connected, if the turnout's direction is the given direction
 	 */
-	def getConnectedSegmentsByTurnoutVicinities(int turnoutId, String direction) {
-		val supportedDirections = #{"straight", "divergent"}
-		val lowercased = if(direction.isNullOrEmpty) direction else direction.toLowerCase
-		
-		if(!supportedDirections.contains(lowercased)) {
+	def getConnectedSegmentsByTurnoutVicinities(int turnoutId, SegmentDirection direction) {
+		val supportedDirections = #{SegmentDirection.STRAIGHT, SegmentDirection.DIVERGENT}
+		if(!supportedDirections.contains(direction)) {
 			return null
 		}
 
 		val vicinities = layout.turnoutVicinities.get(String.valueOf(turnoutId))
-		val strOrDivSegments = switch (lowercased) {
-			case "straight": vicinities.straight
-			case "divergent": vicinities.divergent
-		}
-
+		val strOrDivSegments = getTurnoutVicinitySegmentsByDirection(turnoutId, direction)
+		val turnoutSegmentItself = getSegmentIdsOfTurnout(turnoutId)
+		
 		val segmentIds = newHashSet
 		segmentIds.addAll(strOrDivSegments)
 		segmentIds.addAll(vicinities.facing)
+		segmentIds.addAll(turnoutSegmentItself)
 
 		segmentIds
 	}
-	
+
 	/**
 	 * Get the IDs of segments which are in the vicinity of a turnout, including the turnout's ID as segment itself.
 	 */
-	def getTurnoutVicinitySegments(int turnoutId){
+	def getTurnoutVicinitySegments(int turnoutId) {
 		val segmentsInVicinity = newHashSet
 		val turnoutVicinity = layout.turnoutVicinities.get(String.valueOf(turnoutId))
 		val turnoutSegmentIds = getSegmentIdsOfTurnout(turnoutId)
-		
+
 		segmentsInVicinity.addAll(turnoutVicinity.straight)
 		segmentsInVicinity.addAll(turnoutVicinity.divergent)
 		segmentsInVicinity.addAll(turnoutVicinity.facing)
 		segmentsInVicinity.addAll(turnoutSegmentIds)
-		
+
 		segmentsInVicinity
+	}
+
+	/**
+	 * Get the IDs of segments which are in the vicinity of a turnout and connect to the turnout from the specified direction.
+	 */
+	def getTurnoutVicinitySegmentsByDirection(int turnoutId, SegmentDirection direction) {
+		val turnoutVicinity = layout.turnoutVicinities.get(String.valueOf(turnoutId))
+		switch (direction) {
+			case TURNOUT_ITSELF: getSegmentIdsOfTurnout(turnoutId)
+			case STRAIGHT: turnoutVicinity.straight
+			case DIVERGENT: turnoutVicinity.divergent
+			case FACING: turnoutVicinity.facing
+		}
 	}
 
 	private def <T> asUnmodifiableSet(Set<T> set) {

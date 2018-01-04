@@ -107,11 +107,11 @@ void AddDescriptorsImpl() {
       "\n\024TurnoutCommand.proto\022\017modes3.protobuf\032"
       "\013Enums.proto\"V\n\016TurnoutCommand\022\021\n\tturnou"
       "tID\030\001 \001(\r\0221\n\005state\030\002 \001(\0162\".modes3.protob"
-      "uf.TurnoutStateValueB0\n,hu.bme.mit.inf.m"
-      "odes3.messaging.mms.messagesP\001b\006proto3"
+      "uf.TurnoutStateValueB2\n.hu.bme.mit.inf.m"
+      "odes3.messaging.proto.messagesP\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 198);
+      descriptor, 200);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TurnoutCommand.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();

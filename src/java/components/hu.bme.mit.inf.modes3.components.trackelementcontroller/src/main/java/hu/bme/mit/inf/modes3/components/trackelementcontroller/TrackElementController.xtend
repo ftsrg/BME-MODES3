@@ -99,8 +99,7 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 		// if it is an illegal state
 		// if new turnout command received on network, we need to check if it's our obligation to handle or not
 		// if we handle this turnout, but the direction change is not allowed
-		val recentDirection = turnoutControllers.head.turnoutState
-		if((state == TurnoutState.ILLEGAL) || (this.id != id) || (this.id == id && !guard.isDirectionChangeAllowed(recentDirection))) {
+		if((state == TurnoutState.ILLEGAL) || (this.id != id) || (this.id == id && !guard.isDirectionChangeAllowed())) {
 			return
 		}
 

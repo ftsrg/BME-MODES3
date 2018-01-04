@@ -1,32 +1,21 @@
 package hu.bme.mit.inf.modes3.messaging.communication.state.train.speed
 
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.current.ITrainCurrentSpeedListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.current.ITrainSpeedStateCallback
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.current.TrainCurrentSpeedClient
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.reference.ITrainReferenceSpeedListener
-import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.reference.TrainReferenceSpeedClient
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateCallback
+import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 
-package class TrainSpeedStateCallback implements ITrainSpeedStateCallback, ITrainCurrentSpeedListener, ITrainReferenceSpeedListener {
-	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITrainCurrentSpeedListener trainCurrentSpeedListener
-	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITrainReferenceSpeedListener trainReferenceSpeedListener
+package class TrainSpeedStateCallback implements ITrainSpeedStateCallback, ITrainSpeedStateListener {
+	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITrainSpeedStateListener trainSpeedStateListener
 
 	new(AbstractMessageDispatcher dispatcher) {
-		val trainCurrentSpeedClient = new TrainCurrentSpeedClient(this)
-		val trainReferenceSpeedClient = new TrainReferenceSpeedClient(this)
-
-		dispatcher.trainCurrentSpeedHandler = trainCurrentSpeedClient
+		val trainReferenceSpeedClient = new TrainSpeedStateClient(this)
 		dispatcher.trainReferenceSpeedHandler = trainReferenceSpeedClient
 	}
 
-	override onTrainCurrentSpeed(int id, int speed, TrainDirection direction) {
-		trainCurrentSpeedListener?.onTrainCurrentSpeed(id, speed, direction)
-	}
-
-	override onTrainReferenceSpeed(int id, int speed, TrainDirection direction) {
-		trainReferenceSpeedListener?.onTrainReferenceSpeed(id, speed, direction)
+	override onTrainSpeedState(int id, int speed, TrainDirection direction) {
+		trainSpeedStateListener?.onTrainSpeedState(id, speed, direction)
 	}
 
 }

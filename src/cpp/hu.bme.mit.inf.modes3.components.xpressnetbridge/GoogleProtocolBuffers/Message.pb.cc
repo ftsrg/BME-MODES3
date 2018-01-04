@@ -57,21 +57,12 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_ATTRIBUTE_SECTION
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, segmentcommand_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, segmentstate_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, traincurrentsegment_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, traincurrentspeed_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, trainreferencespeed_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, trainreferencespeedcommand_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, turnoutcommand_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, turnoutstate_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, segmentoccupancy_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, yakindureleaseto_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, yakinducangoto_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, yakinducannotgoto_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, yakindureserveto_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, turnoutreferencecommand_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, turnoutreferencestate_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, trainfunctioncommand_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, trainfunctionstate_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, dccoperationscommand_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, dccoperationsstate_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Message, allstatus_),
@@ -116,21 +107,12 @@ void TableStruct::InitDefaultsImpl() {
   ::modes3::protobuf::protobuf_Enums_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_SegmentCommand_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_SegmentState_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_TrainCurrentSegment_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_TrainCurrentSpeed_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_TrainFunctionCommand_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_TrainFunctionState_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_TrainReferenceSpeed_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_TrainReferenceSpeedCommand_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_TurnoutCommand_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_TurnoutState_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_TurnoutReferenceCommand_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_TurnoutReferenceState_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_SegmentOccupancy_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_YakinduReleaseTo_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_YakinduCanGoTo_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_YakinduCannotGoTo_2eproto::InitDefaults();
-  ::modes3::protobuf::protobuf_YakinduReserveTo_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_SendAllStatus_2eproto::InitDefaults();
   ::modes3::protobuf::protobuf_ComputerVisionObjectPositions_2eproto::InitDefaults();
   _Message_default_instance_._instance.DefaultConstruct();
@@ -139,10 +121,6 @@ void TableStruct::InitDefaultsImpl() {
       ::modes3::protobuf::SegmentCommand::internal_default_instance());
   _Message_default_instance_._instance.get_mutable()->segmentstate_ = const_cast< ::modes3::protobuf::SegmentState*>(
       ::modes3::protobuf::SegmentState::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->traincurrentsegment_ = const_cast< ::modes3::protobuf::TrainCurrentSegment*>(
-      ::modes3::protobuf::TrainCurrentSegment::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->traincurrentspeed_ = const_cast< ::modes3::protobuf::TrainCurrentSpeed*>(
-      ::modes3::protobuf::TrainCurrentSpeed::internal_default_instance());
   _Message_default_instance_._instance.get_mutable()->trainreferencespeed_ = const_cast< ::modes3::protobuf::TrainReferenceSpeed*>(
       ::modes3::protobuf::TrainReferenceSpeed::internal_default_instance());
   _Message_default_instance_._instance.get_mutable()->trainreferencespeedcommand_ = const_cast< ::modes3::protobuf::TrainReferenceSpeedCommand*>(
@@ -153,22 +131,8 @@ void TableStruct::InitDefaultsImpl() {
       ::modes3::protobuf::TurnoutState::internal_default_instance());
   _Message_default_instance_._instance.get_mutable()->segmentoccupancy_ = const_cast< ::modes3::protobuf::SegmentOccupancy*>(
       ::modes3::protobuf::SegmentOccupancy::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->yakindureleaseto_ = const_cast< ::modes3::protobuf::YakinduReleaseTo*>(
-      ::modes3::protobuf::YakinduReleaseTo::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->yakinducangoto_ = const_cast< ::modes3::protobuf::YakinduCanGoTo*>(
-      ::modes3::protobuf::YakinduCanGoTo::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->yakinducannotgoto_ = const_cast< ::modes3::protobuf::YakinduCannotGoTo*>(
-      ::modes3::protobuf::YakinduCannotGoTo::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->yakindureserveto_ = const_cast< ::modes3::protobuf::YakinduReserveTo*>(
-      ::modes3::protobuf::YakinduReserveTo::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->turnoutreferencecommand_ = const_cast< ::modes3::protobuf::TurnoutReferenceCommand*>(
-      ::modes3::protobuf::TurnoutReferenceCommand::internal_default_instance());
   _Message_default_instance_._instance.get_mutable()->turnoutreferencestate_ = const_cast< ::modes3::protobuf::TurnoutReferenceState*>(
       ::modes3::protobuf::TurnoutReferenceState::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->trainfunctioncommand_ = const_cast< ::modes3::protobuf::TrainFunctionCommand*>(
-      ::modes3::protobuf::TrainFunctionCommand::internal_default_instance());
-  _Message_default_instance_._instance.get_mutable()->trainfunctionstate_ = const_cast< ::modes3::protobuf::TrainFunctionState*>(
-      ::modes3::protobuf::TrainFunctionState::internal_default_instance());
   _Message_default_instance_._instance.get_mutable()->dccoperationscommand_ = const_cast< ::modes3::protobuf::DccOperationsCommand*>(
       ::modes3::protobuf::DccOperationsCommand::internal_default_instance());
   _Message_default_instance_._instance.get_mutable()->dccoperationsstate_ = const_cast< ::modes3::protobuf::DccOperationsState*>(
@@ -190,58 +154,38 @@ void AddDescriptorsImpl() {
       "\n\rMessage.proto\022\017modes3.protobuf\032\032DccOpe"
       "rationsCommand.proto\032\030DccOperationsState"
       ".proto\032\013Enums.proto\032\024SegmentCommand.prot"
-      "o\032\022SegmentState.proto\032\031TrainCurrentSegme"
-      "nt.proto\032\027TrainCurrentSpeed.proto\032\032Train"
-      "FunctionCommand.proto\032\030TrainFunctionStat"
-      "e.proto\032\031TrainReferenceSpeed.proto\032 Trai"
-      "nReferenceSpeedCommand.proto\032\024TurnoutCom"
-      "mand.proto\032\022TurnoutState.proto\032\035TurnoutR"
-      "eferenceCommand.proto\032\033TurnoutReferenceS"
-      "tate.proto\032\026SegmentOccupancy.proto\032\026Yaki"
-      "nduReleaseTo.proto\032\024YakinduCanGoTo.proto"
-      "\032\027YakinduCannotGoTo.proto\032\026YakinduReserv"
-      "eTo.proto\032\023SendAllStatus.proto\032#Computer"
-      "VisionObjectPositions.proto\"\376\n\n\007Message\022"
-      "*\n\004type\030\001 \001(\0162\034.modes3.protobuf.MessageT"
-      "ype\0227\n\016segmentCommand\030\002 \001(\0132\037.modes3.pro"
-      "tobuf.SegmentCommand\0223\n\014segmentState\030\003 \001"
-      "(\0132\035.modes3.protobuf.SegmentState\022A\n\023tra"
-      "inCurrentSegment\030\004 \001(\0132$.modes3.protobuf"
-      ".TrainCurrentSegment\022=\n\021trainCurrentSpee"
-      "d\030\005 \001(\0132\".modes3.protobuf.TrainCurrentSp"
-      "eed\022A\n\023trainReferenceSpeed\030\007 \001(\0132$.modes"
-      "3.protobuf.TrainReferenceSpeed\022O\n\032trainR"
-      "eferenceSpeedCommand\030\010 \001(\0132+.modes3.prot"
-      "obuf.TrainReferenceSpeedCommand\0227\n\016turno"
-      "utCommand\030\t \001(\0132\037.modes3.protobuf.Turnou"
-      "tCommand\0223\n\014turnoutState\030\n \001(\0132\035.modes3."
-      "protobuf.TurnoutState\022;\n\020segmentOccupanc"
-      "y\030\013 \001(\0132!.modes3.protobuf.SegmentOccupan"
-      "cy\022;\n\020yakinduReleaseTo\030\014 \001(\0132!.modes3.pr"
-      "otobuf.YakinduReleaseTo\0227\n\016yakinduCanGoT"
-      "o\030\r \001(\0132\037.modes3.protobuf.YakinduCanGoTo"
-      "\022=\n\021yakinduCannotGoTo\030\016 \001(\0132\".modes3.pro"
-      "tobuf.YakinduCannotGoTo\022;\n\020yakinduReserv"
-      "eTo\030\017 \001(\0132!.modes3.protobuf.YakinduReser"
-      "veTo\022I\n\027turnoutReferenceCommand\030\020 \001(\0132(."
-      "modes3.protobuf.TurnoutReferenceCommand\022"
-      "E\n\025turnoutReferenceState\030\021 \001(\0132&.modes3."
-      "protobuf.TurnoutReferenceState\022C\n\024trainF"
-      "unctionCommand\030\022 \001(\0132%.modes3.protobuf.T"
-      "rainFunctionCommand\022\?\n\022trainFunctionStat"
-      "e\030\023 \001(\0132#.modes3.protobuf.TrainFunctionS"
-      "tate\022C\n\024dccOperationsCommand\030\024 \001(\0132%.mod"
-      "es3.protobuf.DccOperationsCommand\022\?\n\022dcc"
-      "OperationsState\030\025 \001(\0132#.modes3.protobuf."
-      "DccOperationsState\0221\n\tallStatus\030\026 \001(\0132\036."
-      "modes3.protobuf.SendAllStatus\022U\n\035compute"
-      "rVisionObjectPositions\030\027 \001(\0132..modes3.pr"
-      "otobuf.ComputerVisionObjectPositionsB0\n,"
-      "hu.bme.mit.inf.modes3.messaging.mms.mess"
-      "agesP\001b\006proto3"
+      "o\032\022SegmentState.proto\032\031TrainReferenceSpe"
+      "ed.proto\032 TrainReferenceSpeedCommand.pro"
+      "to\032\024TurnoutCommand.proto\032\022TurnoutState.p"
+      "roto\032\033TurnoutReferenceState.proto\032\026Segme"
+      "ntOccupancy.proto\032\023SendAllStatus.proto\032#"
+      "ComputerVisionObjectPositions.proto\"\271\006\n\007"
+      "Message\022*\n\004type\030\001 \001(\0162\034.modes3.protobuf."
+      "MessageType\0227\n\016segmentCommand\030\002 \001(\0132\037.mo"
+      "des3.protobuf.SegmentCommand\0223\n\014segmentS"
+      "tate\030\003 \001(\0132\035.modes3.protobuf.SegmentStat"
+      "e\022A\n\023trainReferenceSpeed\030\004 \001(\0132$.modes3."
+      "protobuf.TrainReferenceSpeed\022O\n\032trainRef"
+      "erenceSpeedCommand\030\005 \001(\0132+.modes3.protob"
+      "uf.TrainReferenceSpeedCommand\0227\n\016turnout"
+      "Command\030\006 \001(\0132\037.modes3.protobuf.TurnoutC"
+      "ommand\0223\n\014turnoutState\030\007 \001(\0132\035.modes3.pr"
+      "otobuf.TurnoutState\022;\n\020segmentOccupancy\030"
+      "\010 \001(\0132!.modes3.protobuf.SegmentOccupancy"
+      "\022E\n\025turnoutReferenceState\030\t \001(\0132&.modes3"
+      ".protobuf.TurnoutReferenceState\022C\n\024dccOp"
+      "erationsCommand\030\n \001(\0132%.modes3.protobuf."
+      "DccOperationsCommand\022\?\n\022dccOperationsSta"
+      "te\030\013 \001(\0132#.modes3.protobuf.DccOperations"
+      "State\0221\n\tallStatus\030\014 \001(\0132\036.modes3.protob"
+      "uf.SendAllStatus\022U\n\035computerVisionObject"
+      "Positions\030\r \001(\0132..modes3.protobuf.Comput"
+      "erVisionObjectPositionsB2\n.hu.bme.mit.in"
+      "f.modes3.messaging.proto.messagesP\001b\006pro"
+      "to3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 2054);
+      descriptor, 1243);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Message.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_DccOperationsCommand_2eproto::AddDescriptors();
@@ -249,21 +193,12 @@ void AddDescriptorsImpl() {
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_SegmentCommand_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_SegmentState_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_TrainCurrentSegment_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_TrainCurrentSpeed_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_TrainFunctionCommand_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_TrainFunctionState_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_TrainReferenceSpeed_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_TrainReferenceSpeedCommand_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_TurnoutCommand_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_TurnoutState_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_TurnoutReferenceCommand_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_TurnoutReferenceState_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_SegmentOccupancy_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_YakinduReleaseTo_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_YakinduCanGoTo_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_YakinduCannotGoTo_2eproto::AddDescriptors();
-  ::modes3::protobuf::protobuf_YakinduReserveTo_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_SendAllStatus_2eproto::AddDescriptors();
   ::modes3::protobuf::protobuf_ComputerVisionObjectPositions_2eproto::AddDescriptors();
 }
@@ -289,21 +224,12 @@ struct StaticDescriptorInitializer {
 const int Message::kTypeFieldNumber;
 const int Message::kSegmentCommandFieldNumber;
 const int Message::kSegmentStateFieldNumber;
-const int Message::kTrainCurrentSegmentFieldNumber;
-const int Message::kTrainCurrentSpeedFieldNumber;
 const int Message::kTrainReferenceSpeedFieldNumber;
 const int Message::kTrainReferenceSpeedCommandFieldNumber;
 const int Message::kTurnoutCommandFieldNumber;
 const int Message::kTurnoutStateFieldNumber;
 const int Message::kSegmentOccupancyFieldNumber;
-const int Message::kYakinduReleaseToFieldNumber;
-const int Message::kYakinduCanGoToFieldNumber;
-const int Message::kYakinduCannotGoToFieldNumber;
-const int Message::kYakinduReserveToFieldNumber;
-const int Message::kTurnoutReferenceCommandFieldNumber;
 const int Message::kTurnoutReferenceStateFieldNumber;
-const int Message::kTrainFunctionCommandFieldNumber;
-const int Message::kTrainFunctionStateFieldNumber;
 const int Message::kDccOperationsCommandFieldNumber;
 const int Message::kDccOperationsStateFieldNumber;
 const int Message::kAllStatusFieldNumber;
@@ -333,16 +259,6 @@ Message::Message(const Message& from)
   } else {
     segmentstate_ = NULL;
   }
-  if (from.has_traincurrentsegment()) {
-    traincurrentsegment_ = new ::modes3::protobuf::TrainCurrentSegment(*from.traincurrentsegment_);
-  } else {
-    traincurrentsegment_ = NULL;
-  }
-  if (from.has_traincurrentspeed()) {
-    traincurrentspeed_ = new ::modes3::protobuf::TrainCurrentSpeed(*from.traincurrentspeed_);
-  } else {
-    traincurrentspeed_ = NULL;
-  }
   if (from.has_trainreferencespeed()) {
     trainreferencespeed_ = new ::modes3::protobuf::TrainReferenceSpeed(*from.trainreferencespeed_);
   } else {
@@ -368,45 +284,10 @@ Message::Message(const Message& from)
   } else {
     segmentoccupancy_ = NULL;
   }
-  if (from.has_yakindureleaseto()) {
-    yakindureleaseto_ = new ::modes3::protobuf::YakinduReleaseTo(*from.yakindureleaseto_);
-  } else {
-    yakindureleaseto_ = NULL;
-  }
-  if (from.has_yakinducangoto()) {
-    yakinducangoto_ = new ::modes3::protobuf::YakinduCanGoTo(*from.yakinducangoto_);
-  } else {
-    yakinducangoto_ = NULL;
-  }
-  if (from.has_yakinducannotgoto()) {
-    yakinducannotgoto_ = new ::modes3::protobuf::YakinduCannotGoTo(*from.yakinducannotgoto_);
-  } else {
-    yakinducannotgoto_ = NULL;
-  }
-  if (from.has_yakindureserveto()) {
-    yakindureserveto_ = new ::modes3::protobuf::YakinduReserveTo(*from.yakindureserveto_);
-  } else {
-    yakindureserveto_ = NULL;
-  }
-  if (from.has_turnoutreferencecommand()) {
-    turnoutreferencecommand_ = new ::modes3::protobuf::TurnoutReferenceCommand(*from.turnoutreferencecommand_);
-  } else {
-    turnoutreferencecommand_ = NULL;
-  }
   if (from.has_turnoutreferencestate()) {
     turnoutreferencestate_ = new ::modes3::protobuf::TurnoutReferenceState(*from.turnoutreferencestate_);
   } else {
     turnoutreferencestate_ = NULL;
-  }
-  if (from.has_trainfunctioncommand()) {
-    trainfunctioncommand_ = new ::modes3::protobuf::TrainFunctionCommand(*from.trainfunctioncommand_);
-  } else {
-    trainfunctioncommand_ = NULL;
-  }
-  if (from.has_trainfunctionstate()) {
-    trainfunctionstate_ = new ::modes3::protobuf::TrainFunctionState(*from.trainfunctionstate_);
-  } else {
-    trainfunctionstate_ = NULL;
   }
   if (from.has_dccoperationscommand()) {
     dccoperationscommand_ = new ::modes3::protobuf::DccOperationsCommand(*from.dccoperationscommand_);
@@ -447,21 +328,12 @@ Message::~Message() {
 void Message::SharedDtor() {
   if (this != internal_default_instance()) delete segmentcommand_;
   if (this != internal_default_instance()) delete segmentstate_;
-  if (this != internal_default_instance()) delete traincurrentsegment_;
-  if (this != internal_default_instance()) delete traincurrentspeed_;
   if (this != internal_default_instance()) delete trainreferencespeed_;
   if (this != internal_default_instance()) delete trainreferencespeedcommand_;
   if (this != internal_default_instance()) delete turnoutcommand_;
   if (this != internal_default_instance()) delete turnoutstate_;
   if (this != internal_default_instance()) delete segmentoccupancy_;
-  if (this != internal_default_instance()) delete yakindureleaseto_;
-  if (this != internal_default_instance()) delete yakinducangoto_;
-  if (this != internal_default_instance()) delete yakinducannotgoto_;
-  if (this != internal_default_instance()) delete yakindureserveto_;
-  if (this != internal_default_instance()) delete turnoutreferencecommand_;
   if (this != internal_default_instance()) delete turnoutreferencestate_;
-  if (this != internal_default_instance()) delete trainfunctioncommand_;
-  if (this != internal_default_instance()) delete trainfunctionstate_;
   if (this != internal_default_instance()) delete dccoperationscommand_;
   if (this != internal_default_instance()) delete dccoperationsstate_;
   if (this != internal_default_instance()) delete allstatus_;
@@ -505,14 +377,6 @@ void Message::Clear() {
     delete segmentstate_;
   }
   segmentstate_ = NULL;
-  if (GetArenaNoVirtual() == NULL && traincurrentsegment_ != NULL) {
-    delete traincurrentsegment_;
-  }
-  traincurrentsegment_ = NULL;
-  if (GetArenaNoVirtual() == NULL && traincurrentspeed_ != NULL) {
-    delete traincurrentspeed_;
-  }
-  traincurrentspeed_ = NULL;
   if (GetArenaNoVirtual() == NULL && trainreferencespeed_ != NULL) {
     delete trainreferencespeed_;
   }
@@ -533,38 +397,10 @@ void Message::Clear() {
     delete segmentoccupancy_;
   }
   segmentoccupancy_ = NULL;
-  if (GetArenaNoVirtual() == NULL && yakindureleaseto_ != NULL) {
-    delete yakindureleaseto_;
-  }
-  yakindureleaseto_ = NULL;
-  if (GetArenaNoVirtual() == NULL && yakinducangoto_ != NULL) {
-    delete yakinducangoto_;
-  }
-  yakinducangoto_ = NULL;
-  if (GetArenaNoVirtual() == NULL && yakinducannotgoto_ != NULL) {
-    delete yakinducannotgoto_;
-  }
-  yakinducannotgoto_ = NULL;
-  if (GetArenaNoVirtual() == NULL && yakindureserveto_ != NULL) {
-    delete yakindureserveto_;
-  }
-  yakindureserveto_ = NULL;
-  if (GetArenaNoVirtual() == NULL && turnoutreferencecommand_ != NULL) {
-    delete turnoutreferencecommand_;
-  }
-  turnoutreferencecommand_ = NULL;
   if (GetArenaNoVirtual() == NULL && turnoutreferencestate_ != NULL) {
     delete turnoutreferencestate_;
   }
   turnoutreferencestate_ = NULL;
-  if (GetArenaNoVirtual() == NULL && trainfunctioncommand_ != NULL) {
-    delete trainfunctioncommand_;
-  }
-  trainfunctioncommand_ = NULL;
-  if (GetArenaNoVirtual() == NULL && trainfunctionstate_ != NULL) {
-    delete trainfunctionstate_;
-  }
-  trainfunctionstate_ = NULL;
   if (GetArenaNoVirtual() == NULL && dccoperationscommand_ != NULL) {
     delete dccoperationscommand_;
   }
@@ -591,7 +427,7 @@ bool Message::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:modes3.protobuf.Message)
   for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(16383u);
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
@@ -634,34 +470,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.TrainCurrentSegment trainCurrentSegment = 4;
+      // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 4;
       case 4: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(34u /* 34 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_traincurrentsegment()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.TrainCurrentSpeed trainCurrentSpeed = 5;
-      case 5: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_traincurrentspeed()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 7;
-      case 7: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_trainreferencespeed()));
         } else {
@@ -670,10 +482,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
-      case 8: {
+      // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 5;
+      case 5: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(42u /* 42 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_trainreferencespeedcommand()));
         } else {
@@ -682,10 +494,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.TurnoutCommand turnoutCommand = 9;
-      case 9: {
+      // .modes3.protobuf.TurnoutCommand turnoutCommand = 6;
+      case 6: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_turnoutcommand()));
         } else {
@@ -694,10 +506,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.TurnoutState turnoutState = 10;
-      case 10: {
+      // .modes3.protobuf.TurnoutState turnoutState = 7;
+      case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_turnoutstate()));
         } else {
@@ -706,10 +518,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 11;
-      case 11: {
+      // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 8;
+      case 8: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(90u /* 90 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_segmentoccupancy()));
         } else {
@@ -718,70 +530,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.YakinduReleaseTo yakinduReleaseTo = 12;
-      case 12: {
+      // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 9;
+      case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(98u /* 98 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_yakindureleaseto()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.YakinduCanGoTo yakinduCanGoTo = 13;
-      case 13: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(106u /* 106 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_yakinducangoto()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.YakinduCannotGoTo yakinduCannotGoTo = 14;
-      case 14: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(114u /* 114 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_yakinducannotgoto()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.YakinduReserveTo yakinduReserveTo = 15;
-      case 15: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(122u /* 122 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_yakindureserveto()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.TurnoutReferenceCommand turnoutReferenceCommand = 16;
-      case 16: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(130u /* 130 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_turnoutreferencecommand()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 17;
-      case 17: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(138u /* 138 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_turnoutreferencestate()));
         } else {
@@ -790,34 +542,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.TrainFunctionCommand trainFunctionCommand = 18;
-      case 18: {
+      // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 10;
+      case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(146u /* 146 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_trainfunctioncommand()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.TrainFunctionState trainFunctionState = 19;
-      case 19: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(154u /* 154 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_trainfunctionstate()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 20;
-      case 20: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(162u /* 162 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_dccoperationscommand()));
         } else {
@@ -826,10 +554,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.DccOperationsState dccOperationsState = 21;
-      case 21: {
+      // .modes3.protobuf.DccOperationsState dccOperationsState = 11;
+      case 11: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(170u /* 170 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(90u /* 90 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_dccoperationsstate()));
         } else {
@@ -838,10 +566,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.SendAllStatus allStatus = 22;
-      case 22: {
+      // .modes3.protobuf.SendAllStatus allStatus = 12;
+      case 12: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(178u /* 178 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(98u /* 98 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_allstatus()));
         } else {
@@ -850,10 +578,10 @@ bool Message::MergePartialFromCodedStream(
         break;
       }
 
-      // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 23;
-      case 23: {
+      // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 13;
+      case 13: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(186u /* 186 & 0xFF */)) {
+            static_cast< ::google::protobuf::uint8>(106u /* 106 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_computervisionobjectpositions()));
         } else {
@@ -906,118 +634,64 @@ void Message::SerializeWithCachedSizes(
       3, *this->segmentstate_, output);
   }
 
-  // .modes3.protobuf.TrainCurrentSegment trainCurrentSegment = 4;
-  if (this->has_traincurrentsegment()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      4, *this->traincurrentsegment_, output);
-  }
-
-  // .modes3.protobuf.TrainCurrentSpeed trainCurrentSpeed = 5;
-  if (this->has_traincurrentspeed()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      5, *this->traincurrentspeed_, output);
-  }
-
-  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 7;
+  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 4;
   if (this->has_trainreferencespeed()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, *this->trainreferencespeed_, output);
+      4, *this->trainreferencespeed_, output);
   }
 
-  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
+  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 5;
   if (this->has_trainreferencespeedcommand()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      8, *this->trainreferencespeedcommand_, output);
+      5, *this->trainreferencespeedcommand_, output);
   }
 
-  // .modes3.protobuf.TurnoutCommand turnoutCommand = 9;
+  // .modes3.protobuf.TurnoutCommand turnoutCommand = 6;
   if (this->has_turnoutcommand()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      9, *this->turnoutcommand_, output);
+      6, *this->turnoutcommand_, output);
   }
 
-  // .modes3.protobuf.TurnoutState turnoutState = 10;
+  // .modes3.protobuf.TurnoutState turnoutState = 7;
   if (this->has_turnoutstate()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      10, *this->turnoutstate_, output);
+      7, *this->turnoutstate_, output);
   }
 
-  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 11;
+  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 8;
   if (this->has_segmentoccupancy()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      11, *this->segmentoccupancy_, output);
+      8, *this->segmentoccupancy_, output);
   }
 
-  // .modes3.protobuf.YakinduReleaseTo yakinduReleaseTo = 12;
-  if (this->has_yakindureleaseto()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      12, *this->yakindureleaseto_, output);
-  }
-
-  // .modes3.protobuf.YakinduCanGoTo yakinduCanGoTo = 13;
-  if (this->has_yakinducangoto()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      13, *this->yakinducangoto_, output);
-  }
-
-  // .modes3.protobuf.YakinduCannotGoTo yakinduCannotGoTo = 14;
-  if (this->has_yakinducannotgoto()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      14, *this->yakinducannotgoto_, output);
-  }
-
-  // .modes3.protobuf.YakinduReserveTo yakinduReserveTo = 15;
-  if (this->has_yakindureserveto()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      15, *this->yakindureserveto_, output);
-  }
-
-  // .modes3.protobuf.TurnoutReferenceCommand turnoutReferenceCommand = 16;
-  if (this->has_turnoutreferencecommand()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      16, *this->turnoutreferencecommand_, output);
-  }
-
-  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 17;
+  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 9;
   if (this->has_turnoutreferencestate()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      17, *this->turnoutreferencestate_, output);
+      9, *this->turnoutreferencestate_, output);
   }
 
-  // .modes3.protobuf.TrainFunctionCommand trainFunctionCommand = 18;
-  if (this->has_trainfunctioncommand()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      18, *this->trainfunctioncommand_, output);
-  }
-
-  // .modes3.protobuf.TrainFunctionState trainFunctionState = 19;
-  if (this->has_trainfunctionstate()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      19, *this->trainfunctionstate_, output);
-  }
-
-  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 20;
+  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 10;
   if (this->has_dccoperationscommand()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      20, *this->dccoperationscommand_, output);
+      10, *this->dccoperationscommand_, output);
   }
 
-  // .modes3.protobuf.DccOperationsState dccOperationsState = 21;
+  // .modes3.protobuf.DccOperationsState dccOperationsState = 11;
   if (this->has_dccoperationsstate()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      21, *this->dccoperationsstate_, output);
+      11, *this->dccoperationsstate_, output);
   }
 
-  // .modes3.protobuf.SendAllStatus allStatus = 22;
+  // .modes3.protobuf.SendAllStatus allStatus = 12;
   if (this->has_allstatus()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      22, *this->allstatus_, output);
+      12, *this->allstatus_, output);
   }
 
-  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 23;
+  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 13;
   if (this->has_computervisionobjectpositions()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      23, *this->computervisionobjectpositions_, output);
+      13, *this->computervisionobjectpositions_, output);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1054,137 +728,74 @@ void Message::SerializeWithCachedSizes(
         3, *this->segmentstate_, deterministic, target);
   }
 
-  // .modes3.protobuf.TrainCurrentSegment trainCurrentSegment = 4;
-  if (this->has_traincurrentsegment()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        4, *this->traincurrentsegment_, deterministic, target);
-  }
-
-  // .modes3.protobuf.TrainCurrentSpeed trainCurrentSpeed = 5;
-  if (this->has_traincurrentspeed()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        5, *this->traincurrentspeed_, deterministic, target);
-  }
-
-  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 7;
+  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 4;
   if (this->has_trainreferencespeed()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        7, *this->trainreferencespeed_, deterministic, target);
+        4, *this->trainreferencespeed_, deterministic, target);
   }
 
-  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
+  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 5;
   if (this->has_trainreferencespeedcommand()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        8, *this->trainreferencespeedcommand_, deterministic, target);
+        5, *this->trainreferencespeedcommand_, deterministic, target);
   }
 
-  // .modes3.protobuf.TurnoutCommand turnoutCommand = 9;
+  // .modes3.protobuf.TurnoutCommand turnoutCommand = 6;
   if (this->has_turnoutcommand()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        9, *this->turnoutcommand_, deterministic, target);
+        6, *this->turnoutcommand_, deterministic, target);
   }
 
-  // .modes3.protobuf.TurnoutState turnoutState = 10;
+  // .modes3.protobuf.TurnoutState turnoutState = 7;
   if (this->has_turnoutstate()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        10, *this->turnoutstate_, deterministic, target);
+        7, *this->turnoutstate_, deterministic, target);
   }
 
-  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 11;
+  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 8;
   if (this->has_segmentoccupancy()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        11, *this->segmentoccupancy_, deterministic, target);
+        8, *this->segmentoccupancy_, deterministic, target);
   }
 
-  // .modes3.protobuf.YakinduReleaseTo yakinduReleaseTo = 12;
-  if (this->has_yakindureleaseto()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        12, *this->yakindureleaseto_, deterministic, target);
-  }
-
-  // .modes3.protobuf.YakinduCanGoTo yakinduCanGoTo = 13;
-  if (this->has_yakinducangoto()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        13, *this->yakinducangoto_, deterministic, target);
-  }
-
-  // .modes3.protobuf.YakinduCannotGoTo yakinduCannotGoTo = 14;
-  if (this->has_yakinducannotgoto()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        14, *this->yakinducannotgoto_, deterministic, target);
-  }
-
-  // .modes3.protobuf.YakinduReserveTo yakinduReserveTo = 15;
-  if (this->has_yakindureserveto()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        15, *this->yakindureserveto_, deterministic, target);
-  }
-
-  // .modes3.protobuf.TurnoutReferenceCommand turnoutReferenceCommand = 16;
-  if (this->has_turnoutreferencecommand()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        16, *this->turnoutreferencecommand_, deterministic, target);
-  }
-
-  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 17;
+  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 9;
   if (this->has_turnoutreferencestate()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        17, *this->turnoutreferencestate_, deterministic, target);
+        9, *this->turnoutreferencestate_, deterministic, target);
   }
 
-  // .modes3.protobuf.TrainFunctionCommand trainFunctionCommand = 18;
-  if (this->has_trainfunctioncommand()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        18, *this->trainfunctioncommand_, deterministic, target);
-  }
-
-  // .modes3.protobuf.TrainFunctionState trainFunctionState = 19;
-  if (this->has_trainfunctionstate()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageNoVirtualToArray(
-        19, *this->trainfunctionstate_, deterministic, target);
-  }
-
-  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 20;
+  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 10;
   if (this->has_dccoperationscommand()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        20, *this->dccoperationscommand_, deterministic, target);
+        10, *this->dccoperationscommand_, deterministic, target);
   }
 
-  // .modes3.protobuf.DccOperationsState dccOperationsState = 21;
+  // .modes3.protobuf.DccOperationsState dccOperationsState = 11;
   if (this->has_dccoperationsstate()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        21, *this->dccoperationsstate_, deterministic, target);
+        11, *this->dccoperationsstate_, deterministic, target);
   }
 
-  // .modes3.protobuf.SendAllStatus allStatus = 22;
+  // .modes3.protobuf.SendAllStatus allStatus = 12;
   if (this->has_allstatus()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        22, *this->allstatus_, deterministic, target);
+        12, *this->allstatus_, deterministic, target);
   }
 
-  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 23;
+  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 13;
   if (this->has_computervisionobjectpositions()) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageNoVirtualToArray(
-        23, *this->computervisionobjectpositions_, deterministic, target);
+        13, *this->computervisionobjectpositions_, deterministic, target);
   }
 
   if ((_internal_metadata_.have_unknown_fields() &&  ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
@@ -1218,135 +829,72 @@ size_t Message::ByteSizeLong() const {
         *this->segmentstate_);
   }
 
-  // .modes3.protobuf.TrainCurrentSegment trainCurrentSegment = 4;
-  if (this->has_traincurrentsegment()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->traincurrentsegment_);
-  }
-
-  // .modes3.protobuf.TrainCurrentSpeed trainCurrentSpeed = 5;
-  if (this->has_traincurrentspeed()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->traincurrentspeed_);
-  }
-
-  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 7;
+  // .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 4;
   if (this->has_trainreferencespeed()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->trainreferencespeed_);
   }
 
-  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
+  // .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 5;
   if (this->has_trainreferencespeedcommand()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->trainreferencespeedcommand_);
   }
 
-  // .modes3.protobuf.TurnoutCommand turnoutCommand = 9;
+  // .modes3.protobuf.TurnoutCommand turnoutCommand = 6;
   if (this->has_turnoutcommand()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->turnoutcommand_);
   }
 
-  // .modes3.protobuf.TurnoutState turnoutState = 10;
+  // .modes3.protobuf.TurnoutState turnoutState = 7;
   if (this->has_turnoutstate()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->turnoutstate_);
   }
 
-  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 11;
+  // .modes3.protobuf.SegmentOccupancy segmentOccupancy = 8;
   if (this->has_segmentoccupancy()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->segmentoccupancy_);
   }
 
-  // .modes3.protobuf.YakinduReleaseTo yakinduReleaseTo = 12;
-  if (this->has_yakindureleaseto()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->yakindureleaseto_);
-  }
-
-  // .modes3.protobuf.YakinduCanGoTo yakinduCanGoTo = 13;
-  if (this->has_yakinducangoto()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->yakinducangoto_);
-  }
-
-  // .modes3.protobuf.YakinduCannotGoTo yakinduCannotGoTo = 14;
-  if (this->has_yakinducannotgoto()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->yakinducannotgoto_);
-  }
-
-  // .modes3.protobuf.YakinduReserveTo yakinduReserveTo = 15;
-  if (this->has_yakindureserveto()) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->yakindureserveto_);
-  }
-
-  // .modes3.protobuf.TurnoutReferenceCommand turnoutReferenceCommand = 16;
-  if (this->has_turnoutreferencecommand()) {
-    total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->turnoutreferencecommand_);
-  }
-
-  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 17;
+  // .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 9;
   if (this->has_turnoutreferencestate()) {
-    total_size += 2 +
+    total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->turnoutreferencestate_);
   }
 
-  // .modes3.protobuf.TrainFunctionCommand trainFunctionCommand = 18;
-  if (this->has_trainfunctioncommand()) {
-    total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->trainfunctioncommand_);
-  }
-
-  // .modes3.protobuf.TrainFunctionState trainFunctionState = 19;
-  if (this->has_trainfunctionstate()) {
-    total_size += 2 +
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        *this->trainfunctionstate_);
-  }
-
-  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 20;
+  // .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 10;
   if (this->has_dccoperationscommand()) {
-    total_size += 2 +
+    total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->dccoperationscommand_);
   }
 
-  // .modes3.protobuf.DccOperationsState dccOperationsState = 21;
+  // .modes3.protobuf.DccOperationsState dccOperationsState = 11;
   if (this->has_dccoperationsstate()) {
-    total_size += 2 +
+    total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->dccoperationsstate_);
   }
 
-  // .modes3.protobuf.SendAllStatus allStatus = 22;
+  // .modes3.protobuf.SendAllStatus allStatus = 12;
   if (this->has_allstatus()) {
-    total_size += 2 +
+    total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->allstatus_);
   }
 
-  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 23;
+  // .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 13;
   if (this->has_computervisionobjectpositions()) {
-    total_size += 2 +
+    total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->computervisionobjectpositions_);
   }
@@ -1392,12 +940,6 @@ void Message::MergeFrom(const Message& from) {
   if (from.has_segmentstate()) {
     mutable_segmentstate()->::modes3::protobuf::SegmentState::MergeFrom(from.segmentstate());
   }
-  if (from.has_traincurrentsegment()) {
-    mutable_traincurrentsegment()->::modes3::protobuf::TrainCurrentSegment::MergeFrom(from.traincurrentsegment());
-  }
-  if (from.has_traincurrentspeed()) {
-    mutable_traincurrentspeed()->::modes3::protobuf::TrainCurrentSpeed::MergeFrom(from.traincurrentspeed());
-  }
   if (from.has_trainreferencespeed()) {
     mutable_trainreferencespeed()->::modes3::protobuf::TrainReferenceSpeed::MergeFrom(from.trainreferencespeed());
   }
@@ -1413,29 +955,8 @@ void Message::MergeFrom(const Message& from) {
   if (from.has_segmentoccupancy()) {
     mutable_segmentoccupancy()->::modes3::protobuf::SegmentOccupancy::MergeFrom(from.segmentoccupancy());
   }
-  if (from.has_yakindureleaseto()) {
-    mutable_yakindureleaseto()->::modes3::protobuf::YakinduReleaseTo::MergeFrom(from.yakindureleaseto());
-  }
-  if (from.has_yakinducangoto()) {
-    mutable_yakinducangoto()->::modes3::protobuf::YakinduCanGoTo::MergeFrom(from.yakinducangoto());
-  }
-  if (from.has_yakinducannotgoto()) {
-    mutable_yakinducannotgoto()->::modes3::protobuf::YakinduCannotGoTo::MergeFrom(from.yakinducannotgoto());
-  }
-  if (from.has_yakindureserveto()) {
-    mutable_yakindureserveto()->::modes3::protobuf::YakinduReserveTo::MergeFrom(from.yakindureserveto());
-  }
-  if (from.has_turnoutreferencecommand()) {
-    mutable_turnoutreferencecommand()->::modes3::protobuf::TurnoutReferenceCommand::MergeFrom(from.turnoutreferencecommand());
-  }
   if (from.has_turnoutreferencestate()) {
     mutable_turnoutreferencestate()->::modes3::protobuf::TurnoutReferenceState::MergeFrom(from.turnoutreferencestate());
-  }
-  if (from.has_trainfunctioncommand()) {
-    mutable_trainfunctioncommand()->::modes3::protobuf::TrainFunctionCommand::MergeFrom(from.trainfunctioncommand());
-  }
-  if (from.has_trainfunctionstate()) {
-    mutable_trainfunctionstate()->::modes3::protobuf::TrainFunctionState::MergeFrom(from.trainfunctionstate());
   }
   if (from.has_dccoperationscommand()) {
     mutable_dccoperationscommand()->::modes3::protobuf::DccOperationsCommand::MergeFrom(from.dccoperationscommand());
@@ -1480,21 +1001,12 @@ void Message::InternalSwap(Message* other) {
   using std::swap;
   swap(segmentcommand_, other->segmentcommand_);
   swap(segmentstate_, other->segmentstate_);
-  swap(traincurrentsegment_, other->traincurrentsegment_);
-  swap(traincurrentspeed_, other->traincurrentspeed_);
   swap(trainreferencespeed_, other->trainreferencespeed_);
   swap(trainreferencespeedcommand_, other->trainreferencespeedcommand_);
   swap(turnoutcommand_, other->turnoutcommand_);
   swap(turnoutstate_, other->turnoutstate_);
   swap(segmentoccupancy_, other->segmentoccupancy_);
-  swap(yakindureleaseto_, other->yakindureleaseto_);
-  swap(yakinducangoto_, other->yakinducangoto_);
-  swap(yakinducannotgoto_, other->yakinducannotgoto_);
-  swap(yakindureserveto_, other->yakindureserveto_);
-  swap(turnoutreferencecommand_, other->turnoutreferencecommand_);
   swap(turnoutreferencestate_, other->turnoutreferencestate_);
-  swap(trainfunctioncommand_, other->trainfunctioncommand_);
-  swap(trainfunctionstate_, other->trainfunctionstate_);
   swap(dccoperationscommand_, other->dccoperationscommand_);
   swap(dccoperationsstate_, other->dccoperationsstate_);
   swap(allstatus_, other->allstatus_);
@@ -1606,87 +1118,7 @@ void Message::set_allocated_segmentstate(::modes3::protobuf::SegmentState* segme
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.segmentState)
 }
 
-// .modes3.protobuf.TrainCurrentSegment trainCurrentSegment = 4;
-bool Message::has_traincurrentsegment() const {
-  return this != internal_default_instance() && traincurrentsegment_ != NULL;
-}
-void Message::clear_traincurrentsegment() {
-  if (GetArenaNoVirtual() == NULL && traincurrentsegment_ != NULL) delete traincurrentsegment_;
-  traincurrentsegment_ = NULL;
-}
-const ::modes3::protobuf::TrainCurrentSegment& Message::traincurrentsegment() const {
-  const ::modes3::protobuf::TrainCurrentSegment* p = traincurrentsegment_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainCurrentSegment)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainCurrentSegment*>(
-      &::modes3::protobuf::_TrainCurrentSegment_default_instance_);
-}
-::modes3::protobuf::TrainCurrentSegment* Message::mutable_traincurrentsegment() {
-  
-  if (traincurrentsegment_ == NULL) {
-    traincurrentsegment_ = new ::modes3::protobuf::TrainCurrentSegment;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainCurrentSegment)
-  return traincurrentsegment_;
-}
-::modes3::protobuf::TrainCurrentSegment* Message::release_traincurrentsegment() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainCurrentSegment)
-  
-  ::modes3::protobuf::TrainCurrentSegment* temp = traincurrentsegment_;
-  traincurrentsegment_ = NULL;
-  return temp;
-}
-void Message::set_allocated_traincurrentsegment(::modes3::protobuf::TrainCurrentSegment* traincurrentsegment) {
-  delete traincurrentsegment_;
-  traincurrentsegment_ = traincurrentsegment;
-  if (traincurrentsegment) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainCurrentSegment)
-}
-
-// .modes3.protobuf.TrainCurrentSpeed trainCurrentSpeed = 5;
-bool Message::has_traincurrentspeed() const {
-  return this != internal_default_instance() && traincurrentspeed_ != NULL;
-}
-void Message::clear_traincurrentspeed() {
-  if (GetArenaNoVirtual() == NULL && traincurrentspeed_ != NULL) delete traincurrentspeed_;
-  traincurrentspeed_ = NULL;
-}
-const ::modes3::protobuf::TrainCurrentSpeed& Message::traincurrentspeed() const {
-  const ::modes3::protobuf::TrainCurrentSpeed* p = traincurrentspeed_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainCurrentSpeed)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainCurrentSpeed*>(
-      &::modes3::protobuf::_TrainCurrentSpeed_default_instance_);
-}
-::modes3::protobuf::TrainCurrentSpeed* Message::mutable_traincurrentspeed() {
-  
-  if (traincurrentspeed_ == NULL) {
-    traincurrentspeed_ = new ::modes3::protobuf::TrainCurrentSpeed;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainCurrentSpeed)
-  return traincurrentspeed_;
-}
-::modes3::protobuf::TrainCurrentSpeed* Message::release_traincurrentspeed() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainCurrentSpeed)
-  
-  ::modes3::protobuf::TrainCurrentSpeed* temp = traincurrentspeed_;
-  traincurrentspeed_ = NULL;
-  return temp;
-}
-void Message::set_allocated_traincurrentspeed(::modes3::protobuf::TrainCurrentSpeed* traincurrentspeed) {
-  delete traincurrentspeed_;
-  traincurrentspeed_ = traincurrentspeed;
-  if (traincurrentspeed) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainCurrentSpeed)
-}
-
-// .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 7;
+// .modes3.protobuf.TrainReferenceSpeed trainReferenceSpeed = 4;
 bool Message::has_trainreferencespeed() const {
   return this != internal_default_instance() && trainreferencespeed_ != NULL;
 }
@@ -1726,7 +1158,7 @@ void Message::set_allocated_trainreferencespeed(::modes3::protobuf::TrainReferen
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainReferenceSpeed)
 }
 
-// .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 8;
+// .modes3.protobuf.TrainReferenceSpeedCommand trainReferenceSpeedCommand = 5;
 bool Message::has_trainreferencespeedcommand() const {
   return this != internal_default_instance() && trainreferencespeedcommand_ != NULL;
 }
@@ -1766,7 +1198,7 @@ void Message::set_allocated_trainreferencespeedcommand(::modes3::protobuf::Train
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainReferenceSpeedCommand)
 }
 
-// .modes3.protobuf.TurnoutCommand turnoutCommand = 9;
+// .modes3.protobuf.TurnoutCommand turnoutCommand = 6;
 bool Message::has_turnoutcommand() const {
   return this != internal_default_instance() && turnoutcommand_ != NULL;
 }
@@ -1806,7 +1238,7 @@ void Message::set_allocated_turnoutcommand(::modes3::protobuf::TurnoutCommand* t
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutCommand)
 }
 
-// .modes3.protobuf.TurnoutState turnoutState = 10;
+// .modes3.protobuf.TurnoutState turnoutState = 7;
 bool Message::has_turnoutstate() const {
   return this != internal_default_instance() && turnoutstate_ != NULL;
 }
@@ -1846,7 +1278,7 @@ void Message::set_allocated_turnoutstate(::modes3::protobuf::TurnoutState* turno
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutState)
 }
 
-// .modes3.protobuf.SegmentOccupancy segmentOccupancy = 11;
+// .modes3.protobuf.SegmentOccupancy segmentOccupancy = 8;
 bool Message::has_segmentoccupancy() const {
   return this != internal_default_instance() && segmentoccupancy_ != NULL;
 }
@@ -1886,207 +1318,7 @@ void Message::set_allocated_segmentoccupancy(::modes3::protobuf::SegmentOccupanc
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.segmentOccupancy)
 }
 
-// .modes3.protobuf.YakinduReleaseTo yakinduReleaseTo = 12;
-bool Message::has_yakindureleaseto() const {
-  return this != internal_default_instance() && yakindureleaseto_ != NULL;
-}
-void Message::clear_yakindureleaseto() {
-  if (GetArenaNoVirtual() == NULL && yakindureleaseto_ != NULL) delete yakindureleaseto_;
-  yakindureleaseto_ = NULL;
-}
-const ::modes3::protobuf::YakinduReleaseTo& Message::yakindureleaseto() const {
-  const ::modes3::protobuf::YakinduReleaseTo* p = yakindureleaseto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduReleaseTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduReleaseTo*>(
-      &::modes3::protobuf::_YakinduReleaseTo_default_instance_);
-}
-::modes3::protobuf::YakinduReleaseTo* Message::mutable_yakindureleaseto() {
-  
-  if (yakindureleaseto_ == NULL) {
-    yakindureleaseto_ = new ::modes3::protobuf::YakinduReleaseTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduReleaseTo)
-  return yakindureleaseto_;
-}
-::modes3::protobuf::YakinduReleaseTo* Message::release_yakindureleaseto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduReleaseTo)
-  
-  ::modes3::protobuf::YakinduReleaseTo* temp = yakindureleaseto_;
-  yakindureleaseto_ = NULL;
-  return temp;
-}
-void Message::set_allocated_yakindureleaseto(::modes3::protobuf::YakinduReleaseTo* yakindureleaseto) {
-  delete yakindureleaseto_;
-  yakindureleaseto_ = yakindureleaseto;
-  if (yakindureleaseto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduReleaseTo)
-}
-
-// .modes3.protobuf.YakinduCanGoTo yakinduCanGoTo = 13;
-bool Message::has_yakinducangoto() const {
-  return this != internal_default_instance() && yakinducangoto_ != NULL;
-}
-void Message::clear_yakinducangoto() {
-  if (GetArenaNoVirtual() == NULL && yakinducangoto_ != NULL) delete yakinducangoto_;
-  yakinducangoto_ = NULL;
-}
-const ::modes3::protobuf::YakinduCanGoTo& Message::yakinducangoto() const {
-  const ::modes3::protobuf::YakinduCanGoTo* p = yakinducangoto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduCanGoTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduCanGoTo*>(
-      &::modes3::protobuf::_YakinduCanGoTo_default_instance_);
-}
-::modes3::protobuf::YakinduCanGoTo* Message::mutable_yakinducangoto() {
-  
-  if (yakinducangoto_ == NULL) {
-    yakinducangoto_ = new ::modes3::protobuf::YakinduCanGoTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduCanGoTo)
-  return yakinducangoto_;
-}
-::modes3::protobuf::YakinduCanGoTo* Message::release_yakinducangoto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduCanGoTo)
-  
-  ::modes3::protobuf::YakinduCanGoTo* temp = yakinducangoto_;
-  yakinducangoto_ = NULL;
-  return temp;
-}
-void Message::set_allocated_yakinducangoto(::modes3::protobuf::YakinduCanGoTo* yakinducangoto) {
-  delete yakinducangoto_;
-  yakinducangoto_ = yakinducangoto;
-  if (yakinducangoto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduCanGoTo)
-}
-
-// .modes3.protobuf.YakinduCannotGoTo yakinduCannotGoTo = 14;
-bool Message::has_yakinducannotgoto() const {
-  return this != internal_default_instance() && yakinducannotgoto_ != NULL;
-}
-void Message::clear_yakinducannotgoto() {
-  if (GetArenaNoVirtual() == NULL && yakinducannotgoto_ != NULL) delete yakinducannotgoto_;
-  yakinducannotgoto_ = NULL;
-}
-const ::modes3::protobuf::YakinduCannotGoTo& Message::yakinducannotgoto() const {
-  const ::modes3::protobuf::YakinduCannotGoTo* p = yakinducannotgoto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduCannotGoTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduCannotGoTo*>(
-      &::modes3::protobuf::_YakinduCannotGoTo_default_instance_);
-}
-::modes3::protobuf::YakinduCannotGoTo* Message::mutable_yakinducannotgoto() {
-  
-  if (yakinducannotgoto_ == NULL) {
-    yakinducannotgoto_ = new ::modes3::protobuf::YakinduCannotGoTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduCannotGoTo)
-  return yakinducannotgoto_;
-}
-::modes3::protobuf::YakinduCannotGoTo* Message::release_yakinducannotgoto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduCannotGoTo)
-  
-  ::modes3::protobuf::YakinduCannotGoTo* temp = yakinducannotgoto_;
-  yakinducannotgoto_ = NULL;
-  return temp;
-}
-void Message::set_allocated_yakinducannotgoto(::modes3::protobuf::YakinduCannotGoTo* yakinducannotgoto) {
-  delete yakinducannotgoto_;
-  yakinducannotgoto_ = yakinducannotgoto;
-  if (yakinducannotgoto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduCannotGoTo)
-}
-
-// .modes3.protobuf.YakinduReserveTo yakinduReserveTo = 15;
-bool Message::has_yakindureserveto() const {
-  return this != internal_default_instance() && yakindureserveto_ != NULL;
-}
-void Message::clear_yakindureserveto() {
-  if (GetArenaNoVirtual() == NULL && yakindureserveto_ != NULL) delete yakindureserveto_;
-  yakindureserveto_ = NULL;
-}
-const ::modes3::protobuf::YakinduReserveTo& Message::yakindureserveto() const {
-  const ::modes3::protobuf::YakinduReserveTo* p = yakindureserveto_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.yakinduReserveTo)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::YakinduReserveTo*>(
-      &::modes3::protobuf::_YakinduReserveTo_default_instance_);
-}
-::modes3::protobuf::YakinduReserveTo* Message::mutable_yakindureserveto() {
-  
-  if (yakindureserveto_ == NULL) {
-    yakindureserveto_ = new ::modes3::protobuf::YakinduReserveTo;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.yakinduReserveTo)
-  return yakindureserveto_;
-}
-::modes3::protobuf::YakinduReserveTo* Message::release_yakindureserveto() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.yakinduReserveTo)
-  
-  ::modes3::protobuf::YakinduReserveTo* temp = yakindureserveto_;
-  yakindureserveto_ = NULL;
-  return temp;
-}
-void Message::set_allocated_yakindureserveto(::modes3::protobuf::YakinduReserveTo* yakindureserveto) {
-  delete yakindureserveto_;
-  yakindureserveto_ = yakindureserveto;
-  if (yakindureserveto) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.yakinduReserveTo)
-}
-
-// .modes3.protobuf.TurnoutReferenceCommand turnoutReferenceCommand = 16;
-bool Message::has_turnoutreferencecommand() const {
-  return this != internal_default_instance() && turnoutreferencecommand_ != NULL;
-}
-void Message::clear_turnoutreferencecommand() {
-  if (GetArenaNoVirtual() == NULL && turnoutreferencecommand_ != NULL) delete turnoutreferencecommand_;
-  turnoutreferencecommand_ = NULL;
-}
-const ::modes3::protobuf::TurnoutReferenceCommand& Message::turnoutreferencecommand() const {
-  const ::modes3::protobuf::TurnoutReferenceCommand* p = turnoutreferencecommand_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.turnoutReferenceCommand)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TurnoutReferenceCommand*>(
-      &::modes3::protobuf::_TurnoutReferenceCommand_default_instance_);
-}
-::modes3::protobuf::TurnoutReferenceCommand* Message::mutable_turnoutreferencecommand() {
-  
-  if (turnoutreferencecommand_ == NULL) {
-    turnoutreferencecommand_ = new ::modes3::protobuf::TurnoutReferenceCommand;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.turnoutReferenceCommand)
-  return turnoutreferencecommand_;
-}
-::modes3::protobuf::TurnoutReferenceCommand* Message::release_turnoutreferencecommand() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.turnoutReferenceCommand)
-  
-  ::modes3::protobuf::TurnoutReferenceCommand* temp = turnoutreferencecommand_;
-  turnoutreferencecommand_ = NULL;
-  return temp;
-}
-void Message::set_allocated_turnoutreferencecommand(::modes3::protobuf::TurnoutReferenceCommand* turnoutreferencecommand) {
-  delete turnoutreferencecommand_;
-  turnoutreferencecommand_ = turnoutreferencecommand;
-  if (turnoutreferencecommand) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutReferenceCommand)
-}
-
-// .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 17;
+// .modes3.protobuf.TurnoutReferenceState turnoutReferenceState = 9;
 bool Message::has_turnoutreferencestate() const {
   return this != internal_default_instance() && turnoutreferencestate_ != NULL;
 }
@@ -2126,87 +1358,7 @@ void Message::set_allocated_turnoutreferencestate(::modes3::protobuf::TurnoutRef
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.turnoutReferenceState)
 }
 
-// .modes3.protobuf.TrainFunctionCommand trainFunctionCommand = 18;
-bool Message::has_trainfunctioncommand() const {
-  return this != internal_default_instance() && trainfunctioncommand_ != NULL;
-}
-void Message::clear_trainfunctioncommand() {
-  if (GetArenaNoVirtual() == NULL && trainfunctioncommand_ != NULL) delete trainfunctioncommand_;
-  trainfunctioncommand_ = NULL;
-}
-const ::modes3::protobuf::TrainFunctionCommand& Message::trainfunctioncommand() const {
-  const ::modes3::protobuf::TrainFunctionCommand* p = trainfunctioncommand_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainFunctionCommand)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainFunctionCommand*>(
-      &::modes3::protobuf::_TrainFunctionCommand_default_instance_);
-}
-::modes3::protobuf::TrainFunctionCommand* Message::mutable_trainfunctioncommand() {
-  
-  if (trainfunctioncommand_ == NULL) {
-    trainfunctioncommand_ = new ::modes3::protobuf::TrainFunctionCommand;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainFunctionCommand)
-  return trainfunctioncommand_;
-}
-::modes3::protobuf::TrainFunctionCommand* Message::release_trainfunctioncommand() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainFunctionCommand)
-  
-  ::modes3::protobuf::TrainFunctionCommand* temp = trainfunctioncommand_;
-  trainfunctioncommand_ = NULL;
-  return temp;
-}
-void Message::set_allocated_trainfunctioncommand(::modes3::protobuf::TrainFunctionCommand* trainfunctioncommand) {
-  delete trainfunctioncommand_;
-  trainfunctioncommand_ = trainfunctioncommand;
-  if (trainfunctioncommand) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainFunctionCommand)
-}
-
-// .modes3.protobuf.TrainFunctionState trainFunctionState = 19;
-bool Message::has_trainfunctionstate() const {
-  return this != internal_default_instance() && trainfunctionstate_ != NULL;
-}
-void Message::clear_trainfunctionstate() {
-  if (GetArenaNoVirtual() == NULL && trainfunctionstate_ != NULL) delete trainfunctionstate_;
-  trainfunctionstate_ = NULL;
-}
-const ::modes3::protobuf::TrainFunctionState& Message::trainfunctionstate() const {
-  const ::modes3::protobuf::TrainFunctionState* p = trainfunctionstate_;
-  // @@protoc_insertion_point(field_get:modes3.protobuf.Message.trainFunctionState)
-  return p != NULL ? *p : *reinterpret_cast<const ::modes3::protobuf::TrainFunctionState*>(
-      &::modes3::protobuf::_TrainFunctionState_default_instance_);
-}
-::modes3::protobuf::TrainFunctionState* Message::mutable_trainfunctionstate() {
-  
-  if (trainfunctionstate_ == NULL) {
-    trainfunctionstate_ = new ::modes3::protobuf::TrainFunctionState;
-  }
-  // @@protoc_insertion_point(field_mutable:modes3.protobuf.Message.trainFunctionState)
-  return trainfunctionstate_;
-}
-::modes3::protobuf::TrainFunctionState* Message::release_trainfunctionstate() {
-  // @@protoc_insertion_point(field_release:modes3.protobuf.Message.trainFunctionState)
-  
-  ::modes3::protobuf::TrainFunctionState* temp = trainfunctionstate_;
-  trainfunctionstate_ = NULL;
-  return temp;
-}
-void Message::set_allocated_trainfunctionstate(::modes3::protobuf::TrainFunctionState* trainfunctionstate) {
-  delete trainfunctionstate_;
-  trainfunctionstate_ = trainfunctionstate;
-  if (trainfunctionstate) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.trainFunctionState)
-}
-
-// .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 20;
+// .modes3.protobuf.DccOperationsCommand dccOperationsCommand = 10;
 bool Message::has_dccoperationscommand() const {
   return this != internal_default_instance() && dccoperationscommand_ != NULL;
 }
@@ -2246,7 +1398,7 @@ void Message::set_allocated_dccoperationscommand(::modes3::protobuf::DccOperatio
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.dccOperationsCommand)
 }
 
-// .modes3.protobuf.DccOperationsState dccOperationsState = 21;
+// .modes3.protobuf.DccOperationsState dccOperationsState = 11;
 bool Message::has_dccoperationsstate() const {
   return this != internal_default_instance() && dccoperationsstate_ != NULL;
 }
@@ -2286,7 +1438,7 @@ void Message::set_allocated_dccoperationsstate(::modes3::protobuf::DccOperations
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.dccOperationsState)
 }
 
-// .modes3.protobuf.SendAllStatus allStatus = 22;
+// .modes3.protobuf.SendAllStatus allStatus = 12;
 bool Message::has_allstatus() const {
   return this != internal_default_instance() && allstatus_ != NULL;
 }
@@ -2326,7 +1478,7 @@ void Message::set_allocated_allstatus(::modes3::protobuf::SendAllStatus* allstat
   // @@protoc_insertion_point(field_set_allocated:modes3.protobuf.Message.allStatus)
 }
 
-// .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 23;
+// .modes3.protobuf.ComputerVisionObjectPositions computerVisionObjectPositions = 13;
 bool Message::has_computervisionobjectpositions() const {
   return this != internal_default_instance() && computervisionobjectpositions_ != NULL;
 }

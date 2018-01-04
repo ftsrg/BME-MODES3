@@ -2,14 +2,19 @@ package hu.bme.mit.inf.modes3.messaging.communication.factory
 
 import hu.bme.mit.inf.modes3.messaging.messages.command.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.TurnoutCommand
+import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessage
 import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import java.util.Collection
 import java.util.Set
 
 class TopicFactory {
+
+	private static val SUPPORTED_SEGMENT_MESSAGE_TYPES = #{SegmentStateMessage, SegmentOccupancyMessage, SegmentCommand}
+	private static val SUPPORTED_TURNOUT_MESSAGE_TYPES = #{TurnoutStateMessage, TurnoutCommand}
 
 	/**
 	 * @return every possible topic, without having the topic parameters substituted.
@@ -77,13 +82,13 @@ class TopicFactory {
 	 * 
 	 * WARNING: many topics!
 	 */
-	def static createTopicsWithSubstitutedParameters(Class<?> messageType, Set<String> substitions) {
+	def static createTopicsWithSubstitutedParameters(Class<? extends InternalMessage> messageType, Set<String> substitions) {
 		val topicsWithRawParameters = createTopicsWithRawParameters(messageType)
 		return substituteTopicIdParametersWithValues(topicsWithRawParameters, substitions)
 	}
 
 	/**
-	 * @return creates every topic for the turnout related messages for every turnout, and substitutes the {id} parameters in the topic names
+	 * @return creates every topic for the turnout-related messages for every turnout, and substitutes the {id} parameters in the topic names
 	 * 
 	 * WARNING: many topics!
 	 */
@@ -93,15 +98,22 @@ class TopicFactory {
 	}
 
 	/**
-	 * @return creates every topic for the turnout related messages for the referred turnout, and substitutes the {id} parameters in the topic names
+	 * @return creates every topic for the turnout-related messages for the referred turnout, and substitutes the {id} parameters in the topic names
 	 */
 	def static createTurnoutTopics(int turnoutId) {
-		val messageTypes = #{TurnoutStateMessage, TurnoutCommand}
-		return messageTypes.map[createTopicsWithSubstitutedParameters(it, #{String.valueOf(turnoutId)})].flatten.toSet
+		return createTopicsBySupportedMessageTypes(turnoutId, SUPPORTED_TURNOUT_MESSAGE_TYPES, SUPPORTED_TURNOUT_MESSAGE_TYPES)
 	}
 
 	/**
-	 * @return creates every topic for the Segment related messages for every segment, and substitutes the {id} parameters in the topic names
+	 * @return creates topics only for the selected turnout-related messages for the referred turnout, and substitutes the {id} parameters in the topic names
+	 * Supported message types: TurnoutStateMessage, TurnoutCommand
+	 */
+	def static createTurnoutTopics(int turnoutId, Collection<? extends Class<? extends InternalMessage>> chosenMessageTypes) {
+		return createTopicsBySupportedMessageTypes(turnoutId, SUPPORTED_TURNOUT_MESSAGE_TYPES, chosenMessageTypes)
+	}
+
+	/**
+	 * @return creates every topic for the segment-related messages for every segment, and substitutes the {id} parameters in the topic names
 	 */
 	def static createSegmentTopics() {
 		val segmentIds = LayoutConfiguration.INSTANCE.segments
@@ -109,11 +121,37 @@ class TopicFactory {
 	}
 
 	/**
-	 * @return creates every topic for the Segment related messages for the referred segment, and substitutes the {id} parameters in the topic names
+	 * @return creates topics only for the selected segment-related messages for every segment, and substitutes the {id} parameters in the topic names
+	 *  Supported message types: SegmentStateMessage, SegmentOccupancyMessage, SegmentCommand
+	 */
+	def static createSegmentTopics(Collection<? extends Class<? extends InternalMessage>> chosenMessageTypes) {
+		val segmentIds = LayoutConfiguration.INSTANCE.segments
+		return segmentIds.map[createSegmentTopics(it, chosenMessageTypes)].flatten.toSet
+	}
+
+	/**
+	 * @return creates every topic for the segment-related messages for the referred segment, and substitutes the {id} parameters in the topic names
 	 */
 	def static createSegmentTopics(int segmentId) {
-		val messageTypes = #{SegmentStateMessage, SegmentOccupancyMessage, SegmentCommand}
-		return messageTypes.map[createTopicsWithSubstitutedParameters(it, #{String.valueOf(segmentId)})].flatten.toSet
+		return createSegmentTopics(segmentId, SUPPORTED_SEGMENT_MESSAGE_TYPES)
+	}
+
+	/**
+	 * @return creates topics only for the selected segment-related messages for the referred segment, and substitutes the {id} parameters in the topic names
+	 * Supported message types: SegmentStateMessage, SegmentOccupancyMessage, SegmentCommand
+	 */
+	def static createSegmentTopics(int segmentId, Collection<? extends Class<? extends InternalMessage>> chosenMessageTypes) {
+		return createTopicsBySupportedMessageTypes(segmentId, SUPPORTED_SEGMENT_MESSAGE_TYPES, chosenMessageTypes)
+	}
+
+	private def static createTopicsBySupportedMessageTypes(int substitionId, Collection<? extends Class<? extends InternalMessage>> supportedMessageTypes, Collection<? extends Class<? extends InternalMessage>> chosenMessageTypes) {
+		val everyMessageTypeIsSupported = chosenMessageTypes.forall[supportedMessageTypes.contains(it)]
+		if(everyMessageTypeIsSupported) {
+			return chosenMessageTypes.map[createTopicsWithSubstitutedParameters(it, #{String.valueOf(substitionId)})].flatten.toSet
+		} else {
+			throw new IllegalArgumentException('''Some message types are not supported by this operation. Supported message types: «supportedMessageTypes»; Chosen message types: «chosenMessageTypes»''')
+		}
+
 	}
 
 	private def static substituteTopicIdParametersWithValues(Set<String> parametrizedTopics, Set<String> substitutions) {

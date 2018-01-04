@@ -117,12 +117,12 @@ void AddDescriptorsImpl() {
       "CIRCLE\020\002\022\023\n\017TYPE_SCREEN_TAP\020\003\022\020\n\014TYPE_KE"
       "Y_TAP\020\004\022\r\n\tTYPE_GRAB\020\005\022\021\n\rTYPE_SPEED_UP\020"
       "\006\022\022\n\016TYPE_SLOW_DOWN\020\007\022\022\n\016TYPE_SELECTION\020"
-      "\010\022\r\n\tTYPE_STOP\020\tB\?\n,hu.bme.mit.inf.modes"
-      "3.messaging.mms.messagesB\017ComplexGesture"
-      "s"
+      "\010\022\r\n\tTYPE_STOP\020\tBA\n.hu.bme.mit.inf.modes"
+      "3.messaging.proto.messagesB\017ComplexGestu"
+      "res"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 401);
+      descriptor, 403);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "complex_gestures.proto", &protobuf_RegisterTypes);
 }

@@ -3,7 +3,6 @@ package hu.bme.mit.inf.modes3.messaging.proto.dispatcher.converter
 import hu.bme.mit.inf.modes3.messaging.messages.command.DccOperationsCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.SendAllStatusCommand
-import hu.bme.mit.inf.modes3.messaging.messages.command.TrainFunctionCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.TurnoutCommand
 import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessage
@@ -11,9 +10,6 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.ComputerVisionObjectPosit
 import hu.bme.mit.inf.modes3.messaging.messages.status.DccOperationsStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSegmentMessage
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainCurrentSpeedMessage
-import hu.bme.mit.inf.modes3.messaging.messages.status.TrainFunctionStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TrainReferenceSpeedMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
@@ -28,9 +24,6 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.SendAllStatus
 import hu.bme.mit.inf.modes3.messaging.proto.messages.ThreeDPosition
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSegment
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSpeed
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TwoDPosition
@@ -58,47 +51,6 @@ class InternalToProtobufConverter {
 			segmentState = (SegmentState.newBuilder => [
 				segmentID = message.segmentId;
 				state = ProtobufEnumTransformator::toSpecific(message.state)
-			]).build
-		]).build
-	}
-
-	def dispatch Message internalConvertMessageToRaw(TrainCurrentSegmentMessage message) {
-		(Message.newBuilder => [
-			type = MessageType.TRAIN_CURRENT_SEGMENT;
-			trainCurrentSegment = (TrainCurrentSegment.newBuilder => [
-				trainID = message.trainId;
-				segmentID = message.segmentId
-			]).build
-		]).build
-	}
-
-	def dispatch Message internalConvertMessageToRaw(TrainCurrentSpeedMessage message) {
-		(Message.newBuilder => [
-			type = MessageType.TRAIN_CURRENT_SPEED;
-			trainCurrentSpeed = (TrainCurrentSpeed.newBuilder => [
-				trainID = message.trainId;
-				currentSpeed = message.currentSpeed;
-				direction = ProtobufEnumTransformator::toSpecific(message.direction)
-			]).build
-		]).build
-	}
-
-	def dispatch Message internalConvertMessageToRaw(TrainFunctionCommand message) {
-		(Message.newBuilder => [
-			type = MessageType.TRAIN_FUNCTION_COMMAND;
-			trainFunctionCommand = (hu.bme.mit.inf.modes3.messaging.proto.messages.TrainFunctionCommand.newBuilder => [
-				trainID = message.trainId;
-				trainFunctionValue = ProtobufEnumTransformator::toSpecific(message.trainFunction)
-			]).build
-		]).build
-	}
-
-	def dispatch Message internalConvertMessageToRaw(TrainFunctionStateMessage message) {
-		(Message.newBuilder => [
-			type = MessageType.TRAIN_FUNCTION_STATE;
-			trainFunctionState = (TrainFunctionState.newBuilder => [
-				trainID = message.trainId;
-				trainFunctionValue = ProtobufEnumTransformator::toSpecific(message.trainFunction)
 			]).build
 		]).build
 	}

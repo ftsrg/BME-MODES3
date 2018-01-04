@@ -107,12 +107,12 @@ void AddDescriptorsImpl() {
       "\n\026SegmentOccupancy.proto\022\017modes3.protobu"
       "f\032\013Enums.proto\"\\\n\020SegmentOccupancy\022\021\n\tse"
       "gmentID\030\001 \001(\r\0225\n\005state\030\002 \001(\0162&.modes3.pr"
-      "otobuf.SegmentOccupancyValueB0\n,hu.bme.m"
-      "it.inf.modes3.messaging.mms.messagesP\001b\006"
-      "proto3"
+      "otobuf.SegmentOccupancyValueB2\n.hu.bme.m"
+      "it.inf.modes3.messaging.proto.messagesP\001"
+      "b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 206);
+      descriptor, 208);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SegmentOccupancy.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();
