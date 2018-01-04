@@ -48,7 +48,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see CurrentlyConnectedMatch
- *  @see CurrentlyConnectedProcessor
+ * @see CurrentlyConnectedProcessor
  * @see CurrentlyConnectedQuerySpecification
  * 
  */

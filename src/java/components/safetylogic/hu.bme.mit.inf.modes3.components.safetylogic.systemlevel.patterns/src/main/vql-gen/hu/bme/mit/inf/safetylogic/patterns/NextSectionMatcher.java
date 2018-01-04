@@ -50,7 +50,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see NextSectionMatch
- *  @see NextSectionProcessor
+ * @see NextSectionProcessor
  * @see NextSectionQuerySpecification
  * 
  */

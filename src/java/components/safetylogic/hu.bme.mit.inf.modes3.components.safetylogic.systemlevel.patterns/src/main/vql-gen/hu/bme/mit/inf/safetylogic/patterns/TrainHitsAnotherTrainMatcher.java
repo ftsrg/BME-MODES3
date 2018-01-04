@@ -41,7 +41,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see TrainHitsAnotherTrainMatch
- *  @see TrainHitsAnotherTrainProcessor
+ * @see TrainHitsAnotherTrainProcessor
  * @see TrainHitsAnotherTrainQuerySpecification
  * 
  */

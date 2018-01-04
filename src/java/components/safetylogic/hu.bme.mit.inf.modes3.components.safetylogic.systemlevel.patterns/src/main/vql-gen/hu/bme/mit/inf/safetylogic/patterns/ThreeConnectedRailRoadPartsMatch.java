@@ -7,7 +7,6 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.safetylogic.patterns.util.ThreeConnectedRailRoadPartsQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -22,7 +21,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see ThreeConnectedRailRoadPartsMatcher
- *  @see ThreeConnectedRailRoadPartsProcessor
+ * @see ThreeConnectedRailRoadPartsProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -118,34 +117,48 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
     result.append("\"one\"=" + prettyPrintValue(fOne) + ", ");
+    
     result.append("\"middle\"=" + prettyPrintValue(fMiddle) + ", ");
-    result.append("\"other\"=" + prettyPrintValue(fOther));
+    
+    result.append("\"other\"=" + prettyPrintValue(fOther)
+    );
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    return Objects.hash (fOne, fMiddle, fOther);
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((fOne == null) ? 0 : fOne.hashCode());
+    result = prime * result + ((fMiddle == null) ? 0 : fMiddle.hashCode());
+    result = prime * result + ((fOther == null) ? 0 : fOther.hashCode());
+    return result;
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
         return true;
-    if (obj == null) {
-        return false;
-    }
-    if ((obj instanceof ThreeConnectedRailRoadPartsMatch)) {
-        ThreeConnectedRailRoadPartsMatch other = (ThreeConnectedRailRoadPartsMatch) obj;
-        return Objects.equals(fOne, other.fOne) && Objects.equals(fMiddle, other.fMiddle) && Objects.equals(fOther, other.fOther);
-    } else {
-        // this should be infrequent
+    if (!(obj instanceof ThreeConnectedRailRoadPartsMatch)) { // this should be infrequent
+        if (obj == null) {
+            return false;
+        }
         if (!(obj instanceof IPatternMatch)) {
             return false;
         }
         IPatternMatch otherSig  = (IPatternMatch) obj;
-        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
+        if (!specification().equals(otherSig.specification()))
+            return false;
+        return Arrays.deepEquals(toArray(), otherSig.toArray());
     }
+    ThreeConnectedRailRoadPartsMatch other = (ThreeConnectedRailRoadPartsMatch) obj;
+    if (fOne == null) {if (other.fOne != null) return false;}
+    else if (!fOne.equals(other.fOne)) return false;
+    if (fMiddle == null) {if (other.fMiddle != null) return false;}
+    else if (!fMiddle.equals(other.fMiddle)) return false;
+    if (fOther == null) {if (other.fOther != null) return false;}
+    else if (!fOther.equals(other.fOther)) return false;
+    return true;
   }
   
   @Override

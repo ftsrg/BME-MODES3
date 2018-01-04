@@ -38,7 +38,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see TrainTrailingTurnoutMatch
- *  @see TrainTrailingTurnoutProcessor
+ * @see TrainTrailingTurnoutProcessor
  * @see TrainTrailingTurnoutQuerySpecification
  * 
  */

@@ -37,7 +37,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see ThreeConnectedRailRoadPartsMatch
- *  @see ThreeConnectedRailRoadPartsProcessor
+ * @see ThreeConnectedRailRoadPartsProcessor
  * @see ThreeConnectedRailRoadPartsQuerySpecification
  * 
  */

@@ -7,7 +7,6 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.safetylogic.patterns.util.ConnectedQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -22,7 +21,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see ConnectedMatcher
- *  @see ConnectedProcessor
+ * @see ConnectedProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -101,33 +100,43 @@ public abstract class ConnectedMatch extends BasePatternMatch {
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
     result.append("\"This\"=" + prettyPrintValue(fThis) + ", ");
-    result.append("\"connectedTo\"=" + prettyPrintValue(fConnectedTo));
+    
+    result.append("\"connectedTo\"=" + prettyPrintValue(fConnectedTo)
+    );
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    return Objects.hash (fThis, fConnectedTo);
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((fThis == null) ? 0 : fThis.hashCode());
+    result = prime * result + ((fConnectedTo == null) ? 0 : fConnectedTo.hashCode());
+    return result;
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
         return true;
-    if (obj == null) {
-        return false;
-    }
-    if ((obj instanceof ConnectedMatch)) {
-        ConnectedMatch other = (ConnectedMatch) obj;
-        return Objects.equals(fThis, other.fThis) && Objects.equals(fConnectedTo, other.fConnectedTo);
-    } else {
-        // this should be infrequent
+    if (!(obj instanceof ConnectedMatch)) { // this should be infrequent
+        if (obj == null) {
+            return false;
+        }
         if (!(obj instanceof IPatternMatch)) {
             return false;
         }
         IPatternMatch otherSig  = (IPatternMatch) obj;
-        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
+        if (!specification().equals(otherSig.specification()))
+            return false;
+        return Arrays.deepEquals(toArray(), otherSig.toArray());
     }
+    ConnectedMatch other = (ConnectedMatch) obj;
+    if (fThis == null) {if (other.fThis != null) return false;}
+    else if (!fThis.equals(other.fThis)) return false;
+    if (fConnectedTo == null) {if (other.fConnectedTo != null) return false;}
+    else if (!fConnectedTo.equals(other.fConnectedTo)) return false;
+    return true;
   }
   
   @Override
