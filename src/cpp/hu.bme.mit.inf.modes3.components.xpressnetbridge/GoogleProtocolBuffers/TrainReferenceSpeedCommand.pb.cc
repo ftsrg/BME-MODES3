@@ -109,12 +109,12 @@ void AddDescriptorsImpl() {
       "s3.protobuf\032\013Enums.proto\"~\n\032TrainReferen"
       "ceSpeedCommand\022\017\n\007trainID\030\001 \001(\r\022\026\n\016refer"
       "enceSpeed\030\002 \001(\005\0227\n\tdirection\030\003 \001(\0162$.mod"
-      "es3.protobuf.TrainDirectionValueB0\n,hu.b"
-      "me.mit.inf.modes3.messaging.mms.messages"
-      "P\001b\006proto3"
+      "es3.protobuf.TrainDirectionValueB2\n.hu.b"
+      "me.mit.inf.modes3.messaging.proto.messag"
+      "esP\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 250);
+      descriptor, 252);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "TrainReferenceSpeedCommand.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();

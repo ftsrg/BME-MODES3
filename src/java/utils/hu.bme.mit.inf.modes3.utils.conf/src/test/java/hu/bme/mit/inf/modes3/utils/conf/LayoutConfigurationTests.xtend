@@ -104,26 +104,26 @@ class LayoutConfigurationTests {
 	}
 
 	@Test def void turnout1VicinitiesStraightTest() {
-		val referenceSegmentIds = #{12, 15}
-		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(1, "straight")
+		val referenceSegmentIds = #{12, 15, 14}
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(1, SegmentDirection.STRAIGHT)
 		Assert.assertEquals(referenceSegmentIds, controlledSegments)
 	}
 
 	@Test def void turnout1VicinitiesDivergentTest() {
-		val referenceSegmentIds = #{11, 15}
-		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(1, "divergent")
+		val referenceSegmentIds = #{11, 15, 14}
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(1, SegmentDirection.DIVERGENT)
 		Assert.assertEquals(referenceSegmentIds, controlledSegments)
 	}
 
 	@Test def void turnout3VicinitiesStraightTest() {
-		val referenceSegmentIds = #{20, 26, 19, 30}
-		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(3, "straight")
+		val referenceSegmentIds = #{20, 26, 19, 30, 32, 25}
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(3, SegmentDirection.STRAIGHT)
 		Assert.assertEquals(referenceSegmentIds, controlledSegments)
 	}
 
 	@Test def void turnout3VicinitiesDivergentTest() {
 		val referenceSegmentIds = #{20, 30, 25, 32}
-		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(3, "divergent")
+		val controlledSegments = LayoutConfiguration.INSTANCE.getConnectedSegmentsByTurnoutVicinities(3, SegmentDirection.DIVERGENT)
 		Assert.assertEquals(referenceSegmentIds, controlledSegments)
 	}
 

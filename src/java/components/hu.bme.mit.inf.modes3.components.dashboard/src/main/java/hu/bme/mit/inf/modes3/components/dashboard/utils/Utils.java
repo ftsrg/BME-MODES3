@@ -23,13 +23,13 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.ThreeDPosition;
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TwoDPosition;
 
 public class Utils {
-	
+
 	static Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger("Dashboard Utils");
 
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentOccupancy.Builder segmentOccBuilder;
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentState.Builder segmentStateBuilder;
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState.Builder turnoutStateBuilder;
-	static hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSpeed.Builder trainSpeedBuilder;
+	static hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed.Builder trainSpeedBuilder;
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.Marker.Builder cvObjectBuilder;
 
 	public static void sendSegmentStateChange(MetaBroadcaster metaBroadcaster, int id, SegmentState state) {
@@ -91,14 +91,14 @@ public class Utils {
 		}
 
 		if (trainSpeedBuilder == null) {
-			trainSpeedBuilder = hu.bme.mit.inf.modes3.messaging.proto.messages.TrainCurrentSpeed.newBuilder();
+			trainSpeedBuilder = hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed.newBuilder();
 		}
 
 		String stateAsJson;
 		try {
 			stateAsJson = JsonFormat.printer().includingDefaultValueFields()
 					.print(trainSpeedBuilder.clear().setTrainID(id)
-							.setDirection(ProtobufEnumTransformator.toSpecific(direction)).setCurrentSpeed(speed)
+							.setDirection(ProtobufEnumTransformator.toSpecific(direction)).setReferenceSpeed(speed)
 							.build());
 			metaBroadcaster.broadcastTo("/ws/state/" + TRAIN_SPEED, stateAsJson);
 		} catch (InvalidProtocolBufferException e) {

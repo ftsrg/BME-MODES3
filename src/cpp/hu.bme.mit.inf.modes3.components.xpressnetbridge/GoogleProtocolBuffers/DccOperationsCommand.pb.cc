@@ -106,11 +106,11 @@ void AddDescriptorsImpl() {
       "\n\032DccOperationsCommand.proto\022\017modes3.pro"
       "tobuf\032\013Enums.proto\"M\n\024DccOperationsComma"
       "nd\0225\n\rdccOperations\030\001 \001(\0162\036.modes3.proto"
-      "buf.DccOperationsB0\n,hu.bme.mit.inf.mode"
-      "s3.messaging.mms.messagesP\001b\006proto3"
+      "buf.DccOperationsB2\n.hu.bme.mit.inf.mode"
+      "s3.messaging.proto.messagesP\001b\006proto3"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 195);
+      descriptor, 197);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "DccOperationsCommand.proto", &protobuf_RegisterTypes);
   ::modes3::protobuf::protobuf_Enums_2eproto::AddDescriptors();

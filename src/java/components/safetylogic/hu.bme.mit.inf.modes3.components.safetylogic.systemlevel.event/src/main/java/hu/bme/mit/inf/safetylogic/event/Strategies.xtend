@@ -5,10 +5,8 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.dcc.interfaces.IDcc
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.ITrainCommander
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateRegistry
-import hu.bme.mit.inf.modes3.messaging.messages.command.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
-import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.Logger
 
 public interface ITrainStopStrategy {
@@ -37,18 +35,16 @@ public class TrackDisableStrategy implements ISegmentDisableStrategy {
 }
 
 public class XPressZeroSpeedDisableStrategy implements ITrainStopStrategy {
-	MessagingService mms
+	ITrainCommander mms
 	Logger logger
-	ITrainSpeedStateRegistry speedRegistry
 
-	new(MessagingService mms, Logger logger, ITrainSpeedStateRegistry speedRegistry) {
+	new(ITrainCommander mms, Logger logger) {
 		this.mms = mms
 		this.logger = logger
-		this.speedRegistry = speedRegistry
 	}
 
 	override stopTrain(Train train) {
-		mms.sendMessage(new TrainReferenceSpeedCommand(train.id, 0, TrainDirection.FORWARD))
+		mms.setTrainReferenceSpeedAndDirection(train.id, 0, TrainDirection.FORWARD)
 	}
 }
 
@@ -64,9 +60,10 @@ public class XPressInvertDirectionStrategy implements ITrainStopStrategy {
 	}
 
 	override stopTrain(Train train) {
-		mms.setTrainReferenceSpeedAndDirection(train.id, speedRegistry.getReferenceSpeed(train.id),
-			if(speedRegistry.getReferenceDirection(train.id) == TrainDirection.FORWARD) TrainDirection.
-				BACKWARD else TrainDirection.FORWARD)
+		mms.setTrainReferenceSpeedAndDirection(train.id, speedRegistry.getSpeed(train.id), if(speedRegistry.getDirection(train.id) == TrainDirection.FORWARD)
+			TrainDirection.BACKWARD
+		else
+			TrainDirection.FORWARD)
 	}
 
 }

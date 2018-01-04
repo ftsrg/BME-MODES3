@@ -16,8 +16,6 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFPQuery;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecification;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
-import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory;
-import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
@@ -28,6 +26,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.QueryInitializationException;
 import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
+import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 
 /**
  * A pattern-specific query specification that can instantiate ThreeConnectedRailRoadPartsMatcher in a type-safe way.
@@ -76,9 +75,9 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link ThreeConnectedRailRoadPartsQuerySpecification} to be created 
+   * Inner class allowing the singleton instance of {@link JvmGenericType: hu.bme.mit.inf.safetylogic.patterns.util.ThreeConnectedRailRoadPartsQuerySpecification (visibility: PUBLIC, simpleName: ThreeConnectedRailRoadPartsQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.patterns.util.ThreeConnectedRailRoadPartsQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.patterns.util) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
    *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link ThreeConnectedRailRoadPartsQuerySpecification#instance()}.
+   *     but rather at the first call to {@link JvmGenericType: hu.bme.mit.inf.safetylogic.patterns.util.ThreeConnectedRailRoadPartsQuerySpecification (visibility: PUBLIC, simpleName: ThreeConnectedRailRoadPartsQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.patterns.util.ThreeConnectedRailRoadPartsQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.patterns.util) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -129,7 +128,6 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
     
     @Override
     public Set<PBody> doGetContainedBodies() throws QueryInitializationException {
-      setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
           {
@@ -137,9 +135,9 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
               PVariable var_one = body.getOrCreateVariableByName("one");
               PVariable var_middle = body.getOrCreateVariableByName("middle");
               PVariable var_other = body.getOrCreateVariableByName("other");
-              new TypeConstraint(body, new FlatTuple(var_one), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-              new TypeConstraint(body, new FlatTuple(var_middle), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
-              new TypeConstraint(body, new FlatTuple(var_other), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_one), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_middle), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_other), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
               body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
                  new ExportedParameter(body, var_one, parameter_pOne),
                  new ExportedParameter(body, var_middle, parameter_pMiddle),
@@ -153,8 +151,6 @@ public final class ThreeConnectedRailRoadPartsQuerySpecification extends BaseGen
               new Inequality(body, var_one, var_other);
               bodies.add(body);
           }
-          // to silence compiler error
-          if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
           throw processDependencyException(ex);
       }

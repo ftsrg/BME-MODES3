@@ -7,6 +7,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.safetylogic.patterns.util.NextSectionQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -21,7 +22,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see NextSectionMatcher
- * @see NextSectionProcessor
+ *  @see NextSectionProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -117,48 +118,34 @@ public abstract class NextSectionMatch extends BasePatternMatch {
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
     result.append("\"Old\"=" + prettyPrintValue(fOld) + ", ");
-    
     result.append("\"Current\"=" + prettyPrintValue(fCurrent) + ", ");
-    
-    result.append("\"Next\"=" + prettyPrintValue(fNext)
-    );
+    result.append("\"Next\"=" + prettyPrintValue(fNext));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fOld == null) ? 0 : fOld.hashCode());
-    result = prime * result + ((fCurrent == null) ? 0 : fCurrent.hashCode());
-    result = prime * result + ((fNext == null) ? 0 : fNext.hashCode());
-    return result;
+    return Objects.hash (fOld, fCurrent, fNext);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
         return true;
-    if (!(obj instanceof NextSectionMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
+    if (obj == null) {
+        return false;
+    }
+    if ((obj instanceof NextSectionMatch)) {
+        NextSectionMatch other = (NextSectionMatch) obj;
+        return Objects.equals(fOld, other.fOld) && Objects.equals(fCurrent, other.fCurrent) && Objects.equals(fNext, other.fNext);
+    } else {
+        // this should be infrequent
         if (!(obj instanceof IPatternMatch)) {
             return false;
         }
         IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
     }
-    NextSectionMatch other = (NextSectionMatch) obj;
-    if (fOld == null) {if (other.fOld != null) return false;}
-    else if (!fOld.equals(other.fOld)) return false;
-    if (fCurrent == null) {if (other.fCurrent != null) return false;}
-    else if (!fCurrent.equals(other.fCurrent)) return false;
-    if (fNext == null) {if (other.fNext != null) return false;}
-    else if (!fNext.equals(other.fNext)) return false;
-    return true;
   }
   
   @Override
