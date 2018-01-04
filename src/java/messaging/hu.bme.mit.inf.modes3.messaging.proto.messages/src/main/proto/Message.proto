@@ -32,5 +32,5 @@ message Message {
 	DccOperationsCommand dccOperationsCommand = 10;
 	DccOperationsState dccOperationsState = 11;
 	SendAllStatus allStatus = 12;
-	ComputerVisionObjectPositions computerVisionObjectPositions = 13;
+	ComputerVisionObjectPositions computerVisionObjectPositions = 23;
 }
