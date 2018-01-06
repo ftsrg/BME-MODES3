@@ -39,7 +39,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see MultipleTrainsOnStationMatch
- * @see MultipleTrainsOnStationProcessor
+ *  @see MultipleTrainsOnStationProcessor
  * @see MultipleTrainsOnStationQuerySpecification
  * 
  */

@@ -30,7 +30,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see NoTrainOnStationMatch
- * @see NoTrainOnStationProcessor
+ *  @see NoTrainOnStationProcessor
  * @see NoTrainOnStationQuerySpecification
  * 
  */

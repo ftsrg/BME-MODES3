@@ -16,8 +16,6 @@ import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFPQuery;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecification;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
-import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory;
-import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.ExportedParameter;
@@ -27,6 +25,7 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.QueryInitializationException;
 import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
+import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 
 /**
  * A pattern-specific query specification that can instantiate TrainIsNotInStationMatcher in a type-safe way.
@@ -75,9 +74,9 @@ public final class TrainIsNotInStationQuerySpecification extends BaseGeneratedEM
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link TrainIsNotInStationQuerySpecification} to be created 
+   * Inner class allowing the singleton instance of {@link JvmGenericType: hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainIsNotInStationQuerySpecification (visibility: PUBLIC, simpleName: TrainIsNotInStationQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainIsNotInStationQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.rulepatterns.util) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
    *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link TrainIsNotInStationQuerySpecification#instance()}.
+   *     but rather at the first call to {@link JvmGenericType: hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainIsNotInStationQuerySpecification (visibility: PUBLIC, simpleName: TrainIsNotInStationQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainIsNotInStationQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.rulepatterns.util) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -124,13 +123,12 @@ public final class TrainIsNotInStationQuerySpecification extends BaseGeneratedEM
     
     @Override
     public Set<PBody> doGetContainedBodies() throws QueryInitializationException {
-      setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
           {
               PBody body = new PBody(this);
               PVariable var_t = body.getOrCreateVariableByName("t");
-              new TypeConstraint(body, new FlatTuple(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_t), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
               body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
                  new ExportedParameter(body, var_t, parameter_pT)
               ));
@@ -138,8 +136,6 @@ public final class TrainIsNotInStationQuerySpecification extends BaseGeneratedEM
               new NegativePatternCall(body, new FlatTuple(var_t), TrainOnStationQuerySpecification.instance().getInternalQueryRepresentation());
               bodies.add(body);
           }
-          // to silence compiler error
-          if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
           throw processDependencyException(ex);
       }

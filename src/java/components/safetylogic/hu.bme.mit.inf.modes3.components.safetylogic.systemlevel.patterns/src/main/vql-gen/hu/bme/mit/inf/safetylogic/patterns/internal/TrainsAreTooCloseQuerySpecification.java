@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFPQuery;
-import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedPrivateEMFQuerySpecification;
+import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecificationWithGenericMatcher;
 import org.eclipse.viatra.query.runtime.emf.types.EClassTransitiveInstancesKey;
 import org.eclipse.viatra.query.runtime.emf.types.EStructuralFeatureInstancesKey;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
-import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory;
-import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
@@ -26,16 +24,17 @@ import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameter;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.PParameterDirection;
 import org.eclipse.viatra.query.runtime.matchers.psystem.queries.QueryInitializationException;
 import org.eclipse.viatra.query.runtime.matchers.tuple.FlatTuple;
+import org.eclipse.viatra.query.runtime.matchers.tuple.Tuples;
 
 /**
- * A pattern-specific query specification that can instantiate TrainsAreTooCloseMatcher in a type-safe way.
+ * A pattern-specific query specification that can instantiate GenericPatternMatcher in a type-safe way.
  * 
- * @see TrainsAreTooCloseMatcher
- * @see TrainsAreTooCloseMatch
+ * @see GenericPatternMatcher
+ * @see GenericPatternMatch
  * 
  */
 @SuppressWarnings("all")
-public final class TrainsAreTooCloseQuerySpecification extends BaseGeneratedPrivateEMFQuerySpecification {
+public final class TrainsAreTooCloseQuerySpecification extends BaseGeneratedEMFQuerySpecificationWithGenericMatcher {
   private TrainsAreTooCloseQuerySpecification() {
     super(GeneratedPQuery.INSTANCE);
   }
@@ -54,9 +53,9 @@ public final class TrainsAreTooCloseQuerySpecification extends BaseGeneratedPriv
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link TrainsAreTooCloseQuerySpecification} to be created 
+   * Inner class allowing the singleton instance of {@link JvmGenericType: hu.bme.mit.inf.safetylogic.patterns.internal.TrainsAreTooCloseQuerySpecification (visibility: PUBLIC, simpleName: TrainsAreTooCloseQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.patterns.internal.TrainsAreTooCloseQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.patterns.internal) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
    *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link TrainsAreTooCloseQuerySpecification#instance()}.
+   *     but rather at the first call to {@link JvmGenericType: hu.bme.mit.inf.safetylogic.patterns.internal.TrainsAreTooCloseQuerySpecification (visibility: PUBLIC, simpleName: TrainsAreTooCloseQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.patterns.internal.TrainsAreTooCloseQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.patterns.internal) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -105,7 +104,6 @@ public final class TrainsAreTooCloseQuerySpecification extends BaseGeneratedPriv
     
     @Override
     public Set<PBody> doGetContainedBodies() throws QueryInitializationException {
-      setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
           {
@@ -114,30 +112,28 @@ public final class TrainsAreTooCloseQuerySpecification extends BaseGeneratedPriv
               PVariable var_Victim = body.getOrCreateVariableByName("Victim");
               PVariable var_OffenderPosition = body.getOrCreateVariableByName("OffenderPosition");
               PVariable var_VictimPosition = body.getOrCreateVariableByName("VictimPosition");
-              new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
-              new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
               body.setSymbolicParameters(Arrays.<ExportedParameter>asList(
                  new ExportedParameter(body, var_Offender, parameter_pOffender),
                  new ExportedParameter(body, var_Victim, parameter_pVictim)
               ));
               // 	Train.currentlyOn(Offender, OffenderPosition)
-              new TypeConstraint(body, new FlatTuple(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_Offender), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
               PVariable var__virtual_0_ = body.getOrCreateVariableByName(".virtual{0}");
-              new TypeConstraint(body, new FlatTuple(var_Offender, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
-              new TypeConstraint(body, new FlatTuple(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_Offender, var__virtual_0_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_0_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
               new Equality(body, var__virtual_0_, var_OffenderPosition);
               // 	Train.currentlyOn(Victim, VictimPosition)
-              new TypeConstraint(body, new FlatTuple(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_Victim), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train")));
               PVariable var__virtual_1_ = body.getOrCreateVariableByName(".virtual{1}");
-              new TypeConstraint(body, new FlatTuple(var_Victim, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
-              new TypeConstraint(body, new FlatTuple(var__virtual_1_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var_Victim, var__virtual_1_), new EStructuralFeatureInstancesKey(getFeatureLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "Train", "currentlyOn")));
+              new TypeConstraint(body, Tuples.flatTupleOf(var__virtual_1_), new EClassTransitiveInstancesKey((EClass)getClassifierLiteral("http://hu.bme.mit.inf.safetylogic.railroadmodel", "RailRoadElement")));
               new Equality(body, var__virtual_1_, var_VictimPosition);
               // 	find currentlyConnected(VictimPosition, OffenderPosition)
               new PositivePatternCall(body, new FlatTuple(var_VictimPosition, var_OffenderPosition), CurrentlyConnectedQuerySpecification.instance().getInternalQueryRepresentation());
               bodies.add(body);
           }
-          // to silence compiler error
-          if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
           throw processDependencyException(ex);
       }

@@ -82,7 +82,7 @@ import org.eclipse.viatra.query.runtime.util.ViatraQueryLoggingUtil;
  * </pre></code>
  * 
  * @see ViablePathsMatch
- * @see ViablePathsProcessor
+ *  @see ViablePathsProcessor
  * @see ViablePathsQuerySpecification
  * 
  */

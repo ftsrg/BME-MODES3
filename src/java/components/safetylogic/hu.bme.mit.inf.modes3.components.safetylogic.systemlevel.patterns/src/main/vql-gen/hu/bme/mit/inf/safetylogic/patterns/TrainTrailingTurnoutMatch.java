@@ -8,6 +8,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.safetylogic.patterns.util.TrainTrailingTurnoutQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -22,7 +23,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see TrainTrailingTurnoutMatcher
- * @see TrainTrailingTurnoutProcessor
+ *  @see TrainTrailingTurnoutProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -101,43 +102,33 @@ public abstract class TrainTrailingTurnoutMatch extends BasePatternMatch {
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
     result.append("\"Offender\"=" + prettyPrintValue(fOffender) + ", ");
-    
-    result.append("\"Victim\"=" + prettyPrintValue(fVictim)
-    );
+    result.append("\"Victim\"=" + prettyPrintValue(fVictim));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fOffender == null) ? 0 : fOffender.hashCode());
-    result = prime * result + ((fVictim == null) ? 0 : fVictim.hashCode());
-    return result;
+    return Objects.hash (fOffender, fVictim);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
         return true;
-    if (!(obj instanceof TrainTrailingTurnoutMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
+    if (obj == null) {
+        return false;
+    }
+    if ((obj instanceof TrainTrailingTurnoutMatch)) {
+        TrainTrailingTurnoutMatch other = (TrainTrailingTurnoutMatch) obj;
+        return Objects.equals(fOffender, other.fOffender) && Objects.equals(fVictim, other.fVictim);
+    } else {
+        // this should be infrequent
         if (!(obj instanceof IPatternMatch)) {
             return false;
         }
         IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
     }
-    TrainTrailingTurnoutMatch other = (TrainTrailingTurnoutMatch) obj;
-    if (fOffender == null) {if (other.fOffender != null) return false;}
-    else if (!fOffender.equals(other.fOffender)) return false;
-    if (fVictim == null) {if (other.fVictim != null) return false;}
-    else if (!fVictim.equals(other.fVictim)) return false;
-    return true;
   }
   
   @Override
