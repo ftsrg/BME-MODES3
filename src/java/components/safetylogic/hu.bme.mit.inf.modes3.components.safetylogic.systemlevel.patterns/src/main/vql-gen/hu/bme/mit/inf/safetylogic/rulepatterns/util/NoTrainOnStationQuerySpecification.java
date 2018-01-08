@@ -14,8 +14,6 @@ import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFPQuery;
 import org.eclipse.viatra.query.runtime.api.impl.BaseGeneratedEMFQuerySpecification;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
-import org.eclipse.viatra.query.runtime.matchers.backend.IQueryBackendFactory;
-import org.eclipse.viatra.query.runtime.matchers.backend.QueryEvaluationHint;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PBody;
 import org.eclipse.viatra.query.runtime.matchers.psystem.PVariable;
 import org.eclipse.viatra.query.runtime.matchers.psystem.basicdeferred.Equality;
@@ -73,9 +71,9 @@ public final class NoTrainOnStationQuerySpecification extends BaseGeneratedEMFQu
   }
   
   /**
-   * Inner class allowing the singleton instance of {@link NoTrainOnStationQuerySpecification} to be created 
+   * Inner class allowing the singleton instance of {@link JvmGenericType: hu.bme.mit.inf.safetylogic.rulepatterns.util.NoTrainOnStationQuerySpecification (visibility: PUBLIC, simpleName: NoTrainOnStationQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.rulepatterns.util.NoTrainOnStationQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.rulepatterns.util) (interface: false, strictFloatingPoint: false, anonymous: false)} to be created 
    *     <b>not</b> at the class load time of the outer class, 
-   *     but rather at the first call to {@link NoTrainOnStationQuerySpecification#instance()}.
+   *     but rather at the first call to {@link JvmGenericType: hu.bme.mit.inf.safetylogic.rulepatterns.util.NoTrainOnStationQuerySpecification (visibility: PUBLIC, simpleName: NoTrainOnStationQuerySpecification, identifier: hu.bme.mit.inf.safetylogic.rulepatterns.util.NoTrainOnStationQuerySpecification, deprecated: <unset>) (abstract: false, static: false, final: true, packageName: hu.bme.mit.inf.safetylogic.rulepatterns.util) (interface: false, strictFloatingPoint: false, anonymous: false)#instance()}.
    * 
    * <p> This workaround is required e.g. to support recursion.
    * 
@@ -120,7 +118,6 @@ public final class NoTrainOnStationQuerySpecification extends BaseGeneratedEMFQu
     
     @Override
     public Set<PBody> doGetContainedBodies() throws QueryInitializationException {
-      setEvaluationHints(new QueryEvaluationHint(null, (IQueryBackendFactory)null));
       Set<PBody> bodies = Sets.newLinkedHashSet();
       try {
           {
@@ -136,8 +133,6 @@ public final class NoTrainOnStationQuerySpecification extends BaseGeneratedEMFQu
               new Equality(body, var__virtual_0_, var__virtual_1_);
               bodies.add(body);
           }
-          // to silence compiler error
-          if (false) throw new ViatraQueryException("Never", "happens");
       } catch (ViatraQueryException ex) {
           throw processDependencyException(ex);
       }

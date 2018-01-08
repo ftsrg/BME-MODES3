@@ -7,6 +7,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.TrainOnStationQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -21,7 +22,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see TrainOnStationMatcher
- * @see TrainOnStationProcessor
+ *  @see TrainOnStationProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -82,39 +83,33 @@ public abstract class TrainOnStationMatch extends BasePatternMatch {
   @Override
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
-    result.append("\"t\"=" + prettyPrintValue(fT)
-    );
+    result.append("\"t\"=" + prettyPrintValue(fT));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fT == null) ? 0 : fT.hashCode());
-    return result;
+    return Objects.hash (fT);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
         return true;
-    if (!(obj instanceof TrainOnStationMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
+    if (obj == null) {
+        return false;
+    }
+    if ((obj instanceof TrainOnStationMatch)) {
+        TrainOnStationMatch other = (TrainOnStationMatch) obj;
+        return Objects.equals(fT, other.fT);
+    } else {
+        // this should be infrequent
         if (!(obj instanceof IPatternMatch)) {
             return false;
         }
         IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
     }
-    TrainOnStationMatch other = (TrainOnStationMatch) obj;
-    if (fT == null) {if (other.fT != null) return false;}
-    else if (!fT.equals(other.fT)) return false;
-    return true;
   }
   
   @Override

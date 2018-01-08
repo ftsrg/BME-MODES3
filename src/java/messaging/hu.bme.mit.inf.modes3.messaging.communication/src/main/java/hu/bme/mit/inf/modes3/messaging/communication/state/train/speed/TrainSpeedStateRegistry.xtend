@@ -28,7 +28,6 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 
 		callback = new TrainSpeedStateCallback(dispatcher)
 		callback.trainSpeedStateListener = new ITrainSpeedStateListener() {
-
 			override onTrainSpeedState(int id, int speed, TrainDirection direction) {
 				logger.info('''TrainSpeed message recieved, id=«id», speed=«speed», direction=«direction»''')
 				val previousRecord = speeds.get(id)
@@ -50,7 +49,7 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	}
 
 	override getSpeed(int id) {
-		if(speeds.get(id) === null) {
+		if(speeds.get(id) === null || speeds.get(id).key === null) {
 			logger.trace('''The registry was asked for the reference speed of Train #«id» but there is no information in the cache, default 0 speed is used instead''')
 			speeds.put(id, new SimpleEntry(0, TrainDirection.FORWARD))
 		}
@@ -58,7 +57,7 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	}
 
 	override getDirection(int id) {
-		if(speeds.get(id) === null) {
+		if(speeds.get(id) === null || speeds.get(id).value === null) {
 			logger.trace('''The registry was asked for the reference direction of Train #«id» but there is no information in the cache, default «TrainDirection.FORWARD» direction is used instead''')
 			speeds.put(id, new SimpleEntry(0, TrainDirection.FORWARD))
 		}

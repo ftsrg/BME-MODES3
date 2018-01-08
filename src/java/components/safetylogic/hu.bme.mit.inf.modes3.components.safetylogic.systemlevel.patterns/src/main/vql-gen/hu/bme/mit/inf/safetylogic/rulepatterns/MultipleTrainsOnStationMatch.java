@@ -7,6 +7,7 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.MultipleTrainsOnStationQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -21,7 +22,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see MultipleTrainsOnStationMatcher
- * @see MultipleTrainsOnStationProcessor
+ *  @see MultipleTrainsOnStationProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -100,43 +101,33 @@ public abstract class MultipleTrainsOnStationMatch extends BasePatternMatch {
   public String prettyPrint() {
     StringBuilder result = new StringBuilder();
     result.append("\"t1\"=" + prettyPrintValue(fT1) + ", ");
-    
-    result.append("\"t2\"=" + prettyPrintValue(fT2)
-    );
+    result.append("\"t2\"=" + prettyPrintValue(fT2));
     return result.toString();
   }
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((fT1 == null) ? 0 : fT1.hashCode());
-    result = prime * result + ((fT2 == null) ? 0 : fT2.hashCode());
-    return result;
+    return Objects.hash (fT1, fT2);
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
         return true;
-    if (!(obj instanceof MultipleTrainsOnStationMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
+    if (obj == null) {
+        return false;
+    }
+    if ((obj instanceof MultipleTrainsOnStationMatch)) {
+        MultipleTrainsOnStationMatch other = (MultipleTrainsOnStationMatch) obj;
+        return Objects.equals(fT1, other.fT1) && Objects.equals(fT2, other.fT2);
+    } else {
+        // this should be infrequent
         if (!(obj instanceof IPatternMatch)) {
             return false;
         }
         IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
     }
-    MultipleTrainsOnStationMatch other = (MultipleTrainsOnStationMatch) obj;
-    if (fT1 == null) {if (other.fT1 != null) return false;}
-    else if (!fT1.equals(other.fT1)) return false;
-    if (fT2 == null) {if (other.fT2 != null) return false;}
-    else if (!fT2.equals(other.fT2)) return false;
-    return true;
   }
   
   @Override

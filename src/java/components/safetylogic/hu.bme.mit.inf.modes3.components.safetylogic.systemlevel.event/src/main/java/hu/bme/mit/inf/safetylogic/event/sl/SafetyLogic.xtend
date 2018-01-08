@@ -2,7 +2,6 @@ package hu.bme.mit.inf.safetylogic.event.sl
 
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Segment
 import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Train
-import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadModel.Turnout
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
@@ -57,7 +56,7 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		model = new ModelUtil(factory)
 
-		model.segments.map[it as Segment].forEach[isEnabled = true] // Enable all sections virtually first 
+		model.segments.forEach[isEnabled = true] // Enable all sections virtually first 
 		logger.info('Construction finished')
 	}
 
@@ -116,6 +115,10 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 		this.logger.info("Running started...")
 
+		if(initializeRailRoad) {
+			initRailRoad
+		}
+
 		if(useComputerVision) {
 			this.safetyLogicBridge.computerVisionListener = new ComputerVisionTrainMovementEstimator(model, this, factory, false)
 		} else {
@@ -129,23 +132,18 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 					val senseID = turnoutToSenseIDMap.get(id)
 					logger.info('''TurnoutStateChange arrived, id = T«id» (senseid=«senseID») oldState = «oldValue?.name» newState = «newValue.name»''')
 					println(model.turnouts.filter[senseID.contains(it.id)].size)
-					model.turnouts.filter[senseID.contains(it.id)].map[it as Turnout].forEach [
+					model.turnouts.filter[senseID.contains(it.id)].forEach [
 						it.currentlyDivergent = (newValue == TurnoutState.DIVERGENT)
 						logger.info('''Turnout on «senseID» «if(currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»''')
 					]
 					// logger.info('''Turnout States: <«FOR turnout : model.turnouts.map[it as Turnout] SEPARATOR ";\t "»
 					// Sense=«turnout.id»,TurnoutID=«senseToTurnoutIDMap.get(turnout.id)»,State=«if(turnout.currentlyDivergent) TurnoutState.DIVERGENT else TurnoutState.STRAIGHT»
 					// «ENDFOR»>''')
-					println('Refreshing sl state')
 					refreshSafetyLogicState
-					println('sl state refreshed')
 				}
 			}
 		}
 
-		if(initializeRailRoad) {
-			initRailRoad
-		}
 	}
 
 	def public void refreshSafetyLogicState() {
@@ -164,13 +162,13 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 			offenders.add(hit.offender)
 		]
 
-		val trainsToStop = offenders.filter[!stoppedTrains.contains(it)]
+		val trainsToStop = offenders.filter[!stoppedTrains.contains(it)].toList
 
 		trainsToStop.forEach [ train |
 			trainStopStrategies.forEach[it.stopTrain(train)]
 		]
 
-		val trainsToRelease = stoppedTrains.filter[!offenders.contains(it)]
+		val trainsToRelease = stoppedTrains.filter[!offenders.contains(it)].toList
 		val sectionsToEnable = trainsToRelease.map[it.currentlyOn].toList
 		val sectionsToDisable = trainsToStop.map[it.currentlyOn].toList
 
@@ -198,6 +196,10 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 			it.isEnabled = false
 		]
 
+		if(!stoppedTrains.empty) {
+			logger.info('''Old Stopped trains = «FOR stoppedTrain : stoppedTrains BEFORE '{' SEPARATOR ', ' AFTER '}'» NAME=«LocomotivesConfiguration::INSTANCE.getLocomotiveNameById(stoppedTrain.id)» ON=«stoppedTrain.currentlyOn.id» «ENDFOR»''')
+		}
+
 		stoppedTrains.clear
 
 		if(trainStopStrategies.empty) {
@@ -206,6 +208,9 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 			stoppedTrains.addAll(offenders)
 		}
 
+		if(!stoppedTrains.empty) {
+			logger.info('''Stopped trains = «FOR stoppedTrain : stoppedTrains BEFORE '{' SEPARATOR ', ' AFTER '}'» NAME=«LocomotivesConfiguration::INSTANCE.getLocomotiveNameById(stoppedTrain.id)» ON=«stoppedTrain.currentlyOn.id» «ENDFOR»''')
+		}
 	}
 
 	override onUpdate() {

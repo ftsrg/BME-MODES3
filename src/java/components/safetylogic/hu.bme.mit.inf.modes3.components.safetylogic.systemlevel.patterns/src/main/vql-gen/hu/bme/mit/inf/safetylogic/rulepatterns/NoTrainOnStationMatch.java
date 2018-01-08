@@ -6,6 +6,7 @@ package hu.bme.mit.inf.safetylogic.rulepatterns;
 import hu.bme.mit.inf.safetylogic.rulepatterns.util.NoTrainOnStationQuerySpecification;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import org.eclipse.viatra.query.runtime.api.IPatternMatch;
 import org.eclipse.viatra.query.runtime.api.impl.BasePatternMatch;
 import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
@@ -20,7 +21,7 @@ import org.eclipse.viatra.query.runtime.exception.ViatraQueryException;
  * or to specify the bound (fixed) input parameters when issuing a query.
  * 
  * @see NoTrainOnStationMatcher
- * @see NoTrainOnStationProcessor
+ *  @see NoTrainOnStationProcessor
  * 
  */
 @SuppressWarnings("all")
@@ -69,28 +70,26 @@ public abstract class NoTrainOnStationMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    return result;
+    return 42;
   }
   
   @Override
   public boolean equals(final Object obj) {
     if (this == obj)
         return true;
-    if (!(obj instanceof NoTrainOnStationMatch)) { // this should be infrequent
-        if (obj == null) {
-            return false;
-        }
+    if (obj == null) {
+        return false;
+    }
+    if ((obj instanceof NoTrainOnStationMatch)) {
+        return true;
+    } else {
+        // this should be infrequent
         if (!(obj instanceof IPatternMatch)) {
             return false;
         }
         IPatternMatch otherSig  = (IPatternMatch) obj;
-        if (!specification().equals(otherSig.specification()))
-            return false;
-        return Arrays.deepEquals(toArray(), otherSig.toArray());
+        return Objects.equals(specification(), otherSig.specification()) && Arrays.deepEquals(toArray(), otherSig.toArray());
     }
-    return true;
   }
   
   @Override

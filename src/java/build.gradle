@@ -13,7 +13,7 @@ plugins {
 //Used versions of dependencies
 subprojects{
 	ext{
-		viatraVersion = '1.6.1'
+		viatraVersion = '1.7.0'
 		xtendVersion = '2.9.0'
 	}
 }
