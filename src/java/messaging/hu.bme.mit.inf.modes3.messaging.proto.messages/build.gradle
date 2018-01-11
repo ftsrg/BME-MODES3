@@ -7,9 +7,5 @@ dependencies {
 }
 
 protobuf {
-	protoc {
-		path = '/usr/local/bin/protoc'
-		artifact = 'com.google.protobuf:protoc:3.1.0'
-	}
 	generatedFilesBaseDir = "$projectDir/src/"
 }
