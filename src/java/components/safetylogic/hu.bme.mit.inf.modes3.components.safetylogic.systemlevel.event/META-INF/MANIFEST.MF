@@ -7,6 +7,5 @@ Export-Package: hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.event,
   hu.bme.mit.inf.safetylogic.event,
   hu.bme.mit.inf.safetylogic.event.app,
   hu.bme.mit.inf.safetylogic.event.bridge,
-  hu.bme.mit.inf.safetylogic.event.sl,
-  resources
+  hu.bme.mit.inf.safetylogic.event.sl
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
