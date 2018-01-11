@@ -16,11 +16,11 @@ import hu.bme.mit.inf.safetylogic.patterns.ThreeConnectedRailRoadPartsMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainHitsAnotherTrainMatcher
 import hu.bme.mit.inf.safetylogic.patterns.TrainTrailingTurnoutMatcher
 import java.util.List
-import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
 import org.eclipse.viatra.query.runtime.api.ViatraQueryEngine
 import org.eclipse.viatra.query.runtime.emf.EMFScope
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -104,12 +104,13 @@ class ModelUtil implements IModelInteractor {
 	}
 
 	def private loadSectionResource() {
-		// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
-		val model = ModelUtil.getResource("/instance.railroadmodel").file
-		
 		RailRoadModelPackage.eINSTANCE.class
-		Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("railroadmodel", new XMIResourceFactoryImpl());
-		resourceSet.getResource(URI.createFileURI(model), true);
+		
+		// EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, ModelPackage.eINSTANCE);
+		val model = ModelUtil.getResourceAsStream("/instance.railroadmodel")
+		val res = new XMIResourceImpl(); 
+		res.load(model, null)
+		res
 	}
 
 	def loadModel() {
