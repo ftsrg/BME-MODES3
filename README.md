@@ -158,8 +158,10 @@ cd src/java
 5. Install Eclipse or your faviourite IDE, and install Xtend, Gradle plugins there. (Most of the code is implemented in Xtend, we use Gradle as a build system.)
 
     - Should you develop any project which have dependency for JavaFX in Eclipse, install the [e(fx)clipse](https://wiki.eclipse.org/Efxclipse/Tutorials/AddingE(fx)clipse_to_eclipse) plugin.
+	
+6. Set the default file encoding for UTF-8. In Eclipse do the following: `Window -> Preferences -> General -> Workspace : Text file encoding`
 
-6. Import the Gradle projects in your IDE and try to build the projects there. _Note:_ Should you not need any project, please put a comment mark `#` in front of the lines, which include projects you do not need, in the root folder's `/src/java/build.gradle` file. Please do not commit these changes though.
+7. Import the Gradle projects in your IDE and try to build the projects there. _Note:_ Should you not need any project, please put a comment mark `#` in front of the lines, which include projects you do not need, in the root folder's `/src/java/build.gradle` file. Please do not commit these changes though.
 
 
 #### Troubleshooting
