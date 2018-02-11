@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="ASCII"?>
+<hu.bme.mit.gamma.statechart:Package xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:hu.bme.mit.gamma.constraint="http://www.mit.bme.hu/gamma/constraint/Model" xmlns:hu.bme.mit.gamma.statechart="http://www.mit.bme.hu/gamma/statechart/Model" name="Turnout">
+  <components xsi:type="hu.bme.mit.gamma.statechart:StatechartDefinition" name="TurnoutStatechart">
+    <ports name="ProtocolProvidedTop">
+      <interfaceRealization>
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0"/>
+      </interfaceRealization>
+    </ports>
+    <ports name="TrainRequired">
+      <interfaceRealization realizationMode="REQUIRED">
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.2"/>
+      </interfaceRealization>
+    </ports>
+    <ports name="ProtocolRequiredDivergent">
+      <interfaceRealization realizationMode="REQUIRED">
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0"/>
+      </interfaceRealization>
+    </ports>
+    <ports name="ProtocolProvidedStraight">
+      <interfaceRealization>
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0"/>
+      </interfaceRealization>
+    </ports>
+    <ports name="Turnout">
+      <interfaceRealization>
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.3"/>
+      </interfaceRealization>
+    </ports>
+    <ports name="ProtocolRequiredTop">
+      <interfaceRealization realizationMode="REQUIRED">
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0"/>
+      </interfaceRealization>
+    </ports>
+    <ports name="ProtocolRequiredStraight">
+      <interfaceRealization realizationMode="REQUIRED">
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0"/>
+      </interfaceRealization>
+    </ports>
+    <ports name="ProtocolProvidedDivergent">
+      <interfaceRealization>
+        <interface href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0"/>
+      </interfaceRealization>
+    </ports>
+    <regions name="main_region">
+      <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Straight">
+        <regions name="listening_to_straight">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry8"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="ReservationFromStraight"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Waiting"/>
+        </regions>
+        <regions name="listening_to_release">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry2"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="TransferReleases">
+            <regions name="localReactionRegion12">
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry12"/>
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="LocalReactionState12"/>
+            </regions>
+            <regions name="localReactionRegion13">
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry13"/>
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="LocalReactionState13"/>
+            </regions>
+          </stateNodes>
+        </regions>
+        <regions name="listening_to_top">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry5"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Waiting"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="ReservationFromTop"/>
+        </regions>
+        <regions name="listening_to_occupy">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry0"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Free">
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+            </entryActions>
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+            </entryActions>
+          </stateNodes>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Occupied">
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+            </entryActions>
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+            </entryActions>
+          </stateNodes>
+        </regions>
+        <regions name="localReactionRegion15">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry15"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="LocalReactionState15"/>
+        </regions>
+      </stateNodes>
+      <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Divergent">
+        <regions name="listening_to_release">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry3"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="TransferReleases">
+            <regions name="localReactionRegion10">
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry10"/>
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="LocalReactionState10"/>
+            </regions>
+            <regions name="localReactionRegion11">
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry11"/>
+              <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="LocalReactionState11"/>
+            </regions>
+          </stateNodes>
+        </regions>
+        <regions name="listening_to_occupy">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry1"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Free">
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+            </entryActions>
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+            </entryActions>
+          </stateNodes>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Occupied">
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+            </entryActions>
+            <entryActions xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+              <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+            </entryActions>
+          </stateNodes>
+        </regions>
+        <regions name="listening_to_divergent">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry6"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="ReservationFromDivergent"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Waiting"/>
+        </regions>
+        <regions name="listening_to_top">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry4"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="ReservationFromTop"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="Waiting"/>
+        </regions>
+        <regions name="localReactionRegion14">
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry14"/>
+          <stateNodes xsi:type="hu.bme.mit.gamma.statechart:State" name="LocalReactionState14"/>
+        </regions>
+      </stateNodes>
+      <stateNodes xsi:type="hu.bme.mit.gamma.statechart:InitialState" name="Entry7"/>
+    </regions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.4">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.3/@events.0/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.3/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.3/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.1">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.2/@events.1/@event"/>
+        </eventReference>
+      </trigger>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.1">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.2/@events.1/@event"/>
+        </eventReference>
+      </trigger>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.3">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.0"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.2"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.4">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.3/@events.1/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.7">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.3/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.3/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.1">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.2/@events.0/@event"/>
+        </eventReference>
+      </trigger>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.7">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.2"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.1/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.1">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.2/@events.0/@event"/>
+        </eventReference>
+      </trigger>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.2/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.3/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.3/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.1/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.2/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.3">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.2">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.7">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.3/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.0/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.3">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.2" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.3/@stateNodes.2"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.0/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.1/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.0/@stateNodes.1/@regions.1/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.0/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.0/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.0/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.0/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.3">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.5">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.1/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.1/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.1/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.1/@stateNodes.1/@regions.1/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.0">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.0/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.4/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.4/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.1/@regions.4/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.1/@regions.4/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.3">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.6">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+    </transitions>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.4/@stateNodes.0" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.4/@stateNodes.1"/>
+    <transitions sourceState="//@components.0/@regions.0/@stateNodes.0/@regions.4/@stateNodes.1" targetState="//@components.0/@regions.0/@stateNodes.0/@regions.4/@stateNodes.1">
+      <trigger xsi:type="hu.bme.mit.gamma.statechart:EventTrigger">
+        <eventReference xsi:type="hu.bme.mit.gamma.statechart:PortEventReference" port="//@components.0/@ports.7">
+          <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.2/@event"/>
+        </eventReference>
+      </trigger>
+      <effects xsi:type="hu.bme.mit.gamma.statechart:RaiseEventAction" port="//@components.0/@ports.2">
+        <event href="platform:/resource/hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.model/model/Interfaces_interface.gsm#//@interfaces.0/@events.1/@event"/>
+      </effects>
+    </transitions>
+  </components>
+  <constantDeclarations name="id">
+    <type xsi:type="hu.bme.mit.gamma.constraint:IntegerTypeDefinition"/>
+    <expression xsi:type="hu.bme.mit.gamma.constraint:IntegerLiteralExpression" value="0"/>
+  </constantDeclarations>
+  <constantDeclarations name="DIVERGENT">
+    <type xsi:type="hu.bme.mit.gamma.constraint:IntegerTypeDefinition"/>
+    <expression xsi:type="hu.bme.mit.gamma.constraint:IntegerLiteralExpression" value="2"/>
+  </constantDeclarations>
+  <constantDeclarations name="STRAIGHT">
+    <type xsi:type="hu.bme.mit.gamma.constraint:IntegerTypeDefinition"/>
+    <expression xsi:type="hu.bme.mit.gamma.constraint:IntegerLiteralExpression" value="1"/>
+  </constantDeclarations>
+  <constantDeclarations name="TOP">
+    <type xsi:type="hu.bme.mit.gamma.constraint:IntegerTypeDefinition"/>
+    <expression xsi:type="hu.bme.mit.gamma.constraint:IntegerLiteralExpression" value="0"/>
+  </constantDeclarations>
+</hu.bme.mit.gamma.statechart:Package>

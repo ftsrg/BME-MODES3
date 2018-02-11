@@ -1,0 +1,15 @@
+import t2
+
+package async_t2
+
+async AsyncT2Component of T2Component[
+] {
+	when any / full step
+	
+	queue messages(priority = 1, capacity = 1024) {
+		 S24ProtocolProvidedCCW.any,  S24ProtocolRequiredCCW.any, T2ProtocolProvidedDivergent.any, T2ProtocolRequiredDivergent.any,
+		 S18ProtocolProvidedCW.any, S18ProtocolRequiredCW.any, S24ControlProvided.any, S29ControlProvided.any, 
+		 T2TurnoutProvided.any, S31ControlProvided.any, S18ControlProvided.any, S24TrainRequired.any, 
+		 S29TrainRequired.any, T2TrainRequired.any, S31TrainRequired.any, S18TrainRequired.any	 
+	}
+}

@@ -1,0 +1,16 @@
+import t4
+
+package async_t4
+
+async AsyncT4Component of T4Component[
+] {
+	when any / full step
+	
+	queue messages(priority = 1, capacity = 1024) {
+		S01ProtocolProvidedCW.any, S01ProtocolRequiredCW.any, S07ProtocolProvidedCCW.any, S07ProtocolRequiredCCW.any,
+		S06ProtocolProvidedCCW.any, S06ProtocolRequiredCCW.any, S01ControlProvided.any, T4TurnoutProvided.any,
+		S04ControlProvided.any, S05ControlProvided.any, S06ControlProvided.any, S07ControlProvided.any,
+		S01TrainRequired.any, T4TrainRequired.any, S04TrainRequired.any, S05TrainRequired.any,
+		S06TrainRequired.any, S07TrainRequired.any
+	}
+}

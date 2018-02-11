@@ -1,0 +1,72 @@
+import Section
+import Turnout
+
+package t6
+
+sync T6Component [
+	// Ports on the borders of the zone		 
+	port S17ProtocolProvidedCCW : provides Protocol,
+	port S17ProtocolRequiredCCW : requires Protocol,
+		
+	port S22ProtocolProvidedCW : provides Protocol,
+	port S22ProtocolRequiredCW : requires Protocol,
+		
+	port S27ProtocolProvidedCW : provides Protocol,
+	port S27ProtocolRequiredCW : requires Protocol,
+		
+	// Control ports, needed for all elements
+	port S17ControlProvided : provides Control,
+	port T6TurnoutProvided : provides Turnout,
+	port S22ControlProvided : provides Control,
+	port S23ControlProvided : provides Control,
+	port S27ControlProvided : provides Control,
+		
+	// Train ports, needed for all elements
+	port S17TrainRequired : requires Train,
+	port T6TrainRequired : requires Train,
+	port S22TrainRequired : requires Train,
+	port S23TrainRequired : requires Train,
+	port S27TrainRequired : requires Train
+] {	
+	component S17 : SectionStatechart
+	component T6 : TurnoutStatechart
+	component S22 : SectionStatechart
+	component S23 : SectionStatechart
+	component S27 : SectionStatechart
+	
+	// Binding system ports on the border to the elements
+	bind S17ProtocolProvidedCCW -> S17.ProtocolProvidedCCW
+	bind S17ProtocolRequiredCCW -> S17.ProtocolRequiredCCW		
+				
+	bind S22ProtocolProvidedCW -> S22.ProtocolProvidedCW
+	bind S22ProtocolRequiredCW -> S22.ProtocolRequiredCW
+				
+	bind S27ProtocolProvidedCW -> S27.ProtocolProvidedCW
+	bind S27ProtocolRequiredCW -> S27.ProtocolRequiredCW	
+				
+	// Binding Control ports
+	bind S17ControlProvided -> S17.ControlProvided
+	bind T6TurnoutProvided -> T6.Turnout
+	bind S22ControlProvided -> S22.ControlProvided
+	bind S23ControlProvided -> S23.ControlProvided
+	bind S27ControlProvided -> S27.ControlProvided
+				
+	// Binding Train ports
+	bind S17TrainRequired -> S17.TrainRequired
+	bind T6TrainRequired -> T6.TrainRequired
+	bind S22TrainRequired -> S22.TrainRequired
+	bind S23TrainRequired -> S23.TrainRequired
+	bind S27TrainRequired -> S27.TrainRequired
+	
+	channel [S17.ProtocolProvidedCW] -o)- [T6.ProtocolRequiredTop]
+	channel [T6.ProtocolProvidedTop] -o)- [S17.ProtocolRequiredCW]
+				
+	channel [S23.ProtocolProvidedCCW] -o)- [T6.ProtocolRequiredStraight]
+	channel [T6.ProtocolProvidedStraight] -o)- [S23.ProtocolRequiredCCW]				
+				
+	channel [S22.ProtocolProvidedCCW] -o)- [T6.ProtocolRequiredDivergent]
+	channel [T6.ProtocolProvidedDivergent] -o)- [S22.ProtocolRequiredCCW]
+								
+	channel [S23.ProtocolProvidedCW] -o)- [S27.ProtocolRequiredCCW]
+	channel [S27.ProtocolProvidedCCW] -o)- [S23.ProtocolRequiredCW]
+}

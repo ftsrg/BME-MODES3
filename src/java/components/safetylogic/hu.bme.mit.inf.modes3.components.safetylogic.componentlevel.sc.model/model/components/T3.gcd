@@ -1,0 +1,90 @@
+import Section
+import Turnout
+
+package t3
+
+/** 
+ * You have to be careful here, as there are two separate Turnouts with separate Control ports.
+ * If you want them to change together (from Straight to Divergent and vice versa) send the turnout signals to both Turnouts!!!
+ */
+sync T3Component [
+	// Ports on the borders of the zone
+	port S20ProtocolProvidedCW : provides Protocol,
+	port S20ProtocolRequiredCW : requires Protocol,	
+	
+	port S19ProtocolProvidedCW : provides Protocol,
+	port S19ProtocolRequiredCW : requires Protocol,
+	
+	port S26ProtocolProvidedCCW : provides Protocol,
+	port S26ProtocolRequiredCCW : requires Protocol,
+	 
+	port S30ProtocolProvidedCCW : provides Protocol,
+	port S30ProtocolRequiredCCW : requires Protocol,
+	
+	// Control ports, needed for all elements
+	port S20ControlProvided : provides Control,
+	port S19ControlProvided : provides Control,
+	port T3_1TurnoutProvided : provides Turnout,
+	port T3_2TurnoutProvided : provides Turnout,
+	port S26ControlProvided : provides Control,
+	port S30ControlProvided : provides Control,
+	
+	// Train ports, needed for all elements
+	port S20TrainRequired : requires Train,
+	port S19TrainRequired : requires Train,
+	port T3_1TrainRequired : requires Train,
+	port T3_2TrainRequired : requires Train,
+	port S26TrainRequired : requires Train,
+	port S30TrainRequired : requires Train
+] {
+	component S20 : SectionStatechart
+	component S19 : SectionStatechart
+	component T3_1 : TurnoutStatechart
+	component T3_2 : TurnoutStatechart
+	component S26 : SectionStatechart
+	component S30 : SectionStatechart
+	
+	// Binding system ports on the border to the elements
+	bind S20ProtocolProvidedCW -> S20.ProtocolProvidedCW
+	bind S20ProtocolRequiredCW -> S20.ProtocolRequiredCW	
+				
+	bind S19ProtocolProvidedCW -> S19.ProtocolProvidedCW
+	bind S19ProtocolRequiredCW -> S19.ProtocolRequiredCW
+				
+	bind S26ProtocolProvidedCCW -> S26.ProtocolProvidedCCW
+	bind S26ProtocolRequiredCCW -> S26.ProtocolRequiredCCW
+				 
+	bind S30ProtocolProvidedCCW -> S30.ProtocolProvidedCCW
+	bind S30ProtocolRequiredCCW -> S30.ProtocolRequiredCCW			
+			
+	// Binding Control ports
+	bind S20ControlProvided -> S20.ControlProvided
+	bind S19ControlProvided -> S19.ControlProvided
+	bind T3_1TurnoutProvided -> T3_1.Turnout
+	bind T3_2TurnoutProvided -> T3_2.Turnout
+	bind S26ControlProvided -> S26.ControlProvided
+	bind S30ControlProvided -> S30.ControlProvided
+				
+	// Binding Train ports
+	bind S20TrainRequired -> S20.TrainRequired
+	bind S19TrainRequired -> S19.TrainRequired
+	bind T3_1TrainRequired -> T3_1.TrainRequired
+	bind T3_2TrainRequired -> T3_2.TrainRequired
+	bind S26TrainRequired -> S26.TrainRequired
+	bind S30TrainRequired -> S30.TrainRequired
+			
+	channel [T3_1.ProtocolProvidedDivergent] -o)- [T3_2.ProtocolRequiredDivergent]
+	channel [T3_2.ProtocolProvidedDivergent] -o)- [T3_1.ProtocolRequiredDivergent]
+				
+	channel [S20.ProtocolProvidedCCW] -o)- [T3_1.ProtocolRequiredTop]
+	channel [T3_1.ProtocolProvidedTop] -o)- [S20.ProtocolRequiredCCW]
+				
+	channel [S19.ProtocolProvidedCCW] -o)- [T3_2.ProtocolRequiredStraight]
+	channel [T3_2.ProtocolProvidedStraight] -o)- [S19.ProtocolRequiredCCW]
+				
+	channel [S26.ProtocolProvidedCW] -o)- [T3_1.ProtocolRequiredStraight]
+	channel [T3_1.ProtocolProvidedStraight] -o)- [S26.ProtocolRequiredCW]
+				
+	channel [S30.ProtocolProvidedCW] -o)- [T3_2.ProtocolRequiredTop]
+	channel [T3_2.ProtocolProvidedTop] -o)- [S30.ProtocolRequiredCW]															
+}

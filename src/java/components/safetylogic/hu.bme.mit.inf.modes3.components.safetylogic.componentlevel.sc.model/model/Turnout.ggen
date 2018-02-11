@@ -1,0 +1,18 @@
+statechart Turnout
+mappings {
+	map Turnout = Turnout as provided
+	
+	map ProtocolProvidedTop = Protocol as provided
+	
+	map ProtocolProvidedStraight = Protocol as provided 
+	
+	map ProtocolProvidedDivergent = Protocol as provided 
+	
+	map ProtocolRequiredTop = Protocol as required 
+
+	map ProtocolRequiredStraight = Protocol as required
+	
+	map ProtocolRequiredDivergent = Protocol as required 
+
+	map TrainRequired = Train as required 
+}

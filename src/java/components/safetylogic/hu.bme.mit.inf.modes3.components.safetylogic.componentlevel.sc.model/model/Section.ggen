@@ -1,0 +1,14 @@
+statechart Section
+mappings {
+	map ControlProvided = Control as provided
+	
+	map ProtocolProvidedCW = Protocol as provided
+	
+	map ProtocolProvidedCCW = Protocol as provided 
+	
+	map ProtocolRequiredCW = Protocol as required 
+
+	map ProtocolRequiredCCW = Protocol as required 
+
+	map TrainRequired = Train as required
+}

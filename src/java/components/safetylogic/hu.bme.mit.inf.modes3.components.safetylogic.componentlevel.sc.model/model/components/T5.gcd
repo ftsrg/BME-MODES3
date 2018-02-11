@@ -1,0 +1,72 @@
+import Section
+import Turnout
+
+package t5
+
+sync T5Component [
+	// Ports on the borders of the zone
+	port S11ProtocolProvidedCW : provides Protocol,
+	port S11ProtocolRequiredCW : requires Protocol,
+	
+	port S10ProtocolProvidedCW : provides Protocol,
+	port S10ProtocolRequiredCW : requires Protocol,
+	 
+	port S13ProtocolProvidedCCW : provides Protocol,
+	port S13ProtocolRequiredCCW : requires Protocol,
+	
+	// Control ports, needed for all elements
+	port S11ControlProvided : provides Control,
+	port S10ControlProvided : provides Control,
+	port T5TurnoutProvided : provides Turnout,
+	port S08ControlProvided : provides Control,
+	port S13ControlProvided : provides Control,
+	
+	// Train ports, needed for all elements
+	port S11TrainRequired : requires Train,
+	port S10TrainRequired : requires Train,
+	port T5TrainRequired : requires Train,
+	port S08TrainRequired : requires Train,
+	port S13TrainRequired : requires Train
+] {
+	component S11 : SectionStatechart
+	component S10 : SectionStatechart
+	component T5 : TurnoutStatechart
+	component S08 : SectionStatechart
+	component S13 : SectionStatechart
+	
+	// Binding system ports on the border to the elements
+	bind S11ProtocolProvidedCW -> S11.ProtocolProvidedCW
+	bind S11ProtocolRequiredCW -> S11.ProtocolRequiredCW
+				
+	bind S10ProtocolProvidedCW -> S10.ProtocolProvidedCW
+	bind S10ProtocolRequiredCW -> S10.ProtocolRequiredCW	
+				
+	bind S13ProtocolProvidedCCW -> S13.ProtocolProvidedCCW
+	bind S13ProtocolRequiredCCW -> S13.ProtocolRequiredCCW		
+			
+	// Binding Control ports
+	bind S11ControlProvided -> S11.ControlProvided
+	bind S10ControlProvided -> S10.ControlProvided
+	bind T5TurnoutProvided -> T5.Turnout
+	bind S08ControlProvided -> S08.ControlProvided
+	bind S13ControlProvided -> S13.ControlProvided
+				
+	// Binding Train ports
+	bind S11TrainRequired -> S11.TrainRequired
+	bind S10TrainRequired -> S10.TrainRequired
+	bind T5TrainRequired -> T5.TrainRequired
+	bind S08TrainRequired -> S08.TrainRequired
+	bind S13TrainRequired -> S13.TrainRequired
+	
+	channel [S11.ProtocolProvidedCCW] -o)- [T5.ProtocolRequiredStraight]
+	channel [T5.ProtocolProvidedStraight] -o)- [S11.ProtocolRequiredCCW]				
+				
+	channel [S10.ProtocolProvidedCCW] -o)- [T5.ProtocolRequiredDivergent]
+	channel [T5.ProtocolProvidedDivergent] -o)- [S10.ProtocolRequiredCCW]
+				
+	channel [S08.ProtocolProvidedCW] -o)- [T5.ProtocolRequiredTop]
+	channel [T5.ProtocolProvidedTop] -o)- [S08.ProtocolRequiredCW]
+				
+	channel [S08.ProtocolProvidedCCW] -o)- [S13.ProtocolRequiredCW]
+	channel [S13.ProtocolProvidedCW] -o)- [S08.ProtocolRequiredCCW]
+}
