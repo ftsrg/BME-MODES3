@@ -1,0 +1,560 @@
+{
+	"components": 
+	[
+		{
+			"componentName": "turnout1",
+			"turnouts": 
+			[
+				{
+					"occupancyId": 14,
+					"straight": 
+					{
+						"occupancyId": 12,
+						"itReceivesOurMessagesFrom": "CCW"
+					},
+
+					"divergent": 
+					{
+						"occupancyId": 11,
+						"itReceivesOurMessagesFrom": "CCW"
+					},
+
+					"top": 
+					{
+						"occupancyId": 15,
+						"itReceivesOurMessagesFrom": "CW"
+					}
+				}
+			],
+
+			"sections": 
+			[
+				{
+					"occupancyId": 12,
+					"cw": 
+					{
+						"occupancyId": 14,
+						"itReceivesOurMessagesFrom": "STRAIGHT"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 1,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 15,
+					"cw": 
+					{
+						"occupancyId": 24,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 14,
+						"itReceivesOurMessagesFrom": "TOP"
+					}
+				}
+			]
+		},
+
+		{
+			"componentName": "turnout2",
+			"turnouts": 
+			[
+				{
+					"occupancyId": 28,
+					"straight": 
+					{
+						"occupancyId": 31,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"divergent": 
+					{
+						"occupancyId": 30,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"top": 
+					{
+						"occupancyId": 29,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			],
+
+			"sections": 
+			[
+				{
+					"occupancyId": 24,
+					"cw": 
+					{
+						"occupancyId": 29,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 15,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 29,
+					"cw": 
+					{
+						"occupancyId": 28,
+						"itReceivesOurMessagesFrom": "TOP"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 24,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 31,
+					"cw": 
+					{
+						"occupancyId": 18,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 28,
+						"itReceivesOurMessagesFrom": "STRAIGHT"
+					}
+				},
+
+				{
+					"occupancyId": 18,
+					"cw": 
+					{
+						"occupancyId": 6,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 31,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			]
+		},
+
+		{
+			"componentName": "turnout3",
+			"turnouts": 
+			[
+				{
+					"occupancyId": 25,
+					"straight": 
+					{
+						"occupancyId": 26,
+						"itReceivesOurMessagesFrom": "CCW"
+					},
+
+					"divergent": 
+					{
+						"occupancyId": 32,
+						"itReceivesOurMessagesFrom": "DIVERGENT"
+					},
+
+					"top": 
+					{
+						"occupancyId": 20,
+						"itReceivesOurMessagesFrom": "CW"
+					}
+				},
+
+				{
+					"occupancyId": 32,
+					"straight": 
+					{
+						"occupancyId": 19,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"divergent": 
+					{
+						"occupancyId": 25,
+						"itReceivesOurMessagesFrom": "DIVERGENT"
+					},
+
+					"top": 
+					{
+						"occupancyId": 30,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			],
+
+			"sections": 
+			[
+				{
+					"occupancyId": 20,
+					"cw": 
+					{
+						"occupancyId": 13,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 25,
+						"itReceivesOurMessagesFrom": "TOP"
+					}
+				},
+
+				{
+					"occupancyId": 26,
+					"cw": 
+					{
+						"occupancyId": 25,
+						"itReceivesOurMessagesFrom": "STRAIGHT"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 27,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 19,
+					"cw": 
+					{
+						"occupancyId": 7,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 32,
+						"itReceivesOurMessagesFrom": "STRAIGHT"
+					}
+				},
+
+				{
+					"occupancyId": 30,
+					"cw": 
+					{
+						"occupancyId": 32,
+						"itReceivesOurMessagesFrom": "TOP"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 28,
+						"itReceivesOurMessagesFrom": "DIVERGENT"
+					}
+				}
+			]
+		},
+
+		{
+			"componentName": "turnout4",
+			"turnouts": 
+			[
+				{
+					"occupancyId": 3,
+					"straight": 
+					{
+						"occupancyId": 4,
+						"itReceivesOurMessagesFrom": "CCW"
+					},
+
+					"divergent": 
+					{
+						"occupancyId": 5,
+						"itReceivesOurMessagesFrom": "CCW"
+					},
+
+					"top": 
+					{
+						"occupancyId": 2,
+						"itReceivesOurMessagesFrom": "CW"
+					}
+				}
+			],
+
+			"sections": 
+			[
+				{
+					"occupancyId": 7,
+					"cw": 
+					{
+						"occupancyId": 5,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 19,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 6,
+					"cw": 
+					{
+						"occupancyId": 4,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 18,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 5,
+					"cw": 
+					{
+						"occupancyId": 3,
+						"itReceivesOurMessagesFrom": "DIVERGENT"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 7,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 4,
+					"cw": 
+					{
+						"occupancyId": 3,
+						"itReceivesOurMessagesFrom": "STRAIGHT"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 6,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 2,
+					"cw": 
+					{
+						"occupancyId": 1,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 3,
+						"itReceivesOurMessagesFrom": "TOP"
+					}
+				},
+
+				{
+					"occupancyId": 1,
+					"cw": 
+					{
+						"occupancyId": 12,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 2,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			]
+		},
+
+		{
+			"componentName": "turnout5",
+			"turnouts": 
+			[
+				{
+					"occupancyId": 9,
+					"straight": 
+					{
+						"occupancyId": 11,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"divergent": 
+					{
+						"occupancyId": 10,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"top": 
+					{
+						"occupancyId": 8,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			],
+
+			"sections": 
+			[
+				{
+					"occupancyId": 11,
+					"cw": 
+					{
+						"occupancyId": 14,
+						"itReceivesOurMessagesFrom": "DIVERGENT"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 9,
+						"itReceivesOurMessagesFrom": "STRAIGHT"
+					}
+				},
+
+				{
+					"occupancyId": 10,
+					"cw": 
+					{
+						"occupancyId": 17,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 9,
+						"itReceivesOurMessagesFrom": "DIVERGENT"
+					}
+				},
+
+				{
+					"occupancyId": 8,
+					"cw": 
+					{
+						"occupancyId": 9,
+						"itReceivesOurMessagesFrom": "TOP"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 13,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 13,
+					"cw": 
+					{
+						"occupancyId": 8,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 20,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			]
+		},
+
+		{
+			"componentName": "turnout6",
+			"turnouts": 
+			[
+				{
+					"occupancyId": 21,
+					"straight": 
+					{
+						"occupancyId": 23,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"divergent": 
+					{
+						"occupancyId": 22,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"top": 
+					{
+						"occupancyId": 17,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			],
+
+			"sections": 
+			[
+				{
+					"occupancyId": 17,
+					"cw": 
+					{
+						"occupancyId": 21,
+						"itReceivesOurMessagesFrom": "TOP"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 10,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				},
+
+				{
+					"occupancyId": 22,
+					"cw": null,
+					"ccw": 
+					{
+						"occupancyId": 21,
+						"itReceivesOurMessagesFrom": "DIVERGENT"
+					}
+				},
+
+				{
+					"occupancyId": 23,
+					"cw": 
+					{
+						"occupancyId": 27,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 21,
+						"itReceivesOurMessagesFrom": "STRAIGHT"
+					}
+				},
+
+				{
+					"occupancyId": 27,
+					"cw": 
+					{
+						"occupancyId": 26,
+						"itReceivesOurMessagesFrom": "CW"
+					},
+
+					"ccw": 
+					{
+						"occupancyId": 23,
+						"itReceivesOurMessagesFrom": "CCW"
+					}
+				}
+			]
+		}
+	]
+}
