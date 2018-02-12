@@ -20,14 +20,14 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 	protected TurnoutStatemachine statemachine = new TurnoutStatemachine();
 	
 	/**
-	 * Interface object for SCITurnout
+	 * Interface object for SCITurnoutControlProvided
 	 */		
-	protected class SynchronizedSCITurnout implements SCITurnout {
+	protected class SynchronizedSCITurnoutControlProvided implements SCITurnoutControlProvided {
 		
 		public void raiseTurnoutStraight() {
 			
 			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseTurnoutStraight();
+				statemachine.getSCITurnoutControlProvided().raiseTurnoutStraight();
 				statemachine.runCycle();
 			}
 		}
@@ -35,20 +35,14 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 		public void raiseTurnoutDivergent() {
 			
 			synchronized (statemachine) {
-				statemachine.getSCITurnout().raiseTurnoutDivergent();
+				statemachine.getSCITurnoutControlProvided().raiseTurnoutDivergent();
 				statemachine.runCycle();
-			}
-		}
-		
-		public long getId() {
-			synchronized(statemachine) {
-				return statemachine.getSCITurnout().getId();
 			}
 		}
 		
 	};
 	
-	protected SCITurnout sCITurnout;
+	protected SCITurnoutControlProvided sCITurnoutControlProvided;
 	
 	/**
 	 * Interface object for SCIProtocolProvidedTop
@@ -291,14 +285,14 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 	protected SCIProtocolRequiredDivergent sCIProtocolRequiredDivergent;
 	
 	/**
-	 * Interface object for SCITrainRequired
+	 * Interface object for SCITrainProvided
 	 */		
-	protected class SynchronizedSCITrainRequired implements SCITrainRequired {
+	protected class SynchronizedSCITrainProvided implements SCITrainProvided {
 		
 		public void raiseOccupy() {
 			
 			synchronized (statemachine) {
-				statemachine.getSCITrainRequired().raiseOccupy();
+				statemachine.getSCITrainProvided().raiseOccupy();
 				statemachine.runCycle();
 			}
 		}
@@ -306,14 +300,14 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 		public void raiseUnoccupy() {
 			
 			synchronized (statemachine) {
-				statemachine.getSCITrainRequired().raiseUnoccupy();
+				statemachine.getSCITrainProvided().raiseUnoccupy();
 				statemachine.runCycle();
 			}
 		}
 		
 	};
 	
-	protected SCITrainRequired sCITrainRequired;
+	protected SCITrainProvided sCITrainProvided;
 	
 	/**
 	 * Interface object for SCIDirection
@@ -343,19 +337,19 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 	protected SCIDirection sCIDirection;
 	
 	public SynchronizedTurnoutStatemachine() {
-		sCITurnout = new SynchronizedSCITurnout();
+		sCITurnoutControlProvided = new SynchronizedSCITurnoutControlProvided();
 		sCIProtocolProvidedTop = new SynchronizedSCIProtocolProvidedTop();
 		sCIProtocolRequiredTop = new SynchronizedSCIProtocolRequiredTop();
 		sCIProtocolProvidedStraight = new SynchronizedSCIProtocolProvidedStraight();
 		sCIProtocolRequiredStraight = new SynchronizedSCIProtocolRequiredStraight();
 		sCIProtocolProvidedDivergent = new SynchronizedSCIProtocolProvidedDivergent();
 		sCIProtocolRequiredDivergent = new SynchronizedSCIProtocolRequiredDivergent();
-		sCITrainRequired = new SynchronizedSCITrainRequired();
+		sCITrainProvided = new SynchronizedSCITrainProvided();
 		sCIDirection = new SynchronizedSCIDirection();
 	}
 	
-	public synchronized SCITurnout getSCITurnout() {
-		return sCITurnout;
+	public synchronized SCITurnoutControlProvided getSCITurnoutControlProvided() {
+		return sCITurnoutControlProvided;
 	}
 	public synchronized SCIProtocolProvidedTop getSCIProtocolProvidedTop() {
 		return sCIProtocolProvidedTop;
@@ -375,8 +369,8 @@ public class SynchronizedTurnoutStatemachine implements ITurnoutStatemachine {
 	public synchronized SCIProtocolRequiredDivergent getSCIProtocolRequiredDivergent() {
 		return sCIProtocolRequiredDivergent;
 	}
-	public synchronized SCITrainRequired getSCITrainRequired() {
-		return sCITrainRequired;
+	public synchronized SCITrainProvided getSCITrainProvided() {
+		return sCITrainProvided;
 	}
 	public synchronized SCIDirection getSCIDirection() {
 		return sCIDirection;

@@ -15,18 +15,18 @@ sync T6Component [
 	port S27ProtocolRequiredCW : requires Protocol,
 		
 	// Control ports, needed for all elements
-	port S17ControlProvided : provides Control,
-	port T6TurnoutProvided : provides Turnout,
-	port S22ControlProvided : provides Control,
-	port S23ControlProvided : provides Control,
-	port S27ControlProvided : provides Control,
+	port S17ControlProvided : provides SectionControl,
+	port T6TurnoutProvided : provides TurnoutControl,
+	port S22ControlProvided : provides SectionControl,
+	port S23ControlProvided : provides SectionControl,
+	port S27ControlProvided : provides SectionControl,
 		
 	// Train ports, needed for all elements
-	port S17TrainRequired : requires Train,
-	port T6TrainRequired : requires Train,
-	port S22TrainRequired : requires Train,
-	port S23TrainRequired : requires Train,
-	port S27TrainRequired : requires Train
+	port S17TrainProvided : provides Train,
+	port T6TrainProvided : provides Train,
+	port S22TrainProvided : provides Train,
+	port S23TrainProvided : provides Train,
+	port S27TrainProvided : provides Train
 ] {	
 	component S17 : SectionStatechart
 	component T6 : TurnoutStatechart
@@ -45,18 +45,18 @@ sync T6Component [
 	bind S27ProtocolRequiredCW -> S27.ProtocolRequiredCW	
 				
 	// Binding Control ports
-	bind S17ControlProvided -> S17.ControlProvided
-	bind T6TurnoutProvided -> T6.Turnout
-	bind S22ControlProvided -> S22.ControlProvided
-	bind S23ControlProvided -> S23.ControlProvided
-	bind S27ControlProvided -> S27.ControlProvided
+	bind S17ControlProvided -> S17.SectionControlProvided
+	bind T6TurnoutProvided -> T6.TurnoutControlProvided
+	bind S22ControlProvided -> S22.SectionControlProvided
+	bind S23ControlProvided -> S23.SectionControlProvided
+	bind S27ControlProvided -> S27.SectionControlProvided
 				
 	// Binding Train ports
-	bind S17TrainRequired -> S17.TrainRequired
-	bind T6TrainRequired -> T6.TrainRequired
-	bind S22TrainRequired -> S22.TrainRequired
-	bind S23TrainRequired -> S23.TrainRequired
-	bind S27TrainRequired -> S27.TrainRequired
+	bind S17TrainProvided -> S17.TrainProvided
+	bind T6TrainProvided -> T6.TrainProvided
+	bind S22TrainProvided -> S22.TrainProvided
+	bind S23TrainProvided -> S23.TrainProvided
+	bind S27TrainProvided -> S27.TrainProvided
 	
 	channel [S17.ProtocolProvidedCW] -o)- [T6.ProtocolRequiredTop]
 	channel [T6.ProtocolProvidedTop] -o)- [S17.ProtocolRequiredCW]

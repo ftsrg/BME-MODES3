@@ -1,0 +1,14 @@
+import t1
+
+package async_t1
+
+async AsyncT1Component of T1Component[
+] {
+	when any / full step
+	
+	queue messages(priority = 1, capacity = 1024) {
+		 T1ProtocolProvidedDivergent.any, T1ProtocolRequiredDivergent.any, S15ProtocolProvidedCW.any, S15ProtocolRequiredCW.any,
+		 S12ProtocolProvidedCCW.any, S12ProtocolRequiredCCW.any, S15ControlProvided.any, T1TurnoutProvided.any,
+		 S12ControlProvided.any, S15TrainProvided.any, T1TrainProvided.any, S12TrainProvided.any
+	}
+}

@@ -2,7 +2,7 @@ package hu.bme.mit.gamma.impl.interfaces;
 
 import java.util.List;
 
-public interface TrainInterface {
+public interface TurnoutControlInterface {
 	
 	interface Provided extends Listener.Required {
 		
@@ -13,8 +13,8 @@ public interface TrainInterface {
 	
 	interface Required extends Listener.Provided {
 		
-		public boolean isRaisedOccupy();
-		public boolean isRaisedUnoccupy();
+		public boolean isRaisedTurnoutStraight();
+		public boolean isRaisedTurnoutDivergent();
 		
 		void registerListener(Listener.Required listener);
 		List<Listener.Required> getRegisteredListeners();
@@ -26,8 +26,8 @@ public interface TrainInterface {
 		}
 		
 		interface Required   {
-			void raiseOccupy();
-			void raiseUnoccupy();
+			void raiseTurnoutStraight();
+			void raiseTurnoutDivergent();
 		}
 		
 	}

@@ -2,10 +2,12 @@ package hu.bme.mit.gamma.impl.interfaces;
 
 import java.util.List;
 
-public interface TrainInterface {
+public interface SectionControlInterface {
 	
 	interface Provided extends Listener.Required {
 		
+		public boolean isRaisedDisableSection();
+		public boolean isRaisedEnableSection();
 		
 		void registerListener(Listener.Provided listener);
 		List<Listener.Provided> getRegisteredListeners();
@@ -13,8 +15,7 @@ public interface TrainInterface {
 	
 	interface Required extends Listener.Provided {
 		
-		public boolean isRaisedOccupy();
-		public boolean isRaisedUnoccupy();
+		public boolean isRaisedRestartProtocol();
 		
 		void registerListener(Listener.Required listener);
 		List<Listener.Required> getRegisteredListeners();
@@ -23,11 +24,12 @@ public interface TrainInterface {
 	interface Listener {
 		
 		interface Provided  {
+			void raiseDisableSection();
+			void raiseEnableSection();
 		}
 		
 		interface Required   {
-			void raiseOccupy();
-			void raiseUnoccupy();
+			void raiseRestartProtocol();
 		}
 		
 	}

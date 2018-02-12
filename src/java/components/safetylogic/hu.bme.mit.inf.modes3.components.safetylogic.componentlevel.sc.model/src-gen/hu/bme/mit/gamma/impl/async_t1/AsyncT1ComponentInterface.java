@@ -1,24 +1,24 @@
 package hu.bme.mit.gamma.impl.async_t1;
 
-import hu.bme.mit.gamma.impl.interfaces.TrainInterface;
+import hu.bme.mit.gamma.impl.interfaces.TurnoutControlInterface;
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface;
-import hu.bme.mit.gamma.impl.interfaces.TurnoutInterface;
-import hu.bme.mit.gamma.impl.interfaces.ControlInterface;
+import hu.bme.mit.gamma.impl.interfaces.TrainInterface;
+import hu.bme.mit.gamma.impl.interfaces.SectionControlInterface;
 
 public interface AsyncT1ComponentInterface {
 	
-	TrainInterface.Required getT1TrainRequired();
-	ProtocolInterface.Provided getS15ProtocolProvidedCW();
-	TrainInterface.Required getS15TrainRequired();
-	TurnoutInterface.Provided getT1TurnoutProvided();
-	ControlInterface.Provided getS15ControlProvided();
-	TrainInterface.Required getS12TrainRequired();
-	ProtocolInterface.Provided getS12ProtocolProvidedCCW();
-	ProtocolInterface.Required getS15ProtocolRequiredCW();
-	ProtocolInterface.Required getT1ProtocolRequiredDivergent();
-	ProtocolInterface.Required getS12ProtocolRequiredCCW();
+	TurnoutControlInterface.Provided getT1TurnoutProvided();
 	ProtocolInterface.Provided getT1ProtocolProvidedDivergent();
-	ControlInterface.Provided getS12ControlProvided();
+	ProtocolInterface.Required getT1ProtocolRequiredDivergent();
+	ProtocolInterface.Provided getS12ProtocolProvidedCCW();
+	TrainInterface.Provided getS15TrainProvided();
+	SectionControlInterface.Provided getS12ControlProvided();
+	ProtocolInterface.Provided getS15ProtocolProvidedCW();
+	ProtocolInterface.Required getS12ProtocolRequiredCCW();
+	ProtocolInterface.Required getS15ProtocolRequiredCW();
+	TrainInterface.Provided getT1TrainProvided();
+	TrainInterface.Provided getS12TrainProvided();
+	SectionControlInterface.Provided getS15ControlProvided();
 	
 	
 } 

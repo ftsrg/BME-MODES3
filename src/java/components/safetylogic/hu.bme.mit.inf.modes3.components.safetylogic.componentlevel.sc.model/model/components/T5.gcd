@@ -15,18 +15,18 @@ sync T5Component [
 	port S13ProtocolRequiredCCW : requires Protocol,
 	
 	// Control ports, needed for all elements
-	port S11ControlProvided : provides Control,
-	port S10ControlProvided : provides Control,
-	port T5TurnoutProvided : provides Turnout,
-	port S08ControlProvided : provides Control,
-	port S13ControlProvided : provides Control,
+	port S11ControlProvided : provides SectionControl,
+	port S10ControlProvided : provides SectionControl,
+	port T5TurnoutProvided : provides TurnoutControl,
+	port S08ControlProvided : provides SectionControl,
+	port S13ControlProvided : provides SectionControl,
 	
 	// Train ports, needed for all elements
-	port S11TrainRequired : requires Train,
-	port S10TrainRequired : requires Train,
-	port T5TrainRequired : requires Train,
-	port S08TrainRequired : requires Train,
-	port S13TrainRequired : requires Train
+	port S11TrainProvided : provides Train,
+	port S10TrainProvided : provides Train,
+	port T5TrainProvided : provides Train,
+	port S08TrainProvided : provides Train,
+	port S13TrainProvided : provides Train
 ] {
 	component S11 : SectionStatechart
 	component S10 : SectionStatechart
@@ -45,18 +45,18 @@ sync T5Component [
 	bind S13ProtocolRequiredCCW -> S13.ProtocolRequiredCCW		
 			
 	// Binding Control ports
-	bind S11ControlProvided -> S11.ControlProvided
-	bind S10ControlProvided -> S10.ControlProvided
-	bind T5TurnoutProvided -> T5.Turnout
-	bind S08ControlProvided -> S08.ControlProvided
-	bind S13ControlProvided -> S13.ControlProvided
+	bind S11ControlProvided -> S11.SectionControlProvided
+	bind S10ControlProvided -> S10.SectionControlProvided
+	bind T5TurnoutProvided -> T5.TurnoutControlProvided
+	bind S08ControlProvided -> S08.SectionControlProvided
+	bind S13ControlProvided -> S13.SectionControlProvided
 				
 	// Binding Train ports
-	bind S11TrainRequired -> S11.TrainRequired
-	bind S10TrainRequired -> S10.TrainRequired
-	bind T5TrainRequired -> T5.TrainRequired
-	bind S08TrainRequired -> S08.TrainRequired
-	bind S13TrainRequired -> S13.TrainRequired
+	bind S11TrainProvided -> S11.TrainProvided
+	bind S10TrainProvided -> S10.TrainProvided
+	bind T5TrainProvided -> T5.TrainProvided
+	bind S08TrainProvided -> S08.TrainProvided
+	bind S13TrainProvided -> S13.TrainProvided
 	
 	channel [S11.ProtocolProvidedCCW] -o)- [T5.ProtocolRequiredStraight]
 	channel [T5.ProtocolProvidedStraight] -o)- [S11.ProtocolRequiredCCW]				

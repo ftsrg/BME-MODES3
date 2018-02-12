@@ -27,11 +27,11 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 	private T5TurnoutProvided t5TurnoutProvided = new T5TurnoutProvided();
 	private S08ControlProvided s08ControlProvided = new S08ControlProvided();
 	private S13ControlProvided s13ControlProvided = new S13ControlProvided();
-	private S11TrainRequired s11TrainRequired = new S11TrainRequired();
-	private S10TrainRequired s10TrainRequired = new S10TrainRequired();
-	private T5TrainRequired t5TrainRequired = new T5TrainRequired();
-	private S08TrainRequired s08TrainRequired = new S08TrainRequired();
-	private S13TrainRequired s13TrainRequired = new S13TrainRequired();
+	private S11TrainProvided s11TrainProvided = new S11TrainProvided();
+	private S10TrainProvided s10TrainProvided = new S10TrainProvided();
+	private T5TrainProvided t5TrainProvided = new T5TrainProvided();
+	private S08TrainProvided s08TrainProvided = new S08TrainProvided();
+	private S13TrainProvided s13TrainProvided = new S13TrainProvided();
 	// Clocks
 	// Main queue
 	private LinkedBlockingMultiQueue<String, Event> __asyncQueue = new LinkedBlockingMultiQueue<String, Event>();
@@ -69,16 +69,16 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			messages.offer(new Event("S11ProtocolProvidedCW.cannotGo", null));
 		}
 		@Override
+		public void raiseReserve() {
+			messages.offer(new Event("S11ProtocolProvidedCW.reserve", null));
+		}
+		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S11ProtocolProvidedCW.canGo", null));
 		}
 		@Override
 		public void raiseRelease() {
 			messages.offer(new Event("S11ProtocolProvidedCW.release", null));
-		}
-		@Override
-		public void raiseReserve() {
-			messages.offer(new Event("S11ProtocolProvidedCW.reserve", null));
 		}
 		
 		
@@ -108,6 +108,11 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
+		public boolean isRaisedReserve() {
+			return t5Component.getS11ProtocolRequiredCW().isRaisedReserve();
+		}
+		
+		@Override
 		public boolean isRaisedCanGo() {
 			return t5Component.getS11ProtocolRequiredCW().isRaisedCanGo();
 		}
@@ -115,11 +120,6 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		@Override
 		public boolean isRaisedRelease() {
 			return t5Component.getS11ProtocolRequiredCW().isRaisedRelease();
-		}
-		
-		@Override
-		public boolean isRaisedReserve() {
-			return t5Component.getS11ProtocolRequiredCW().isRaisedReserve();
 		}
 		
 		@Override
@@ -146,16 +146,16 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			messages.offer(new Event("S10ProtocolProvidedCW.cannotGo", null));
 		}
 		@Override
+		public void raiseReserve() {
+			messages.offer(new Event("S10ProtocolProvidedCW.reserve", null));
+		}
+		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S10ProtocolProvidedCW.canGo", null));
 		}
 		@Override
 		public void raiseRelease() {
 			messages.offer(new Event("S10ProtocolProvidedCW.release", null));
-		}
-		@Override
-		public void raiseReserve() {
-			messages.offer(new Event("S10ProtocolProvidedCW.reserve", null));
 		}
 		
 		
@@ -185,6 +185,11 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
+		public boolean isRaisedReserve() {
+			return t5Component.getS10ProtocolRequiredCW().isRaisedReserve();
+		}
+		
+		@Override
 		public boolean isRaisedCanGo() {
 			return t5Component.getS10ProtocolRequiredCW().isRaisedCanGo();
 		}
@@ -192,11 +197,6 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		@Override
 		public boolean isRaisedRelease() {
 			return t5Component.getS10ProtocolRequiredCW().isRaisedRelease();
-		}
-		
-		@Override
-		public boolean isRaisedReserve() {
-			return t5Component.getS10ProtocolRequiredCW().isRaisedReserve();
 		}
 		
 		@Override
@@ -223,16 +223,16 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			messages.offer(new Event("S13ProtocolProvidedCCW.cannotGo", null));
 		}
 		@Override
+		public void raiseReserve() {
+			messages.offer(new Event("S13ProtocolProvidedCCW.reserve", null));
+		}
+		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S13ProtocolProvidedCCW.canGo", null));
 		}
 		@Override
 		public void raiseRelease() {
 			messages.offer(new Event("S13ProtocolProvidedCCW.release", null));
-		}
-		@Override
-		public void raiseReserve() {
-			messages.offer(new Event("S13ProtocolProvidedCCW.reserve", null));
 		}
 		
 		
@@ -262,6 +262,11 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
+		public boolean isRaisedReserve() {
+			return t5Component.getS13ProtocolRequiredCCW().isRaisedReserve();
+		}
+		
+		@Override
 		public boolean isRaisedCanGo() {
 			return t5Component.getS13ProtocolRequiredCCW().isRaisedCanGo();
 		}
@@ -269,11 +274,6 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		@Override
 		public boolean isRaisedRelease() {
 			return t5Component.getS13ProtocolRequiredCCW().isRaisedRelease();
-		}
-		
-		@Override
-		public boolean isRaisedReserve() {
-			return t5Component.getS13ProtocolRequiredCCW().isRaisedReserve();
 		}
 		
 		@Override
@@ -293,7 +293,7 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		return s13ProtocolRequiredCCW;
 	}
 	
-	public class S11ControlProvided implements ControlInterface.Provided {
+	public class S11ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -304,27 +304,19 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		public boolean isRaisedDisableSection() {
 			return t5Component.getS11ControlProvided().isRaisedDisableSection();
 		}
-		@Override
-		public long getDisableSectionValue() {
-			return t5Component.getS11ControlProvided().getDisableSectionValue();
-		}
 		
 		@Override
 		public boolean isRaisedEnableSection() {
 			return t5Component.getS11ControlProvided().isRaisedEnableSection();
 		}
-		@Override
-		public long getEnableSectionValue() {
-			return t5Component.getS11ControlProvided().getEnableSectionValue();
-		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t5Component.getS11ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t5Component.getS11ControlProvided().getRegisteredListeners();
 		}
 		
@@ -335,7 +327,7 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		return s11ControlProvided;
 	}
 	
-	public class S10ControlProvided implements ControlInterface.Provided {
+	public class S10ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -346,27 +338,19 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		public boolean isRaisedDisableSection() {
 			return t5Component.getS10ControlProvided().isRaisedDisableSection();
 		}
-		@Override
-		public long getDisableSectionValue() {
-			return t5Component.getS10ControlProvided().getDisableSectionValue();
-		}
 		
 		@Override
 		public boolean isRaisedEnableSection() {
 			return t5Component.getS10ControlProvided().isRaisedEnableSection();
 		}
-		@Override
-		public long getEnableSectionValue() {
-			return t5Component.getS10ControlProvided().getEnableSectionValue();
-		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t5Component.getS10ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t5Component.getS10ControlProvided().getRegisteredListeners();
 		}
 		
@@ -377,7 +361,7 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		return s10ControlProvided;
 	}
 	
-	public class T5TurnoutProvided implements TurnoutInterface.Provided {
+	public class T5TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 		@Override
 		public void raiseTurnoutDivergent() {
@@ -390,12 +374,12 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		
 		
 		@Override
-		public void registerListener(TurnoutInterface.Listener.Provided listener) {
+		public void registerListener(TurnoutControlInterface.Listener.Provided listener) {
 			t5Component.getT5TurnoutProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TurnoutInterface.Listener.Provided> getRegisteredListeners() {
+		public List<TurnoutControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t5Component.getT5TurnoutProvided().getRegisteredListeners();
 		}
 		
@@ -406,7 +390,7 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		return t5TurnoutProvided;
 	}
 	
-	public class S08ControlProvided implements ControlInterface.Provided {
+	public class S08ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -417,27 +401,19 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		public boolean isRaisedDisableSection() {
 			return t5Component.getS08ControlProvided().isRaisedDisableSection();
 		}
-		@Override
-		public long getDisableSectionValue() {
-			return t5Component.getS08ControlProvided().getDisableSectionValue();
-		}
 		
 		@Override
 		public boolean isRaisedEnableSection() {
 			return t5Component.getS08ControlProvided().isRaisedEnableSection();
 		}
-		@Override
-		public long getEnableSectionValue() {
-			return t5Component.getS08ControlProvided().getEnableSectionValue();
-		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t5Component.getS08ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t5Component.getS08ControlProvided().getRegisteredListeners();
 		}
 		
@@ -448,7 +424,7 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		return s08ControlProvided;
 	}
 	
-	public class S13ControlProvided implements ControlInterface.Provided {
+	public class S13ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -459,27 +435,19 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		public boolean isRaisedDisableSection() {
 			return t5Component.getS13ControlProvided().isRaisedDisableSection();
 		}
-		@Override
-		public long getDisableSectionValue() {
-			return t5Component.getS13ControlProvided().getDisableSectionValue();
-		}
 		
 		@Override
 		public boolean isRaisedEnableSection() {
 			return t5Component.getS13ControlProvided().isRaisedEnableSection();
 		}
-		@Override
-		public long getEnableSectionValue() {
-			return t5Component.getS13ControlProvided().getEnableSectionValue();
-		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t5Component.getS13ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t5Component.getS13ControlProvided().getRegisteredListeners();
 		}
 		
@@ -490,149 +458,149 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		return s13ControlProvided;
 	}
 	
-	public class S11TrainRequired implements TrainInterface.Required {
+	public class S11TrainProvided implements TrainInterface.Provided {
 		
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S11TrainRequired.unoccupy", null));
+			messages.offer(new Event("S11TrainProvided.unoccupy", null));
 		}
 		@Override
 		public void raiseOccupy() {
-			messages.offer(new Event("S11TrainRequired.occupy", null));
+			messages.offer(new Event("S11TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t5Component.getS11TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t5Component.getS11TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t5Component.getS11TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t5Component.getS11TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S11TrainRequired getS11TrainRequired() {
-		return s11TrainRequired;
+	public S11TrainProvided getS11TrainProvided() {
+		return s11TrainProvided;
 	}
 	
-	public class S10TrainRequired implements TrainInterface.Required {
+	public class S10TrainProvided implements TrainInterface.Provided {
 		
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S10TrainRequired.unoccupy", null));
+			messages.offer(new Event("S10TrainProvided.unoccupy", null));
 		}
 		@Override
 		public void raiseOccupy() {
-			messages.offer(new Event("S10TrainRequired.occupy", null));
+			messages.offer(new Event("S10TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t5Component.getS10TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t5Component.getS10TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t5Component.getS10TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t5Component.getS10TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S10TrainRequired getS10TrainRequired() {
-		return s10TrainRequired;
+	public S10TrainProvided getS10TrainProvided() {
+		return s10TrainProvided;
 	}
 	
-	public class T5TrainRequired implements TrainInterface.Required {
+	public class T5TrainProvided implements TrainInterface.Provided {
 		
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("T5TrainRequired.unoccupy", null));
+			messages.offer(new Event("T5TrainProvided.unoccupy", null));
 		}
 		@Override
 		public void raiseOccupy() {
-			messages.offer(new Event("T5TrainRequired.occupy", null));
+			messages.offer(new Event("T5TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t5Component.getT5TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t5Component.getT5TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t5Component.getT5TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t5Component.getT5TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public T5TrainRequired getT5TrainRequired() {
-		return t5TrainRequired;
+	public T5TrainProvided getT5TrainProvided() {
+		return t5TrainProvided;
 	}
 	
-	public class S08TrainRequired implements TrainInterface.Required {
+	public class S08TrainProvided implements TrainInterface.Provided {
 		
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S08TrainRequired.unoccupy", null));
+			messages.offer(new Event("S08TrainProvided.unoccupy", null));
 		}
 		@Override
 		public void raiseOccupy() {
-			messages.offer(new Event("S08TrainRequired.occupy", null));
+			messages.offer(new Event("S08TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t5Component.getS08TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t5Component.getS08TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t5Component.getS08TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t5Component.getS08TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S08TrainRequired getS08TrainRequired() {
-		return s08TrainRequired;
+	public S08TrainProvided getS08TrainProvided() {
+		return s08TrainProvided;
 	}
 	
-	public class S13TrainRequired implements TrainInterface.Required {
+	public class S13TrainProvided implements TrainInterface.Provided {
 		
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S13TrainRequired.unoccupy", null));
+			messages.offer(new Event("S13TrainProvided.unoccupy", null));
 		}
 		@Override
 		public void raiseOccupy() {
-			messages.offer(new Event("S13TrainRequired.occupy", null));
+			messages.offer(new Event("S13TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t5Component.getS13TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t5Component.getS13TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t5Component.getS13TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t5Component.getS13TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S13TrainRequired getS13TrainRequired() {
-		return s13TrainRequired;
+	public S13TrainProvided getS13TrainProvided() {
+		return s13TrainProvided;
 	}
 	
 	/** Operation. */
@@ -662,17 +630,20 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			case "S11ProtocolProvidedCW.cannotGo":
 				t5Component.getS11ProtocolProvidedCW().raiseCannotGo();
 			break;
+			case "S11ProtocolProvidedCW.reserve":
+				t5Component.getS11ProtocolProvidedCW().raiseReserve();
+			break;
 			case "S11ProtocolProvidedCW.canGo":
 				t5Component.getS11ProtocolProvidedCW().raiseCanGo();
 			break;
 			case "S11ProtocolProvidedCW.release":
 				t5Component.getS11ProtocolProvidedCW().raiseRelease();
 			break;
-			case "S11ProtocolProvidedCW.reserve":
-				t5Component.getS11ProtocolProvidedCW().raiseReserve();
-			break;
 			case "S10ProtocolProvidedCW.cannotGo":
 				t5Component.getS10ProtocolProvidedCW().raiseCannotGo();
+			break;
+			case "S10ProtocolProvidedCW.reserve":
+				t5Component.getS10ProtocolProvidedCW().raiseReserve();
 			break;
 			case "S10ProtocolProvidedCW.canGo":
 				t5Component.getS10ProtocolProvidedCW().raiseCanGo();
@@ -680,20 +651,17 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			case "S10ProtocolProvidedCW.release":
 				t5Component.getS10ProtocolProvidedCW().raiseRelease();
 			break;
-			case "S10ProtocolProvidedCW.reserve":
-				t5Component.getS10ProtocolProvidedCW().raiseReserve();
-			break;
 			case "S13ProtocolProvidedCCW.cannotGo":
 				t5Component.getS13ProtocolProvidedCCW().raiseCannotGo();
+			break;
+			case "S13ProtocolProvidedCCW.reserve":
+				t5Component.getS13ProtocolProvidedCCW().raiseReserve();
 			break;
 			case "S13ProtocolProvidedCCW.canGo":
 				t5Component.getS13ProtocolProvidedCCW().raiseCanGo();
 			break;
 			case "S13ProtocolProvidedCCW.release":
 				t5Component.getS13ProtocolProvidedCCW().raiseRelease();
-			break;
-			case "S13ProtocolProvidedCCW.reserve":
-				t5Component.getS13ProtocolProvidedCCW().raiseReserve();
 			break;
 			case "S11ControlProvided.restartProtocol":
 				t5Component.getS11ControlProvided().raiseRestartProtocol();
@@ -713,35 +681,35 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			case "S13ControlProvided.restartProtocol":
 				t5Component.getS13ControlProvided().raiseRestartProtocol();
 			break;
-			case "S11TrainRequired.unoccupy":
-				t5Component.getS11TrainRequired().raiseUnoccupy();
+			case "S11TrainProvided.unoccupy":
+				t5Component.getS11TrainProvided().raiseUnoccupy();
 			break;
-			case "S11TrainRequired.occupy":
-				t5Component.getS11TrainRequired().raiseOccupy();
+			case "S11TrainProvided.occupy":
+				t5Component.getS11TrainProvided().raiseOccupy();
 			break;
-			case "S10TrainRequired.unoccupy":
-				t5Component.getS10TrainRequired().raiseUnoccupy();
+			case "S10TrainProvided.unoccupy":
+				t5Component.getS10TrainProvided().raiseUnoccupy();
 			break;
-			case "S10TrainRequired.occupy":
-				t5Component.getS10TrainRequired().raiseOccupy();
+			case "S10TrainProvided.occupy":
+				t5Component.getS10TrainProvided().raiseOccupy();
 			break;
-			case "T5TrainRequired.unoccupy":
-				t5Component.getT5TrainRequired().raiseUnoccupy();
+			case "T5TrainProvided.unoccupy":
+				t5Component.getT5TrainProvided().raiseUnoccupy();
 			break;
-			case "T5TrainRequired.occupy":
-				t5Component.getT5TrainRequired().raiseOccupy();
+			case "T5TrainProvided.occupy":
+				t5Component.getT5TrainProvided().raiseOccupy();
 			break;
-			case "S08TrainRequired.unoccupy":
-				t5Component.getS08TrainRequired().raiseUnoccupy();
+			case "S08TrainProvided.unoccupy":
+				t5Component.getS08TrainProvided().raiseUnoccupy();
 			break;
-			case "S08TrainRequired.occupy":
-				t5Component.getS08TrainRequired().raiseOccupy();
+			case "S08TrainProvided.occupy":
+				t5Component.getS08TrainProvided().raiseOccupy();
 			break;
-			case "S13TrainRequired.unoccupy":
-				t5Component.getS13TrainRequired().raiseUnoccupy();
+			case "S13TrainProvided.unoccupy":
+				t5Component.getS13TrainProvided().raiseUnoccupy();
 			break;
-			case "S13TrainRequired.occupy":
-				t5Component.getS13TrainRequired().raiseOccupy();
+			case "S13TrainProvided.occupy":
+				t5Component.getS13TrainProvided().raiseOccupy();
 			break;
 			default:
 				throw new IllegalArgumentException("No such event!");

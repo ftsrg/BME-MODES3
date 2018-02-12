@@ -1,6 +1,6 @@
 statechart Turnout
 mappings {
-	map Turnout = Turnout as provided
+	map TurnoutControlProvided = TurnoutControl as provided
 	
 	map ProtocolProvidedTop = Protocol as provided
 	
@@ -14,5 +14,5 @@ mappings {
 	
 	map ProtocolRequiredDivergent = Protocol as required 
 
-	map TrainRequired = Train as required 
+	map TrainProvided = Train as provided 
 }

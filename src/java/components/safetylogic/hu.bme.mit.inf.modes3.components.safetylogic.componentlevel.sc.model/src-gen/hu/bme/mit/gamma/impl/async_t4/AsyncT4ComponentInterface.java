@@ -1,30 +1,30 @@
 package hu.bme.mit.gamma.impl.async_t4;
 
-import hu.bme.mit.gamma.impl.interfaces.TurnoutInterface;
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface;
+import hu.bme.mit.gamma.impl.interfaces.SectionControlInterface;
 import hu.bme.mit.gamma.impl.interfaces.TrainInterface;
-import hu.bme.mit.gamma.impl.interfaces.ControlInterface;
+import hu.bme.mit.gamma.impl.interfaces.TurnoutControlInterface;
 
 public interface AsyncT4ComponentInterface {
 	
-	TurnoutInterface.Provided getT4TurnoutProvided();
-	ProtocolInterface.Required getS01ProtocolRequiredCW();
-	TrainInterface.Required getT4TrainRequired();
-	ProtocolInterface.Required getS06ProtocolRequiredCCW();
-	TrainInterface.Required getS01TrainRequired();
-	ProtocolInterface.Provided getS07ProtocolProvidedCCW();
-	ControlInterface.Provided getS05ControlProvided();
-	TrainInterface.Required getS06TrainRequired();
-	ControlInterface.Provided getS04ControlProvided();
-	TrainInterface.Required getS07TrainRequired();
-	ControlInterface.Provided getS01ControlProvided();
-	ProtocolInterface.Required getS07ProtocolRequiredCCW();
-	TrainInterface.Required getS04TrainRequired();
 	ProtocolInterface.Provided getS01ProtocolProvidedCW();
+	SectionControlInterface.Provided getS04ControlProvided();
+	TrainInterface.Provided getS07TrainProvided();
+	ProtocolInterface.Required getS07ProtocolRequiredCCW();
+	TrainInterface.Provided getS06TrainProvided();
+	SectionControlInterface.Provided getS06ControlProvided();
+	SectionControlInterface.Provided getS07ControlProvided();
+	SectionControlInterface.Provided getS05ControlProvided();
+	TrainInterface.Provided getS05TrainProvided();
 	ProtocolInterface.Provided getS06ProtocolProvidedCCW();
-	ControlInterface.Provided getS07ControlProvided();
-	ControlInterface.Provided getS06ControlProvided();
-	TrainInterface.Required getS05TrainRequired();
+	TrainInterface.Provided getS04TrainProvided();
+	ProtocolInterface.Required getS01ProtocolRequiredCW();
+	TrainInterface.Provided getT4TrainProvided();
+	ProtocolInterface.Required getS06ProtocolRequiredCCW();
+	ProtocolInterface.Provided getS07ProtocolProvidedCCW();
+	SectionControlInterface.Provided getS01ControlProvided();
+	TurnoutControlInterface.Provided getT4TurnoutProvided();
+	TrainInterface.Provided getS01TrainProvided();
 	
 	
 } 

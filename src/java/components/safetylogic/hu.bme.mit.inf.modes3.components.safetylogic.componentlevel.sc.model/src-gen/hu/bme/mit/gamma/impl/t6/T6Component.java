@@ -2,8 +2,8 @@
 
 	import java.util.List;
 	import hu.bme.mit.gamma.impl.interfaces.*;
-	import hu.bme.mit.gamma.impl.section.*;
 	import hu.bme.mit.gamma.impl.turnout.*;
+	import hu.bme.mit.gamma.impl.section.*;
 	
 	public class T6Component implements T6ComponentInterface {			
 		// Component instances
@@ -24,11 +24,11 @@
 		private S22ControlProvided s22ControlProvided = new S22ControlProvided();
 		private S23ControlProvided s23ControlProvided = new S23ControlProvided();
 		private S27ControlProvided s27ControlProvided = new S27ControlProvided();
-		private S17TrainRequired s17TrainRequired = new S17TrainRequired();
-		private T6TrainRequired t6TrainRequired = new T6TrainRequired();
-		private S22TrainRequired s22TrainRequired = new S22TrainRequired();
-		private S23TrainRequired s23TrainRequired = new S23TrainRequired();
-		private S27TrainRequired s27TrainRequired = new S27TrainRequired();
+		private S17TrainProvided s17TrainProvided = new S17TrainProvided();
+		private T6TrainProvided t6TrainProvided = new T6TrainProvided();
+		private S22TrainProvided s22TrainProvided = new S22TrainProvided();
+		private S23TrainProvided s23TrainProvided = new S23TrainProvided();
+		private S27TrainProvided s27TrainProvided = new S27TrainProvided();
 		
 		public T6Component() {
 			init();
@@ -46,20 +46,20 @@
 		/** Creates the channel mappings and enters the wrapped statemachines. */
 		private void init() {
 			// Registration of simple channels
+			T6.getProtocolProvidedDivergent().registerListener(S22.getProtocolRequiredCCW());
+			S22.getProtocolRequiredCCW().registerListener(T6.getProtocolProvidedDivergent());
+			T6.getProtocolProvidedTop().registerListener(S17.getProtocolRequiredCW());
+			S17.getProtocolRequiredCW().registerListener(T6.getProtocolProvidedTop());
+			S22.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredDivergent());
+			T6.getProtocolRequiredDivergent().registerListener(S22.getProtocolProvidedCCW());
+			S23.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredStraight());
+			T6.getProtocolRequiredStraight().registerListener(S23.getProtocolProvidedCCW());
 			S23.getProtocolProvidedCW().registerListener(S27.getProtocolRequiredCCW());
 			S27.getProtocolRequiredCCW().registerListener(S23.getProtocolProvidedCW());
 			S17.getProtocolProvidedCW().registerListener(T6.getProtocolRequiredTop());
 			T6.getProtocolRequiredTop().registerListener(S17.getProtocolProvidedCW());
-			T6.getProtocolProvidedTop().registerListener(S17.getProtocolRequiredCW());
-			S17.getProtocolRequiredCW().registerListener(T6.getProtocolProvidedTop());
-			T6.getProtocolProvidedDivergent().registerListener(S22.getProtocolRequiredCCW());
-			S22.getProtocolRequiredCCW().registerListener(T6.getProtocolProvidedDivergent());
-			S23.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredStraight());
-			T6.getProtocolRequiredStraight().registerListener(S23.getProtocolProvidedCCW());
 			T6.getProtocolProvidedStraight().registerListener(S23.getProtocolRequiredCCW());
 			S23.getProtocolRequiredCCW().registerListener(T6.getProtocolProvidedStraight());
-			S22.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredDivergent());
-			T6.getProtocolRequiredDivergent().registerListener(S22.getProtocolProvidedCCW());
 			S27.getProtocolProvidedCCW().registerListener(S23.getProtocolRequiredCW());
 			S23.getProtocolRequiredCW().registerListener(S27.getProtocolProvidedCCW());
 			// Registration of broadcast channels
@@ -75,6 +75,11 @@
 			}
 			
 			@Override
+			public void raiseCannotGo() {
+				S17.getProtocolProvidedCCW().raiseCannotGo();
+			}
+			
+			@Override
 			public void raiseReserve() {
 				S17.getProtocolProvidedCCW().raiseReserve();
 			}
@@ -82,11 +87,6 @@
 			@Override
 			public void raiseCanGo() {
 				S17.getProtocolProvidedCCW().raiseCanGo();
-			}
-			
-			@Override
-			public void raiseCannotGo() {
-				S17.getProtocolProvidedCCW().raiseCannotGo();
 			}
 			
 			
@@ -115,16 +115,16 @@
 				return S17.getProtocolRequiredCCW().isRaisedRelease();
 			}
 			@Override
+			public boolean isRaisedCannotGo() {
+				return S17.getProtocolRequiredCCW().isRaisedCannotGo();
+			}
+			@Override
 			public boolean isRaisedReserve() {
 				return S17.getProtocolRequiredCCW().isRaisedReserve();
 			}
 			@Override
 			public boolean isRaisedCanGo() {
 				return S17.getProtocolRequiredCCW().isRaisedCanGo();
-			}
-			@Override
-			public boolean isRaisedCannotGo() {
-				return S17.getProtocolRequiredCCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -152,6 +152,11 @@
 			}
 			
 			@Override
+			public void raiseCannotGo() {
+				S22.getProtocolProvidedCW().raiseCannotGo();
+			}
+			
+			@Override
 			public void raiseReserve() {
 				S22.getProtocolProvidedCW().raiseReserve();
 			}
@@ -159,11 +164,6 @@
 			@Override
 			public void raiseCanGo() {
 				S22.getProtocolProvidedCW().raiseCanGo();
-			}
-			
-			@Override
-			public void raiseCannotGo() {
-				S22.getProtocolProvidedCW().raiseCannotGo();
 			}
 			
 			
@@ -192,16 +192,16 @@
 				return S22.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
+			public boolean isRaisedCannotGo() {
+				return S22.getProtocolRequiredCW().isRaisedCannotGo();
+			}
+			@Override
 			public boolean isRaisedReserve() {
 				return S22.getProtocolRequiredCW().isRaisedReserve();
 			}
 			@Override
 			public boolean isRaisedCanGo() {
 				return S22.getProtocolRequiredCW().isRaisedCanGo();
-			}
-			@Override
-			public boolean isRaisedCannotGo() {
-				return S22.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -229,6 +229,11 @@
 			}
 			
 			@Override
+			public void raiseCannotGo() {
+				S27.getProtocolProvidedCW().raiseCannotGo();
+			}
+			
+			@Override
 			public void raiseReserve() {
 				S27.getProtocolProvidedCW().raiseReserve();
 			}
@@ -236,11 +241,6 @@
 			@Override
 			public void raiseCanGo() {
 				S27.getProtocolProvidedCW().raiseCanGo();
-			}
-			
-			@Override
-			public void raiseCannotGo() {
-				S27.getProtocolProvidedCW().raiseCannotGo();
 			}
 			
 			
@@ -269,16 +269,16 @@
 				return S27.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
+			public boolean isRaisedCannotGo() {
+				return S27.getProtocolRequiredCW().isRaisedCannotGo();
+			}
+			@Override
 			public boolean isRaisedReserve() {
 				return S27.getProtocolRequiredCW().isRaisedReserve();
 			}
 			@Override
 			public boolean isRaisedCanGo() {
 				return S27.getProtocolRequiredCW().isRaisedCanGo();
-			}
-			@Override
-			public boolean isRaisedCannotGo() {
-				return S27.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -298,38 +298,30 @@
 			return s27ProtocolRequiredCW;
 		}
 		
-		public class S17ControlProvided implements ControlInterface.Provided {
+		public class S17ControlProvided implements SectionControlInterface.Provided {
 		
 			@Override
 			public void raiseRestartProtocol() {
-				S17.getControlProvided().raiseRestartProtocol();
+				S17.getSectionControlProvided().raiseRestartProtocol();
 			}
 			
-			@Override
-			public boolean isRaisedDisableSection() {
-				return S17.getControlProvided().isRaisedDisableSection();
-			}
-			@Override
-			public long getDisableSectionValue() {
-				return S17.getControlProvided().getDisableSectionValue();
-			}
 			@Override
 			public boolean isRaisedEnableSection() {
-				return S17.getControlProvided().isRaisedEnableSection();
+				return S17.getSectionControlProvided().isRaisedEnableSection();
 			}
 			@Override
-			public long getEnableSectionValue() {
-				return S17.getControlProvided().getEnableSectionValue();
-			}
-			
-			@Override
-			public void registerListener(ControlInterface.Listener.Provided listener) {
-				S17.getControlProvided().registerListener(listener);
+			public boolean isRaisedDisableSection() {
+				return S17.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
-			public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
-				return S17.getControlProvided().getRegisteredListeners();
+			public void registerListener(SectionControlInterface.Listener.Provided listener) {
+				S17.getSectionControlProvided().registerListener(listener);
+			}
+			
+			@Override
+			public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
+				return S17.getSectionControlProvided().getRegisteredListeners();
 			}
 			
 		}
@@ -339,27 +331,27 @@
 			return s17ControlProvided;
 		}
 		
-		public class T6TurnoutProvided implements TurnoutInterface.Provided {
+		public class T6TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 			@Override
-			public void raiseTurnoutDivergent() {
-				T6.getTurnout().raiseTurnoutDivergent();
-			}
-			
-			@Override
 			public void raiseTurnoutStraight() {
-				T6.getTurnout().raiseTurnoutStraight();
+				T6.getTurnoutControlProvided().raiseTurnoutStraight();
+			}
+			
+			@Override
+			public void raiseTurnoutDivergent() {
+				T6.getTurnoutControlProvided().raiseTurnoutDivergent();
 			}
 			
 			
 			@Override
-			public void registerListener(TurnoutInterface.Listener.Provided listener) {
-				T6.getTurnout().registerListener(listener);
+			public void registerListener(TurnoutControlInterface.Listener.Provided listener) {
+				T6.getTurnoutControlProvided().registerListener(listener);
 			}
 			
 			@Override
-			public List<TurnoutInterface.Listener.Provided> getRegisteredListeners() {
-				return T6.getTurnout().getRegisteredListeners();
+			public List<TurnoutControlInterface.Listener.Provided> getRegisteredListeners() {
+				return T6.getTurnoutControlProvided().getRegisteredListeners();
 			}
 			
 		}
@@ -369,38 +361,30 @@
 			return t6TurnoutProvided;
 		}
 		
-		public class S22ControlProvided implements ControlInterface.Provided {
+		public class S22ControlProvided implements SectionControlInterface.Provided {
 		
 			@Override
 			public void raiseRestartProtocol() {
-				S22.getControlProvided().raiseRestartProtocol();
+				S22.getSectionControlProvided().raiseRestartProtocol();
 			}
 			
-			@Override
-			public boolean isRaisedDisableSection() {
-				return S22.getControlProvided().isRaisedDisableSection();
-			}
-			@Override
-			public long getDisableSectionValue() {
-				return S22.getControlProvided().getDisableSectionValue();
-			}
 			@Override
 			public boolean isRaisedEnableSection() {
-				return S22.getControlProvided().isRaisedEnableSection();
+				return S22.getSectionControlProvided().isRaisedEnableSection();
 			}
 			@Override
-			public long getEnableSectionValue() {
-				return S22.getControlProvided().getEnableSectionValue();
-			}
-			
-			@Override
-			public void registerListener(ControlInterface.Listener.Provided listener) {
-				S22.getControlProvided().registerListener(listener);
+			public boolean isRaisedDisableSection() {
+				return S22.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
-			public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
-				return S22.getControlProvided().getRegisteredListeners();
+			public void registerListener(SectionControlInterface.Listener.Provided listener) {
+				S22.getSectionControlProvided().registerListener(listener);
+			}
+			
+			@Override
+			public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
+				return S22.getSectionControlProvided().getRegisteredListeners();
 			}
 			
 		}
@@ -410,38 +394,30 @@
 			return s22ControlProvided;
 		}
 		
-		public class S23ControlProvided implements ControlInterface.Provided {
+		public class S23ControlProvided implements SectionControlInterface.Provided {
 		
 			@Override
 			public void raiseRestartProtocol() {
-				S23.getControlProvided().raiseRestartProtocol();
+				S23.getSectionControlProvided().raiseRestartProtocol();
 			}
 			
-			@Override
-			public boolean isRaisedDisableSection() {
-				return S23.getControlProvided().isRaisedDisableSection();
-			}
-			@Override
-			public long getDisableSectionValue() {
-				return S23.getControlProvided().getDisableSectionValue();
-			}
 			@Override
 			public boolean isRaisedEnableSection() {
-				return S23.getControlProvided().isRaisedEnableSection();
+				return S23.getSectionControlProvided().isRaisedEnableSection();
 			}
 			@Override
-			public long getEnableSectionValue() {
-				return S23.getControlProvided().getEnableSectionValue();
-			}
-			
-			@Override
-			public void registerListener(ControlInterface.Listener.Provided listener) {
-				S23.getControlProvided().registerListener(listener);
+			public boolean isRaisedDisableSection() {
+				return S23.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
-			public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
-				return S23.getControlProvided().getRegisteredListeners();
+			public void registerListener(SectionControlInterface.Listener.Provided listener) {
+				S23.getSectionControlProvided().registerListener(listener);
+			}
+			
+			@Override
+			public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
+				return S23.getSectionControlProvided().getRegisteredListeners();
 			}
 			
 		}
@@ -451,38 +427,30 @@
 			return s23ControlProvided;
 		}
 		
-		public class S27ControlProvided implements ControlInterface.Provided {
+		public class S27ControlProvided implements SectionControlInterface.Provided {
 		
 			@Override
 			public void raiseRestartProtocol() {
-				S27.getControlProvided().raiseRestartProtocol();
+				S27.getSectionControlProvided().raiseRestartProtocol();
 			}
 			
-			@Override
-			public boolean isRaisedDisableSection() {
-				return S27.getControlProvided().isRaisedDisableSection();
-			}
-			@Override
-			public long getDisableSectionValue() {
-				return S27.getControlProvided().getDisableSectionValue();
-			}
 			@Override
 			public boolean isRaisedEnableSection() {
-				return S27.getControlProvided().isRaisedEnableSection();
+				return S27.getSectionControlProvided().isRaisedEnableSection();
 			}
 			@Override
-			public long getEnableSectionValue() {
-				return S27.getControlProvided().getEnableSectionValue();
-			}
-			
-			@Override
-			public void registerListener(ControlInterface.Listener.Provided listener) {
-				S27.getControlProvided().registerListener(listener);
+			public boolean isRaisedDisableSection() {
+				return S27.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
-			public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
-				return S27.getControlProvided().getRegisteredListeners();
+			public void registerListener(SectionControlInterface.Listener.Provided listener) {
+				S27.getSectionControlProvided().registerListener(listener);
+			}
+			
+			@Override
+			public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
+				return S27.getSectionControlProvided().getRegisteredListeners();
 			}
 			
 		}
@@ -492,154 +460,154 @@
 			return s27ControlProvided;
 		}
 		
-		public class S17TrainRequired implements TrainInterface.Required {
+		public class S17TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseOccupy() {
-				S17.getTrainRequired().raiseOccupy();
-			}
-			
-			@Override
 			public void raiseUnoccupy() {
-				S17.getTrainRequired().raiseUnoccupy();
+				S17.getTrainProvided().raiseUnoccupy();
+			}
+			
+			@Override
+			public void raiseOccupy() {
+				S17.getTrainProvided().raiseOccupy();
 			}
 			
 			
 			@Override
-			public void registerListener(TrainInterface.Listener.Required listener) {
-				S17.getTrainRequired().registerListener(listener);
+			public void registerListener(TrainInterface.Listener.Provided listener) {
+				S17.getTrainProvided().registerListener(listener);
 			}
 			
 			@Override
-			public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-				return S17.getTrainRequired().getRegisteredListeners();
+			public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+				return S17.getTrainProvided().getRegisteredListeners();
 			}
 			
 		}
 		
 		@Override
-		public S17TrainRequired getS17TrainRequired() {
-			return s17TrainRequired;
+		public S17TrainProvided getS17TrainProvided() {
+			return s17TrainProvided;
 		}
 		
-		public class T6TrainRequired implements TrainInterface.Required {
+		public class T6TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseOccupy() {
-				T6.getTrainRequired().raiseOccupy();
-			}
-			
-			@Override
 			public void raiseUnoccupy() {
-				T6.getTrainRequired().raiseUnoccupy();
+				T6.getTrainProvided().raiseUnoccupy();
+			}
+			
+			@Override
+			public void raiseOccupy() {
+				T6.getTrainProvided().raiseOccupy();
 			}
 			
 			
 			@Override
-			public void registerListener(TrainInterface.Listener.Required listener) {
-				T6.getTrainRequired().registerListener(listener);
+			public void registerListener(TrainInterface.Listener.Provided listener) {
+				T6.getTrainProvided().registerListener(listener);
 			}
 			
 			@Override
-			public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-				return T6.getTrainRequired().getRegisteredListeners();
+			public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+				return T6.getTrainProvided().getRegisteredListeners();
 			}
 			
 		}
 		
 		@Override
-		public T6TrainRequired getT6TrainRequired() {
-			return t6TrainRequired;
+		public T6TrainProvided getT6TrainProvided() {
+			return t6TrainProvided;
 		}
 		
-		public class S22TrainRequired implements TrainInterface.Required {
+		public class S22TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseOccupy() {
-				S22.getTrainRequired().raiseOccupy();
-			}
-			
-			@Override
 			public void raiseUnoccupy() {
-				S22.getTrainRequired().raiseUnoccupy();
+				S22.getTrainProvided().raiseUnoccupy();
+			}
+			
+			@Override
+			public void raiseOccupy() {
+				S22.getTrainProvided().raiseOccupy();
 			}
 			
 			
 			@Override
-			public void registerListener(TrainInterface.Listener.Required listener) {
-				S22.getTrainRequired().registerListener(listener);
+			public void registerListener(TrainInterface.Listener.Provided listener) {
+				S22.getTrainProvided().registerListener(listener);
 			}
 			
 			@Override
-			public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-				return S22.getTrainRequired().getRegisteredListeners();
+			public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+				return S22.getTrainProvided().getRegisteredListeners();
 			}
 			
 		}
 		
 		@Override
-		public S22TrainRequired getS22TrainRequired() {
-			return s22TrainRequired;
+		public S22TrainProvided getS22TrainProvided() {
+			return s22TrainProvided;
 		}
 		
-		public class S23TrainRequired implements TrainInterface.Required {
+		public class S23TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseOccupy() {
-				S23.getTrainRequired().raiseOccupy();
-			}
-			
-			@Override
 			public void raiseUnoccupy() {
-				S23.getTrainRequired().raiseUnoccupy();
+				S23.getTrainProvided().raiseUnoccupy();
+			}
+			
+			@Override
+			public void raiseOccupy() {
+				S23.getTrainProvided().raiseOccupy();
 			}
 			
 			
 			@Override
-			public void registerListener(TrainInterface.Listener.Required listener) {
-				S23.getTrainRequired().registerListener(listener);
+			public void registerListener(TrainInterface.Listener.Provided listener) {
+				S23.getTrainProvided().registerListener(listener);
 			}
 			
 			@Override
-			public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-				return S23.getTrainRequired().getRegisteredListeners();
+			public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+				return S23.getTrainProvided().getRegisteredListeners();
 			}
 			
 		}
 		
 		@Override
-		public S23TrainRequired getS23TrainRequired() {
-			return s23TrainRequired;
+		public S23TrainProvided getS23TrainProvided() {
+			return s23TrainProvided;
 		}
 		
-		public class S27TrainRequired implements TrainInterface.Required {
+		public class S27TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseOccupy() {
-				S27.getTrainRequired().raiseOccupy();
-			}
-			
-			@Override
 			public void raiseUnoccupy() {
-				S27.getTrainRequired().raiseUnoccupy();
+				S27.getTrainProvided().raiseUnoccupy();
+			}
+			
+			@Override
+			public void raiseOccupy() {
+				S27.getTrainProvided().raiseOccupy();
 			}
 			
 			
 			@Override
-			public void registerListener(TrainInterface.Listener.Required listener) {
-				S27.getTrainRequired().registerListener(listener);
+			public void registerListener(TrainInterface.Listener.Provided listener) {
+				S27.getTrainProvided().registerListener(listener);
 			}
 			
 			@Override
-			public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-				return S27.getTrainRequired().getRegisteredListeners();
+			public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+				return S27.getTrainProvided().getRegisteredListeners();
 			}
 			
 		}
 		
 		@Override
-		public S27TrainRequired getS27TrainRequired() {
-			return s27TrainRequired;
+		public S27TrainProvided getS27TrainProvided() {
+			return s27TrainProvided;
 		}
 		
 		/** Changes the event and process queues of all component instances. Should be used only be the container (composite system) class. */

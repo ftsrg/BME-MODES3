@@ -1,28 +1,28 @@
 package hu.bme.mit.gamma.impl.t2;
 
-import hu.bme.mit.gamma.impl.interfaces.ControlInterface;
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface;
-import hu.bme.mit.gamma.impl.interfaces.TurnoutInterface;
+import hu.bme.mit.gamma.impl.interfaces.SectionControlInterface;
 import hu.bme.mit.gamma.impl.interfaces.TrainInterface;
+import hu.bme.mit.gamma.impl.interfaces.TurnoutControlInterface;
 
 public interface T2ComponentInterface {
 	
-	ControlInterface.Provided getS24ControlProvided();
-	ProtocolInterface.Required getS18ProtocolRequiredCW();
-	TurnoutInterface.Provided getT2TurnoutProvided();
-	TrainInterface.Required getT2TrainRequired();
-	TrainInterface.Required getS31TrainRequired();
-	TrainInterface.Required getS18TrainRequired();
-	ProtocolInterface.Provided getS18ProtocolProvidedCW();
-	ProtocolInterface.Required getT2ProtocolRequiredDivergent();
-	ControlInterface.Provided getS31ControlProvided();
-	ProtocolInterface.Provided getT2ProtocolProvidedDivergent();
-	ControlInterface.Provided getS29ControlProvided();
-	TrainInterface.Required getS24TrainRequired();
-	ProtocolInterface.Provided getS24ProtocolProvidedCCW();
 	ProtocolInterface.Required getS24ProtocolRequiredCCW();
-	TrainInterface.Required getS29TrainRequired();
-	ControlInterface.Provided getS18ControlProvided();
+	ProtocolInterface.Required getT2ProtocolRequiredDivergent();
+	ProtocolInterface.Required getS18ProtocolRequiredCW();
+	SectionControlInterface.Provided getS24ControlProvided();
+	SectionControlInterface.Provided getS29ControlProvided();
+	TrainInterface.Provided getS31TrainProvided();
+	TurnoutControlInterface.Provided getT2TurnoutProvided();
+	TrainInterface.Provided getS18TrainProvided();
+	TrainInterface.Provided getS24TrainProvided();
+	SectionControlInterface.Provided getS31ControlProvided();
+	TrainInterface.Provided getS29TrainProvided();
+	ProtocolInterface.Provided getS24ProtocolProvidedCCW();
+	ProtocolInterface.Provided getT2ProtocolProvidedDivergent();
+	ProtocolInterface.Provided getS18ProtocolProvidedCW();
+	SectionControlInterface.Provided getS18ControlProvided();
+	TrainInterface.Provided getT2TrainProvided();
 	
 	void runCycle();
 	void runFullCycle();

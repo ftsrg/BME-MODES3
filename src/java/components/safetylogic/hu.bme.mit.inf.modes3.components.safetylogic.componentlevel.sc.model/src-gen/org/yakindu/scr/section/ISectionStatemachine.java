@@ -7,10 +7,6 @@ public interface ISectionStatemachine extends IStatemachine {
 
 	public interface SCISection {
 	
-		public static final long id = 0;
-	
-		public long getId();
-		
 		public long getLatestReserveDirection();
 		
 		public void setLatestReserveDirection(long value);
@@ -23,28 +19,24 @@ public interface ISectionStatemachine extends IStatemachine {
 	
 	public SCISection getSCISection();
 	
-	public interface SCIControlProvided {
+	public interface SCISectionControlProvided {
 	
 		public void raiseRestartProtocol();
 		
 		public boolean isRaisedEnableSection();
 		
-		public long getEnableSectionValue();
-		
 		public boolean isRaisedDisableSection();
 		
-		public long getDisableSectionValue();
-		
-	public List<SCIControlProvidedListener> getListeners();
+	public List<SCISectionControlProvidedListener> getListeners();
 	}
 	
-	public interface SCIControlProvidedListener {
+	public interface SCISectionControlProvidedListener {
 	
-		public void onEnableSectionRaised(long value);
-		public void onDisableSectionRaised(long value);
+		public void onEnableSectionRaised();
+		public void onDisableSectionRaised();
 		}
 	
-	public SCIControlProvided getSCIControlProvided();
+	public SCISectionControlProvided getSCISectionControlProvided();
 	
 	public interface SCIProtocolProvidedCW {
 	
@@ -120,7 +112,7 @@ public interface ISectionStatemachine extends IStatemachine {
 	
 	public SCIProtocolRequiredCCW getSCIProtocolRequiredCCW();
 	
-	public interface SCITrainRequired {
+	public interface SCITrainProvided {
 	
 		public void raiseOccupy();
 		
@@ -128,7 +120,7 @@ public interface ISectionStatemachine extends IStatemachine {
 		
 	}
 	
-	public SCITrainRequired getSCITrainRequired();
+	public SCITrainProvided getSCITrainProvided();
 	
 	public interface SCIDirection {
 	

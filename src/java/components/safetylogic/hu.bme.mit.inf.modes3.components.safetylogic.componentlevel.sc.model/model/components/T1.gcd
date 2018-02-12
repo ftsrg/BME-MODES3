@@ -15,14 +15,14 @@ sync T1Component [
 	port S12ProtocolRequiredCCW : requires Protocol,
 	
 	// Control ports, needed for all elements
-	port S15ControlProvided : provides Control,
-	port T1TurnoutProvided : provides Turnout,
-	port S12ControlProvided : provides Control,
+	port S15ControlProvided : provides SectionControl,
+	port T1TurnoutProvided : provides TurnoutControl,
+	port S12ControlProvided : provides SectionControl,
 	
 	// Train ports, needed for all elements
-	port S15TrainRequired : requires Train,
-	port T1TrainRequired : requires Train,
-	port S12TrainRequired : requires Train
+	port S15TrainProvided : provides Train,
+	port T1TrainProvided : provides Train,
+	port S12TrainProvided : provides Train
 ] {
 	component S15 : SectionStatechart
 	component T1 : TurnoutStatechart
@@ -39,14 +39,14 @@ sync T1Component [
 	bind S12ProtocolRequiredCCW -> S12.ProtocolRequiredCCW
 			
 	// Binding Control ports
-	bind S15ControlProvided -> S15.ControlProvided
-	bind T1TurnoutProvided -> T1.Turnout
-	bind S12ControlProvided -> S12.ControlProvided
+	bind S15ControlProvided -> S15.SectionControlProvided
+	bind T1TurnoutProvided -> T1.TurnoutControlProvided
+	bind S12ControlProvided -> S12.SectionControlProvided
 			
 	// Binding Train ports
-	bind S15TrainRequired -> S15.TrainRequired
-	bind T1TrainRequired -> T1.TrainRequired
-	bind S12TrainRequired -> S12.TrainRequired
+	bind S15TrainProvided -> S15.TrainProvided
+	bind T1TrainProvided -> T1.TrainProvided
+	bind S12TrainProvided -> S12.TrainProvided
 		
 	// Connecting elements of the zone
 	channel	[T1.ProtocolProvidedTop] -o)- [S15.ProtocolRequiredCCW]

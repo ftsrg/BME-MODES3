@@ -24,12 +24,6 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 	 */		
 	protected class SynchronizedSCISection implements SCISection {
 		
-		public long getId() {
-			synchronized(statemachine) {
-				return statemachine.getSCISection().getId();
-			}
-		}
-		
 		public long getLatestReserveDirection() {
 			synchronized(statemachine) {
 				return statemachine.getSCISection().getLatestReserveDirection();
@@ -59,49 +53,39 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 	protected SCISection sCISection;
 	
 	/**
-	 * Interface object for SCIControlProvided
+	 * Interface object for SCISectionControlProvided
 	 */		
-	protected class SynchronizedSCIControlProvided implements SCIControlProvided {
+	protected class SynchronizedSCISectionControlProvided implements SCISectionControlProvided {
 		
-		public List<SCIControlProvidedListener> getListeners() {
+		public List<SCISectionControlProvidedListener> getListeners() {
 			synchronized(statemachine) {
-				return statemachine.getSCIControlProvided().getListeners();
+				return statemachine.getSCISectionControlProvided().getListeners();
 			}
 		}
 		
 		public void raiseRestartProtocol() {
 			
 			synchronized (statemachine) {
-				statemachine.getSCIControlProvided().raiseRestartProtocol();
+				statemachine.getSCISectionControlProvided().raiseRestartProtocol();
 				statemachine.runCycle();
 			}
 		}
 		
 		public boolean isRaisedEnableSection() {
 			synchronized(statemachine) {
-				return statemachine.getSCIControlProvided().isRaisedEnableSection();
+				return statemachine.getSCISectionControlProvided().isRaisedEnableSection();
 			}
 		}
 		
-		public long getEnableSectionValue() {
-			synchronized(statemachine) {
-				return statemachine.getSCIControlProvided().getEnableSectionValue();
-			}
-		}
 		public boolean isRaisedDisableSection() {
 			synchronized(statemachine) {
-				return statemachine.getSCIControlProvided().isRaisedDisableSection();
+				return statemachine.getSCISectionControlProvided().isRaisedDisableSection();
 			}
 		}
 		
-		public long getDisableSectionValue() {
-			synchronized(statemachine) {
-				return statemachine.getSCIControlProvided().getDisableSectionValue();
-			}
-		}
 	};
 	
-	protected SCIControlProvided sCIControlProvided;
+	protected SCISectionControlProvided sCISectionControlProvided;
 	
 	/**
 	 * Interface object for SCIProtocolProvidedCW
@@ -264,14 +248,14 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 	protected SCIProtocolRequiredCCW sCIProtocolRequiredCCW;
 	
 	/**
-	 * Interface object for SCITrainRequired
+	 * Interface object for SCITrainProvided
 	 */		
-	protected class SynchronizedSCITrainRequired implements SCITrainRequired {
+	protected class SynchronizedSCITrainProvided implements SCITrainProvided {
 		
 		public void raiseOccupy() {
 			
 			synchronized (statemachine) {
-				statemachine.getSCITrainRequired().raiseOccupy();
+				statemachine.getSCITrainProvided().raiseOccupy();
 				statemachine.runCycle();
 			}
 		}
@@ -279,14 +263,14 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 		public void raiseUnoccupy() {
 			
 			synchronized (statemachine) {
-				statemachine.getSCITrainRequired().raiseUnoccupy();
+				statemachine.getSCITrainProvided().raiseUnoccupy();
 				statemachine.runCycle();
 			}
 		}
 		
 	};
 	
-	protected SCITrainRequired sCITrainRequired;
+	protected SCITrainProvided sCITrainProvided;
 	
 	/**
 	 * Interface object for SCIDirection
@@ -317,20 +301,20 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 	
 	public SynchronizedSectionStatemachine() {
 		sCISection = new SynchronizedSCISection();
-		sCIControlProvided = new SynchronizedSCIControlProvided();
+		sCISectionControlProvided = new SynchronizedSCISectionControlProvided();
 		sCIProtocolProvidedCW = new SynchronizedSCIProtocolProvidedCW();
 		sCIProtocolProvidedCCW = new SynchronizedSCIProtocolProvidedCCW();
 		sCIProtocolRequiredCW = new SynchronizedSCIProtocolRequiredCW();
 		sCIProtocolRequiredCCW = new SynchronizedSCIProtocolRequiredCCW();
-		sCITrainRequired = new SynchronizedSCITrainRequired();
+		sCITrainProvided = new SynchronizedSCITrainProvided();
 		sCIDirection = new SynchronizedSCIDirection();
 	}
 	
 	public synchronized SCISection getSCISection() {
 		return sCISection;
 	}
-	public synchronized SCIControlProvided getSCIControlProvided() {
-		return sCIControlProvided;
+	public synchronized SCISectionControlProvided getSCISectionControlProvided() {
+		return sCISectionControlProvided;
 	}
 	public synchronized SCIProtocolProvidedCW getSCIProtocolProvidedCW() {
 		return sCIProtocolProvidedCW;
@@ -344,8 +328,8 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 	public synchronized SCIProtocolRequiredCCW getSCIProtocolRequiredCCW() {
 		return sCIProtocolRequiredCCW;
 	}
-	public synchronized SCITrainRequired getSCITrainRequired() {
-		return sCITrainRequired;
+	public synchronized SCITrainProvided getSCITrainProvided() {
+		return sCITrainProvided;
 	}
 	public synchronized SCIDirection getSCIDirection() {
 		return sCIDirection;

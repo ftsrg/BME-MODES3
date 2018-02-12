@@ -27,11 +27,11 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 	private S22ControlProvided s22ControlProvided = new S22ControlProvided();
 	private S23ControlProvided s23ControlProvided = new S23ControlProvided();
 	private S27ControlProvided s27ControlProvided = new S27ControlProvided();
-	private S17TrainRequired s17TrainRequired = new S17TrainRequired();
-	private T6TrainRequired t6TrainRequired = new T6TrainRequired();
-	private S22TrainRequired s22TrainRequired = new S22TrainRequired();
-	private S23TrainRequired s23TrainRequired = new S23TrainRequired();
-	private S27TrainRequired s27TrainRequired = new S27TrainRequired();
+	private S17TrainProvided s17TrainProvided = new S17TrainProvided();
+	private T6TrainProvided t6TrainProvided = new T6TrainProvided();
+	private S22TrainProvided s22TrainProvided = new S22TrainProvided();
+	private S23TrainProvided s23TrainProvided = new S23TrainProvided();
+	private S27TrainProvided s27TrainProvided = new S27TrainProvided();
 	// Clocks
 	// Main queue
 	private LinkedBlockingMultiQueue<String, Event> __asyncQueue = new LinkedBlockingMultiQueue<String, Event>();
@@ -69,16 +69,16 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 			messages.offer(new Event("S17ProtocolProvidedCCW.release", null));
 		}
 		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S17ProtocolProvidedCCW.cannotGo", null));
+		}
+		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S17ProtocolProvidedCCW.reserve", null));
 		}
 		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S17ProtocolProvidedCCW.canGo", null));
-		}
-		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S17ProtocolProvidedCCW.cannotGo", null));
 		}
 		
 		
@@ -108,6 +108,11 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		}
 		
 		@Override
+		public boolean isRaisedCannotGo() {
+			return t6Component.getS17ProtocolRequiredCCW().isRaisedCannotGo();
+		}
+		
+		@Override
 		public boolean isRaisedReserve() {
 			return t6Component.getS17ProtocolRequiredCCW().isRaisedReserve();
 		}
@@ -115,11 +120,6 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		@Override
 		public boolean isRaisedCanGo() {
 			return t6Component.getS17ProtocolRequiredCCW().isRaisedCanGo();
-		}
-		
-		@Override
-		public boolean isRaisedCannotGo() {
-			return t6Component.getS17ProtocolRequiredCCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -146,16 +146,16 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 			messages.offer(new Event("S22ProtocolProvidedCW.release", null));
 		}
 		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S22ProtocolProvidedCW.cannotGo", null));
+		}
+		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S22ProtocolProvidedCW.reserve", null));
 		}
 		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S22ProtocolProvidedCW.canGo", null));
-		}
-		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S22ProtocolProvidedCW.cannotGo", null));
 		}
 		
 		
@@ -185,6 +185,11 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		}
 		
 		@Override
+		public boolean isRaisedCannotGo() {
+			return t6Component.getS22ProtocolRequiredCW().isRaisedCannotGo();
+		}
+		
+		@Override
 		public boolean isRaisedReserve() {
 			return t6Component.getS22ProtocolRequiredCW().isRaisedReserve();
 		}
@@ -192,11 +197,6 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		@Override
 		public boolean isRaisedCanGo() {
 			return t6Component.getS22ProtocolRequiredCW().isRaisedCanGo();
-		}
-		
-		@Override
-		public boolean isRaisedCannotGo() {
-			return t6Component.getS22ProtocolRequiredCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -223,16 +223,16 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 			messages.offer(new Event("S27ProtocolProvidedCW.release", null));
 		}
 		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S27ProtocolProvidedCW.cannotGo", null));
+		}
+		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S27ProtocolProvidedCW.reserve", null));
 		}
 		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S27ProtocolProvidedCW.canGo", null));
-		}
-		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S27ProtocolProvidedCW.cannotGo", null));
 		}
 		
 		
@@ -262,6 +262,11 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		}
 		
 		@Override
+		public boolean isRaisedCannotGo() {
+			return t6Component.getS27ProtocolRequiredCW().isRaisedCannotGo();
+		}
+		
+		@Override
 		public boolean isRaisedReserve() {
 			return t6Component.getS27ProtocolRequiredCW().isRaisedReserve();
 		}
@@ -269,11 +274,6 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		@Override
 		public boolean isRaisedCanGo() {
 			return t6Component.getS27ProtocolRequiredCW().isRaisedCanGo();
-		}
-		
-		@Override
-		public boolean isRaisedCannotGo() {
-			return t6Component.getS27ProtocolRequiredCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -293,7 +293,7 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		return s27ProtocolRequiredCW;
 	}
 	
-	public class S17ControlProvided implements ControlInterface.Provided {
+	public class S17ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -301,30 +301,22 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t6Component.getS17ControlProvided().isRaisedDisableSection();
-		}
-		@Override
-		public long getDisableSectionValue() {
-			return t6Component.getS17ControlProvided().getDisableSectionValue();
-		}
-		
-		@Override
 		public boolean isRaisedEnableSection() {
 			return t6Component.getS17ControlProvided().isRaisedEnableSection();
 		}
+		
 		@Override
-		public long getEnableSectionValue() {
-			return t6Component.getS17ControlProvided().getEnableSectionValue();
+		public boolean isRaisedDisableSection() {
+			return t6Component.getS17ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t6Component.getS17ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t6Component.getS17ControlProvided().getRegisteredListeners();
 		}
 		
@@ -335,25 +327,25 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		return s17ControlProvided;
 	}
 	
-	public class T6TurnoutProvided implements TurnoutInterface.Provided {
+	public class T6TurnoutProvided implements TurnoutControlInterface.Provided {
 		
-		@Override
-		public void raiseTurnoutDivergent() {
-			messages.offer(new Event("T6TurnoutProvided.turnoutDivergent", null));
-		}
 		@Override
 		public void raiseTurnoutStraight() {
 			messages.offer(new Event("T6TurnoutProvided.turnoutStraight", null));
 		}
+		@Override
+		public void raiseTurnoutDivergent() {
+			messages.offer(new Event("T6TurnoutProvided.turnoutDivergent", null));
+		}
 		
 		
 		@Override
-		public void registerListener(TurnoutInterface.Listener.Provided listener) {
+		public void registerListener(TurnoutControlInterface.Listener.Provided listener) {
 			t6Component.getT6TurnoutProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TurnoutInterface.Listener.Provided> getRegisteredListeners() {
+		public List<TurnoutControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t6Component.getT6TurnoutProvided().getRegisteredListeners();
 		}
 		
@@ -364,7 +356,7 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		return t6TurnoutProvided;
 	}
 	
-	public class S22ControlProvided implements ControlInterface.Provided {
+	public class S22ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -372,30 +364,22 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t6Component.getS22ControlProvided().isRaisedDisableSection();
-		}
-		@Override
-		public long getDisableSectionValue() {
-			return t6Component.getS22ControlProvided().getDisableSectionValue();
-		}
-		
-		@Override
 		public boolean isRaisedEnableSection() {
 			return t6Component.getS22ControlProvided().isRaisedEnableSection();
 		}
+		
 		@Override
-		public long getEnableSectionValue() {
-			return t6Component.getS22ControlProvided().getEnableSectionValue();
+		public boolean isRaisedDisableSection() {
+			return t6Component.getS22ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t6Component.getS22ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t6Component.getS22ControlProvided().getRegisteredListeners();
 		}
 		
@@ -406,7 +390,7 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		return s22ControlProvided;
 	}
 	
-	public class S23ControlProvided implements ControlInterface.Provided {
+	public class S23ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -414,30 +398,22 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t6Component.getS23ControlProvided().isRaisedDisableSection();
-		}
-		@Override
-		public long getDisableSectionValue() {
-			return t6Component.getS23ControlProvided().getDisableSectionValue();
-		}
-		
-		@Override
 		public boolean isRaisedEnableSection() {
 			return t6Component.getS23ControlProvided().isRaisedEnableSection();
 		}
+		
 		@Override
-		public long getEnableSectionValue() {
-			return t6Component.getS23ControlProvided().getEnableSectionValue();
+		public boolean isRaisedDisableSection() {
+			return t6Component.getS23ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t6Component.getS23ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t6Component.getS23ControlProvided().getRegisteredListeners();
 		}
 		
@@ -448,7 +424,7 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		return s23ControlProvided;
 	}
 	
-	public class S27ControlProvided implements ControlInterface.Provided {
+	public class S27ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -456,30 +432,22 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t6Component.getS27ControlProvided().isRaisedDisableSection();
-		}
-		@Override
-		public long getDisableSectionValue() {
-			return t6Component.getS27ControlProvided().getDisableSectionValue();
-		}
-		
-		@Override
 		public boolean isRaisedEnableSection() {
 			return t6Component.getS27ControlProvided().isRaisedEnableSection();
 		}
+		
 		@Override
-		public long getEnableSectionValue() {
-			return t6Component.getS27ControlProvided().getEnableSectionValue();
+		public boolean isRaisedDisableSection() {
+			return t6Component.getS27ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t6Component.getS27ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t6Component.getS27ControlProvided().getRegisteredListeners();
 		}
 		
@@ -490,149 +458,149 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 		return s27ControlProvided;
 	}
 	
-	public class S17TrainRequired implements TrainInterface.Required {
+	public class S17TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S17TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S17TrainRequired.unoccupy", null));
+			messages.offer(new Event("S17TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S17TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t6Component.getS17TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t6Component.getS17TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t6Component.getS17TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t6Component.getS17TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S17TrainRequired getS17TrainRequired() {
-		return s17TrainRequired;
+	public S17TrainProvided getS17TrainProvided() {
+		return s17TrainProvided;
 	}
 	
-	public class T6TrainRequired implements TrainInterface.Required {
+	public class T6TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("T6TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("T6TrainRequired.unoccupy", null));
+			messages.offer(new Event("T6TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("T6TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t6Component.getT6TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t6Component.getT6TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t6Component.getT6TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t6Component.getT6TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public T6TrainRequired getT6TrainRequired() {
-		return t6TrainRequired;
+	public T6TrainProvided getT6TrainProvided() {
+		return t6TrainProvided;
 	}
 	
-	public class S22TrainRequired implements TrainInterface.Required {
+	public class S22TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S22TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S22TrainRequired.unoccupy", null));
+			messages.offer(new Event("S22TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S22TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t6Component.getS22TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t6Component.getS22TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t6Component.getS22TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t6Component.getS22TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S22TrainRequired getS22TrainRequired() {
-		return s22TrainRequired;
+	public S22TrainProvided getS22TrainProvided() {
+		return s22TrainProvided;
 	}
 	
-	public class S23TrainRequired implements TrainInterface.Required {
+	public class S23TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S23TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S23TrainRequired.unoccupy", null));
+			messages.offer(new Event("S23TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S23TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t6Component.getS23TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t6Component.getS23TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t6Component.getS23TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t6Component.getS23TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S23TrainRequired getS23TrainRequired() {
-		return s23TrainRequired;
+	public S23TrainProvided getS23TrainProvided() {
+		return s23TrainProvided;
 	}
 	
-	public class S27TrainRequired implements TrainInterface.Required {
+	public class S27TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S27TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S27TrainRequired.unoccupy", null));
+			messages.offer(new Event("S27TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S27TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t6Component.getS27TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t6Component.getS27TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t6Component.getS27TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t6Component.getS27TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S27TrainRequired getS27TrainRequired() {
-		return s27TrainRequired;
+	public S27TrainProvided getS27TrainProvided() {
+		return s27TrainProvided;
 	}
 	
 	/** Operation. */
@@ -662,17 +630,20 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 			case "S17ProtocolProvidedCCW.release":
 				t6Component.getS17ProtocolProvidedCCW().raiseRelease();
 			break;
+			case "S17ProtocolProvidedCCW.cannotGo":
+				t6Component.getS17ProtocolProvidedCCW().raiseCannotGo();
+			break;
 			case "S17ProtocolProvidedCCW.reserve":
 				t6Component.getS17ProtocolProvidedCCW().raiseReserve();
 			break;
 			case "S17ProtocolProvidedCCW.canGo":
 				t6Component.getS17ProtocolProvidedCCW().raiseCanGo();
 			break;
-			case "S17ProtocolProvidedCCW.cannotGo":
-				t6Component.getS17ProtocolProvidedCCW().raiseCannotGo();
-			break;
 			case "S22ProtocolProvidedCW.release":
 				t6Component.getS22ProtocolProvidedCW().raiseRelease();
+			break;
+			case "S22ProtocolProvidedCW.cannotGo":
+				t6Component.getS22ProtocolProvidedCW().raiseCannotGo();
 			break;
 			case "S22ProtocolProvidedCW.reserve":
 				t6Component.getS22ProtocolProvidedCW().raiseReserve();
@@ -680,11 +651,11 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 			case "S22ProtocolProvidedCW.canGo":
 				t6Component.getS22ProtocolProvidedCW().raiseCanGo();
 			break;
-			case "S22ProtocolProvidedCW.cannotGo":
-				t6Component.getS22ProtocolProvidedCW().raiseCannotGo();
-			break;
 			case "S27ProtocolProvidedCW.release":
 				t6Component.getS27ProtocolProvidedCW().raiseRelease();
+			break;
+			case "S27ProtocolProvidedCW.cannotGo":
+				t6Component.getS27ProtocolProvidedCW().raiseCannotGo();
 			break;
 			case "S27ProtocolProvidedCW.reserve":
 				t6Component.getS27ProtocolProvidedCW().raiseReserve();
@@ -692,17 +663,14 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 			case "S27ProtocolProvidedCW.canGo":
 				t6Component.getS27ProtocolProvidedCW().raiseCanGo();
 			break;
-			case "S27ProtocolProvidedCW.cannotGo":
-				t6Component.getS27ProtocolProvidedCW().raiseCannotGo();
-			break;
 			case "S17ControlProvided.restartProtocol":
 				t6Component.getS17ControlProvided().raiseRestartProtocol();
 			break;
-			case "T6TurnoutProvided.turnoutDivergent":
-				t6Component.getT6TurnoutProvided().raiseTurnoutDivergent();
-			break;
 			case "T6TurnoutProvided.turnoutStraight":
 				t6Component.getT6TurnoutProvided().raiseTurnoutStraight();
+			break;
+			case "T6TurnoutProvided.turnoutDivergent":
+				t6Component.getT6TurnoutProvided().raiseTurnoutDivergent();
 			break;
 			case "S22ControlProvided.restartProtocol":
 				t6Component.getS22ControlProvided().raiseRestartProtocol();
@@ -713,35 +681,35 @@ public class AsyncT6Component implements Runnable, AsyncT6ComponentInterface {
 			case "S27ControlProvided.restartProtocol":
 				t6Component.getS27ControlProvided().raiseRestartProtocol();
 			break;
-			case "S17TrainRequired.occupy":
-				t6Component.getS17TrainRequired().raiseOccupy();
+			case "S17TrainProvided.unoccupy":
+				t6Component.getS17TrainProvided().raiseUnoccupy();
 			break;
-			case "S17TrainRequired.unoccupy":
-				t6Component.getS17TrainRequired().raiseUnoccupy();
+			case "S17TrainProvided.occupy":
+				t6Component.getS17TrainProvided().raiseOccupy();
 			break;
-			case "T6TrainRequired.occupy":
-				t6Component.getT6TrainRequired().raiseOccupy();
+			case "T6TrainProvided.unoccupy":
+				t6Component.getT6TrainProvided().raiseUnoccupy();
 			break;
-			case "T6TrainRequired.unoccupy":
-				t6Component.getT6TrainRequired().raiseUnoccupy();
+			case "T6TrainProvided.occupy":
+				t6Component.getT6TrainProvided().raiseOccupy();
 			break;
-			case "S22TrainRequired.occupy":
-				t6Component.getS22TrainRequired().raiseOccupy();
+			case "S22TrainProvided.unoccupy":
+				t6Component.getS22TrainProvided().raiseUnoccupy();
 			break;
-			case "S22TrainRequired.unoccupy":
-				t6Component.getS22TrainRequired().raiseUnoccupy();
+			case "S22TrainProvided.occupy":
+				t6Component.getS22TrainProvided().raiseOccupy();
 			break;
-			case "S23TrainRequired.occupy":
-				t6Component.getS23TrainRequired().raiseOccupy();
+			case "S23TrainProvided.unoccupy":
+				t6Component.getS23TrainProvided().raiseUnoccupy();
 			break;
-			case "S23TrainRequired.unoccupy":
-				t6Component.getS23TrainRequired().raiseUnoccupy();
+			case "S23TrainProvided.occupy":
+				t6Component.getS23TrainProvided().raiseOccupy();
 			break;
-			case "S27TrainRequired.occupy":
-				t6Component.getS27TrainRequired().raiseOccupy();
+			case "S27TrainProvided.unoccupy":
+				t6Component.getS27TrainProvided().raiseUnoccupy();
 			break;
-			case "S27TrainRequired.unoccupy":
-				t6Component.getS27TrainRequired().raiseUnoccupy();
+			case "S27TrainProvided.occupy":
+				t6Component.getS27TrainProvided().raiseOccupy();
 			break;
 			default:
 				throw new IllegalArgumentException("No such event!");

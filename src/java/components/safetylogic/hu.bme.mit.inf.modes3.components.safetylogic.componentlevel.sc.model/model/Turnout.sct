@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_gFmwIFVoEeast5DdeVZiLw" specification="interface Turnout:&#xA;// The id of the turnout&#xA;const id : integer = 0&#xA;// direction change&#xA;in event turnoutStraight&#xA;in event turnoutDivergent&#xA;&#xA;interface ProtocolProvidedTop:&#xA;// reservation request from TOP sections&#xA;in event reserve&#xA;in event canGo&#xA;in event cannotGo&#xA;// free by CW section&#xA;in event release&#xA;&#xA;interface ProtocolRequiredTop:&#xA;// reservation request to TOP sections&#xA;out event reserve&#xA;out event canGo&#xA;out event cannotGo&#xA;// free to CW section&#xA;out event release&#xA;&#xA;interface ProtocolProvidedStraight:&#xA;// reservation request from STRAIGHT sections&#xA;in event reserve&#xA;in event canGo&#xA;in event cannotGo&#xA;// free by CW section&#xA;in event release&#xA;&#xA;interface ProtocolRequiredStraight:&#xA;// reservation request to STRAIGHT sections&#xA;out event reserve&#xA;out event canGo&#xA;out event cannotGo&#xA;// free to CW section&#xA;out event release&#xA;&#xA;interface ProtocolProvidedDivergent:&#xA;// reservation request from DIVERGENT sections&#xA;in event reserve&#xA;in event canGo&#xA;in event cannotGo&#xA;// free by CW section&#xA;in event release&#xA;&#xA;interface ProtocolRequiredDivergent:&#xA;// reservation request to DIVERGENT sections&#xA;out event reserve&#xA;out event canGo&#xA;out event cannotGo&#xA;// free to CW section&#xA;out event release&#xA;&#xA;interface TrainRequired:&#xA;// occupy by train&#xA;in event occupy&#xA;// leave by train&#xA;in event unoccupy&#xA;&#xA;interface Direction:&#xA;const TOP: integer = 0&#xA;const STRAIGHT: integer = 1&#xA;const DIVERGENT: integer = 2" name="Turnout">
+  <sgraph:Statechart xmi:id="_gFmwIFVoEeast5DdeVZiLw" specification="interface TurnoutControlProvided:&#xA;// direction change&#xA;in event turnoutStraight&#xA;in event turnoutDivergent&#xA;&#xA;interface ProtocolProvidedTop:&#xA;// reservation request from TOP sections&#xA;in event reserve&#xA;in event canGo&#xA;in event cannotGo&#xA;// free by CW section&#xA;in event release&#xA;&#xA;interface ProtocolRequiredTop:&#xA;// reservation request to TOP sections&#xA;out event reserve&#xA;out event canGo&#xA;out event cannotGo&#xA;// free to CW section&#xA;out event release&#xA;&#xA;interface ProtocolProvidedStraight:&#xA;// reservation request from STRAIGHT sections&#xA;in event reserve&#xA;in event canGo&#xA;in event cannotGo&#xA;// free by CW section&#xA;in event release&#xA;&#xA;interface ProtocolRequiredStraight:&#xA;// reservation request to STRAIGHT sections&#xA;out event reserve&#xA;out event canGo&#xA;out event cannotGo&#xA;// free to CW section&#xA;out event release&#xA;&#xA;interface ProtocolProvidedDivergent:&#xA;// reservation request from DIVERGENT sections&#xA;in event reserve&#xA;in event canGo&#xA;in event cannotGo&#xA;// free by CW section&#xA;in event release&#xA;&#xA;interface ProtocolRequiredDivergent:&#xA;// reservation request to DIVERGENT sections&#xA;out event reserve&#xA;out event canGo&#xA;out event cannotGo&#xA;// free to CW section&#xA;out event release&#xA;&#xA;interface TrainProvided:&#xA;// occupy by train&#xA;in event occupy&#xA;// leave by train&#xA;in event unoccupy&#xA;&#xA;interface Direction:&#xA;const TOP: integer = 0&#xA;const STRAIGHT: integer = 1&#xA;const DIVERGENT: integer = 2" name="Turnout">
     <regions xmi:id="_gFn-Q1VoEeast5DdeVZiLw" name="main_region">
       <vertices xsi:type="sgraph:Entry" xmi:id="_gFpMYVVoEeast5DdeVZiLw">
         <outgoingTransitions xmi:id="_WU6EsH2BEeayf-zIFUV4tA" target="_gFpzd1VoEeast5DdeVZiLw"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_gFpzd1VoEeast5DdeVZiLw" specification="ProtocolProvidedDivergent.reserve / raise ProtocolRequiredDivergent.cannotGo" name="Straight" incomingTransitions="_z4CWsFvoEeamfIYQfRbcvQ _WU6EsH2BEeayf-zIFUV4tA">
-        <outgoingTransitions xmi:id="_v-BYMFvoEeamfIYQfRbcvQ" specification="Turnout.turnoutDivergent / &#xD;&#xA;raise ProtocolRequiredTop.release; &#xD;&#xA;raise ProtocolRequiredDivergent.release; &#xD;&#xA;raise ProtocolRequiredStraight.cannotGo" target="_EqwicFvoEeamfIYQfRbcvQ"/>
+        <outgoingTransitions xmi:id="_v-BYMFvoEeamfIYQfRbcvQ" specification="TurnoutControlProvided.turnoutDivergent / &#xD;&#xA;raise ProtocolRequiredTop.release; &#xD;&#xA;raise ProtocolRequiredDivergent.release; &#xD;&#xA;raise ProtocolRequiredStraight.cannotGo" target="_EqwicFvoEeamfIYQfRbcvQ"/>
         <regions xmi:id="_NxqMwFVqEeast5DdeVZiLw" name="listening_to_top">
           <vertices xsi:type="sgraph:Entry" xmi:id="_CuK8IFmGEeaZgK6lD15z3g">
             <outgoingTransitions xmi:id="_X5KFsH2BEeayf-zIFUV4tA" specification="" target="_HzLX0FvbEeadwNW-u8Zqwg"/>
@@ -33,13 +33,13 @@
         </regions>
         <regions xmi:id="_RsDqQH2BEeayf-zIFUV4tA" name="listening_to_occupy">
           <vertices xsi:type="sgraph:State" xmi:id="_cPP8MH2BEeayf-zIFUV4tA" specification="entry/ &#xD;&#xA;raise ProtocolRequiredStraight.release;&#xD;&#xA;raise ProtocolRequiredTop.release" name="Free" incomingTransitions="_ep0hMH2BEeayf-zIFUV4tA _iwAeAH2CEeayf-zIFUV4tA">
-            <outgoingTransitions xmi:id="_oTLoIH2BEeayf-zIFUV4tA" specification="TrainRequired.occupy " target="_nHzaIH2BEeayf-zIFUV4tA"/>
+            <outgoingTransitions xmi:id="_oTLoIH2BEeayf-zIFUV4tA" specification="TrainProvided.occupy " target="_nHzaIH2BEeayf-zIFUV4tA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_d9CTsH2BEeayf-zIFUV4tA">
             <outgoingTransitions xmi:id="_ep0hMH2BEeayf-zIFUV4tA" specification="" target="_cPP8MH2BEeayf-zIFUV4tA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_nHzaIH2BEeayf-zIFUV4tA" specification="entry / &#xD;&#xA;raise ProtocolRequiredStraight.reserve; &#xD;&#xA;raise ProtocolRequiredTop.reserve" name="Occupied" incomingTransitions="_oTLoIH2BEeayf-zIFUV4tA">
-            <outgoingTransitions xmi:id="_iwAeAH2CEeayf-zIFUV4tA" specification="TrainRequired.unoccupy" target="_cPP8MH2BEeayf-zIFUV4tA"/>
+            <outgoingTransitions xmi:id="_iwAeAH2CEeayf-zIFUV4tA" specification="TrainProvided.unoccupy" target="_cPP8MH2BEeayf-zIFUV4tA"/>
           </vertices>
         </regions>
         <regions xmi:id="_o6IBcH2DEeayf-zIFUV4tA" name="listening_to_release">
@@ -50,7 +50,7 @@
         </regions>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_EqwicFvoEeamfIYQfRbcvQ" specification="ProtocolProvidedStraight.reserve / raise ProtocolRequiredStraight.cannotGo" name="Divergent" incomingTransitions="_v-BYMFvoEeamfIYQfRbcvQ">
-        <outgoingTransitions xmi:id="_z4CWsFvoEeamfIYQfRbcvQ" specification="Turnout.turnoutStraight/ &#xD;&#xA;raise ProtocolRequiredTop.release; &#xD;&#xA;raise ProtocolRequiredStraight.release;&#xD;&#xA;raise ProtocolRequiredDivergent.cannotGo" target="_gFpzd1VoEeast5DdeVZiLw"/>
+        <outgoingTransitions xmi:id="_z4CWsFvoEeamfIYQfRbcvQ" specification="TurnoutControlProvided.turnoutStraight/ &#xD;&#xA;raise ProtocolRequiredTop.release; &#xD;&#xA;raise ProtocolRequiredStraight.release;&#xD;&#xA;raise ProtocolRequiredDivergent.cannotGo" target="_gFpzd1VoEeast5DdeVZiLw"/>
         <regions xmi:id="_qBxGUH2AEeayf-zIFUV4tA" name="listening_to_top">
           <vertices xsi:type="sgraph:Entry" xmi:id="_qBxGUX2AEeayf-zIFUV4tA">
             <outgoingTransitions xmi:id="_qBxGUn2AEeayf-zIFUV4tA" target="_qBxtYH2AEeayf-zIFUV4tA"/>
@@ -77,13 +77,13 @@
         </regions>
         <regions xmi:id="_kUoScH2CEeayf-zIFUV4tA" name="listening_to_occupy">
           <vertices xsi:type="sgraph:State" xmi:id="_kUoScX2CEeayf-zIFUV4tA" specification="entry/ &#xD;&#xA;raise ProtocolRequiredDivergent.release;&#xD;&#xA;raise ProtocolRequiredTop.release" name="Free" incomingTransitions="_kUpglX2CEeayf-zIFUV4tA _kUrVwH2CEeayf-zIFUV4tA">
-            <outgoingTransitions xmi:id="_kUo5j32CEeayf-zIFUV4tA" specification="TrainRequired.occupy " target="_kUqHoH2CEeayf-zIFUV4tA"/>
+            <outgoingTransitions xmi:id="_kUo5j32CEeayf-zIFUV4tA" specification="TrainProvided.occupy " target="_kUqHoH2CEeayf-zIFUV4tA"/>
           </vertices>
           <vertices xsi:type="sgraph:Entry" xmi:id="_kUpglH2CEeayf-zIFUV4tA">
             <outgoingTransitions xmi:id="_kUpglX2CEeayf-zIFUV4tA" specification="" target="_kUoScX2CEeayf-zIFUV4tA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_kUqHoH2CEeayf-zIFUV4tA" specification="entry / &#xD;&#xA;raise ProtocolRequiredDivergent.reserve; &#xD;&#xA;raise ProtocolRequiredTop.reserve" name="Occupied" incomingTransitions="_kUo5j32CEeayf-zIFUV4tA">
-            <outgoingTransitions xmi:id="_kUrVwH2CEeayf-zIFUV4tA" specification="TrainRequired.unoccupy" target="_kUoScX2CEeayf-zIFUV4tA"/>
+            <outgoingTransitions xmi:id="_kUrVwH2CEeayf-zIFUV4tA" specification="TrainProvided.unoccupy" target="_kUoScX2CEeayf-zIFUV4tA"/>
           </vertices>
         </regions>
         <regions xmi:id="_92BzoH2DEeayf-zIFUV4tA" name="listening_to_release">

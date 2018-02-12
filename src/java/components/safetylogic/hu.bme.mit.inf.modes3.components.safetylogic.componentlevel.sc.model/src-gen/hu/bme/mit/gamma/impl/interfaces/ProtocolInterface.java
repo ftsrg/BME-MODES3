@@ -14,9 +14,9 @@ public interface ProtocolInterface {
 	interface Required extends Listener.Provided {
 		
 		public boolean isRaisedRelease();
+		public boolean isRaisedCanGo();
 		public boolean isRaisedCannotGo();
 		public boolean isRaisedReserve();
-		public boolean isRaisedCanGo();
 		
 		void registerListener(Listener.Required listener);
 		List<Listener.Required> getRegisteredListeners();
@@ -29,9 +29,9 @@ public interface ProtocolInterface {
 		
 		interface Required   {
 			void raiseRelease();
+			void raiseCanGo();
 			void raiseCannotGo();
 			void raiseReserve();
-			void raiseCanGo();
 		}
 		
 	}

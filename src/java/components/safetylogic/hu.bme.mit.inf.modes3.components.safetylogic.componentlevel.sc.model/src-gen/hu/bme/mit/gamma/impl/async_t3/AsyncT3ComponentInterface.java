@@ -1,32 +1,32 @@
 package hu.bme.mit.gamma.impl.async_t3;
 
-import hu.bme.mit.gamma.impl.interfaces.ControlInterface;
-import hu.bme.mit.gamma.impl.interfaces.TrainInterface;
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface;
-import hu.bme.mit.gamma.impl.interfaces.TurnoutInterface;
+import hu.bme.mit.gamma.impl.interfaces.TrainInterface;
+import hu.bme.mit.gamma.impl.interfaces.TurnoutControlInterface;
+import hu.bme.mit.gamma.impl.interfaces.SectionControlInterface;
 
 public interface AsyncT3ComponentInterface {
 	
-	ControlInterface.Provided getS19ControlProvided();
-	TrainInterface.Required getT3_1TrainRequired();
-	ProtocolInterface.Required getS26ProtocolRequiredCCW();
-	TrainInterface.Required getS19TrainRequired();
-	ProtocolInterface.Provided getS26ProtocolProvidedCCW();
-	ProtocolInterface.Provided getS30ProtocolProvidedCCW();
-	ProtocolInterface.Required getS19ProtocolRequiredCW();
-	ControlInterface.Provided getS20ControlProvided();
-	ControlInterface.Provided getS26ControlProvided();
-	ControlInterface.Provided getS30ControlProvided();
-	TrainInterface.Required getS30TrainRequired();
 	ProtocolInterface.Provided getS19ProtocolProvidedCW();
-	TrainInterface.Required getS26TrainRequired();
-	TurnoutInterface.Provided getT3_2TurnoutProvided();
-	ProtocolInterface.Required getS30ProtocolRequiredCCW();
-	TrainInterface.Required getS20TrainRequired();
-	TrainInterface.Required getT3_2TrainRequired();
-	ProtocolInterface.Required getS20ProtocolRequiredCW();
+	ProtocolInterface.Required getS26ProtocolRequiredCCW();
+	TrainInterface.Provided getS26TrainProvided();
+	TrainInterface.Provided getT3_1TrainProvided();
+	ProtocolInterface.Provided getS30ProtocolProvidedCCW();
+	TurnoutControlInterface.Provided getT3_1TurnoutProvided();
 	ProtocolInterface.Provided getS20ProtocolProvidedCW();
-	TurnoutInterface.Provided getT3_1TurnoutProvided();
+	ProtocolInterface.Required getS30ProtocolRequiredCCW();
+	SectionControlInterface.Provided getS26ControlProvided();
+	ProtocolInterface.Provided getS26ProtocolProvidedCCW();
+	TrainInterface.Provided getS19TrainProvided();
+	SectionControlInterface.Provided getS20ControlProvided();
+	SectionControlInterface.Provided getS19ControlProvided();
+	TrainInterface.Provided getT3_2TrainProvided();
+	TurnoutControlInterface.Provided getT3_2TurnoutProvided();
+	TrainInterface.Provided getS20TrainProvided();
+	ProtocolInterface.Required getS20ProtocolRequiredCW();
+	ProtocolInterface.Required getS19ProtocolRequiredCW();
+	TrainInterface.Provided getS30TrainProvided();
+	SectionControlInterface.Provided getS30ControlProvided();
 	
 	
 } 

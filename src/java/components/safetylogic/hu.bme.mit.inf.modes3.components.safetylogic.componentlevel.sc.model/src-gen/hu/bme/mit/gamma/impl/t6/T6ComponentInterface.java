@@ -1,28 +1,28 @@
 package hu.bme.mit.gamma.impl.t6;
 
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface;
+import hu.bme.mit.gamma.impl.interfaces.SectionControlInterface;
 import hu.bme.mit.gamma.impl.interfaces.TrainInterface;
-import hu.bme.mit.gamma.impl.interfaces.ControlInterface;
-import hu.bme.mit.gamma.impl.interfaces.TurnoutInterface;
+import hu.bme.mit.gamma.impl.interfaces.TurnoutControlInterface;
 
 public interface T6ComponentInterface {
 	
-	ProtocolInterface.Required getS17ProtocolRequiredCCW();
-	TrainInterface.Required getS17TrainRequired();
-	ControlInterface.Provided getS27ControlProvided();
-	ControlInterface.Provided getS22ControlProvided();
+	ProtocolInterface.Provided getS27ProtocolProvidedCW();
+	SectionControlInterface.Provided getS22ControlProvided();
+	TrainInterface.Provided getT6TrainProvided();
+	TrainInterface.Provided getS22TrainProvided();
 	ProtocolInterface.Required getS27ProtocolRequiredCW();
 	ProtocolInterface.Provided getS22ProtocolProvidedCW();
+	TrainInterface.Provided getS27TrainProvided();
+	SectionControlInterface.Provided getS27ControlProvided();
+	ProtocolInterface.Required getS17ProtocolRequiredCCW();
 	ProtocolInterface.Required getS22ProtocolRequiredCW();
-	TrainInterface.Required getS22TrainRequired();
-	TurnoutInterface.Provided getT6TurnoutProvided();
-	TrainInterface.Required getT6TrainRequired();
-	TrainInterface.Required getS27TrainRequired();
-	ProtocolInterface.Provided getS27ProtocolProvidedCW();
+	TurnoutControlInterface.Provided getT6TurnoutProvided();
+	SectionControlInterface.Provided getS17ControlProvided();
 	ProtocolInterface.Provided getS17ProtocolProvidedCCW();
-	ControlInterface.Provided getS17ControlProvided();
-	ControlInterface.Provided getS23ControlProvided();
-	TrainInterface.Required getS23TrainRequired();
+	TrainInterface.Provided getS17TrainProvided();
+	TrainInterface.Provided getS23TrainProvided();
+	SectionControlInterface.Provided getS23ControlProvided();
 	
 	void runCycle();
 	void runFullCycle();

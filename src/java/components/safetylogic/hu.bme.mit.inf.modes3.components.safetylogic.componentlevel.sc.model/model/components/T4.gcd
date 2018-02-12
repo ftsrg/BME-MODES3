@@ -15,20 +15,20 @@ sync T4Component [
 	port S06ProtocolRequiredCCW : requires Protocol,
 	
 	// Control ports, needed for all elements
-	port S01ControlProvided : provides Control,
-	port T4TurnoutProvided : provides Turnout,
-	port S04ControlProvided : provides Control,
-	port S05ControlProvided : provides Control,
-	port S06ControlProvided : provides Control,
-	port S07ControlProvided : provides Control,
+	port S01ControlProvided : provides SectionControl,
+	port T4TurnoutProvided : provides TurnoutControl,
+	port S04ControlProvided : provides SectionControl,
+	port S05ControlProvided : provides SectionControl,
+	port S06ControlProvided : provides SectionControl,
+	port S07ControlProvided : provides SectionControl,
 	
 	// Train ports, needed for all elements
-	port S01TrainRequired : requires Train,
-	port T4TrainRequired : requires Train,
-	port S04TrainRequired : requires Train,
-	port S05TrainRequired : requires Train,
-	port S06TrainRequired : requires Train,
-	port S07TrainRequired : requires Train
+	port S01TrainProvided : provides Train,
+	port T4TrainProvided : provides Train,
+	port S04TrainProvided : provides Train,
+	port S05TrainProvided : provides Train,
+	port S06TrainProvided : provides Train,
+	port S07TrainProvided : provides Train
 ] {
 	component S01 : SectionStatechart
 	component S02 : SectionStatechart
@@ -49,20 +49,20 @@ sync T4Component [
 	bind S07ProtocolRequiredCCW -> S07.ProtocolRequiredCCW			
 			
 	// Binding Control ports
-	bind S01ControlProvided -> S01.ControlProvided
-	bind T4TurnoutProvided -> T4.Turnout
-	bind S04ControlProvided -> S04.ControlProvided
-	bind S05ControlProvided -> S05.ControlProvided
-	bind S06ControlProvided -> S06.ControlProvided
-	bind S07ControlProvided -> S07.ControlProvided
+	bind S01ControlProvided -> S01.SectionControlProvided
+	bind T4TurnoutProvided -> T4.TurnoutControlProvided
+	bind S04ControlProvided -> S04.SectionControlProvided
+	bind S05ControlProvided -> S05.SectionControlProvided
+	bind S06ControlProvided -> S06.SectionControlProvided
+	bind S07ControlProvided -> S07.SectionControlProvided
 				
 	// Binding Train ports
-	bind S01TrainRequired -> S01.TrainRequired
-	bind T4TrainRequired -> T4.TrainRequired
-	bind S04TrainRequired -> S04.TrainRequired
-	bind S05TrainRequired -> S05.TrainRequired
-	bind S06TrainRequired -> S06.TrainRequired
-	bind S07TrainRequired -> S07.TrainRequired
+	bind S01TrainProvided -> S01.TrainProvided
+	bind T4TrainProvided -> T4.TrainProvided
+	bind S04TrainProvided -> S04.TrainProvided
+	bind S05TrainProvided -> S05.TrainProvided
+	bind S06TrainProvided -> S06.TrainProvided
+	bind S07TrainProvided -> S07.TrainProvided
 	
 	channel [S01.ProtocolProvidedCCW] -o)- [S02.ProtocolRequiredCW]
 	channel [S02.ProtocolProvidedCW] -o)- [S01.ProtocolRequiredCCW]

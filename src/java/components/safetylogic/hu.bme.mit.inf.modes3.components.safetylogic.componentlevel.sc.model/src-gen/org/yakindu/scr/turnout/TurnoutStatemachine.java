@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TurnoutStatemachine implements ITurnoutStatemachine {
 
-	protected class SCITurnoutImpl implements SCITurnout {
+	protected class SCITurnoutControlProvidedImpl implements SCITurnoutControlProvided {
 	
 		private boolean turnoutStraight;
 		
@@ -18,17 +18,13 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 			turnoutDivergent = true;
 		}
 		
-		public long getId() {
-			return id;
-		}
-		
 		protected void clearEvents() {
 			turnoutStraight = false;
 			turnoutDivergent = false;
 		}
 	}
 	
-	protected SCITurnoutImpl sCITurnout;
+	protected SCITurnoutControlProvidedImpl sCITurnoutControlProvided;
 	
 	protected class SCIProtocolProvidedTopImpl implements SCIProtocolProvidedTop {
 	
@@ -357,7 +353,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	protected SCIProtocolRequiredDivergentImpl sCIProtocolRequiredDivergent;
 	
-	protected class SCITrainRequiredImpl implements SCITrainRequired {
+	protected class SCITrainProvidedImpl implements SCITrainProvided {
 	
 		private boolean occupy;
 		
@@ -377,7 +373,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		}
 	}
 	
-	protected SCITrainRequiredImpl sCITrainRequired;
+	protected SCITrainProvidedImpl sCITrainProvided;
 	
 	protected class SCIDirectionImpl implements SCIDirection {
 	
@@ -426,14 +422,14 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	
 	public TurnoutStatemachine() {
-		sCITurnout = new SCITurnoutImpl();
+		sCITurnoutControlProvided = new SCITurnoutControlProvidedImpl();
 		sCIProtocolProvidedTop = new SCIProtocolProvidedTopImpl();
 		sCIProtocolRequiredTop = new SCIProtocolRequiredTopImpl();
 		sCIProtocolProvidedStraight = new SCIProtocolProvidedStraightImpl();
 		sCIProtocolRequiredStraight = new SCIProtocolRequiredStraightImpl();
 		sCIProtocolProvidedDivergent = new SCIProtocolProvidedDivergentImpl();
 		sCIProtocolRequiredDivergent = new SCIProtocolRequiredDivergentImpl();
-		sCITrainRequired = new SCITrainRequiredImpl();
+		sCITrainProvided = new SCITrainProvidedImpl();
 		sCIDirection = new SCIDirectionImpl();
 	}
 	
@@ -479,14 +475,14 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	* This method resets the incoming events (time events included).
 	*/
 	protected void clearEvents() {
-		sCITurnout.clearEvents();
+		sCITurnoutControlProvided.clearEvents();
 		sCIProtocolProvidedTop.clearEvents();
 		sCIProtocolRequiredTop.clearEvents();
 		sCIProtocolProvidedStraight.clearEvents();
 		sCIProtocolRequiredStraight.clearEvents();
 		sCIProtocolProvidedDivergent.clearEvents();
 		sCIProtocolRequiredDivergent.clearEvents();
-		sCITrainRequired.clearEvents();
+		sCITrainProvided.clearEvents();
 	}
 	
 	/**
@@ -543,8 +539,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		}
 	}
 	
-	public SCITurnout getSCITurnout() {
-		return sCITurnout;
+	public SCITurnoutControlProvided getSCITurnoutControlProvided() {
+		return sCITurnoutControlProvided;
 	}
 	
 	public SCIProtocolProvidedTop getSCIProtocolProvidedTop() {
@@ -571,8 +567,8 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		return sCIProtocolRequiredDivergent;
 	}
 	
-	public SCITrainRequired getSCITrainRequired() {
-		return sCITrainRequired;
+	public SCITrainProvided getSCITrainProvided() {
+		return sCITrainProvided;
 	}
 	
 	public SCIDirection getSCIDirection() {
@@ -584,7 +580,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Straight_tr0_tr0() {
-		return sCITurnout.turnoutDivergent;
+		return sCITurnoutControlProvided.turnoutDivergent;
 	}
 	
 	private boolean check_main_region_Straight_listening_to_top_Waiting_tr0_tr0() {
@@ -612,11 +608,11 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Straight_listening_to_occupy_Free_tr0_tr0() {
-		return sCITrainRequired.occupy;
+		return sCITrainProvided.occupy;
 	}
 	
 	private boolean check_main_region_Straight_listening_to_occupy_Occupied_tr0_tr0() {
-		return sCITrainRequired.unoccupy;
+		return sCITrainProvided.unoccupy;
 	}
 	
 	private boolean check_main_region_Straight_listening_to_release_TransferReleases_lr0_lr0() {
@@ -632,7 +628,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Divergent_tr0_tr0() {
-		return sCITurnout.turnoutStraight;
+		return sCITurnoutControlProvided.turnoutStraight;
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_top_Waiting_tr0_tr0() {
@@ -660,11 +656,11 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_occupy_Free_tr0_tr0() {
-		return sCITrainRequired.occupy;
+		return sCITrainProvided.occupy;
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_occupy_Occupied_tr0_tr0() {
-		return sCITrainRequired.unoccupy;
+		return sCITrainProvided.unoccupy;
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_release_TransferReleases_lr0_lr0() {

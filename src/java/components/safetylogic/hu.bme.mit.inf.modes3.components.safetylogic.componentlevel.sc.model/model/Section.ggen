@@ -1,6 +1,6 @@
 statechart Section
 mappings {
-	map ControlProvided = Control as provided
+	map SectionControlProvided = SectionControl as provided
 	
 	map ProtocolProvidedCW = Protocol as provided
 	
@@ -10,5 +10,5 @@ mappings {
 
 	map ProtocolRequiredCCW = Protocol as required 
 
-	map TrainRequired = Train as required
+	map TrainProvided = Train as provided
 }

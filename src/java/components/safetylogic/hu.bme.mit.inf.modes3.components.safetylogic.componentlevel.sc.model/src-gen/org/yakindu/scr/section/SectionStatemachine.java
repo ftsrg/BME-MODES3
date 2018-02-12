@@ -6,10 +6,6 @@ public class SectionStatemachine implements ISectionStatemachine {
 
 	protected class SCISectionImpl implements SCISection {
 	
-		public long getId() {
-			return id;
-		}
-		
 		private long latestReserveDirection;
 		
 		public long getLatestReserveDirection() {
@@ -34,11 +30,11 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	protected SCISectionImpl sCISection;
 	
-	protected class SCIControlProvidedImpl implements SCIControlProvided {
+	protected class SCISectionControlProvidedImpl implements SCISectionControlProvided {
 	
-		private List<SCIControlProvidedListener> listeners = new LinkedList<SCIControlProvidedListener>();
+		private List<SCISectionControlProvidedListener> listeners = new LinkedList<SCISectionControlProvidedListener>();
 		
-		public List<SCIControlProvidedListener> getListeners() {
+		public List<SCISectionControlProvidedListener> getListeners() {
 			return listeners;
 		}
 		private boolean restartProtocol;
@@ -49,46 +45,28 @@ public class SectionStatemachine implements ISectionStatemachine {
 		
 		private boolean enableSection;
 		
-		private long enableSectionValue;
-		
 		public boolean isRaisedEnableSection() {
 			return enableSection;
 		}
 		
-		protected void raiseEnableSection(long value) {
+		protected void raiseEnableSection() {
 			enableSection = true;
-			enableSectionValue = value;
-			for (SCIControlProvidedListener listener : listeners) {
-				listener.onEnableSectionRaised(value);
+			for (SCISectionControlProvidedListener listener : listeners) {
+				listener.onEnableSectionRaised();
 			}
 		}
 		
-		public long getEnableSectionValue() {
-			if (! enableSection ) 
-				throw new IllegalStateException("Illegal event value access. Event EnableSection is not raised!");
-			return enableSectionValue;
-		}
-		
 		private boolean disableSection;
-		
-		private long disableSectionValue;
 		
 		public boolean isRaisedDisableSection() {
 			return disableSection;
 		}
 		
-		protected void raiseDisableSection(long value) {
+		protected void raiseDisableSection() {
 			disableSection = true;
-			disableSectionValue = value;
-			for (SCIControlProvidedListener listener : listeners) {
-				listener.onDisableSectionRaised(value);
+			for (SCISectionControlProvidedListener listener : listeners) {
+				listener.onDisableSectionRaised();
 			}
-		}
-		
-		public long getDisableSectionValue() {
-			if (! disableSection ) 
-				throw new IllegalStateException("Illegal event value access. Event DisableSection is not raised!");
-			return disableSectionValue;
 		}
 		
 		protected void clearEvents() {
@@ -102,7 +80,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 		
 	}
 	
-	protected SCIControlProvidedImpl sCIControlProvided;
+	protected SCISectionControlProvidedImpl sCISectionControlProvided;
 	
 	protected class SCIProtocolProvidedCWImpl implements SCIProtocolProvidedCW {
 	
@@ -322,7 +300,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	protected SCIProtocolRequiredCCWImpl sCIProtocolRequiredCCW;
 	
-	protected class SCITrainRequiredImpl implements SCITrainRequired {
+	protected class SCITrainProvidedImpl implements SCITrainProvided {
 	
 		private boolean occupy;
 		
@@ -342,7 +320,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 		}
 	}
 	
-	protected SCITrainRequiredImpl sCITrainRequired;
+	protected SCITrainProvidedImpl sCITrainProvided;
 	
 	protected class SCIDirectionImpl implements SCIDirection {
 	
@@ -383,12 +361,12 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	public SectionStatemachine() {
 		sCISection = new SCISectionImpl();
-		sCIControlProvided = new SCIControlProvidedImpl();
+		sCISectionControlProvided = new SCISectionControlProvidedImpl();
 		sCIProtocolProvidedCW = new SCIProtocolProvidedCWImpl();
 		sCIProtocolProvidedCCW = new SCIProtocolProvidedCCWImpl();
 		sCIProtocolRequiredCW = new SCIProtocolRequiredCWImpl();
 		sCIProtocolRequiredCCW = new SCIProtocolRequiredCCWImpl();
-		sCITrainRequired = new SCITrainRequiredImpl();
+		sCITrainProvided = new SCITrainProvidedImpl();
 		sCIDirection = new SCIDirectionImpl();
 	}
 	
@@ -437,19 +415,19 @@ public class SectionStatemachine implements ISectionStatemachine {
 	* This method resets the incoming events (time events included).
 	*/
 	protected void clearEvents() {
-		sCIControlProvided.clearEvents();
+		sCISectionControlProvided.clearEvents();
 		sCIProtocolProvidedCW.clearEvents();
 		sCIProtocolProvidedCCW.clearEvents();
 		sCIProtocolRequiredCW.clearEvents();
 		sCIProtocolRequiredCCW.clearEvents();
-		sCITrainRequired.clearEvents();
+		sCITrainProvided.clearEvents();
 	}
 	
 	/**
 	* This method resets the outgoing events.
 	*/
 	protected void clearOutEvents() {
-		sCIControlProvided.clearOutEvents();
+		sCISectionControlProvided.clearOutEvents();
 		sCIProtocolRequiredCW.clearOutEvents();
 		sCIProtocolRequiredCCW.clearOutEvents();
 	}
@@ -484,8 +462,8 @@ public class SectionStatemachine implements ISectionStatemachine {
 		return sCISection;
 	}
 	
-	public SCIControlProvided getSCIControlProvided() {
-		return sCIControlProvided;
+	public SCISectionControlProvided getSCISectionControlProvided() {
+		return sCISectionControlProvided;
 	}
 	
 	public SCIProtocolProvidedCW getSCIProtocolProvidedCW() {
@@ -504,8 +482,8 @@ public class SectionStatemachine implements ISectionStatemachine {
 		return sCIProtocolRequiredCCW;
 	}
 	
-	public SCITrainRequired getSCITrainRequired() {
-		return sCITrainRequired;
+	public SCITrainProvided getSCITrainProvided() {
+		return sCITrainProvided;
 	}
 	
 	public SCIDirection getSCIDirection() {
@@ -521,7 +499,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Free_tr2_tr2() {
-		return sCITrainRequired.occupy;
+		return sCITrainProvided.occupy;
 	}
 	
 	private boolean check_main_Reserved_lr0_lr0() {
@@ -541,7 +519,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Reserved_tr0_tr0() {
-		return sCITrainRequired.occupy;
+		return sCITrainProvided.occupy;
 	}
 	
 	private boolean check_main_Reserved_tr1_tr1() {
@@ -569,7 +547,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Occupied_tr0_tr0() {
-		return sCITrainRequired.unoccupy;
+		return sCITrainProvided.unoccupy;
 	}
 	
 	private boolean check_main_Occupied_tr1_tr1() {
@@ -589,7 +567,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Stop_tr0_tr0() {
-		return sCITrainRequired.unoccupy;
+		return sCITrainProvided.unoccupy;
 	}
 	
 	private boolean check_main_Stop_tr1_tr1() {
@@ -601,7 +579,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Stop_tr3_tr3() {
-		return sCIControlProvided.restartProtocol;
+		return sCISectionControlProvided.restartProtocol;
 	}
 	
 	private boolean check_main_Locking_protocol_tr0_tr0() {
@@ -791,7 +769,7 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	/* Entry action for state 'Free'. */
 	private void entryAction_main_Free() {
-		sCIControlProvided.raiseEnableSection(sCISection.getId());
+		sCISectionControlProvided.raiseEnableSection();
 		
 		sCISection.setLatestReserveDirection(SCIDirection.uNSPECIFIED);
 		
@@ -800,12 +778,12 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	/* Entry action for state 'Occupied'. */
 	private void entryAction_main_Occupied() {
-		sCIControlProvided.raiseEnableSection(sCISection.getId());
+		sCISectionControlProvided.raiseEnableSection();
 	}
 	
 	/* Entry action for state 'Stop'. */
 	private void entryAction_main_Stop() {
-		sCIControlProvided.raiseDisableSection(sCISection.getId());
+		sCISectionControlProvided.raiseDisableSection();
 	}
 	
 	/* Entry action for state 'WaitForFirstResponse'. */

@@ -5,19 +5,15 @@ import org.yakindu.scr.IStatemachine;
 
 public interface ITurnoutStatemachine extends IStatemachine {
 
-	public interface SCITurnout {
-	
-		public static final long id = 0;
+	public interface SCITurnoutControlProvided {
 	
 		public void raiseTurnoutStraight();
 		
 		public void raiseTurnoutDivergent();
 		
-		public long getId();
-		
 	}
 	
-	public SCITurnout getSCITurnout();
+	public SCITurnoutControlProvided getSCITurnoutControlProvided();
 	
 	public interface SCIProtocolProvidedTop {
 	
@@ -130,7 +126,7 @@ public interface ITurnoutStatemachine extends IStatemachine {
 	
 	public SCIProtocolRequiredDivergent getSCIProtocolRequiredDivergent();
 	
-	public interface SCITrainRequired {
+	public interface SCITrainProvided {
 	
 		public void raiseOccupy();
 		
@@ -138,7 +134,7 @@ public interface ITurnoutStatemachine extends IStatemachine {
 		
 	}
 	
-	public SCITrainRequired getSCITrainRequired();
+	public SCITrainProvided getSCITrainProvided();
 	
 	public interface SCIDirection {
 	

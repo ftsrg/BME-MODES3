@@ -25,9 +25,9 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 	private S15ControlProvided s15ControlProvided = new S15ControlProvided();
 	private T1TurnoutProvided t1TurnoutProvided = new T1TurnoutProvided();
 	private S12ControlProvided s12ControlProvided = new S12ControlProvided();
-	private S15TrainRequired s15TrainRequired = new S15TrainRequired();
-	private T1TrainRequired t1TrainRequired = new T1TrainRequired();
-	private S12TrainRequired s12TrainRequired = new S12TrainRequired();
+	private S15TrainProvided s15TrainProvided = new S15TrainProvided();
+	private T1TrainProvided t1TrainProvided = new T1TrainProvided();
+	private S12TrainProvided s12TrainProvided = new S12TrainProvided();
 	// Clocks
 	// Main queue
 	private LinkedBlockingMultiQueue<String, Event> __asyncQueue = new LinkedBlockingMultiQueue<String, Event>();
@@ -65,16 +65,16 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			messages.offer(new Event("T1ProtocolProvidedDivergent.cannotGo", null));
 		}
 		@Override
-		public void raiseCanGo() {
-			messages.offer(new Event("T1ProtocolProvidedDivergent.canGo", null));
-		}
-		@Override
 		public void raiseRelease() {
 			messages.offer(new Event("T1ProtocolProvidedDivergent.release", null));
 		}
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("T1ProtocolProvidedDivergent.reserve", null));
+		}
+		@Override
+		public void raiseCanGo() {
+			messages.offer(new Event("T1ProtocolProvidedDivergent.canGo", null));
 		}
 		
 		
@@ -104,11 +104,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedCanGo() {
-			return t1Component.getT1ProtocolRequiredDivergent().isRaisedCanGo();
-		}
-		
-		@Override
 		public boolean isRaisedRelease() {
 			return t1Component.getT1ProtocolRequiredDivergent().isRaisedRelease();
 		}
@@ -116,6 +111,11 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public boolean isRaisedReserve() {
 			return t1Component.getT1ProtocolRequiredDivergent().isRaisedReserve();
+		}
+		
+		@Override
+		public boolean isRaisedCanGo() {
+			return t1Component.getT1ProtocolRequiredDivergent().isRaisedCanGo();
 		}
 		
 		@Override
@@ -142,16 +142,16 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			messages.offer(new Event("S15ProtocolProvidedCW.cannotGo", null));
 		}
 		@Override
-		public void raiseCanGo() {
-			messages.offer(new Event("S15ProtocolProvidedCW.canGo", null));
-		}
-		@Override
 		public void raiseRelease() {
 			messages.offer(new Event("S15ProtocolProvidedCW.release", null));
 		}
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S15ProtocolProvidedCW.reserve", null));
+		}
+		@Override
+		public void raiseCanGo() {
+			messages.offer(new Event("S15ProtocolProvidedCW.canGo", null));
 		}
 		
 		
@@ -181,11 +181,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedCanGo() {
-			return t1Component.getS15ProtocolRequiredCW().isRaisedCanGo();
-		}
-		
-		@Override
 		public boolean isRaisedRelease() {
 			return t1Component.getS15ProtocolRequiredCW().isRaisedRelease();
 		}
@@ -193,6 +188,11 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public boolean isRaisedReserve() {
 			return t1Component.getS15ProtocolRequiredCW().isRaisedReserve();
+		}
+		
+		@Override
+		public boolean isRaisedCanGo() {
+			return t1Component.getS15ProtocolRequiredCW().isRaisedCanGo();
 		}
 		
 		@Override
@@ -219,16 +219,16 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			messages.offer(new Event("S12ProtocolProvidedCCW.cannotGo", null));
 		}
 		@Override
-		public void raiseCanGo() {
-			messages.offer(new Event("S12ProtocolProvidedCCW.canGo", null));
-		}
-		@Override
 		public void raiseRelease() {
 			messages.offer(new Event("S12ProtocolProvidedCCW.release", null));
 		}
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S12ProtocolProvidedCCW.reserve", null));
+		}
+		@Override
+		public void raiseCanGo() {
+			messages.offer(new Event("S12ProtocolProvidedCCW.canGo", null));
 		}
 		
 		
@@ -258,11 +258,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedCanGo() {
-			return t1Component.getS12ProtocolRequiredCCW().isRaisedCanGo();
-		}
-		
-		@Override
 		public boolean isRaisedRelease() {
 			return t1Component.getS12ProtocolRequiredCCW().isRaisedRelease();
 		}
@@ -270,6 +265,11 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public boolean isRaisedReserve() {
 			return t1Component.getS12ProtocolRequiredCCW().isRaisedReserve();
+		}
+		
+		@Override
+		public boolean isRaisedCanGo() {
+			return t1Component.getS12ProtocolRequiredCCW().isRaisedCanGo();
 		}
 		
 		@Override
@@ -289,7 +289,7 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		return s12ProtocolRequiredCCW;
 	}
 	
-	public class S15ControlProvided implements ControlInterface.Provided {
+	public class S15ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -300,27 +300,19 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		public boolean isRaisedEnableSection() {
 			return t1Component.getS15ControlProvided().isRaisedEnableSection();
 		}
-		@Override
-		public long getEnableSectionValue() {
-			return t1Component.getS15ControlProvided().getEnableSectionValue();
-		}
 		
 		@Override
 		public boolean isRaisedDisableSection() {
 			return t1Component.getS15ControlProvided().isRaisedDisableSection();
 		}
-		@Override
-		public long getDisableSectionValue() {
-			return t1Component.getS15ControlProvided().getDisableSectionValue();
-		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t1Component.getS15ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t1Component.getS15ControlProvided().getRegisteredListeners();
 		}
 		
@@ -331,7 +323,7 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		return s15ControlProvided;
 	}
 	
-	public class T1TurnoutProvided implements TurnoutInterface.Provided {
+	public class T1TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 		@Override
 		public void raiseTurnoutStraight() {
@@ -344,12 +336,12 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		
 		
 		@Override
-		public void registerListener(TurnoutInterface.Listener.Provided listener) {
+		public void registerListener(TurnoutControlInterface.Listener.Provided listener) {
 			t1Component.getT1TurnoutProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TurnoutInterface.Listener.Provided> getRegisteredListeners() {
+		public List<TurnoutControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t1Component.getT1TurnoutProvided().getRegisteredListeners();
 		}
 		
@@ -360,7 +352,7 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		return t1TurnoutProvided;
 	}
 	
-	public class S12ControlProvided implements ControlInterface.Provided {
+	public class S12ControlProvided implements SectionControlInterface.Provided {
 		
 		@Override
 		public void raiseRestartProtocol() {
@@ -371,27 +363,19 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		public boolean isRaisedEnableSection() {
 			return t1Component.getS12ControlProvided().isRaisedEnableSection();
 		}
-		@Override
-		public long getEnableSectionValue() {
-			return t1Component.getS12ControlProvided().getEnableSectionValue();
-		}
 		
 		@Override
 		public boolean isRaisedDisableSection() {
 			return t1Component.getS12ControlProvided().isRaisedDisableSection();
 		}
-		@Override
-		public long getDisableSectionValue() {
-			return t1Component.getS12ControlProvided().getDisableSectionValue();
-		}
 		
 		@Override
-		public void registerListener(ControlInterface.Listener.Provided listener) {
+		public void registerListener(SectionControlInterface.Listener.Provided listener) {
 			t1Component.getS12ControlProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<ControlInterface.Listener.Provided> getRegisteredListeners() {
+		public List<SectionControlInterface.Listener.Provided> getRegisteredListeners() {
 			return t1Component.getS12ControlProvided().getRegisteredListeners();
 		}
 		
@@ -402,91 +386,91 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		return s12ControlProvided;
 	}
 	
-	public class S15TrainRequired implements TrainInterface.Required {
+	public class S15TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S15TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S15TrainRequired.unoccupy", null));
+			messages.offer(new Event("S15TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S15TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t1Component.getS15TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t1Component.getS15TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t1Component.getS15TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t1Component.getS15TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S15TrainRequired getS15TrainRequired() {
-		return s15TrainRequired;
+	public S15TrainProvided getS15TrainProvided() {
+		return s15TrainProvided;
 	}
 	
-	public class T1TrainRequired implements TrainInterface.Required {
+	public class T1TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("T1TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("T1TrainRequired.unoccupy", null));
+			messages.offer(new Event("T1TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("T1TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t1Component.getT1TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t1Component.getT1TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t1Component.getT1TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t1Component.getT1TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public T1TrainRequired getT1TrainRequired() {
-		return t1TrainRequired;
+	public T1TrainProvided getT1TrainProvided() {
+		return t1TrainProvided;
 	}
 	
-	public class S12TrainRequired implements TrainInterface.Required {
+	public class S12TrainProvided implements TrainInterface.Provided {
 		
-		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S12TrainRequired.occupy", null));
-		}
 		@Override
 		public void raiseUnoccupy() {
-			messages.offer(new Event("S12TrainRequired.unoccupy", null));
+			messages.offer(new Event("S12TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S12TrainProvided.occupy", null));
 		}
 		
 		
 		@Override
-		public void registerListener(TrainInterface.Listener.Required listener) {
-			t1Component.getS12TrainRequired().registerListener(listener);
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			t1Component.getS12TrainProvided().registerListener(listener);
 		}
 		
 		@Override
-		public List<TrainInterface.Listener.Required> getRegisteredListeners() {
-			return t1Component.getS12TrainRequired().getRegisteredListeners();
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return t1Component.getS12TrainProvided().getRegisteredListeners();
 		}
 		
 	}
 	
 	@Override
-	public S12TrainRequired getS12TrainRequired() {
-		return s12TrainRequired;
+	public S12TrainProvided getS12TrainProvided() {
+		return s12TrainProvided;
 	}
 	
 	/** Operation. */
@@ -516,20 +500,17 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			case "T1ProtocolProvidedDivergent.cannotGo":
 				t1Component.getT1ProtocolProvidedDivergent().raiseCannotGo();
 			break;
-			case "T1ProtocolProvidedDivergent.canGo":
-				t1Component.getT1ProtocolProvidedDivergent().raiseCanGo();
-			break;
 			case "T1ProtocolProvidedDivergent.release":
 				t1Component.getT1ProtocolProvidedDivergent().raiseRelease();
 			break;
 			case "T1ProtocolProvidedDivergent.reserve":
 				t1Component.getT1ProtocolProvidedDivergent().raiseReserve();
 			break;
+			case "T1ProtocolProvidedDivergent.canGo":
+				t1Component.getT1ProtocolProvidedDivergent().raiseCanGo();
+			break;
 			case "S15ProtocolProvidedCW.cannotGo":
 				t1Component.getS15ProtocolProvidedCW().raiseCannotGo();
-			break;
-			case "S15ProtocolProvidedCW.canGo":
-				t1Component.getS15ProtocolProvidedCW().raiseCanGo();
 			break;
 			case "S15ProtocolProvidedCW.release":
 				t1Component.getS15ProtocolProvidedCW().raiseRelease();
@@ -537,17 +518,20 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			case "S15ProtocolProvidedCW.reserve":
 				t1Component.getS15ProtocolProvidedCW().raiseReserve();
 			break;
+			case "S15ProtocolProvidedCW.canGo":
+				t1Component.getS15ProtocolProvidedCW().raiseCanGo();
+			break;
 			case "S12ProtocolProvidedCCW.cannotGo":
 				t1Component.getS12ProtocolProvidedCCW().raiseCannotGo();
-			break;
-			case "S12ProtocolProvidedCCW.canGo":
-				t1Component.getS12ProtocolProvidedCCW().raiseCanGo();
 			break;
 			case "S12ProtocolProvidedCCW.release":
 				t1Component.getS12ProtocolProvidedCCW().raiseRelease();
 			break;
 			case "S12ProtocolProvidedCCW.reserve":
 				t1Component.getS12ProtocolProvidedCCW().raiseReserve();
+			break;
+			case "S12ProtocolProvidedCCW.canGo":
+				t1Component.getS12ProtocolProvidedCCW().raiseCanGo();
 			break;
 			case "S15ControlProvided.restartProtocol":
 				t1Component.getS15ControlProvided().raiseRestartProtocol();
@@ -561,23 +545,23 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			case "S12ControlProvided.restartProtocol":
 				t1Component.getS12ControlProvided().raiseRestartProtocol();
 			break;
-			case "S15TrainRequired.occupy":
-				t1Component.getS15TrainRequired().raiseOccupy();
+			case "S15TrainProvided.unoccupy":
+				t1Component.getS15TrainProvided().raiseUnoccupy();
 			break;
-			case "S15TrainRequired.unoccupy":
-				t1Component.getS15TrainRequired().raiseUnoccupy();
+			case "S15TrainProvided.occupy":
+				t1Component.getS15TrainProvided().raiseOccupy();
 			break;
-			case "T1TrainRequired.occupy":
-				t1Component.getT1TrainRequired().raiseOccupy();
+			case "T1TrainProvided.unoccupy":
+				t1Component.getT1TrainProvided().raiseUnoccupy();
 			break;
-			case "T1TrainRequired.unoccupy":
-				t1Component.getT1TrainRequired().raiseUnoccupy();
+			case "T1TrainProvided.occupy":
+				t1Component.getT1TrainProvided().raiseOccupy();
 			break;
-			case "S12TrainRequired.occupy":
-				t1Component.getS12TrainRequired().raiseOccupy();
+			case "S12TrainProvided.unoccupy":
+				t1Component.getS12TrainProvided().raiseUnoccupy();
 			break;
-			case "S12TrainRequired.unoccupy":
-				t1Component.getS12TrainRequired().raiseUnoccupy();
+			case "S12TrainProvided.occupy":
+				t1Component.getS12TrainProvided().raiseOccupy();
 			break;
 			default:
 				throw new IllegalArgumentException("No such event!");

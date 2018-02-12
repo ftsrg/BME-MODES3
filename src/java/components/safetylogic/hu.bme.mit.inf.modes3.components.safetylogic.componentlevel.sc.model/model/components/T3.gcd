@@ -22,20 +22,20 @@ sync T3Component [
 	port S30ProtocolRequiredCCW : requires Protocol,
 	
 	// Control ports, needed for all elements
-	port S20ControlProvided : provides Control,
-	port S19ControlProvided : provides Control,
-	port T3_1TurnoutProvided : provides Turnout,
-	port T3_2TurnoutProvided : provides Turnout,
-	port S26ControlProvided : provides Control,
-	port S30ControlProvided : provides Control,
+	port S20ControlProvided : provides SectionControl,
+	port S19ControlProvided : provides SectionControl,
+	port T3_1TurnoutProvided : provides TurnoutControl,
+	port T3_2TurnoutProvided : provides TurnoutControl,
+	port S26ControlProvided : provides SectionControl,
+	port S30ControlProvided : provides SectionControl,
 	
 	// Train ports, needed for all elements
-	port S20TrainRequired : requires Train,
-	port S19TrainRequired : requires Train,
-	port T3_1TrainRequired : requires Train,
-	port T3_2TrainRequired : requires Train,
-	port S26TrainRequired : requires Train,
-	port S30TrainRequired : requires Train
+	port S20TrainProvided : provides Train,
+	port S19TrainProvided : provides Train,
+	port T3_1TrainProvided : provides Train,
+	port T3_2TrainProvided : provides Train,
+	port S26TrainProvided : provides Train,
+	port S30TrainProvided : provides Train
 ] {
 	component S20 : SectionStatechart
 	component S19 : SectionStatechart
@@ -58,20 +58,20 @@ sync T3Component [
 	bind S30ProtocolRequiredCCW -> S30.ProtocolRequiredCCW			
 			
 	// Binding Control ports
-	bind S20ControlProvided -> S20.ControlProvided
-	bind S19ControlProvided -> S19.ControlProvided
-	bind T3_1TurnoutProvided -> T3_1.Turnout
-	bind T3_2TurnoutProvided -> T3_2.Turnout
-	bind S26ControlProvided -> S26.ControlProvided
-	bind S30ControlProvided -> S30.ControlProvided
+	bind S20ControlProvided -> S20.SectionControlProvided
+	bind S19ControlProvided -> S19.SectionControlProvided
+	bind T3_1TurnoutProvided -> T3_1.TurnoutControlProvided
+	bind T3_2TurnoutProvided -> T3_2.TurnoutControlProvided
+	bind S26ControlProvided -> S26.SectionControlProvided
+	bind S30ControlProvided -> S30.SectionControlProvided
 				
 	// Binding Train ports
-	bind S20TrainRequired -> S20.TrainRequired
-	bind S19TrainRequired -> S19.TrainRequired
-	bind T3_1TrainRequired -> T3_1.TrainRequired
-	bind T3_2TrainRequired -> T3_2.TrainRequired
-	bind S26TrainRequired -> S26.TrainRequired
-	bind S30TrainRequired -> S30.TrainRequired
+	bind S20TrainProvided -> S20.TrainProvided
+	bind S19TrainProvided -> S19.TrainProvided
+	bind T3_1TrainProvided -> T3_1.TrainProvided
+	bind T3_2TrainProvided -> T3_2.TrainProvided
+	bind S26TrainProvided -> S26.TrainProvided
+	bind S30TrainProvided -> S30.TrainProvided
 			
 	channel [T3_1.ProtocolProvidedDivergent] -o)- [T3_2.ProtocolRequiredDivergent]
 	channel [T3_2.ProtocolProvidedDivergent] -o)- [T3_1.ProtocolRequiredDivergent]

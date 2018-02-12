@@ -15,18 +15,18 @@ sync T2Component [
 	port S18ProtocolRequiredCW : requires Protocol,
 		
 	// Control ports, needed for all elements
-	port S24ControlProvided : provides Control,
-	port S29ControlProvided : provides Control,
-	port T2TurnoutProvided : provides Turnout,
-	port S31ControlProvided : provides Control,
-	port S18ControlProvided : provides Control,
+	port S24ControlProvided : provides SectionControl,
+	port S29ControlProvided : provides SectionControl,
+	port T2TurnoutProvided : provides TurnoutControl,
+	port S31ControlProvided : provides SectionControl,
+	port S18ControlProvided : provides SectionControl,
 		
 	// Train ports, needed for all elements
-	port S24TrainRequired : requires Train,
-	port S29TrainRequired : requires Train,
-	port T2TrainRequired : requires Train,
-	port S31TrainRequired : requires Train,
-	port S18TrainRequired : requires Train
+	port S24TrainProvided : provides Train,
+	port S29TrainProvided : provides Train,
+	port T2TrainProvided : provides Train,
+	port S31TrainProvided : provides Train,
+	port S18TrainProvided : provides Train
 ] {
 	component S24 : SectionStatechart
 	component S29 : SectionStatechart
@@ -45,18 +45,18 @@ sync T2Component [
 	bind S18ProtocolRequiredCW -> S18.ProtocolRequiredCW
 				
 	// Binding Control ports
-	bind S24ControlProvided -> S24.ControlProvided
-	bind S29ControlProvided -> S29.ControlProvided
-	bind T2TurnoutProvided -> T2.Turnout
-	bind S31ControlProvided -> S31.ControlProvided
-	bind S18ControlProvided -> S18.ControlProvided
+	bind S24ControlProvided -> S24.SectionControlProvided
+	bind S29ControlProvided -> S29.SectionControlProvided
+	bind T2TurnoutProvided -> T2.TurnoutControlProvided
+	bind S31ControlProvided -> S31.SectionControlProvided
+	bind S18ControlProvided -> S18.SectionControlProvided
 				
 	// Binding Train ports
-	bind S24TrainRequired -> S24.TrainRequired
-	bind S29TrainRequired -> S29.TrainRequired
-	bind T2TrainRequired -> T2.TrainRequired
-	bind S31TrainRequired -> S31.TrainRequired
-	bind S18TrainRequired -> S18.TrainRequired
+	bind S24TrainProvided -> S24.TrainProvided
+	bind S29TrainProvided -> S29.TrainProvided
+	bind T2TrainProvided -> T2.TrainProvided
+	bind S31TrainProvided -> S31.TrainProvided
+	bind S18TrainProvided -> S18.TrainProvided
 			
 	channel [S24.ProtocolProvidedCW] -o)- [S29.ProtocolRequiredCCW]
 	channel	[S29.ProtocolProvidedCCW] -o)- [S24.ProtocolRequiredCW]
