@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.utils.conf
+package hu.bme.mit.inf.modes3.utils.conf.layout
 
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Data

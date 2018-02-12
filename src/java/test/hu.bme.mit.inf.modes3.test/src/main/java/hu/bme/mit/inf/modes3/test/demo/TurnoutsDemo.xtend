@@ -5,7 +5,7 @@ import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicatio
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TrackCommunicationServiceLocator
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import org.slf4j.ILoggerFactory
 
 class TurnoutsDemo extends AbstractCommunicationComponent implements ITurnoutCommandListener, ITurnoutStateChangeListener {

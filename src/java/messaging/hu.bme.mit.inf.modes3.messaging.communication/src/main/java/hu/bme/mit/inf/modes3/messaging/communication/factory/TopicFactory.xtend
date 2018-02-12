@@ -7,7 +7,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMappe
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import java.util.Collection
 import java.util.Set
 

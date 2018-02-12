@@ -9,8 +9,8 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
-import hu.bme.mit.inf.modes3.utils.conf.SegmentDirection
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.SegmentDirection
 import java.net.InetAddress
 import org.slf4j.impl.SimpleLoggerFactory
 

@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.utils.conf
+package hu.bme.mit.inf.modes3.utils.conf.layout
 
 import hu.bme.mit.inf.modes3.utils.common.gson.GsonLoader
 import java.util.Collections
@@ -24,10 +24,10 @@ class LayoutConfiguration {
 	public static val INSTANCE = new LayoutConfiguration
 	private static val LAYOUT_CONFIG = "layout.json"
 
-	private var LayoutConfigurationData layout
+	private val LayoutConfigurationData layout
 
 	private new() {
-		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData, LayoutConfiguration.classLoader.getResourceAsStream(LAYOUT_CONFIG))
+		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData, class.getResourceAsStream(LAYOUT_CONFIG))
 
 		val inverseMapping = loadedConfiguration.turnoutsSegmentIds.flatMap([key, value|value -> Integer.valueOf(key)])
 
@@ -109,7 +109,7 @@ class LayoutConfiguration {
 		val vicinities = layout.turnoutVicinities.get(String.valueOf(turnoutId))
 		val strOrDivSegments = getTurnoutVicinitySegmentsByDirection(turnoutId, direction)
 		val turnoutSegmentItself = getSegmentIdsOfTurnout(turnoutId)
-		
+
 		val segmentIds = newHashSet
 		segmentIds.addAll(strOrDivSegments)
 		segmentIds.addAll(vicinities.facing)

@@ -2,7 +2,7 @@
 	"components": 
 	[
 		{
-			"componentName": "turnout1",
+			"componentName": "t1",
 			"turnouts": 
 			[
 				{
@@ -62,7 +62,7 @@
 		},
 
 		{
-			"componentName": "turnout2",
+			"componentName": "t2",
 			"turnouts": 
 			[
 				{
@@ -152,7 +152,7 @@
 		},
 
 		{
-			"componentName": "turnout3",
+			"componentName": "t3",
 			"turnouts": 
 			[
 				{
@@ -263,7 +263,7 @@
 		},
 
 		{
-			"componentName": "turnout4",
+			"componentName": "t4",
 			"turnouts": 
 			[
 				{
@@ -383,7 +383,7 @@
 		},
 
 		{
-			"componentName": "turnout5",
+			"componentName": "t5",
 			"turnouts": 
 			[
 				{
@@ -473,7 +473,7 @@
 		},
 
 		{
-			"componentName": "turnout6",
+			"componentName": "t6",
 			"turnouts": 
 			[
 				{

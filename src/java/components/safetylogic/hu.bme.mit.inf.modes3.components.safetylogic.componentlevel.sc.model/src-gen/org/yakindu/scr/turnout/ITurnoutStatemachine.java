@@ -138,11 +138,11 @@ public interface ITurnoutStatemachine extends IStatemachine {
 	
 	public interface SCIDirection {
 	
-		public static final long tOP = 0;
+		public static final long tOP = 3;
 	
-		public static final long sTRAIGHT = 1;
+		public static final long sTRAIGHT = 4;
 	
-		public static final long dIVERGENT = 2;
+		public static final long dIVERGENT = 5;
 	
 		public long getTOP();
 		
