@@ -17,6 +17,7 @@ sync T4Component [
 	// Control ports, needed for all elements
 	port S01ControlProvided : provides SectionControl,
 	port T4TurnoutProvided : provides TurnoutControl,
+	port S02ControlProvided : provides SectionControl,
 	port S04ControlProvided : provides SectionControl,
 	port S05ControlProvided : provides SectionControl,
 	port S06ControlProvided : provides SectionControl,
@@ -25,6 +26,7 @@ sync T4Component [
 	// Train ports, needed for all elements
 	port S01TrainProvided : provides Train,
 	port T4TrainProvided : provides Train,
+	port S02TrainProvided : provides Train,
 	port S04TrainProvided : provides Train,
 	port S05TrainProvided : provides Train,
 	port S06TrainProvided : provides Train,
@@ -51,6 +53,7 @@ sync T4Component [
 	// Binding Control ports
 	bind S01ControlProvided -> S01.SectionControlProvided
 	bind T4TurnoutProvided -> T4.TurnoutControlProvided
+	bind S02ControlProvided -> S02.SectionControlProvided
 	bind S04ControlProvided -> S04.SectionControlProvided
 	bind S05ControlProvided -> S05.SectionControlProvided
 	bind S06ControlProvided -> S06.SectionControlProvided
@@ -59,6 +62,7 @@ sync T4Component [
 	// Binding Train ports
 	bind S01TrainProvided -> S01.TrainProvided
 	bind T4TrainProvided -> T4.TrainProvided
+	bind S02TrainProvided -> S02.TrainProvided
 	bind S04TrainProvided -> S04.TrainProvided
 	bind S05TrainProvided -> S05.TrainProvided
 	bind S06TrainProvided -> S06.TrainProvided

@@ -2,6 +2,9 @@ package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.app
 
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.SafetyLogic
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.bridge.SafetyLogicBridge
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.JsonDispatcherFactory
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.JsonMessageDispatcher
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.YakinduProtocolDispatcher
 import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 import hu.bme.mit.inf.modes3.messaging.communication.factory.TopicFactory
 import hu.bme.mit.inf.modes3.messaging.messages.command.SegmentCommand
@@ -19,13 +22,14 @@ class Main {
 		val loggerFactory = new SimpleLoggerFactory
 
 		val registry = new ArgumentRegistry(loggerFactory)
-		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "ID of the turnout", Integer))
+		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "ID of the turnout", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
 
 		registry.parseArguments(args);
 
-		val turnoutID = registry.getParameterIntegerValue("id")
+		val hostname = registry.getParameterStringValue("id")
+		val turnoutID = Integer.valueOf(hostname.split("\\.").head.replace('t', ''))
 
 		val controlledSections = LayoutConfiguration.INSTANCE.getControlledSections(turnoutID)
 		val facingSegment = LayoutConfiguration.INSTANCE.getTurnoutVicinitySegmentsByDirection(turnoutID, SegmentDirection.FACING)
@@ -46,8 +50,17 @@ class Main {
 		topics.addAll(turnoutOccupancyTopic)
 
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
+
+		val yakinduStack = JsonDispatcherFactory::createMQTTStackWithJSON(registry, loggerFactory)
+		val yakinduDispatcher = (yakinduStack.dispatcher as JsonMessageDispatcher)
+		val yakinduProtocolDispatcher = new YakinduProtocolDispatcher
+		yakinduDispatcher.canGoToListener = yakinduProtocolDispatcher
+		yakinduDispatcher.cannotGoToListener = yakinduProtocolDispatcher
+		yakinduDispatcher.releaseToListener = yakinduProtocolDispatcher
+		yakinduDispatcher.reserveToListener = yakinduProtocolDispatcher
+
 		val safetyLogic = new SafetyLogic(turnoutID, loggerFactory)
-		val slWrapper = new SafetyLogicBridge(safetyLogic, communicationStack, loggerFactory)
+		val slWrapper = new SafetyLogicBridge(safetyLogic, communicationStack, yakinduStack, yakinduProtocolDispatcher, loggerFactory)
 		slWrapper.run // The component will run on this thread
 	}
 

@@ -16,6 +16,7 @@
 		"TurnoutReferenceStateMessage": ["/modes3/all"],
 		"TurnoutStateMessage": ["/modes3/turnout/{id}/status"],
 		"BarrierStateMessage": ["barrier/gate"],
+		"YakinduProtocolMessage": ["/modes3/yakindu"],
 		"default": ["/modes3/all"]
 	}
 }

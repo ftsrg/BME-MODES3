@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.modes3.messaging.communication.factory
 
 import hu.bme.mit.inf.modes3.messaging.mms.TopicBasedMessagingService
+import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
 import hu.bme.mit.inf.modes3.transports.config.loaders.ArgumentBasedTransportConfigurationLoader
@@ -12,22 +13,21 @@ import org.slf4j.ILoggerFactory
 class MessagingServiceFactory {
 
 	def static createMQTTStack(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
-		return new TopicBasedMessagingService(
-			new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadTopicBasedConfiguration(argumentRegistry),
-				factory), new ProtobufMessageDispatcher(factory), factory)
+		return new TopicBasedMessagingService(new MQTTTransport(ArgumentBasedTransportConfigurationLoader.loadTopicBasedConfiguration(argumentRegistry), factory), new ProtobufMessageDispatcher(factory), factory)
 	}
 
 	def static createStackForTopics(ArgumentRegistry argumentRegistry, ILoggerFactory factory, Set<String> topics) {
+		createStackForTopics(argumentRegistry, factory, topics, new ProtobufMessageDispatcher(factory))
+	}
+
+	def static createStackForTopics(ArgumentRegistry argumentRegistry, ILoggerFactory factory, Set<String> topics, AbstractMessageDispatcher messageDispatcher) {
 		val transportConfig = ArgumentBasedTransportConfigurationLoader::loadTransportConfiguration(argumentRegistry)
-		val initialConfig = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr,
-			transportConfig.port, topics.head)
+		val initialConfig = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr, transportConfig.port, topics.head)
 		// create the messaging service with the first configuration
-		val mms = new TopicBasedMessagingService(new MQTTTransport(initialConfig, factory),
-			new ProtobufMessageDispatcher(factory), factory)
+		val mms = new TopicBasedMessagingService(new MQTTTransport(initialConfig, factory), messageDispatcher, factory)
 		// create the other transport layers with the remaining configurations
 		topics.filter[it != topics.head].forEach [
-			val config = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr,
-				transportConfig.port, it);
+			val config = new TopicBasedTransportConfiguration(transportConfig.id, transportConfig.addr, transportConfig.port, it);
 			val transport = new MQTTTransport(config, factory);
 			mms.addTransport(transport)
 		]

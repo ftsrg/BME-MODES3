@@ -1,28 +1,19 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper
 
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface
-import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface.Listener.Provided
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.YakinduMessageSender
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IYakinduMessageSender
 import hu.bme.mit.inf.modes3.utils.conf.layout.whole.ConnectionDirection
-import java.util.Collections
 
-class YakinduProtocolAdapter implements ProtocolInterface.Provided {
+class YakinduProtocolAdapter implements ProtocolInterface.Listener.Required {
 
 	val int neighbourSegmentID
 	val ConnectionDirection neighbourSegmentConnectsFrom
-	val YakinduMessageSender messageSender
+	val IYakinduMessageSender messageSender
 
-	new(int neighbourID, ConnectionDirection neighbourConnectsFrom, YakinduMessageSender messageSender) {
-		this.neighbourSegmentID = neighbourID
+	new(int neighbourSegmentID, ConnectionDirection neighbourConnectsFrom, IYakinduMessageSender messageSender) {
+		this.neighbourSegmentID = neighbourSegmentID
 		this.neighbourSegmentConnectsFrom = neighbourConnectsFrom
 		this.messageSender = messageSender
-	}
-
-	override getRegisteredListeners() {
-		Collections.emptyList
-	}
-
-	override registerListener(Provided listener) {
 	}
 
 	override raiseCanGo() {

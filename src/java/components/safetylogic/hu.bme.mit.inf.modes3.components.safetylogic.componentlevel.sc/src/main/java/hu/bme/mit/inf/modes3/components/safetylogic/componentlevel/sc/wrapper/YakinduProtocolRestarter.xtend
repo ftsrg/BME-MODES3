@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentSkipListSet
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
-class PeriodicYakinduProtocolRestarter implements Runnable {
+class YakinduProtocolRestarter implements Runnable, IYakinduProtocolRestarter {
 
 	private static val SLEEP_TIME = 50
 
@@ -15,6 +15,10 @@ class PeriodicYakinduProtocolRestarter implements Runnable {
 
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(class.name)
+	}
+
+	override registerSection(SectionControlInterface.Provided section) {
+		sectionsToBeRestarted.add(section)
 	}
 
 	override run() {

@@ -11,6 +11,6 @@ async AsyncT4Component of T4Component[
 		S06ProtocolProvidedCCW.any, S06ProtocolRequiredCCW.any, S01ControlProvided.any, T4TurnoutProvided.any,
 		S04ControlProvided.any, S05ControlProvided.any, S06ControlProvided.any, S07ControlProvided.any,
 		S01TrainProvided.any, T4TrainProvided.any, S04TrainProvided.any, S05TrainProvided.any,
-		S06TrainProvided.any, S07TrainProvided.any
+		S06TrainProvided.any, S07TrainProvided.any, S02ControlProvided.any, S02TrainProvided.any
 	}
 }

@@ -8,7 +8,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
-class YakinduMessageSender implements ICanGoToListener, ICannotGoToListener, IReserveToListener, IReleaseToListener {
+class YakinduMessageSender implements IYakinduMessageSender {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	var protected MessagingService mms
 

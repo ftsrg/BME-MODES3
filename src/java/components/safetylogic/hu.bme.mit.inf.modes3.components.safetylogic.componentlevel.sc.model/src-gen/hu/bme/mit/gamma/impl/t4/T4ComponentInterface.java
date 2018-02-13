@@ -7,24 +7,26 @@ import hu.bme.mit.gamma.impl.interfaces.TurnoutControlInterface;
 
 public interface T4ComponentInterface {
 	
-	ProtocolInterface.Provided getS01ProtocolProvidedCW();
-	SectionControlInterface.Provided getS04ControlProvided();
-	TrainInterface.Provided getS07TrainProvided();
-	ProtocolInterface.Required getS07ProtocolRequiredCCW();
-	TrainInterface.Provided getS06TrainProvided();
-	SectionControlInterface.Provided getS06ControlProvided();
-	SectionControlInterface.Provided getS07ControlProvided();
-	SectionControlInterface.Provided getS05ControlProvided();
-	TrainInterface.Provided getS05TrainProvided();
-	ProtocolInterface.Provided getS06ProtocolProvidedCCW();
-	TrainInterface.Provided getS04TrainProvided();
-	ProtocolInterface.Required getS01ProtocolRequiredCW();
-	ProtocolInterface.Required getS06ProtocolRequiredCCW();
-	TrainInterface.Provided getT4TrainProvided();
 	ProtocolInterface.Provided getS07ProtocolProvidedCCW();
+	SectionControlInterface.Provided getS02ControlProvided();
+	ProtocolInterface.Provided getS06ProtocolProvidedCCW();
 	SectionControlInterface.Provided getS01ControlProvided();
+	SectionControlInterface.Provided getS06ControlProvided();
+	TrainInterface.Provided getT4TrainProvided();
+	SectionControlInterface.Provided getS05ControlProvided();
+	ProtocolInterface.Required getS07ProtocolRequiredCCW();
+	SectionControlInterface.Provided getS04ControlProvided();
+	ProtocolInterface.Required getS06ProtocolRequiredCCW();
+	TrainInterface.Provided getS04TrainProvided();
+	TrainInterface.Provided getS05TrainProvided();
+	SectionControlInterface.Provided getS07ControlProvided();
+	ProtocolInterface.Required getS01ProtocolRequiredCW();
 	TurnoutControlInterface.Provided getT4TurnoutProvided();
 	TrainInterface.Provided getS01TrainProvided();
+	TrainInterface.Provided getS07TrainProvided();
+	TrainInterface.Provided getS06TrainProvided();
+	ProtocolInterface.Provided getS01ProtocolProvidedCW();
+	TrainInterface.Provided getS02TrainProvided();
 	
 	void runCycle();
 	void runFullCycle();

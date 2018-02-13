@@ -1,10 +1,7 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper
 
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.ICanGoToListener
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.ICannotGoToListener
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IReleaseToListener
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IReserveToListener
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IYakinduMessageSender
 import hu.bme.mit.inf.modes3.utils.conf.layout.whole.ConnectionDirection
 import java.util.Map
 import java.util.Set
@@ -12,11 +9,11 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet
 import org.eclipse.xtend.lib.annotations.Data
 
-class YakinduProtocolWrapper implements ICanGoToListener, ICannotGoToListener, IReleaseToListener, IReserveToListener {
+class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduMessageSender {
 
 	val Map<Integer, Set<PortWithDirection>> segmentsToBeNotified = new ConcurrentHashMap
 
-	def registerSegment(int segmentID, PortWithDirection portToBeNotified) {
+	override registerSegment(int segmentID, PortWithDirection portToBeNotified) {
 		var Set<PortWithDirection> ports = segmentsToBeNotified.get(segmentID)
 		if(ports === null) {
 			synchronized(ports) {
