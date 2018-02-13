@@ -52,11 +52,11 @@ class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafet
 	}
 
 	override setSegmentOccupancyChangeListener(ISegmentOccupancyChangeListener listener) {
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = listener
+		locator.trackElementStateRegistry.registerSegmentOccupancyChangeListener = listener
 	}
 
 	override setTurnoutStateChangeListener(ITurnoutStateChangeListener listener) {
-		locator.trackElementStateRegistry.turnoutStateChangeListener = listener
+		locator.trackElementStateRegistry.registerTurnoutStateChangeListener = listener
 	}
 
 	override setComputerVisionListener(IComputerVisionListener listener) {

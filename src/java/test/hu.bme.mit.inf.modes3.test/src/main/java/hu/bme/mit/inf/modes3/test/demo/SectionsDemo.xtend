@@ -15,8 +15,8 @@ class SectionsDemo extends AbstractCommunicationComponent implements ISegmentOcc
 
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
-		locator.trackElementStateRegistry.segmentStateChangeListener = this
+		locator.trackElementStateRegistry.registerSegmentOccupancyChangeListener = this
+		locator.trackElementStateRegistry.registerSegmentStateChangeListener = this
 	}
 
 	override run() {

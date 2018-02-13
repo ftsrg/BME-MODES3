@@ -11,7 +11,7 @@ class SafetyLogic implements ISafetyLogic {
 	val Logger logger
 
 	new(int turnoutID, ILoggerFactory factory) {
-		this.logger = factory.getLogger(this.class.name)
+		this.logger = factory.getLogger(class.name)
 	}
 
 	override run() {

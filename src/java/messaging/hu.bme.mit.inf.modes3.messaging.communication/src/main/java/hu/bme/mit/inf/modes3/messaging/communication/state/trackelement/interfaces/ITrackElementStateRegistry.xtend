@@ -14,7 +14,7 @@ interface ITrackElementStateRegistry {
 	
 	def List<Integer> getTurnouts()
 	
-	def void setTurnoutStateChangeListener(ITurnoutStateChangeListener listener)
-	def void setSegmentStateChangeListener(ISegmentStateChangeListener listener)
-	def void setSegmentOccupancyChangeListener(ISegmentOccupancyChangeListener listener)
+	def void registerTurnoutStateChangeListener(ITurnoutStateChangeListener listener)
+	def void registerSegmentStateChangeListener(ISegmentStateChangeListener listener)
+	def void registerSegmentOccupancyChangeListener(ISegmentOccupancyChangeListener listener)
 }

@@ -14,6 +14,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import java.util.ArrayList
 import java.util.Collections
+import java.util.HashSet
 import java.util.concurrent.ConcurrentHashMap
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
@@ -23,11 +24,11 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	val segments = new ConcurrentHashMap<Integer, SegmentState>
 	val turnouts = new ConcurrentHashMap<Integer, TurnoutState>
 	val occupancy = new ConcurrentHashMap<Integer, SegmentOccupancy>
-	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
-	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ITurnoutStateChangeListener turnoutStateChangeListener
-	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISegmentStateChangeListener segmentStateChangeListener
-	@Accessors(#[PRIVATE_GETTER, PUBLIC_SETTER]) var ISegmentOccupancyChangeListener segmentOccupancyChangeListener
-	@Accessors(#[PACKAGE_GETTER, PACKAGE_SETTER]) ITrackElementStateCallback trackElementStateCallback
+	@Accessors(#[PROTECTED_GETTER]) val Logger logger
+	@Accessors(#[PROTECTED_GETTER]) val turnoutStateChangeListeners = new HashSet<ITurnoutStateChangeListener>
+	@Accessors(#[PROTECTED_GETTER]) val segmentStateChangeListeners = new HashSet<ISegmentStateChangeListener>
+	@Accessors(#[PROTECTED_GETTER]) val segmentOccupancyChangeListeners = new HashSet<ISegmentOccupancyChangeListener>
+	@Accessors(#[PROTECTED_GETTER]) val ITrackElementStateCallback trackElementStateCallback
 
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
@@ -40,7 +41,7 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 				if(oldState != state) {
 					logger.trace('''segmentState changed compared to cached values. Cached = «oldState» new =«state»''')
 					segments.put(id, state)
-					segmentStateChangeListener?.onSegmentStateChange(id, oldState, state)
+					segmentStateChangeListeners.forEach[onSegmentStateChange(id, oldState, state)]
 				}
 			}
 
@@ -53,7 +54,7 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 				if(oldState != state) {
 					logger.trace('''turnoutState changed compared to cached values. Cached = «oldState» new =«state»''')
 					turnouts.put(id, state)
-					turnoutStateChangeListener?.onTurnoutStateChange(id, oldState, state)
+					turnoutStateChangeListeners.forEach[onTurnoutStateChange(id, oldState, state)]
 				}
 			}
 
@@ -66,7 +67,7 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 				if(oldState != state) {
 					logger.trace('''segmentOccupancy changed compared to cached values. Cached = «oldState» new =«state»''')
 					occupancy.put(id, state)
-					segmentOccupancyChangeListener?.onSegmentOccupancyChange(id, oldState, state)
+					segmentOccupancyChangeListeners.forEach[onSegmentOccupancyChange(id, oldState, state)]
 				}
 			}
 
@@ -110,6 +111,18 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 		synchronized(turnouts) {
 			return new ArrayList<Integer>(Collections.list(turnouts.keys));
 		}
+	}
+	
+	override registerTurnoutStateChangeListener(ITurnoutStateChangeListener listener) {
+		turnoutStateChangeListeners.add(listener)
+	}
+	
+	override registerSegmentStateChangeListener(ISegmentStateChangeListener listener) {
+		segmentStateChangeListeners.add(listener)
+	}
+	
+	override registerSegmentOccupancyChangeListener(ISegmentOccupancyChangeListener listener) {
+		segmentOccupancyChangeListeners.add(listener)
 	}
 
 }

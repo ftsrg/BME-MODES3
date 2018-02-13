@@ -16,7 +16,7 @@ class TurnoutsDemo extends AbstractCommunicationComponent implements ITurnoutCom
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
 		locator.trackElementCommandCallback.turnoutCommandListener = this
-		locator.trackElementStateRegistry.turnoutStateChangeListener = this
+		locator.trackElementStateRegistry.registerTurnoutStateChangeListener = this
 	}
 
 	override run() {
