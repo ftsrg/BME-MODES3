@@ -19,18 +19,22 @@ class YakinduMessageSender implements IYakinduMessageSender {
 
 	override canGoTo(int targetID, ConnectionDirection direction) {
 		mms.sendMessage(new YakinduProtocolMessage(targetID, direction, YakinduMessageType.CAN_GO_TO))
+		logger.debug('''YakinduCanGoTo message sent with id=«targetID» direction=«direction»''')
 	}
 
 	override cannotGoTo(int targetID, ConnectionDirection direction) {
 		mms.sendMessage(new YakinduProtocolMessage(targetID, direction, YakinduMessageType.CANNOT_GO_TO))
+		logger.debug('''YakinduCannotGoTo message sent with id=«targetID» direction=«direction»''')
 	}
 
 	override reserveTo(int targetID, ConnectionDirection direction) {
 		mms.sendMessage(new YakinduProtocolMessage(targetID, direction, YakinduMessageType.RESERVE_TO))
+		logger.debug('''YakinduReserveTo message sent with id=«targetID» direction=«direction»''')
 	}
 
 	override releaseTo(int targetID, ConnectionDirection direction) {
 		mms.sendMessage(new YakinduProtocolMessage(targetID, direction, YakinduMessageType.RELEASE_TO))
+		logger.debug('''YakinduReleaseTo message sent with id=«targetID» direction=«direction»''')
 	}
 
 }

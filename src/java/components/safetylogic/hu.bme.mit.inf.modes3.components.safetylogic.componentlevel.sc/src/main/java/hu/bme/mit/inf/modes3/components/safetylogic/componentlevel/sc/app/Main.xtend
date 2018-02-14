@@ -14,11 +14,15 @@ import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import hu.bme.mit.inf.modes3.utils.conf.layout.SegmentDirection
+import org.slf4j.impl.SimpleLogger
 import org.slf4j.impl.SimpleLoggerFactory
 
 class Main {
 
 	def static void main(String[] args) {
+		System.setProperty(SimpleLogger.LOG_FILE_KEY, "System.out")
+		System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace")
+
 		val loggerFactory = new SimpleLoggerFactory
 
 		val registry = new ArgumentRegistry(loggerFactory)
@@ -53,7 +57,7 @@ class Main {
 
 		val yakinduStack = JsonDispatcherFactory::createMQTTStackWithJSON(registry, loggerFactory)
 		val yakinduDispatcher = (yakinduStack.dispatcher as JsonMessageDispatcher)
-		val yakinduProtocolDispatcher = new YakinduProtocolDispatcher
+		val yakinduProtocolDispatcher = new YakinduProtocolDispatcher(loggerFactory)
 		yakinduDispatcher.canGoToListener = yakinduProtocolDispatcher
 		yakinduDispatcher.cannotGoToListener = yakinduProtocolDispatcher
 		yakinduDispatcher.releaseToListener = yakinduProtocolDispatcher

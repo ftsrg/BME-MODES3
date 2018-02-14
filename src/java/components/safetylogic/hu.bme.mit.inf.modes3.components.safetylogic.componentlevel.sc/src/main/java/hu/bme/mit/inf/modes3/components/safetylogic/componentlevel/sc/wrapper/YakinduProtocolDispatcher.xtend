@@ -8,10 +8,18 @@ import java.util.Set
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentSkipListSet
 import org.eclipse.xtend.lib.annotations.Data
+import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
 class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduMessageSender {
 
-	val Map<Integer, Set<PortWithDirection>> segmentsToBeNotified = new ConcurrentHashMap
+	val Logger logger
+	val Map<Integer, Set<PortWithDirection>> segmentsToBeNotified
+
+	new(ILoggerFactory factory) {
+		this.logger = factory.getLogger(class.name)
+		this.segmentsToBeNotified = new ConcurrentHashMap
+	}
 
 	override registerSegment(int segmentID, PortWithDirection portToBeNotified) {
 		var Set<PortWithDirection> ports = segmentsToBeNotified.get(segmentID)
@@ -27,23 +35,29 @@ class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduM
 	}
 
 	override canGoTo(int targetID, ConnectionDirection direction) {
+		logger.debug('''YakinduCanGoTo message received with id=«targetID» direction=«direction»''')
 		getTargetPort(targetID, direction)?.raiseCanGo
 	}
 
 	override cannotGoTo(int targetID, ConnectionDirection direction) {
+		logger.debug('''YakinduCannotGoTo message received with id=«targetID» direction=«direction»''')
 		getTargetPort(targetID, direction)?.raiseCannotGo
 	}
 
 	override releaseTo(int targetID, ConnectionDirection direction) {
+		logger.debug('''YakinduReleaseTo message received with id=«targetID» direction=«direction»''')
 		getTargetPort(targetID, direction)?.raiseRelease
 	}
 
 	override reserveTo(int targetID, ConnectionDirection direction) {
+		logger.debug('''YakinduReserveTo message received with id=«targetID» direction=«direction»''')
 		getTargetPort(targetID, direction)?.raiseReserve
 	}
 
 	private def getTargetPort(int targetID, ConnectionDirection direction) {
-		segmentsToBeNotified.get(targetID)?.findFirst[it.direction == direction]?.providedPort
+		val targetSegment = segmentsToBeNotified.get(targetID)?.findFirst[it.direction == direction]
+		logger.trace('''Yakindu target port was «IF targetSegment === null»not«ENDIF» found with id=«targetID» direction=«direction»''')
+		targetSegment?.providedPort
 	}
 }
 

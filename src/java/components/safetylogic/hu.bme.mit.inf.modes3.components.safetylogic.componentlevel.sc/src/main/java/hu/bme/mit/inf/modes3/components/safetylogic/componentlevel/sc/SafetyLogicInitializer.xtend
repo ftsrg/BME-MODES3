@@ -17,10 +17,15 @@ import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.Tu
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.YakinduProtocolAdapter
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry
+import org.slf4j.ILoggerFactory
+import org.slf4j.Logger
 
 import static hu.bme.mit.inf.modes3.utils.conf.layout.whole.ConnectionDirection.*
 
 class SafetyLogicInitializer {
+	val Logger logger
+	val ILoggerFactory loggerFactory
+
 	val IYakinduProtocolRestarter protocolRestarter
 	val IYakinduProtocolDispatcher protocolDispatcher
 
@@ -29,7 +34,10 @@ class SafetyLogicInitializer {
 	val ITrackElementCommander commander
 	val ITrackElementStateRegistry stateRegistry
 
-	new(IYakinduProtocolRestarter protocolRestarter, IYakinduProtocolDispatcher protocolDispatcher, IYakinduMessageSender messageSender, ITrackElementCommander commander, ITrackElementStateRegistry stateRegistry) {
+	new(ILoggerFactory factory, IYakinduProtocolRestarter protocolRestarter, IYakinduProtocolDispatcher protocolDispatcher, IYakinduMessageSender messageSender, ITrackElementCommander commander, ITrackElementStateRegistry stateRegistry) {
+		this.logger = factory.getLogger(class.name)
+		this.loggerFactory = factory
+
 		this.protocolRestarter = protocolRestarter
 		this.protocolDispatcher = protocolDispatcher
 		this.messageSender = messageSender
@@ -38,7 +46,7 @@ class SafetyLogicInitializer {
 	}
 
 	def init(int turnoutID) {
-		switch (turnoutID) {
+		val component = switch (turnoutID) {
 			case 1: initT1
 			case 2: initT2
 			case 3: initT3
@@ -46,18 +54,20 @@ class SafetyLogicInitializer {
 			case 5: initT5
 			case 6: initT6
 		}
+		logger.debug('''SafetyLogic is «IF component === null»not«ENDIF» initialized for turnout (ID=«turnoutID»)''')
+		return component
 	}
 
 	private def initT1() {
 		val component = new AsyncT1Component
 
 		// segments train interfaces
-		new SegmentOccupancyNotifier(14, component.t1TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(12, component.s12TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(15, component.s15TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 14, component.t1TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 12, component.s12TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 15, component.s15TrainProvided, stateRegistry)
 
 		// turnout control interface
-		new TurnoutDirectionNotifier(1, component.t1TurnoutProvided, stateRegistry)
+		new TurnoutDirectionNotifier(loggerFactory, 1, component.t1TurnoutProvided, stateRegistry)
 
 		// sections control interfaces
 		val s12ControlProvider = component.s12ControlProvided
@@ -86,14 +96,14 @@ class SafetyLogicInitializer {
 		val component = new AsyncT2Component
 
 		// segments train interfaces
-		new SegmentOccupancyNotifier(28, component.t2TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(18, component.s18TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(24, component.s24TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(29, component.s29TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(31, component.s31TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 28, component.t2TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 18, component.s18TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 24, component.s24TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 29, component.s29TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 31, component.s31TrainProvided, stateRegistry)
 
 		// turnout control interface
-		new TurnoutDirectionNotifier(2, component.t2TurnoutProvided, stateRegistry)
+		new TurnoutDirectionNotifier(loggerFactory, 2, component.t2TurnoutProvided, stateRegistry)
 
 		// sections control interfaces
 		val s18ControlProvider = component.s18ControlProvided
@@ -130,16 +140,16 @@ class SafetyLogicInitializer {
 		val component = new AsyncT3Component
 
 		// segments train interfaces
-		new SegmentOccupancyNotifier(25, component.t3_1TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(32, component.t3_2TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(19, component.s19TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(20, component.s20TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(26, component.s26TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(30, component.s30TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 25, component.t3_1TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 32, component.t3_2TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 19, component.s19TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 20, component.s20TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 26, component.s26TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 30, component.s30TrainProvided, stateRegistry)
 
 		// turnout control interface
-		new TurnoutDirectionNotifier(3, component.t3_1TurnoutProvided, stateRegistry)
-		new TurnoutDirectionNotifier(3, component.t3_2TurnoutProvided, stateRegistry)
+		new TurnoutDirectionNotifier(loggerFactory, 3, component.t3_1TurnoutProvided, stateRegistry)
+		new TurnoutDirectionNotifier(loggerFactory, 3, component.t3_2TurnoutProvided, stateRegistry)
 
 		// sections control interfaces
 		val s19ControlProvider = component.s19ControlProvided
@@ -178,16 +188,16 @@ class SafetyLogicInitializer {
 		val component = new AsyncT4Component
 
 		// segments train interfaces
-		new SegmentOccupancyNotifier(3, component.t4TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(1, component.s01TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(2, component.s02TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(4, component.s04TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(5, component.s05TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(6, component.s06TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(7, component.s07TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 3, component.t4TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 1, component.s01TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 2, component.s02TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 4, component.s04TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 5, component.s05TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 6, component.s06TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 7, component.s07TrainProvided, stateRegistry)
 
 		// turnout control interface
-		new TurnoutDirectionNotifier(4, component.t4TurnoutProvided, stateRegistry)
+		new TurnoutDirectionNotifier(loggerFactory, 4, component.t4TurnoutProvided, stateRegistry)
 
 		// sections control interfaces
 		val s01ControlProvider = component.s01ControlProvided
@@ -231,14 +241,14 @@ class SafetyLogicInitializer {
 		val component = new AsyncT5Component
 
 		// segments train interfaces
-		new SegmentOccupancyNotifier(9, component.t5TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(8, component.s08TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(10, component.s10TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(11, component.s11TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(13, component.s13TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 9, component.t5TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 8, component.s08TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 10, component.s10TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 11, component.s11TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 13, component.s13TrainProvided, stateRegistry)
 
 		// turnout control interface
-		new TurnoutDirectionNotifier(5, component.t5TurnoutProvided, stateRegistry)
+		new TurnoutDirectionNotifier(loggerFactory, 5, component.t5TurnoutProvided, stateRegistry)
 
 		// sections control interfaces		
 		val s08ControlProvider = component.s08ControlProvided
@@ -274,14 +284,14 @@ class SafetyLogicInitializer {
 		val component = new AsyncT6Component
 
 		// segments train interfaces
-		new SegmentOccupancyNotifier(21, component.t6TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(17, component.s17TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(22, component.s22TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(23, component.s23TrainProvided, stateRegistry)
-		new SegmentOccupancyNotifier(27, component.s27TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 21, component.t6TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 17, component.s17TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 22, component.s22TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 23, component.s23TrainProvided, stateRegistry)
+		new SegmentOccupancyNotifier(loggerFactory, 27, component.s27TrainProvided, stateRegistry)
 
 		// turnout control interface
-		new TurnoutDirectionNotifier(6, component.t6TurnoutProvided, stateRegistry)
+		new TurnoutDirectionNotifier(loggerFactory, 6, component.t6TurnoutProvided, stateRegistry)
 
 		// sections control interfaces		
 		val s17ControlProvider = component.s17ControlProvided

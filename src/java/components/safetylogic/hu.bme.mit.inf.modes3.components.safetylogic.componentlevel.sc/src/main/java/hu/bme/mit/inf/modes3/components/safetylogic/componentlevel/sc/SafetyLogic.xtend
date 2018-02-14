@@ -12,7 +12,7 @@ class SafetyLogic implements ISafetyLogic {
 
 	@Accessors(PUBLIC_SETTER) var ISafetyLogicBridge safetyLogicBridge
 
-	val ILoggerFactory factory
+	val ILoggerFactory loggerFactory
 	val Logger logger
 
 	val int turnoutID
@@ -23,7 +23,7 @@ class SafetyLogic implements ISafetyLogic {
 	val ExecutorService executor
 
 	new(int turnoutID, ILoggerFactory factory) {
-		this.factory = factory
+		this.loggerFactory = factory
 		this.logger = factory.getLogger(class.name)
 		this.turnoutID = turnoutID
 		this.executor = Executors.newFixedThreadPool(2)
@@ -32,20 +32,22 @@ class SafetyLogic implements ISafetyLogic {
 	override setSafetyLogicBridge(ISafetyLogicBridge safetyLogicBridge) {
 		this.safetyLogicBridge = safetyLogicBridge
 
-		val yakinduProtocolRestarter = new YakinduProtocolRestarter(factory)
+		val yakinduProtocolRestarter = new YakinduProtocolRestarter(loggerFactory)
 		protocolRestarter = yakinduProtocolRestarter
 
 		val commander = safetyLogicBridge.trackElementCommander
 		val trackElementStateRegistry = safetyLogicBridge.trackElementStateRegistry
 		val protocolDispatcher = safetyLogicBridge.yakinduProtocolDispatcher
 
-		val slInitializer = new SafetyLogicInitializer(yakinduProtocolRestarter, protocolDispatcher, safetyLogicBridge, commander, trackElementStateRegistry)
+		val slInitializer = new SafetyLogicInitializer(loggerFactory, yakinduProtocolRestarter, protocolDispatcher, safetyLogicBridge, commander, trackElementStateRegistry)
 		component = slInitializer.init(turnoutID)
 	}
 
 	override run() {
 		executor.execute(component)
+		logger.debug('''SafetyLogic for turnout (ID=«turnoutID») is started''')
 		executor.execute(protocolRestarter)
+		logger.debug('''YakinduProtocolRestarter is started''')
 	// Thread.currentThread.join
 	}
 
