@@ -3,6 +3,3 @@
   remote_user: debian
   tasks:
   - include: utils/deploy-gradle.yaml service_name=trackelementcontroller
-# TODO: copy the yakindu safetylogic from the safetylogic subfolder to one level above, so that it can be correctly deployed. 
-# See /config-management/ansible/utils/deploy-gradle.yaml
-  #  - include: utils/deploy-gradle.yaml service_name=yakindusafetylogic
