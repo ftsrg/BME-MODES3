@@ -11,6 +11,11 @@ class JsonDispatcherFactory {
 	def static createMQTTStackWithJSON(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
 		val topics = InternalMessageToTopicMapper.INSTANCE.getTopics(YakinduProtocolMessage.simpleName)
 		val dispatcher = new JsonMessageDispatcher(factory)
-		return MessagingServiceFactory::createStackForTopics(argumentRegistry, factory, topics, dispatcher)
+		val communicationStack = MessagingServiceFactory::createStackForTopics(argumentRegistry, factory, topics, dispatcher)
+
+		val logger = factory.getLogger(JsonDispatcherFactory.name)
+		logger.debug('''Subscribed for Yakindu topics: «topics»''')
+
+		return communicationStack
 	}
 }

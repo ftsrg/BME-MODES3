@@ -24,6 +24,7 @@ class Main {
 		System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace")
 
 		val loggerFactory = new SimpleLoggerFactory
+		val logger = loggerFactory.getLogger(Main.name)
 
 		val registry = new ArgumentRegistry(loggerFactory)
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "ID of the turnout", String))
@@ -54,6 +55,7 @@ class Main {
 		topics.addAll(turnoutOccupancyTopic)
 
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)
+		logger.debug('''Subscribed for railway track topics: «topics»''')
 
 		val yakinduStack = JsonDispatcherFactory::createMQTTStackWithJSON(registry, loggerFactory)
 		val yakinduDispatcher = (yakinduStack.dispatcher as JsonMessageDispatcher)
