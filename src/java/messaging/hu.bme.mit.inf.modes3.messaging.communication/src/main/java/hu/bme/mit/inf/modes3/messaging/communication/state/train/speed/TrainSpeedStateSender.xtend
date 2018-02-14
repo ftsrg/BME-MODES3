@@ -18,7 +18,7 @@ class TrainSpeedStateSender implements ITrainSpeedStateSender {
 	}
 
 	override sendTrainReferenceSpeedAndDirection(int id, int speed, TrainDirection direction) {
-		logger.info('''TrainReferenceSpeedMessage sent with id=«id»(speed=«speed») direction=«direction»''')
 		mms.sendMessage(new TrainReferenceSpeedMessage(id, speed, direction))
+		logger.debug('''TrainReferenceSpeedMessage sent with id=«id»(speed=«speed») direction=«direction»''')
 	}
 }

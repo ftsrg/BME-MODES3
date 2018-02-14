@@ -22,18 +22,18 @@ class TrackElementStateSender implements ITrackElementStateSender {
 	}
 
 	override sendSegmentOccupation(int id, SegmentOccupancy state) {
-		logger.trace('''SegmentOccupation message sent with id=«id» state=«state»''')
 		mms.sendMessage(new SegmentOccupancyMessage(id, state))
+		logger.debug('''SegmentOccupation message sent with id=«id» state=«state»''')
 	}
 
 	override sendSegmentState(int id, SegmentState state) {
-		logger.trace('''SegmentState message sent with id=«id» state=«state»''')
 		mms.sendMessage(new SegmentStateMessage(id, state))
+		logger.debug('''SegmentState message sent with id=«id» state=«state»''')
 	}
 
 	override sendTurnoutState(int id, TurnoutState state) {
-		logger.trace('''TurnoutState message sent with id=«id» state=«state»''')
 		mms.sendMessage(new TurnoutStateMessage(id, state))
+		logger.debug('''TurnoutState message sent with id=«id» state=«state»''')
 	}
 
 }
