@@ -27,7 +27,7 @@ class LayoutConfiguration {
 	private val LayoutConfigurationData layout
 
 	private new() {
-		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData, class.getResourceAsStream(LAYOUT_CONFIG))
+		val LayoutConfigurationData loadedConfiguration = GsonLoader.loadTypeFromInputStream(LayoutConfigurationData, class.classLoader.getResourceAsStream(LAYOUT_CONFIG))
 
 		val inverseMapping = loadedConfiguration.turnoutsSegmentIds.flatMap([key, value|value -> Integer.valueOf(key)])
 

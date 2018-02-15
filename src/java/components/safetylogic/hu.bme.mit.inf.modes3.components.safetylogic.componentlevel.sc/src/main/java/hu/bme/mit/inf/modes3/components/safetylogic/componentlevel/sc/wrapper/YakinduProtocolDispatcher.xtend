@@ -2,6 +2,7 @@ package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper
 
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IYakinduMessageSender
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comparators.ProvidedProtocolInterfaceComparator
 import hu.bme.mit.inf.modes3.utils.conf.layout.whole.ConnectionDirection
 import java.util.Map
 import java.util.Set
@@ -24,7 +25,7 @@ class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduM
 	override registerSegment(int segmentID, PortWithDirection portToBeNotified) {
 		var Set<PortWithDirection> ports = segmentsToBeNotified.get(segmentID)
 		if(ports === null) {
-			synchronized(ports) {
+			synchronized(this) {
 				if(ports === null) {
 					ports = new ConcurrentSkipListSet
 					segmentsToBeNotified.put(segmentID, ports)
@@ -62,7 +63,16 @@ class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduM
 }
 
 @Data
-class PortWithDirection {
+class PortWithDirection implements Comparable<PortWithDirection> {
 	ConnectionDirection direction
 	ProtocolInterface.Provided providedPort
+
+	override compareTo(PortWithDirection o) {
+		val i = direction.compareTo(o.direction)
+		if(i != 0) {
+			return i
+		} else {
+			return (new ProvidedProtocolInterfaceComparator).compare(providedPort, o.providedPort)
+		}
+	}
 }
