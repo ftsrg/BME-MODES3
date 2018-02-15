@@ -2,6 +2,7 @@ package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc
 
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.bridge.ISafetyLogicBridge
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.YakinduProtocolRestarter
+import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -41,6 +42,9 @@ class SafetyLogic implements ISafetyLogic {
 
 		val slInitializer = new SafetyLogicInitializer(loggerFactory, yakinduProtocolRestarter, protocolDispatcher, safetyLogicBridge, commander, trackElementStateRegistry)
 		component = slInitializer.init(turnoutID)
+
+		// initializing turnout direction
+		commander.sendTurnoutCommandWithTurnoutId(turnoutID, TurnoutState.STRAIGHT)
 	}
 
 	override run() {

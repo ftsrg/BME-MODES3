@@ -531,11 +531,11 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Occupied_lr1_lr1() {
-		return sCIProtocolProvidedCCW.reserve;
+		return sCIProtocolProvidedCW.reserve;
 	}
 	
 	private boolean check_main_Occupied_lr2_lr2() {
-		return sCIProtocolProvidedCW.reserve;
+		return sCIProtocolProvidedCCW.reserve;
 	}
 	
 	private boolean check_main_Occupied_lr3_lr3() {
@@ -669,11 +669,11 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private void effect_main_Occupied_lr1_lr1() {
-		sCIProtocolRequiredCCW.raiseCanGo();
+		sCIProtocolRequiredCW.raiseCanGo();
 	}
 	
 	private void effect_main_Occupied_lr2_lr2() {
-		sCIProtocolRequiredCW.raiseCanGo();
+		sCIProtocolRequiredCCW.raiseCanGo();
 	}
 	
 	private void effect_main_Occupied_lr3_lr3() {
@@ -756,8 +756,6 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0() {
 		exitSequence_main_Locking_protocol();
-		sCIProtocolRequiredCCW.raiseReserve();
-		
 		enterSequence_main_Stop_default();
 	}
 	
