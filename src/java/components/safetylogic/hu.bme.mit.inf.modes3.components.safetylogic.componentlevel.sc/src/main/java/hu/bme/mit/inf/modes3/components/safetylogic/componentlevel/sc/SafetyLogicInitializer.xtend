@@ -124,7 +124,7 @@ class SafetyLogicInitializer {
 
 		// turnout protocol interfaces
 		component.t2ProtocolRequiredDivergent.registerListener(new YakinduProtocolAdapter(30, DIVERGENT, messageSender))
-		protocolDispatcher.registerSegment(28, new PortWithDirection(DIVERGENT, component.t2ProtocolProvidedDivergent))
+		protocolDispatcher.registerSegment(28, new PortWithDirection(CCW, component.t2ProtocolProvidedDivergent))
 
 		// section protocol interfaces
 		component.s18ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(6, CW, messageSender))
