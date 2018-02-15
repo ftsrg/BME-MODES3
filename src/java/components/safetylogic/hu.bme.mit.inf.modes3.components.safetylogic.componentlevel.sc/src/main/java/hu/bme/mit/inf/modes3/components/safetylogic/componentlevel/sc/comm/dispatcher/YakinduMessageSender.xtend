@@ -13,8 +13,8 @@ class YakinduMessageSender implements IYakinduMessageSender {
 	var protected MessagingService mms
 
 	new(MessagingService mms, ILoggerFactory factory) {
+		this.logger = factory.getLogger(class.name)
 		this.mms = mms
-		this.logger = factory.getLogger(this.class.name)
 	}
 
 	override canGoTo(int targetID, ConnectionDirection direction) {

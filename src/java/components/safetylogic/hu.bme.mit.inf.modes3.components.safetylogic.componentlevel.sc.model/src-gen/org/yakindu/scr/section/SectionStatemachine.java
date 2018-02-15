@@ -590,6 +590,10 @@ public class SectionStatemachine implements ISectionStatemachine {
 		return sCIProtocolProvidedCCW.reserve;
 	}
 	
+	private boolean check_main_Locking_protocol_tr2_tr2() {
+		return sCITrainProvided.unoccupy;
+	}
+	
 	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0_tr0() {
 		return sCIProtocolProvidedCW.cannotGo;
 	}
@@ -743,6 +747,11 @@ public class SectionStatemachine implements ISectionStatemachine {
 		sCIProtocolRequiredCCW.raiseCannotGo();
 		
 		enterSequence_main_Stop_default();
+	}
+	
+	private void effect_main_Locking_protocol_tr2() {
+		exitSequence_main_Locking_protocol();
+		enterSequence_main_Free_default();
 	}
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0() {
@@ -1038,11 +1047,15 @@ public class SectionStatemachine implements ISectionStatemachine {
 			if (check_main_Locking_protocol_tr1_tr1()) {
 				effect_main_Locking_protocol_tr1();
 			} else {
-				if (check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0_tr0()) {
-					effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0();
+				if (check_main_Locking_protocol_tr2_tr2()) {
+					effect_main_Locking_protocol_tr2();
 				} else {
-					if (check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1_tr1()) {
-						effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1();
+					if (check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0_tr0()) {
+						effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0();
+					} else {
+						if (check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1_tr1()) {
+							effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1();
+						}
 					}
 				}
 			}
@@ -1057,11 +1070,15 @@ public class SectionStatemachine implements ISectionStatemachine {
 			if (check_main_Locking_protocol_tr1_tr1()) {
 				effect_main_Locking_protocol_tr1();
 			} else {
-				if (check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0_tr0()) {
-					effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0();
+				if (check_main_Locking_protocol_tr2_tr2()) {
+					effect_main_Locking_protocol_tr2();
 				} else {
-					if (check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1_tr1()) {
-						effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1();
+					if (check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0_tr0()) {
+						effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0();
+					} else {
+						if (check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1_tr1()) {
+							effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1();
+						}
 					}
 				}
 			}

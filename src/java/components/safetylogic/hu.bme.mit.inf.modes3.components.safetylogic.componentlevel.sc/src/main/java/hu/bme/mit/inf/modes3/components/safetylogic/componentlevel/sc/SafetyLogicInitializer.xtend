@@ -84,10 +84,10 @@ class SafetyLogicInitializer {
 
 		// section protocol interfaces
 		component.s12ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(1, CCW, messageSender))
-		protocolDispatcher.registerSegment(12, new PortWithDirection(CCW, component.s12ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(12, new PortWithDirection(CW, component.s12ProtocolProvidedCCW))
 
 		component.s15ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(24, CW, messageSender))
-		protocolDispatcher.registerSegment(15, new PortWithDirection(CW, component.s15ProtocolProvidedCW))
+		protocolDispatcher.registerSegment(15, new PortWithDirection(CCW, component.s15ProtocolProvidedCW))
 
 		return component
 	}
@@ -127,11 +127,11 @@ class SafetyLogicInitializer {
 		protocolDispatcher.registerSegment(28, new PortWithDirection(DIVERGENT, component.t2ProtocolProvidedDivergent))
 
 		// section protocol interfaces
-		component.s18ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(5, CW, messageSender))
-		protocolDispatcher.registerSegment(18, new PortWithDirection(CW, component.s18ProtocolProvidedCW))
+		component.s18ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(6, CW, messageSender))
+		protocolDispatcher.registerSegment(18, new PortWithDirection(CCW, component.s18ProtocolProvidedCW))
 
 		component.s24ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(15, CCW, messageSender))
-		protocolDispatcher.registerSegment(24, new PortWithDirection(CCW, component.s24ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(24, new PortWithDirection(CW, component.s24ProtocolProvidedCCW))
 
 		return component
 	}
@@ -170,16 +170,16 @@ class SafetyLogicInitializer {
 
 		// section protocol interfaces
 		component.s19ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(7, CW, messageSender))
-		protocolDispatcher.registerSegment(19, new PortWithDirection(CW, component.s19ProtocolProvidedCW))
+		protocolDispatcher.registerSegment(19, new PortWithDirection(CCW, component.s19ProtocolProvidedCW))
 
 		component.s20ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(13, CW, messageSender))
-		protocolDispatcher.registerSegment(20, new PortWithDirection(CW, component.s20ProtocolProvidedCW))
+		protocolDispatcher.registerSegment(20, new PortWithDirection(CCW, component.s20ProtocolProvidedCW))
 
 		component.s26ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(27, CCW, messageSender))
-		protocolDispatcher.registerSegment(26, new PortWithDirection(CCW, component.s26ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(26, new PortWithDirection(CW, component.s26ProtocolProvidedCCW))
 
 		component.s30ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(28, CCW, messageSender))
-		protocolDispatcher.registerSegment(30, new PortWithDirection(CCW, component.s30ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(30, new PortWithDirection(CW, component.s30ProtocolProvidedCCW))
 
 		return component
 	}
@@ -226,13 +226,13 @@ class SafetyLogicInitializer {
 
 		// section protocol interfaces
 		component.s01ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(12, CW, messageSender))
-		protocolDispatcher.registerSegment(1, new PortWithDirection(CW, component.s01ProtocolProvidedCW))
+		protocolDispatcher.registerSegment(1, new PortWithDirection(CCW, component.s01ProtocolProvidedCW))
 
 		component.s06ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(18, CCW, messageSender))
-		protocolDispatcher.registerSegment(6, new PortWithDirection(CCW, component.s06ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(6, new PortWithDirection(CW, component.s06ProtocolProvidedCCW))
 
 		component.s07ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(19, CCW, messageSender))
-		protocolDispatcher.registerSegment(7, new PortWithDirection(CCW, component.s07ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(7, new PortWithDirection(CW, component.s07ProtocolProvidedCCW))
 
 		return component
 	}
@@ -269,13 +269,13 @@ class SafetyLogicInitializer {
 
 		// section protocol interfaces
 		component.s10ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(17, CW, messageSender))
-		protocolDispatcher.registerSegment(10, new PortWithDirection(CW, component.s10ProtocolProvidedCW))
+		protocolDispatcher.registerSegment(10, new PortWithDirection(CCW, component.s10ProtocolProvidedCW))
 
 		component.s11ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(14, CW, messageSender))
-		protocolDispatcher.registerSegment(11, new PortWithDirection(CW, component.s11ProtocolProvidedCW))
+		protocolDispatcher.registerSegment(11, new PortWithDirection(CCW, component.s11ProtocolProvidedCW))
 
 		component.s13ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(17, CCW, messageSender))
-		protocolDispatcher.registerSegment(13, new PortWithDirection(CCW, component.s13ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(13, new PortWithDirection(CW, component.s13ProtocolProvidedCCW))
 
 		return component
 	}
@@ -311,8 +311,8 @@ class SafetyLogicInitializer {
 		protocolRestarter.registerSection(s27ControlProvider)
 
 		// section protocol interfaces
-		component.s17ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(10, CW, messageSender))
-		protocolDispatcher.registerSegment(17, new PortWithDirection(CCW, component.s17ProtocolProvidedCCW))
+		component.s17ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(10, CCW, messageSender))
+		protocolDispatcher.registerSegment(17, new PortWithDirection(CW, component.s17ProtocolProvidedCCW))
 
 		component.s22ProtocolRequiredCW.registerListener(new ProtocolInterface.Listener.Required() {
 
@@ -332,8 +332,8 @@ class SafetyLogicInitializer {
 
 		})
 
-		component.s27ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(26, CCW, messageSender))
-		protocolDispatcher.registerSegment(27, new PortWithDirection(CW, component.s27ProtocolProvidedCW))
+		component.s27ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(26, CW, messageSender))
+		protocolDispatcher.registerSegment(27, new PortWithDirection(CCW, component.s27ProtocolProvidedCW))
 
 		return component
 	}

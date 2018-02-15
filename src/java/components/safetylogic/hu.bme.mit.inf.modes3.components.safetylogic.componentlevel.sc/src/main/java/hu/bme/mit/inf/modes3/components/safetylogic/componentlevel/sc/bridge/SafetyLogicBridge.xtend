@@ -23,6 +23,7 @@ class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafet
 		this.yakinduMessageSender = new YakinduMessageSender(yakinduStack, factory)
 		this.safetyLogic = safetyLogic
 		this.safetyLogic.safetyLogicBridge = this
+		yakinduStack.start
 	}
 
 	override run() {

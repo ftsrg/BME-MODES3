@@ -13,7 +13,6 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
-import hu.bme.mit.inf.modes3.utils.conf.layout.SegmentDirection
 import org.slf4j.impl.SimpleLogger
 import org.slf4j.impl.SimpleLoggerFactory
 
@@ -37,21 +36,16 @@ class Main {
 		val turnoutID = Integer.valueOf(hostname.split("\\.").head.replace('t', ''))
 
 		val controlledSections = LayoutConfiguration.INSTANCE.getControlledSections(turnoutID)
-		val facingSegment = LayoutConfiguration.INSTANCE.getTurnoutVicinitySegmentsByDirection(turnoutID, SegmentDirection.FACING)
 		val turnoutSegmentItself = LayoutConfiguration.INSTANCE.getSegmentIdsOfTurnout(turnoutID)
 
-		val sectionTopics = controlledSections.map[TopicFactory::createSegmentTopics(it, #{SegmentCommand, SegmentStateMessage})].flatten.toSet
-		val facingSegmentOccupancyTopic = facingSegment.map[TopicFactory::createSegmentTopics(it, #{SegmentOccupancyMessage})].flatten.toSet
+		val sectionTopics = controlledSections.map[TopicFactory::createSegmentTopics(it, #{SegmentCommand, SegmentStateMessage, SegmentOccupancyMessage})].flatten.toSet
 		val turnoutOccupancyTopic = turnoutSegmentItself.map[TopicFactory::createSegmentTopics(it, #{SegmentOccupancyMessage})].flatten.toSet
 
 		val turnoutTopics = TopicFactory::createTurnoutTopics(turnoutID)
-		val defaultTopics = TopicFactory::createDefaultTopics
 
 		val topics = newHashSet
 		topics.addAll(turnoutTopics)
 		topics.addAll(sectionTopics)
-		topics.addAll(defaultTopics)
-		topics.addAll(facingSegmentOccupancyTopic)
 		topics.addAll(turnoutOccupancyTopic)
 
 		val communicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, topics)

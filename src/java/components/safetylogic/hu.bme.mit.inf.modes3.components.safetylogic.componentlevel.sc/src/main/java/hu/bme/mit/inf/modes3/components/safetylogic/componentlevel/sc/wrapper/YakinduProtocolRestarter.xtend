@@ -9,7 +9,7 @@ import org.slf4j.Logger
 
 class YakinduProtocolRestarter implements Runnable, IYakinduProtocolRestarter {
 
-	private static val SLEEP_TIME = 50
+	private static val SLEEP_TIME = 500
 
 	val Logger logger
 	val Set<SectionControlInterface.Provided> sectionsToBeRestarted
