@@ -79,8 +79,8 @@ class SafetyLogicInitializer {
 		protocolRestarter.registerSection(s15ControlProvider)
 
 		// turnout protocol interfaces
-		component.t1ProtocolRequiredDivergent.registerListener(new YakinduProtocolAdapter(9, DIVERGENT, messageSender))
-		protocolDispatcher.registerSegment(14, new PortWithDirection(DIVERGENT, component.t1ProtocolProvidedDivergent))
+		component.t1ProtocolRequiredDivergent.registerListener(new YakinduProtocolAdapter(11, DIVERGENT, messageSender))
+		protocolDispatcher.registerSegment(14, new PortWithDirection(CW, component.t1ProtocolProvidedDivergent))
 
 		// section protocol interfaces
 		component.s12ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(1, CCW, messageSender))
@@ -272,7 +272,7 @@ class SafetyLogicInitializer {
 		protocolDispatcher.registerSegment(10, new PortWithDirection(CCW, component.s10ProtocolProvidedCW))
 
 		component.s11ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(14, CW, messageSender))
-		protocolDispatcher.registerSegment(11, new PortWithDirection(CCW, component.s11ProtocolProvidedCW))
+		protocolDispatcher.registerSegment(11, new PortWithDirection(DIVERGENT, component.s11ProtocolProvidedCW))
 
 		component.s13ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(17, CCW, messageSender))
 		protocolDispatcher.registerSegment(13, new PortWithDirection(CW, component.s13ProtocolProvidedCCW))
