@@ -19,6 +19,7 @@ class LayoutConfiguration {
 		private Map<Integer, Integer> turnoutIdBySegmentId // map segment ID to turnout ID (the turnout's occupancy can be sensed by this segment)
 		private Map<String, Set<Integer>> turnoutsResponsibilities // which turnout is responsible for which sections
 		private Map<String, TurnoutVicinity> turnoutVicinities
+		private Map<String, SectionVicinity> sectionVicinities
 	}
 
 	public static val INSTANCE = new LayoutConfiguration
@@ -31,7 +32,7 @@ class LayoutConfiguration {
 
 		val inverseMapping = loadedConfiguration.turnoutsSegmentIds.flatMap([key, value|value -> Integer.valueOf(key)])
 
-		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections, loadedConfiguration.turnoutsSegmentIds, inverseMapping, loadedConfiguration.turnoutsResponsibilities, loadedConfiguration.turnoutVicinities)
+		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections, loadedConfiguration.turnoutsSegmentIds, inverseMapping, loadedConfiguration.turnoutsResponsibilities, loadedConfiguration.turnoutVicinities, loadedConfiguration.sectionVicinities)
 	}
 
 	def getSections() {
@@ -95,6 +96,13 @@ class LayoutConfiguration {
 	 */
 	def getControlledSectionIds() {
 		asUnmodifiableSet(layout.turnoutsResponsibilities.values.flatten.toSet)
+	}
+
+	/**
+	 * @return the vicinity of the section
+	 */
+	def getSectionVicinity(int sectionId) {
+		layout.sectionVicinities.get(String.valueOf(sectionId))
 	}
 
 	/**

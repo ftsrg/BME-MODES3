@@ -1,9 +1,9 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher
 
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.ConnectionDirection
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.messages.YakinduMessageType
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.messages.YakinduProtocolMessage
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.utils.conf.layout.whole.ConnectionDirection
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger

@@ -1,8 +1,8 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper
 
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.ConnectionDirection
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IYakinduMessageSender
-import hu.bme.mit.inf.modes3.utils.conf.layout.whole.ConnectionDirection
 
 class YakinduProtocolAdapter implements ProtocolInterface.Listener.Required {
 

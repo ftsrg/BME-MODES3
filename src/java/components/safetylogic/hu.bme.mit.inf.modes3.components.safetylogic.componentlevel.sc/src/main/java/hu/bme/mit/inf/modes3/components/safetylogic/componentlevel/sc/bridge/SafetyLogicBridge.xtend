@@ -1,5 +1,6 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.bridge
 
+import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.ConnectionDirection
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.ISafetyLogic
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IYakinduMessageSender
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.YakinduMessageSender
@@ -7,7 +8,6 @@ import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.IY
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.PortWithDirection
 import hu.bme.mit.inf.modes3.messaging.communication.common.AbstractCommunicationComponent
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.utils.conf.layout.whole.ConnectionDirection
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 
@@ -25,7 +25,7 @@ class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafet
 		this.safetyLogic.safetyLogicBridge = this
 		yakinduStack.start
 	}
-
+	
 	override run() {
 		safetyLogic.run
 	}

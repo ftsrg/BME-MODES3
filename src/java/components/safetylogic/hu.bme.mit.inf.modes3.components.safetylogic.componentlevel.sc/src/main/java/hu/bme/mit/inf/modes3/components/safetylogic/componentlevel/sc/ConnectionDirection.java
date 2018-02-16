@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.utils.conf.layout.whole;
+package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -12,7 +12,8 @@ public enum ConnectionDirection {
 
 	static {
 		enumByYakinduValue = new TreeMap<>();
-		Arrays.stream(ConnectionDirection.values()).forEach(enumValue -> enumByYakinduValue.put(enumValue.valueInYakindu, enumValue));
+		Arrays.stream(ConnectionDirection.values())
+				.forEach(enumValue -> enumByYakinduValue.put(enumValue.valueInYakindu, enumValue));
 	}
 
 	private int valueInYakindu;
