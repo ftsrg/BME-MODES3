@@ -11,10 +11,6 @@ public interface ISectionStatemachine extends IStatemachine {
 		
 		public void setLatestReserveDirection(long value);
 		
-		public long getNegatedReserveDirection();
-		
-		public void setNegatedReserveDirection(long value);
-		
 	}
 	
 	public SCISection getSCISection();

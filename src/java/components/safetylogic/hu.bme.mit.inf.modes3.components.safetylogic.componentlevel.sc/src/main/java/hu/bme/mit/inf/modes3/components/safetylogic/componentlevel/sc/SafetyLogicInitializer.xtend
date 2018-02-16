@@ -179,7 +179,7 @@ class SafetyLogicInitializer {
 		protocolDispatcher.registerSegment(26, new PortWithDirection(CW, component.s26ProtocolProvidedCCW))
 
 		component.s30ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(28, CCW, messageSender))
-		protocolDispatcher.registerSegment(30, new PortWithDirection(CW, component.s30ProtocolProvidedCCW))
+		protocolDispatcher.registerSegment(30, new PortWithDirection(DIVERGENT, component.s30ProtocolProvidedCCW))
 
 		return component
 	}
@@ -274,7 +274,7 @@ class SafetyLogicInitializer {
 		component.s11ProtocolRequiredCW.registerListener(new YakinduProtocolAdapter(14, CW, messageSender))
 		protocolDispatcher.registerSegment(11, new PortWithDirection(DIVERGENT, component.s11ProtocolProvidedCW))
 
-		component.s13ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(17, CCW, messageSender))
+		component.s13ProtocolRequiredCCW.registerListener(new YakinduProtocolAdapter(20, CCW, messageSender))
 		protocolDispatcher.registerSegment(13, new PortWithDirection(CW, component.s13ProtocolProvidedCCW))
 
 		return component

@@ -16,16 +16,6 @@ public class SectionStatemachine implements ISectionStatemachine {
 			this.latestReserveDirection = value;
 		}
 		
-		private long negatedReserveDirection;
-		
-		public long getNegatedReserveDirection() {
-			return negatedReserveDirection;
-		}
-		
-		public void setNegatedReserveDirection(long value) {
-			this.negatedReserveDirection = value;
-		}
-		
 	}
 	
 	protected SCISectionImpl sCISection;
@@ -379,8 +369,6 @@ public class SectionStatemachine implements ISectionStatemachine {
 		clearEvents();
 		clearOutEvents();
 		sCISection.setLatestReserveDirection(0);
-		
-		sCISection.setNegatedReserveDirection(0);
 	}
 	
 	public void enter() {
@@ -595,11 +583,11 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0_tr0() {
-		return sCIProtocolProvidedCW.cannotGo;
+		return sCIProtocolProvidedCW.canGo;
 	}
 	
 	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1_tr1() {
-		return sCIProtocolProvidedCW.canGo;
+		return sCIProtocolProvidedCW.cannotGo;
 	}
 	
 	private boolean check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0_tr0() {
@@ -616,8 +604,6 @@ public class SectionStatemachine implements ISectionStatemachine {
 		
 		sCISection.setLatestReserveDirection(SCIDirection.cW);
 		
-		sCISection.setNegatedReserveDirection(SCIDirection.cCW);
-		
 		enterSequence_main_Reserved_default();
 	}
 	
@@ -626,8 +612,6 @@ public class SectionStatemachine implements ISectionStatemachine {
 		sCIProtocolRequiredCCW.raiseCanGo();
 		
 		sCISection.setLatestReserveDirection(SCIDirection.cCW);
-		
-		sCISection.setNegatedReserveDirection(SCIDirection.cW);
 		
 		enterSequence_main_Reserved_default();
 	}
@@ -755,13 +739,13 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0() {
-		exitSequence_main_Locking_protocol();
-		enterSequence_main_Stop_default();
+		exitSequence_main_Locking_protocol_inner_region_WaitForFirstResponse();
+		enterSequence_main_Locking_protocol_inner_region_WaitForSecondResponse_default();
 	}
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1() {
-		exitSequence_main_Locking_protocol_inner_region_WaitForFirstResponse();
-		enterSequence_main_Locking_protocol_inner_region_WaitForSecondResponse_default();
+		exitSequence_main_Locking_protocol();
+		enterSequence_main_Stop_default();
 	}
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0() {
@@ -779,8 +763,6 @@ public class SectionStatemachine implements ISectionStatemachine {
 		sCISectionControlProvided.raiseEnableSection();
 		
 		sCISection.setLatestReserveDirection(SCIDirection.uNSPECIFIED);
-		
-		sCISection.setNegatedReserveDirection(SCIDirection.uNSPECIFIED);
 	}
 	
 	/* Entry action for state 'Occupied'. */

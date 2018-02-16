@@ -36,18 +36,6 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 			}
 		}
 		
-		public long getNegatedReserveDirection() {
-			synchronized(statemachine) {
-				return statemachine.getSCISection().getNegatedReserveDirection();
-			}
-		}
-		
-		public void setNegatedReserveDirection(final long value) {
-			synchronized(statemachine) {
-				statemachine.getSCISection().setNegatedReserveDirection(value);
-			}
-		}
-		
 	};
 	
 	protected SCISection sCISection;

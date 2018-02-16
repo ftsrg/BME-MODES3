@@ -52,7 +52,6 @@ class SafetyLogic implements ISafetyLogic {
 		logger.debug('''SafetyLogic for turnout (ID=«turnoutID») is started''')
 		executor.execute(protocolRestarter)
 		logger.debug('''YakinduProtocolRestarter is started''')
-	// Thread.currentThread.join
 	}
 
 }
