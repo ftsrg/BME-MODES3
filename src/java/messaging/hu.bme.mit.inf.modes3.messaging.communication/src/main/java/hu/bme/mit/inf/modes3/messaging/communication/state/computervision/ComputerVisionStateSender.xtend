@@ -20,9 +20,8 @@ class ComputerVisionStateSender implements IComputerVisionStateSender {
 	}
 
 	override sendComputerVisionState(Map<String, PhysicalObject> physicalObjects, long timestamp, long frameIndex) {
-		logger.
-			trace('''ComputerVisionState message sent with physicalObjects=«physicalObjects» timestamp=«timestamp» frameIndex=«frameIndex»''')
 		mms.sendMessage(new ComputerVisionObjectPositionsMessage(physicalObjects, timestamp, frameIndex))
+		logger.debug('''ComputerVisionState message sent with physicalObjects=«physicalObjects» timestamp=«timestamp» frameIndex=«frameIndex»''')
 	}
 
 }

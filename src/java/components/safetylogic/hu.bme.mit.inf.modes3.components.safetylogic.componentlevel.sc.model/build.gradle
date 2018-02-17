@@ -1,7 +1,10 @@
 apply plugin: 'java'
 
-sonarqube {
-	properties {
-		property "sonar.exclusions", "src/main/java/org/yakindu/scr/**"
-	}
-}
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java'
+            srcDirs 'src-gen'
+        }
+    }
+ }

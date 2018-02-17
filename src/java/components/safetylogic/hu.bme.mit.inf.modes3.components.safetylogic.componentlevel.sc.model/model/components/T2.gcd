@@ -1,0 +1,72 @@
+import Section
+import Turnout
+
+package t2
+
+sync T2Component [
+	// Ports on the borders of the zone
+	port S24ProtocolProvidedCCW : provides Protocol,
+	port S24ProtocolRequiredCCW : requires Protocol,
+
+	port T2ProtocolProvidedDivergent : provides Protocol,
+	port T2ProtocolRequiredDivergent : requires Protocol,
+		
+	port S18ProtocolProvidedCW : provides Protocol,
+	port S18ProtocolRequiredCW : requires Protocol,
+		
+	// Control ports, needed for all elements
+	port S24ControlProvided : provides SectionControl,
+	port S29ControlProvided : provides SectionControl,
+	port T2TurnoutProvided : provides TurnoutControl,
+	port S31ControlProvided : provides SectionControl,
+	port S18ControlProvided : provides SectionControl,
+		
+	// Train ports, needed for all elements
+	port S24TrainProvided : provides Train,
+	port S29TrainProvided : provides Train,
+	port T2TrainProvided : provides Train,
+	port S31TrainProvided : provides Train,
+	port S18TrainProvided : provides Train
+] {
+	component S24 : SectionStatechart
+	component S29 : SectionStatechart
+	component T2 : TurnoutStatechart
+	component S31 : SectionStatechart
+	component S18 : SectionStatechart
+
+	// Binding system ports on the border to the elements
+	bind S24ProtocolProvidedCCW -> S24.ProtocolProvidedCCW
+	bind S24ProtocolRequiredCCW -> S24.ProtocolRequiredCCW
+				
+	bind T2ProtocolProvidedDivergent -> T2.ProtocolProvidedDivergent
+	bind T2ProtocolRequiredDivergent -> T2.ProtocolRequiredDivergent
+				
+	bind S18ProtocolProvidedCW -> S18.ProtocolProvidedCW
+	bind S18ProtocolRequiredCW -> S18.ProtocolRequiredCW
+				
+	// Binding Control ports
+	bind S24ControlProvided -> S24.SectionControlProvided
+	bind S29ControlProvided -> S29.SectionControlProvided
+	bind T2TurnoutProvided -> T2.TurnoutControlProvided
+	bind S31ControlProvided -> S31.SectionControlProvided
+	bind S18ControlProvided -> S18.SectionControlProvided
+				
+	// Binding Train ports
+	bind S24TrainProvided -> S24.TrainProvided
+	bind S29TrainProvided -> S29.TrainProvided
+	bind T2TrainProvided -> T2.TrainProvided
+	bind S31TrainProvided -> S31.TrainProvided
+	bind S18TrainProvided -> S18.TrainProvided
+			
+	channel [S24.ProtocolProvidedCW] -o)- [S29.ProtocolRequiredCCW]
+	channel	[S29.ProtocolProvidedCCW] -o)- [S24.ProtocolRequiredCW]
+
+	channel [T2.ProtocolProvidedTop] -o)- [S29.ProtocolRequiredCW]
+	channel [S29.ProtocolProvidedCW] -o)- [T2.ProtocolRequiredTop]
+				
+	channel [T2.ProtocolProvidedStraight] -o)- [S31.ProtocolRequiredCCW]
+	channel [S31.ProtocolProvidedCCW] -o)- [T2.ProtocolRequiredStraight]
+				
+	channel [S31.ProtocolProvidedCW] -o)- [S18.ProtocolRequiredCCW]
+	channel [S18.ProtocolProvidedCCW] -o)- [S31.ProtocolRequiredCW]									
+}

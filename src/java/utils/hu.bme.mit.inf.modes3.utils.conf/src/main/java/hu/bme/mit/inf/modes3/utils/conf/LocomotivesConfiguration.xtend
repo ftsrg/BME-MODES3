@@ -19,11 +19,10 @@ class LocomotivesConfiguration {
 	public static val INSTANCE = new LocomotivesConfiguration
 	private static val LOCOMOTIVES_CONFIG = "locomotives.json"
 
-	private var LocomotivesConfigurationData locomotives
+	private val LocomotivesConfigurationData locomotives
 
 	private new() {
-		locomotives = GsonLoader.loadTypeFromInputStream(LocomotivesConfigurationData,
-			LocomotivesConfiguration.classLoader.getResourceAsStream(LOCOMOTIVES_CONFIG))
+		locomotives = GsonLoader.loadTypeFromInputStream(LocomotivesConfigurationData, class.classLoader.getResourceAsStream(LOCOMOTIVES_CONFIG))
 		lowercaseEveryTrainName
 	}
 
@@ -31,9 +30,9 @@ class LocomotivesConfiguration {
 		val lowercased = if(name.isNullOrEmpty) name else name.toLowerCase
 		locomotives.locomotiveIds.get(lowercased)
 	}
-	
-	def getLocomotiveNameById(int id){
-		locomotives.locomotiveIds.entrySet.findFirst[entry | entry.value === id].key
+
+	def getLocomotiveNameById(int id) {
+		locomotives.locomotiveIds.entrySet.findFirst[entry|entry.value === id].key
 	}
 
 	def getLocomotiveNames() {

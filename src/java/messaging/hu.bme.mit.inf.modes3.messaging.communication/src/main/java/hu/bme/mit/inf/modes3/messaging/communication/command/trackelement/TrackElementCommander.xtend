@@ -7,7 +7,7 @@ import hu.bme.mit.inf.modes3.messaging.messages.command.TurnoutCommand
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
@@ -25,16 +25,16 @@ class TrackElementCommander implements ITrackElementCommander {
 	}
 
 	override sendSegmentCommand(int id, SegmentState state) {
-		logger.trace('''SegmentCommand message sent with id=«id» state=«state»''')
 		mms.sendMessage(new SegmentCommand(id, state))
+		logger.debug('''SegmentCommand message sent with id=«id» state=«state»''')
 	}
 
 	/**
 	 * Send a command to a turnout, denoted by its ID.
 	 */
 	override sendTurnoutCommandWithTurnoutId(int id, TurnoutState state) {
-		logger.info('''TurnoutCommand message sent with id=«id»(=T«(id)») state=«state»''')
 		mms.sendMessage(new TurnoutCommand(id, state))
+		logger.debug('''TurnoutCommand message sent with id=«id»(=T«(id)») state=«state»''')
 	}
 
 	/**
@@ -42,13 +42,13 @@ class TrackElementCommander implements ITrackElementCommander {
 	 */
 	override sendTurnoutCommand(int segmentId, TurnoutState state) {
 		val turnoutId = SEGMENT_ID_TO_TURNOUT_ID_MAPPING.get(segmentId)
-		logger.info('''TurnoutCommand message sent with segmentId=«segmentId»(=T«turnoutId») state=«state»''')
 		mms.sendMessage(new TurnoutCommand(turnoutId, state))
+		logger.debug('''TurnoutCommand message sent with segmentId=«segmentId»(=T«turnoutId») state=«state»''')
 	}
 
 	override sendAllStatusCommand() {
-		logger.trace('''SendAllStatus message sent to everyone''')
 		mms.sendMessage(new SendAllStatusCommand)
+		logger.debug('''SendAllStatus message sent''')
 	}
 
 }

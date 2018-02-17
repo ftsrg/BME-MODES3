@@ -9,7 +9,7 @@ import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
 class DccCommander implements IDccCommander {
-	
+
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	var protected MessagingService mms
 
@@ -17,20 +17,20 @@ class DccCommander implements IDccCommander {
 		this.mms = mms
 		this.logger = factory.getLogger(this.class.name)
 	}
-	
+
 	override stopEntireRailRoad() {
-		logger.info('''DccOperationsCommand stop entire railroad sent''')
 		mms.sendMessage(new DccOperationsCommand(DccOperations.STOP_OPERATIONS))
+		logger.debug('''DccOperationsCommand stop entire railroad sent''')
 	}
 
 	override stopTrains() {
-		logger.info('''DccOperationsCommand stop trains sent''')
 		mms.sendMessage(new DccOperationsCommand(DccOperations.STOP_ALL_LOCOMOTIVES))
+		logger.debug('''DccOperationsCommand stop trains sent''')
 	}
 
 	override startEntireRailRoad() {
-		logger.info('''DccOperationsCommand start entire railroad sent''')
 		mms.sendMessage(new DccOperationsCommand(DccOperations.NORMAL_OPERATIONS))
+		logger.debug('''DccOperationsCommand start entire railroad sent''')
 	}
-	
+
 }

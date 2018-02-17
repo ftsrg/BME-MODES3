@@ -55,9 +55,9 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		sensorDataMessages.put("sensor01", new SensorDataMessage());
 		sensorDataMessages.put("sensor02", new SensorDataMessage());
 
-		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentOccupancyChangeListener(this);
-		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setSegmentStateChangeListener(this);
-		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().setTurnoutStateChangeListener(this);
+		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().registerSegmentOccupancyChangeListener(this);
+		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().registerSegmentStateChangeListener(this);
+		DashboardManager.INSTANCE.getLocator().getTrackElementStateRegistry().registerTurnoutStateChangeListener(this);
 		DashboardManager.INSTANCE.getLocator().getTrainSpeedStateRegistry().addTrainSpeedStateListener(this);
 		DashboardManager.INSTANCE.getLocator().getComputerVisionCallback().setComputerVisionListener(this);
 		DashboardManager.INSTANCE.getSensorsDispatcher().setStateChangeService(this);

@@ -1,0 +1,15 @@
+import t5
+
+package async_t5
+
+async AsyncT5Component of T5Component[
+] {
+	when any / full step
+	
+	queue messages(priority = 1, capacity = 1024) {
+		S11ProtocolProvidedCW.any, S11ProtocolRequiredCW.any, S10ProtocolProvidedCW.any, S10ProtocolRequiredCW.any,
+		S13ProtocolProvidedCCW.any, S13ProtocolRequiredCCW.any, S11ControlProvided.any, S10ControlProvided.any,
+		T5TurnoutProvided.any, S08ControlProvided.any, S13ControlProvided.any, S11TrainProvided.any,
+		S10TrainProvided.any, T5TrainProvided.any, S08TrainProvided.any, S13TrainProvided.any
+	}
+}

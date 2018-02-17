@@ -10,8 +10,8 @@ import hu.bme.mit.inf.modes3.components.touchboard.ui.ThreadSafeNode
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
 import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import java.util.Map
 import java.util.TreeMap
 import java.util.concurrent.ExecutorService

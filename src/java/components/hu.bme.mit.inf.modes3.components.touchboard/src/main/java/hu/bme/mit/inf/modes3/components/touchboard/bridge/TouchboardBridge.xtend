@@ -20,9 +20,9 @@ class TouchboardBridge extends AbstractCommunicationComponent implements ISegmen
 		this.touchboardController = touchboardController
 		this.touchboardController.touchboardBridge = this
 
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
-		locator.trackElementStateRegistry.segmentStateChangeListener = this
-		locator.trackElementStateRegistry.turnoutStateChangeListener = this
+		locator.trackElementStateRegistry.registerSegmentOccupancyChangeListener = this
+		locator.trackElementStateRegistry.registerSegmentStateChangeListener = this
+		locator.trackElementStateRegistry.registerTurnoutStateChangeListener = this
 	}
 
 	override run() {

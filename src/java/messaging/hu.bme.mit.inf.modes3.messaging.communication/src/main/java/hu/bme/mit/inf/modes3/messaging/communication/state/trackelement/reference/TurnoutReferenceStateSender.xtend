@@ -19,8 +19,8 @@ class TurnoutReferenceStateSender implements ITurnoutReferenceStateSender {
 	}
 
 	override sendTurnoutReferenceState(int id, TurnoutState state) {
-		logger.trace('''TurnoutReferenceState message sent with id=«id» state=«state»''')
 		mms.sendMessage(new TurnoutReferenceStateMessage(id, state))
+		logger.debug('''TurnoutReferenceState message sent with id=«id» state=«state»''')
 	}
 
 }

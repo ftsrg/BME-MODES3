@@ -81,34 +81,171 @@
 	},
 	"turnoutVicinities": {
 		"1": {
-			"straight": [12],
-			"divergent": [11],
-			"facing": [15]
+			"straight": [
+				12
+			],
+			"divergent": [
+				11
+			],
+			"facing": [
+				15
+			]
 		},
 		"2": {
-			"straight": [31],
-			"divergent": [30],
-			"facing": [29]
+			"straight": [
+				31
+			],
+			"divergent": [
+				30
+			],
+			"facing": [
+				29
+			]
 		},
 		"3": {
-			"straight": [26, 19],
-			"divergent": [25, 32],
-			"facing": [20, 30]
+			"straight": [
+				26,
+				19
+			],
+			"divergent": [
+				25,
+				32
+			],
+			"facing": [
+				20,
+				30
+			]
 		},
 		"4": {
-			"straight": [4],
-			"divergent": [5],
-			"facing": [2]
+			"straight": [
+				4
+			],
+			"divergent": [
+				5
+			],
+			"facing": [
+				2
+			]
 		},
 		"5": {
-			"straight": [11],
-			"divergent": [10],
-			"facing": [8]
+			"straight": [
+				11
+			],
+			"divergent": [
+				10
+			],
+			"facing": [
+				8
+			]
 		},
 		"6": {
-			"straight": [23],
-			"divergent": [22],
-			"facing": [17]
+			"straight": [
+				23
+			],
+			"divergent": [
+				22
+			],
+			"facing": [
+				17
+			]
+		}
+	},
+	"sectionVicinities": {
+		"1": {
+			"cw": 12,
+			"ccw": 2
+		},
+		"2": {
+			"cw": 1,
+			"ccw": 3
+		},
+		"4": {
+			"cw": 3,
+			"ccw": 6
+		},
+		"5": {
+			"cw": 3,
+			"ccw": 7
+		},
+		"6": {
+			"cw": 4,
+			"ccw": 18
+		},
+		"7": {
+			"cw": 5,
+			"ccw": 19
+		},
+		"8": {
+			"cw": 9,
+			"ccw": 13
+		},
+		"10": {
+			"cw": 17,
+			"ccw": 9
+		},
+		"11": {
+			"cw": 14,
+			"ccw": 9
+		},
+		"12": {
+			"cw": 14,
+			"ccw": 1
+		},
+		"13": {
+			"cw": 5,
+			"ccw": 20
+		},
+		"15": {
+			"cw": 24,
+			"ccw": 14
+		},
+		"17": {
+			"cw": 21,
+			"ccw": 10
+		},
+		"18": {
+			"cw": 6,
+			"ccw": 31
+		},
+		"19": {
+			"cw": 7,
+			"ccw": 32
+		},
+		"20": {
+			"cw": 13,
+			"ccw": 25
+		},
+		"22": {
+			"cw": null,
+			"ccw": 21
+		},
+		"23": {
+			"cw": 27,
+			"ccw": 21
+		},
+		"24": {
+			"cw": 29,
+			"ccw": 15
+		},
+		"26": {
+			"cw": 25,
+			"ccw": 27
+		},
+		"27": {
+			"cw": 26,
+			"ccw": 23
+		},
+		"29": {
+			"cw": 28,
+			"ccw": 24
+		},
+		"30": {
+			"cw": 32,
+			"ccw": 28
+		},
+		"31": {
+			"cw": 18,
+			"ccw": 28
 		}
 	},
 	"turnoutsResponsibilities": {

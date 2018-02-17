@@ -5,8 +5,8 @@ import hu.bme.mit.inf.modes3.components.safetylogic.systemlevel.model.RailRoadMo
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITurnoutStateChangeListener
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
 import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import hu.bme.mit.inf.safetylogic.event.ComputerVisionTrainMovementEstimator
 import hu.bme.mit.inf.safetylogic.event.IModelInteractor
 import hu.bme.mit.inf.safetylogic.event.INotifiable

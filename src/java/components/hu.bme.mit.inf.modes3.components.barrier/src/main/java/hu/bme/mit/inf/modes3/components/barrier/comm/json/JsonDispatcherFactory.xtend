@@ -1,31 +1,16 @@
 package hu.bme.mit.inf.modes3.components.barrier.comm.json
 
+import hu.bme.mit.inf.modes3.messaging.communication.factory.MessagingServiceFactory
 import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
 import hu.bme.mit.inf.modes3.messaging.messages.status.BarrierStateMessage
-import hu.bme.mit.inf.modes3.messaging.mms.TopicBasedMessagingService
-import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
-import hu.bme.mit.inf.modes3.transports.mqtt.MQTTTransport
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import org.slf4j.ILoggerFactory
 
 class JsonDispatcherFactory {
 
 	def static createMQTTStackWithJSON(ArgumentRegistry argumentRegistry, ILoggerFactory factory) {
-		return new TopicBasedMessagingService(
-			new MQTTTransport(loadMQTTConfiguration(argumentRegistry), factory),
-			new JsonDispatcher(factory),
-			factory
-		)
-	}
-
-	private def static loadMQTTConfiguration(ArgumentRegistry registry) {
-		val address = registry.getParameterStringValue('address')
-		val id = registry.getParameterStringValue('id')
-		val port = registry.getParameterIntegerValue('port')
-		val barriertopic = InternalMessageToTopicMapper.INSTANCE.getTopics(BarrierStateMessage.simpleName).filter [
-			it == "barrier/gate"
-		].head
-
-		return new TopicBasedTransportConfiguration(id, address, port, barriertopic)
+		val topics = InternalMessageToTopicMapper.INSTANCE.getTopics(BarrierStateMessage.simpleName)
+		val dispatcher = new JsonDispatcher(factory)
+		return MessagingServiceFactory::createStackForTopics(argumentRegistry, factory, topics, dispatcher)
 	}
 }

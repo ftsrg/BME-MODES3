@@ -19,8 +19,8 @@ class TrainCommander implements ITrainCommander {
 	}
 
 	override setTrainReferenceSpeedAndDirection(int id, int speed, TrainDirection direction) {
-		logger.info('''TrainReferenceSpeedCommand sent with id=«id»(speed=«speed») direction=«direction»''')
 		mms.sendMessage(new TrainReferenceSpeedCommand(id, speed, direction))
+		logger.debug('''TrainReferenceSpeedCommand sent with id=«id»(speed=«speed») direction=«direction»''')
 	}
 
 }

@@ -16,7 +16,7 @@ class SampleComponentBridge extends AbstractCommunicationComponent implements IS
 		super(messagingService, factory)
 		this.sampleComponent = sampleComponent
 		this.sampleComponent.sampleComponentBridge = this
-		locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
+		locator.trackElementStateRegistry.registerSegmentOccupancyChangeListener = this
 	}
 
 	override run() {

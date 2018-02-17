@@ -1,0 +1,5 @@
+---
+- hosts: bbb
+  remote_user: debian
+  tasks:
+  - include: utils/deploy-gradle-safetylogic.yaml service_name=componentlevel.sc

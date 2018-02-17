@@ -4,7 +4,7 @@ import com.fazecast.jSerialComm.SerialPort
 import hu.bme.mit.inf.modes3.components.occupancyquery.bridge.IOccupancyQueryBridge
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
-import hu.bme.mit.inf.modes3.utils.conf.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger

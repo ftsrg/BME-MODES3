@@ -1,0 +1,15 @@
+import t6
+
+package async_t6
+
+async AsyncT6Component of T6Component[
+] {
+	when any / full step
+	
+	queue messages(priority = 1, capacity = 1024) {
+		S17ProtocolProvidedCCW.any, S17ProtocolRequiredCCW.any, S22ProtocolProvidedCW.any, S22ProtocolRequiredCW.any,
+		S27ProtocolProvidedCW.any, S27ProtocolRequiredCW.any, S17ControlProvided.any, T6TurnoutProvided.any,
+		S22ControlProvided.any, S23ControlProvided.any, S27ControlProvided.any, S17TrainProvided.any,
+		T6TrainProvided.any, S22TrainProvided.any, S23TrainProvided.any, S27TrainProvided.any
+	}
+}

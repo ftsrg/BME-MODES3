@@ -19,8 +19,8 @@ class DccStateSender implements IDccStateSender {
 	}
 
 	override sendDccState(DccOperations dccOperations) {
-		logger.trace('''DccOperationsState message sent with dccOperations=«dccOperations»''')
 		mms.sendMessage(new DccOperationsStateMessage(dccOperations))
+		logger.debug('''DccOperationsState message sent with dccOperations=«dccOperations»''')
 	}
 
 }

@@ -1,5 +1,7 @@
 package hu.bme.mit.inf.modes3.utils.conf
 
+import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
+import hu.bme.mit.inf.modes3.utils.conf.layout.SegmentDirection
 import org.junit.Assert
 import org.junit.Test
 

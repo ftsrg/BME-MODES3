@@ -16,7 +16,7 @@ class TrackSupervisorBridge extends AbstractCommunicationComponent implements IS
 	new(ITrackSupervisor trackSupervisor, MessagingService railwayTrackStack, MessagingService barrierStack,
 		ILoggerFactory factory) {
 		super(railwayTrackStack, factory)
-		super.locator.trackElementStateRegistry.segmentOccupancyChangeListener = this
+		super.locator.trackElementStateRegistry.registerSegmentOccupancyChangeListener = this
 		this.barrierCommander = new BarrierCommander(barrierStack, factory)
 		this.trackSupervisor = trackSupervisor
 		this.trackSupervisor.supervisorBridge = this
