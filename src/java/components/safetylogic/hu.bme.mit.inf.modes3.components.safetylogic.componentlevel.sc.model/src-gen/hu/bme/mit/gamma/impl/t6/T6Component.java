@@ -1,9 +1,11 @@
 	package hu.bme.mit.gamma.impl.t6;
 
 	import java.util.List;
+	import org.yakindu.scr.ITimer;
+	
 	import hu.bme.mit.gamma.impl.interfaces.*;
-	import hu.bme.mit.gamma.impl.turnout.*;
 	import hu.bme.mit.gamma.impl.section.*;
+	import hu.bme.mit.gamma.impl.turnout.*;
 	
 	public class T6Component implements T6ComponentInterface {			
 		// Component instances
@@ -46,22 +48,22 @@
 		/** Creates the channel mappings and enters the wrapped statemachines. */
 		private void init() {
 			// Registration of simple channels
-			T6.getProtocolProvidedDivergent().registerListener(S22.getProtocolRequiredCCW());
-			S22.getProtocolRequiredCCW().registerListener(T6.getProtocolProvidedDivergent());
-			T6.getProtocolProvidedTop().registerListener(S17.getProtocolRequiredCW());
-			S17.getProtocolRequiredCW().registerListener(T6.getProtocolProvidedTop());
-			S22.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredDivergent());
-			T6.getProtocolRequiredDivergent().registerListener(S22.getProtocolProvidedCCW());
-			S23.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredStraight());
-			T6.getProtocolRequiredStraight().registerListener(S23.getProtocolProvidedCCW());
-			S23.getProtocolProvidedCW().registerListener(S27.getProtocolRequiredCCW());
-			S27.getProtocolRequiredCCW().registerListener(S23.getProtocolProvidedCW());
-			S17.getProtocolProvidedCW().registerListener(T6.getProtocolRequiredTop());
-			T6.getProtocolRequiredTop().registerListener(S17.getProtocolProvidedCW());
 			T6.getProtocolProvidedStraight().registerListener(S23.getProtocolRequiredCCW());
 			S23.getProtocolRequiredCCW().registerListener(T6.getProtocolProvidedStraight());
+			T6.getProtocolProvidedTop().registerListener(S17.getProtocolRequiredCW());
+			S17.getProtocolRequiredCW().registerListener(T6.getProtocolProvidedTop());
+			S17.getProtocolProvidedCW().registerListener(T6.getProtocolRequiredTop());
+			T6.getProtocolRequiredTop().registerListener(S17.getProtocolProvidedCW());
 			S27.getProtocolProvidedCCW().registerListener(S23.getProtocolRequiredCW());
 			S23.getProtocolRequiredCW().registerListener(S27.getProtocolProvidedCCW());
+			S22.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredDivergent());
+			T6.getProtocolRequiredDivergent().registerListener(S22.getProtocolProvidedCCW());
+			S23.getProtocolProvidedCW().registerListener(S27.getProtocolRequiredCCW());
+			S27.getProtocolRequiredCCW().registerListener(S23.getProtocolProvidedCW());
+			T6.getProtocolProvidedDivergent().registerListener(S22.getProtocolRequiredCCW());
+			S22.getProtocolRequiredCCW().registerListener(T6.getProtocolProvidedDivergent());
+			S23.getProtocolProvidedCCW().registerListener(T6.getProtocolRequiredStraight());
+			T6.getProtocolRequiredStraight().registerListener(S23.getProtocolProvidedCCW());
 			// Registration of broadcast channels
 			enter();
 		}
@@ -75,8 +77,8 @@
 			}
 			
 			@Override
-			public void raiseCannotGo() {
-				S17.getProtocolProvidedCCW().raiseCannotGo();
+			public void raiseCanGo() {
+				S17.getProtocolProvidedCCW().raiseCanGo();
 			}
 			
 			@Override
@@ -85,8 +87,8 @@
 			}
 			
 			@Override
-			public void raiseCanGo() {
-				S17.getProtocolProvidedCCW().raiseCanGo();
+			public void raiseCannotGo() {
+				S17.getProtocolProvidedCCW().raiseCannotGo();
 			}
 			
 			
@@ -115,16 +117,16 @@
 				return S17.getProtocolRequiredCCW().isRaisedRelease();
 			}
 			@Override
-			public boolean isRaisedCannotGo() {
-				return S17.getProtocolRequiredCCW().isRaisedCannotGo();
+			public boolean isRaisedCanGo() {
+				return S17.getProtocolRequiredCCW().isRaisedCanGo();
 			}
 			@Override
 			public boolean isRaisedReserve() {
 				return S17.getProtocolRequiredCCW().isRaisedReserve();
 			}
 			@Override
-			public boolean isRaisedCanGo() {
-				return S17.getProtocolRequiredCCW().isRaisedCanGo();
+			public boolean isRaisedCannotGo() {
+				return S17.getProtocolRequiredCCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -152,8 +154,8 @@
 			}
 			
 			@Override
-			public void raiseCannotGo() {
-				S22.getProtocolProvidedCW().raiseCannotGo();
+			public void raiseCanGo() {
+				S22.getProtocolProvidedCW().raiseCanGo();
 			}
 			
 			@Override
@@ -162,8 +164,8 @@
 			}
 			
 			@Override
-			public void raiseCanGo() {
-				S22.getProtocolProvidedCW().raiseCanGo();
+			public void raiseCannotGo() {
+				S22.getProtocolProvidedCW().raiseCannotGo();
 			}
 			
 			
@@ -192,16 +194,16 @@
 				return S22.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
-			public boolean isRaisedCannotGo() {
-				return S22.getProtocolRequiredCW().isRaisedCannotGo();
+			public boolean isRaisedCanGo() {
+				return S22.getProtocolRequiredCW().isRaisedCanGo();
 			}
 			@Override
 			public boolean isRaisedReserve() {
 				return S22.getProtocolRequiredCW().isRaisedReserve();
 			}
 			@Override
-			public boolean isRaisedCanGo() {
-				return S22.getProtocolRequiredCW().isRaisedCanGo();
+			public boolean isRaisedCannotGo() {
+				return S22.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -229,8 +231,8 @@
 			}
 			
 			@Override
-			public void raiseCannotGo() {
-				S27.getProtocolProvidedCW().raiseCannotGo();
+			public void raiseCanGo() {
+				S27.getProtocolProvidedCW().raiseCanGo();
 			}
 			
 			@Override
@@ -239,8 +241,8 @@
 			}
 			
 			@Override
-			public void raiseCanGo() {
-				S27.getProtocolProvidedCW().raiseCanGo();
+			public void raiseCannotGo() {
+				S27.getProtocolProvidedCW().raiseCannotGo();
 			}
 			
 			
@@ -269,16 +271,16 @@
 				return S27.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
-			public boolean isRaisedCannotGo() {
-				return S27.getProtocolRequiredCW().isRaisedCannotGo();
+			public boolean isRaisedCanGo() {
+				return S27.getProtocolRequiredCW().isRaisedCanGo();
 			}
 			@Override
 			public boolean isRaisedReserve() {
 				return S27.getProtocolRequiredCW().isRaisedReserve();
 			}
 			@Override
-			public boolean isRaisedCanGo() {
-				return S27.getProtocolRequiredCW().isRaisedCanGo();
+			public boolean isRaisedCannotGo() {
+				return S27.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -463,13 +465,13 @@
 		public class S17TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseUnoccupy() {
-				S17.getTrainProvided().raiseUnoccupy();
+			public void raiseOccupy() {
+				S17.getTrainProvided().raiseOccupy();
 			}
 			
 			@Override
-			public void raiseOccupy() {
-				S17.getTrainProvided().raiseOccupy();
+			public void raiseUnoccupy() {
+				S17.getTrainProvided().raiseUnoccupy();
 			}
 			
 			
@@ -493,13 +495,13 @@
 		public class T6TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseUnoccupy() {
-				T6.getTrainProvided().raiseUnoccupy();
+			public void raiseOccupy() {
+				T6.getTrainProvided().raiseOccupy();
 			}
 			
 			@Override
-			public void raiseOccupy() {
-				T6.getTrainProvided().raiseOccupy();
+			public void raiseUnoccupy() {
+				T6.getTrainProvided().raiseUnoccupy();
 			}
 			
 			
@@ -523,13 +525,13 @@
 		public class S22TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseUnoccupy() {
-				S22.getTrainProvided().raiseUnoccupy();
+			public void raiseOccupy() {
+				S22.getTrainProvided().raiseOccupy();
 			}
 			
 			@Override
-			public void raiseOccupy() {
-				S22.getTrainProvided().raiseOccupy();
+			public void raiseUnoccupy() {
+				S22.getTrainProvided().raiseUnoccupy();
 			}
 			
 			
@@ -553,13 +555,13 @@
 		public class S23TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseUnoccupy() {
-				S23.getTrainProvided().raiseUnoccupy();
+			public void raiseOccupy() {
+				S23.getTrainProvided().raiseOccupy();
 			}
 			
 			@Override
-			public void raiseOccupy() {
-				S23.getTrainProvided().raiseOccupy();
+			public void raiseUnoccupy() {
+				S23.getTrainProvided().raiseUnoccupy();
 			}
 			
 			
@@ -583,13 +585,13 @@
 		public class S27TrainProvided implements TrainInterface.Provided {
 		
 			@Override
-			public void raiseUnoccupy() {
-				S27.getTrainProvided().raiseUnoccupy();
+			public void raiseOccupy() {
+				S27.getTrainProvided().raiseOccupy();
 			}
 			
 			@Override
-			public void raiseOccupy() {
-				S27.getTrainProvided().raiseOccupy();
+			public void raiseUnoccupy() {
+				S27.getTrainProvided().raiseUnoccupy();
 			}
 			
 			
@@ -654,6 +656,13 @@
 			S27.runComponent();
 		}
 
+		/** Setter for the timer e.g., a virtual timer. */
+		public void setTimer(ITimer timer) {
+			S17.setTimer(timer);
+			S22.setTimer(timer);
+			S23.setTimer(timer);
+			S27.setTimer(timer);
+		}
 		
 		/**  Getter for component instances, e.g. enabling to check their states. */
 		public SectionStatechart getS17() {

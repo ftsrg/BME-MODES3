@@ -6,9 +6,11 @@ import java.util.LinkedList;
 
 import hu.bme.mit.gamma.impl.event.*;
 import hu.bme.mit.gamma.impl.interfaces.*;
-import org.yakindu.scr.section.ISectionStatemachine.SCIProtocolRequiredCWListener;
 import org.yakindu.scr.section.ISectionStatemachine.SCISectionControlProvidedListener;
+import org.yakindu.scr.section.ISectionStatemachine.SCIProtocolRequiredCWListener;
 import org.yakindu.scr.section.ISectionStatemachine.SCIProtocolRequiredCCWListener;
+import org.yakindu.scr.TimerService;
+import org.yakindu.scr.ITimer;
 import org.yakindu.scr.section.SectionStatemachine;
 import org.yakindu.scr.section.SectionStatemachine.State;
 
@@ -16,10 +18,10 @@ public class SectionStatechart implements SectionStatechartInterface {
 	// The wrapped Yakindu statemachine
 	private SectionStatemachine sectionStatemachine = new SectionStatemachine();
 	// Port instances
-	private TrainProvided trainProvided = new TrainProvided();
-	private ProtocolRequiredCW protocolRequiredCW = new ProtocolRequiredCW();
 	private ProtocolProvidedCW protocolProvidedCW = new ProtocolProvidedCW();
+	private TrainProvided trainProvided = new TrainProvided();
 	private SectionControlProvided sectionControlProvided = new SectionControlProvided();
+	private ProtocolRequiredCW protocolRequiredCW = new ProtocolRequiredCW();
 	private ProtocolRequiredCCW protocolRequiredCCW = new ProtocolRequiredCCW();
 	private ProtocolProvidedCCW protocolProvidedCCW = new ProtocolProvidedCCW();
 	// Indicates which queues are active in this cycle
@@ -31,6 +33,7 @@ public class SectionStatechart implements SectionStatechartInterface {
 	
 	public SectionStatechart() {
 		// Initializing and entering the wrapped statemachine
+		sectionStatemachine.setTimer(new TimerService());
 		sectionStatemachine.init();
 		sectionStatemachine.enter();
 	}
@@ -93,23 +96,23 @@ public class SectionStatechart implements SectionStatechartInterface {
 		while (!eventQueue.isEmpty()) {
 				Event event = eventQueue.remove();
 				switch (event.getEvent()) {
-					case "TrainProvided.Unoccupy": 
-						sectionStatemachine.getSCITrainProvided().raiseUnoccupy();
-					break;
-					case "TrainProvided.Occupy": 
-						sectionStatemachine.getSCITrainProvided().raiseOccupy();
-					break;
 					case "ProtocolProvidedCW.Release": 
 						sectionStatemachine.getSCIProtocolProvidedCW().raiseRelease();
 					break;
-					case "ProtocolProvidedCW.CannotGo": 
-						sectionStatemachine.getSCIProtocolProvidedCW().raiseCannotGo();
+					case "ProtocolProvidedCW.CanGo": 
+						sectionStatemachine.getSCIProtocolProvidedCW().raiseCanGo();
 					break;
 					case "ProtocolProvidedCW.Reserve": 
 						sectionStatemachine.getSCIProtocolProvidedCW().raiseReserve();
 					break;
-					case "ProtocolProvidedCW.CanGo": 
-						sectionStatemachine.getSCIProtocolProvidedCW().raiseCanGo();
+					case "ProtocolProvidedCW.CannotGo": 
+						sectionStatemachine.getSCIProtocolProvidedCW().raiseCannotGo();
+					break;
+					case "TrainProvided.Occupy": 
+						sectionStatemachine.getSCITrainProvided().raiseOccupy();
+					break;
+					case "TrainProvided.Unoccupy": 
+						sectionStatemachine.getSCITrainProvided().raiseUnoccupy();
 					break;
 					case "SectionControlProvided.RestartProtocol": 
 						sectionStatemachine.getSCISectionControlProvided().raiseRestartProtocol();
@@ -117,14 +120,14 @@ public class SectionStatechart implements SectionStatechartInterface {
 					case "ProtocolProvidedCCW.Release": 
 						sectionStatemachine.getSCIProtocolProvidedCCW().raiseRelease();
 					break;
-					case "ProtocolProvidedCCW.CannotGo": 
-						sectionStatemachine.getSCIProtocolProvidedCCW().raiseCannotGo();
+					case "ProtocolProvidedCCW.CanGo": 
+						sectionStatemachine.getSCIProtocolProvidedCCW().raiseCanGo();
 					break;
 					case "ProtocolProvidedCCW.Reserve": 
 						sectionStatemachine.getSCIProtocolProvidedCCW().raiseReserve();
 					break;
-					case "ProtocolProvidedCCW.CanGo": 
-						sectionStatemachine.getSCIProtocolProvidedCCW().raiseCanGo();
+					case "ProtocolProvidedCCW.CannotGo": 
+						sectionStatemachine.getSCIProtocolProvidedCCW().raiseCannotGo();
 					break;
 					default:
 						throw new IllegalArgumentException("No such event!");
@@ -134,95 +137,6 @@ public class SectionStatechart implements SectionStatechartInterface {
 	}    		
 	
 	// Inner classes representing Ports
-	public class TrainProvided implements TrainInterface.Provided {
-		private List<TrainInterface.Listener.Provided> registeredListeners = new LinkedList<TrainInterface.Listener.Provided>();
-
-		@Override
-		public void raiseUnoccupy() {
-			getInsertQueue().add(new Event("TrainProvided.Unoccupy", null));
-		}
-		
-		@Override
-		public void raiseOccupy() {
-			getInsertQueue().add(new Event("TrainProvided.Occupy", null));
-		}
-
-		@Override
-		public void registerListener(TrainInterface.Listener.Provided listener) {
-			registeredListeners.add(listener);
-		}
-		
-		@Override
-		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
-			return registeredListeners;
-		}
-
-	}
-	
-	@Override
-	public TrainProvided getTrainProvided() {
-		return trainProvided;
-	}
-	
-	public class ProtocolRequiredCW implements ProtocolInterface.Required {
-		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
-
-
-		@Override
-		public boolean isRaisedRelease() {
-			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedRelease();
-		}
-		@Override
-		public boolean isRaisedCannotGo() {
-			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedCannotGo();
-		}
-		@Override
-		public boolean isRaisedReserve() {
-			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedReserve();
-		}
-		@Override
-		public boolean isRaisedCanGo() {
-			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedCanGo();
-		}
-		@Override
-		public void registerListener(ProtocolInterface.Listener.Required listener) {
-			registeredListeners.add(listener);
-			//sectionStatemachine.getSCIProtocolRequiredCW().getListeners().clear();
-			sectionStatemachine.getSCIProtocolRequiredCW().getListeners().add(new SCIProtocolRequiredCWListener() {
-				@Override
-				public void onReleaseRaised() {
-					listener.raiseRelease();
-				}
-				
-				@Override
-				public void onCannotGoRaised() {
-					listener.raiseCannotGo();
-				}
-				
-				@Override
-				public void onReserveRaised() {
-					listener.raiseReserve();
-				}
-				
-				@Override
-				public void onCanGoRaised() {
-					listener.raiseCanGo();
-				}
-			});
-		}
-		
-		@Override
-		public List<ProtocolInterface.Listener.Required> getRegisteredListeners() {
-			return registeredListeners;
-		}
-
-	}
-	
-	@Override
-	public ProtocolRequiredCW getProtocolRequiredCW() {
-		return protocolRequiredCW;
-	}
-	
 	public class ProtocolProvidedCW implements ProtocolInterface.Provided {
 		private List<ProtocolInterface.Listener.Provided> registeredListeners = new LinkedList<ProtocolInterface.Listener.Provided>();
 
@@ -232,8 +146,8 @@ public class SectionStatechart implements SectionStatechartInterface {
 		}
 		
 		@Override
-		public void raiseCannotGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedCW.CannotGo", null));
+		public void raiseCanGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedCW.CanGo", null));
 		}
 		
 		@Override
@@ -242,8 +156,8 @@ public class SectionStatechart implements SectionStatechartInterface {
 		}
 		
 		@Override
-		public void raiseCanGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedCW.CanGo", null));
+		public void raiseCannotGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedCW.CannotGo", null));
 		}
 
 		@Override
@@ -261,6 +175,36 @@ public class SectionStatechart implements SectionStatechartInterface {
 	@Override
 	public ProtocolProvidedCW getProtocolProvidedCW() {
 		return protocolProvidedCW;
+	}
+	
+	public class TrainProvided implements TrainInterface.Provided {
+		private List<TrainInterface.Listener.Provided> registeredListeners = new LinkedList<TrainInterface.Listener.Provided>();
+
+		@Override
+		public void raiseOccupy() {
+			getInsertQueue().add(new Event("TrainProvided.Occupy", null));
+		}
+		
+		@Override
+		public void raiseUnoccupy() {
+			getInsertQueue().add(new Event("TrainProvided.Unoccupy", null));
+		}
+
+		@Override
+		public void registerListener(TrainInterface.Listener.Provided listener) {
+			registeredListeners.add(listener);
+		}
+		
+		@Override
+		public List<TrainInterface.Listener.Provided> getRegisteredListeners() {
+			return registeredListeners;
+		}
+
+	}
+	
+	@Override
+	public TrainProvided getTrainProvided() {
+		return trainProvided;
 	}
 	
 	public class SectionControlProvided implements SectionControlInterface.Provided {
@@ -308,6 +252,65 @@ public class SectionStatechart implements SectionStatechartInterface {
 		return sectionControlProvided;
 	}
 	
+	public class ProtocolRequiredCW implements ProtocolInterface.Required {
+		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
+
+
+		@Override
+		public boolean isRaisedRelease() {
+			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedRelease();
+		}
+		@Override
+		public boolean isRaisedCanGo() {
+			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedCanGo();
+		}
+		@Override
+		public boolean isRaisedReserve() {
+			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedReserve();
+		}
+		@Override
+		public boolean isRaisedCannotGo() {
+			return sectionStatemachine.getSCIProtocolRequiredCW().isRaisedCannotGo();
+		}
+		@Override
+		public void registerListener(ProtocolInterface.Listener.Required listener) {
+			registeredListeners.add(listener);
+			//sectionStatemachine.getSCIProtocolRequiredCW().getListeners().clear();
+			sectionStatemachine.getSCIProtocolRequiredCW().getListeners().add(new SCIProtocolRequiredCWListener() {
+				@Override
+				public void onReleaseRaised() {
+					listener.raiseRelease();
+				}
+				
+				@Override
+				public void onCanGoRaised() {
+					listener.raiseCanGo();
+				}
+				
+				@Override
+				public void onReserveRaised() {
+					listener.raiseReserve();
+				}
+				
+				@Override
+				public void onCannotGoRaised() {
+					listener.raiseCannotGo();
+				}
+			});
+		}
+		
+		@Override
+		public List<ProtocolInterface.Listener.Required> getRegisteredListeners() {
+			return registeredListeners;
+		}
+
+	}
+	
+	@Override
+	public ProtocolRequiredCW getProtocolRequiredCW() {
+		return protocolRequiredCW;
+	}
+	
 	public class ProtocolRequiredCCW implements ProtocolInterface.Required {
 		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
 
@@ -317,16 +320,16 @@ public class SectionStatechart implements SectionStatechartInterface {
 			return sectionStatemachine.getSCIProtocolRequiredCCW().isRaisedRelease();
 		}
 		@Override
-		public boolean isRaisedCannotGo() {
-			return sectionStatemachine.getSCIProtocolRequiredCCW().isRaisedCannotGo();
+		public boolean isRaisedCanGo() {
+			return sectionStatemachine.getSCIProtocolRequiredCCW().isRaisedCanGo();
 		}
 		@Override
 		public boolean isRaisedReserve() {
 			return sectionStatemachine.getSCIProtocolRequiredCCW().isRaisedReserve();
 		}
 		@Override
-		public boolean isRaisedCanGo() {
-			return sectionStatemachine.getSCIProtocolRequiredCCW().isRaisedCanGo();
+		public boolean isRaisedCannotGo() {
+			return sectionStatemachine.getSCIProtocolRequiredCCW().isRaisedCannotGo();
 		}
 		@Override
 		public void registerListener(ProtocolInterface.Listener.Required listener) {
@@ -339,8 +342,8 @@ public class SectionStatechart implements SectionStatechartInterface {
 				}
 				
 				@Override
-				public void onCannotGoRaised() {
-					listener.raiseCannotGo();
+				public void onCanGoRaised() {
+					listener.raiseCanGo();
 				}
 				
 				@Override
@@ -349,8 +352,8 @@ public class SectionStatechart implements SectionStatechartInterface {
 				}
 				
 				@Override
-				public void onCanGoRaised() {
-					listener.raiseCanGo();
+				public void onCannotGoRaised() {
+					listener.raiseCannotGo();
 				}
 			});
 		}
@@ -376,8 +379,8 @@ public class SectionStatechart implements SectionStatechartInterface {
 		}
 		
 		@Override
-		public void raiseCannotGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedCCW.CannotGo", null));
+		public void raiseCanGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedCCW.CanGo", null));
 		}
 		
 		@Override
@@ -386,8 +389,8 @@ public class SectionStatechart implements SectionStatechartInterface {
 		}
 		
 		@Override
-		public void raiseCanGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedCCW.CanGo", null));
+		public void raiseCannotGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedCCW.CannotGo", null));
 		}
 
 		@Override
@@ -412,5 +415,8 @@ public class SectionStatechart implements SectionStatechartInterface {
 		return sectionStatemachine.isStateActive(state);
 	}
 	
+	public void setTimer(ITimer timer) {
+		sectionStatemachine.setTimer(timer);
+	}
 	
 }

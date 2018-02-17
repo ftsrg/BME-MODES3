@@ -1,6 +1,8 @@
 	package hu.bme.mit.gamma.impl.t5;
 
 	import java.util.List;
+	import org.yakindu.scr.ITimer;
+	
 	import hu.bme.mit.gamma.impl.interfaces.*;
 	import hu.bme.mit.gamma.impl.section.*;
 	import hu.bme.mit.gamma.impl.turnout.*;
@@ -46,22 +48,22 @@
 		/** Creates the channel mappings and enters the wrapped statemachines. */
 		private void init() {
 			// Registration of simple channels
-			T5.getProtocolProvidedTop().registerListener(S08.getProtocolRequiredCW());
-			S08.getProtocolRequiredCW().registerListener(T5.getProtocolProvidedTop());
-			T5.getProtocolProvidedDivergent().registerListener(S10.getProtocolRequiredCCW());
-			S10.getProtocolRequiredCCW().registerListener(T5.getProtocolProvidedDivergent());
-			S13.getProtocolProvidedCW().registerListener(S08.getProtocolRequiredCCW());
-			S08.getProtocolRequiredCCW().registerListener(S13.getProtocolProvidedCW());
-			S08.getProtocolProvidedCCW().registerListener(S13.getProtocolRequiredCW());
-			S13.getProtocolRequiredCW().registerListener(S08.getProtocolProvidedCCW());
-			S11.getProtocolProvidedCCW().registerListener(T5.getProtocolRequiredStraight());
-			T5.getProtocolRequiredStraight().registerListener(S11.getProtocolProvidedCCW());
-			T5.getProtocolProvidedStraight().registerListener(S11.getProtocolRequiredCCW());
-			S11.getProtocolRequiredCCW().registerListener(T5.getProtocolProvidedStraight());
-			S10.getProtocolProvidedCCW().registerListener(T5.getProtocolRequiredDivergent());
-			T5.getProtocolRequiredDivergent().registerListener(S10.getProtocolProvidedCCW());
 			S08.getProtocolProvidedCW().registerListener(T5.getProtocolRequiredTop());
 			T5.getProtocolRequiredTop().registerListener(S08.getProtocolProvidedCW());
+			T5.getProtocolProvidedDivergent().registerListener(S10.getProtocolRequiredCCW());
+			S10.getProtocolRequiredCCW().registerListener(T5.getProtocolProvidedDivergent());
+			S11.getProtocolProvidedCCW().registerListener(T5.getProtocolRequiredStraight());
+			T5.getProtocolRequiredStraight().registerListener(S11.getProtocolProvidedCCW());
+			S10.getProtocolProvidedCCW().registerListener(T5.getProtocolRequiredDivergent());
+			T5.getProtocolRequiredDivergent().registerListener(S10.getProtocolProvidedCCW());
+			T5.getProtocolProvidedTop().registerListener(S08.getProtocolRequiredCW());
+			S08.getProtocolRequiredCW().registerListener(T5.getProtocolProvidedTop());
+			T5.getProtocolProvidedStraight().registerListener(S11.getProtocolRequiredCCW());
+			S11.getProtocolRequiredCCW().registerListener(T5.getProtocolProvidedStraight());
+			S08.getProtocolProvidedCCW().registerListener(S13.getProtocolRequiredCW());
+			S13.getProtocolRequiredCW().registerListener(S08.getProtocolProvidedCCW());
+			S13.getProtocolProvidedCW().registerListener(S08.getProtocolRequiredCCW());
+			S08.getProtocolRequiredCCW().registerListener(S13.getProtocolProvidedCW());
 			// Registration of broadcast channels
 			enter();
 		}
@@ -75,8 +77,8 @@
 			}
 			
 			@Override
-			public void raiseReserve() {
-				S11.getProtocolProvidedCW().raiseReserve();
+			public void raiseRelease() {
+				S11.getProtocolProvidedCW().raiseRelease();
 			}
 			
 			@Override
@@ -85,8 +87,8 @@
 			}
 			
 			@Override
-			public void raiseRelease() {
-				S11.getProtocolProvidedCW().raiseRelease();
+			public void raiseReserve() {
+				S11.getProtocolProvidedCW().raiseReserve();
 			}
 			
 			
@@ -115,16 +117,16 @@
 				return S11.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			@Override
-			public boolean isRaisedReserve() {
-				return S11.getProtocolRequiredCW().isRaisedReserve();
+			public boolean isRaisedRelease() {
+				return S11.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
 			public boolean isRaisedCanGo() {
 				return S11.getProtocolRequiredCW().isRaisedCanGo();
 			}
 			@Override
-			public boolean isRaisedRelease() {
-				return S11.getProtocolRequiredCW().isRaisedRelease();
+			public boolean isRaisedReserve() {
+				return S11.getProtocolRequiredCW().isRaisedReserve();
 			}
 			
 			@Override
@@ -152,8 +154,8 @@
 			}
 			
 			@Override
-			public void raiseReserve() {
-				S10.getProtocolProvidedCW().raiseReserve();
+			public void raiseRelease() {
+				S10.getProtocolProvidedCW().raiseRelease();
 			}
 			
 			@Override
@@ -162,8 +164,8 @@
 			}
 			
 			@Override
-			public void raiseRelease() {
-				S10.getProtocolProvidedCW().raiseRelease();
+			public void raiseReserve() {
+				S10.getProtocolProvidedCW().raiseReserve();
 			}
 			
 			
@@ -192,16 +194,16 @@
 				return S10.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			@Override
-			public boolean isRaisedReserve() {
-				return S10.getProtocolRequiredCW().isRaisedReserve();
+			public boolean isRaisedRelease() {
+				return S10.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
 			public boolean isRaisedCanGo() {
 				return S10.getProtocolRequiredCW().isRaisedCanGo();
 			}
 			@Override
-			public boolean isRaisedRelease() {
-				return S10.getProtocolRequiredCW().isRaisedRelease();
+			public boolean isRaisedReserve() {
+				return S10.getProtocolRequiredCW().isRaisedReserve();
 			}
 			
 			@Override
@@ -229,8 +231,8 @@
 			}
 			
 			@Override
-			public void raiseReserve() {
-				S13.getProtocolProvidedCCW().raiseReserve();
+			public void raiseRelease() {
+				S13.getProtocolProvidedCCW().raiseRelease();
 			}
 			
 			@Override
@@ -239,8 +241,8 @@
 			}
 			
 			@Override
-			public void raiseRelease() {
-				S13.getProtocolProvidedCCW().raiseRelease();
+			public void raiseReserve() {
+				S13.getProtocolProvidedCCW().raiseReserve();
 			}
 			
 			
@@ -269,16 +271,16 @@
 				return S13.getProtocolRequiredCCW().isRaisedCannotGo();
 			}
 			@Override
-			public boolean isRaisedReserve() {
-				return S13.getProtocolRequiredCCW().isRaisedReserve();
+			public boolean isRaisedRelease() {
+				return S13.getProtocolRequiredCCW().isRaisedRelease();
 			}
 			@Override
 			public boolean isRaisedCanGo() {
 				return S13.getProtocolRequiredCCW().isRaisedCanGo();
 			}
 			@Override
-			public boolean isRaisedRelease() {
-				return S13.getProtocolRequiredCCW().isRaisedRelease();
+			public boolean isRaisedReserve() {
+				return S13.getProtocolRequiredCCW().isRaisedReserve();
 			}
 			
 			@Override
@@ -306,12 +308,12 @@
 			}
 			
 			@Override
-			public boolean isRaisedDisableSection() {
-				return S11.getSectionControlProvided().isRaisedDisableSection();
-			}
-			@Override
 			public boolean isRaisedEnableSection() {
 				return S11.getSectionControlProvided().isRaisedEnableSection();
+			}
+			@Override
+			public boolean isRaisedDisableSection() {
+				return S11.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
@@ -339,12 +341,12 @@
 			}
 			
 			@Override
-			public boolean isRaisedDisableSection() {
-				return S10.getSectionControlProvided().isRaisedDisableSection();
-			}
-			@Override
 			public boolean isRaisedEnableSection() {
 				return S10.getSectionControlProvided().isRaisedEnableSection();
+			}
+			@Override
+			public boolean isRaisedDisableSection() {
+				return S10.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
@@ -402,12 +404,12 @@
 			}
 			
 			@Override
-			public boolean isRaisedDisableSection() {
-				return S08.getSectionControlProvided().isRaisedDisableSection();
-			}
-			@Override
 			public boolean isRaisedEnableSection() {
 				return S08.getSectionControlProvided().isRaisedEnableSection();
+			}
+			@Override
+			public boolean isRaisedDisableSection() {
+				return S08.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
@@ -435,12 +437,12 @@
 			}
 			
 			@Override
-			public boolean isRaisedDisableSection() {
-				return S13.getSectionControlProvided().isRaisedDisableSection();
-			}
-			@Override
 			public boolean isRaisedEnableSection() {
 				return S13.getSectionControlProvided().isRaisedEnableSection();
+			}
+			@Override
+			public boolean isRaisedDisableSection() {
+				return S13.getSectionControlProvided().isRaisedDisableSection();
 			}
 			
 			@Override
@@ -654,6 +656,13 @@
 			S13.runComponent();
 		}
 
+		/** Setter for the timer e.g., a virtual timer. */
+		public void setTimer(ITimer timer) {
+			S11.setTimer(timer);
+			S10.setTimer(timer);
+			S08.setTimer(timer);
+			S13.setTimer(timer);
+		}
 		
 		/**  Getter for component instances, e.g. enabling to check their states. */
 		public SectionStatechart getS11() {

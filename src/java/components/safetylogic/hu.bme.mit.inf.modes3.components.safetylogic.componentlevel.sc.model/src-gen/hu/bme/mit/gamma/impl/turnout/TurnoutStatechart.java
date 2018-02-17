@@ -7,8 +7,8 @@ import java.util.LinkedList;
 import hu.bme.mit.gamma.impl.event.*;
 import hu.bme.mit.gamma.impl.interfaces.*;
 import org.yakindu.scr.turnout.ITurnoutStatemachine.SCIProtocolRequiredStraightListener;
-import org.yakindu.scr.turnout.ITurnoutStatemachine.SCIProtocolRequiredTopListener;
 import org.yakindu.scr.turnout.ITurnoutStatemachine.SCIProtocolRequiredDivergentListener;
+import org.yakindu.scr.turnout.ITurnoutStatemachine.SCIProtocolRequiredTopListener;
 import org.yakindu.scr.turnout.TurnoutStatemachine;
 import org.yakindu.scr.turnout.TurnoutStatemachine.State;
 
@@ -16,14 +16,14 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 	// The wrapped Yakindu statemachine
 	private TurnoutStatemachine turnoutStatemachine = new TurnoutStatemachine();
 	// Port instances
-	private ProtocolRequiredStraight protocolRequiredStraight = new ProtocolRequiredStraight();
-	private TrainProvided trainProvided = new TrainProvided();
-	private TurnoutControlProvided turnoutControlProvided = new TurnoutControlProvided();
-	private ProtocolRequiredTop protocolRequiredTop = new ProtocolRequiredTop();
-	private ProtocolProvidedStraight protocolProvidedStraight = new ProtocolProvidedStraight();
-	private ProtocolRequiredDivergent protocolRequiredDivergent = new ProtocolRequiredDivergent();
 	private ProtocolProvidedTop protocolProvidedTop = new ProtocolProvidedTop();
+	private TrainProvided trainProvided = new TrainProvided();
+	private ProtocolRequiredStraight protocolRequiredStraight = new ProtocolRequiredStraight();
+	private TurnoutControlProvided turnoutControlProvided = new TurnoutControlProvided();
+	private ProtocolRequiredDivergent protocolRequiredDivergent = new ProtocolRequiredDivergent();
+	private ProtocolRequiredTop protocolRequiredTop = new ProtocolRequiredTop();
 	private ProtocolProvidedDivergent protocolProvidedDivergent = new ProtocolProvidedDivergent();
+	private ProtocolProvidedStraight protocolProvidedStraight = new ProtocolProvidedStraight();
 	// Indicates which queues are active in this cycle
 	private boolean insertQueue = true;
 	private boolean processQueue = false;
@@ -95,11 +95,23 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 		while (!eventQueue.isEmpty()) {
 				Event event = eventQueue.remove();
 				switch (event.getEvent()) {
-					case "TrainProvided.Unoccupy": 
-						turnoutStatemachine.getSCITrainProvided().raiseUnoccupy();
+					case "ProtocolProvidedTop.Release": 
+						turnoutStatemachine.getSCIProtocolProvidedTop().raiseRelease();
+					break;
+					case "ProtocolProvidedTop.CanGo": 
+						turnoutStatemachine.getSCIProtocolProvidedTop().raiseCanGo();
+					break;
+					case "ProtocolProvidedTop.Reserve": 
+						turnoutStatemachine.getSCIProtocolProvidedTop().raiseReserve();
+					break;
+					case "ProtocolProvidedTop.CannotGo": 
+						turnoutStatemachine.getSCIProtocolProvidedTop().raiseCannotGo();
 					break;
 					case "TrainProvided.Occupy": 
 						turnoutStatemachine.getSCITrainProvided().raiseOccupy();
+					break;
+					case "TrainProvided.Unoccupy": 
+						turnoutStatemachine.getSCITrainProvided().raiseUnoccupy();
 					break;
 					case "TurnoutControlProvided.TurnoutStraight": 
 						turnoutStatemachine.getSCITurnoutControlProvided().raiseTurnoutStraight();
@@ -107,41 +119,29 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 					case "TurnoutControlProvided.TurnoutDivergent": 
 						turnoutStatemachine.getSCITurnoutControlProvided().raiseTurnoutDivergent();
 					break;
-					case "ProtocolProvidedStraight.Release": 
-						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseRelease();
-					break;
-					case "ProtocolProvidedStraight.CannotGo": 
-						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseCannotGo();
-					break;
-					case "ProtocolProvidedStraight.Reserve": 
-						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseReserve();
-					break;
-					case "ProtocolProvidedStraight.CanGo": 
-						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseCanGo();
-					break;
-					case "ProtocolProvidedTop.Release": 
-						turnoutStatemachine.getSCIProtocolProvidedTop().raiseRelease();
-					break;
-					case "ProtocolProvidedTop.CannotGo": 
-						turnoutStatemachine.getSCIProtocolProvidedTop().raiseCannotGo();
-					break;
-					case "ProtocolProvidedTop.Reserve": 
-						turnoutStatemachine.getSCIProtocolProvidedTop().raiseReserve();
-					break;
-					case "ProtocolProvidedTop.CanGo": 
-						turnoutStatemachine.getSCIProtocolProvidedTop().raiseCanGo();
-					break;
 					case "ProtocolProvidedDivergent.Release": 
 						turnoutStatemachine.getSCIProtocolProvidedDivergent().raiseRelease();
 					break;
-					case "ProtocolProvidedDivergent.CannotGo": 
-						turnoutStatemachine.getSCIProtocolProvidedDivergent().raiseCannotGo();
+					case "ProtocolProvidedDivergent.CanGo": 
+						turnoutStatemachine.getSCIProtocolProvidedDivergent().raiseCanGo();
 					break;
 					case "ProtocolProvidedDivergent.Reserve": 
 						turnoutStatemachine.getSCIProtocolProvidedDivergent().raiseReserve();
 					break;
-					case "ProtocolProvidedDivergent.CanGo": 
-						turnoutStatemachine.getSCIProtocolProvidedDivergent().raiseCanGo();
+					case "ProtocolProvidedDivergent.CannotGo": 
+						turnoutStatemachine.getSCIProtocolProvidedDivergent().raiseCannotGo();
+					break;
+					case "ProtocolProvidedStraight.Release": 
+						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseRelease();
+					break;
+					case "ProtocolProvidedStraight.CanGo": 
+						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseCanGo();
+					break;
+					case "ProtocolProvidedStraight.Reserve": 
+						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseReserve();
+					break;
+					case "ProtocolProvidedStraight.CannotGo": 
+						turnoutStatemachine.getSCIProtocolProvidedStraight().raiseCannotGo();
 					break;
 					default:
 						throw new IllegalArgumentException("No such event!");
@@ -151,76 +151,57 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 	}    		
 	
 	// Inner classes representing Ports
-	public class ProtocolRequiredStraight implements ProtocolInterface.Required {
-		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
+	public class ProtocolProvidedTop implements ProtocolInterface.Provided {
+		private List<ProtocolInterface.Listener.Provided> registeredListeners = new LinkedList<ProtocolInterface.Listener.Provided>();
 
-
 		@Override
-		public boolean isRaisedRelease() {
-			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedRelease();
-		}
-		@Override
-		public boolean isRaisedCannotGo() {
-			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedCannotGo();
-		}
-		@Override
-		public boolean isRaisedReserve() {
-			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedReserve();
-		}
-		@Override
-		public boolean isRaisedCanGo() {
-			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedCanGo();
-		}
-		@Override
-		public void registerListener(ProtocolInterface.Listener.Required listener) {
-			registeredListeners.add(listener);
-			//turnoutStatemachine.getSCIProtocolRequiredStraight().getListeners().clear();
-			turnoutStatemachine.getSCIProtocolRequiredStraight().getListeners().add(new SCIProtocolRequiredStraightListener() {
-				@Override
-				public void onReleaseRaised() {
-					listener.raiseRelease();
-				}
-				
-				@Override
-				public void onCannotGoRaised() {
-					listener.raiseCannotGo();
-				}
-				
-				@Override
-				public void onReserveRaised() {
-					listener.raiseReserve();
-				}
-				
-				@Override
-				public void onCanGoRaised() {
-					listener.raiseCanGo();
-				}
-			});
+		public void raiseRelease() {
+			getInsertQueue().add(new Event("ProtocolProvidedTop.Release", null));
 		}
 		
 		@Override
-		public List<ProtocolInterface.Listener.Required> getRegisteredListeners() {
+		public void raiseCanGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedTop.CanGo", null));
+		}
+		
+		@Override
+		public void raiseReserve() {
+			getInsertQueue().add(new Event("ProtocolProvidedTop.Reserve", null));
+		}
+		
+		@Override
+		public void raiseCannotGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedTop.CannotGo", null));
+		}
+
+		@Override
+		public void registerListener(ProtocolInterface.Listener.Provided listener) {
+			registeredListeners.add(listener);
+		}
+		
+		@Override
+		public List<ProtocolInterface.Listener.Provided> getRegisteredListeners() {
 			return registeredListeners;
 		}
 
 	}
 	
 	@Override
-	public ProtocolRequiredStraight getProtocolRequiredStraight() {
-		return protocolRequiredStraight;
+	public ProtocolProvidedTop getProtocolProvidedTop() {
+		return protocolProvidedTop;
 	}
 	
 	public class TrainProvided implements TrainInterface.Provided {
 		private List<TrainInterface.Listener.Provided> registeredListeners = new LinkedList<TrainInterface.Listener.Provided>();
 
 		@Override
-		public void raiseUnoccupy() {
-			getInsertQueue().add(new Event("TrainProvided.Unoccupy", null));
+		public void raiseOccupy() {
+			getInsertQueue().add(new Event("TrainProvided.Occupy", null));
 		}
 		
 		@Override
-		public void raiseOccupy() {
-			getInsertQueue().add(new Event("TrainProvided.Occupy", null));
+		public void raiseUnoccupy() {
+			getInsertQueue().add(new Event("TrainProvided.Unoccupy", null));
 		}
 
 		@Override
@@ -238,6 +219,65 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 	@Override
 	public TrainProvided getTrainProvided() {
 		return trainProvided;
+	}
+	
+	public class ProtocolRequiredStraight implements ProtocolInterface.Required {
+		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
+
+
+		@Override
+		public boolean isRaisedRelease() {
+			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedRelease();
+		}
+		@Override
+		public boolean isRaisedCanGo() {
+			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedCanGo();
+		}
+		@Override
+		public boolean isRaisedReserve() {
+			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedReserve();
+		}
+		@Override
+		public boolean isRaisedCannotGo() {
+			return turnoutStatemachine.getSCIProtocolRequiredStraight().isRaisedCannotGo();
+		}
+		@Override
+		public void registerListener(ProtocolInterface.Listener.Required listener) {
+			registeredListeners.add(listener);
+			//turnoutStatemachine.getSCIProtocolRequiredStraight().getListeners().clear();
+			turnoutStatemachine.getSCIProtocolRequiredStraight().getListeners().add(new SCIProtocolRequiredStraightListener() {
+				@Override
+				public void onReleaseRaised() {
+					listener.raiseRelease();
+				}
+				
+				@Override
+				public void onCanGoRaised() {
+					listener.raiseCanGo();
+				}
+				
+				@Override
+				public void onReserveRaised() {
+					listener.raiseReserve();
+				}
+				
+				@Override
+				public void onCannotGoRaised() {
+					listener.raiseCannotGo();
+				}
+			});
+		}
+		
+		@Override
+		public List<ProtocolInterface.Listener.Required> getRegisteredListeners() {
+			return registeredListeners;
+		}
+
+	}
+	
+	@Override
+	public ProtocolRequiredStraight getProtocolRequiredStraight() {
+		return protocolRequiredStraight;
 	}
 	
 	public class TurnoutControlProvided implements TurnoutControlInterface.Provided {
@@ -270,105 +310,6 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 		return turnoutControlProvided;
 	}
 	
-	public class ProtocolRequiredTop implements ProtocolInterface.Required {
-		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
-
-
-		@Override
-		public boolean isRaisedRelease() {
-			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedRelease();
-		}
-		@Override
-		public boolean isRaisedCannotGo() {
-			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedCannotGo();
-		}
-		@Override
-		public boolean isRaisedReserve() {
-			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedReserve();
-		}
-		@Override
-		public boolean isRaisedCanGo() {
-			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedCanGo();
-		}
-		@Override
-		public void registerListener(ProtocolInterface.Listener.Required listener) {
-			registeredListeners.add(listener);
-			//turnoutStatemachine.getSCIProtocolRequiredTop().getListeners().clear();
-			turnoutStatemachine.getSCIProtocolRequiredTop().getListeners().add(new SCIProtocolRequiredTopListener() {
-				@Override
-				public void onReleaseRaised() {
-					listener.raiseRelease();
-				}
-				
-				@Override
-				public void onCannotGoRaised() {
-					listener.raiseCannotGo();
-				}
-				
-				@Override
-				public void onReserveRaised() {
-					listener.raiseReserve();
-				}
-				
-				@Override
-				public void onCanGoRaised() {
-					listener.raiseCanGo();
-				}
-			});
-		}
-		
-		@Override
-		public List<ProtocolInterface.Listener.Required> getRegisteredListeners() {
-			return registeredListeners;
-		}
-
-	}
-	
-	@Override
-	public ProtocolRequiredTop getProtocolRequiredTop() {
-		return protocolRequiredTop;
-	}
-	
-	public class ProtocolProvidedStraight implements ProtocolInterface.Provided {
-		private List<ProtocolInterface.Listener.Provided> registeredListeners = new LinkedList<ProtocolInterface.Listener.Provided>();
-
-		@Override
-		public void raiseRelease() {
-			getInsertQueue().add(new Event("ProtocolProvidedStraight.Release", null));
-		}
-		
-		@Override
-		public void raiseCannotGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedStraight.CannotGo", null));
-		}
-		
-		@Override
-		public void raiseReserve() {
-			getInsertQueue().add(new Event("ProtocolProvidedStraight.Reserve", null));
-		}
-		
-		@Override
-		public void raiseCanGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedStraight.CanGo", null));
-		}
-
-		@Override
-		public void registerListener(ProtocolInterface.Listener.Provided listener) {
-			registeredListeners.add(listener);
-		}
-		
-		@Override
-		public List<ProtocolInterface.Listener.Provided> getRegisteredListeners() {
-			return registeredListeners;
-		}
-
-	}
-	
-	@Override
-	public ProtocolProvidedStraight getProtocolProvidedStraight() {
-		return protocolProvidedStraight;
-	}
-	
 	public class ProtocolRequiredDivergent implements ProtocolInterface.Required {
 		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
 
@@ -378,16 +319,16 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 			return turnoutStatemachine.getSCIProtocolRequiredDivergent().isRaisedRelease();
 		}
 		@Override
-		public boolean isRaisedCannotGo() {
-			return turnoutStatemachine.getSCIProtocolRequiredDivergent().isRaisedCannotGo();
+		public boolean isRaisedCanGo() {
+			return turnoutStatemachine.getSCIProtocolRequiredDivergent().isRaisedCanGo();
 		}
 		@Override
 		public boolean isRaisedReserve() {
 			return turnoutStatemachine.getSCIProtocolRequiredDivergent().isRaisedReserve();
 		}
 		@Override
-		public boolean isRaisedCanGo() {
-			return turnoutStatemachine.getSCIProtocolRequiredDivergent().isRaisedCanGo();
+		public boolean isRaisedCannotGo() {
+			return turnoutStatemachine.getSCIProtocolRequiredDivergent().isRaisedCannotGo();
 		}
 		@Override
 		public void registerListener(ProtocolInterface.Listener.Required listener) {
@@ -400,8 +341,8 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 				}
 				
 				@Override
-				public void onCannotGoRaised() {
-					listener.raiseCannotGo();
+				public void onCanGoRaised() {
+					listener.raiseCanGo();
 				}
 				
 				@Override
@@ -410,8 +351,8 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 				}
 				
 				@Override
-				public void onCanGoRaised() {
-					listener.raiseCanGo();
+				public void onCannotGoRaised() {
+					listener.raiseCannotGo();
 				}
 			});
 		}
@@ -428,44 +369,63 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 		return protocolRequiredDivergent;
 	}
 	
-	public class ProtocolProvidedTop implements ProtocolInterface.Provided {
-		private List<ProtocolInterface.Listener.Provided> registeredListeners = new LinkedList<ProtocolInterface.Listener.Provided>();
+	public class ProtocolRequiredTop implements ProtocolInterface.Required {
+		private List<ProtocolInterface.Listener.Required> registeredListeners = new LinkedList<ProtocolInterface.Listener.Required>();
+
 
 		@Override
-		public void raiseRelease() {
-			getInsertQueue().add(new Event("ProtocolProvidedTop.Release", null));
+		public boolean isRaisedRelease() {
+			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedRelease();
 		}
-		
 		@Override
-		public void raiseCannotGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedTop.CannotGo", null));
+		public boolean isRaisedCanGo() {
+			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedCanGo();
 		}
-		
 		@Override
-		public void raiseReserve() {
-			getInsertQueue().add(new Event("ProtocolProvidedTop.Reserve", null));
+		public boolean isRaisedReserve() {
+			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedReserve();
 		}
-		
 		@Override
-		public void raiseCanGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedTop.CanGo", null));
+		public boolean isRaisedCannotGo() {
+			return turnoutStatemachine.getSCIProtocolRequiredTop().isRaisedCannotGo();
 		}
-
 		@Override
-		public void registerListener(ProtocolInterface.Listener.Provided listener) {
+		public void registerListener(ProtocolInterface.Listener.Required listener) {
 			registeredListeners.add(listener);
+			//turnoutStatemachine.getSCIProtocolRequiredTop().getListeners().clear();
+			turnoutStatemachine.getSCIProtocolRequiredTop().getListeners().add(new SCIProtocolRequiredTopListener() {
+				@Override
+				public void onReleaseRaised() {
+					listener.raiseRelease();
+				}
+				
+				@Override
+				public void onCanGoRaised() {
+					listener.raiseCanGo();
+				}
+				
+				@Override
+				public void onReserveRaised() {
+					listener.raiseReserve();
+				}
+				
+				@Override
+				public void onCannotGoRaised() {
+					listener.raiseCannotGo();
+				}
+			});
 		}
 		
 		@Override
-		public List<ProtocolInterface.Listener.Provided> getRegisteredListeners() {
+		public List<ProtocolInterface.Listener.Required> getRegisteredListeners() {
 			return registeredListeners;
 		}
 
 	}
 	
 	@Override
-	public ProtocolProvidedTop getProtocolProvidedTop() {
-		return protocolProvidedTop;
+	public ProtocolRequiredTop getProtocolRequiredTop() {
+		return protocolRequiredTop;
 	}
 	
 	public class ProtocolProvidedDivergent implements ProtocolInterface.Provided {
@@ -477,8 +437,8 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 		}
 		
 		@Override
-		public void raiseCannotGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedDivergent.CannotGo", null));
+		public void raiseCanGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedDivergent.CanGo", null));
 		}
 		
 		@Override
@@ -487,8 +447,8 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 		}
 		
 		@Override
-		public void raiseCanGo() {
-			getInsertQueue().add(new Event("ProtocolProvidedDivergent.CanGo", null));
+		public void raiseCannotGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedDivergent.CannotGo", null));
 		}
 
 		@Override
@@ -506,6 +466,46 @@ public class TurnoutStatechart implements TurnoutStatechartInterface {
 	@Override
 	public ProtocolProvidedDivergent getProtocolProvidedDivergent() {
 		return protocolProvidedDivergent;
+	}
+	
+	public class ProtocolProvidedStraight implements ProtocolInterface.Provided {
+		private List<ProtocolInterface.Listener.Provided> registeredListeners = new LinkedList<ProtocolInterface.Listener.Provided>();
+
+		@Override
+		public void raiseRelease() {
+			getInsertQueue().add(new Event("ProtocolProvidedStraight.Release", null));
+		}
+		
+		@Override
+		public void raiseCanGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedStraight.CanGo", null));
+		}
+		
+		@Override
+		public void raiseReserve() {
+			getInsertQueue().add(new Event("ProtocolProvidedStraight.Reserve", null));
+		}
+		
+		@Override
+		public void raiseCannotGo() {
+			getInsertQueue().add(new Event("ProtocolProvidedStraight.CannotGo", null));
+		}
+
+		@Override
+		public void registerListener(ProtocolInterface.Listener.Provided listener) {
+			registeredListeners.add(listener);
+		}
+		
+		@Override
+		public List<ProtocolInterface.Listener.Provided> getRegisteredListeners() {
+			return registeredListeners;
+		}
+
+	}
+	
+	@Override
+	public ProtocolProvidedStraight getProtocolProvidedStraight() {
+		return protocolProvidedStraight;
 	}
 	
 	/** Checks whether the wrapped statemachine is in the given state. */

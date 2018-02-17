@@ -2,8 +2,9 @@ package org.yakindu.scr.section;
 
 import java.util.List;
 import org.yakindu.scr.IStatemachine;
+import org.yakindu.scr.ITimerCallback;
 
-public interface ISectionStatemachine extends IStatemachine {
+public interface ISectionStatemachine extends ITimerCallback,IStatemachine {
 
 	public interface SCISection {
 	

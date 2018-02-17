@@ -1,9 +1,11 @@
 	package hu.bme.mit.gamma.impl.t3;
 
 	import java.util.List;
+	import org.yakindu.scr.ITimer;
+	
 	import hu.bme.mit.gamma.impl.interfaces.*;
-	import hu.bme.mit.gamma.impl.turnout.*;
 	import hu.bme.mit.gamma.impl.section.*;
+	import hu.bme.mit.gamma.impl.turnout.*;
 	
 	public class T3Component implements T3ComponentInterface {			
 		// Component instances
@@ -52,26 +54,26 @@
 		/** Creates the channel mappings and enters the wrapped statemachines. */
 		private void init() {
 			// Registration of simple channels
+			T3_1.getProtocolProvidedStraight().registerListener(S26.getProtocolRequiredCW());
+			S26.getProtocolRequiredCW().registerListener(T3_1.getProtocolProvidedStraight());
+			T3_2.getProtocolProvidedDivergent().registerListener(T3_1.getProtocolRequiredDivergent());
+			T3_1.getProtocolRequiredDivergent().registerListener(T3_2.getProtocolProvidedDivergent());
 			T3_1.getProtocolProvidedTop().registerListener(S20.getProtocolRequiredCCW());
 			S20.getProtocolRequiredCCW().registerListener(T3_1.getProtocolProvidedTop());
-			T3_2.getProtocolProvidedStraight().registerListener(S19.getProtocolRequiredCCW());
-			S19.getProtocolRequiredCCW().registerListener(T3_2.getProtocolProvidedStraight());
-			S19.getProtocolProvidedCCW().registerListener(T3_2.getProtocolRequiredStraight());
-			T3_2.getProtocolRequiredStraight().registerListener(S19.getProtocolProvidedCCW());
-			T3_1.getProtocolProvidedDivergent().registerListener(T3_2.getProtocolRequiredDivergent());
-			T3_2.getProtocolRequiredDivergent().registerListener(T3_1.getProtocolProvidedDivergent());
+			S30.getProtocolProvidedCW().registerListener(T3_2.getProtocolRequiredTop());
+			T3_2.getProtocolRequiredTop().registerListener(S30.getProtocolProvidedCW());
 			T3_2.getProtocolProvidedTop().registerListener(S30.getProtocolRequiredCW());
 			S30.getProtocolRequiredCW().registerListener(T3_2.getProtocolProvidedTop());
 			S26.getProtocolProvidedCW().registerListener(T3_1.getProtocolRequiredStraight());
 			T3_1.getProtocolRequiredStraight().registerListener(S26.getProtocolProvidedCW());
+			T3_1.getProtocolProvidedDivergent().registerListener(T3_2.getProtocolRequiredDivergent());
+			T3_2.getProtocolRequiredDivergent().registerListener(T3_1.getProtocolProvidedDivergent());
+			T3_2.getProtocolProvidedStraight().registerListener(S19.getProtocolRequiredCCW());
+			S19.getProtocolRequiredCCW().registerListener(T3_2.getProtocolProvidedStraight());
+			S19.getProtocolProvidedCCW().registerListener(T3_2.getProtocolRequiredStraight());
+			T3_2.getProtocolRequiredStraight().registerListener(S19.getProtocolProvidedCCW());
 			S20.getProtocolProvidedCCW().registerListener(T3_1.getProtocolRequiredTop());
 			T3_1.getProtocolRequiredTop().registerListener(S20.getProtocolProvidedCCW());
-			T3_1.getProtocolProvidedStraight().registerListener(S26.getProtocolRequiredCW());
-			S26.getProtocolRequiredCW().registerListener(T3_1.getProtocolProvidedStraight());
-			S30.getProtocolProvidedCW().registerListener(T3_2.getProtocolRequiredTop());
-			T3_2.getProtocolRequiredTop().registerListener(S30.getProtocolProvidedCW());
-			T3_2.getProtocolProvidedDivergent().registerListener(T3_1.getProtocolRequiredDivergent());
-			T3_1.getProtocolRequiredDivergent().registerListener(T3_2.getProtocolProvidedDivergent());
 			// Registration of broadcast channels
 			enter();
 		}
@@ -80,8 +82,8 @@
 		public class S20ProtocolProvidedCW implements ProtocolInterface.Provided {
 		
 			@Override
-			public void raiseCannotGo() {
-				S20.getProtocolProvidedCW().raiseCannotGo();
+			public void raiseRelease() {
+				S20.getProtocolProvidedCW().raiseRelease();
 			}
 			
 			@Override
@@ -90,13 +92,13 @@
 			}
 			
 			@Override
-			public void raiseRelease() {
-				S20.getProtocolProvidedCW().raiseRelease();
+			public void raiseCanGo() {
+				S20.getProtocolProvidedCW().raiseCanGo();
 			}
 			
 			@Override
-			public void raiseCanGo() {
-				S20.getProtocolProvidedCW().raiseCanGo();
+			public void raiseCannotGo() {
+				S20.getProtocolProvidedCW().raiseCannotGo();
 			}
 			
 			
@@ -121,20 +123,20 @@
 		
 			
 			@Override
-			public boolean isRaisedCannotGo() {
-				return S20.getProtocolRequiredCW().isRaisedCannotGo();
+			public boolean isRaisedRelease() {
+				return S20.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
 			public boolean isRaisedReserve() {
 				return S20.getProtocolRequiredCW().isRaisedReserve();
 			}
 			@Override
-			public boolean isRaisedRelease() {
-				return S20.getProtocolRequiredCW().isRaisedRelease();
-			}
-			@Override
 			public boolean isRaisedCanGo() {
 				return S20.getProtocolRequiredCW().isRaisedCanGo();
+			}
+			@Override
+			public boolean isRaisedCannotGo() {
+				return S20.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -157,8 +159,8 @@
 		public class S19ProtocolProvidedCW implements ProtocolInterface.Provided {
 		
 			@Override
-			public void raiseCannotGo() {
-				S19.getProtocolProvidedCW().raiseCannotGo();
+			public void raiseRelease() {
+				S19.getProtocolProvidedCW().raiseRelease();
 			}
 			
 			@Override
@@ -167,13 +169,13 @@
 			}
 			
 			@Override
-			public void raiseRelease() {
-				S19.getProtocolProvidedCW().raiseRelease();
+			public void raiseCanGo() {
+				S19.getProtocolProvidedCW().raiseCanGo();
 			}
 			
 			@Override
-			public void raiseCanGo() {
-				S19.getProtocolProvidedCW().raiseCanGo();
+			public void raiseCannotGo() {
+				S19.getProtocolProvidedCW().raiseCannotGo();
 			}
 			
 			
@@ -198,20 +200,20 @@
 		
 			
 			@Override
-			public boolean isRaisedCannotGo() {
-				return S19.getProtocolRequiredCW().isRaisedCannotGo();
+			public boolean isRaisedRelease() {
+				return S19.getProtocolRequiredCW().isRaisedRelease();
 			}
 			@Override
 			public boolean isRaisedReserve() {
 				return S19.getProtocolRequiredCW().isRaisedReserve();
 			}
 			@Override
-			public boolean isRaisedRelease() {
-				return S19.getProtocolRequiredCW().isRaisedRelease();
-			}
-			@Override
 			public boolean isRaisedCanGo() {
 				return S19.getProtocolRequiredCW().isRaisedCanGo();
+			}
+			@Override
+			public boolean isRaisedCannotGo() {
+				return S19.getProtocolRequiredCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -234,8 +236,8 @@
 		public class S26ProtocolProvidedCCW implements ProtocolInterface.Provided {
 		
 			@Override
-			public void raiseCannotGo() {
-				S26.getProtocolProvidedCCW().raiseCannotGo();
+			public void raiseRelease() {
+				S26.getProtocolProvidedCCW().raiseRelease();
 			}
 			
 			@Override
@@ -244,13 +246,13 @@
 			}
 			
 			@Override
-			public void raiseRelease() {
-				S26.getProtocolProvidedCCW().raiseRelease();
+			public void raiseCanGo() {
+				S26.getProtocolProvidedCCW().raiseCanGo();
 			}
 			
 			@Override
-			public void raiseCanGo() {
-				S26.getProtocolProvidedCCW().raiseCanGo();
+			public void raiseCannotGo() {
+				S26.getProtocolProvidedCCW().raiseCannotGo();
 			}
 			
 			
@@ -275,20 +277,20 @@
 		
 			
 			@Override
-			public boolean isRaisedCannotGo() {
-				return S26.getProtocolRequiredCCW().isRaisedCannotGo();
+			public boolean isRaisedRelease() {
+				return S26.getProtocolRequiredCCW().isRaisedRelease();
 			}
 			@Override
 			public boolean isRaisedReserve() {
 				return S26.getProtocolRequiredCCW().isRaisedReserve();
 			}
 			@Override
-			public boolean isRaisedRelease() {
-				return S26.getProtocolRequiredCCW().isRaisedRelease();
-			}
-			@Override
 			public boolean isRaisedCanGo() {
 				return S26.getProtocolRequiredCCW().isRaisedCanGo();
+			}
+			@Override
+			public boolean isRaisedCannotGo() {
+				return S26.getProtocolRequiredCCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -311,8 +313,8 @@
 		public class S30ProtocolProvidedCCW implements ProtocolInterface.Provided {
 		
 			@Override
-			public void raiseCannotGo() {
-				S30.getProtocolProvidedCCW().raiseCannotGo();
+			public void raiseRelease() {
+				S30.getProtocolProvidedCCW().raiseRelease();
 			}
 			
 			@Override
@@ -321,13 +323,13 @@
 			}
 			
 			@Override
-			public void raiseRelease() {
-				S30.getProtocolProvidedCCW().raiseRelease();
+			public void raiseCanGo() {
+				S30.getProtocolProvidedCCW().raiseCanGo();
 			}
 			
 			@Override
-			public void raiseCanGo() {
-				S30.getProtocolProvidedCCW().raiseCanGo();
+			public void raiseCannotGo() {
+				S30.getProtocolProvidedCCW().raiseCannotGo();
 			}
 			
 			
@@ -352,20 +354,20 @@
 		
 			
 			@Override
-			public boolean isRaisedCannotGo() {
-				return S30.getProtocolRequiredCCW().isRaisedCannotGo();
+			public boolean isRaisedRelease() {
+				return S30.getProtocolRequiredCCW().isRaisedRelease();
 			}
 			@Override
 			public boolean isRaisedReserve() {
 				return S30.getProtocolRequiredCCW().isRaisedReserve();
 			}
 			@Override
-			public boolean isRaisedRelease() {
-				return S30.getProtocolRequiredCCW().isRaisedRelease();
-			}
-			@Override
 			public boolean isRaisedCanGo() {
 				return S30.getProtocolRequiredCCW().isRaisedCanGo();
+			}
+			@Override
+			public boolean isRaisedCannotGo() {
+				return S30.getProtocolRequiredCCW().isRaisedCannotGo();
 			}
 			
 			@Override
@@ -454,13 +456,13 @@
 		public class T3_1TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 			@Override
-			public void raiseTurnoutStraight() {
-				T3_1.getTurnoutControlProvided().raiseTurnoutStraight();
+			public void raiseTurnoutDivergent() {
+				T3_1.getTurnoutControlProvided().raiseTurnoutDivergent();
 			}
 			
 			@Override
-			public void raiseTurnoutDivergent() {
-				T3_1.getTurnoutControlProvided().raiseTurnoutDivergent();
+			public void raiseTurnoutStraight() {
+				T3_1.getTurnoutControlProvided().raiseTurnoutStraight();
 			}
 			
 			
@@ -484,13 +486,13 @@
 		public class T3_2TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 			@Override
-			public void raiseTurnoutStraight() {
-				T3_2.getTurnoutControlProvided().raiseTurnoutStraight();
+			public void raiseTurnoutDivergent() {
+				T3_2.getTurnoutControlProvided().raiseTurnoutDivergent();
 			}
 			
 			@Override
-			public void raiseTurnoutDivergent() {
-				T3_2.getTurnoutControlProvided().raiseTurnoutDivergent();
+			public void raiseTurnoutStraight() {
+				T3_2.getTurnoutControlProvided().raiseTurnoutStraight();
 			}
 			
 			
@@ -803,6 +805,13 @@
 			S30.runComponent();
 		}
 
+		/** Setter for the timer e.g., a virtual timer. */
+		public void setTimer(ITimer timer) {
+			S20.setTimer(timer);
+			S19.setTimer(timer);
+			S26.setTimer(timer);
+			S30.setTimer(timer);
+		}
 		
 		/**  Getter for component instances, e.g. enabling to check their states. */
 		public SectionStatechart getS20() {

@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import lbmq.*;
+import org.yakindu.scr.ITimer;
+
 import hu.bme.mit.gamma.impl.event.*;
 import hu.bme.mit.gamma.impl.interfaces.*;
 
@@ -73,12 +75,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			messages.offer(new Event("S01ProtocolProvidedCW.release", null));
 		}
 		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S01ProtocolProvidedCW.cannotGo", null));
-		}
-		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S01ProtocolProvidedCW.reserve", null));
+		}
+		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S01ProtocolProvidedCW.cannotGo", null));
 		}
 		@Override
 		public void raiseCanGo() {
@@ -112,13 +114,13 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedCannotGo() {
-			return t4Component.getS01ProtocolRequiredCW().isRaisedCannotGo();
+		public boolean isRaisedReserve() {
+			return t4Component.getS01ProtocolRequiredCW().isRaisedReserve();
 		}
 		
 		@Override
-		public boolean isRaisedReserve() {
-			return t4Component.getS01ProtocolRequiredCW().isRaisedReserve();
+		public boolean isRaisedCannotGo() {
+			return t4Component.getS01ProtocolRequiredCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -150,12 +152,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			messages.offer(new Event("S07ProtocolProvidedCCW.release", null));
 		}
 		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S07ProtocolProvidedCCW.cannotGo", null));
-		}
-		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S07ProtocolProvidedCCW.reserve", null));
+		}
+		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S07ProtocolProvidedCCW.cannotGo", null));
 		}
 		@Override
 		public void raiseCanGo() {
@@ -189,13 +191,13 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedCannotGo() {
-			return t4Component.getS07ProtocolRequiredCCW().isRaisedCannotGo();
+		public boolean isRaisedReserve() {
+			return t4Component.getS07ProtocolRequiredCCW().isRaisedReserve();
 		}
 		
 		@Override
-		public boolean isRaisedReserve() {
-			return t4Component.getS07ProtocolRequiredCCW().isRaisedReserve();
+		public boolean isRaisedCannotGo() {
+			return t4Component.getS07ProtocolRequiredCCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -227,12 +229,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			messages.offer(new Event("S06ProtocolProvidedCCW.release", null));
 		}
 		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S06ProtocolProvidedCCW.cannotGo", null));
-		}
-		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S06ProtocolProvidedCCW.reserve", null));
+		}
+		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S06ProtocolProvidedCCW.cannotGo", null));
 		}
 		@Override
 		public void raiseCanGo() {
@@ -266,13 +268,13 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedCannotGo() {
-			return t4Component.getS06ProtocolRequiredCCW().isRaisedCannotGo();
+		public boolean isRaisedReserve() {
+			return t4Component.getS06ProtocolRequiredCCW().isRaisedReserve();
 		}
 		
 		@Override
-		public boolean isRaisedReserve() {
-			return t4Component.getS06ProtocolRequiredCCW().isRaisedReserve();
+		public boolean isRaisedCannotGo() {
+			return t4Component.getS06ProtocolRequiredCCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -334,12 +336,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class T4TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 		@Override
-		public void raiseTurnoutDivergent() {
-			messages.offer(new Event("T4TurnoutProvided.turnoutDivergent", null));
-		}
-		@Override
 		public void raiseTurnoutStraight() {
 			messages.offer(new Event("T4TurnoutProvided.turnoutStraight", null));
+		}
+		@Override
+		public void raiseTurnoutDivergent() {
+			messages.offer(new Event("T4TurnoutProvided.turnoutDivergent", null));
 		}
 		
 		
@@ -533,12 +535,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class S01TrainProvided implements TrainInterface.Provided {
 		
 		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S01TrainProvided.occupy", null));
-		}
-		@Override
 		public void raiseUnoccupy() {
 			messages.offer(new Event("S01TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S01TrainProvided.occupy", null));
 		}
 		
 		
@@ -562,12 +564,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class T4TrainProvided implements TrainInterface.Provided {
 		
 		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("T4TrainProvided.occupy", null));
-		}
-		@Override
 		public void raiseUnoccupy() {
 			messages.offer(new Event("T4TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("T4TrainProvided.occupy", null));
 		}
 		
 		
@@ -591,12 +593,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class S02TrainProvided implements TrainInterface.Provided {
 		
 		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S02TrainProvided.occupy", null));
-		}
-		@Override
 		public void raiseUnoccupy() {
 			messages.offer(new Event("S02TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S02TrainProvided.occupy", null));
 		}
 		
 		
@@ -620,12 +622,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class S04TrainProvided implements TrainInterface.Provided {
 		
 		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S04TrainProvided.occupy", null));
-		}
-		@Override
 		public void raiseUnoccupy() {
 			messages.offer(new Event("S04TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S04TrainProvided.occupy", null));
 		}
 		
 		
@@ -649,12 +651,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class S05TrainProvided implements TrainInterface.Provided {
 		
 		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S05TrainProvided.occupy", null));
-		}
-		@Override
 		public void raiseUnoccupy() {
 			messages.offer(new Event("S05TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S05TrainProvided.occupy", null));
 		}
 		
 		
@@ -678,12 +680,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class S06TrainProvided implements TrainInterface.Provided {
 		
 		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S06TrainProvided.occupy", null));
-		}
-		@Override
 		public void raiseUnoccupy() {
 			messages.offer(new Event("S06TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S06TrainProvided.occupy", null));
 		}
 		
 		
@@ -707,12 +709,12 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 	public class S07TrainProvided implements TrainInterface.Provided {
 		
 		@Override
-		public void raiseOccupy() {
-			messages.offer(new Event("S07TrainProvided.occupy", null));
-		}
-		@Override
 		public void raiseUnoccupy() {
 			messages.offer(new Event("S07TrainProvided.unoccupy", null));
+		}
+		@Override
+		public void raiseOccupy() {
+			messages.offer(new Event("S07TrainProvided.occupy", null));
 		}
 		
 		
@@ -760,11 +762,11 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			case "S01ProtocolProvidedCW.release":
 				t4Component.getS01ProtocolProvidedCW().raiseRelease();
 			break;
-			case "S01ProtocolProvidedCW.cannotGo":
-				t4Component.getS01ProtocolProvidedCW().raiseCannotGo();
-			break;
 			case "S01ProtocolProvidedCW.reserve":
 				t4Component.getS01ProtocolProvidedCW().raiseReserve();
+			break;
+			case "S01ProtocolProvidedCW.cannotGo":
+				t4Component.getS01ProtocolProvidedCW().raiseCannotGo();
 			break;
 			case "S01ProtocolProvidedCW.canGo":
 				t4Component.getS01ProtocolProvidedCW().raiseCanGo();
@@ -772,11 +774,11 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			case "S07ProtocolProvidedCCW.release":
 				t4Component.getS07ProtocolProvidedCCW().raiseRelease();
 			break;
-			case "S07ProtocolProvidedCCW.cannotGo":
-				t4Component.getS07ProtocolProvidedCCW().raiseCannotGo();
-			break;
 			case "S07ProtocolProvidedCCW.reserve":
 				t4Component.getS07ProtocolProvidedCCW().raiseReserve();
+			break;
+			case "S07ProtocolProvidedCCW.cannotGo":
+				t4Component.getS07ProtocolProvidedCCW().raiseCannotGo();
 			break;
 			case "S07ProtocolProvidedCCW.canGo":
 				t4Component.getS07ProtocolProvidedCCW().raiseCanGo();
@@ -784,11 +786,11 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			case "S06ProtocolProvidedCCW.release":
 				t4Component.getS06ProtocolProvidedCCW().raiseRelease();
 			break;
-			case "S06ProtocolProvidedCCW.cannotGo":
-				t4Component.getS06ProtocolProvidedCCW().raiseCannotGo();
-			break;
 			case "S06ProtocolProvidedCCW.reserve":
 				t4Component.getS06ProtocolProvidedCCW().raiseReserve();
+			break;
+			case "S06ProtocolProvidedCCW.cannotGo":
+				t4Component.getS06ProtocolProvidedCCW().raiseCannotGo();
 			break;
 			case "S06ProtocolProvidedCCW.canGo":
 				t4Component.getS06ProtocolProvidedCCW().raiseCanGo();
@@ -796,11 +798,11 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			case "S01ControlProvided.restartProtocol":
 				t4Component.getS01ControlProvided().raiseRestartProtocol();
 			break;
-			case "T4TurnoutProvided.turnoutDivergent":
-				t4Component.getT4TurnoutProvided().raiseTurnoutDivergent();
-			break;
 			case "T4TurnoutProvided.turnoutStraight":
 				t4Component.getT4TurnoutProvided().raiseTurnoutStraight();
+			break;
+			case "T4TurnoutProvided.turnoutDivergent":
+				t4Component.getT4TurnoutProvided().raiseTurnoutDivergent();
 			break;
 			case "S02ControlProvided.restartProtocol":
 				t4Component.getS02ControlProvided().raiseRestartProtocol();
@@ -817,47 +819,47 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 			case "S07ControlProvided.restartProtocol":
 				t4Component.getS07ControlProvided().raiseRestartProtocol();
 			break;
-			case "S01TrainProvided.occupy":
-				t4Component.getS01TrainProvided().raiseOccupy();
-			break;
 			case "S01TrainProvided.unoccupy":
 				t4Component.getS01TrainProvided().raiseUnoccupy();
 			break;
-			case "T4TrainProvided.occupy":
-				t4Component.getT4TrainProvided().raiseOccupy();
+			case "S01TrainProvided.occupy":
+				t4Component.getS01TrainProvided().raiseOccupy();
 			break;
 			case "T4TrainProvided.unoccupy":
 				t4Component.getT4TrainProvided().raiseUnoccupy();
 			break;
-			case "S02TrainProvided.occupy":
-				t4Component.getS02TrainProvided().raiseOccupy();
+			case "T4TrainProvided.occupy":
+				t4Component.getT4TrainProvided().raiseOccupy();
 			break;
 			case "S02TrainProvided.unoccupy":
 				t4Component.getS02TrainProvided().raiseUnoccupy();
 			break;
-			case "S04TrainProvided.occupy":
-				t4Component.getS04TrainProvided().raiseOccupy();
+			case "S02TrainProvided.occupy":
+				t4Component.getS02TrainProvided().raiseOccupy();
 			break;
 			case "S04TrainProvided.unoccupy":
 				t4Component.getS04TrainProvided().raiseUnoccupy();
 			break;
-			case "S05TrainProvided.occupy":
-				t4Component.getS05TrainProvided().raiseOccupy();
+			case "S04TrainProvided.occupy":
+				t4Component.getS04TrainProvided().raiseOccupy();
 			break;
 			case "S05TrainProvided.unoccupy":
 				t4Component.getS05TrainProvided().raiseUnoccupy();
 			break;
-			case "S06TrainProvided.occupy":
-				t4Component.getS06TrainProvided().raiseOccupy();
+			case "S05TrainProvided.occupy":
+				t4Component.getS05TrainProvided().raiseOccupy();
 			break;
 			case "S06TrainProvided.unoccupy":
 				t4Component.getS06TrainProvided().raiseUnoccupy();
 			break;
-			case "S07TrainProvided.occupy":
-				t4Component.getS07TrainProvided().raiseOccupy();
+			case "S06TrainProvided.occupy":
+				t4Component.getS06TrainProvided().raiseOccupy();
 			break;
 			case "S07TrainProvided.unoccupy":
 				t4Component.getS07TrainProvided().raiseUnoccupy();
+			break;
+			case "S07TrainProvided.occupy":
+				t4Component.getS07TrainProvided().raiseOccupy();
 			break;
 			default:
 				throw new IllegalArgumentException("No such event!");
@@ -886,5 +888,8 @@ public class AsyncT4Component implements Runnable, AsyncT4ComponentInterface {
 		return t4Component;
 	}
 	
+	public void setTimer(ITimer timer) {
+		t4Component.setTimer(timer);
+	}
 	
 }

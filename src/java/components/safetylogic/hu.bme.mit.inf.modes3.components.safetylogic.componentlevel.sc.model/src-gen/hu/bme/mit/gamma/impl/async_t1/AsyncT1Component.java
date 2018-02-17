@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import lbmq.*;
+import org.yakindu.scr.ITimer;
+
 import hu.bme.mit.gamma.impl.event.*;
 import hu.bme.mit.gamma.impl.interfaces.*;
 
@@ -61,6 +63,10 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 	public class T1ProtocolProvidedDivergent implements ProtocolInterface.Provided {
 		
 		@Override
+		public void raiseCanGo() {
+			messages.offer(new Event("T1ProtocolProvidedDivergent.canGo", null));
+		}
+		@Override
 		public void raiseCannotGo() {
 			messages.offer(new Event("T1ProtocolProvidedDivergent.cannotGo", null));
 		}
@@ -71,10 +77,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("T1ProtocolProvidedDivergent.reserve", null));
-		}
-		@Override
-		public void raiseCanGo() {
-			messages.offer(new Event("T1ProtocolProvidedDivergent.canGo", null));
 		}
 		
 		
@@ -99,6 +101,11 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		
 		
 		@Override
+		public boolean isRaisedCanGo() {
+			return t1Component.getT1ProtocolRequiredDivergent().isRaisedCanGo();
+		}
+		
+		@Override
 		public boolean isRaisedCannotGo() {
 			return t1Component.getT1ProtocolRequiredDivergent().isRaisedCannotGo();
 		}
@@ -111,11 +118,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public boolean isRaisedReserve() {
 			return t1Component.getT1ProtocolRequiredDivergent().isRaisedReserve();
-		}
-		
-		@Override
-		public boolean isRaisedCanGo() {
-			return t1Component.getT1ProtocolRequiredDivergent().isRaisedCanGo();
 		}
 		
 		@Override
@@ -138,6 +140,10 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 	public class S15ProtocolProvidedCW implements ProtocolInterface.Provided {
 		
 		@Override
+		public void raiseCanGo() {
+			messages.offer(new Event("S15ProtocolProvidedCW.canGo", null));
+		}
+		@Override
 		public void raiseCannotGo() {
 			messages.offer(new Event("S15ProtocolProvidedCW.cannotGo", null));
 		}
@@ -148,10 +154,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S15ProtocolProvidedCW.reserve", null));
-		}
-		@Override
-		public void raiseCanGo() {
-			messages.offer(new Event("S15ProtocolProvidedCW.canGo", null));
 		}
 		
 		
@@ -176,6 +178,11 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		
 		
 		@Override
+		public boolean isRaisedCanGo() {
+			return t1Component.getS15ProtocolRequiredCW().isRaisedCanGo();
+		}
+		
+		@Override
 		public boolean isRaisedCannotGo() {
 			return t1Component.getS15ProtocolRequiredCW().isRaisedCannotGo();
 		}
@@ -188,11 +195,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public boolean isRaisedReserve() {
 			return t1Component.getS15ProtocolRequiredCW().isRaisedReserve();
-		}
-		
-		@Override
-		public boolean isRaisedCanGo() {
-			return t1Component.getS15ProtocolRequiredCW().isRaisedCanGo();
 		}
 		
 		@Override
@@ -215,6 +217,10 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 	public class S12ProtocolProvidedCCW implements ProtocolInterface.Provided {
 		
 		@Override
+		public void raiseCanGo() {
+			messages.offer(new Event("S12ProtocolProvidedCCW.canGo", null));
+		}
+		@Override
 		public void raiseCannotGo() {
 			messages.offer(new Event("S12ProtocolProvidedCCW.cannotGo", null));
 		}
@@ -225,10 +231,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S12ProtocolProvidedCCW.reserve", null));
-		}
-		@Override
-		public void raiseCanGo() {
-			messages.offer(new Event("S12ProtocolProvidedCCW.canGo", null));
 		}
 		
 		
@@ -253,6 +255,11 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		
 		
 		@Override
+		public boolean isRaisedCanGo() {
+			return t1Component.getS12ProtocolRequiredCCW().isRaisedCanGo();
+		}
+		
+		@Override
 		public boolean isRaisedCannotGo() {
 			return t1Component.getS12ProtocolRequiredCCW().isRaisedCannotGo();
 		}
@@ -265,11 +272,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		@Override
 		public boolean isRaisedReserve() {
 			return t1Component.getS12ProtocolRequiredCCW().isRaisedReserve();
-		}
-		
-		@Override
-		public boolean isRaisedCanGo() {
-			return t1Component.getS12ProtocolRequiredCCW().isRaisedCanGo();
 		}
 		
 		@Override
@@ -497,6 +499,9 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 	
 	private void forwardEvent(Event event) {
 		switch (event.getEvent()) {
+			case "T1ProtocolProvidedDivergent.canGo":
+				t1Component.getT1ProtocolProvidedDivergent().raiseCanGo();
+			break;
 			case "T1ProtocolProvidedDivergent.cannotGo":
 				t1Component.getT1ProtocolProvidedDivergent().raiseCannotGo();
 			break;
@@ -506,8 +511,8 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			case "T1ProtocolProvidedDivergent.reserve":
 				t1Component.getT1ProtocolProvidedDivergent().raiseReserve();
 			break;
-			case "T1ProtocolProvidedDivergent.canGo":
-				t1Component.getT1ProtocolProvidedDivergent().raiseCanGo();
+			case "S15ProtocolProvidedCW.canGo":
+				t1Component.getS15ProtocolProvidedCW().raiseCanGo();
 			break;
 			case "S15ProtocolProvidedCW.cannotGo":
 				t1Component.getS15ProtocolProvidedCW().raiseCannotGo();
@@ -518,8 +523,8 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			case "S15ProtocolProvidedCW.reserve":
 				t1Component.getS15ProtocolProvidedCW().raiseReserve();
 			break;
-			case "S15ProtocolProvidedCW.canGo":
-				t1Component.getS15ProtocolProvidedCW().raiseCanGo();
+			case "S12ProtocolProvidedCCW.canGo":
+				t1Component.getS12ProtocolProvidedCCW().raiseCanGo();
 			break;
 			case "S12ProtocolProvidedCCW.cannotGo":
 				t1Component.getS12ProtocolProvidedCCW().raiseCannotGo();
@@ -529,9 +534,6 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 			break;
 			case "S12ProtocolProvidedCCW.reserve":
 				t1Component.getS12ProtocolProvidedCCW().raiseReserve();
-			break;
-			case "S12ProtocolProvidedCCW.canGo":
-				t1Component.getS12ProtocolProvidedCCW().raiseCanGo();
 			break;
 			case "S15ControlProvided.restartProtocol":
 				t1Component.getS15ControlProvided().raiseRestartProtocol();
@@ -590,5 +592,8 @@ public class AsyncT1Component implements Runnable, AsyncT1ComponentInterface {
 		return t1Component;
 	}
 	
+	public void setTimer(ITimer timer) {
+		t1Component.setTimer(timer);
+	}
 	
 }

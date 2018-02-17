@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import lbmq.*;
+import org.yakindu.scr.ITimer;
+
 import hu.bme.mit.gamma.impl.event.*;
 import hu.bme.mit.gamma.impl.interfaces.*;
 
@@ -69,20 +71,20 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 	public class S20ProtocolProvidedCW implements ProtocolInterface.Provided {
 		
 		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S20ProtocolProvidedCW.cannotGo", null));
+		public void raiseRelease() {
+			messages.offer(new Event("S20ProtocolProvidedCW.release", null));
 		}
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S20ProtocolProvidedCW.reserve", null));
 		}
 		@Override
-		public void raiseRelease() {
-			messages.offer(new Event("S20ProtocolProvidedCW.release", null));
-		}
-		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S20ProtocolProvidedCW.canGo", null));
+		}
+		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S20ProtocolProvidedCW.cannotGo", null));
 		}
 		
 		
@@ -107,8 +109,8 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		
 		
 		@Override
-		public boolean isRaisedCannotGo() {
-			return t3Component.getS20ProtocolRequiredCW().isRaisedCannotGo();
+		public boolean isRaisedRelease() {
+			return t3Component.getS20ProtocolRequiredCW().isRaisedRelease();
 		}
 		
 		@Override
@@ -117,13 +119,13 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedRelease() {
-			return t3Component.getS20ProtocolRequiredCW().isRaisedRelease();
+		public boolean isRaisedCanGo() {
+			return t3Component.getS20ProtocolRequiredCW().isRaisedCanGo();
 		}
 		
 		@Override
-		public boolean isRaisedCanGo() {
-			return t3Component.getS20ProtocolRequiredCW().isRaisedCanGo();
+		public boolean isRaisedCannotGo() {
+			return t3Component.getS20ProtocolRequiredCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -146,20 +148,20 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 	public class S19ProtocolProvidedCW implements ProtocolInterface.Provided {
 		
 		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S19ProtocolProvidedCW.cannotGo", null));
+		public void raiseRelease() {
+			messages.offer(new Event("S19ProtocolProvidedCW.release", null));
 		}
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S19ProtocolProvidedCW.reserve", null));
 		}
 		@Override
-		public void raiseRelease() {
-			messages.offer(new Event("S19ProtocolProvidedCW.release", null));
-		}
-		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S19ProtocolProvidedCW.canGo", null));
+		}
+		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S19ProtocolProvidedCW.cannotGo", null));
 		}
 		
 		
@@ -184,8 +186,8 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		
 		
 		@Override
-		public boolean isRaisedCannotGo() {
-			return t3Component.getS19ProtocolRequiredCW().isRaisedCannotGo();
+		public boolean isRaisedRelease() {
+			return t3Component.getS19ProtocolRequiredCW().isRaisedRelease();
 		}
 		
 		@Override
@@ -194,13 +196,13 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedRelease() {
-			return t3Component.getS19ProtocolRequiredCW().isRaisedRelease();
+		public boolean isRaisedCanGo() {
+			return t3Component.getS19ProtocolRequiredCW().isRaisedCanGo();
 		}
 		
 		@Override
-		public boolean isRaisedCanGo() {
-			return t3Component.getS19ProtocolRequiredCW().isRaisedCanGo();
+		public boolean isRaisedCannotGo() {
+			return t3Component.getS19ProtocolRequiredCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -223,20 +225,20 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 	public class S26ProtocolProvidedCCW implements ProtocolInterface.Provided {
 		
 		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S26ProtocolProvidedCCW.cannotGo", null));
+		public void raiseRelease() {
+			messages.offer(new Event("S26ProtocolProvidedCCW.release", null));
 		}
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S26ProtocolProvidedCCW.reserve", null));
 		}
 		@Override
-		public void raiseRelease() {
-			messages.offer(new Event("S26ProtocolProvidedCCW.release", null));
-		}
-		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S26ProtocolProvidedCCW.canGo", null));
+		}
+		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S26ProtocolProvidedCCW.cannotGo", null));
 		}
 		
 		
@@ -261,8 +263,8 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		
 		
 		@Override
-		public boolean isRaisedCannotGo() {
-			return t3Component.getS26ProtocolRequiredCCW().isRaisedCannotGo();
+		public boolean isRaisedRelease() {
+			return t3Component.getS26ProtocolRequiredCCW().isRaisedRelease();
 		}
 		
 		@Override
@@ -271,13 +273,13 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedRelease() {
-			return t3Component.getS26ProtocolRequiredCCW().isRaisedRelease();
+		public boolean isRaisedCanGo() {
+			return t3Component.getS26ProtocolRequiredCCW().isRaisedCanGo();
 		}
 		
 		@Override
-		public boolean isRaisedCanGo() {
-			return t3Component.getS26ProtocolRequiredCCW().isRaisedCanGo();
+		public boolean isRaisedCannotGo() {
+			return t3Component.getS26ProtocolRequiredCCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -300,20 +302,20 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 	public class S30ProtocolProvidedCCW implements ProtocolInterface.Provided {
 		
 		@Override
-		public void raiseCannotGo() {
-			messages.offer(new Event("S30ProtocolProvidedCCW.cannotGo", null));
+		public void raiseRelease() {
+			messages.offer(new Event("S30ProtocolProvidedCCW.release", null));
 		}
 		@Override
 		public void raiseReserve() {
 			messages.offer(new Event("S30ProtocolProvidedCCW.reserve", null));
 		}
 		@Override
-		public void raiseRelease() {
-			messages.offer(new Event("S30ProtocolProvidedCCW.release", null));
-		}
-		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S30ProtocolProvidedCCW.canGo", null));
+		}
+		@Override
+		public void raiseCannotGo() {
+			messages.offer(new Event("S30ProtocolProvidedCCW.cannotGo", null));
 		}
 		
 		
@@ -338,8 +340,8 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		
 		
 		@Override
-		public boolean isRaisedCannotGo() {
-			return t3Component.getS30ProtocolRequiredCCW().isRaisedCannotGo();
+		public boolean isRaisedRelease() {
+			return t3Component.getS30ProtocolRequiredCCW().isRaisedRelease();
 		}
 		
 		@Override
@@ -348,13 +350,13 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedRelease() {
-			return t3Component.getS30ProtocolRequiredCCW().isRaisedRelease();
+		public boolean isRaisedCanGo() {
+			return t3Component.getS30ProtocolRequiredCCW().isRaisedCanGo();
 		}
 		
 		@Override
-		public boolean isRaisedCanGo() {
-			return t3Component.getS30ProtocolRequiredCCW().isRaisedCanGo();
+		public boolean isRaisedCannotGo() {
+			return t3Component.getS30ProtocolRequiredCCW().isRaisedCannotGo();
 		}
 		
 		@Override
@@ -445,12 +447,12 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 	public class T3_1TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 		@Override
-		public void raiseTurnoutStraight() {
-			messages.offer(new Event("T3_1TurnoutProvided.turnoutStraight", null));
-		}
-		@Override
 		public void raiseTurnoutDivergent() {
 			messages.offer(new Event("T3_1TurnoutProvided.turnoutDivergent", null));
+		}
+		@Override
+		public void raiseTurnoutStraight() {
+			messages.offer(new Event("T3_1TurnoutProvided.turnoutStraight", null));
 		}
 		
 		
@@ -474,12 +476,12 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 	public class T3_2TurnoutProvided implements TurnoutControlInterface.Provided {
 		
 		@Override
-		public void raiseTurnoutStraight() {
-			messages.offer(new Event("T3_2TurnoutProvided.turnoutStraight", null));
-		}
-		@Override
 		public void raiseTurnoutDivergent() {
 			messages.offer(new Event("T3_2TurnoutProvided.turnoutDivergent", null));
+		}
+		@Override
+		public void raiseTurnoutStraight() {
+			messages.offer(new Event("T3_2TurnoutProvided.turnoutStraight", null));
 		}
 		
 		
@@ -766,53 +768,53 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 	
 	private void forwardEvent(Event event) {
 		switch (event.getEvent()) {
-			case "S20ProtocolProvidedCW.cannotGo":
-				t3Component.getS20ProtocolProvidedCW().raiseCannotGo();
+			case "S20ProtocolProvidedCW.release":
+				t3Component.getS20ProtocolProvidedCW().raiseRelease();
 			break;
 			case "S20ProtocolProvidedCW.reserve":
 				t3Component.getS20ProtocolProvidedCW().raiseReserve();
 			break;
-			case "S20ProtocolProvidedCW.release":
-				t3Component.getS20ProtocolProvidedCW().raiseRelease();
-			break;
 			case "S20ProtocolProvidedCW.canGo":
 				t3Component.getS20ProtocolProvidedCW().raiseCanGo();
 			break;
-			case "S19ProtocolProvidedCW.cannotGo":
-				t3Component.getS19ProtocolProvidedCW().raiseCannotGo();
-			break;
-			case "S19ProtocolProvidedCW.reserve":
-				t3Component.getS19ProtocolProvidedCW().raiseReserve();
+			case "S20ProtocolProvidedCW.cannotGo":
+				t3Component.getS20ProtocolProvidedCW().raiseCannotGo();
 			break;
 			case "S19ProtocolProvidedCW.release":
 				t3Component.getS19ProtocolProvidedCW().raiseRelease();
 			break;
+			case "S19ProtocolProvidedCW.reserve":
+				t3Component.getS19ProtocolProvidedCW().raiseReserve();
+			break;
 			case "S19ProtocolProvidedCW.canGo":
 				t3Component.getS19ProtocolProvidedCW().raiseCanGo();
 			break;
-			case "S26ProtocolProvidedCCW.cannotGo":
-				t3Component.getS26ProtocolProvidedCCW().raiseCannotGo();
-			break;
-			case "S26ProtocolProvidedCCW.reserve":
-				t3Component.getS26ProtocolProvidedCCW().raiseReserve();
+			case "S19ProtocolProvidedCW.cannotGo":
+				t3Component.getS19ProtocolProvidedCW().raiseCannotGo();
 			break;
 			case "S26ProtocolProvidedCCW.release":
 				t3Component.getS26ProtocolProvidedCCW().raiseRelease();
 			break;
+			case "S26ProtocolProvidedCCW.reserve":
+				t3Component.getS26ProtocolProvidedCCW().raiseReserve();
+			break;
 			case "S26ProtocolProvidedCCW.canGo":
 				t3Component.getS26ProtocolProvidedCCW().raiseCanGo();
 			break;
-			case "S30ProtocolProvidedCCW.cannotGo":
-				t3Component.getS30ProtocolProvidedCCW().raiseCannotGo();
-			break;
-			case "S30ProtocolProvidedCCW.reserve":
-				t3Component.getS30ProtocolProvidedCCW().raiseReserve();
+			case "S26ProtocolProvidedCCW.cannotGo":
+				t3Component.getS26ProtocolProvidedCCW().raiseCannotGo();
 			break;
 			case "S30ProtocolProvidedCCW.release":
 				t3Component.getS30ProtocolProvidedCCW().raiseRelease();
 			break;
+			case "S30ProtocolProvidedCCW.reserve":
+				t3Component.getS30ProtocolProvidedCCW().raiseReserve();
+			break;
 			case "S30ProtocolProvidedCCW.canGo":
 				t3Component.getS30ProtocolProvidedCCW().raiseCanGo();
+			break;
+			case "S30ProtocolProvidedCCW.cannotGo":
+				t3Component.getS30ProtocolProvidedCCW().raiseCannotGo();
 			break;
 			case "S20ControlProvided.restartProtocol":
 				t3Component.getS20ControlProvided().raiseRestartProtocol();
@@ -820,17 +822,17 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 			case "S19ControlProvided.restartProtocol":
 				t3Component.getS19ControlProvided().raiseRestartProtocol();
 			break;
-			case "T3_1TurnoutProvided.turnoutStraight":
-				t3Component.getT3_1TurnoutProvided().raiseTurnoutStraight();
-			break;
 			case "T3_1TurnoutProvided.turnoutDivergent":
 				t3Component.getT3_1TurnoutProvided().raiseTurnoutDivergent();
 			break;
-			case "T3_2TurnoutProvided.turnoutStraight":
-				t3Component.getT3_2TurnoutProvided().raiseTurnoutStraight();
+			case "T3_1TurnoutProvided.turnoutStraight":
+				t3Component.getT3_1TurnoutProvided().raiseTurnoutStraight();
 			break;
 			case "T3_2TurnoutProvided.turnoutDivergent":
 				t3Component.getT3_2TurnoutProvided().raiseTurnoutDivergent();
+			break;
+			case "T3_2TurnoutProvided.turnoutStraight":
+				t3Component.getT3_2TurnoutProvided().raiseTurnoutStraight();
 			break;
 			case "S26ControlProvided.restartProtocol":
 				t3Component.getS26ControlProvided().raiseRestartProtocol();
@@ -901,5 +903,8 @@ public class AsyncT3Component implements Runnable, AsyncT3ComponentInterface {
 		return t3Component;
 	}
 	
+	public void setTimer(ITimer timer) {
+		t3Component.setTimer(timer);
+	}
 	
 }

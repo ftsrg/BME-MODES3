@@ -403,7 +403,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		main_region_Straight_listening_to_straight_ReservationFromStraight,
 		main_region_Straight_listening_to_occupy_Free,
 		main_region_Straight_listening_to_occupy_Occupied,
-		main_region_Straight_listening_to_release_TransferReleases,
 		main_region_Divergent,
 		main_region_Divergent_listening_to_top_Waiting,
 		main_region_Divergent_listening_to_top_ReservationFromTop,
@@ -411,11 +410,10 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		main_region_Divergent_listening_to_divergent_ReservationFromDivergent,
 		main_region_Divergent_listening_to_occupy_Free,
 		main_region_Divergent_listening_to_occupy_Occupied,
-		main_region_Divergent_listening_to_release_TransferReleases,
 		$NullState$
 	};
 	
-	private final State[] stateVector = new State[4];
+	private final State[] stateVector = new State[3];
 	
 	private int nextStateIndex;
 	
@@ -436,7 +434,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	public void init() {
 		this.initialized = true;
 		
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			stateVector[i] = State.$NullState$;
 		}
 		clearEvents();
@@ -460,7 +458,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	 * @see IStatemachine#isActive()
 	 */
 	public boolean isActive() {
-		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$||stateVector[3] != State.$NullState$;
+		return stateVector[0] != State.$NullState$||stateVector[1] != State.$NullState$||stateVector[2] != State.$NullState$;
 	}
 	
 	/** 
@@ -502,7 +500,7 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		switch (state) {
 		case main_region_Straight:
 			return stateVector[0].ordinal() >= State.
-					main_region_Straight.ordinal()&& stateVector[0].ordinal() <= State.main_region_Straight_listening_to_release_TransferReleases.ordinal();
+					main_region_Straight.ordinal()&& stateVector[0].ordinal() <= State.main_region_Straight_listening_to_occupy_Occupied.ordinal();
 		case main_region_Straight_listening_to_top_Waiting:
 			return stateVector[0] == State.main_region_Straight_listening_to_top_Waiting;
 		case main_region_Straight_listening_to_top_ReservationFromTop:
@@ -515,11 +513,9 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 			return stateVector[2] == State.main_region_Straight_listening_to_occupy_Free;
 		case main_region_Straight_listening_to_occupy_Occupied:
 			return stateVector[2] == State.main_region_Straight_listening_to_occupy_Occupied;
-		case main_region_Straight_listening_to_release_TransferReleases:
-			return stateVector[3] == State.main_region_Straight_listening_to_release_TransferReleases;
 		case main_region_Divergent:
 			return stateVector[0].ordinal() >= State.
-					main_region_Divergent.ordinal()&& stateVector[0].ordinal() <= State.main_region_Divergent_listening_to_release_TransferReleases.ordinal();
+					main_region_Divergent.ordinal()&& stateVector[0].ordinal() <= State.main_region_Divergent_listening_to_occupy_Occupied.ordinal();
 		case main_region_Divergent_listening_to_top_Waiting:
 			return stateVector[0] == State.main_region_Divergent_listening_to_top_Waiting;
 		case main_region_Divergent_listening_to_top_ReservationFromTop:
@@ -532,8 +528,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 			return stateVector[2] == State.main_region_Divergent_listening_to_occupy_Free;
 		case main_region_Divergent_listening_to_occupy_Occupied:
 			return stateVector[2] == State.main_region_Divergent_listening_to_occupy_Occupied;
-		case main_region_Divergent_listening_to_release_TransferReleases:
-			return stateVector[3] == State.main_region_Divergent_listening_to_release_TransferReleases;
 		default:
 			return false;
 		}
@@ -588,11 +582,11 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Straight_listening_to_top_ReservationFromTop_tr0_tr0() {
-		return sCIProtocolProvidedStraight.canGo;
+		return sCIProtocolProvidedStraight.cannotGo;
 	}
 	
 	private boolean check_main_region_Straight_listening_to_top_ReservationFromTop_tr1_tr1() {
-		return sCIProtocolProvidedStraight.cannotGo;
+		return sCIProtocolProvidedStraight.canGo;
 	}
 	
 	private boolean check_main_region_Straight_listening_to_straight_Waiting_tr0_tr0() {
@@ -600,27 +594,35 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Straight_listening_to_straight_ReservationFromStraight_tr0_tr0() {
-		return sCIProtocolProvidedTop.canGo;
+		return sCIProtocolProvidedTop.cannotGo;
 	}
 	
 	private boolean check_main_region_Straight_listening_to_straight_ReservationFromStraight_tr1_tr1() {
-		return sCIProtocolProvidedTop.cannotGo;
+		return sCIProtocolProvidedTop.canGo;
+	}
+	
+	private boolean check_main_region_Straight_listening_to_occupy_Free_lr0_lr0() {
+		return sCIProtocolProvidedStraight.release;
+	}
+	
+	private boolean check_main_region_Straight_listening_to_occupy_Free_lr1_lr1() {
+		return sCIProtocolProvidedTop.release;
 	}
 	
 	private boolean check_main_region_Straight_listening_to_occupy_Free_tr0_tr0() {
 		return sCITrainProvided.occupy;
 	}
 	
-	private boolean check_main_region_Straight_listening_to_occupy_Occupied_tr0_tr0() {
-		return sCITrainProvided.unoccupy;
-	}
-	
-	private boolean check_main_region_Straight_listening_to_release_TransferReleases_lr0_lr0() {
+	private boolean check_main_region_Straight_listening_to_occupy_Occupied_lr0_lr0() {
 		return sCIProtocolProvidedStraight.release;
 	}
 	
-	private boolean check_main_region_Straight_listening_to_release_TransferReleases_lr1_lr1() {
+	private boolean check_main_region_Straight_listening_to_occupy_Occupied_lr1_lr1() {
 		return sCIProtocolProvidedTop.release;
+	}
+	
+	private boolean check_main_region_Straight_listening_to_occupy_Occupied_tr0_tr0() {
+		return sCITrainProvided.unoccupy;
 	}
 	
 	private boolean check_main_region_Divergent_lr0_lr0() {
@@ -636,11 +638,11 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_top_ReservationFromTop_tr0_tr0() {
-		return sCIProtocolProvidedDivergent.canGo;
+		return sCIProtocolProvidedDivergent.cannotGo;
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_top_ReservationFromTop_tr1_tr1() {
-		return sCIProtocolProvidedDivergent.cannotGo;
+		return sCIProtocolProvidedDivergent.canGo;
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_divergent_Waiting_tr0_tr0() {
@@ -648,27 +650,35 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_divergent_ReservationFromDivergent_tr0_tr0() {
-		return sCIProtocolProvidedTop.canGo;
+		return sCIProtocolProvidedTop.cannotGo;
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_divergent_ReservationFromDivergent_tr1_tr1() {
-		return sCIProtocolProvidedTop.cannotGo;
+		return sCIProtocolProvidedTop.canGo;
+	}
+	
+	private boolean check_main_region_Divergent_listening_to_occupy_Free_lr0_lr0() {
+		return sCIProtocolProvidedDivergent.release;
+	}
+	
+	private boolean check_main_region_Divergent_listening_to_occupy_Free_lr1_lr1() {
+		return sCIProtocolProvidedTop.release;
 	}
 	
 	private boolean check_main_region_Divergent_listening_to_occupy_Free_tr0_tr0() {
 		return sCITrainProvided.occupy;
 	}
 	
+	private boolean check_main_region_Divergent_listening_to_occupy_Occupied_lr0_lr0() {
+		return sCIProtocolProvidedDivergent.release;
+	}
+	
+	private boolean check_main_region_Divergent_listening_to_occupy_Occupied_lr1_lr1() {
+		return sCIProtocolProvidedTop.release;
+	}
+	
 	private boolean check_main_region_Divergent_listening_to_occupy_Occupied_tr0_tr0() {
 		return sCITrainProvided.unoccupy;
-	}
-	
-	private boolean check_main_region_Divergent_listening_to_release_TransferReleases_lr0_lr0() {
-		return sCIProtocolProvidedTop.release;
-	}
-	
-	private boolean check_main_region_Divergent_listening_to_release_TransferReleases_lr1_lr1() {
-		return sCIProtocolProvidedTop.release;
 	}
 	
 	private void effect_main_region_Straight_lr0_lr0() {
@@ -695,14 +705,14 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	private void effect_main_region_Straight_listening_to_top_ReservationFromTop_tr0() {
 		exitSequence_main_region_Straight_listening_to_top_ReservationFromTop();
-		sCIProtocolRequiredTop.raiseCanGo();
+		sCIProtocolRequiredTop.raiseCannotGo();
 		
 		enterSequence_main_region_Straight_listening_to_top_Waiting_default();
 	}
 	
 	private void effect_main_region_Straight_listening_to_top_ReservationFromTop_tr1() {
 		exitSequence_main_region_Straight_listening_to_top_ReservationFromTop();
-		sCIProtocolRequiredTop.raiseCannotGo();
+		sCIProtocolRequiredTop.raiseCanGo();
 		
 		enterSequence_main_region_Straight_listening_to_top_Waiting_default();
 	}
@@ -716,16 +726,24 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	private void effect_main_region_Straight_listening_to_straight_ReservationFromStraight_tr0() {
 		exitSequence_main_region_Straight_listening_to_straight_ReservationFromStraight();
-		sCIProtocolRequiredStraight.raiseCanGo();
+		sCIProtocolRequiredStraight.raiseCannotGo();
 		
 		enterSequence_main_region_Straight_listening_to_straight_Waiting_default();
 	}
 	
 	private void effect_main_region_Straight_listening_to_straight_ReservationFromStraight_tr1() {
 		exitSequence_main_region_Straight_listening_to_straight_ReservationFromStraight();
-		sCIProtocolRequiredStraight.raiseCannotGo();
+		sCIProtocolRequiredStraight.raiseCanGo();
 		
 		enterSequence_main_region_Straight_listening_to_straight_Waiting_default();
+	}
+	
+	private void effect_main_region_Straight_listening_to_occupy_Free_lr0_lr0() {
+		sCIProtocolRequiredTop.raiseRelease();
+	}
+	
+	private void effect_main_region_Straight_listening_to_occupy_Free_lr1_lr1() {
+		sCIProtocolRequiredStraight.raiseRelease();
 	}
 	
 	private void effect_main_region_Straight_listening_to_occupy_Free_tr0() {
@@ -733,17 +751,17 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		enterSequence_main_region_Straight_listening_to_occupy_Occupied_default();
 	}
 	
+	private void effect_main_region_Straight_listening_to_occupy_Occupied_lr0_lr0() {
+		sCIProtocolRequiredStraight.raiseReserve();
+	}
+	
+	private void effect_main_region_Straight_listening_to_occupy_Occupied_lr1_lr1() {
+		sCIProtocolRequiredTop.raiseReserve();
+	}
+	
 	private void effect_main_region_Straight_listening_to_occupy_Occupied_tr0() {
 		exitSequence_main_region_Straight_listening_to_occupy_Occupied();
 		enterSequence_main_region_Straight_listening_to_occupy_Free_default();
-	}
-	
-	private void effect_main_region_Straight_listening_to_release_TransferReleases_lr0_lr0() {
-		sCIProtocolRequiredTop.raiseRelease();
-	}
-	
-	private void effect_main_region_Straight_listening_to_release_TransferReleases_lr1_lr1() {
-		sCIProtocolRequiredStraight.raiseRelease();
 	}
 	
 	private void effect_main_region_Divergent_lr0_lr0() {
@@ -770,14 +788,14 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	private void effect_main_region_Divergent_listening_to_top_ReservationFromTop_tr0() {
 		exitSequence_main_region_Divergent_listening_to_top_ReservationFromTop();
-		sCIProtocolRequiredTop.raiseCanGo();
+		sCIProtocolRequiredTop.raiseCannotGo();
 		
 		enterSequence_main_region_Divergent_listening_to_top_Waiting_default();
 	}
 	
 	private void effect_main_region_Divergent_listening_to_top_ReservationFromTop_tr1() {
 		exitSequence_main_region_Divergent_listening_to_top_ReservationFromTop();
-		sCIProtocolRequiredTop.raiseCannotGo();
+		sCIProtocolRequiredTop.raiseCanGo();
 		
 		enterSequence_main_region_Divergent_listening_to_top_Waiting_default();
 	}
@@ -791,16 +809,24 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	private void effect_main_region_Divergent_listening_to_divergent_ReservationFromDivergent_tr0() {
 		exitSequence_main_region_Divergent_listening_to_divergent_ReservationFromDivergent();
-		sCIProtocolRequiredDivergent.raiseCanGo();
+		sCIProtocolRequiredDivergent.raiseCannotGo();
 		
 		enterSequence_main_region_Divergent_listening_to_divergent_Waiting_default();
 	}
 	
 	private void effect_main_region_Divergent_listening_to_divergent_ReservationFromDivergent_tr1() {
 		exitSequence_main_region_Divergent_listening_to_divergent_ReservationFromDivergent();
-		sCIProtocolRequiredDivergent.raiseCannotGo();
+		sCIProtocolRequiredDivergent.raiseCanGo();
 		
 		enterSequence_main_region_Divergent_listening_to_divergent_Waiting_default();
+	}
+	
+	private void effect_main_region_Divergent_listening_to_occupy_Free_lr0_lr0() {
+		sCIProtocolRequiredTop.raiseRelease();
+	}
+	
+	private void effect_main_region_Divergent_listening_to_occupy_Free_lr1_lr1() {
+		sCIProtocolRequiredDivergent.raiseRelease();
 	}
 	
 	private void effect_main_region_Divergent_listening_to_occupy_Free_tr0() {
@@ -808,45 +834,17 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		enterSequence_main_region_Divergent_listening_to_occupy_Occupied_default();
 	}
 	
+	private void effect_main_region_Divergent_listening_to_occupy_Occupied_lr0_lr0() {
+		sCIProtocolRequiredDivergent.raiseReserve();
+	}
+	
+	private void effect_main_region_Divergent_listening_to_occupy_Occupied_lr1_lr1() {
+		sCIProtocolRequiredTop.raiseReserve();
+	}
+	
 	private void effect_main_region_Divergent_listening_to_occupy_Occupied_tr0() {
 		exitSequence_main_region_Divergent_listening_to_occupy_Occupied();
 		enterSequence_main_region_Divergent_listening_to_occupy_Free_default();
-	}
-	
-	private void effect_main_region_Divergent_listening_to_release_TransferReleases_lr0_lr0() {
-		sCIProtocolRequiredTop.raiseRelease();
-	}
-	
-	private void effect_main_region_Divergent_listening_to_release_TransferReleases_lr1_lr1() {
-		sCIProtocolRequiredDivergent.raiseRelease();
-	}
-	
-	/* Entry action for state 'Free'. */
-	private void entryAction_main_region_Straight_listening_to_occupy_Free() {
-		sCIProtocolRequiredStraight.raiseRelease();
-		
-		sCIProtocolRequiredTop.raiseRelease();
-	}
-	
-	/* Entry action for state 'Occupied'. */
-	private void entryAction_main_region_Straight_listening_to_occupy_Occupied() {
-		sCIProtocolRequiredStraight.raiseReserve();
-		
-		sCIProtocolRequiredTop.raiseReserve();
-	}
-	
-	/* Entry action for state 'Free'. */
-	private void entryAction_main_region_Divergent_listening_to_occupy_Free() {
-		sCIProtocolRequiredDivergent.raiseRelease();
-		
-		sCIProtocolRequiredTop.raiseRelease();
-	}
-	
-	/* Entry action for state 'Occupied'. */
-	private void entryAction_main_region_Divergent_listening_to_occupy_Occupied() {
-		sCIProtocolRequiredDivergent.raiseReserve();
-		
-		sCIProtocolRequiredTop.raiseReserve();
 	}
 	
 	/* 'default' enter sequence for state Straight */
@@ -854,7 +852,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		enterSequence_main_region_Straight_listening_to_top_default();
 		enterSequence_main_region_Straight_listening_to_straight_default();
 		enterSequence_main_region_Straight_listening_to_occupy_default();
-		enterSequence_main_region_Straight_listening_to_release_default();
 	}
 	
 	/* 'default' enter sequence for state Waiting */
@@ -883,22 +880,14 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	/* 'default' enter sequence for state Free */
 	private void enterSequence_main_region_Straight_listening_to_occupy_Free_default() {
-		entryAction_main_region_Straight_listening_to_occupy_Free();
 		nextStateIndex = 2;
 		stateVector[2] = State.main_region_Straight_listening_to_occupy_Free;
 	}
 	
 	/* 'default' enter sequence for state Occupied */
 	private void enterSequence_main_region_Straight_listening_to_occupy_Occupied_default() {
-		entryAction_main_region_Straight_listening_to_occupy_Occupied();
 		nextStateIndex = 2;
 		stateVector[2] = State.main_region_Straight_listening_to_occupy_Occupied;
-	}
-	
-	/* 'default' enter sequence for state TransferReleases */
-	private void enterSequence_main_region_Straight_listening_to_release_TransferReleases_default() {
-		nextStateIndex = 3;
-		stateVector[3] = State.main_region_Straight_listening_to_release_TransferReleases;
 	}
 	
 	/* 'default' enter sequence for state Divergent */
@@ -906,7 +895,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		enterSequence_main_region_Divergent_listening_to_top_default();
 		enterSequence_main_region_Divergent_listening_to_divergent_default();
 		enterSequence_main_region_Divergent_listening_to_occupy_default();
-		enterSequence_main_region_Divergent_listening_to_release_default();
 	}
 	
 	/* 'default' enter sequence for state Waiting */
@@ -935,22 +923,14 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	
 	/* 'default' enter sequence for state Free */
 	private void enterSequence_main_region_Divergent_listening_to_occupy_Free_default() {
-		entryAction_main_region_Divergent_listening_to_occupy_Free();
 		nextStateIndex = 2;
 		stateVector[2] = State.main_region_Divergent_listening_to_occupy_Free;
 	}
 	
 	/* 'default' enter sequence for state Occupied */
 	private void enterSequence_main_region_Divergent_listening_to_occupy_Occupied_default() {
-		entryAction_main_region_Divergent_listening_to_occupy_Occupied();
 		nextStateIndex = 2;
 		stateVector[2] = State.main_region_Divergent_listening_to_occupy_Occupied;
-	}
-	
-	/* 'default' enter sequence for state TransferReleases */
-	private void enterSequence_main_region_Divergent_listening_to_release_TransferReleases_default() {
-		nextStateIndex = 3;
-		stateVector[3] = State.main_region_Divergent_listening_to_release_TransferReleases;
 	}
 	
 	/* 'default' enter sequence for region main_region */
@@ -973,11 +953,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		react_main_region_Straight_listening_to_occupy__entry_Default();
 	}
 	
-	/* 'default' enter sequence for region listening_to_release */
-	private void enterSequence_main_region_Straight_listening_to_release_default() {
-		react_main_region_Straight_listening_to_release__entry_Default();
-	}
-	
 	/* 'default' enter sequence for region listening_to_top */
 	private void enterSequence_main_region_Divergent_listening_to_top_default() {
 		react_main_region_Divergent_listening_to_top__entry_Default();
@@ -993,17 +968,11 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		react_main_region_Divergent_listening_to_occupy__entry_Default();
 	}
 	
-	/* 'default' enter sequence for region listening_to_release */
-	private void enterSequence_main_region_Divergent_listening_to_release_default() {
-		react_main_region_Divergent_listening_to_release__entry_Default();
-	}
-	
 	/* Default exit sequence for state Straight */
 	private void exitSequence_main_region_Straight() {
 		exitSequence_main_region_Straight_listening_to_top();
 		exitSequence_main_region_Straight_listening_to_straight();
 		exitSequence_main_region_Straight_listening_to_occupy();
-		exitSequence_main_region_Straight_listening_to_release();
 	}
 	
 	/* Default exit sequence for state Waiting */
@@ -1042,18 +1011,11 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		stateVector[2] = State.$NullState$;
 	}
 	
-	/* Default exit sequence for state TransferReleases */
-	private void exitSequence_main_region_Straight_listening_to_release_TransferReleases() {
-		nextStateIndex = 3;
-		stateVector[3] = State.$NullState$;
-	}
-	
 	/* Default exit sequence for state Divergent */
 	private void exitSequence_main_region_Divergent() {
 		exitSequence_main_region_Divergent_listening_to_top();
 		exitSequence_main_region_Divergent_listening_to_divergent();
 		exitSequence_main_region_Divergent_listening_to_occupy();
-		exitSequence_main_region_Divergent_listening_to_release();
 	}
 	
 	/* Default exit sequence for state Waiting */
@@ -1090,12 +1052,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	private void exitSequence_main_region_Divergent_listening_to_occupy_Occupied() {
 		nextStateIndex = 2;
 		stateVector[2] = State.$NullState$;
-	}
-	
-	/* Default exit sequence for state TransferReleases */
-	private void exitSequence_main_region_Divergent_listening_to_release_TransferReleases() {
-		nextStateIndex = 3;
-		stateVector[3] = State.$NullState$;
 	}
 	
 	/* Default exit sequence for region main_region */
@@ -1150,17 +1106,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		default:
 			break;
 		}
-		
-		switch (stateVector[3]) {
-		case main_region_Straight_listening_to_release_TransferReleases:
-			exitSequence_main_region_Straight_listening_to_release_TransferReleases();
-			break;
-		case main_region_Divergent_listening_to_release_TransferReleases:
-			exitSequence_main_region_Divergent_listening_to_release_TransferReleases();
-			break;
-		default:
-			break;
-		}
 	}
 	
 	/* Default exit sequence for region listening_to_top */
@@ -1205,17 +1150,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 		}
 	}
 	
-	/* Default exit sequence for region listening_to_release */
-	private void exitSequence_main_region_Straight_listening_to_release() {
-		switch (stateVector[3]) {
-		case main_region_Straight_listening_to_release_TransferReleases:
-			exitSequence_main_region_Straight_listening_to_release_TransferReleases();
-			break;
-		default:
-			break;
-		}
-	}
-	
 	/* Default exit sequence for region listening_to_top */
 	private void exitSequence_main_region_Divergent_listening_to_top() {
 		switch (stateVector[0]) {
@@ -1252,17 +1186,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 			break;
 		case main_region_Divergent_listening_to_occupy_Occupied:
 			exitSequence_main_region_Divergent_listening_to_occupy_Occupied();
-			break;
-		default:
-			break;
-		}
-	}
-	
-	/* Default exit sequence for region listening_to_release */
-	private void exitSequence_main_region_Divergent_listening_to_release() {
-		switch (stateVector[3]) {
-		case main_region_Divergent_listening_to_release_TransferReleases:
-			exitSequence_main_region_Divergent_listening_to_release_TransferReleases();
 			break;
 		default:
 			break;
@@ -1323,6 +1246,13 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	private void react_main_region_Straight_listening_to_occupy_Free() {
 		if (check_main_region_Straight_listening_to_occupy_Free_tr0_tr0()) {
 			effect_main_region_Straight_listening_to_occupy_Free_tr0();
+		} else {
+			if (check_main_region_Straight_listening_to_occupy_Free_lr0_lr0()) {
+				effect_main_region_Straight_listening_to_occupy_Free_lr0_lr0();
+			}
+			if (check_main_region_Straight_listening_to_occupy_Free_lr1_lr1()) {
+				effect_main_region_Straight_listening_to_occupy_Free_lr1_lr1();
+			}
 		}
 	}
 	
@@ -1330,16 +1260,13 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	private void react_main_region_Straight_listening_to_occupy_Occupied() {
 		if (check_main_region_Straight_listening_to_occupy_Occupied_tr0_tr0()) {
 			effect_main_region_Straight_listening_to_occupy_Occupied_tr0();
-		}
-	}
-	
-	/* The reactions of state TransferReleases. */
-	private void react_main_region_Straight_listening_to_release_TransferReleases() {
-		if (check_main_region_Straight_listening_to_release_TransferReleases_lr0_lr0()) {
-			effect_main_region_Straight_listening_to_release_TransferReleases_lr0_lr0();
-		}
-		if (check_main_region_Straight_listening_to_release_TransferReleases_lr1_lr1()) {
-			effect_main_region_Straight_listening_to_release_TransferReleases_lr1_lr1();
+		} else {
+			if (check_main_region_Straight_listening_to_occupy_Occupied_lr0_lr0()) {
+				effect_main_region_Straight_listening_to_occupy_Occupied_lr0_lr0();
+			}
+			if (check_main_region_Straight_listening_to_occupy_Occupied_lr1_lr1()) {
+				effect_main_region_Straight_listening_to_occupy_Occupied_lr1_lr1();
+			}
 		}
 	}
 	
@@ -1397,6 +1324,13 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	private void react_main_region_Divergent_listening_to_occupy_Free() {
 		if (check_main_region_Divergent_listening_to_occupy_Free_tr0_tr0()) {
 			effect_main_region_Divergent_listening_to_occupy_Free_tr0();
+		} else {
+			if (check_main_region_Divergent_listening_to_occupy_Free_lr0_lr0()) {
+				effect_main_region_Divergent_listening_to_occupy_Free_lr0_lr0();
+			}
+			if (check_main_region_Divergent_listening_to_occupy_Free_lr1_lr1()) {
+				effect_main_region_Divergent_listening_to_occupy_Free_lr1_lr1();
+			}
 		}
 	}
 	
@@ -1404,16 +1338,13 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	private void react_main_region_Divergent_listening_to_occupy_Occupied() {
 		if (check_main_region_Divergent_listening_to_occupy_Occupied_tr0_tr0()) {
 			effect_main_region_Divergent_listening_to_occupy_Occupied_tr0();
-		}
-	}
-	
-	/* The reactions of state TransferReleases. */
-	private void react_main_region_Divergent_listening_to_release_TransferReleases() {
-		if (check_main_region_Divergent_listening_to_release_TransferReleases_lr0_lr0()) {
-			effect_main_region_Divergent_listening_to_release_TransferReleases_lr0_lr0();
-		}
-		if (check_main_region_Divergent_listening_to_release_TransferReleases_lr1_lr1()) {
-			effect_main_region_Divergent_listening_to_release_TransferReleases_lr1_lr1();
+		} else {
+			if (check_main_region_Divergent_listening_to_occupy_Occupied_lr0_lr0()) {
+				effect_main_region_Divergent_listening_to_occupy_Occupied_lr0_lr0();
+			}
+			if (check_main_region_Divergent_listening_to_occupy_Occupied_lr1_lr1()) {
+				effect_main_region_Divergent_listening_to_occupy_Occupied_lr1_lr1();
+			}
 		}
 	}
 	
@@ -1438,11 +1369,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	}
 	
 	/* Default react sequence for initial entry  */
-	private void react_main_region_Straight_listening_to_release__entry_Default() {
-		enterSequence_main_region_Straight_listening_to_release_TransferReleases_default();
-	}
-	
-	/* Default react sequence for initial entry  */
 	private void react_main_region_Divergent_listening_to_top__entry_Default() {
 		enterSequence_main_region_Divergent_listening_to_top_Waiting_default();
 	}
@@ -1455,11 +1381,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 	/* Default react sequence for initial entry  */
 	private void react_main_region_Divergent_listening_to_occupy__entry_Default() {
 		enterSequence_main_region_Divergent_listening_to_occupy_Free_default();
-	}
-	
-	/* Default react sequence for initial entry  */
-	private void react_main_region_Divergent_listening_to_release__entry_Default() {
-		enterSequence_main_region_Divergent_listening_to_release_TransferReleases_default();
 	}
 	
 	public void runCycle() {
@@ -1487,9 +1408,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 			case main_region_Straight_listening_to_occupy_Occupied:
 				react_main_region_Straight_listening_to_occupy_Occupied();
 				break;
-			case main_region_Straight_listening_to_release_TransferReleases:
-				react_main_region_Straight_listening_to_release_TransferReleases();
-				break;
 			case main_region_Divergent_listening_to_top_Waiting:
 				react_main_region_Divergent_listening_to_top_Waiting();
 				break;
@@ -1507,9 +1425,6 @@ public class TurnoutStatemachine implements ITurnoutStatemachine {
 				break;
 			case main_region_Divergent_listening_to_occupy_Occupied:
 				react_main_region_Divergent_listening_to_occupy_Occupied();
-				break;
-			case main_region_Divergent_listening_to_release_TransferReleases:
-				react_main_region_Divergent_listening_to_release_TransferReleases();
 				break;
 			default:
 				// $NullState$

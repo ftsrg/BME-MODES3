@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import lbmq.*;
+import org.yakindu.scr.ITimer;
+
 import hu.bme.mit.gamma.impl.event.*;
 import hu.bme.mit.gamma.impl.interfaces.*;
 
@@ -69,16 +71,16 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			messages.offer(new Event("S11ProtocolProvidedCW.cannotGo", null));
 		}
 		@Override
-		public void raiseReserve() {
-			messages.offer(new Event("S11ProtocolProvidedCW.reserve", null));
+		public void raiseRelease() {
+			messages.offer(new Event("S11ProtocolProvidedCW.release", null));
 		}
 		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S11ProtocolProvidedCW.canGo", null));
 		}
 		@Override
-		public void raiseRelease() {
-			messages.offer(new Event("S11ProtocolProvidedCW.release", null));
+		public void raiseReserve() {
+			messages.offer(new Event("S11ProtocolProvidedCW.reserve", null));
 		}
 		
 		
@@ -108,8 +110,8 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedReserve() {
-			return t5Component.getS11ProtocolRequiredCW().isRaisedReserve();
+		public boolean isRaisedRelease() {
+			return t5Component.getS11ProtocolRequiredCW().isRaisedRelease();
 		}
 		
 		@Override
@@ -118,8 +120,8 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedRelease() {
-			return t5Component.getS11ProtocolRequiredCW().isRaisedRelease();
+		public boolean isRaisedReserve() {
+			return t5Component.getS11ProtocolRequiredCW().isRaisedReserve();
 		}
 		
 		@Override
@@ -146,16 +148,16 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			messages.offer(new Event("S10ProtocolProvidedCW.cannotGo", null));
 		}
 		@Override
-		public void raiseReserve() {
-			messages.offer(new Event("S10ProtocolProvidedCW.reserve", null));
+		public void raiseRelease() {
+			messages.offer(new Event("S10ProtocolProvidedCW.release", null));
 		}
 		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S10ProtocolProvidedCW.canGo", null));
 		}
 		@Override
-		public void raiseRelease() {
-			messages.offer(new Event("S10ProtocolProvidedCW.release", null));
+		public void raiseReserve() {
+			messages.offer(new Event("S10ProtocolProvidedCW.reserve", null));
 		}
 		
 		
@@ -185,8 +187,8 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedReserve() {
-			return t5Component.getS10ProtocolRequiredCW().isRaisedReserve();
+		public boolean isRaisedRelease() {
+			return t5Component.getS10ProtocolRequiredCW().isRaisedRelease();
 		}
 		
 		@Override
@@ -195,8 +197,8 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedRelease() {
-			return t5Component.getS10ProtocolRequiredCW().isRaisedRelease();
+		public boolean isRaisedReserve() {
+			return t5Component.getS10ProtocolRequiredCW().isRaisedReserve();
 		}
 		
 		@Override
@@ -223,16 +225,16 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			messages.offer(new Event("S13ProtocolProvidedCCW.cannotGo", null));
 		}
 		@Override
-		public void raiseReserve() {
-			messages.offer(new Event("S13ProtocolProvidedCCW.reserve", null));
+		public void raiseRelease() {
+			messages.offer(new Event("S13ProtocolProvidedCCW.release", null));
 		}
 		@Override
 		public void raiseCanGo() {
 			messages.offer(new Event("S13ProtocolProvidedCCW.canGo", null));
 		}
 		@Override
-		public void raiseRelease() {
-			messages.offer(new Event("S13ProtocolProvidedCCW.release", null));
+		public void raiseReserve() {
+			messages.offer(new Event("S13ProtocolProvidedCCW.reserve", null));
 		}
 		
 		
@@ -262,8 +264,8 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedReserve() {
-			return t5Component.getS13ProtocolRequiredCCW().isRaisedReserve();
+		public boolean isRaisedRelease() {
+			return t5Component.getS13ProtocolRequiredCCW().isRaisedRelease();
 		}
 		
 		@Override
@@ -272,8 +274,8 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedRelease() {
-			return t5Component.getS13ProtocolRequiredCCW().isRaisedRelease();
+		public boolean isRaisedReserve() {
+			return t5Component.getS13ProtocolRequiredCCW().isRaisedReserve();
 		}
 		
 		@Override
@@ -301,13 +303,13 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t5Component.getS11ControlProvided().isRaisedDisableSection();
+		public boolean isRaisedEnableSection() {
+			return t5Component.getS11ControlProvided().isRaisedEnableSection();
 		}
 		
 		@Override
-		public boolean isRaisedEnableSection() {
-			return t5Component.getS11ControlProvided().isRaisedEnableSection();
+		public boolean isRaisedDisableSection() {
+			return t5Component.getS11ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
@@ -335,13 +337,13 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t5Component.getS10ControlProvided().isRaisedDisableSection();
+		public boolean isRaisedEnableSection() {
+			return t5Component.getS10ControlProvided().isRaisedEnableSection();
 		}
 		
 		@Override
-		public boolean isRaisedEnableSection() {
-			return t5Component.getS10ControlProvided().isRaisedEnableSection();
+		public boolean isRaisedDisableSection() {
+			return t5Component.getS10ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
@@ -398,13 +400,13 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t5Component.getS08ControlProvided().isRaisedDisableSection();
+		public boolean isRaisedEnableSection() {
+			return t5Component.getS08ControlProvided().isRaisedEnableSection();
 		}
 		
 		@Override
-		public boolean isRaisedEnableSection() {
-			return t5Component.getS08ControlProvided().isRaisedEnableSection();
+		public boolean isRaisedDisableSection() {
+			return t5Component.getS08ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
@@ -432,13 +434,13 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		}
 		
 		@Override
-		public boolean isRaisedDisableSection() {
-			return t5Component.getS13ControlProvided().isRaisedDisableSection();
+		public boolean isRaisedEnableSection() {
+			return t5Component.getS13ControlProvided().isRaisedEnableSection();
 		}
 		
 		@Override
-		public boolean isRaisedEnableSection() {
-			return t5Component.getS13ControlProvided().isRaisedEnableSection();
+		public boolean isRaisedDisableSection() {
+			return t5Component.getS13ControlProvided().isRaisedDisableSection();
 		}
 		
 		@Override
@@ -630,38 +632,38 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 			case "S11ProtocolProvidedCW.cannotGo":
 				t5Component.getS11ProtocolProvidedCW().raiseCannotGo();
 			break;
-			case "S11ProtocolProvidedCW.reserve":
-				t5Component.getS11ProtocolProvidedCW().raiseReserve();
+			case "S11ProtocolProvidedCW.release":
+				t5Component.getS11ProtocolProvidedCW().raiseRelease();
 			break;
 			case "S11ProtocolProvidedCW.canGo":
 				t5Component.getS11ProtocolProvidedCW().raiseCanGo();
 			break;
-			case "S11ProtocolProvidedCW.release":
-				t5Component.getS11ProtocolProvidedCW().raiseRelease();
+			case "S11ProtocolProvidedCW.reserve":
+				t5Component.getS11ProtocolProvidedCW().raiseReserve();
 			break;
 			case "S10ProtocolProvidedCW.cannotGo":
 				t5Component.getS10ProtocolProvidedCW().raiseCannotGo();
 			break;
-			case "S10ProtocolProvidedCW.reserve":
-				t5Component.getS10ProtocolProvidedCW().raiseReserve();
+			case "S10ProtocolProvidedCW.release":
+				t5Component.getS10ProtocolProvidedCW().raiseRelease();
 			break;
 			case "S10ProtocolProvidedCW.canGo":
 				t5Component.getS10ProtocolProvidedCW().raiseCanGo();
 			break;
-			case "S10ProtocolProvidedCW.release":
-				t5Component.getS10ProtocolProvidedCW().raiseRelease();
+			case "S10ProtocolProvidedCW.reserve":
+				t5Component.getS10ProtocolProvidedCW().raiseReserve();
 			break;
 			case "S13ProtocolProvidedCCW.cannotGo":
 				t5Component.getS13ProtocolProvidedCCW().raiseCannotGo();
 			break;
-			case "S13ProtocolProvidedCCW.reserve":
-				t5Component.getS13ProtocolProvidedCCW().raiseReserve();
+			case "S13ProtocolProvidedCCW.release":
+				t5Component.getS13ProtocolProvidedCCW().raiseRelease();
 			break;
 			case "S13ProtocolProvidedCCW.canGo":
 				t5Component.getS13ProtocolProvidedCCW().raiseCanGo();
 			break;
-			case "S13ProtocolProvidedCCW.release":
-				t5Component.getS13ProtocolProvidedCCW().raiseRelease();
+			case "S13ProtocolProvidedCCW.reserve":
+				t5Component.getS13ProtocolProvidedCCW().raiseReserve();
 			break;
 			case "S11ControlProvided.restartProtocol":
 				t5Component.getS11ControlProvided().raiseRestartProtocol();
@@ -738,5 +740,8 @@ public class AsyncT5Component implements Runnable, AsyncT5ComponentInterface {
 		return t5Component;
 	}
 	
+	public void setTimer(ITimer timer) {
+		t5Component.setTimer(timer);
+	}
 	
 }

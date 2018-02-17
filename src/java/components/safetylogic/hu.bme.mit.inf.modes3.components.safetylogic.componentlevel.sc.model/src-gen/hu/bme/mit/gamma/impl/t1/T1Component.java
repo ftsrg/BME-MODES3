@@ -1,6 +1,8 @@
 	package hu.bme.mit.gamma.impl.t1;
 
 	import java.util.List;
+	import org.yakindu.scr.ITimer;
+	
 	import hu.bme.mit.gamma.impl.interfaces.*;
 	import hu.bme.mit.gamma.impl.section.*;
 	import hu.bme.mit.gamma.impl.turnout.*;
@@ -38,14 +40,14 @@
 		/** Creates the channel mappings and enters the wrapped statemachines. */
 		private void init() {
 			// Registration of simple channels
-			S15.getProtocolProvidedCCW().registerListener(T1.getProtocolRequiredTop());
-			T1.getProtocolRequiredTop().registerListener(S15.getProtocolProvidedCCW());
-			T1.getProtocolProvidedTop().registerListener(S15.getProtocolRequiredCCW());
-			S15.getProtocolRequiredCCW().registerListener(T1.getProtocolProvidedTop());
-			S12.getProtocolProvidedCW().registerListener(T1.getProtocolRequiredStraight());
-			T1.getProtocolRequiredStraight().registerListener(S12.getProtocolProvidedCW());
 			T1.getProtocolProvidedStraight().registerListener(S12.getProtocolRequiredCW());
 			S12.getProtocolRequiredCW().registerListener(T1.getProtocolProvidedStraight());
+			S12.getProtocolProvidedCW().registerListener(T1.getProtocolRequiredStraight());
+			T1.getProtocolRequiredStraight().registerListener(S12.getProtocolProvidedCW());
+			T1.getProtocolProvidedTop().registerListener(S15.getProtocolRequiredCCW());
+			S15.getProtocolRequiredCCW().registerListener(T1.getProtocolProvidedTop());
+			S15.getProtocolProvidedCCW().registerListener(T1.getProtocolRequiredTop());
+			T1.getProtocolRequiredTop().registerListener(S15.getProtocolProvidedCCW());
 			// Registration of broadcast channels
 			enter();
 		}
@@ -53,6 +55,11 @@
 		// Inner classes representing Ports
 		public class T1ProtocolProvidedDivergent implements ProtocolInterface.Provided {
 		
+			@Override
+			public void raiseCanGo() {
+				T1.getProtocolProvidedDivergent().raiseCanGo();
+			}
+			
 			@Override
 			public void raiseCannotGo() {
 				T1.getProtocolProvidedDivergent().raiseCannotGo();
@@ -66,11 +73,6 @@
 			@Override
 			public void raiseReserve() {
 				T1.getProtocolProvidedDivergent().raiseReserve();
-			}
-			
-			@Override
-			public void raiseCanGo() {
-				T1.getProtocolProvidedDivergent().raiseCanGo();
 			}
 			
 			
@@ -95,6 +97,10 @@
 		
 			
 			@Override
+			public boolean isRaisedCanGo() {
+				return T1.getProtocolRequiredDivergent().isRaisedCanGo();
+			}
+			@Override
 			public boolean isRaisedCannotGo() {
 				return T1.getProtocolRequiredDivergent().isRaisedCannotGo();
 			}
@@ -105,10 +111,6 @@
 			@Override
 			public boolean isRaisedReserve() {
 				return T1.getProtocolRequiredDivergent().isRaisedReserve();
-			}
-			@Override
-			public boolean isRaisedCanGo() {
-				return T1.getProtocolRequiredDivergent().isRaisedCanGo();
 			}
 			
 			@Override
@@ -131,6 +133,11 @@
 		public class S15ProtocolProvidedCW implements ProtocolInterface.Provided {
 		
 			@Override
+			public void raiseCanGo() {
+				S15.getProtocolProvidedCW().raiseCanGo();
+			}
+			
+			@Override
 			public void raiseCannotGo() {
 				S15.getProtocolProvidedCW().raiseCannotGo();
 			}
@@ -143,11 +150,6 @@
 			@Override
 			public void raiseReserve() {
 				S15.getProtocolProvidedCW().raiseReserve();
-			}
-			
-			@Override
-			public void raiseCanGo() {
-				S15.getProtocolProvidedCW().raiseCanGo();
 			}
 			
 			
@@ -172,6 +174,10 @@
 		
 			
 			@Override
+			public boolean isRaisedCanGo() {
+				return S15.getProtocolRequiredCW().isRaisedCanGo();
+			}
+			@Override
 			public boolean isRaisedCannotGo() {
 				return S15.getProtocolRequiredCW().isRaisedCannotGo();
 			}
@@ -182,10 +188,6 @@
 			@Override
 			public boolean isRaisedReserve() {
 				return S15.getProtocolRequiredCW().isRaisedReserve();
-			}
-			@Override
-			public boolean isRaisedCanGo() {
-				return S15.getProtocolRequiredCW().isRaisedCanGo();
 			}
 			
 			@Override
@@ -208,6 +210,11 @@
 		public class S12ProtocolProvidedCCW implements ProtocolInterface.Provided {
 		
 			@Override
+			public void raiseCanGo() {
+				S12.getProtocolProvidedCCW().raiseCanGo();
+			}
+			
+			@Override
 			public void raiseCannotGo() {
 				S12.getProtocolProvidedCCW().raiseCannotGo();
 			}
@@ -220,11 +227,6 @@
 			@Override
 			public void raiseReserve() {
 				S12.getProtocolProvidedCCW().raiseReserve();
-			}
-			
-			@Override
-			public void raiseCanGo() {
-				S12.getProtocolProvidedCCW().raiseCanGo();
 			}
 			
 			
@@ -249,6 +251,10 @@
 		
 			
 			@Override
+			public boolean isRaisedCanGo() {
+				return S12.getProtocolRequiredCCW().isRaisedCanGo();
+			}
+			@Override
 			public boolean isRaisedCannotGo() {
 				return S12.getProtocolRequiredCCW().isRaisedCannotGo();
 			}
@@ -259,10 +265,6 @@
 			@Override
 			public boolean isRaisedReserve() {
 				return S12.getProtocolRequiredCCW().isRaisedReserve();
-			}
-			@Override
-			public boolean isRaisedCanGo() {
-				return S12.getProtocolRequiredCCW().isRaisedCanGo();
 			}
 			
 			@Override
@@ -508,6 +510,11 @@
 			S12.runComponent();
 		}
 
+		/** Setter for the timer e.g., a virtual timer. */
+		public void setTimer(ITimer timer) {
+			S15.setTimer(timer);
+			S12.setTimer(timer);
+		}
 		
 		/**  Getter for component instances, e.g. enabling to check their states. */
 		public SectionStatechart getS15() {

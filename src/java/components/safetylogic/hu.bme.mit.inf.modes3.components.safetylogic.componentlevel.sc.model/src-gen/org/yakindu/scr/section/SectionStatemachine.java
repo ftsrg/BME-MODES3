@@ -1,6 +1,7 @@
 package org.yakindu.scr.section;
 import java.util.LinkedList;
 import java.util.List;
+import org.yakindu.scr.ITimer;
 
 public class SectionStatemachine implements ISectionStatemachine {
 
@@ -347,6 +348,9 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	private int nextStateIndex;
 	
+	private ITimer timer;
+	
+	private final boolean[] timeEvents = new boolean[2];
 	
 	
 	public SectionStatemachine() {
@@ -362,6 +366,9 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	public void init() {
 		this.initialized = true;
+		if (timer == null) {
+			throw new IllegalStateException("timer not set.");
+		}
 		
 		for (int i = 0; i < 1; i++) {
 			stateVector[i] = State.$NullState$;
@@ -375,6 +382,9 @@ public class SectionStatemachine implements ISectionStatemachine {
 		if (!initialized) {
 			throw new IllegalStateException(
 					"The state machine needs to be initialized first by calling the init() function.");
+		}
+		if (timer == null) {
+			throw new IllegalStateException("timer not set.");
 		}
 	
 		enterSequence_main_default();
@@ -409,6 +419,9 @@ public class SectionStatemachine implements ISectionStatemachine {
 		sCIProtocolRequiredCW.clearEvents();
 		sCIProtocolRequiredCCW.clearEvents();
 		sCITrainProvided.clearEvents();
+		for (int i=0; i<timeEvents.length; i++) {
+			timeEvents[i] = false;
+		}
 	}
 	
 	/**
@@ -446,6 +459,30 @@ public class SectionStatemachine implements ISectionStatemachine {
 		}
 	}
 	
+	/**
+	* Set the {@link ITimer} for the state machine. It must be set
+	* externally on a timed state machine before a run cycle can be correct
+	* executed.
+	* 
+	* @param timer
+	*/
+	public void setTimer(ITimer timer) {
+		this.timer = timer;
+	}
+	
+	/**
+	* Returns the currently used timer.
+	* 
+	* @return {@link ITimer}
+	*/
+	public ITimer getTimer() {
+		return timer;
+	}
+	
+	public void timeElapsed(int eventID) {
+		timeEvents[eventID] = true;
+	}
+	
 	public SCISection getSCISection() {
 		return sCISection;
 	}
@@ -479,15 +516,15 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Free_tr0_tr0() {
-		return sCIProtocolProvidedCW.reserve;
+		return sCITrainProvided.occupy;
 	}
 	
 	private boolean check_main_Free_tr1_tr1() {
-		return sCIProtocolProvidedCCW.reserve;
+		return sCIProtocolProvidedCW.reserve;
 	}
 	
 	private boolean check_main_Free_tr2_tr2() {
-		return sCITrainProvided.occupy;
+		return sCIProtocolProvidedCCW.reserve;
 	}
 	
 	private boolean check_main_Reserved_lr0_lr0() {
@@ -571,34 +608,47 @@ public class SectionStatemachine implements ISectionStatemachine {
 	}
 	
 	private boolean check_main_Locking_protocol_tr0_tr0() {
-		return sCIProtocolProvidedCW.reserve;
-	}
-	
-	private boolean check_main_Locking_protocol_tr1_tr1() {
-		return sCIProtocolProvidedCCW.reserve;
-	}
-	
-	private boolean check_main_Locking_protocol_tr2_tr2() {
 		return sCITrainProvided.unoccupy;
 	}
 	
-	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0_tr0() {
-		return sCIProtocolProvidedCW.canGo;
+	private boolean check_main_Locking_protocol_tr1_tr1() {
+		return sCIProtocolProvidedCW.reserve;
 	}
 	
-	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1_tr1() {
+	private boolean check_main_Locking_protocol_tr2_tr2() {
+		return sCIProtocolProvidedCCW.reserve;
+	}
+	
+	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0_tr0() {
 		return sCIProtocolProvidedCW.cannotGo;
 	}
 	
-	private boolean check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0_tr0() {
-		return sCIProtocolProvidedCCW.canGo;
+	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1_tr1() {
+		return sCIProtocolProvidedCW.canGo;
 	}
 	
-	private boolean check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1_tr1() {
+	private boolean check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr2_tr2() {
+		return timeEvents[0];
+	}
+	
+	private boolean check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0_tr0() {
 		return sCIProtocolProvidedCCW.cannotGo;
 	}
 	
+	private boolean check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1_tr1() {
+		return sCIProtocolProvidedCCW.canGo;
+	}
+	
+	private boolean check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr2_tr2() {
+		return timeEvents[1];
+	}
+	
 	private void effect_main_Free_tr0() {
+		exitSequence_main_Free();
+		enterSequence_main_Locking_protocol_default();
+	}
+	
+	private void effect_main_Free_tr1() {
 		exitSequence_main_Free();
 		sCIProtocolRequiredCW.raiseCanGo();
 		
@@ -607,18 +657,13 @@ public class SectionStatemachine implements ISectionStatemachine {
 		enterSequence_main_Reserved_default();
 	}
 	
-	private void effect_main_Free_tr1() {
+	private void effect_main_Free_tr2() {
 		exitSequence_main_Free();
 		sCIProtocolRequiredCCW.raiseCanGo();
 		
 		sCISection.setLatestReserveDirection(SCIDirection.cCW);
 		
 		enterSequence_main_Reserved_default();
-	}
-	
-	private void effect_main_Free_tr2() {
-		exitSequence_main_Free();
-		enterSequence_main_Locking_protocol_default();
 	}
 	
 	private void effect_main_Reserved_lr0_lr0() {
@@ -721,41 +766,51 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	private void effect_main_Locking_protocol_tr0() {
 		exitSequence_main_Locking_protocol();
-		sCIProtocolRequiredCW.raiseCannotGo();
-		
-		enterSequence_main_Stop_default();
+		enterSequence_main_Free_default();
 	}
 	
 	private void effect_main_Locking_protocol_tr1() {
 		exitSequence_main_Locking_protocol();
-		sCIProtocolRequiredCCW.raiseCannotGo();
+		sCIProtocolRequiredCW.raiseCannotGo();
 		
 		enterSequence_main_Stop_default();
 	}
 	
 	private void effect_main_Locking_protocol_tr2() {
 		exitSequence_main_Locking_protocol();
-		enterSequence_main_Free_default();
+		sCIProtocolRequiredCCW.raiseCannotGo();
+		
+		enterSequence_main_Stop_default();
 	}
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr0() {
+		exitSequence_main_Locking_protocol();
+		enterSequence_main_Stop_default();
+	}
+	
+	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1() {
 		exitSequence_main_Locking_protocol_inner_region_WaitForFirstResponse();
 		enterSequence_main_Locking_protocol_inner_region_WaitForSecondResponse_default();
 	}
 	
-	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1() {
-		exitSequence_main_Locking_protocol();
-		enterSequence_main_Stop_default();
+	private void effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr2() {
+		exitSequence_main_Locking_protocol_inner_region_WaitForFirstResponse();
+		enterSequence_main_Locking_protocol_inner_region_WaitForFirstResponse_default();
 	}
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr0() {
 		exitSequence_main_Locking_protocol();
-		enterSequence_main_Occupied_default();
+		enterSequence_main_Stop_default();
 	}
 	
 	private void effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1() {
 		exitSequence_main_Locking_protocol();
-		enterSequence_main_Stop_default();
+		enterSequence_main_Occupied_default();
+	}
+	
+	private void effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr2() {
+		exitSequence_main_Locking_protocol_inner_region_WaitForSecondResponse();
+		enterSequence_main_Locking_protocol_inner_region_WaitForSecondResponse_default();
 	}
 	
 	/* Entry action for state 'Free'. */
@@ -777,12 +832,26 @@ public class SectionStatemachine implements ISectionStatemachine {
 	
 	/* Entry action for state 'WaitForFirstResponse'. */
 	private void entryAction_main_Locking_protocol_inner_region_WaitForFirstResponse() {
+		timer.setTimer(this, 0, 1 * 1000, false);
+		
 		sCIProtocolRequiredCW.raiseReserve();
 	}
 	
 	/* Entry action for state 'WaitForSecondResponse'. */
 	private void entryAction_main_Locking_protocol_inner_region_WaitForSecondResponse() {
+		timer.setTimer(this, 1, 1 * 1000, false);
+		
 		sCIProtocolRequiredCCW.raiseReserve();
+	}
+	
+	/* Exit action for state 'WaitForFirstResponse'. */
+	private void exitAction_main_Locking_protocol_inner_region_WaitForFirstResponse() {
+		timer.unsetTimer(this, 0);
+	}
+	
+	/* Exit action for state 'WaitForSecondResponse'. */
+	private void exitAction_main_Locking_protocol_inner_region_WaitForSecondResponse() {
+		timer.unsetTimer(this, 1);
 	}
 	
 	/* 'default' enter sequence for state Free */
@@ -874,12 +943,16 @@ public class SectionStatemachine implements ISectionStatemachine {
 	private void exitSequence_main_Locking_protocol_inner_region_WaitForFirstResponse() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_Locking_protocol_inner_region_WaitForFirstResponse();
 	}
 	
 	/* Default exit sequence for state WaitForSecondResponse */
 	private void exitSequence_main_Locking_protocol_inner_region_WaitForSecondResponse() {
 		nextStateIndex = 0;
 		stateVector[0] = State.$NullState$;
+		
+		exitAction_main_Locking_protocol_inner_region_WaitForSecondResponse();
 	}
 	
 	/* Default exit sequence for region main */
@@ -1035,6 +1108,10 @@ public class SectionStatemachine implements ISectionStatemachine {
 					} else {
 						if (check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1_tr1()) {
 							effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr1();
+						} else {
+							if (check_main_Locking_protocol_inner_region_WaitForFirstResponse_tr2_tr2()) {
+								effect_main_Locking_protocol_inner_region_WaitForFirstResponse_tr2();
+							}
 						}
 					}
 				}
@@ -1058,6 +1135,10 @@ public class SectionStatemachine implements ISectionStatemachine {
 					} else {
 						if (check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1_tr1()) {
 							effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr1();
+						} else {
+							if (check_main_Locking_protocol_inner_region_WaitForSecondResponse_tr2_tr2()) {
+								effect_main_Locking_protocol_inner_region_WaitForSecondResponse_tr2();
+							}
 						}
 					}
 				}

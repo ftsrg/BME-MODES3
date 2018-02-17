@@ -1,6 +1,8 @@
 package org.yakindu.scr.section;
 import java.util.List;
 
+import org.yakindu.scr.ITimer;
+import org.yakindu.scr.ITimerCallback;
 import org.yakindu.scr.section.SectionStatemachine.State;
 
 /**
@@ -321,6 +323,54 @@ public class SynchronizedSectionStatemachine implements ISectionStatemachine {
 	}
 	public synchronized SCIDirection getSCIDirection() {
 		return sCIDirection;
+	}
+	/*================ TIME EVENT HANDLING ================
+	
+	/** An external timer instance is required. */
+	protected ITimer externalTimer;
+	
+	/** Internally we use a timer proxy that queues time events together with other input events. */
+	protected ITimer timerProxy = new ITimer() {
+		/** Simply delegate to external timer with a modified callback. */
+		@Override
+		public void setTimer(ITimerCallback callback, int eventID, long time,
+				boolean isPeriodic) {
+			externalTimer.setTimer(SynchronizedSectionStatemachine.this, eventID, time, isPeriodic);
+		}
+		
+		@Override
+		public void unsetTimer(ITimerCallback callback, int eventID) {
+			externalTimer.unsetTimer(SynchronizedSectionStatemachine.this, eventID);
+		}
+	};
+	
+	/**
+	 * Set the {@link ITimer} for the state machine. It must be set externally
+	 * on a timed state machine before a run cycle can be correct executed.
+	 * 
+	 * @param timer
+	 */
+	public void setTimer(ITimer timer) {
+		synchronized(statemachine) {
+			this.externalTimer = timer;
+			/* the wrapped state machine uses timer proxy as timer */
+			statemachine.setTimer(timerProxy);
+		}
+	}
+	
+	/**
+	* Returns the currently used timer.
+	* 
+	* @return {@link ITimer}
+	*/
+	public ITimer getTimer() {
+		return externalTimer;
+	}
+	
+	public void timeElapsed(int eventID) {
+		synchronized (statemachine) {
+			statemachine.timeElapsed(eventID);
+		}
 	}
 	
 	/**
