@@ -20,7 +20,7 @@ class Main {
 
 	def static void main(String[] args) {
 		System.setProperty(SimpleLogger.LOG_FILE_KEY, "System.out")
-		System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace")
+		//System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "trace")
 
 		val loggerFactory = new SimpleLoggerFactory
 		val logger = loggerFactory.getLogger(Main.name)
