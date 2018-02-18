@@ -15,6 +15,13 @@ subprojects{
 	ext{
 		viatraVersion = '1.7.0'
 		xtendVersion = '2.9.0'
+		
+		componentsPrefix = "${rootProject.name}.components"
+		safetylogicPrefix = "${componentsPrefix}.safetylogic"
+		messagingPrefix = "${rootProject.name}.messaging"
+		transportsPrefix = "${rootProject.name}.transports"
+		utilsPrefix = "${rootProject.name}.utils"
+		testPrefix = "${rootProject.name}.test"
 	}
 }
 
@@ -49,6 +56,7 @@ subprojects {
 			testCompile 'junit:junit:4.12'
 			testCompile "org.mockito:mockito-core:1.10.19"
 		}
+		
 	}
 
 	plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {

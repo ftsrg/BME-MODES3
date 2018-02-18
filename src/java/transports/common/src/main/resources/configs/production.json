@@ -1,0 +1,102 @@
+{
+	"core": [
+		"bbb1.modes3.intra" : [
+			{
+				"id": "component_safety_logic",
+				"port": 1001
+			},
+			{
+				"id": "section_controller",
+				"port": 1002
+			},
+			{
+				"id": "turnout_controller",
+				"port": 1003
+			}
+		],
+		"bbb2.modes3.intra" : [
+			{
+				"id": "component_safety_logic",
+				"port": 1001
+			},
+			{
+				"id": "section_controller",
+				"port": 1002
+			},
+			{
+				"id": "turnout_controller",
+				"port": 1003
+			}
+		],
+		"bbb3.modes3.intra" : [
+			{
+				"id": "component_safety_logic",
+				"port": 1001
+			},
+			{
+				"id": "section_controller",
+				"port": 1002
+			},
+			{
+				"id": "turnout_controller",
+				"port": 1003
+			}
+		],
+		"bbb4.modes3.intra" : [
+			{
+				"id": "component_safety_logic",
+				"port": 1001
+			},
+			{
+				"id": "section_controller",
+				"port": 1002
+			},
+			{
+				"id": "turnout_controller",
+				"port": 1003
+			}
+		],
+		"bbb5.modes3.intra" : [
+			{
+				"id": "component_safety_logic",
+				"port": 1001
+			},
+			{
+				"id": "section_controller",
+				"port": 1002
+			},
+			{
+				"id": "turnout_controller",
+				"port": 1003
+			}
+		],
+		"bbb6.modes3.intra" : [
+			{
+				"id": "component_safety_logic",
+				"port": 1001
+			},
+			{
+				"id": "section_controller",
+				"port": 1002
+			},
+			{
+				"id": "turnout_controller",
+				"port": 1003
+			}
+		],
+		"raspi.modes3.intra" : [
+			{
+				"id": "section_occupancy",
+				"port": 1001
+			},
+			{
+				"id": "system_monitor",
+				"port": 1002
+			},
+			{
+				"id": "train_control",
+				"port": 1003
+			}
+		]
+	]
+}

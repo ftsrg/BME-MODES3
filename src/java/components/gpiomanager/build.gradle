@@ -1,0 +1,27 @@
+apply plugin: 'application'
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+
+dependencies {
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+}
+
+def archivePrefix = "${componentsPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}
+
+startScripts {
+	applicationName archivePrefix
+}
+
+distZip {
+	baseName archivePrefix
+}
+
+distTar {
+	baseName archivePrefix
+}
+
+mainClassName = "hu.bme.mit.inf.modes3.components.gpiomanager.Main"

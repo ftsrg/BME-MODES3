@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+sourceSets {
+    main {
+        java {
+			srcDirs 'src'
+            srcDirs 'src-gen'
+        }
+    }
+}
+ 
+def archivePrefix = "${safetylogicPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}

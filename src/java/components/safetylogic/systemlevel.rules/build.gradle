@@ -1,0 +1,49 @@
+apply plugin: 'java'
+//apply plugin: "com.diffplug.gradle.p2.asmaven"
+
+
+repositories {
+    jcenter()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'src-gen']
+        }
+    }
+}
+
+/*
+p2AsMaven {
+    //destination buildDir
+    group 'viatra-cep', {
+        repo 'http://download.eclipse.org/viatra/updates/integration'
+        p2.addIU('org.eclipse.viatra.cep.core')
+    }
+}
+*/
+
+dependencies {
+    compile 'org.eclipse.emf:org.eclipse.emf.common:2.11.0-v20150805-0538'
+	compile 'org.eclipse.emf:org.eclipse.emf.ecore:2.11.1-v20150805-0538'
+	compile 'org.eclipse.viatra:org.eclipse.viatra.transformation.evm:1.4.0'
+	compile 'org.eclipse.viatra:viatra-query-runtime:1.4.0'
+	compile 'org.eclipse.viatra:org.eclipse.viatra.transformation.runtime.emf:1.4.0'
+	compile 'org.eclipse.viatra:org.eclipse.viatra.transformation.runtime.emf.feature:1.4.0'
+	
+ 	//compile 'org.eclipse.viatra-cep:org.eclipse.viatra.cep.core:+'
+ 	
+ 	compile project(':messaging:communication')
+	compile project(':components:safetylogic:systemlevel.model')
+	compile project(':components:safetylogic:systemlevel.patterns')
+ 	
+ 	// XXX: workaround: (1) p2AsMaven does not work properly (2) Viatra-CEP & Viatra QueryBasedFeatures aren't available in m2 repository
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+def archivePrefix = "${safetylogicPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}

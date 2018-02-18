@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+
+dependencies {
+	compile 'com.google.code.gson:gson:2.7'
+	compile project(':utils:common')
+}
+
+def archivePrefix = "${transportsPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}

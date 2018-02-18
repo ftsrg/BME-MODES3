@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+def archivePrefix = "${safetylogicPrefix}.${project.name}"
+
+distZip {
+	baseName archivePrefix
+}
+
+distTar {
+	baseName archivePrefix
+}
