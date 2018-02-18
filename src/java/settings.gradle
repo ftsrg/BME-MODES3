@@ -14,6 +14,14 @@ def transportsPrefix = "${rootProject.name}.${transports}"
 def utilsPrefix = "${rootProject.name}.${utils}"
 def testPrefix = "${rootProject.name}.${test}"
 
+// export the naming so that it can be reused in the `build.gradle` file
+gradle.ext.componentsPrefix = componentsPrefix
+gradle.ext.safetylogicPrefix = safetylogicPrefix
+gradle.ext.messagingPrefix = messagingPrefix
+gradle.ext.transportsPrefix = transportsPrefix
+gradle.ext.utilsPrefix = utilsPrefix
+gradle.ext.testPrefix = testPrefix
+
 include ":${components}:barrier"
 project(":${components}:barrier").name = "${componentsPrefix}.barrier"
 include ":${components}:dashboard"
