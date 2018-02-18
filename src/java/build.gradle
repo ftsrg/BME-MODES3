@@ -15,7 +15,6 @@ subprojects{
 	ext{
 		viatraVersion = '1.7.0'
 		xtendVersion = '2.9.0'
-		
 		componentsPrefix = "${rootProject.name}.components"
 		safetylogicPrefix = "${componentsPrefix}.safetylogic"
 		messagingPrefix = "${rootProject.name}.messaging"

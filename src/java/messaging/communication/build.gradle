@@ -3,18 +3,8 @@ apply plugin: 'org.xtext.xtend'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
-	compile project(':utils:common')
-	compile project(':utils:conf')
-	compile project(':messaging:mms')
-	compile project(':transports:mqtt')
-}
-
-def archivePrefix = "${messagingPrefix}.${project.name}"
-
-jar {
-	baseName archivePrefix
-}
-
-shadowJar {
-	baseName archivePrefix
+	compile project(":utils:${utilsPrefix}.common")
+	compile project(":utils:${utilsPrefix}.conf")
+	compile project(":messaging:${messagingPrefix}.mms")
+	compile project(":transports:${transportsPrefix}.mqtt")
 }

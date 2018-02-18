@@ -9,8 +9,8 @@ dependencies {
 	compile group: 'org.eclipse.viatra', name: 'viatra-query-language', version:  viatraVersion
 	
 		
-	compile project(':messaging:communication')
-	compile project(':components:safetylogic:systemlevel.model')
+	compile project(":messaging:${messagingPrefix}.communication")
+	compile project(":components:safetylogic:${safetylogicPrefix}.systemlevel.model")
 }
 
 plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
@@ -30,10 +30,4 @@ plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
 			xtendOutputDir = 'src/test/xtend-gen'
 		}
 	}
-}
-
-def archivePrefix = "${safetylogicPrefix}.${project.name}"
-
-jar {
-	baseName archivePrefix
 }

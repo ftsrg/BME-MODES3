@@ -12,9 +12,3 @@ protobuf {
   }
 	generatedFilesBaseDir = "$projectDir/src/"
 }
-
-def archivePrefix = "${messagingPrefix}.${project.name}"
-
-jar {
-	baseName archivePrefix
-}

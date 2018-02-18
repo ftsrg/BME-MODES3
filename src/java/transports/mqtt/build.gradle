@@ -3,12 +3,6 @@ apply plugin: 'org.xtext.xtend'
 
 dependencies {
 	compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
-	compile project(':transports:common')
-	compile project(':messaging:proto')
-}
-
-def archivePrefix = "${transportsPrefix}.${project.name}"
-
-jar {
-	baseName archivePrefix
+	compile project(":transports:${transportsPrefix}.common")
+	compile project(":messaging:${messagingPrefix}.proto")
 }
