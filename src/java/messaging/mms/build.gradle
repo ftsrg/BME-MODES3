@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+
+dependencies {
+	compile project(':messaging:messages')
+	compile project(':transports:common')
+}
+
+def archivePrefix = "${messagingPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}

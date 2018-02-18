@@ -1,0 +1,101 @@
+package hu.bme.mit.inf.safetylogic.patterns
+
+import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
+
+private pattern notNull(Old : RailRoadElement){
+	RailRoadElement(Old);
+}
+
+pattern nextSection(Old : RailRoadElement, Current : RailRoadElement, Next : RailRoadElement){
+	find viablePaths(Current, p);
+	Path.from(p, Old);
+	Path.via(p, Current);
+	Path.to(p, Next);
+} or {
+	
+	neg find notNull(Old); // Check for null, as if it is, we don't know the direction
+	
+	RailRoadModel.sections(RailRoad,Old);
+	RailRoadModel.sections(RailRoad,Next);
+	RailRoadModel.sections(RailRoad,Current);
+	
+	find viablePaths(Current, p);
+	Path.from(p, _);
+	Path.via(p, Current);
+	Path.to(p, Next);
+}
+
+//------------------------------------Train distance without direction------------------------------------//
+private pattern trainsAreTooClose(Offender : Train, Victim : Train){
+	Train.currentlyOn(Offender, OffenderPosition);
+	Train.currentlyOn(Victim, VictimPosition);
+	find currentlyConnected(VictimPosition, OffenderPosition);
+}
+
+//------------------------------------Train Collision Stuff------------------------------------// 
+private pattern trainHitsAnotherTrainNextAfterNext(Offender : Train, Victim : Train) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	find nextSection(CurrentPosition, NextPosition, NextPositionAfterNextPosition);
+	
+	Train.currentlyOn(Victim, NextPositionAfterNextPosition);
+}
+
+private pattern trainHitsAnotherTrainNextAfterNextAfterNext(Offender : Train, Victim : Train) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	find nextSection(CurrentPosition, NextPosition, NextPositionAfterNextPosition);
+	find nextSection(NextPosition, NextPositionAfterNextPosition, NextPositionAfterNextPositionAfterNextPosition);
+	
+	Train.currentlyOn(Victim, NextPositionAfterNextPositionAfterNextPosition);
+}
+
+private pattern trainHitsAnotherTrainNext(Offender : Train, Victim : Train) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	
+	Train.currentlyOn(Victim, NextPosition);
+}
+
+pattern trainHitsAnotherTrain(Offender : Train, Victim : Train){
+	find trainHitsAnotherTrainNext(Offender, Victim);
+} or {
+	find trainHitsAnotherTrainNextAfterNext(Offender, Victim);
+} or {
+	find trainsAreTooClose(Offender, Victim);
+} or {
+	find trainHitsAnotherTrainNextAfterNextAfterNext(Offender, Victim);
+}
+
+//------------------------------------Turnout Cutting Stuff------------------------------------//
+
+private pattern trainDerailsOnNextTurnout(Offender : Train, Victim : RailRoadElement) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, Victim);
+	
+	neg find currentlyConnected(Victim, CurrentPosition);
+}
+
+private pattern trainDerailsOnTurnoutNextAfterNext(Offender : Train, Victim : RailRoadElement) {
+	Train.currentlyOn(Offender, CurrentPosition);
+	Train.previouslyOn(Offender, OldPosition);
+	
+	find nextSection(OldPosition, CurrentPosition, NextPosition);
+	find nextSection(CurrentPosition, NextPosition, Victim);
+	
+	neg find currentlyConnected(Victim, NextPosition);
+}
+
+pattern trainTrailingTurnout(Offender : Train, Victim : RailRoadElement){
+	find trainDerailsOnNextTurnout(Offender, Victim);
+} or {
+	find trainDerailsOnTurnoutNextAfterNext(Offender, Victim);
+}

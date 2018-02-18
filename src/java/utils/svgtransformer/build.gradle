@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+
+dependencies {
+	compile group: 'org.apache.xmlgraphics', name: 'batik-svg-dom', version: '1.7'
+	compile group: 'org.apache.xmlgraphics', name: 'batik-bridge', version: '1.7'
+	
+	compile project(':components:safetylogic:systemlevel.model')
+}
+
+def archivePrefix = "${utilsPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}

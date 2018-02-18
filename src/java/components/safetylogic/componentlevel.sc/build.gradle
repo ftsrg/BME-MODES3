@@ -1,0 +1,28 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+apply plugin: 'application'
+
+dependencies {
+	compile project(':messaging:communication')
+	compile project(':components:safetylogic:componentlevel.sc.model')
+}
+
+def archivePrefix = "${safetylogicPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}
+
+startScripts {
+	applicationName archivePrefix
+}
+
+distZip {
+	baseName archivePrefix
+}
+
+distTar {
+	baseName archivePrefix
+}
+
+mainClassName = "hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.app.Main"

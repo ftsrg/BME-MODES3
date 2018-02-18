@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+
+dependencies {
+	compile 'org.eclipse.emf:org.eclipse.emf.common:2.11.0-v20150805-0538'
+	compile 'org.eclipse.emf:org.eclipse.emf.ecore:2.11.1-v20150805-0538'
+	compile 'org.eclipse.emf:org.eclipse.emf.ecore.xmi:2.11.1-v20150805-0538'
+	compile 'org.eclipse.viatra:viatra-query-runtime:1.4.0'
+}
+
+def archivePrefix = "${safetylogicPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}

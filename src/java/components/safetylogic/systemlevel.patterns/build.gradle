@@ -1,0 +1,39 @@
+apply plugin: 'java'
+apply plugin: 'org.xtext.xtend'
+
+dependencies {
+	compile 'org.eclipse.emf:org.eclipse.emf.common:2.11.0-v20150805-0538'
+	compile 'org.eclipse.emf:org.eclipse.emf.ecore:2.11.1-v20150805-0538'
+	
+	compile group: 'org.eclipse.viatra', name: 'viatra-query-runtime', version: viatraVersion
+	compile group: 'org.eclipse.viatra', name: 'viatra-query-language', version:  viatraVersion
+	
+		
+	compile project(':messaging:communication')
+	compile project(':components:safetylogic:systemlevel.model')
+}
+
+plugins.withType(org.xtext.gradle.XtendLanguagePlugin) {
+	dependencies {
+		compile 'org.eclipse.xtend:org.eclipse.xtend.lib:2.9.0'
+	}
+	
+	sourceSets {
+		main {
+			java.srcDirs = ['src/main/java', 'src/main/xtext-gen', 'src/main/vql-gen']
+			resources.srcDirs = ['src/main/resources', 'src/main/xtext-gen']
+			xtendOutputDir = 'src/main/xtend-gen'
+		}
+		test {
+			java.srcDirs = ['src/test/java', 'src/test/xtext-gen']
+			resources.srcDirs = ['src/test/resources', 'src/test/xtext-gen']
+			xtendOutputDir = 'src/test/xtend-gen'
+		}
+	}
+}
+
+def archivePrefix = "${safetylogicPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}

@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'org.xtext.xtend'
+
+dependencies {
+	
+	compile 'com.google.protobuf:protobuf-java:3.0.0'
+	compile 'com.google.protobuf:protobuf-java-util:3.0.0'
+	compile 'org.zeromq:jeromq:0.4.2'
+	
+	compile project(':messaging:communication')
+	compile project(':messaging:proto')
+}
+
+def archivePrefix = "${componentsPrefix}.${project.name}"
+
+jar {
+	baseName archivePrefix
+}
+
+startScripts {
+	applicationName archivePrefix
+}
+
+distZip {
+	baseName archivePrefix
+}
+
+distTar {
+	baseName archivePrefix
+}
+
+mainClassName = "hu.bme.mit.inf.modes3.components.leapmotion.main.Main"
