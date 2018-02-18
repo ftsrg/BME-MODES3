@@ -10,20 +10,6 @@ plugins {
 	id 'com.github.johnrengelman.shadow' version '2.0.1'
 }
 
-//Used versions of dependencies
-subprojects{
-	ext{
-		viatraVersion = '1.7.0'
-		xtendVersion = '2.9.0'
-		componentsPrefix = "${rootProject.name}.components"
-		safetylogicPrefix = "${componentsPrefix}.safetylogic"
-		messagingPrefix = "${rootProject.name}.messaging"
-		transportsPrefix = "${rootProject.name}.transports"
-		utilsPrefix = "${rootProject.name}.utils"
-		testPrefix = "${rootProject.name}.test"
-	}
-}
-
 ssh.settings { knownHosts = allowAnyHosts }
 
 //sonarqube {
@@ -31,6 +17,16 @@ ssh.settings { knownHosts = allowAnyHosts }
 //}
 
 subprojects {
+	ext{
+		viatraVersion = '1.7.0'
+		xtendVersion = '2.9.0'
+		componentsPrefix = gradle.ext.componentsPrefix
+		safetylogicPrefix = gradle.ext.safetylogicPrefix
+		messagingPrefix = gradle.ext.messagingPrefix
+		transportsPrefix = gradle.ext.transportsPrefix
+		utilsPrefix = gradle.ext.utilsPrefix
+		testPrefix = gradle.ext.testPrefix
+	}
 
 	repositories {
 		jcenter()
