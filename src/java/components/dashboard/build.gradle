@@ -12,8 +12,8 @@ dependencies {
 	compile 'org.atmosphere:atmosphere-runtime:2.4.6'
 	compile 'org.webjars:atmosphere-javascript:2.3.0'
 	
-	compile project(':messaging:communication')
-	compile project(':messaging:proto')
+	compile project(":messaging:${messagingPrefix}.communication")
+	compile project(":messaging:${messagingPrefix}.proto")
 }
 
 sourceSets {
@@ -22,24 +22,6 @@ sourceSets {
             srcDirs "src/main/resources", "src/main/webapp"
         }
     }
-}
-
-def archivePrefix = "${componentsPrefix}.${project.name}"
-
-jar {
-	baseName archivePrefix
-}
-
-startScripts {
-	applicationName archivePrefix
-}
-
-distZip {
-	baseName archivePrefix
-}
-
-distTar {
-	baseName archivePrefix
 }
 
 mainClassName = "hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager"

@@ -7,27 +7,9 @@ dependencies {
 	compile 'org.eclipse.emf:org.eclipse.emf.ecore:2.11.1-v20150805-0538'
 	compile 'org.eclipse.viatra:viatra-query-runtime:1.4.0'
 	
-	compile project(':messaging:communication')
-	compile project(':components:safetylogic:systemlevel.model')
-	compile project(':components:safetylogic:systemlevel.patterns')
-}
-
-def archivePrefix = "${safetylogicPrefix}.systemlevel.event"
-
-jar {
-	baseName archivePrefix
-}
-
-startScripts {
-	applicationName archivePrefix
-}
-
-distZip {
-	baseName archivePrefix
-}
-
-distTar {
-	baseName archivePrefix
+	compile project(":messaging:${messagingPrefix}.communication")
+	compile project(":components:safetylogic:${safetylogicPrefix}.systemlevel.model")
+	compile project(":components:safetylogic:${safetylogicPrefix}.systemlevel.patterns")
 }
 
 mainClassName = "hu.bme.mit.inf.safetylogic.event.app.Main"

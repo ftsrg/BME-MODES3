@@ -2,12 +2,6 @@ apply plugin: 'java'
 apply plugin: 'org.xtext.xtend'
 
 dependencies {
-	compile project(':messaging:communication')
-	compile project(':components:safetylogic:systemlevel.event')
-}
-
-def archivePrefix = "${testPrefix}.${project.name}"
-
-jar {
-	baseName archivePrefix
+	compile project(":messaging:${messagingPrefix}.communication")
+	compile project(":components:safetylogic:${safetylogicPrefix}.systemlevel.event")
 }

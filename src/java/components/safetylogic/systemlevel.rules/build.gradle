@@ -34,16 +34,10 @@ dependencies {
 	
  	//compile 'org.eclipse.viatra-cep:org.eclipse.viatra.cep.core:+'
  	
- 	compile project(':messaging:communication')
-	compile project(':components:safetylogic:systemlevel.model')
-	compile project(':components:safetylogic:systemlevel.patterns')
+ 	compile project(":messaging:${messagingPrefix}.communication")
+	compile project(":components:safetylogic:${safetylogicPrefix}.systemlevel.model")
+	compile project(":components:safetylogic:${safetylogicPrefix}.systemlevel.patterns")
  	
  	// XXX: workaround: (1) p2AsMaven does not work properly (2) Viatra-CEP & Viatra QueryBasedFeatures aren't available in m2 repository
     compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-def archivePrefix = "${safetylogicPrefix}.${project.name}"
-
-jar {
-	baseName archivePrefix
 }
