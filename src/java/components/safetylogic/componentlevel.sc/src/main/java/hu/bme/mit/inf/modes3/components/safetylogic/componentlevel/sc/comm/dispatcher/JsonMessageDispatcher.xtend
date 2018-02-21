@@ -1,7 +1,11 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher
 
 import com.google.gson.Gson
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.messages.YakinduProtocolMessage
+import hu.bme.mit.inf.modes3.messaging.communication.yakindu.interfaces.ICanGoToListener
+import hu.bme.mit.inf.modes3.messaging.communication.yakindu.interfaces.ICannotGoToListener
+import hu.bme.mit.inf.modes3.messaging.communication.yakindu.interfaces.IReleaseToListener
+import hu.bme.mit.inf.modes3.messaging.communication.yakindu.interfaces.IReserveToListener
+import hu.bme.mit.inf.modes3.messaging.messages.yakindu.YakinduProtocolMessage
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory

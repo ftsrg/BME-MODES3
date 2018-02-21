@@ -3,16 +3,17 @@ package hu.bme.mit.inf.modes3.messaging.mms
 import hu.bme.mit.inf.modes3.messaging.messages.command.SegmentCommand
 import hu.bme.mit.inf.modes3.messaging.messages.command.TurnoutCommand
 import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessage
+import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentOccupancyMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.SegmentStateMessage
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
+import hu.bme.mit.inf.modes3.messaging.messages.yakindu.YakinduProtocolMessage
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import hu.bme.mit.inf.modes3.transports.common.TopicBasedTransport
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
-import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessageToTopicMapper
 
 class TopicBasedMessagingService extends MessagingService {
 
@@ -91,6 +92,7 @@ class TopicBasedMessagingService extends MessagingService {
 			SegmentCommand: message.segmentId
 			SegmentStateMessage: message.segmentId
 			SegmentOccupancyMessage: message.segmentId
+			YakinduProtocolMessage: message.targetID
 			default: throw new IllegalArgumentException('''Message («message») does not contain any ID.''')
 		}
 	}

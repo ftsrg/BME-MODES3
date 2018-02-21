@@ -20,11 +20,11 @@ class Main {
 
 		registry.parseArguments(args)
 
-		val occupancyTopics = TopicFactory::createSegmentTopics(#{SegmentOccupancyMessage}).toSet
+		val supervisedSections = #{15, 24}
+		val occupancyTopics = TopicFactory::createSegmentTopics(supervisedSections, #{SegmentOccupancyMessage}).toSet
 		val railwayTrackCommunicationStack = MessagingServiceFactory::createStackForTopics(registry, loggerFactory, occupancyTopics)
 
 		val barrierCommunicationStack = JsonDispatcherFactory::createMQTTStackWithJSON(registry, loggerFactory)
-		val supervisedSections = #{15, 24}
 
 		val component = new TrackSupervisor(supervisedSections)
 		val componentWrapper = new TrackSupervisorBridge(component, railwayTrackCommunicationStack, barrierCommunicationStack, loggerFactory)

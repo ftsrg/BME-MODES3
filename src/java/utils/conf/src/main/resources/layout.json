@@ -153,99 +153,123 @@
 	"sectionVicinities": {
 		"1": {
 			"cw": 12,
-			"ccw": 2
+			"ccw": 2,
+			"ownerTurnout": 4
 		},
 		"2": {
 			"cw": 1,
-			"ccw": 3
+			"ccw": 3,
+			"ownerTurnout": 4
 		},
 		"4": {
 			"cw": 3,
-			"ccw": 6
+			"ccw": 6,
+			"ownerTurnout": 4
 		},
 		"5": {
 			"cw": 3,
-			"ccw": 7
+			"ccw": 7,
+			"ownerTurnout": 4
 		},
 		"6": {
 			"cw": 4,
-			"ccw": 18
+			"ccw": 18,
+			"ownerTurnout": 4
 		},
 		"7": {
 			"cw": 5,
-			"ccw": 19
+			"ccw": 19,
+			"ownerTurnout": 4
 		},
 		"8": {
 			"cw": 9,
-			"ccw": 13
+			"ccw": 13,
+			"ownerTurnout": 5
 		},
 		"10": {
 			"cw": 17,
-			"ccw": 9
+			"ccw": 9,
+			"ownerTurnout": 5
 		},
 		"11": {
 			"cw": 14,
-			"ccw": 9
+			"ccw": 9,
+			"ownerTurnout": 5
 		},
 		"12": {
 			"cw": 14,
-			"ccw": 1
+			"ccw": 1,
+			"ownerTurnout": 1
 		},
 		"13": {
-			"cw": 5,
-			"ccw": 20
+			"cw": 8,
+			"ccw": 20,
+			"ownerTurnout": 5
 		},
 		"15": {
 			"cw": 24,
-			"ccw": 14
+			"ccw": 14,
+			"ownerTurnout": 1
 		},
 		"17": {
 			"cw": 21,
-			"ccw": 10
+			"ccw": 10,
+			"ownerTurnout": 6
 		},
 		"18": {
 			"cw": 6,
-			"ccw": 31
+			"ccw": 31,
+			"ownerTurnout": 2
 		},
 		"19": {
 			"cw": 7,
-			"ccw": 32
+			"ccw": 32,
+			"ownerTurnout": 3
 		},
 		"20": {
 			"cw": 13,
-			"ccw": 25
+			"ccw": 25,
+			"ownerTurnout": 3
 		},
 		"22": {
 			"cw": null,
-			"ccw": 21
+			"ccw": 21,
+			"ownerTurnout": 6
 		},
 		"23": {
 			"cw": 27,
-			"ccw": 21
+			"ccw": 21,
+			"ownerTurnout": 6
 		},
 		"24": {
 			"cw": 29,
-			"ccw": 15
+			"ccw": 15,
+			"ownerTurnout": 2
 		},
 		"26": {
 			"cw": 25,
-			"ccw": 27
+			"ccw": 27,
+			"ownerTurnout": 3
 		},
 		"27": {
 			"cw": 26,
-			"ccw": 23
+			"ccw": 23,
+			"ownerTurnout": 6
 		},
 		"29": {
 			"cw": 28,
-			"ccw": 24
+			"ccw": 24,
+			"ownerTurnout": 2
 		},
 		"30": {
 			"cw": 32,
-			"ccw": 28
+			"ccw": 28,
+			"ownerTurnout": 3
 		},
 		"31": {
 			"cw": 18,
-			"ccw": 28
+			"ccw": 28,
+			"ownerTurnout": 2
 		}
 	},
 	"turnoutsResponsibilities": {

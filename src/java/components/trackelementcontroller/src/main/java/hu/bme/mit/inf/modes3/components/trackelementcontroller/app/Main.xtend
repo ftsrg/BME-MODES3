@@ -11,32 +11,31 @@ import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import hu.bme.mit.inf.modes3.utils.conf.layout.SegmentDirection
-import java.net.InetAddress
 import org.slf4j.impl.SimpleLoggerFactory
 
 class Main {
 
 	def static void main(String[] args) {
 		val loggerFactory = new SimpleLoggerFactory
-		val logger = loggerFactory.getLogger(Main.name)
+		val layout = LayoutConfiguration.INSTANCE
 
 		val registry = new ArgumentRegistry(loggerFactory)
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("id", "ID of the turnout", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("address", "The address of the transport server", String))
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter("port", "The port used by the transport server", Integer))
 
-		registry.parseArguments(args);
+		registry.parseArguments(args)
 
-		val hostname = InetAddress.getLocalHost().getHostName();
-		logger.info("Hostname: " + hostname);
-		val turnoutID = Integer.valueOf(hostname.split("\\.").head.replace('t', ''));
-		val controlledSections = LayoutConfiguration.INSTANCE.getControlledSections(turnoutID)
-		val facingSegment = LayoutConfiguration.INSTANCE.getTurnoutVicinitySegmentsByDirection(turnoutID, SegmentDirection.FACING)
-		val turnoutSegmentItself = LayoutConfiguration.INSTANCE.getSegmentIdsOfTurnout(turnoutID)
+		val hostname = registry.getParameterStringValue("id")
+		val turnoutID = Integer.valueOf(hostname.split("\\.").head.replace('t', ''))
 
-		val sectionTopics = controlledSections.map[TopicFactory::createSegmentTopics(it, #{SegmentCommand, SegmentStateMessage})].flatten.toSet
-		val facingSegmentOccupancyTopic = facingSegment.map[TopicFactory::createSegmentTopics(it, #{SegmentOccupancyMessage})].flatten.toSet
-		val turnoutOccupancyTopic = turnoutSegmentItself.map[TopicFactory::createSegmentTopics(it, #{SegmentOccupancyMessage})].flatten.toSet
+		val controlledSections = layout.getControlledSections(turnoutID)
+		val facingSegment = layout.getTurnoutVicinitySegmentsByDirection(turnoutID, SegmentDirection.FACING)
+		val turnoutSegmentItself = layout.getSegmentIdsOfTurnout(turnoutID)
+
+		val sectionTopics = TopicFactory::createSegmentTopics(controlledSections, #{SegmentCommand, SegmentStateMessage})
+		val facingSegmentOccupancyTopic = TopicFactory::createSegmentTopics(facingSegment, #{SegmentOccupancyMessage})
+		val turnoutOccupancyTopic = TopicFactory::createSegmentTopics(turnoutSegmentItself, #{SegmentOccupancyMessage})
 
 		val turnoutTopics = TopicFactory::createTurnoutTopics(turnoutID)
 		val defaultTopics = TopicFactory::createDefaultTopics

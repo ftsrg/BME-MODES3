@@ -6,4 +6,5 @@ import org.eclipse.xtend.lib.annotations.Data
 class SectionVicinity {
 	Integer cw
 	Integer ccw
+	Integer ownerTurnout
 }

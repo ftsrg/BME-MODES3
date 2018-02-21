@@ -7,7 +7,6 @@ import hu.bme.mit.gamma.impl.async_t4.AsyncT4Component
 import hu.bme.mit.gamma.impl.async_t5.AsyncT5Component
 import hu.bme.mit.gamma.impl.async_t6.AsyncT6Component
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IYakinduMessageSender
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.IYakinduProtocolDispatcher
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.IYakinduProtocolRestarter
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.PortWithDirection
@@ -17,10 +16,11 @@ import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.Tu
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper.YakinduProtocolAdapter
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander
 import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry
+import hu.bme.mit.inf.modes3.messaging.communication.yakindu.interfaces.IYakinduMessageSender
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
-import static hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.ConnectionDirection.*
+import static hu.bme.mit.inf.modes3.messaging.messages.enums.ConnectionDirection.*
 
 class SafetyLogicInitializer {
 	val Logger logger

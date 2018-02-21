@@ -1,7 +1,7 @@
-package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.messages
+package hu.bme.mit.inf.modes3.messaging.messages.yakindu
 
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.ConnectionDirection
 import hu.bme.mit.inf.modes3.messaging.messages.core.InternalMessage
+import hu.bme.mit.inf.modes3.messaging.messages.enums.ConnectionDirection
 import org.eclipse.xtend.lib.annotations.Data
 
 @Data

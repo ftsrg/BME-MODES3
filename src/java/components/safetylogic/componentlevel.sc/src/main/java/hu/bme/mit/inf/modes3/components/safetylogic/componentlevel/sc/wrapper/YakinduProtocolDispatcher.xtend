@@ -1,9 +1,9 @@
 package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.wrapper
 
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.ConnectionDirection
-import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comm.dispatcher.IYakinduMessageSender
 import hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comparators.ProvidedProtocolInterfaceComparator
+import hu.bme.mit.inf.modes3.messaging.communication.yakindu.interfaces.IYakinduMessageSender
+import hu.bme.mit.inf.modes3.messaging.messages.enums.ConnectionDirection
 import java.util.Map
 import java.util.Set
 import java.util.concurrent.ConcurrentHashMap

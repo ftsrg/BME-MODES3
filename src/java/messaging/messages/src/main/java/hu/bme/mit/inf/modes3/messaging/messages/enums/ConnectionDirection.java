@@ -1,4 +1,4 @@
-package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc;
+package hu.bme.mit.inf.modes3.messaging.messages.enums;
 
 import java.util.Arrays;
 import java.util.Map;

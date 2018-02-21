@@ -8,6 +8,7 @@ import org.eclipse.xtend.lib.annotations.Data
 
 import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensions.flatMap
 import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensions.map
+import static extension hu.bme.mit.inf.modes3.utils.common.extensions.SetExtensions.asIntegerSet
 
 class LayoutConfiguration {
 
@@ -44,7 +45,7 @@ class LayoutConfiguration {
 	}
 
 	def getTurnoutIds() {
-		asUnmodifiableSet(asIntegerSet(layout.turnoutsSegmentIds.keySet))
+		asUnmodifiableSet(layout.turnoutsSegmentIds.keySet.asIntegerSet)
 	}
 
 	/**
@@ -55,7 +56,7 @@ class LayoutConfiguration {
 	}
 
 	/**
-	 * @return the segment IDs which belong to a particular turnout, aka the (particular) turnout's occupancy can be sensed by these segment IDs. If such turnout ID cannot be found, it returns null. 
+	 * @return the segment IDs which belong to a particular turnout, aka the (particular) turnout's occupancy can be sensed by these segment IDs. If such turnout ID cannot be found, then returns null. 
 	 * E.g. turnout 3 has two segments, segment 25 and 32. By invoking this method with 3, it will return a Set<String> consisting of 25 and 32.
 	 */
 	def getSegmentIdsOfTurnout(int turnoutId) {
@@ -92,7 +93,7 @@ class LayoutConfiguration {
 	}
 
 	/**
-	 * @return section IDs that are controlled by either turnout
+	 * @return section IDs that are controlled by any turnout
 	 */
 	def getControlledSectionIds() {
 		asUnmodifiableSet(layout.turnoutsResponsibilities.values.flatten.toSet)
@@ -103,6 +104,38 @@ class LayoutConfiguration {
 	 */
 	def getSectionVicinity(int sectionId) {
 		layout.sectionVicinities.get(String.valueOf(sectionId))
+	}
+
+	/**
+	 * @return IDs of sections which are neighbours of sectionId (param), such that their owner turnout
+	 * ID is different from the sectionId's (param) owner turnout
+	 */
+	def getNeighbourSectionIds(int sectionId) {
+		val sectionVicinity = getSectionVicinity(sectionId)
+		val ownerTurnout = sectionVicinity.ownerTurnout
+		val neighbourIDs = newHashSet
+		#[sectionVicinity.cw, sectionVicinity.ccw].filter[it !== null].forEach [
+			val neighbourSection = getSectionVicinity(it)
+			if(neighbourSection === null) {
+				val turnoutId = getTurnoutIdFromSegmentId(it)
+				if(turnoutId != ownerTurnout) {
+					neighbourIDs.add(it)
+				} else {
+					val turnoutVicinity = getTurnoutVicinity(turnoutId)
+					#[turnoutVicinity.divergent, turnoutVicinity.straight, turnoutVicinity.facing].forEach[forEach[addNeighbourIfOwnerIsDifferent(it, ownerTurnout, neighbourIDs)]]
+				}
+			} else {
+				addNeighbourIfOwnerIsDifferent(it, ownerTurnout, neighbourIDs)
+			}
+		]
+		return neighbourIDs
+	}
+
+	private def addNeighbourIfOwnerIsDifferent(int neighbourSectionId, int respectiveOwnerId, Set<Integer> neighbourIDs) {
+		val neighbourOwner = getSectionVicinity(neighbourSectionId)?.ownerTurnout
+		if(neighbourOwner !== null && neighbourOwner != respectiveOwnerId) {
+			neighbourIDs.add(neighbourSectionId)
+		}
 	}
 
 	/**
@@ -127,26 +160,17 @@ class LayoutConfiguration {
 	}
 
 	/**
-	 * Get the IDs of segments which are in the vicinity of a turnout, including the turnout's ID as segment itself.
+	 * @return the vicinity of the turnout: which segment is connected from which direction to the turnout
 	 */
-	def getTurnoutVicinitySegments(int turnoutId) {
-		val segmentsInVicinity = newHashSet
-		val turnoutVicinity = layout.turnoutVicinities.get(String.valueOf(turnoutId))
-		val turnoutSegmentIds = getSegmentIdsOfTurnout(turnoutId)
-
-		segmentsInVicinity.addAll(turnoutVicinity.straight)
-		segmentsInVicinity.addAll(turnoutVicinity.divergent)
-		segmentsInVicinity.addAll(turnoutVicinity.facing)
-		segmentsInVicinity.addAll(turnoutSegmentIds)
-
-		segmentsInVicinity
+	def getTurnoutVicinity(int turnoutId) {
+		layout.turnoutVicinities.get(String.valueOf(turnoutId))
 	}
 
 	/**
 	 * Get the IDs of segments which are in the vicinity of a turnout and connect to the turnout from the specified direction.
 	 */
 	def getTurnoutVicinitySegmentsByDirection(int turnoutId, SegmentDirection direction) {
-		val turnoutVicinity = layout.turnoutVicinities.get(String.valueOf(turnoutId))
+		val turnoutVicinity = getTurnoutVicinity(turnoutId)
 		switch (direction) {
 			case TURNOUT_ITSELF: getSegmentIdsOfTurnout(turnoutId)
 			case STRAIGHT: turnoutVicinity.straight
@@ -161,10 +185,6 @@ class LayoutConfiguration {
 
 	private def <T, U> asUnmodifiableMap(Map<T, U> map) {
 		Collections.unmodifiableMap(map)
-	}
-
-	private def asIntegerSet(Set<String> set) {
-		set.map[Integer.valueOf(it)].toSet
 	}
 
 	private def convertKeysToInteger(Map<String, Set<Integer>> map) {
