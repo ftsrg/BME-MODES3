@@ -10,6 +10,7 @@ Table of Contents
     + [C++](#c--)
     + [JavaScript](#javascript)
     + [Java](#java)
+      - [Yakindu and Gamma models of the component level safety logic](https://github.com/FTSRG/BME-MODES3/tree/master/src/java/components/safetylogic/componentlevel.sc.model/model)
 
 A case study system using the cooperation of a model railway and a robot to demonstrate techniques and methods for developing IoT and CPS systems. See a [quick overview](https://inf.mit.bme.hu/en/research/projects/modes3) and our [blog](http://modes3.tumblr.com/) for more details.
 
@@ -78,7 +79,7 @@ To set up the development environment on your machine, follow the [Getting Start
 | Logical Component |  Physical location      | Comments | Owner|
 |:-------------------:|:------------------------|:--------:|:---:|
 | Component level safety logic | <safetylogic_folder_path>/componentlevel.sc | Component level safetylogic by Yakindu statecharts | benedekh |
-| Component level safety logic (Model) | <safetylogic_folder_path>/componentlevel.sc.model | Yakindu models for component level safety logic | benedekh |
+| Component level safety logic (Model) | <safetylogic_folder_path>/componentlevel.sc.model | Yakindu and Gamma models of the component level safety logic | benedekh |
 | System level safety logic (Event) | <safetylogic_folder_path>/systemlevel.event | System level safety logic with a runtime EMF model and using VIATRA-Queries| baloghlaszlo
 | System level safety logic (Model) | <safetylogic_folder_path>/systemlevel.model | Model for system level safety logic | baloghlaszlo
 | System level safety logic (Model instance) | <safetylogic_folder_path>/systemlevel.model.instance | Model instance for system level safety logic | baloghlaszlo
