@@ -8,10 +8,10 @@
   },
   "dependencies": {
     "babel-plugin-syntax-jsx": "^6.18.0",
-    "inferno": "^3.7.1"
+    "inferno": "^3.10.1"
   },
   "devDependencies": {
-    "babel-plugin-inferno": "^3.2.0",
-    "electron-prebuilt-compile": "^1.7.5"
+    "babel-plugin-inferno": "^3.5.1",
+    "electron-prebuilt-compile": "^1.8.4"
   }
 }
