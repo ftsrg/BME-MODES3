@@ -1,3 +1,5 @@
+![MoDeS3](https://raw.githubusercontent.com/wiki/FTSRG/BME-MODES3/img/modes3-3.png)
+
 # **Mo**del-based **De**monstrator for **S**mart and **S**afe **S**ystems (MoDeS3)
 
 [![Build Status](https://travis-ci.org/FTSRG/BME-MODES3.svg?branch=gen3-arch)](https://travis-ci.org/FTSRG/BME-MODES3)
@@ -42,7 +44,7 @@ To set up the development environment on your machine, follow the [Getting Start
 |Computer Vision | <path_prefix>.components.computervision | The OpenCV-based Computer Vision component, which provides the coordinates of the train markers. | FuzesiMate |
 |imu                | <path_prefix>.components.imu     |           |     |
 |Section Occupancy Query   | <path_prefix>.components.soc | Reads the sections occupancy from the physical sensors.   | zsoltmazlo, hegyibalint    |
-|Train Detector | <path_prefix>.components.trainsamplegenerator | Train detector and locomotive length measurer using infrared sensors. | hegyibalint |
+|Train Detector | <path_prefix>.components.traindetector | Train detector and locomotive length measurer using infrared sensors. | hegyibalint |
 |train_sample_generator   | <path_prefix>.components.trainsamplegenerator |    |  FuzesiMate |
 |Turnout Actuator   | <path_prefix>.components.turnoutactuator | The actuator to set the turnouts' directions.   | hegyibalint    |
 |XPressNet Bridge   | <path_prefix>.components.xpressnetbridge | C++ implementation for the XPressNetBridge, in order to send DCC commands to the trains.   | Chorithian (Attila Biró)    |
