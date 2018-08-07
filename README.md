@@ -4,7 +4,6 @@
 
 [![Build Status](https://travis-ci.org/FTSRG/BME-MODES3.svg?branch=gen3-arch)](https://travis-ci.org/FTSRG/BME-MODES3)
 
-Table of Contents
 - [Getting Started](#getting-started)
 - [Structure of the repository](#structure-of-the-repository)
   * [Configuration management scripts](#configuration-management-scripts)
