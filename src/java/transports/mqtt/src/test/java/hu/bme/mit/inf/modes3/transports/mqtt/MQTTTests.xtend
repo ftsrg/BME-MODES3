@@ -1,11 +1,15 @@
 package hu.bme.mit.inf.modes3.transports.mqtt
 
 import hu.bme.mit.inf.modes3.transports.config.TopicBasedTransportConfiguration
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.Test
+import static org.junit.jupiter.api.Assertions.assertEquals
+//import org.junit.After
+//import org.junit.Assert
+//import org.junit.Before
+//import org.junit.Test
 
 // FIXME: Redo the local testing of the MQTT
 class MQTTTests {
@@ -13,7 +17,7 @@ class MQTTTests {
 	var MQTTTransport sender
 	var MQTTTransport receiver
 
-	@Before
+	@BeforeAll
 	def void init() {
 		val senderConfig = new TopicBasedTransportConfiguration("MQTT-TEST-SENDER", "root.modes3.intra", 1883, '''''')
 		sender = new MQTTTransport(senderConfig, new NOPLoggerFactory)
@@ -26,7 +30,7 @@ class MQTTTests {
 		println("Receiver connected")
 	}
 
-	@After
+	@AfterAll
 	def void close() {
 		sender.close
 		receiver.close
@@ -45,7 +49,7 @@ class MQTTTests {
 		println("Receiving...")
 		val receivedMessage = new String(receiver.receiveMessage)
 		println("Received")
-		Assert.assertEquals(message, receivedMessage)
+		assertEquals(message, receivedMessage)
 	}
 
 }

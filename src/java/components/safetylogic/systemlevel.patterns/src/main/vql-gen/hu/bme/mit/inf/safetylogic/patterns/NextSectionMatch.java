@@ -125,7 +125,7 @@ public abstract class NextSectionMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    return Objects.hash (fOld, fCurrent, fNext);
+    return Objects.hash(fOld, fCurrent, fNext);
   }
   
   @Override

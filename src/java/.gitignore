@@ -5,3 +5,4 @@
 **/xtend-gen/
 **/*.java._trace
 **/*.xtendbin
+!/src/main/vql-gen/*

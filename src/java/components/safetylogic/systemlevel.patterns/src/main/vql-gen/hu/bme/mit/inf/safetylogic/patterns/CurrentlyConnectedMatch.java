@@ -107,7 +107,7 @@ public abstract class CurrentlyConnectedMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    return Objects.hash (fThis, fConnectedTo);
+    return Objects.hash(fThis, fConnectedTo);
   }
   
   @Override

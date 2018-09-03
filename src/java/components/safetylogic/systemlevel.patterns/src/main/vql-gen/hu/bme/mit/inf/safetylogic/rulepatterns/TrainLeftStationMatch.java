@@ -89,7 +89,7 @@ public abstract class TrainLeftStationMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    return Objects.hash (fT);
+    return Objects.hash(fT);
   }
   
   @Override

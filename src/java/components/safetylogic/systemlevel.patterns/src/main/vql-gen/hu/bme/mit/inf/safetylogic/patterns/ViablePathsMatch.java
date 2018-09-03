@@ -108,7 +108,7 @@ public abstract class ViablePathsMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    return Objects.hash (fThis, fPath);
+    return Objects.hash(fThis, fPath);
   }
   
   @Override

@@ -70,7 +70,7 @@ public abstract class NoTrainOnStationMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    return 42;
+    return Objects.hash();
   }
   
   @Override

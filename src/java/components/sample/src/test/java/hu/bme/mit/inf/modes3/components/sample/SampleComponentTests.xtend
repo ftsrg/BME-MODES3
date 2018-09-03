@@ -2,7 +2,7 @@ package hu.bme.mit.inf.modes3.components.sample
 
 import hu.bme.mit.inf.modes3.components.sample.bridge.ISampleComponentBridge
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 
 class SampleComponentTests {

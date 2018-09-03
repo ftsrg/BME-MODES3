@@ -108,7 +108,7 @@ public abstract class TrainTrailingTurnoutMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    return Objects.hash (fOffender, fVictim);
+    return Objects.hash(fOffender, fVictim);
   }
   
   @Override
