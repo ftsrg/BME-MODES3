@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "babel-plugin-inferno": "^3.5.1",
-    "electron-prebuilt-compile": "^1.8.4"
+    "electron-prebuilt-compile": "^1.8.4",
+    "macaddress": "^0.2.9"
   }
 }
