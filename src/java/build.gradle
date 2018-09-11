@@ -1,6 +1,6 @@
 //Gradle plugins
 plugins {
-	id "org.xtext.xtend" version "1.0.12" apply false
+	id "org.xtext.xtend" version "2.0.1" apply false
 	id "com.google.protobuf" version "0.8.3" apply false
 
 //	id "org.sonarqube" version "2.5"
@@ -19,7 +19,7 @@ ssh.settings { knownHosts = allowAnyHosts }
 subprojects {
 	ext{
 		viatraVersion = '1.7.0'
-		xtendVersion = '2.9.0'
+		xtendVersion = '2.11.0'
 		componentsPrefix = gradle.ext.componentsPrefix
 		safetylogicPrefix = gradle.ext.safetylogicPrefix
 		messagingPrefix = gradle.ext.messagingPrefix
