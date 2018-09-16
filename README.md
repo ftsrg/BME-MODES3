@@ -9,7 +9,6 @@
   * [Configuration management scripts](#configuration-management-scripts)
   * [Sources divided by programming language](#sources-divided-by-programming-language)
     + [C++](#c--)
-    + [JavaScript](#javascript)
     + [Java](#java)
       - [Yakindu and Gamma models of the component level safety logic](https://github.com/FTSRG/BME-MODES3/tree/master/src/java/components/safetylogic/componentlevel.sc.model/model)
 
@@ -47,17 +46,6 @@ To set up the development environment on your machine, follow the [Getting Start
 |train_sample_generator   | <path_prefix>.components.trainsamplegenerator |    |  FuzesiMate |
 |Turnout Actuator   | <path_prefix>.components.turnoutactuator | The actuator to set the turnouts' directions.   | hegyibalint    |
 |XPressNet Bridge   | <path_prefix>.components.xpressnetbridge | C++ implementation for the XPressNetBridge, in order to send DCC commands to the trains.   | Chorithian (Attila Biró)    |
-
-#### JavaScript
-
-- Root path: `/src/js/`
-- Folder prefix: `modes3`
-- Path prefix: `<root_path> + <folder_prefix>`
-
-| Logical Component |  Physical location      | Comments | Owner|
-|:-------------------:|:------------------------|:--------:|:---:|
-|Dashboard UI      | <path_prefix>-dashboard  | Dashboard for the model railway track.  |   zsoltmazlo  |
-|Touchboard UI   | <path_prefix>-touchboard | Dashboard for the model railway track, with focus on touchable elements.   | hegyibalint    |
 
 #### Java
 
