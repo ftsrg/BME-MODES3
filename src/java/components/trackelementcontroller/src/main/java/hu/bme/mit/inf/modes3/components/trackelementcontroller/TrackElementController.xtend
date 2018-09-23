@@ -13,6 +13,7 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
+import hu.bme.mit.inf.modes3.components.gpiomanager.GpioWriter
 
 class TrackElementController implements ITrackElementController, PhysicalTurnoutController.ITurnoutStateChangedListener {
 
@@ -41,6 +42,8 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 		config = Configuration::loadPinoutConfig(turnoutID, factory)
 		pinout = ExpanderConfigInterpreter.loadPinoutConfig(factory)
 		GpioManager::loadGpioMappingFromFile(GPIO_JSON)
+		// TODO Check validity
+		GpioManager::setGpioWriter(new GpioWriter)
 
 		logger.info('''segments: «config.sectionNames»''')
 		logger.info('''turnout expander: «config.turnoutExpanders»''')

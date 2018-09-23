@@ -53,7 +53,7 @@ subprojects {
 
 			compile group: 'org.eclipse.xtend', name: 'org.eclipse.xtend.lib', version: xtendVersion
 
-			testCompile 'org.mockito:mockito-core:2.7.22'
+			testCompile 'org.mockito:mockito-core:2.22.0'
 			testCompile("org.junit.jupiter:junit-jupiter-api:5.2.0")
    			testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
 			

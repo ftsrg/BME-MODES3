@@ -13,13 +13,16 @@ import java.util.ArrayList;
  */
 public class Main {
 
-    /**
+	/**
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception {
 
         GpioManager.loadGpioMappingFromFile(args[0]);
+        
+        GpioManager.setGpioWriter(new GpioWriter());
+        GpioManager.setGpioReader(new GpioReader());
 
         checkSegmentActuator2();
 
@@ -29,76 +32,78 @@ public class Main {
 
     }
 
-    public static void checkSegmentActuator() throws Exception {
-        // running test with P6-G6 and P7-G7
-        ArrayList<Gpio> gpios = new ArrayList<>();
-        gpios.add(GpioManager.setGpio("P6", Gpio.Direction.OUT));
-        gpios.add(GpioManager.setGpio("P7", Gpio.Direction.OUT));
-        gpios.add(GpioManager.setGpio("G6", Gpio.Direction.OUT));
-        gpios.add(GpioManager.setGpio("G7", Gpio.Direction.OUT));
+	public static void checkSegmentActuator() throws Exception {
+		// running test with P6-G6 and P7-G7
+		ArrayList<Gpio> gpios = new ArrayList<>();
+		gpios.add(GpioManager.setGpio("P6", Gpio.Direction.OUT));
+		gpios.add(GpioManager.setGpio("P7", Gpio.Direction.OUT));
+		gpios.add(GpioManager.setGpio("G6", Gpio.Direction.OUT));
+		gpios.add(GpioManager.setGpio("G7", Gpio.Direction.OUT));
 
-        // test will be the following: every 500s one gpio set to high, and then the set to low
-        long impulseWidth = 4000;
-        for (Gpio g : gpios) {
-            g.setLevel(Gpio.Level.HIGH);
-            Thread.sleep(500);
-        }
+		// test will be the following: every 500s one gpio set to high, and then the set
+		// to low
+		long impulseWidth = 4000;
+		for (Gpio g : gpios) {
+			g.setLevel(Gpio.Level.HIGH);
+			Thread.sleep(500);
+		}
 
-        for (Gpio g : gpios) {
-            g.setLevel(Gpio.Level.LOW);
-            Thread.sleep(500);
-        }
+		for (Gpio g : gpios) {
+			g.setLevel(Gpio.Level.LOW);
+			Thread.sleep(500);
+		}
 
-    }
+	}
 
-    public static void checkSegmentActuator2() throws Exception {
-        // running test with P6-G6 and P7-G7
-        ArrayList<Gpio> gpios = new ArrayList<>();
-        gpios.add(GpioManager.setGpio("P6", Gpio.Direction.OUT));
-        gpios.add(GpioManager.setGpio("G6", Gpio.Direction.OUT));
+	public static void checkSegmentActuator2() throws Exception {
+		// running test with P6-G6 and P7-G7
+		ArrayList<Gpio> gpios = new ArrayList<>();
+		gpios.add(GpioManager.setGpio("P6", Gpio.Direction.OUT));
+		gpios.add(GpioManager.setGpio("G6", Gpio.Direction.OUT));
 
-        // test will be the following: every 500s one gpio set to high, and then the set to low
-        int impulseWidth = 4000;
-        for (Gpio g : gpios) {
-            g.impulse(impulseWidth, true);
-            impulseWidth -= 500;
-        }
+		// test will be the following: every 500s one gpio set to high, and then the set
+		// to low
+		int impulseWidth = 4000;
+		for (Gpio g : gpios) {
+			g.impulse(impulseWidth, true);
+			impulseWidth -= 500;
+		}
 
-    }
+	}
 
-    private static class TestListener implements Gpio.InputStateListener {
+	private static class TestListener implements Gpio.InputStateListener {
 
-        private static final String TAG = "LISTENER";
-        private final Gpio p7;
-        private final Gpio g7;
+		private static final String TAG = "LISTENER";
+		private final Gpio p7;
+		private final Gpio g7;
 
-        public TestListener() throws Exception {
-            p7 = GpioManager.setGpio("P7", Gpio.Direction.OUT);
-            g7 = GpioManager.setGpio("G7", Gpio.Direction.OUT);
-        }
+		public TestListener() throws Exception {
+			p7 = GpioManager.setGpio("P7", Gpio.Direction.OUT);
+			g7 = GpioManager.setGpio("G7", Gpio.Direction.OUT);
+		}
 
-        @Override
-        public void levelStateChanged(Gpio.Level newLevel) {
-            Logger.info(TAG, "level changed! %s", newLevel.toString());
+		@Override
+		public void levelStateChanged(Gpio.Level newLevel) {
+			Logger.info(TAG, "level changed! %s", newLevel.toString());
 
-            try {
-                p7.setLevel(newLevel);
-                g7.setLevel(newLevel);
-            } catch (Exception e) {
-                Logger.info(TAG, "P7 or G7 could not be setted to right level!");
-            }
-        }
+			try {
+				p7.setLevel(newLevel);
+				g7.setLevel(newLevel);
+			} catch (Exception e) {
+				Logger.info(TAG, "P7 or G7 could not be setted to right level!");
+			}
+		}
 
-    }
+	}
 
-    public static void checkInput() throws Exception {
+	public static void checkInput() throws Exception {
 
-        Gpio g = GpioManager.setGpio("P0", Gpio.Direction.IN);
-        g.addInputStateListener(new TestListener());
+		Gpio g = GpioManager.setGpio("P0", Gpio.Direction.IN);
+		g.addInputStateListener(new TestListener());
 
-        // wait for one key
-        System.console().format("Press ENTER to proceed.\n");
-        System.console().readLine();
-    }
+		// wait for one key
+		System.console().format("Press ENTER to proceed.\n");
+		System.console().readLine();
+	}
 
 }
