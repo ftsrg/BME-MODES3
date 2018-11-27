@@ -27,8 +27,6 @@ import com.google.gson.Gson;
  * @author ecsedigergo
  *
  */
-//@RunWith(Parameterized.class)
-//@PowerMockIgnore("org.mockito.*")
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(GpioProvider.class)
 @PowerMockRunnerDelegate(Parameterized.class)
@@ -38,9 +36,6 @@ public class GpioManagerTest {
 		public int port;
 	}
 
-//	@Rule
-//	public PowerMockRule rule = new PowerMockRule();
-	
 	private GpioProperties[] datas;
 
 	@Parameter(0) 
