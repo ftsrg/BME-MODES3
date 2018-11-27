@@ -14,55 +14,31 @@ import java.util.ArrayList;
 public class Main {
 
 	/**
-     * @param args the command line arguments
-     * @throws java.lang.Exception
-     */
-    public static void main(String[] args) throws Exception {
+	 * @param args the command line arguments
+	 * @throws java.lang.Exception
+	 */
+	public static void main(String[] args) throws Exception {
 
-        GpioManager.loadGpioMappingFromFile(args[0]);
-        
-        GpioManager.setGpioWriter(new GpioWriter());
-        GpioManager.setGpioReader(new GpioReader());
+		GpioManager.loadGpioMappingFromFile(args[0]);
 
-        checkSegmentActuator2();
+		checkSegmentActuator2();
 
-        checkInput();
+		checkInput();
 
-        GpioManager.cleanup();
-
-    }
-
-	public static void checkSegmentActuator() throws Exception {
-		// running test with P6-G6 and P7-G7
-		ArrayList<Gpio> gpios = new ArrayList<>();
-		gpios.add(GpioManager.setGpio("P6", Gpio.Direction.OUT));
-		gpios.add(GpioManager.setGpio("P7", Gpio.Direction.OUT));
-		gpios.add(GpioManager.setGpio("G6", Gpio.Direction.OUT));
-		gpios.add(GpioManager.setGpio("G7", Gpio.Direction.OUT));
-
-		// test will be the following: every 500s one gpio set to high, and then the set
-		// to low
-		long impulseWidth = 4000;
-		for (Gpio g : gpios) {
-			g.setLevel(Gpio.Level.HIGH);
-			Thread.sleep(500);
-		}
-
-		for (Gpio g : gpios) {
-			g.setLevel(Gpio.Level.LOW);
-			Thread.sleep(500);
-		}
+		GpioManager.cleanup();
 
 	}
 
+	// It is using real file writing, could be an integration-test case
 	public static void checkSegmentActuator2() throws Exception {
 		// running test with P6-G6 and P7-G7
 		ArrayList<Gpio> gpios = new ArrayList<>();
 		gpios.add(GpioManager.setGpio("P6", Gpio.Direction.OUT));
 		gpios.add(GpioManager.setGpio("G6", Gpio.Direction.OUT));
 
-		// test will be the following: every 500s one gpio set to high, and then the set
-		// to low
+		// test will be the following: every 500s one gpio set to high, and then the set to low
+		// P6 4000 msec long impulse
+		// G6 3500 msec long impulse
 		int impulseWidth = 4000;
 		for (Gpio g : gpios) {
 			g.impulse(impulseWidth, true);

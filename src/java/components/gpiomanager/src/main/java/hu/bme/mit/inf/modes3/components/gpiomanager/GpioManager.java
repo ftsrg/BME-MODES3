@@ -42,14 +42,12 @@ public class GpioManager {
 
 		// reading from json file
 		Gson gson = new Gson();
-		GpioMarkupObject[] data = gson.fromJson(
-				new InputStreamReader(GpioManager.class.getClassLoader().getResourceAsStream(resourceName)),
-				GpioMarkupObject[].class);
+		GpioMarkupObject[] data = gson.fromJson(new InputStreamReader(GpioManager.class.getClassLoader().getResourceAsStream(resourceName)), GpioMarkupObject[].class);
 
 		// adding every pin to the hashmap
-		for (GpioMarkupObject gpio : data) {
-			INSTANCE._gpioMapping.put(gpio.name, gpio.port);
-			Logger.info(TAG, "GPIO \"%s\" added.", gpio.name);
+		for (GpioMarkupObject gpioMO : data) {
+			INSTANCE._gpioMapping.put(gpioMO.name, gpioMO.port);
+			Logger.info(TAG, "GPIO \"%s\" added.", gpioMO.name);
 		}
 	}
 
@@ -64,7 +62,7 @@ public class GpioManager {
 		if (INSTANCE._gpioMapping.containsKey(port)) {
 			int pin = INSTANCE._gpioMapping.get(port);
 
-			Gpio instance = new Gpio(pin, direction);
+			Gpio instance = GpioProvider.getGpioInstance(pin, direction);
 			INSTANCE._usedGpios.put(port, instance);
 			Logger.info(TAG, "Pin \"%s\" setup succeeded with direction of \"%s\".", port, direction);
 			return instance;
@@ -92,14 +90,6 @@ public class GpioManager {
 				// catching gpio exception to not to break for cycle
 			}
 		});
-	}
-
-	public static void setGpioWriter(CommandWriter writer) {
-		Gpio.setWriter(writer);
-	}
-	
-	public static void setGpioReader(CommandReader reader) {
-		Gpio.setReader(reader);
 	}
 
 }

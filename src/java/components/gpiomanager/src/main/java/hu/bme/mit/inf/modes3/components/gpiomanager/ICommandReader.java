@@ -4,6 +4,6 @@ import java.io.IOException;
 
 import hu.bme.mit.inf.modes3.components.gpiomanager.Gpio.Level;
 
-public interface CommandReader {
+public interface ICommandReader {
 	Level getGpioValue(String targetPath) throws IOException;
 }
