@@ -5,11 +5,7 @@
  */
 package hu.bme.mit.inf.modes3.components.gpiomanager;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +17,7 @@ import java.util.TimerTask;
  *
  * @author zsoltmazlo
  */
-public final class Gpio {
+public class Gpio {
 
 	public enum Level {
 		LOW, HIGH
@@ -57,34 +53,42 @@ public final class Gpio {
 
 	private TimerTask _inputListenerTask;
 
-	public Gpio(int pin, Direction direction) throws IOException, GpioNotConfiguratedException {
+	private ICommandWriter _writer;
+
+	private ICommandReader _reader;
+
+	public Gpio(int pin, Direction direction, ICommandWriter writer, ICommandReader reader) throws IOException {
 		this._pin = pin;
 		this._direction = direction;
+		this._reader = reader;
+		this._writer = writer;
+		this._gpioFolder = GPIO_BASE_FOLDER + "gpio" + this._pin + "/";
+	}
 
+	public void initializeGpio() throws IOException {
 		// export gpio pin first
 		try {
-			executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "export");
+			_writer.executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "export");
 		} catch (Exception ex) {
-			Logger.error(TAG, "Pin export failed! Pin: %d", _pin);
+
+			Logger.error(TAG, "Pin export failed! Pin: %d" + "\n" + ex.getCause(), _pin);
 
 			// if GPIO pin exporting failed, the cause of the failure is the
 			// fact that the GPIO has already exported previously
 			// in this case, we should unexport it and try to export it again
 			// if unexport fails also, there should be something wrong
 			try {
-				executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "unexport");
-				executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "export");
+				_writer.executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "unexport");
+				_writer.executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "export");
 			} catch (Exception ex2) {
 				Logger.error(TAG, "Pin re-export failed! Pin: %d", _pin);
 				throw ex2;
 			}
 		}
 
-		this._gpioFolder = GPIO_BASE_FOLDER + "gpio" + this._pin + "/";
-
 		// set direction of pin
 		try {
-			executeCommand(this._direction.toString().toLowerCase(), _gpioFolder + "direction");
+			_writer.executeCommand(this._direction.toString().toLowerCase(), _gpioFolder + "direction");
 		} catch (Exception ex) {
 			Logger.error(TAG, "Pin direction setup failed! Pin: %d", _pin);
 			throw ex;
@@ -93,7 +97,7 @@ public final class Gpio {
 		switch (this._direction) {
 		case IN:
 			// setup edge detection as well
-			executeCommand("both", _gpioFolder + "edge");
+			_writer.executeCommand("both", _gpioFolder + "edge");
 
 			setupInputChangeListening();
 			break;
@@ -102,12 +106,11 @@ public final class Gpio {
 			this.setLevel(Level.LOW);
 			break;
 		}
-
 	}
 
 	public final void setLevel(Level level) throws IOException {
 		try {
-			executeCommand(level == Level.HIGH ? "1" : "0", _gpioFolder + "value");
+			_writer.executeCommand(level == Level.HIGH ? "1" : "0", _gpioFolder + "value");
 			this._level = level;
 		} catch (IOException ex) {
 			Logger.error(TAG, "Level setting failed! Pin: %d", _pin);
@@ -155,46 +158,33 @@ public final class Gpio {
 		this.listeners.remove(listener);
 	}
 
-	private void executeCommand(String value, String targetFile) throws IOException {
-		Logger.info(TAG, "Trying to write \"%s\" to %s", value, targetFile);
-		try (BufferedWriter w = new BufferedWriter(new FileWriter(targetFile))) {
-			w.append(value);
-			w.newLine();
-			w.flush();
-		}
-		Logger.info(TAG, "Succeeded!");
-	}
-
 	private class InputStateChangeListenerTask extends TimerTask {
 
 		@Override
 		public void run() {
 			try {
-				try (BufferedReader reader = new BufferedReader(new FileReader(_gpioFolder + "value"))) {
-					Level newLevel = reader.readLine().equals("1") ? Level.HIGH : Level.LOW;
-					if (!newLevel.equals(_level)) {
-						Logger.info(TAG, "Pin state changed! Pin: %d Value: %s", _pin, newLevel.toString());
-						_level = newLevel;
-						listeners.stream().forEach((listener) -> {
-							try {
-								listener.levelStateChanged(_level);
-							} catch (Exception ex) {
-								Logger.error(TAG, "Error while notifying the InputStateChangeListener (%s)",
-										listener.toString());
-								Logger.error(TAG, ex.getMessage());
-							}
-						});
-					}
+				Level newLvl = _reader.getGpioValue(_gpioFolder + "value");
+				if (newLvl != null && !newLvl.equals(_level)) {
+					Logger.info(TAG, "Pin state changed! Pin: %d Value: %s", _pin, newLvl.toString());
+					_level = newLvl;
+					listeners.stream().forEach((listener) -> {
+						try {
+							listener.levelStateChanged(_level);
+						} catch (Exception ex) {
+							Logger.error(TAG, "Error while notifying the InputStateChangeListener (%s)", listener.toString());
+							Logger.error(TAG, ex.getMessage());
+						}
+					});
 				}
-
 			} catch (FileNotFoundException ex) {
-				Logger.error(TAG, "InputStateChangeListenerTask is aborted, because pin #%d's value file not found!",
-						_pin);
+				Logger.error(TAG, "InputStateChangeListenerTask is aborted, because pin #%d's value file not found!", _pin);
 				Logger.error(TAG, ex.getMessage());
 			} catch (IOException ex) {
-				Logger.error(TAG, "InputStateChangeListenerTask is aborted, IO error during file read on pin #%d",
-						_pin);
+				Logger.error(TAG, "InputStateChangeListenerTask is aborted, IO error during file read on pin #%d", _pin);
 				Logger.error(TAG, ex.getMessage());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Logger.error(TAG, "Something is wrong here: " + ex.getMessage());
 			}
 		}
 
@@ -209,7 +199,7 @@ public final class Gpio {
 		}
 	}
 
-	public final void cleanup() throws IOException, InterruptedException {
+	public final void cleanup() throws IOException {
 		// unexport gpio pin
 		try {
 			if (_isInputListenerRunning) {
@@ -220,7 +210,7 @@ public final class Gpio {
 				_isInputListenerRunning = false;
 				Logger.info(TAG, "Listening service for pin #%d stopped.", _pin);
 			}
-			executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "unexport");
+			_writer.executeCommand(String.valueOf(_pin), GPIO_BASE_FOLDER + "unexport");
 		} catch (IOException ex) {
 			Logger.error(TAG, "Pin unexport failed! Pin: %d", _pin);
 			throw ex;

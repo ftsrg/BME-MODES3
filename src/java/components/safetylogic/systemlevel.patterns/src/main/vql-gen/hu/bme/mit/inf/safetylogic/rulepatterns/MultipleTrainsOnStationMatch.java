@@ -107,7 +107,7 @@ public abstract class MultipleTrainsOnStationMatch extends BasePatternMatch {
   
   @Override
   public int hashCode() {
-    return Objects.hash (fT1, fT2);
+    return Objects.hash(fT1, fT2);
   }
   
   @Override

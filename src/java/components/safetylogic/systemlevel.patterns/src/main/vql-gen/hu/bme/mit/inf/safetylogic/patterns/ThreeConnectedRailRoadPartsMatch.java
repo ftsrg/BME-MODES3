@@ -125,7 +125,7 @@ public abstract class ThreeConnectedRailRoadPartsMatch extends BasePatternMatch 
   
   @Override
   public int hashCode() {
-    return Objects.hash (fOne, fMiddle, fOther);
+    return Objects.hash(fOne, fMiddle, fOther);
   }
   
   @Override
