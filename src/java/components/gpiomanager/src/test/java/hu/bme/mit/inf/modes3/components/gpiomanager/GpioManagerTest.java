@@ -8,6 +8,7 @@ import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
@@ -59,11 +60,6 @@ public class GpioManagerTest {
 	@Mock
 	private Gpio mGpio = Mockito.mock(Gpio.class);
 	
-	@Test
-	public void test1() {
-		Mockito.doReturn(Gpio.Level.HIGH).<Gpio>when(mGpio).getLevel();
-	}
-
 	@Before
 	public void initEnv() throws IOException {
 		// Setup powermockito for static GpioProvider mocking
@@ -88,6 +84,12 @@ public class GpioManagerTest {
 		PowerMockito.verifyStatic(GpioProvider.class, Mockito.times(1));
 		GpioProvider.getGpioInstance(datas[pGpio].port, pDir);
 	}
+	
+	@Test
+	public void testThatGpioIsNoPinFound() throws IOException, GpioNotConfiguratedException {
+		// Act and Assert
+		Assertions.assertThrows(GpioNotConfiguratedException.class, () -> {GpioManager.setGpio("99", pDir);});
+	}
 
 	@Test
 	public void testSetGpioInternally() throws IOException, GpioNotConfiguratedException {
@@ -109,7 +111,7 @@ public class GpioManagerTest {
 		// Assert
 		Assert.assertSame(mGpio, g);
 	}
-
+	
 //	Cannot test Cleanup as a Unit, because cannot Mock gpio.cleanup for not calling writer.executemethod
 //	Can be tested in GpioManager_Integration tests
 //	@Test
