@@ -1,8 +1,0 @@
-apply plugin: 'java'
-apply plugin: 'org.xtext.xtend'
-
-dependencies {
-	compile 'com.google.code.gson:gson:2.7'
-	testCompile 'junit:junit:4.12'
-	compile project(":utils:${utilsPrefix}.common")
-}

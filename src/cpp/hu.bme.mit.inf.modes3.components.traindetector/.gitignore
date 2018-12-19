@@ -1,5 +1,0 @@
-**/cmake-build-debug
-test/lib
-.pioenvs
-.piolibdeps
-.vscode/c_cpp_properties.json

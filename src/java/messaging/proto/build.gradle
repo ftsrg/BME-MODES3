@@ -1,7 +1,0 @@
-apply plugin: 'java'
-apply plugin: 'org.xtext.xtend'
-
-dependencies {
-	compile project(":messaging:${messagingPrefix}.mms")
-	compile project(":messaging:${messagingPrefix}.proto.messages")
-}

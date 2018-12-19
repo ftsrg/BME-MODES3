@@ -1,8 +1,0 @@
-apply plugin: 'java'
-apply plugin: 'org.xtext.xtend'
-
-dependencies {
-	compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
-	compile project(":transports:${transportsPrefix}.common")
-	compile project(":messaging:${messagingPrefix}.proto")
-}

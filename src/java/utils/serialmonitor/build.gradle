@@ -1,9 +1,0 @@
-apply plugin: 'application'
-apply plugin: 'java'
-apply plugin: 'org.xtext.xtend'
-
-dependencies {
-	compile 'org.scream3r:jssc:2.8.0'
-}
-
-mainClassName = "hu.bme.mit.inf.modes3.utils.serialmonitor.SerialMonitor"
