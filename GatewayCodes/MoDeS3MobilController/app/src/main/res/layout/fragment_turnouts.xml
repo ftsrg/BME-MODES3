@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/t01"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorGrey"
+        android:text="@string/t01" />
+    <Button
+        android:id="@+id/t02"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorGrey"
+        android:text="@string/t02" />
+    <Button
+        android:id="@+id/t03"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorGrey"
+        android:text="@string/t03" />
+    <Button
+        android:id="@+id/t04"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorGrey"
+        android:text="@string/t04" />
+    <Button
+        android:id="@+id/t05"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorGrey"
+        android:text="@string/t05" />
+    <Button
+        android:id="@+id/t06"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorGrey"
+        android:text="@string/t06" />
+
+
+</LinearLayout>

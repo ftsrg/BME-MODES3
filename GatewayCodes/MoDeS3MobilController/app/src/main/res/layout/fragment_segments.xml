@@ -1,0 +1,738 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnOff"
+            android:layout_width="165dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="22dp"
+            android:background="@color/colorRed"
+            android:text="@string/off" />
+
+        <Button
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/btnOn"
+            android:layout_width="163dp"
+            android:layout_height="wrap_content"
+
+
+            android:background="@color/colorGreen"
+            android:text="@string/on" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s01"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s01" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s02"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s02" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s04"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s04" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s05"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:textColor="@color/colorBlack"
+                android:clickable="false"
+                android:text="@string/s05" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s06"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s06" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s07"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s07" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s08"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s08" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s10"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:textColor="@color/colorBlack"
+                android:clickable="false"
+                android:text="@string/s10" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s11"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s11" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s12"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s12" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s13"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s13" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s15"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:textColor="@color/colorBlack"
+                android:clickable="false"
+                android:text="@string/s15" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s17"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s17" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s18"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s18" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s19"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s19" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s20"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:textColor="@color/colorBlack"
+                android:clickable="false"
+                android:text="@string/s20" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s22"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s22" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s23"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s23" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s24"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s24" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s26"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:textColor="@color/colorBlack"
+                android:clickable="false"
+                android:text="@string/s26" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s27"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s27" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s29"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s29" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s30"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:clickable="false"
+                android:textColor="@color/colorBlack"
+                android:text="@string/s30" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/s31"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@color/colorGrey"
+                android:clickable="true"
+                android:focusable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/train" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="23dp"
+                android:textColor="@color/colorBlack"
+                android:clickable="false"
+                android:text="@string/s31" />
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

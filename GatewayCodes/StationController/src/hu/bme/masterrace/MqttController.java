@@ -131,9 +131,7 @@ public class MqttController implements org.eclipse.paho.client.mqttv3.MqttCallba
         System.out.println("Delivery Complete");
     }
 
-    public void messageArrived(String arg0, MqttMessage arg1)
-
-       {
+    public void messageArrived(String arg0, MqttMessage arg1) {
         System.out.println("-------------------------------------------------");
         System.out.println("| Topic:" + arg0.toString());
         System.out.println("| Message: " + new String(arg1.getPayload()));
@@ -146,10 +144,10 @@ public class MqttController implements org.eclipse.paho.client.mqttv3.MqttCallba
         sendCommandToMoDeS3(obj, topic);
     }
 
-    private void sendSegmentStateChanged(){ //todo on change send state
+    private void sendSegmentStateChanged() { //todo on change send state
     }
 
-    private void sendSegmentState(int segment){ //todo check
+    private void sendSegmentState(int segment) { //todo check
         segmentCommander.getSegmentState(segment);
     }
 
@@ -157,7 +155,7 @@ public class MqttController implements org.eclipse.paho.client.mqttv3.MqttCallba
 
         if (topic.equals("segment")) {
             elementCommander.sendSegmentCommand(Integer.valueOf(message.get("segment").toString()).intValue(), getSegmentState(message));
-            elementCommander.sendSegmentCommand(Integer.valueOf(message.get("segment2").toString()).intValue(), getSegmentState(message));
+            elementCommander.sendSegmentCommand(Integer.valueOf(message.get("segment2").toString()).intValue(), getSegmentState(message)); //todo ez biztos kell?
         }
 
 //        if (topic.equals("segmentAll")) {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="tcp://192.168.137.1:1883"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:key="@string/MQTTserverURI"
+        android:selectable="true"
+        android:title="@string/mqttServerURI" />
+    <ListPreference
+        android:defaultValue="MQTT"
+        android:dialogTitle="Connection type"
+        android:entries="@array/pref_conntection_type_entries"
+        android:entryValues="@array/pref_conntection_type_values"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:key="@string/connectionType"
+        android:title="@string/ConnectionType" />
+</PreferenceScreen>
