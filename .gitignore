@@ -1,0 +1,5 @@
+
+*.xml
+*.class
+GatewayCodes/StationController/out/production/StationController/META-INF/MANIFEST.MF
+GatewayCodes/StationController/StationController.iml
