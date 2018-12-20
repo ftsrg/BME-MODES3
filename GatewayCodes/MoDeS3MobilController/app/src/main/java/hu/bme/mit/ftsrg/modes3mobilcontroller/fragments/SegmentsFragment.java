@@ -69,7 +69,15 @@ public class SegmentsFragment extends Fragment {
                 setBackground(message);
             }
         });
+
+        initSegmentState();
         return rootView;
+    }
+
+    private void initSegmentState() {
+        if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                MQTTHandler.mypublish("segment/state", "{\"getstate\":\"every\"}");
+        }
     }
 
     private void setBackground(MqttMessage message) {
