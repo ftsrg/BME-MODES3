@@ -30,7 +30,7 @@ public class MainControl
 
     public static void main(String[] args) {
         init();
-        MqttController smc = new MqttController(trainCommander, elementCommander, segmentCommander, dccCommander);
+        MqttController smc = new MqttController();
 
         smc.runClient();
     }
@@ -59,8 +59,6 @@ public class MainControl
         segmentCommander = locator.getTrackElementStateRegistry();
         stateSender = locator.getTrackElementStateSender();
         dccCommander = locator.getDccCommander();
-
-
     }
 
     public void run() {
