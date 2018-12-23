@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import hu.bme.mit.ftsrg.modes3mobilcontroller.MQTTHandler;
 import hu.bme.mit.ftsrg.modes3mobilcontroller.R;
-import hu.bme.mit.ftsrg.modes3mobilcontroller.SegmentStateChangedListener;
+import hu.bme.mit.ftsrg.modes3mobilcontroller.listeners.SegmentStateChangedListener;
 import hu.bme.mit.ftsrg.modes3mobilcontroller.network.NetworkUtil;
 
 /**
@@ -63,7 +63,7 @@ public class SegmentsFragment extends Fragment {
 
         initSegments(rootView);
 
-        MQTTHandler.setOnEventListener(new SegmentStateChangedListener() {
+        MQTTHandler.setEventListener(new SegmentStateChangedListener() {
             @Override
             public void segmentStateChanged(MqttMessage message) {
                 setBackground(message);
@@ -93,7 +93,7 @@ public class SegmentsFragment extends Fragment {
                 case 1:
                     if (state.equals("0")) {
                         s01.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s01.setBackgroundColor(Color.GREEN);
                     }
                     break;
@@ -101,126 +101,126 @@ public class SegmentsFragment extends Fragment {
                 case 2:
                     if (state.equals("0")) {
                         s02.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s02.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 4:
                     if (state.equals("0")) {
                         s04.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s04.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 5:
                     if (state.equals("0")) {
                         s05.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s05.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 6:
                     if (state.equals("0")) {
                         s06.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s06.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 7:
                     if (state.equals("0")) {
                         s07.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s07.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 8:
                     if (state.equals("0")) {
                         s08.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s08.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 10:
                     if (state.equals("0")) {
                         s10.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s10.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 11:
                     if (state.equals("0")) {
                         s11.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s11.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 12:
                     if (state.equals("0")) {
                         s12.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s12.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 13:
                     if (state.equals("0")) {
                         s13.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s13.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 15:
                     if (state.equals("0")) {
                         s15.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s15.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 17:
                     if (state.equals("0")) {
                         s17.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s17.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 18:
                     if (state.equals("0")) {
                         s18.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s18.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 19:
                     if (state.equals("0")) {
                         s19.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s19.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 20:
                     if (state.equals("0")) {
                         s20.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s20.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 22:
                     if (state.equals("0")) {
                         s22.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s22.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 23:
                     if (state.equals("0")) {
                         s23.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s23.setBackgroundColor(Color.GREEN);
                     }
                     break;
                 case 24:
                     if (state.equals("0")) {
                         s24.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s24.setBackgroundColor(Color.GREEN);
                     }
 
@@ -228,7 +228,7 @@ public class SegmentsFragment extends Fragment {
                 case 26:
                     if (state.equals("0")) {
                         s26.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s26.setBackgroundColor(Color.GREEN);
                     }
 
@@ -236,7 +236,7 @@ public class SegmentsFragment extends Fragment {
                 case 27:
                     if (state.equals("0")) {
                         s27.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s27.setBackgroundColor(Color.GREEN);
                     }
 
@@ -244,7 +244,7 @@ public class SegmentsFragment extends Fragment {
                 case 29:
                     if (state.equals("0")) {
                         s29.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s29.setBackgroundColor(Color.GREEN);
                     }
 
@@ -252,7 +252,7 @@ public class SegmentsFragment extends Fragment {
                 case 30:
                     if (state.equals("0")) {
                         s30.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s30.setBackgroundColor(Color.GREEN);
                     }
 
@@ -260,7 +260,7 @@ public class SegmentsFragment extends Fragment {
                 case 31:
                     if (state.equals("0")) {
                         s31.setBackgroundColor(Color.RED);
-                    } else {
+                    } else if (state.equals("1")) {
                         s31.setBackgroundColor(Color.GREEN);
                     }
                     break;

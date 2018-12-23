@@ -4,65 +4,200 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
-        android:id="@+id/t01"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorGrey"
-        android:text="@string/t01" />
-    <Button
-        android:id="@+id/t02"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
 
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/colorGrey"
-        android:text="@string/t02" />
-    <Button
-        android:id="@+id/t03"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
 
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/colorGrey"
-        android:text="@string/t03" />
-    <Button
-        android:id="@+id/t04"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content">
 
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/colorGrey"
-        android:text="@string/t04" />
-    <Button
-        android:id="@+id/t05"
+
+        <ImageButton
+            android:id="@+id/t01"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/colorGrey"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingRight="5dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/turnout_reg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="@string/t01"
+            android:textColor="@color/colorBlack"
+            android:textSize="35dp" />
+
+
+    </FrameLayout>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content">
 
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/colorGrey"
-        android:text="@string/t05" />
-    <Button
-        android:id="@+id/t06"
+
+        <ImageButton
+            android:id="@+id/t02"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/colorGrey"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingRight="5dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/turnout_reg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="@string/t02"
+            android:textColor="@color/colorBlack"
+            android:textSize="35dp" />
+
+
+    </FrameLayout>
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content">
 
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/colorGrey"
-        android:text="@string/t06" />
+
+        <ImageButton
+            android:id="@+id/t03"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/colorGrey"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingRight="5dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/turnout_dual" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="@string/t03"
+            android:textColor="@color/colorBlack"
+            android:textSize="35dp" />
+
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:id="@+id/t04"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/colorGrey"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingRight="5dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/turnout_reg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="@string/t04"
+            android:textColor="@color/colorBlack"
+            android:textSize="35dp" />
+
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:id="@+id/t05"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/colorGrey"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingRight="5dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/turnout_reg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="@string/t05"
+            android:textColor="@color/colorBlack"
+            android:textSize="35dp" />
+
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:id="@+id/t06"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/colorGrey"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingRight="5dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/turnout_reg" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:clickable="false"
+            android:text="@string/t06"
+            android:textColor="@color/colorBlack"
+            android:textSize="35dp" />
+
+
+    </FrameLayout>
 
 
 </LinearLayout>

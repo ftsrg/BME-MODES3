@@ -14,6 +14,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.io.UnsupportedEncodingException;
 
+import hu.bme.mit.ftsrg.modes3mobilcontroller.listeners.SegmentStateChangedListener;
+import hu.bme.mit.ftsrg.modes3mobilcontroller.listeners.TurnoutStateChangedListener;
 import hu.bme.mit.ftsrg.modes3mobilcontroller.network.NetworkUtil;
 
 ;
@@ -22,11 +24,24 @@ import hu.bme.mit.ftsrg.modes3mobilcontroller.network.NetworkUtil;
 public class MQTTHandler {
 
     private static SegmentStateChangedListener segmentStateChangedListener;
+    private static TurnoutStateChangedListener turnoutStateChangedListener;
 
 
-    public static void setOnEventListener(SegmentStateChangedListener listener) {
+    public static void setEventListener(SegmentStateChangedListener listener) {
         segmentStateChangedListener = listener;
     }
+
+    public static void setEventListener(TurnoutStateChangedListener listener) {
+        turnoutStateChangedListener = listener;
+    }
+
+    public void turnoutStateChanged(MqttMessage msg) {
+
+        if (turnoutStateChangedListener != null)
+            turnoutStateChangedListener.turnoutStateChanged(msg); // event result object :)
+
+    }
+
 
     public void segmentStateChanged(MqttMessage msg) {
 
@@ -59,6 +74,18 @@ public class MQTTHandler {
                                 public void messageArrived(String topic, MqttMessage message) throws Exception {
                                     Log.d("mqtt", "arrived " + message);
                                     segmentStateChanged(message);
+                                }
+                            });
+                        } catch (MqttException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            MQTTHandler.client.subscribe("turnout/state", 0, new IMqttMessageListener() {
+                                @Override
+                                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                                    Log.d("mqtt", "arrived " + message);
+                                    turnoutStateChanged(message);
                                 }
                             });
                         } catch (MqttException e) {
