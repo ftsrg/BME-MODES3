@@ -31,6 +31,13 @@ public class TrainsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_trains, container, false);
 
+        initPiros(rootView);
+
+
+        return rootView;
+    }
+
+    private void initPiros(View rootView) {
         final ToggleButton r = rootView.findViewById(R.id.reverse);
 
         Button _0 = (Button) rootView.findViewById(R.id._0);
@@ -38,7 +45,7 @@ public class TrainsFragment extends Fragment {
             public void onClick(View v) {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._0), Toast.LENGTH_SHORT).show();
-                        MQTTHandler.mypublish("command/train", "0");
+                    MQTTHandler.mypublish("command/train", "0");
 
                 }
             }
@@ -50,7 +57,7 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._25), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                    MQTTHandler.mypublish("command/train", "-25");
+                        MQTTHandler.mypublish("command/train", "-25");
                     else
                         MQTTHandler.mypublish("command/train", "25");
                 }
@@ -94,9 +101,138 @@ public class TrainsFragment extends Fragment {
                 }
             }
         });
-
-
-        return rootView;
     }
 
+    private void initSNCF(View rootView) {
+        final ToggleButton r = rootView.findViewById(R.id.reverse2);
+
+        Button _0 = (Button) rootView.findViewById(R.id.s_0);
+        _0.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._0), Toast.LENGTH_SHORT).show();
+                    MQTTHandler.mypublish("command/train", "0");
+
+                }
+            }
+        });
+
+        Button _25 = (Button) rootView.findViewById(R.id.s_25);
+        _25.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._25), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-25");
+                    else
+                        MQTTHandler.mypublish("command/train", "25");
+                }
+            }
+        });
+        Button _50 = (Button) rootView.findViewById(R.id.s_50);
+        _50.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._50), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-50");
+                    else
+                        MQTTHandler.mypublish("command/train", "50");
+                }
+            }
+        });
+
+        Button _75 = (Button) rootView.findViewById(R.id.s_75);
+        _75.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._75), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-75");
+                    else
+                        MQTTHandler.mypublish("command/train", "75");
+                }
+            }
+        });
+
+        Button _100 = (Button) rootView.findViewById(R.id.s_100);
+        _100.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._100), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-100");
+                    else
+                        MQTTHandler.mypublish("command/train", "100");
+                }
+            }
+        });
+    }
+
+    private void initTaurus(View rootView) {
+        final ToggleButton r = rootView.findViewById(R.id.reverse3);
+
+        Button _0 = (Button) rootView.findViewById(R.id.t_0);
+        _0.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._0), Toast.LENGTH_SHORT).show();
+                    MQTTHandler.mypublish("command/train", "0");
+
+                }
+            }
+        });
+
+        Button _25 = (Button) rootView.findViewById(R.id.t_25);
+        _25.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._25), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-25");
+                    else
+                        MQTTHandler.mypublish("command/train", "25");
+                }
+            }
+        });
+        Button _50 = (Button) rootView.findViewById(R.id.t_50);
+        _50.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._50), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-50");
+                    else
+                        MQTTHandler.mypublish("command/train", "50");
+                }
+            }
+        });
+
+        Button _75 = (Button) rootView.findViewById(R.id.t_75);
+        _75.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._75), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-75");
+                    else
+                        MQTTHandler.mypublish("command/train", "75");
+                }
+            }
+        });
+
+        Button _100 = (Button) rootView.findViewById(R.id.t_100);
+        _100.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
+                    Toast.makeText(getContext(), getString(R.string._100), Toast.LENGTH_SHORT).show();
+                    if(r.isChecked())
+                        MQTTHandler.mypublish("command/train", "-100");
+                    else
+                        MQTTHandler.mypublish("command/train", "100");
+                }
+            }
+        });
+    }
 }
+
