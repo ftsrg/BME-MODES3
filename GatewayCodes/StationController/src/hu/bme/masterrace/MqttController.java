@@ -3,39 +3,17 @@ package hu.bme.masterrace;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import hu.bme.mit.inf.modes3.messaging.communication.command.dcc.interfaces.IDccCommander;
-import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ISendAllStatusCommandCallback;
-import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander;
-import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.ITrainCommander;
-import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionCallback;
-import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionListener;
-import hu.bme.mit.inf.modes3.messaging.communication.state.computervision.interfaces.IComputerVisionStateSender;
-import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ISegmentStateChangeListener;
-import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateRegistry;
-import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfaces.ITrackElementStateSender;
-import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
-
-import java.io.PrintStream;
-
-import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;
-import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainDirectionValue;
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.MqttTopic;
+import org.eclipse.paho.client.mqttv3.*;
 
 import static hu.bme.masterrace.MainControl.elementCommander;
 import static hu.bme.masterrace.MainControl.segmentCommander;
 
 public class MqttController implements org.eclipse.paho.client.mqttv3.MqttCallback {
 
-    MqttClient myClient;
-    MqttConnectOptions connOpt;
+    private MqttClient myClient;
+    private MqttConnectOptions connOpt;
     static final String BROKER_URL = "tcp://192.168.1.150:1883";
     static final String M2MIO_DOMAIN = "hovasminek";
     static final String M2MIO_STUFF = "things";
@@ -43,8 +21,6 @@ public class MqttController implements org.eclipse.paho.client.mqttv3.MqttCallba
     static final String M2MIO_USERNAME = "StationController";
     static final String M2MIO_PASSWORD_MD5 = "";
 
-    static final Boolean subscriber = Boolean.valueOf(true);
-    static final Boolean publisher = Boolean.valueOf(false);
 
     public void connectionLost(Throwable t) {
         System.out.println("Connection lost!");
@@ -80,7 +56,6 @@ public class MqttController implements org.eclipse.paho.client.mqttv3.MqttCallba
         MqttTopic topic = myClient.getTopic(myTopic);
 
 
-        if (subscriber) {
             try {
                 int subQoS = 0;
                 myClient.subscribe(myTopic, subQoS);
@@ -89,31 +64,8 @@ public class MqttController implements org.eclipse.paho.client.mqttv3.MqttCallba
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
 
 
-        if (publisher) {
-            for (int i = 1; i <= 10; i++) {
-                String pubMsg = "{\"pubmsg\":" + i + "}";
-                int pubQoS = 0;
-                MqttMessage message = new MqttMessage(pubMsg.getBytes());
-                message.setQos(pubQoS);
-                message.setRetained(false);
-
-
-                System.out.println("Publishing to topic \"" + topic + "\" qos " + pubQoS);
-                MqttDeliveryToken token = null;
-                try {
-                    token = topic.publish(message);
-
-
-                    token.waitForCompletion();
-                    Thread.sleep(100L);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public void deliveryComplete(IMqttDeliveryToken arg0) {
