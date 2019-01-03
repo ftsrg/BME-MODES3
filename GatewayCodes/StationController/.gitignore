@@ -1,6 +1,10 @@
 #LogFile
 MyLogFile.txt
 MyLogFile.log.lck
+
+
+/out/*
+
 # Created by https://www.gitignore.io/api/java,intellij
 # Edit at https://www.gitignore.io/?templates=java,intellij
 
