@@ -16,20 +16,23 @@ import org.slf4j.ILoggerFactory;
 import org.slf4j.impl.SimpleLoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 
-public class MainControl extends AbstractCommunicationComponent {
+public class Main extends AbstractCommunicationComponent {
+
     static ITrainCommander trainCommander;
     static ITrackElementCommander elementCommander;
     static ITrackElementStateRegistry segmentCommander;
     static ITrackElementStateSender stateSender;
     static IDccCommander dccCommander;
-    static String MQTTSERVERURI ="tcp://192.168.1.150:1883";
-    final static Logger Log = Logger.getLogger(MainControl.class.getName());
+    final static String MQTTSERVERURI ="tcp://192.168.1.150:1883";
+    final static Logger Log = Logger.getLogger(Main.class.getName());
     private static FileHandler fh;
+    final static ArrayList<Integer> segmentIDs = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -37,23 +40,33 @@ public class MainControl extends AbstractCommunicationComponent {
         Log.info("Station Controller Started");
         init();
 
-        MqttController smc = new MqttController();
-        smc.runClient();
+        loadSegmentList();
+
+        elementCommander.sendAllStatusCommand();
+        SegmentStates segmentStates = new SegmentStates();
+        Turnout turnoutStates = new Turnout();
+        SegmentOccupancys segmentOccupancys = new SegmentOccupancys();
+        Train train = new Train();
+    }
+
+    private static void loadSegmentList() {
+        for (int i = 1; i <= 31; i++) {
+            if (i == 16 || i == 3 || i == 9 || i == 14 || i == 21 || i == 25 || i == 28) {
+            } else {
+                segmentIDs.add(i);
+            }
+        }
     }
 
     private static void initLogger() {
-
         try {
             fh = new FileHandler("StationControllerLog.log",true);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
         Log.addHandler(fh);
         SimpleFormatter formatter = new SimpleFormatter();
         fh.setFormatter(formatter);
-
-
     }
 
 
@@ -69,10 +82,10 @@ public class MainControl extends AbstractCommunicationComponent {
         TopicBasedMessagingService msgService = MessagingServiceFactory.createStackForTopics(registry,
                 new SimpleLoggerFactory(), TopicFactory.createEveryTopic());
 
-        new MainControl(msgService, new SimpleLoggerFactory());
+        new Main(msgService, new SimpleLoggerFactory());
     }
 
-    MainControl(MessagingService messagingService, ILoggerFactory factory) {
+    Main(MessagingService messagingService, ILoggerFactory factory) {
         super(messagingService, factory);
         trainCommander = locator.getTrainCommander();
         elementCommander = locator.getTrackElementCommander();
