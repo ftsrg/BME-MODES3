@@ -21,20 +21,20 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
+        if (position == 0)
             return new SegmentsFragment();
-        } else if (position == 1) {
+        else if (position == 1)
             return new TurnoutsFragment();
-        } else if (position == 2) {
+         else
             return new TrainsFragment();
-        } else {
-            return new SensorsFragment();
-        }
+
+        //else
+        //    return new SensorsFragment();
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
 
@@ -48,8 +48,8 @@ public class MyPagerAdapter extends FragmentPagerAdapter {
                 return mContext.getString(R.string.turnouts);
             case 2:
                 return mContext.getString(R.string.trains);
-            case 3:
-                return mContext.getString(R.string.sensor);
+           // case 3:
+             //   return mContext.getString(R.string.sensor);
             default:
                 return null;
         }

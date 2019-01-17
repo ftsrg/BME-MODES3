@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     static public NetworkUtil networkUtil;
     static public ConnectivityManager cm;
 
-
+    static public final String TOPIC_SEGMENT_COMMAND = "command/segment";
+    static public final String TOPIC_TURNOUT_COMMAND = "command/turnout";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,34 +41,38 @@ public class MainActivity extends AppCompatActivity {
 
         createSettingsToolbar();
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-
-        MyPagerAdapter adapter = new MyPagerAdapter(this, getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-
-
+        setLayout();
         FloatingActionButtonInit();
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        initSettings();
 
-        mSettings = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        registerNetworkStateChangedListener();
 
 
-        Log.d("mqtt", NetworkUtil.getConnectivityStatusString(getApplicationContext()));
+    }
 
-        Log.d("mqtt", cm.toString());
-        getApplicationContext().registerReceiver(new BroadcastReceiver() { // rekt api 26
+    private void registerNetworkStateChangedListener() {
+        getApplicationContext().registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
-
                 Log.d("mqtt", "changed networkState");
                 mqttHandler = new MQTTHandler(getApplication(), mSettings.getString(getString(R.string.MQTTserverURI), getString(R.string.missing)));
             }
         }, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+    }
 
+    private void initSettings() {
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        mSettings = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+    }
 
+    private void setLayout() {
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+
+        MyPagerAdapter adapter = new MyPagerAdapter(this, getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 
@@ -76,10 +81,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if ((NetworkUtil.getConnectivityStatusString(getApplicationContext())).equals("Wifi enabled")) {
                     Toast.makeText(getApplicationContext(), getString(R.string.emergencyStop), Toast.LENGTH_SHORT).show();
-                    MQTTHandler.mypublish("command/segmentAll", "{\"segmentAll\":0}");
+                    MQTTHandler.mypublish("command/train", "{\"trainID\":\"taurus\",\"speed\":0,\"direction\":\"forward\"}");
+                    MQTTHandler.mypublish("command/train", "{\"trainID\":\"piros\",\"speed\":0,\"direction\":\"forward\"}");
+                    MQTTHandler.mypublish("command/train", "{\"trainID\":\"sncf\",\"speed\":0,\"direction\":\"forward\"}");
                 }
             }
         });

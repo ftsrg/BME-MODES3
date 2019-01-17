@@ -54,7 +54,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -173,7 +173,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -227,7 +227,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -252,7 +252,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -290,7 +290,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -317,7 +317,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -344,7 +344,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -369,7 +369,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -409,7 +409,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -436,7 +436,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -463,7 +463,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -488,7 +488,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -524,7 +524,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -551,7 +551,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -578,7 +578,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -603,7 +603,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -643,7 +643,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -670,7 +670,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -697,7 +697,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -722,7 +722,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/train" />
+                android:src="@drawable/train_grey" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -7,7 +7,7 @@
     <string name="section_format">Light Sensor: %1$.2f"</string>
     <string name="segments">Segments</string>
     <string name="turnouts">Turnouts</string>
-    <string name="trains">Trains</string>
+    <string name="trains"> Trains </string>
     <string name="filterButton_Done">asd</string>
     <string name="sensor">Sensor</string>
 

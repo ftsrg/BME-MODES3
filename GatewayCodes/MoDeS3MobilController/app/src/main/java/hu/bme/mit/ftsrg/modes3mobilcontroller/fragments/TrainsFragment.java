@@ -32,9 +32,14 @@ public class TrainsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_trains, container, false);
 
         initPiros(rootView);
-
+        initSNCF(rootView);
+        initTaurus(rootView);
 
         return rootView;
+    }
+
+    public String makeMessage(String trainID,int speed, String dir) {
+         return "{\"trainID\":" + trainID + ",\"speed\":"+speed +",direction:\"" + dir + "\"}";
     }
 
     private void initPiros(View rootView) {
@@ -45,7 +50,7 @@ public class TrainsFragment extends Fragment {
             public void onClick(View v) {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._0), Toast.LENGTH_SHORT).show();
-                    MQTTHandler.mypublish("command/train", "0");
+                    MQTTHandler.mypublish("command/train", makeMessage("piros",0,"forward"));
 
                 }
             }
@@ -57,9 +62,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._25), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-25");
+                        MQTTHandler.mypublish("command/train", makeMessage("piros",32,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "25");
+                        MQTTHandler.mypublish("command/train",  makeMessage("piros",32,"forward"));
                 }
             }
         });
@@ -69,9 +74,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._50), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-50");
+                        MQTTHandler.mypublish("command/train", makeMessage("piros",64,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "50");
+                        MQTTHandler.mypublish("command/train", makeMessage("piros",64,"forward"));
                 }
             }
         });
@@ -82,9 +87,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._75), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-75");
+                        MQTTHandler.mypublish("command/train", makeMessage("piros",96,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "75");
+                        MQTTHandler.mypublish("command/train", makeMessage("piros",96,"forward"));
                 }
             }
         });
@@ -95,9 +100,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._100), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-100");
+                        MQTTHandler.mypublish("command/train", makeMessage("piros",126,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "100");
+                        MQTTHandler.mypublish("command/train", makeMessage("piros",126,"forward"));
                 }
             }
         });
@@ -111,7 +116,7 @@ public class TrainsFragment extends Fragment {
             public void onClick(View v) {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._0), Toast.LENGTH_SHORT).show();
-                    MQTTHandler.mypublish("command/train", "0");
+                    MQTTHandler.mypublish("command/train", makeMessage("sncf",0,"forward"));
 
                 }
             }
@@ -123,9 +128,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._25), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-25");
+                        MQTTHandler.mypublish("command/train",makeMessage("sncf",32,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "25");
+                        MQTTHandler.mypublish("command/train", makeMessage("sncf",32,"forward"));
                 }
             }
         });
@@ -135,9 +140,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._50), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-50");
+                        MQTTHandler.mypublish("command/train", makeMessage("sncf",64,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "50");
+                        MQTTHandler.mypublish("command/train", makeMessage("sncf",64,"forward"));
                 }
             }
         });
@@ -148,9 +153,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._75), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-75");
+                        MQTTHandler.mypublish("command/train", makeMessage("sncf",64,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "75");
+                        MQTTHandler.mypublish("command/train", makeMessage("sncf",64,"forward"));
                 }
             }
         });
@@ -161,9 +166,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._100), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-100");
+                        MQTTHandler.mypublish("command/train", makeMessage("sncf",126,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "100");
+                        MQTTHandler.mypublish("command/train", makeMessage("sncf",126,"forward"));
                 }
             }
         });
@@ -177,7 +182,7 @@ public class TrainsFragment extends Fragment {
             public void onClick(View v) {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._0), Toast.LENGTH_SHORT).show();
-                    MQTTHandler.mypublish("command/train", "0");
+                    MQTTHandler.mypublish("command/train", makeMessage("taurus",0,"forward"));
 
                 }
             }
@@ -189,9 +194,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._25), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-25");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",32,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "25");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",32,"forward"));
                 }
             }
         });
@@ -201,9 +206,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._50), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-50");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",64,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "50");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",64,"forward"));
                 }
             }
         });
@@ -214,9 +219,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._75), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-75");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",96,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "75");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",96,"forward"));
                 }
             }
         });
@@ -227,9 +232,9 @@ public class TrainsFragment extends Fragment {
                 if ((NetworkUtil.getConnectivityStatusString(getContext())).equals("Wifi enabled")) {
                     Toast.makeText(getContext(), getString(R.string._100), Toast.LENGTH_SHORT).show();
                     if(r.isChecked())
-                        MQTTHandler.mypublish("command/train", "-100");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",126,"backward"));
                     else
-                        MQTTHandler.mypublish("command/train", "100");
+                        MQTTHandler.mypublish("command/train", makeMessage("taurus",126,"forward"));
                 }
             }
         });

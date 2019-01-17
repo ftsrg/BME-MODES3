@@ -14,6 +14,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 
 import java.io.UnsupportedEncodingException;
 
+import hu.bme.mit.ftsrg.modes3mobilcontroller.listeners.SegmentOccChangedListener;
 import hu.bme.mit.ftsrg.modes3mobilcontroller.listeners.SegmentStateChangedListener;
 import hu.bme.mit.ftsrg.modes3mobilcontroller.listeners.TurnoutStateChangedListener;
 import hu.bme.mit.ftsrg.modes3mobilcontroller.network.NetworkUtil;
@@ -25,7 +26,11 @@ public class MQTTHandler {
 
     private static SegmentStateChangedListener segmentStateChangedListener;
     private static TurnoutStateChangedListener turnoutStateChangedListener;
+    private static SegmentOccChangedListener segmentOccChangedListener;
 
+    public static void setEventListener(SegmentOccChangedListener listener){
+        segmentOccChangedListener = listener;
+    }
 
     public static void setEventListener(SegmentStateChangedListener listener) {
         segmentStateChangedListener = listener;
@@ -39,9 +44,15 @@ public class MQTTHandler {
 
         if (turnoutStateChangedListener != null)
             turnoutStateChangedListener.turnoutStateChanged(msg); // event result object :)
-
     }
 
+
+    public void segmentOccChanged(MqttMessage msg) {
+
+        if (segmentOccChangedListener != null)
+            segmentOccChangedListener.segmentOccChanged(msg); // event result object :)
+
+    }
 
     public void segmentStateChanged(MqttMessage msg) {
 
@@ -68,29 +79,11 @@ public class MQTTHandler {
                         // We are connected
                         Toast.makeText(mycontext, mycontext.getString(R.string.connectedTo) +" "+ client.getServerURI(), Toast.LENGTH_SHORT).show();
                         Log.d("mqtt", "onSuccess connected");
-                        try {
-                            MQTTHandler.client.subscribe("segment/state", 0, new IMqttMessageListener() {
-                                @Override
-                                public void messageArrived(String topic, MqttMessage message) throws Exception {
-                                    Log.d("mqtt", "arrived " + message);
-                                    segmentStateChanged(message);
-                                }
-                            });
-                        } catch (MqttException e) {
-                            e.printStackTrace();
-                        }
+                        segmentStateRegister();
 
-                        try {
-                            MQTTHandler.client.subscribe("turnout/state", 0, new IMqttMessageListener() {
-                                @Override
-                                public void messageArrived(String topic, MqttMessage message) throws Exception {
-                                    Log.d("mqtt", "arrived " + message);
-                                    turnoutStateChanged(message);
-                                }
-                            });
-                        } catch (MqttException e) {
-                            e.printStackTrace();
-                        }
+                        turnoutStateRegister();
+                        segmentOccRegister();
+
                     }
 
                     @Override
@@ -108,6 +101,55 @@ public class MQTTHandler {
         }
     }
 
+    private void segmentOccRegister() {
+        try {
+            MQTTHandler.client.subscribe("segment/occupancy", 1, new IMqttMessageListener() {
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    Log.d("mqtt", "arrived " + message);
+                    segmentOccChanged(message);
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void turnoutStateRegister() {
+        try {
+            MQTTHandler.client.subscribe("turnout/state", 1, new IMqttMessageListener() {
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    Log.d("mqtt", "arrived " + message);
+                    turnoutStateChanged(message);
+                }
+            });
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void segmentStateRegister() {
+        try {
+            MQTTHandler.client.subscribe("segment/state", 1, new IMqttMessageListener() {
+                @Override
+                public void messageArrived(String topic, MqttMessage message) throws Exception {
+                    Log.d("mqtt", "arrived " + message);
+                    segmentStateChanged(message);
+                }
+            });
+            initStates();
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initStates() {
+        MQTTHandler.mypublish("segment/state", "{\"getstate\":\"every\"}");
+        MQTTHandler.mypublish("turnout/state", "{\"getstate\":\"every\"}");
+        MQTTHandler.mypublish("segment/occupancy", "{\"getoccupancy\":\"every\"}");
+    }
+
     public static void mypublish(String topic, String message) {
         if ((NetworkUtil.getConnectivityStatusString(mycontext)).equals("Wifi enabled")) {
             if (MQTTHandler.client.isConnected()) {
@@ -118,7 +160,7 @@ public class MQTTHandler {
                     MqttMessage messages = new MqttMessage(encodedPayload);
                     messages.setRetained(true);
                     Log.d("mqtt", "mqtt message sent on topic: " + topic + " message:" + message);
-                    MQTTHandler.client.publish(topic, messages);
+                    MQTTHandler.client.publish(topic, messages.getPayload(),1 ,false);
                 } catch (UnsupportedEncodingException | MqttException e) {
                     e.printStackTrace();
                 }
