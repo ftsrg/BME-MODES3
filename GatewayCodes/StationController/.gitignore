@@ -1,7 +1,7 @@
 #LogFile
 MyLogFile.txt
 MyLogFile.log.lck
-
+*.lck
 
 /out/*
 
