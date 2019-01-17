@@ -12,6 +12,7 @@ import java.util.concurrent.Semaphore;
 import static hu.bme.masterrace.Main.*;
 
 public class SegmentOccupancys implements MqttCallback {
+
     private static final String TOPIC_INFO = "segment/occupancy";
     private static final String TOPIC_COMMAND = "command/occupancy";
     private MqttClient myClient;
@@ -21,6 +22,7 @@ public class SegmentOccupancys implements MqttCallback {
 
     SegmentOccupancys() {
         try {
+
             setConnectionOptions();
             connect();
             if (myClient.isConnected()) {
@@ -47,22 +49,31 @@ public class SegmentOccupancys implements MqttCallback {
         myClient.setCallback(this);
         myClient.connect(connOpt);
         System.out.println("Connected Segment Occpancy Commander!");
+
     }
 
     private void setConnectionOptions() {
         connOpt = new MqttConnectOptions();
         connOpt.setCleanSession(true);
         connOpt.setKeepAliveInterval(30);
-        connOpt.setAutomaticReconnect(true);
+        connOpt.setAutomaticReconnect(false);
     }
 
     @Override
     public void connectionLost(Throwable throwable) {
         System.out.println("rip in connection");
         try {
-            connect();
-        } catch (MqttException e) {
+            reconnect();
+        } catch ( MqttException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void reconnect() throws MqttException {
+        connect();
+        if (myClient.isConnected()) {
+            subscribe();
+            registerSegmentOccupancyChanger();
         }
     }
 
@@ -80,10 +91,18 @@ public class SegmentOccupancys implements MqttCallback {
     }
 
     private JsonObject getJsonObject(MqttMessage mqttMessage) {
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(new String(mqttMessage.getPayload()));
-        return element.getAsJsonObject();
+        try {
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(new String(mqttMessage.getPayload()));
+            return element.getAsJsonObject();
+        }catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("wrong format");
+
+        }
+        return null;
     }
+
 
     private void handleRequest(String topic, JsonObject message) {
         if (topic.equals(TOPIC_INFO))
@@ -94,6 +113,7 @@ public class SegmentOccupancys implements MqttCallback {
 
     private void handleTopicCommand(JsonObject message) {
         if (message.has("occupancy") && message.has("segmentID"))
+
             sendSegmentOccCommand(message);
 
     }
@@ -105,10 +125,16 @@ public class SegmentOccupancys implements MqttCallback {
     }
 
     private SegmentOccupancy getSegmentOcc(JsonObject message) {
-        if (message.get("occupancy").toString().equals("\"occupied\""))
-            return SegmentOccupancy.OCCUPIED;
-        if (message.get("occupancy").toString().equals("\"free\""))
-            return SegmentOccupancy.FREE;
+        try {
+            if (message.get("occupancy").toString().equals("\"occupied\""))
+                return SegmentOccupancy.OCCUPIED;
+            if (message.get("occupancy").toString().equals("\"free\""))
+                return SegmentOccupancy.FREE;
+
+        }catch (Exception e ){
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -137,6 +163,8 @@ public class SegmentOccupancys implements MqttCallback {
         semaphore.release();
     }
 
+
+
     private void sendOccupancy(int segmentID) {
         try {
             SegmentOccupancy state = segmentCommander.getSegmentOccupancy(segmentID);
@@ -154,6 +182,6 @@ public class SegmentOccupancys implements MqttCallback {
     }
 
     private String makeMessage(int segmentID, String s) {
-        return "{\"segmentID\":" + segmentID + ",\"occupancy\":" + s + "}";
+        return "{\"segmentID\":" + segmentID + ",\"occupancy\":\"" + s + "\"}";
     }
 }

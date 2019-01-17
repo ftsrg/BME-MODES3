@@ -45,16 +45,24 @@ public class Train implements MqttCallback {
         connOpt = new MqttConnectOptions();
         connOpt.setCleanSession(true);
         connOpt.setKeepAliveInterval(30);
-        connOpt.setAutomaticReconnect(true);
+        connOpt.setAutomaticReconnect(false);
     }
 
     @Override
     public void connectionLost(Throwable throwable) {
         System.out.println("rip in connection");
         try {
-            connect();
-        } catch (MqttException e) {
+            reconnect();
+        } catch ( MqttException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void reconnect() throws MqttException {
+        connect();
+        if (myClient.isConnected()) {
+            subscribe();
+
         }
     }
 

@@ -53,19 +53,26 @@ public class SegmentStates implements MqttCallback {
         connOpt = new MqttConnectOptions();
         connOpt.setCleanSession(true);
         connOpt.setKeepAliveInterval(30);
-        connOpt.setAutomaticReconnect(true);
+        connOpt.setAutomaticReconnect(false);
     }
 
     @Override
     public void connectionLost(Throwable throwable) {
         System.out.println("rip in connection");
         try {
-            connect();
-        } catch (MqttException e) {
+            reconnect();
+        } catch ( MqttException e) {
             e.printStackTrace();
         }
     }
 
+    private void reconnect() throws MqttException {
+        connect();
+        if (myClient.isConnected()) {
+            subscribe();
+            registerSegmentStateChange();
+        }
+    }
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) {
         printMessageToConsole(s, mqttMessage);
@@ -95,10 +102,6 @@ public class SegmentStates implements MqttCallback {
     private void handleTopicCommand(JsonObject message) {
         if (message.has("state") && message.has("segmentID")) {
             sendSegmentCommand(message, "state");
-        }
-        //ez a camera miatt, hogy egyszerre 2-t kapcsoljon le
-        if (message.has("state2") && message.has("segmentID")) {
-            sendSegmentCommand(message, "state2");
         }
         if (message.has("stateAll")) {
             sendSegmentCommandAll(message);
