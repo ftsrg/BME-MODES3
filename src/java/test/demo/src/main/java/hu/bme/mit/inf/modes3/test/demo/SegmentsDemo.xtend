@@ -7,15 +7,28 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import org.slf4j.ILoggerFactory
 
+/**
+ * A show-case (demo), how you can get diverse information about the segments (section + turnout) and 
+ * how you can control the segments too.
+ * 
+ * @author benedekh
+ */
 class SegmentsDemo extends AbstractCommunicationComponent implements ISegmentCommandListener {
 
 	val knownSegments = LayoutConfiguration.INSTANCE.segments
 
+	/**
+	 * @param locator the high-level communication service of the railway track
+	 * @param factory the logger factory
+	 */
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
 		locator.trackElementCommandCallback.segmentCommandListener = this
 	}
 
+	/**
+	 * Runs the demo of how to get status information from the segments and how you can control them.
+	 */
 	override run() {
 		getOccupancyOfAll
 		printSeparatorAndSleep

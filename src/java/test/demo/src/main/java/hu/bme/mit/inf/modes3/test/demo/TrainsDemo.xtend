@@ -7,15 +7,27 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 import hu.bme.mit.inf.modes3.utils.conf.LocomotivesConfiguration
 import org.slf4j.ILoggerFactory
 
+/**
+ * A show-case (demo), how you can get diverse information about the trains and how you can control them.
+ * 
+ * @author benedekh
+ */
 class TrainsDemo extends AbstractCommunicationComponent implements ITrainSpeedStateListener {
 
 	val knownTrains = LocomotivesConfiguration.INSTANCE.locomotiveIds
 
+	/**
+	 * @param locator the high-level communication service of the railway track
+	 * @param factory the logger factory
+	 */
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
 		locator.trainSpeedStateRegistry.addTrainSpeedStateListener(this)
 	}
 
+	/**
+	 * Runs the demo of how to get diverse information about the trains and how you can control them.
+	 */
 	override run() {
 		initiateStopEntireRailroad
 		Thread.sleep(100)

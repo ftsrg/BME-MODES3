@@ -19,6 +19,11 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;;
 
+/**
+ * A handler to update all status information of the elements on the railway track. 
+ * 
+ * @author zsoltmazlo
+ */
 @Singleton
 @ManagedService(path = "/ws/allstate")
 public class AllStateHandlerService {
@@ -26,6 +31,9 @@ public class AllStateHandlerService {
 	@Inject
 	protected MetaBroadcaster metaBroadcaster;
 
+	/**
+	 * Requests the status information of the elements on the railway track and forwards these information to  the website. 
+	 */
 	@Message
 	public void onMessage(String message) {
 		System.out.println("State change service: " + message);

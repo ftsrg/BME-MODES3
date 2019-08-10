@@ -7,13 +7,21 @@ import java.util.concurrent.ConcurrentSkipListSet
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Triggers a protocol restart event in the statecharts every {@link YakinduProtocolRestarter#SLEEP_TIME} milliseconds.
+ * 
+ * @author benedekh
+ */
 class YakinduProtocolRestarter implements Runnable, IYakinduProtocolRestarter {
 
 	private static val SLEEP_TIME = 500
 
 	val Logger logger
 	val Set<SectionControlInterface.Provided> sectionsToBeRestarted
-
+	
+	/**
+	 * @param factory the logger factory
+	 */
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(class.name)
 		this.sectionsToBeRestarted = new ConcurrentSkipListSet(new ProvidedSectionControlInterfaceComparator)

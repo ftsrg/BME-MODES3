@@ -8,12 +8,21 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Handles the train commands.
+ * 
+ * @author benedekh
+ */
 class TrainCommandCallback implements ITrainCommandCallback, ITrainReferenceSpeedCommandListener {
 
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITrainReferenceSpeedCommandListener trainReferenceSpeedCommandListener
 
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 * @param factory the logger factory
+	 */
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		val trainReferenceSpeedClient = new TrainReferenceSpeedCommandClient(this)
 		dispatcher.trainReferenceSpeedCommandHandler = trainReferenceSpeedClient

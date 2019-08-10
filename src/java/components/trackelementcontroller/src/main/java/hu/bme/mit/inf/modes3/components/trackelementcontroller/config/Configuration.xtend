@@ -67,14 +67,24 @@ class Configuration {
 		sections.containsKey(sectionId)
 	}
 
+	/**
+	 * @return the pinout headers of the sections that are controlled by the controller
+	 */
 	def getSectionNames() {
 		sections.keySet
 	}
 
+	/**
+	 * @return the pinout headers of the turnouts that are controlled by the controller
+	 */
 	def getTurnoutExpanders() {
 		turnouts
 	}
 
+	/**
+	 * @param sectionID the ID of the section
+	 * @return the pinout header of the section that belongs to this ID
+	 */
 	def getSectionExpander(int sectionID) {
 		sections.get(sectionID.toString)
 	}

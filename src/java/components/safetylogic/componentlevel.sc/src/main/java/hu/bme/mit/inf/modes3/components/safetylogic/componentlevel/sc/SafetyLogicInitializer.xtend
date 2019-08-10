@@ -22,6 +22,11 @@ import org.slf4j.Logger
 
 import static hu.bme.mit.inf.modes3.messaging.messages.enums.ConnectionDirection.*
 
+/**
+ * Initializes the safety logic of a turnout by creating and starting the necessary statecharts.
+ * 
+ * @author benedekh
+ */
 class SafetyLogicInitializer {
 	val Logger logger
 	val ILoggerFactory loggerFactory
@@ -33,7 +38,15 @@ class SafetyLogicInitializer {
 
 	val ITrackElementCommander commander
 	val ITrackElementStateRegistry stateRegistry
-
+	
+	/**
+	 * @param factory the logger factory
+	 * @param protocolRestarter periodically restarts the yakindu protocol
+	 * @param protocolDispatcher the dispatcher of yakindu messages to the statecharts
+	 * @param messageSender sends the Yakindu messages over the communication network
+	 * @param commander the track element commander
+	 * @param stateRegistry the state registry of the track elements
+	 */
 	new(ILoggerFactory factory, IYakinduProtocolRestarter protocolRestarter, IYakinduProtocolDispatcher protocolDispatcher, IYakinduMessageSender messageSender, ITrackElementCommander commander, ITrackElementStateRegistry stateRegistry) {
 		this.logger = factory.getLogger(class.name)
 		this.loggerFactory = factory
@@ -44,7 +57,15 @@ class SafetyLogicInitializer {
 		this.commander = commander
 		this.stateRegistry = stateRegistry
 	}
-
+	
+	/**
+	 * Creates and initializes the statecharts that belong to the given turnout.
+	 * The section's statecharts will also be created that connect to this turnout.
+	 * 
+	 * @param turnoutID the ID of the turnout whose component (statecharts) should be created
+	 * 
+	 * @return the component that can be started
+	 */
 	def init(int turnoutID) {
 		val component = switch (turnoutID) {
 			case 1: initT1

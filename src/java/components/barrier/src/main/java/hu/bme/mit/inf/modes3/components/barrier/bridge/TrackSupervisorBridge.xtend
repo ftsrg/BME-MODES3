@@ -8,11 +8,22 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
+/**
+ * The bridge between the barrier application and the communication network.
+ * 
+ * @author benedekh
+ */
 class TrackSupervisorBridge extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ITrackSupervisorBridge {
 
 	val BarrierCommander barrierCommander
 	val ITrackSupervisor trackSupervisor
 
+	/**
+	 * @param trackSupervisor the barrier application
+	 * @param railwayTrackStack the messaging service to the railway track
+	 * @param barrierStack the messaging service to the barrier
+	 * @param factory the logger factory
+	 */
 	new(ITrackSupervisor trackSupervisor, MessagingService railwayTrackStack, MessagingService barrierStack,
 		ILoggerFactory factory) {
 		super(railwayTrackStack, factory)

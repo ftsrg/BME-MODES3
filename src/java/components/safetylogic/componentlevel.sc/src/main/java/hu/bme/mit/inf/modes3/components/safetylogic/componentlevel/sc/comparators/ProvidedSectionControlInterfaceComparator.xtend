@@ -4,6 +4,11 @@ import hu.bme.mit.gamma.impl.interfaces.SectionControlInterface
 import hu.bme.mit.gamma.impl.interfaces.SectionControlInterface.Provided
 import java.util.Comparator
 
+/**
+ * Compares two {@link SectionControlInterface.Provided} instances by their hash codes. 
+ * 
+ * @author benedekh
+ */
 class ProvidedSectionControlInterfaceComparator implements Comparator<SectionControlInterface.Provided> {
 
 	val comparator = new HashCodeComparator

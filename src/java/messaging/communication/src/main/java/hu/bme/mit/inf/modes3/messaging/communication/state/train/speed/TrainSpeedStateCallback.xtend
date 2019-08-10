@@ -6,9 +6,17 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 
+/**
+ * Handles the train reference speed state messages.
+ * 
+ * @author benedekh
+ */
 package class TrainSpeedStateCallback implements ITrainSpeedStateCallback, ITrainSpeedStateListener {
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITrainSpeedStateListener trainSpeedStateListener
 
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 */
 	new(AbstractMessageDispatcher dispatcher) {
 		val trainReferenceSpeedClient = new TrainSpeedStateClient(this)
 		dispatcher.trainReferenceSpeedHandler = trainReferenceSpeedClient

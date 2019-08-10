@@ -8,6 +8,13 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The state controller of a segment.
+ * It can enable or disable a segment physically through the GPIO ports.
+ * Enable/disable means if any train can/cannot move physically on that segment. 
+ * 
+ * @author hegyibalint
+ */
 class PhysicalSegmentController {
 
 	/**
@@ -26,6 +33,11 @@ class PhysicalSegmentController {
 
 	val Logger logger
 
+	/**
+	 * @param pinout the interpeter of the pinout configuration
+	 * @param expander the ID of the expander that controls the segment (physically)
+	 * @param factory the logger factory
+	 */
 	new(ExpanderConfigInterpreter pinout, String expander, ILoggerFactory factory) {
 		logger = factory.getLogger(PhysicalSegmentController.name);
 		val String[] pins = pinout.getHeaderPins(expander);
@@ -41,7 +53,12 @@ class PhysicalSegmentController {
 			logger.debug("GPIO pin could not be setted!", ex);
 		}
 	}
-
+	
+	/**
+	 * Enables/disables the segment physically, depending on the paramter.
+	 * 
+	 * @param state the state of the segment
+	 */
 	def setSegmentState(SegmentState state) {
 		try {
 			switch state {
@@ -60,6 +77,9 @@ class PhysicalSegmentController {
 		}
 	}
 
+	/**
+	 * @return the recent state of the segment
+	 */
 	def getSegmentState() {
 		// segment is only enabled when all of these gpios are HIGH
 		if(appControl.level == Gpio.Level.HIGH && pruControl.level == Gpio.Level.HIGH) {

@@ -4,10 +4,18 @@ import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.IT
 import hu.bme.mit.inf.modes3.messaging.messages.command.TrainReferenceSpeedCommand
 import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 
+/**
+ * Forwards the {@link TrainReferenceSpeedCommand} message to the corresponding callback.  
+ * 
+ * @author benedekh
+ */
 package class TrainReferenceSpeedCommandClient implements IMessageHandler<TrainReferenceSpeedCommand> {
 
 	private var ITrainReferenceSpeedCommandListener callback
-
+	
+	/**
+	 * @param controller the callback for the train reference speed command
+	 */
 	new(ITrainReferenceSpeedCommandListener controller) {
 		callback = controller
 	}

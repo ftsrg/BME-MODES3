@@ -13,6 +13,11 @@ import java.util.Set
 
 import static extension hu.bme.mit.inf.modes3.utils.common.extensions.SetExtensions.asStringSet
 
+/**
+ * A factory to generate the default topics for each message type. 
+ * 
+ * @author benedekh
+ */
 abstract class TopicFactory {
 
 	private static val SUPPORTED_SEGMENT_MESSAGE_TYPES = #{SegmentStateMessage, SegmentOccupancyMessage, SegmentCommand}
@@ -40,6 +45,8 @@ abstract class TopicFactory {
 	}
 
 	/**
+	 * @param excludedTopicFragments topics to be excluded from the generation
+	 * 
 	 * @return every possible topic, with the topic parameters being substituted, except those whose name is contains a fragment denoted by argument
 	 * 
 	 * E.g. for every section status topic the {id} will be substituted with the respective section's ID.
@@ -75,6 +82,8 @@ abstract class TopicFactory {
 	}
 
 	/**
+	 * @param turnoutId the ID to be substituted in the topic names
+	 * 
 	 * @return creates every topic for the turnout-related messages for the referred turnout, and substitutes the {id} parameters in the topic names
 	 */
 	def static createTurnoutTopics(int turnoutId) {
@@ -82,6 +91,9 @@ abstract class TopicFactory {
 	}
 
 	/**
+	 * @param turnoutId the ID to be substituted in the topic names
+	 * @param chosenMessageTypes the topics should be generated only for these message types 
+	 * 
 	 * @return creates topics only for the selected turnout-related messages for the referred turnout, and substitutes the {id} parameters in the topic names
 	 * Supported message types: TurnoutStateMessage, TurnoutCommand
 	 */
@@ -97,6 +109,7 @@ abstract class TopicFactory {
 	}
 
 	/**
+	 * @param segmentIds the ID of the segments to be substituted in the topic names
 	 * @return creates every topic for the segment-related messages for the referred segments, and substitutes the {id} parameters in the topic names
 	 */
 	def static createSegmentTopics(Set<Integer> segmentIds) {
@@ -104,6 +117,8 @@ abstract class TopicFactory {
 	}
 
 	/**
+	 * @param chosenMessageTypes the topics should be generated only for these message types
+	 *  
 	 * @return creates topics only for the selected segment-related messages for every segment, and substitutes the {id} parameters in the topic names
 	 *  Supported message types: SegmentStateMessage, SegmentOccupancyMessage, SegmentCommand
 	 */
@@ -112,6 +127,9 @@ abstract class TopicFactory {
 	}
 
 	/**
+	 * @param segmentIds the ID of the segments to be substituted in the topic names
+	 * @param chosenMessageTypes the topics should be generated only for these message types
+	 * 
 	 * @return creates topics only for the selected segment-related messages for the referred segments, and substitutes the {id} parameters in the topic names
 	 * Supported message types: SegmentStateMessage, SegmentOccupancyMessage, SegmentCommand
 	 */
@@ -122,7 +140,6 @@ abstract class TopicFactory {
 	/**
 	 * 
 	 * @param messageType MessageType whose topic parameters will get substituted
-	 * 
 	 * @param substitutions values which shall be substituted into the parameters. Note: by default the {id} parameters will be substituted only
 	 * 
 	 * @return topics for the specified message type, with having the topic parameters substituted.

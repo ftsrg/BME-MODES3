@@ -10,6 +10,11 @@ import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
 import org.slf4j.impl.SimpleLoggerFactory
 
+/**
+ * Test class of {@link TrainMovementEstimator}.
+ * 
+ * @author baloghlaszlo
+ */
 class TrainMovementEstimatorTest {
 	var TrainMovementEstimator estimator
 	var ModelUtil modelUtil
@@ -33,7 +38,10 @@ class TrainMovementEstimatorTest {
 		Thread.sleep(200)
 		estimator.onSegmentOccupancyChange(from, SegmentOccupancy.OCCUPIED, SegmentOccupancy.FREE)
 	}
-
+	
+	/**
+	 * Tests the track element estimations in various scenarios as the train moves along the track.
+	 */
 	@Test
 	def void trainMovementEstimatorTest() {
 

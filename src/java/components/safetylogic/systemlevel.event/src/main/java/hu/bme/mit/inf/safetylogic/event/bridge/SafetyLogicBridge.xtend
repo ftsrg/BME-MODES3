@@ -13,10 +13,20 @@ import hu.bme.mit.inf.safetylogic.event.sl.ISafetyLogic
 import org.slf4j.ILoggerFactory
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection
 
+/**
+ * The bridge between the system-level safety logic application and the communication network.
+ * 
+ * @author benedekh
+ */
 class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafetyLogicBridge {
 
 	val ISafetyLogic safetyLogic
-
+	
+	/**
+	 * @param safetyLogic the system-level safety logic application
+	 * @param messagingService the messaging service to the railway track
+	 * @param factory the logger factory
+	 */
 	new(ISafetyLogic safetyLogic, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.safetyLogic = safetyLogic

@@ -25,6 +25,11 @@ import javafx.scene.control.ToggleButton
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The touchboard application.
+ * 
+ * @author benedekh
+ */
 class TouchboardController implements ITouchboardController {
 
 	val ILoggerFactory loggerFactory
@@ -37,6 +42,9 @@ class TouchboardController implements ITouchboardController {
 
 	var ITouchboardBridge touchboardBridge
 
+	/**
+	 * @param loggerFactory the logger factory
+	 */
 	new(ILoggerFactory loggerFactory) {
 		this.loggerFactory = loggerFactory
 		this.logger = loggerFactory.getLogger(TouchboardController.name)
@@ -82,7 +90,12 @@ class TouchboardController implements ITouchboardController {
 			}
 		}
 	}
-
+	
+	/**
+	 * An action handler for the turnout pressed event.
+	 * 
+	 * @param event the event occurred
+	 */
 	@FXML def void onTurnoutPress(ActionEvent event) {
 		executeHandler(new Runnable() {
 			override run() {
@@ -93,6 +106,11 @@ class TouchboardController implements ITouchboardController {
 		})
 	}
 
+	/**
+	 * An action handler for the segment pressed event.
+	 * 
+	 * @param event the event occurred
+	 */
 	@FXML def void onSegmentPress(ActionEvent event) {
 		executeHandler(new Runnable() {
 			override run() {
@@ -103,6 +121,11 @@ class TouchboardController implements ITouchboardController {
 		})
 	}
 
+	/**
+	 * An action handler for the enable all segments event.
+	 * 
+	 * @param event the event occurred
+	 */
 	@FXML def void onEnableAllSegment(ActionEvent event) {
 		onSetSectionState(new SegmentStateSetter() {
 			override onSetSegmentState(SegmentEventHandler handler) {
@@ -111,6 +134,11 @@ class TouchboardController implements ITouchboardController {
 		})
 	}
 
+	/**
+	 * An action handler for the disable all segments event.
+	 * 
+	 * @param event the event occurred
+	 */
 	@FXML def void onDisableAllSegment(ActionEvent event) {
 		onSetSectionState(new SegmentStateSetter() {
 			override onSetSegmentState(SegmentEventHandler handler) {
@@ -119,6 +147,11 @@ class TouchboardController implements ITouchboardController {
 		})
 	}
 
+	/**
+	 * An action handler for the train direction changed event.
+	 * 
+	 * @param event the event occurred
+	 */
 	@FXML def void onTrainDirectionChange(ActionEvent event) {
 		executeHandler(
 			new Runnable() {
@@ -133,6 +166,11 @@ class TouchboardController implements ITouchboardController {
 		)
 	}
 
+	/**
+	 * An action handler for the train speed changed event.
+	 * 
+	 * @param event the event occurred
+	 */
 	@FXML def void onTrainSpeedChange(ActionEvent event) {
 		executeHandler(
 			new Runnable() {
@@ -147,7 +185,12 @@ class TouchboardController implements ITouchboardController {
 			}
 		)
 	}
-
+	
+	/**
+	 * Sets the scene.
+	 * 
+	 * @param scene the Scene to be set
+	 */
 	def void setScene(Scene scene) {
 		initializeSegments(scene)
 		initializeTurnouts(scene)

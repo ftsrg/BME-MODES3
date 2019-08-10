@@ -10,11 +10,19 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 
+/**
+ * Handles the track element (section or turnout = segment) state messages.
+ * 
+ * @author benedekh
+ */
 package class TrackElementStateCallback implements ITrackElementStateCallback, ISegmentStateListener, ITurnoutStateListener, ISegmentOccupancyListener {
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ISegmentStateListener segmentStateListener
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITurnoutStateListener turnoutStateListener
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ISegmentOccupancyListener segmentOccupancyListener
 
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 */
 	new(AbstractMessageDispatcher dispatcher) {
 		val segmentStateClient = new SegmentStateClient(this)
 		val turnoutStateClient = new TurnoutStateClient(this)

@@ -10,8 +10,18 @@ import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import org.slf4j.impl.SimpleLoggerFactory
 import hu.bme.mit.inf.modes3.messaging.messages.command.SegmentCommand
 
+/**
+ * The entry class of the Sample application.
+ * The application is a template how to create new standalone components that use the services offered by the model railway track.
+ * 
+ * @author benedekh
+ */
 class Main {
 
+	/**
+	 * The application initializes and starts itself based on the command-line arguments.
+	 * @param args command-line arguments
+	 */
 	def static final main(String[] args) {
 		val loggerFactory = new SimpleLoggerFactory
 

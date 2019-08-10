@@ -9,6 +9,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The component-level safety logic application.
+ * 
+ * @author benedekh
+ */
 class SafetyLogic implements ISafetyLogic {
 
 	@Accessors(PUBLIC_SETTER) var ISafetyLogicBridge safetyLogicBridge
@@ -22,7 +27,11 @@ class SafetyLogic implements ISafetyLogic {
 	var Runnable protocolRestarter
 
 	val ExecutorService executor
-
+	
+	/**
+	 * @param turnoutID the ID of the turnout whose safety logic should be started
+	 * @param factory the logger factory
+	 */
 	new(int turnoutID, ILoggerFactory factory) {
 		this.loggerFactory = factory
 		this.logger = factory.getLogger(class.name)

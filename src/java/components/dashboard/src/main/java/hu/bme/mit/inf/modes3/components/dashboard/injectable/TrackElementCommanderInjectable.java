@@ -8,6 +8,11 @@ import org.atmosphere.inject.Injectable;
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
 import hu.bme.mit.inf.modes3.messaging.communication.command.trackelement.interfaces.ITrackElementCommander;
 
+/**
+ * An injectable wrapper over {@link ITrackElementCommander}.
+ * 
+ * @author zsoltmazlo
+ */
 public class TrackElementCommanderInjectable implements Injectable<ITrackElementCommander>{
 
 	ITrackElementCommander tec;

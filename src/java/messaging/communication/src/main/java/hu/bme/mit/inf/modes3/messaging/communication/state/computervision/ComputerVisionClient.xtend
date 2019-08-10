@@ -8,10 +8,18 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.ComputerVisionObjectPosit
 import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 import java.util.ArrayList
 
+/**
+ * Forwards the {@link ComputerVisionObjectPositionsMessage} message to the corresponding callback.  
+ * 
+ * @author benedekh
+ */
 package class ComputerVisionClient implements IMessageHandler<ComputerVisionObjectPositionsMessage> {
 
 	private var IComputerVisionListener callback
 
+	/**
+	 * @param controller the callback for the Computer Vision Informations
+	 */
 	new(IComputerVisionListener controller) {
 		callback = controller
 	}

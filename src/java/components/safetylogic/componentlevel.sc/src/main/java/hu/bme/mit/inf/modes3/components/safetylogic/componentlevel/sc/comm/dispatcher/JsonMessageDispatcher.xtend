@@ -11,6 +11,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * A dispatcher that can serialize a Java class into JSON (and then to byte[]) and vice versa.
+ * 
+ * @author benedekh
+ */
 class JsonMessageDispatcher extends AbstractMessageDispatcher {
 
 	val Logger logger
@@ -19,7 +24,10 @@ class JsonMessageDispatcher extends AbstractMessageDispatcher {
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ICannotGoToListener cannotGoToListener
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var IReleaseToListener releaseToListener
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var IReserveToListener reserveToListener
-
+	
+	/**
+	 * @param factory the logger factory
+	 */
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 	}

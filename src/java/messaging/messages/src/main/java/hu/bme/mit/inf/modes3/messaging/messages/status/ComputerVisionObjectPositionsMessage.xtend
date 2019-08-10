@@ -5,6 +5,11 @@ import java.util.List
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Data
 
+/**
+ * Position information about physical objects on the track. The information is originates from CV.
+ * 
+ * @author benedekh
+ */
 @Data
 class ComputerVisionObjectPositionsMessage extends InternalMessage {
 	Map<String, PhysicalObject> physicalObjects
@@ -12,12 +17,22 @@ class ComputerVisionObjectPositionsMessage extends InternalMessage {
 	long frameIndex
 }
 
+/**
+ * Position information about physical object on the track.
+ * 
+ * @author benedekh
+ */
 @Data
 class PhysicalObject {
 	String name
 	Map<String, Marker> markers
 }
 
+/**
+ * Position information about a marker on the track.
+ * 
+ * @author benedekh
+ */
 @Data
 class Marker {
 	String name
@@ -26,6 +41,11 @@ class Marker {
 	List<Boolean> tracked
 }
 
+/**
+ * A three dimensional position.
+ * 
+ * @author benedekh
+ */
 @Data
 class ThreeDPosition {
 	double x
@@ -33,6 +53,11 @@ class ThreeDPosition {
 	double z
 }
 
+/**
+ * A two dimensional position.
+ * 
+ * @author benedekh
+ */
 @Data
 class TwoDPosition {
 	double x

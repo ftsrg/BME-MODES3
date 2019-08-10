@@ -9,8 +9,20 @@ import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import org.slf4j.impl.SimpleLoggerFactory
 
+/**
+ * The entry class of the Occupancy Query application.
+ * The application receives the occupancies of every segment on the railway track from a sensor and broadcasts these occupancies
+ * on the communication network.
+ * 
+ * @author benedekh
+ */
 class Main {
 
+	/**
+	 * The application initializes and starts itself based on the command-line arguments.
+	 * 
+	 * @param args the command line arguments
+	 */
 	def static final main(String[] args) {
 		val loggerFactory = new SimpleLoggerFactory
 

@@ -7,13 +7,20 @@ import org.junit.Before
 import org.junit.Test
 import org.slf4j.helpers.NOPLoggerFactory
 
-// FIXME: Redo the local testing of the MQTT
+/**
+ * The test class of {@link MQTTTransport}.
+ * 
+ * @author benedekh
+ */
 class MQTTTests {
 
 	var MQTTTransport sender
 	var MQTTTransport receiver
 
-	@Before
+	/**
+	 * Reinitialize the sender and the receiver before each test. 
+	 */
+	@Before 
 	def void init() {
 		val senderConfig = new TopicBasedTransportConfiguration("MQTT-TEST-SENDER", "root.modes3.intra", 1883, '''''')
 		sender = new MQTTTransport(senderConfig, new NOPLoggerFactory)
@@ -26,14 +33,19 @@ class MQTTTests {
 		println("Receiver connected")
 	}
 
+	/**
+	 * Close the connections after each test.
+	 */
 	@After
 	def void close() {
 		sender.close
 		receiver.close
 	}
 
-	@Test
-	def void messageTests() {
+	/**
+	 * Test the transport by sending a message on it.
+	 */
+	@Test def void messageTests() {
 		// Arrange
 		val message = "Hello World!"
 

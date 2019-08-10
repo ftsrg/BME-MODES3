@@ -10,20 +10,20 @@ import org.eclipse.xtend.lib.annotations.Data
  */
 @Data
 class ArgumentDescriptorWithParameter<T> {
-
+	
+	String name
+	String description
+	Class<T> type
+	
+	/**
+	 * @param name the name of the argument 
+	 * @param description a description for the argument 
+	 * @param type type of the argument (e.g. String.class, Integer.class)  
+	 */
 	new(String name, String description, Class<T> type) {
 		this.name = name
 		this.description = description
 		this.type = type
 	}
-
-	// the name of the argument
-	String name
-
-	// a description for the argument
-	String description
-
-	// type of the argument (e.g. String.class, Integer.class)
-	Class<T> type
 	
 }

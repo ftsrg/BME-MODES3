@@ -7,11 +7,19 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 import org.eclipse.xtend.lib.annotations.Accessors
 
+/**
+ * The barrier application.
+ * 
+ * @author benedekh
+ */
 class TrackSupervisor implements ITrackSupervisor {
 
 	val ConcurrentMap<Integer, SegmentOccupancy> supervisedSections
 	@Accessors(PUBLIC_SETTER) var ITrackSupervisorBridge supervisorBridge
 
+	/**
+	 * @param supervisedSections the sections whose occupancies is supervised by the application
+	 */
 	new(Set<Integer> supervisedSections) {
 		this.supervisedSections = new ConcurrentHashMap<Integer, SegmentOccupancy>
 		supervisedSections.forEach[this.supervisedSections.put(it, SegmentOccupancy.FREE)]

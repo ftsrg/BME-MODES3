@@ -13,8 +13,19 @@ import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import hu.bme.mit.inf.modes3.utils.conf.layout.SegmentDirection
 import org.slf4j.impl.SimpleLoggerFactory
 
+/**
+ * The entry class of the track element controller application.
+ * The application is able to enable/disable the sections that are connected to it (physically).
+ * It can also switch the direction of the turnouts, that are connected to it.
+ * 
+ * @author benedekh
+ */
 class Main {
 
+	/**
+	 * The application initializes and starts itself based on the command-line arguments.
+	 * @param args command-line arguments
+	 */
 	def static void main(String[] args) {
 		val loggerFactory = new SimpleLoggerFactory
 		val layout = LayoutConfiguration.INSTANCE

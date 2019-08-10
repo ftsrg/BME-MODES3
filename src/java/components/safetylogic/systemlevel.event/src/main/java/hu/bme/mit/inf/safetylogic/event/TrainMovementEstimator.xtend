@@ -11,6 +11,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * An estimator about the movement of the train.
+ * 
+ * @author baloghlaszlo
+ */
 class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifiable {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
@@ -20,6 +25,11 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	val Map<RailRoadElement, Long> freedSections
 	val Poller poller
 
+	/**
+	 * @param model the model of the railway track
+	 * @param notifiable
+	 * @param factory the logger factory
+	 */
 	new(IModelInteractor model, INotifiable notifiable, ILoggerFactory factory) {
 		this.model = model
 		this.notifiable = notifiable
@@ -30,13 +40,16 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 	}
 
 	private def print(SegmentOccupancy value) {
-		switch(value){
+		switch (value) {
 			case FREE: 'FREE'
 			case OCCUPIED: 'OCCUPIED'
 			default: 'NULL'
 		}
 	}
 
+	/**
+	 * Refreshes its view about the occupied sections.
+	 */
 	def synchronized checkFreedSections() {
 		val time = System.currentTimeMillis
 		val freedLongTimeAgo = freedSections.filter[freedSection, timeStamp|timeStamp < (time - 5000)]
@@ -57,6 +70,13 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 		removeKeys.forEach[freedSections.remove(it)]
 	}
 
+	/**
+	 * Processes the change of the segment's occupancy.
+	 * 
+	 * @param id the ID of the segment
+	 * @param oldValue the old occupancy of the segment
+	 * @param newValue the new occupancy of the segment
+	 */
 	def synchronized threadSafeOnSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
 
 		logger.info('''Segment occupancy changed on «id» from «oldValue.print» to «newValue.print»''')
@@ -84,8 +104,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 					return
 				}
 			}
-			
-			  
+
 			if (changedSegment instanceof Turnout) { // If we move on a turnout
 				val next = nextSegment(train.currentlyOn, changedSegment) // We skip the turnout as a railroadelement, as the train can not be stopped on it
 				logger.info('''Train arrived on turnout «changedSegment.id» so it is moved to «next.id»''')
@@ -93,7 +112,7 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 				train.currentlyOn = next
 				return
 			}
-			
+
 			logger.info('''Train moved from «train.currentlyOn.id» to «changedSegment.id»''')
 			train.previouslyOn = train.currentlyOn // Set the previous on the model
 			train.currentlyOn = changedSegment // And update the train position
@@ -104,6 +123,12 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 		notifiable.onUpdate
 	}
 
+	/**
+	 * @param old the previous railroad element
+	 * @param current the current railroad element
+	 * 
+	 * @return the following railroad element depending on the direction of movement
+	 */
 	def nextSegment(RailRoadElement old, RailRoadElement current) {
 		return model.getNextSection(old, current)
 	}
@@ -118,14 +143,25 @@ class TrainMovementEstimator implements ISegmentOccupancyChangeListener, INotifi
 
 }
 
+/**
+ * Notifies the subscriber every second.
+ * 
+ * @author baloghlaszlo
+ */
 class Poller {
 	val INotifiable toNotify
 	Thread t = null
 
+	/**
+	 * @param notify the subscriber to be notified
+	 */
 	new(INotifiable notify) {
 		this.toNotify = notify
 	}
 
+	/**
+	 * Starts a {@link Thread} that will notify the subscriber every second.
+	 */
 	def start() {
 		if (t !== null) {
 			throw new RuntimeException

@@ -2,6 +2,10 @@ package hu.bme.mit.inf.safetylogic.patterns
 
 import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
 
+/**
+ * @author baloghlaszlo
+ */
+
 private pattern notNull(Old : RailRoadElement){
 	RailRoadElement(Old);
 }

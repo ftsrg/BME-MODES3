@@ -20,10 +20,20 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 
+/**
+ * An application to map the sections and the turnouts of the railroad model (in the system-level safety logic), 
+ * for their actual positions on the model railway track.
+ * 
+ * @author hegyibalint
+ */
 class Main {
 
 	static val RATIO = 28.34f;
 
+	/**
+	 * Maps the sections and the turnouts of the railroad model (in the system-level safety logic), 
+ 	 * for their actual positions on the model railway track.
+	 */
 	def static void main(String[] args) {
 		try {
 			val parser = XMLResourceDescriptor.XMLParserClassName

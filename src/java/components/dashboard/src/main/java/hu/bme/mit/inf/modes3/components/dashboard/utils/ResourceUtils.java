@@ -1,5 +1,10 @@
 package hu.bme.mit.inf.modes3.components.dashboard.utils;
 
+/**
+ * A util class to identify resource names.
+ * 
+ * @author zsoltmazlo
+ */
 public class ResourceUtils {
 	
 	public final static String TRAIN_SPEED = "trainspeed";

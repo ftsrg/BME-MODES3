@@ -7,6 +7,11 @@ import java.util.List
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Estimates the movement of the train based on informations received from the computer visions.
+ * 
+ * @author baloghlaszlo
+ */
 class ComputerVisionTrainMovementEstimator implements IComputerVisionListener {
 
 	IModelInteractor model
@@ -14,7 +19,13 @@ class ComputerVisionTrainMovementEstimator implements IComputerVisionListener {
 	Logger logger
 	ComputerVisionEstimator estimator
 	boolean extensiveLogging
-
+	
+	/**
+	 * @param model the model of the railway track
+	 * @param notifiable
+	 * @param factory the logger factory
+	 * @param extensiveLogging if the logging should be more fine grained
+	 */
 	new(IModelInteractor model, INotifiable notifiable, ILoggerFactory factory, boolean extensiveLogging) {
 		this.extensiveLogging = extensiveLogging
 		this.model = model

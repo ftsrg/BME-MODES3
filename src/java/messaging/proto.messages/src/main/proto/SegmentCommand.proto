@@ -6,6 +6,7 @@ package modes3.protobuf;
 option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
+/* A command if a segment should be enabled or disabled. */
 message SegmentCommand {
 	uint32 segmentID = 1;
 	SegmentStateValue state = 2;

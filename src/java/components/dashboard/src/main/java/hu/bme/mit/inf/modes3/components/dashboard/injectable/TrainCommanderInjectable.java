@@ -8,6 +8,11 @@ import org.atmosphere.inject.Injectable;
 import hu.bme.mit.inf.modes3.components.dashboard.main.DashboardManager;
 import hu.bme.mit.inf.modes3.messaging.communication.command.train.interfaces.ITrainCommander;
 
+/**
+ * An injectable wrapper over {@link ITrainCommander}.
+ * 
+ * @author zsoltmazlo
+ */
 public class TrainCommanderInjectable implements Injectable<ITrainCommander>{
 
 	ITrainCommander tec;

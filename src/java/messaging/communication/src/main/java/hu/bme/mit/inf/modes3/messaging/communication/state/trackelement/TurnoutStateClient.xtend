@@ -4,9 +4,17 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.interfac
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 
+/**
+ * Forwards the {@link TurnoutStateMessage} message to the corresponding callback.
+ * 
+ * @author benedekh
+ */
 package class TurnoutStateClient implements IMessageHandler<TurnoutStateMessage> {
 	private var ITurnoutStateListener callback
 
+	/**
+	 * @param controller the callback for the turnout state
+	 */
 	new(ITurnoutStateListener controller) {
 		callback = controller
 	}

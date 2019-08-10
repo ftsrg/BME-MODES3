@@ -6,9 +6,17 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.eclipse.xtend.lib.annotations.Accessors
 
+/**
+ * Handles the turnout reference state messages.
+ * 
+ * @author benedekh
+ */
 class TurnoutReferenceStateCallback implements ITurnoutReferenceStateCallback, ITurnoutReferenceStateListener {
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITurnoutReferenceStateListener turnoutReferenceStateListener
 
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 */
 	new(AbstractMessageDispatcher dispatcher) {
 		val referenceStateClient = new TurnoutReferenceStateClient(this)
 		dispatcher.turnoutReferenceStateHandler = referenceStateClient

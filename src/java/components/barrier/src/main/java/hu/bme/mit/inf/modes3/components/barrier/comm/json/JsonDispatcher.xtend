@@ -6,10 +6,18 @@ import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * A dispatcher that can serialize a Java class into JSON (and then to byte[]) and vice versa.
+ * 
+ * @author benedekh
+ */
 class JsonDispatcher extends AbstractMessageDispatcher {
 
 	val Logger logger
 
+	/**
+	 * @param factory the logger factory
+	 */
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 	}

@@ -5,6 +5,11 @@ import java.util.Set
 
 import static extension hu.bme.mit.inf.modes3.utils.common.extensions.SetExtensions.asStringSet
 
+/**
+ * A topic factory for the Yakindu messages.
+ * 
+ * @author benedekh
+ */
 abstract class YakinduTopicFactory extends TopicFactory {
 
 	private new() {
@@ -18,6 +23,7 @@ abstract class YakinduTopicFactory extends TopicFactory {
 	}
 
 	/**
+	 * @param segmentIDs the ID of the segments to be substituted in the topic names
 	 * @return Yakindu topics for the referred segmentIDs
 	 */
 	def static createYakinduTopics(Set<Integer> segmentIDs) {

@@ -7,12 +7,22 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Notifies a turnout's statechart if the direction of the turnout has changed.
+ * 
+ * @author benedekh
+ */
 class TurnoutDirectionNotifier implements ITurnoutStateChangeListener {
 
 	val Logger logger
 	val int turnoutId
 	val TurnoutControlInterface.Provided turnoutToBeNotified
-
+	
+	/**
+	 * @param factory the logger factory
+	 * @param turnoutToBeNotified the turnout to be notified
+	 * @param stateRegistry the state registry
+	 */
 	new(ILoggerFactory factory, int turnoutId, TurnoutControlInterface.Provided turnoutToBeNotified, ITrackElementStateRegistry stateRegistry) {
 		this.logger = factory.getLogger(class.name)
 		this.turnoutId = turnoutId

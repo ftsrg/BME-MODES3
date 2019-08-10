@@ -17,6 +17,11 @@ import org.slf4j.helpers.NOPLoggerFactory
 
 import static org.junit.Assert.*
 
+/**
+ * Test class of {@link ArgumentRegistry}.
+ * 
+ * @author benedekh
+ */
 @RunWith(Theories)
 class ArgumentRegistryTest {
 
@@ -25,13 +30,17 @@ class ArgumentRegistryTest {
 	@DataPoints
 	public static var supportedParameterTypes = #[Integer, String]
 
-	@Before
-	def void init() {
+	/**
+	 * Recreate the {@link ArgumentRegistry} before each test.
+	 */
+	@Before def void init() {
 		registry = new ArgumentRegistry(new NOPLoggerFactory)
 	}
 
-	@Test
-	def void registerFlagArgument() {
+	/**
+	 * Register an argument without options. 
+	 */
+	@Test def void registerFlagArgument() {
 		// Arrange
 		val descriptor = new ArgumentDescriptorWithoutParameter("name", "description")
 
@@ -42,8 +51,10 @@ class ArgumentRegistryTest {
 		assertTrue(true)
 	}
 
-	@Theory
-	def void registerArgumentWithParameter(Class<?> parameterType) {
+	/**
+	 * Register an argument with an option.
+	 */
+	@Theory def void registerArgumentWithParameter(Class<?> parameterType) {
 		// Theory -> see http://junit.sourceforge.net/doc/ReleaseNotes4.4.html Theories section
 		// Arrange
 		val descriptor = new ArgumentDescriptorWithParameter("name", "description", parameterType)
@@ -55,8 +66,10 @@ class ArgumentRegistryTest {
 		assertTrue(true)
 	}
 
-	@Test
-	def void printArgumentHelp() {
+	/**
+	 *  Print the help of the argument registry.
+	 */
+	@Test def void printArgumentHelp() {
 		// Arrange
 		val argumentOne = new ArgumentDescriptorWithoutParameter("f", "sample argument without parameter")
 		val argumentTwo = new ArgumentDescriptorWithParameter("s", "sample argument with string parameter", String)
@@ -83,8 +96,10 @@ class ArgumentRegistryTest {
 		assertTrue(outputStringSplitByLine.forall[expectedLines.contains(it)])
 	}
 
-	@Test
-	def void oneCharacterLongArgumentName() {
+	/**
+	 * Register an argument with a one-character-long shorthand.
+	 */
+	@Test def void oneCharacterLongArgumentName() {
 		// Arrange
 		val oneCharacterArg = new ArgumentDescriptorWithoutParameter("s", "one character long argument without parameter")
 		val outputStream = new ByteArrayOutputStream
@@ -103,8 +118,10 @@ class ArgumentRegistryTest {
 		assertTrue(outputString.contains(expectedLine))
 	}
 
-	@Test
-	def void moreThanOneCharacterLongArgumentName() {
+	/**
+	 * Register an argument with a two-character-long shorthand.
+	 */
+	@Test def void moreThanOneCharacterLongArgumentName() {
 		// Arrange
 		val twoCharactersArg = new ArgumentDescriptorWithoutParameter("tw", "two characters long argument without parameter")
 		val outputStream = new ByteArrayOutputStream
@@ -126,8 +143,7 @@ class ArgumentRegistryTest {
 	/**
 	 * Parses the String[] array that contains the arguments which were set by the user.
 	 */
-	@Test
-	def void parseArgumentsTest() {
+	@Test def void parseArgumentsTest() {
 		// Arrange
 		val firstArgument = new ArgumentDescriptorWithParameter("f", "first argument with one parameter", String)
 		val secondArgument = new ArgumentDescriptorWithoutParameter("se", "second argument without parameter")
@@ -142,7 +158,10 @@ class ArgumentRegistryTest {
 		assertTrue(true)
 	}
 
-	@Test(expected=OptionException)
+	/**
+	 * Invoke the argument registry with an unregistered argument.
+	 */
+	@Test(expected=OptionException) 
 	def void parseArgumentsWithUnexpectedArgumentTest() {
 		// Arrange
 		// contains an unexpected argument, because no argument is registered in the registry
@@ -152,7 +171,10 @@ class ArgumentRegistryTest {
 		registry.parseArguments(argumentsSetByCommandLine)
 	}
 
-	@Test(expected=OptionException)
+	/**
+	 * Invoke the argument registry without setting a mandatory parameter.
+	 */
+	@Test(expected=OptionException) 
 	def void parseArgumentsArgumentMissingParameter() {
 		// Arrange
 		val argument = new ArgumentDescriptorWithParameter("a", "argument with parameter", String)
@@ -163,8 +185,10 @@ class ArgumentRegistryTest {
 		registry.parseArguments(argumentsSetByCommandLine)
 	}
 
-	@Test
-	def void requiredArgumentsAreSetByUser() {
+	/**
+	 * Verify that all the mandatory parameters are set by the user.
+	 */
+	@Test def void requiredArgumentsAreSetByUser() {
 		// Arrange
 		val firstArgument = new ArgumentDescriptorWithParameter("f", "first argument with one parameter", String)
 		val secondArgument = new ArgumentDescriptorWithoutParameter("se", "second argument without parameter")
@@ -181,8 +205,10 @@ class ArgumentRegistryTest {
 		assertTrue(requiredArgumentsAreSetByTheUser)
 	}
 
-	@Test
-	def void noMandatoryArgumentIsSetByUser() {
+	/**
+	 * Invoke the argument registry without setting a mandatory parameter.
+	 */
+	@Test def void noMandatoryArgumentIsSetByUser() {
 		// Arrange
 		val firstArgument = new ArgumentDescriptorWithParameter("m", "mandatory argument with one parameter", String)
 		val mandatoryArgument = new HashSet<String>(Arrays.asList("m"))
@@ -197,8 +223,10 @@ class ArgumentRegistryTest {
 		assertFalse(requiredArgumentsAreSetByTheUser)
 	}
 
-	@Test
-	def void mandatoryArgumentIsNotSetByUser() {
+	/**
+	 * Invoke the argument registry without setting a mandatory parameter.
+	 */
+	@Test def void mandatoryArgumentIsNotSetByUser() {
 		// Arrange
 		val firstArgument = new ArgumentDescriptorWithParameter("f", "first argument with one parameter", String)
 		val secondArgument = new ArgumentDescriptorWithoutParameter("se", "second argument without parameter")
@@ -215,8 +243,10 @@ class ArgumentRegistryTest {
 		assertFalse(requiredArgumentsAreSetByTheUser)
 	}
 
-	@Test
-	def void getStringArgumentParameterValue() {
+	/**
+	 * Get the value of a String parameter.
+	 */
+	@Test def void getStringArgumentParameterValue() {
 		// Arrange
 		val argumentName = "a"
 		val argument = new ArgumentDescriptorWithParameter(argumentName, "argument with string parameter", String)
@@ -232,8 +262,10 @@ class ArgumentRegistryTest {
 		assertEquals(expectedParameterValue, parameterValue)
 	}
 
-	@Test
-	def void getIntegerArgumentParameterValue() {
+	/**
+	 * Get the value of an Integer parameter.
+	 */
+	@Test def void getIntegerArgumentParameterValue() {
 		// Arrange
 		val argumentName = "a"
 		val argument = new ArgumentDescriptorWithParameter(argumentName, "argument with integer parameter", Integer)
@@ -249,6 +281,9 @@ class ArgumentRegistryTest {
 		assertEquals(Integer.valueOf(expectedParameterValue), parameterValue)
 	}
 
+	/**
+	 * Try to get an Integer parameter as String.
+	 */
 	@Test(expected=IllegalArgumentException)
 	def void getIntegerParameterAsString() {
 		// Arrange
@@ -262,9 +297,12 @@ class ArgumentRegistryTest {
 		registry.parseArguments(argumentSetByCommandLine)
 		registry.getParameterStringValue(argumentName)
 	}
-
+	
+	/**
+	 * Try to get a String parameter as Integer.
+	 */
 	@Test(expected=IllegalArgumentException)
-	def void getStringParameterAsString() {
+	def void getStringParameterAsInteger() {
 		// Arrange
 		val argumentName = "a"
 		val argument = new ArgumentDescriptorWithParameter(argumentName, "argument with string parameter", String)

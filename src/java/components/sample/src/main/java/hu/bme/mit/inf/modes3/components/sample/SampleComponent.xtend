@@ -6,6 +6,11 @@ import java.util.concurrent.ConcurrentHashMap
 import org.eclipse.xtend.lib.annotations.Accessors
 import hu.bme.mit.inf.modes3.components.sample.bridge.ISampleComponentBridge
 
+/**
+ * The sample application.
+ * 
+ * @author benedekh
+ */
 class SampleComponent implements ISampleComponent {
 
 	val ConcurrentHashMap<Integer, ChangeCounter> segmentOccupancyChanges
@@ -16,6 +21,10 @@ class SampleComponent implements ISampleComponent {
 		this.segmentOccupancyChanges = new ConcurrentHashMap
 	}
 
+	/**
+	 * The application counts how many times the occupancy of a segment (section or turnout) has changed.
+	 * If it has changed more than twice then the segment will be disabled. 
+	 */
 	override onSegmentOccupancyChange(int id, SegmentOccupancy oldValue, SegmentOccupancy newValue) {
 		val changeCounter = getNumberOfChanges(id)
 		val changes = changeCounter.increment

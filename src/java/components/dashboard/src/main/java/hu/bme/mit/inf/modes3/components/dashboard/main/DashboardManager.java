@@ -1,6 +1,7 @@
 package hu.bme.mit.inf.modes3.components.dashboard.main;
 
 import java.io.IOException;
+import java.nio.channels.SeekableByteChannel;
 import java.util.Set;
 
 import org.atmosphere.container.Jetty9AsyncSupportWithWebSocket;
@@ -28,8 +29,17 @@ import hu.bme.mit.inf.modes3.messaging.mms.MessagingService;
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter;
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry;
 
+/**
+ * The entry class of the Dashboard application. 
+ * The application provides a website where the user can supervise and control the railway track.
+ * 
+ * @author zsoltmazlo
+ */
 public class DashboardManager {
 
+	/**
+	 *  the one and only instance of the class
+	 */
 	public static final DashboardManager INSTANCE = new DashboardManager();
 
 	private Server server;
@@ -49,6 +59,10 @@ public class DashboardManager {
 		server = new Server();
 	}
 
+	/**
+	 * The application initializes and starts itself based on the command-line arguments.
+	 * @param args command-line arguments
+	 */
 	public static void main(String[] args) {
 		loggerFactory = new SimpleLoggerFactory();
 		logger = loggerFactory.getLogger(DashboardManager.class.getName());
@@ -65,6 +79,10 @@ public class DashboardManager {
 		}
 	}
 
+	/**
+	 * The initialization method of the application.
+	 * @throws IOException {@link SensorsMessagingServiceFactory#createMQTTStackWithJSON(hu.bme.mit.inf.modes3.components.dashboard.comm.ArgumentRegistry, org.slf4j.ILoggerFactory, String)}
+	 */
 	public void initialize() throws IOException {
 		Set<String> topics = createTopics(true);
 		trackMessagingService = MessagingServiceFactory.createStackForTopics(registry, loggerFactory, topics);
@@ -77,6 +95,10 @@ public class DashboardManager {
 		sensorsDispatcher = (SensorsJsonDispatcher) sensorsMessagingService.getDispatcher();
 	}
 
+	/**
+	 * Util method to parse the command-line arguments
+	 * @param args the command-line arguments
+	 */
 	public void parseArguments(String[] args) {
 		registry = new ArgumentRegistry(loggerFactory);
 		registry.registerArgumentWithOptions(new ArgumentDescriptorWithParameter<String>("address",
@@ -87,6 +109,10 @@ public class DashboardManager {
 		registry.parseArguments(args);
 	}
 
+	/**
+	 * Starts the web server of the application.
+	 * @throws Exception {@link ServerConnector#start()}
+	 */
 	public void startJetty() throws Exception {
 		ServerConnector http = new ServerConnector(server, new HttpConnectionFactory());
 		http.setPort(8080);
@@ -119,15 +145,24 @@ public class DashboardManager {
 		server.join();
 	}
 
+	/**
+	 * @return the logger factory
+	 */
 	public SimpleLoggerFactory getLoggerFactory() {
 		return loggerFactory;
 		
 	}
 
+	/**
+	 * @return the high-level communication service of the railway track
+	 */
 	public TrackCommunicationServiceLocator getLocator() {
 		return locator;
 	}
 
+	/**
+	 * @return the sensors message dispatcher
+	 */
 	public SensorsJsonDispatcher getSensorsDispatcher() {
 		return sensorsDispatcher;
 	}

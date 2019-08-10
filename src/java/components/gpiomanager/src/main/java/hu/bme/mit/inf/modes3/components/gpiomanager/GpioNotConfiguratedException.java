@@ -6,7 +6,8 @@
 package hu.bme.mit.inf.modes3.components.gpiomanager;
 
 /**
- *
+ * The GPIO port was not found or configured exception. 
+ * 
  * @author zsoltmazlo
  */
 public class GpioNotConfiguratedException extends Exception {

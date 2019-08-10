@@ -25,6 +25,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The system-level safety logic application.
+ * 
+ * @author baloghlaszlo, benedekh
+ */
 class SafetyLogic implements INotifiable, ISafetyLogic {
 
 	val boolean initializeRailRoad
@@ -44,7 +49,12 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 	var List<ITrainStopStrategy> trainStopStrategies
 
 	var ISafetyLogicBridge safetyLogicBridge
-
+	
+	/**
+	 * @param factory the logger factory
+	 * @param initializeRailRoad if the railroad should be initialized
+	 * @param useComputerVision if true the CV, otherwise the API of the model-railway track will be used will be used as source for information 
+	 */
 	new(ILoggerFactory factory, boolean initializeRailRoad, boolean useComputerVision) {
 		this.factory = factory
 		this.logger = factory.getLogger(this.class.name)
@@ -146,7 +156,10 @@ class SafetyLogic implements INotifiable, ISafetyLogic {
 
 	}
 
-	def public void refreshSafetyLogicState() {
+	/**
+	 * Refreshes the safety logic's view of the railroad track.
+	 */
+	def void refreshSafetyLogicState() {
 		logger.info('''Refreshing state: #of trains «model.trains.size», #of trailings «model.trailings.size», #of hits «model.hits.size»''')
 		logger.info('''Trains «FOR train : model.trains.filter[currentlyOn !== null]»{ID=«train.id» NAME=«LocomotivesConfiguration::INSTANCE.getLocomotiveNameById(train.id)» ON=«train.currentlyOn.id» PREV=«if(train.previouslyOn === null) "UNDEF" else train.previouslyOn.id»}«ENDFOR»''')
 

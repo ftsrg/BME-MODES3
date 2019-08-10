@@ -29,12 +29,31 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TwoDPosition
 import java.util.Map
 
+/**
+ * Converts the messages between general representation (that is used by 
+ * the applications which are built on the communication layer) and the
+ * protobuf specific representation.
+ * 
+ * @author benedekh
+ */
 class InternalToProtobufConverter {
-
+	
+	/**
+	 * Converts a message from general representation to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def Message convertToProtobufMessage(Object message) {
 		internalConvertMessageToRaw(message as InternalMessage)
 	}
 
+	/**
+	 * Converts a {@link SegmentCommand} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(SegmentCommand message) {
 		(Message.newBuilder => [
 			type = MessageType.SEGMENT_COMMAND;
@@ -45,6 +64,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link SegmentStateMessage} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(SegmentStateMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.SEGMENT_STATE;
@@ -55,6 +80,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link TrainReferenceSpeedMessage} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(TrainReferenceSpeedMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.TRAIN_REFERENCE_SPEED;
@@ -66,6 +97,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link TrainReferenceSpeedCommand} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(TrainReferenceSpeedCommand message) {
 		(Message.newBuilder => [
 			type = MessageType.TRAIN_REFERENCE_SPEED_COMMAND;
@@ -78,6 +115,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link TurnoutCommand} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(TurnoutCommand message) {
 		(Message.newBuilder => [
 			type = MessageType.TURNOUT_COMMAND;
@@ -88,6 +131,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link TurnoutReferenceStateMessage} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(TurnoutReferenceStateMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.TURNOUT_REFERENCE_STATE;
@@ -98,6 +147,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link TurnoutStateMessage} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(TurnoutStateMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.TURNOUT_STATE;
@@ -108,6 +163,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link SegmentOccupancyMessage} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(SegmentOccupancyMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.SEGMENT_OCCUPANCY;
@@ -118,6 +179,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link ComputerVisionObjectPositionsMessage} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(ComputerVisionObjectPositionsMessage message) {
 		val Map<String, PhysicalObject> physicalObjects = message.physicalObjects.mapValues [ physicalObjectEntry |
 			val markers = physicalObjectEntry.markers.mapValues [ markersEntry |
@@ -156,6 +223,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link DccOperationsStateMessage} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(DccOperationsStateMessage message) {
 		(Message.newBuilder => [
 			type = MessageType.DCC_OPERATIONS_STATE;
@@ -165,6 +238,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link DccOperationsCommand} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(DccOperationsCommand message) {
 		(Message.newBuilder => [
 			type = MessageType.DCC_OPERATIONS_COMMAND;
@@ -174,6 +253,12 @@ class InternalToProtobufConverter {
 		]).build
 	}
 
+	/**
+	 * Converts a {@link SendAllStatusCommand} message to protobuf.
+	 * 
+	 * @param message to be converted to protobuf
+	 * @return the message converted to protobuf
+	 */
 	def dispatch Message internalConvertMessageToRaw(SendAllStatusCommand message) {
 		(Message.newBuilder => [
 			type = MessageType.SEND_ALL_STATUS;

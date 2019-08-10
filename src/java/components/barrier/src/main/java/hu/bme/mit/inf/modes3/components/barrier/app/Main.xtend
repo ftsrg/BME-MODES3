@@ -10,7 +10,19 @@ import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentDescriptorWithParameter
 import hu.bme.mit.inf.modes3.utils.common.jopt.ArgumentRegistry
 import org.slf4j.impl.SimpleLoggerFactory
 
+/**
+ * The entry class of the Barrier application.
+ * The application supervises the occupancies of the segments that are next to the barrier. Based on the occupancies it sends a 
+ * command to the barrier to open / close itself.
+ * 
+ * @author benedekh
+ */
 class Main {
+	
+	/**
+	 * The application initializes and starts itself based on the command-line arguments.
+	 * @param args command-line arguments
+	 */
 	def static void main(String[] args) {
 		val loggerFactory = new SimpleLoggerFactory
 

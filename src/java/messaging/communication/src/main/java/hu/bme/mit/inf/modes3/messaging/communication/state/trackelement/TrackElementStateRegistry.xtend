@@ -20,6 +20,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * An in-memory cache that notifies the listeners if the track elemnt's (section or turnout = segment)
+ * state or occupancy has changed.
+ * 
+ * @author benedekh
+ */
 class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	val segments = new ConcurrentHashMap<Integer, SegmentState>
 	val turnouts = new ConcurrentHashMap<Integer, TurnoutState>
@@ -30,6 +36,10 @@ class TrackElementStateRegistry implements ITrackElementStateRegistry {
 	@Accessors(#[PROTECTED_GETTER]) val segmentOccupancyChangeListeners = new HashSet<ISegmentOccupancyChangeListener>
 	@Accessors(#[PROTECTED_GETTER]) val ITrackElementStateCallback trackElementStateCallback
 
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 * @param factory the logger factory
+	 */
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 		trackElementStateCallback = new TrackElementStateCallback(dispatcher)

@@ -10,10 +10,20 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
+/**
+ * The bridge between the track element controller application and the communication network.
+ * 
+ * @author benedekh
+ */
 class TrackElementControllerBridge extends AbstractCommunicationComponent implements ISendAllStatusListener, ISegmentCommandListener, ITurnoutCommandListener, ITrackElementControllerBridge {
 
 	val ITrackElementController trackElementController
 
+	/**
+	 * @param trackElementController the track element controller application
+	 * @param messagingService the messaging service to the railway track
+	 * @param factory the logger factory
+	 */
 	new(ITrackElementController trackElementController, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.trackElementController = trackElementController

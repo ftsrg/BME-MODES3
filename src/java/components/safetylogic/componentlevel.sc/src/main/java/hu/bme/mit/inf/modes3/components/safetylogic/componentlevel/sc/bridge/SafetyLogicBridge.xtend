@@ -11,12 +11,24 @@ import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 
+/**
+ * The bridge between the component-level safety logic application and the communication network.
+ * 
+ * @author benedekh
+ */
 class SafetyLogicBridge extends AbstractCommunicationComponent implements ISafetyLogicBridge {
 
 	val ISafetyLogic safetyLogic
 	@Accessors(PUBLIC_GETTER) val IYakinduProtocolDispatcher yakinduProtocolDispatcher
 	val IYakinduMessageSender yakinduMessageSender
 
+	/**
+	 * @param safetyLogic the component-level safety logic
+	 * @param railwayTrackStack the messaging service to the railroad track
+	 * @param yakinduStack the messaging service to the yakindu statecharts
+	 * @param protocolDispatcher the dispatcher of the yakindu messages
+	 * @param factory the logger factory
+	 */
 	new(ISafetyLogic safetyLogic, MessagingService railwayTrackStack, MessagingService yakinduStack, IYakinduProtocolDispatcher protocolDispatcher, ILoggerFactory factory) {
 		super(railwayTrackStack, factory)
 		this.yakinduProtocolDispatcher = protocolDispatcher

@@ -12,13 +12,23 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+
+/**
+ * A commander that sends the track element commands (section or turnout = segment) to the railway track.
+ * 
+ * @author benedekh
+ */
 class TrackElementCommander implements ITrackElementCommander {
 
 	private static val SEGMENT_ID_TO_TURNOUT_ID_MAPPING = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
 
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	var protected MessagingService mms
-
+	
+	/**
+	 * @param mms the messaging service to the track
+	 * @param factory the logger factory
+	 */
 	new(MessagingService mms, ILoggerFactory factory) {
 		this.mms = mms
 		this.logger = factory.getLogger(this.class.name)
@@ -29,17 +39,11 @@ class TrackElementCommander implements ITrackElementCommander {
 		logger.debug('''SegmentCommand message sent with id=«id» state=«state»''')
 	}
 
-	/**
-	 * Send a command to a turnout, denoted by its ID.
-	 */
 	override sendTurnoutCommandWithTurnoutId(int id, TurnoutState state) {
 		mms.sendMessage(new TurnoutCommand(id, state))
 		logger.debug('''TurnoutCommand message sent with id=«id»(=T«(id)») state=«state»''')
 	}
 
-	/**
-	 * Send a command to a turnout, denoted by its segment ID. (The ID of the segment which indicates the turnout's occupancy.)
-	 */
 	override sendTurnoutCommand(int segmentId, TurnoutState state) {
 		val turnoutId = SEGMENT_ID_TO_TURNOUT_ID_MAPPING.get(segmentId)
 		mms.sendMessage(new TurnoutCommand(turnoutId, state))

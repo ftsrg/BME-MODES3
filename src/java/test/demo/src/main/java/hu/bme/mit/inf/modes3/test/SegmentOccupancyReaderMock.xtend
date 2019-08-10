@@ -9,17 +9,31 @@ import org.eclipse.emf.common.notify.Notification
 import org.eclipse.emf.ecore.util.EContentAdapter
 import org.slf4j.ILoggerFactory
 
+/**
+ * A show-case (demo) to show how the model-based simulation of the track works.
+ * Simulates the behavior of segments becoming occupied and free.
+ * 
+ * @author baloghlaszlo
+ */
 class SegmentOccupancyReaderMock extends AbstractCommunicationComponent {
 
 	val RailRoadModel model
 	val isOccupied = new HashMap<Integer, Boolean>
 
+	/**
+	 * @param messagingService the messaging service to the railway track
+	 * @param model the model of the model railway track
+	 * @param factory the logger factory
+	 */
 	new(MessagingService messagingService, RailRoadModel model, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.model = model
 		model.sections.forEach[isOccupied.put(it.id, false)]
 	}
 
+	/**
+	 * Simulates the behavior of segments becoming occupied and free.
+	 */
 	override run() {
 		model.eAdapters.add(new EContentAdapter() {
 
@@ -30,7 +44,10 @@ class SegmentOccupancyReaderMock extends AbstractCommunicationComponent {
 		})
 		model.eSetDeliver(true)
 	}
-
+	
+	/**
+	 * Simulates the behavior of segments becoming occupied and free.
+	 */
 	def update() {
 		synchronized (model) {
 			val occupiedSections = model.trains.map[it.currentlyOn.id]

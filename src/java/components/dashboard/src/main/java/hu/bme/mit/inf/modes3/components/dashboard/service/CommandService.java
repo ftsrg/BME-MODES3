@@ -25,6 +25,11 @@ import hu.bme.mit.inf.modes3.messaging.proto.messages.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed;
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TurnoutState;
 
+/**
+ * A handler for the command messages that should be sent to the elements of the railway track.
+ * 
+ * @author zsoltmazlo
+ */
 @Singleton
 @ManagedService(path = "/ws/command/{target}")
 public class CommandService {
@@ -53,6 +58,9 @@ public class CommandService {
 	@PathParam("target")
 	protected String target;
 
+	/**
+	 * Sends the a command to the corresponding track element, based on {@link target}.
+	 */
 	@Message
 	public void onMessage(String message) {
 		try {

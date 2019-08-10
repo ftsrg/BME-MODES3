@@ -6,5 +6,6 @@ package modes3.protobuf;
 option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
+/* Every recipient should send status information about everything it controls or knows about. */
 message SendAllStatus {
 }

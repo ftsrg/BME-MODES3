@@ -32,6 +32,11 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TrainDirection;
 import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState;
 
+/**
+ * A universal state change handler of the railway track elements.
+ * 
+ * @author zsoltmazlo
+ */
 @Singleton
 @ManagedService(path = "/ws/state/{source}")
 public class StateChangeService implements ISegmentOccupancyChangeListener, ITurnoutStateChangeListener,
@@ -90,6 +95,11 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 				.forEach(cvInfo -> Utils.sendComputerVisionState(metaBroadcaster, cvInfo));
 	}
 
+	/**
+	 * An event listener for a speed sensor message.
+	 * 
+	 * @param message from the speed sensor
+	 */
 	public void onSpeedSensorMessage(SpeedSensorMessage message) {
 		SensorDataMessage m = sensorDataMessages.get(message.getSender());
 		if (m != null) {
@@ -98,6 +108,11 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		}
 	}
 
+	/**
+	 * An event listener for a length sensor message.
+	 * 
+	 * @param message from the length sensor
+	 */
 	public void onLengthSensorMessage(LengthSensorMessage message) {
 		SensorDataMessage m = sensorDataMessages.get(message.getSender());
 		if (m != null) {
@@ -106,6 +121,11 @@ public class StateChangeService implements ISegmentOccupancyChangeListener, ITur
 		}
 	}
 
+	/**
+	 * An event listener for a train sensor message.
+	 * 
+	 * @param message from the train sensor
+	 */
 	public void onTrainSensorMessage(TrainSensorMessage message) {
 		SensorDataMessage m = sensorDataMessages.get(message.getSender());
 		if (m != null) {

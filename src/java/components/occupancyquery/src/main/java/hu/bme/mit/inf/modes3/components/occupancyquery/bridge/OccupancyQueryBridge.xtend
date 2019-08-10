@@ -6,10 +6,20 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
+/**
+ * The bridge between the application and the communication network.
+ * 
+ * @author benedekh
+ */
 class OccupancyQueryBridge extends AbstractCommunicationComponent implements IOccupancyQueryBridge {
 
 	val IOccupancyQuery occupancyQuery
 
+    /**
+     * @param occupancyQuery the occupancy query application
+     * @param messagingService the messaging service to the railway track
+     * @param factory the logger factory
+     */
 	new(IOccupancyQuery occupancyQuery, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.occupancyQuery = occupancyQuery

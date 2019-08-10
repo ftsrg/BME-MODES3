@@ -6,6 +6,7 @@ package modes3.protobuf;
 option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
+/* Operation command that should be executed by the DCC (via XPressNet) protocol. */
 message DccOperationsCommand {
 	DccOperations dccOperations = 1;
 }

@@ -22,6 +22,11 @@ import hu.bme.mit.inf.modes3.messaging.proto.dispatcher.ProtobufEnumTransformato
 import hu.bme.mit.inf.modes3.messaging.proto.messages.ThreeDPosition;
 import hu.bme.mit.inf.modes3.messaging.proto.messages.TwoDPosition;
 
+/**
+ * Utility class to update the website based on based on the model railway track.
+ * 
+ * @author zsoltmazlo
+ */
 public class Utils {
 
 	static Logger logger = DashboardManager.INSTANCE.getLoggerFactory().getLogger("Dashboard Utils");
@@ -32,6 +37,13 @@ public class Utils {
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.TrainReferenceSpeed.Builder trainSpeedBuilder;
 	static hu.bme.mit.inf.modes3.messaging.proto.messages.Marker.Builder cvObjectBuilder;
 
+	/**
+	 * Updates the segment's status on the website.
+	 * 
+	 * @param metaBroadcaster to send the message to the website
+	 * @param id the ID of the segment
+	 * @param state the state of the segment
+	 */
 	public static void sendSegmentStateChange(MetaBroadcaster metaBroadcaster, int id, SegmentState state) {
 
 		if (segmentStateBuilder == null) {
@@ -48,6 +60,13 @@ public class Utils {
 		}
 	}
 
+	/**
+	 * Updates the turnout's status on the website.
+	 * 
+	 * @param metaBroadcaster to send the message to the website
+	 * @param id the ID of the turnout
+	 * @param state the state of the turnout
+	 */
 	public static void sendTurnutStateChange(MetaBroadcaster metaBroadcaster, int id, TurnoutState state) {
 
 		if (turnoutStateBuilder == null) {
@@ -64,6 +83,13 @@ public class Utils {
 		}
 	}
 
+	/**
+	 * Updates the segment's occupancy on the website.
+	 * 
+	 * @param metaBroadcaster to send the message to the website
+	 * @param id the ID of the segment
+	 * @param occupancy the occupancy of the segment
+	 */
 	public static void sendSegmentOccupancyStateChange(MetaBroadcaster metaBroadcaster, int id,
 			SegmentOccupancy occupancy) {
 
@@ -82,6 +108,14 @@ public class Utils {
 
 	}
 
+	/**
+	 * Updates the train's reference speed on the website.
+	 * 
+	 * @param metaBroadcaster to send the message to the website
+	 * @param id the ID of the segment
+	 * @param speed the speed of the train
+	 * @param direction the train's direction of movement
+	 */
 	public static void sendTrainReferenceSpeedChange(MetaBroadcaster metaBroadcaster, int id, int speed,
 			TrainDirection direction) {
 
@@ -107,6 +141,12 @@ public class Utils {
 
 	}
 
+	/**
+	 * Updates the computer vision information on the website.
+	 * 
+	 * @param metaBroadcaster to send the message to the website
+	 * @param info the information from the computer vision module
+	 */
 	public static void sendComputerVisionState(MetaBroadcaster metaBroadcaster, ComputerVisionInformation info) {
 
 		if (cvObjectBuilder == null) {

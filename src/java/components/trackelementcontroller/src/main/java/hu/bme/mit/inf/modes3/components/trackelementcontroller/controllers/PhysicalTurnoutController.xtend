@@ -10,9 +10,25 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The state controller of a turnout.
+ * It can switch the direction of a turnout physically, through GPIO ports. 
+ * 
+ * @author hegyibalint
+ */
 class PhysicalTurnoutController implements InputStateListener {
-
+	
+	/**
+	 * A listener for the change of the turnout state. 
+	 * 
+	 * @author hegyibalint
+	 */
 	public interface ITurnoutStateChangedListener {
+	/**
+	 * Processes the change of the turnout's state.
+	 * 
+	 * @param newState the new state of the turnout
+	 */
 		def void onStateChanged(TurnoutState newState);
 	}
 
@@ -37,6 +53,11 @@ class PhysicalTurnoutController implements InputStateListener {
 
 	String expander
 
+	/**
+	 * @param pinout the interpeter of the pinout configuration
+	 * @param expander the ID of the expander that controls the turnout (physically)
+	 * @param factory the logger factory
+	 */
 	new(ExpanderConfigInterpreter pinout, String expander, ILoggerFactory factory) {
 		this.expander = expander;
 		logger = factory.getLogger(PhysicalTurnoutController.name);
@@ -57,11 +78,19 @@ class PhysicalTurnoutController implements InputStateListener {
 		straightState.addInputStateListener(this);
 		divergentState.addInputStateListener(this);
 	}
-
+	
+	/**
+	 * Sets a turnout state change listener.
+	 * 
+	 * @param listener the listener to be set
+	 */
 	def setTurnoutStateChangedListener(ITurnoutStateChangedListener listener) {
 		this.listener = listener;
 	}
 
+	/**
+	 * @return the recent state (direction) of the turnout
+	 */
 	def getTurnoutState() {
 		if((straightState.level == Level.HIGH) && (divergentState.level == Level.LOW)) {
 			return TurnoutState.STRAIGHT;
@@ -72,6 +101,11 @@ class PhysicalTurnoutController implements InputStateListener {
 		}
 	}
 
+	/**
+	 * Sets the turnout to the given direction (state).
+	 * 
+	 * @param state the state of the turnout to be set for
+	 */
 	def setTurnoutState(TurnoutState state) {
 		try {
 			switch state {

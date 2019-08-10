@@ -14,6 +14,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The track element controller application.
+ * 
+ * @author benedekh
+ */
 class TrackElementController implements ITrackElementController, PhysicalTurnoutController.ITurnoutStateChangedListener {
 
 	private static val GPIO_JSON = '''gpio.json'''
@@ -31,6 +36,10 @@ class TrackElementController implements ITrackElementController, PhysicalTurnout
 	val HashMap<Integer, PhysicalSegmentController> segmentControllers = newHashMap
 	val List<PhysicalTurnoutController> turnoutControllers = newArrayList
 
+	/**
+	 * @param turnoutID the ID of the turnout that is connected to the controller
+	 * @param factory the logger factory
+	 */
 	new(int turnoutID, ILoggerFactory factory) {
 		this.factory = factory
 		logger = factory.getLogger(this.class.name)

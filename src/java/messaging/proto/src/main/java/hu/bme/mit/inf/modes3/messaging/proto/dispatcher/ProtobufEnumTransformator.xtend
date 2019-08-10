@@ -14,14 +14,31 @@ import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+/**
+ * A utility class to transform the enumerations between the transport-layer-specific representation (e.g. protobuf) and
+ * the independent representation that is used by the applications which are built on the communication layer.
+ * 
+ * @author benedekh
+ */
 class ProtobufEnumTransformator {
 
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) static var Logger logger = LoggerFactory.getLogger(ProtobufEnumTransformator.name)
 
+	/**
+	 * Sets the logger factory.
+	 * 
+	 * @param factory the logger factory
+	 */
 	def static setLogger(ILoggerFactory factory) {
 		logger = factory.getLogger(ProtobufEnumTransformator.name)
 	}
 
+	/**
+	 * Converts the {@link SegmentOccupancy} to its corresponding protobuf enum.
+	 * 
+	 * @param state to be converted to protobuf
+	 * @return the value of the enum in protobuf
+	 */
 	def static SegmentOccupancyValue toSpecific(SegmentOccupancy state) {
 		switch (state) {
 			case FREE: SegmentOccupancyValue.FREE
@@ -29,6 +46,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link SegmentState} to its corresponding protobuf enum.
+	 * 
+	 * @param state to be converted to protobuf
+	 * @return the value of the enum in protobuf
+	 */
 	def static SegmentStateValue toSpecific(SegmentState state) {
 		switch (state) {
 			case ENABLED: SegmentStateValue.ENABLED
@@ -36,6 +59,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link TurnoutState} to its corresponding protobuf enum.
+	 * 
+	 * @param state to be converted to protobuf
+	 * @return the value of the enum in protobuf
+	 */
 	def static TurnoutStateValue toSpecific(TurnoutState state) {
 		switch (state) {
 			case DIVERGENT:
@@ -49,6 +78,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link TrainDirection} to its corresponding protobuf enum.
+	 * 
+	 * @param direction to be converted to protobuf
+	 * @return the value of the enum in protobuf
+	 */
 	def static TrainDirectionValue toSpecific(TrainDirection direction) {
 		switch (direction) {
 			case FORWARD: TrainDirectionValue.FORWARD
@@ -56,6 +91,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link DccOperations} to its corresponding protobuf enum.
+	 * 
+	 * @param dccOperations to be converted to protobuf
+	 * @return the value of the enum in protobuf
+	 */
 	def static hu.bme.mit.inf.modes3.messaging.proto.messages.DccOperations toSpecific(DccOperations dccOperations) {
 		switch (dccOperations) {
 			case NORMAL_OPERATIONS: hu.bme.mit.inf.modes3.messaging.proto.messages.DccOperations.NORMAL_OPERATIONS
@@ -64,6 +105,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link SegmentOccupancyValue} to its corresponding general enum.
+	 * 
+	 * @param state to be converted to general enum
+	 * @return the value of the enum in general representation
+	 */
 	def static SegmentOccupancy toGeneral(SegmentOccupancyValue state) {
 		switch (state) {
 			case FREE:
@@ -77,6 +124,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link SegmentStateValue} to its corresponding general enum.
+	 * 
+	 * @param state to be converted to general enum
+	 * @return the value of the enum in general representation
+	 */
 	def static SegmentState toGeneral(SegmentStateValue state) {
 		switch (state) {
 			case ENABLED:
@@ -90,6 +143,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link TurnoutStateValue} to its corresponding general enum.
+	 * 
+	 * @param state to be converted to general enum
+	 * @return the value of the enum in general representation
+	 */
 	def static TurnoutState toGeneral(TurnoutStateValue state) {
 		switch (state) {
 			case DIVERGENT:
@@ -103,6 +162,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link TrainDirectionValue} to its corresponding general enum.
+	 * 
+	 * @param direction to be converted to general enum
+	 * @return the value of the enum in general representation
+	 */
 	def static TrainDirection toGeneral(TrainDirectionValue direction) {
 		switch (direction) {
 			case FORWARD:
@@ -116,6 +181,12 @@ class ProtobufEnumTransformator {
 		}
 	}
 
+	/**
+	 * Converts the {@link hu.bme.mit.inf.modes3.messaging.proto.messages.DccOperations} to its corresponding general enum.
+	 * 
+	 * @param dccOperations to be converted to general enum
+	 * @return the value of the enum in general representation
+	 */
 	def static DccOperations toGeneral(hu.bme.mit.inf.modes3.messaging.proto.messages.DccOperations dccOperations) {
 		switch (dccOperations) {
 			case NORMAL_OPERATIONS:

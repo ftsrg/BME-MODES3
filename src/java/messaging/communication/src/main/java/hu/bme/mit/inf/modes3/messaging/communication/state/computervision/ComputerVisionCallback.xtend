@@ -9,11 +9,20 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Handles the Computer Vision Informations.
+ * 
+ * @author benedekh
+ */
 class ComputerVisionCallback implements IComputerVisionCallback, IComputerVisionListener {
 
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var IComputerVisionListener computerVisionListener
 	Logger logger
 
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 * @param factory the logger factory
+	 */
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 		dispatcher.computerVisionObjectPositionsHandler = new ComputerVisionClient(this)

@@ -6,6 +6,11 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * A handler for the segment events.
+ * 
+ * @author benedekh
+ */
 class SegmentEventHandler {
 
 	static val ENABLED = "enabled"
@@ -17,7 +22,12 @@ class SegmentEventHandler {
 	val int segmentId
 
 	val ITouchboardBridge touchboardBridge
-
+	
+	/**
+	 * @param touchboardBridge the bridge between the application and the communication network
+	 * @param node the UI representation of the segment
+	 * @param loggerFactory the logger factory
+	 */
 	new(ITouchboardBridge touchboardBridge, ThreadSafeNode node, ILoggerFactory loggerFactory) {
 		this.logger = loggerFactory.getLogger(this.class.name)
 		this.node = node
@@ -25,24 +35,39 @@ class SegmentEventHandler {
 		this.touchboardBridge = touchboardBridge
 	}
 
+	/**
+	 * Sets the segment disabled on the UI.
+	 */
 	def synchronized setDisabled() {
 		node.removeCssClass(ENABLED)
 		node.addCssClass(DISABLED)
 	}
 
+	/**
+	 * Sets the segment enabled on the UI.
+	 */
 	def synchronized setEnabled() {
 		node.removeCssClass(DISABLED)
 		node.addCssClass(ENABLED)
 	}
 
+	/**
+	 * Sets the segment occupied on the UI.
+	 */
 	def synchronized setOccupied() {
 		node.addCssClass(OCCUPIED)
 	}
 
-	def  synchronized setFree() {
+	/**
+	 * Sets the segment free on the UI.
+	 */
+	def synchronized setFree() {
 		node.removeCssClass(OCCUPIED)
 	}
 
+	/**
+	 * An event handler if the segment was clicked.
+	 */
 	def void onSegmentClicked() {
 		try {
 			val state = touchboardBridge.getSegmentState(segmentId)
@@ -53,6 +78,9 @@ class SegmentEventHandler {
 		}
 	}
 
+	/**
+	 * An event handler if the segment should be enabled.
+	 */
 	def void onEnableSegment() {
 		try {
 			setSegmentState(SegmentState.ENABLED)
@@ -61,6 +89,9 @@ class SegmentEventHandler {
 		}
 	}
 
+	/**
+	 * An event handler if the segment should be disabled.
+	 */
 	def void onDisableSegment() {
 		try {
 			setSegmentState(SegmentState.DISABLED)

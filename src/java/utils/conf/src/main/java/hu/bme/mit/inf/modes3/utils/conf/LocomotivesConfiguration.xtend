@@ -9,6 +9,11 @@ import org.eclipse.xtend.lib.annotations.Data
 
 import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensions.map
 
+/**
+ * Utility class about the locomotives on the model railway track.
+ * 
+ * @author benedekh
+ */
 class LocomotivesConfiguration {
 
 	@Data
@@ -26,23 +31,40 @@ class LocomotivesConfiguration {
 		lowercaseEveryTrainName
 	}
 
+	/**
+	 * @param name the name of the locomotive
+	 * @return the ID of the locomotive denoted by its name
+	 */
 	def getLocomotiveIdByName(String name) {
 		val lowercased = if(name.isNullOrEmpty) name else name.toLowerCase
 		locomotives.locomotiveIds.get(lowercased)
 	}
 
+	/**
+	 * @param id the ID of the locomotive
+	 * @return the name of the locomotive denoted by its ID
+	 */
 	def getLocomotiveNameById(int id) {
 		locomotives.locomotiveIds.entrySet.findFirst[entry|entry.value === id].key
 	}
 
+	/**
+	 * @return the name of all registered locomotives
+	 */
 	def getLocomotiveNames() {
 		asUnmodifiableSet(locomotives.locomotiveIds.keySet)
 	}
 
+	/**
+	 * @return the ID of all registered locomotives
+	 */
 	def getLocomotiveIds() {
 		asUnmodifiableSet(new HashSet<Integer>(locomotives.locomotiveIds.values))
 	}
 
+	/**
+	 * @return the name and ID of all registered locomotives
+	 */
 	def getLocomotivesWithNameAndId() {
 		asUnmodifiableMap(locomotives.locomotiveIds)
 	}

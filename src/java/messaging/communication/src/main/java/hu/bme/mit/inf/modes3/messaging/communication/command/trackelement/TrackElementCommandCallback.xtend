@@ -10,12 +10,21 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Handles the track element (section or turnout = segment) commands.
+ * 
+ * @author baloghlaszlo
+ */
 class TrackElementCommandCallback implements ITrackElementCommandCallback, ITurnoutCommandListener, ISegmentCommandListener {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ISegmentCommandListener segmentCommandListener
 	@Accessors(#[PROTECTED_GETTER, PUBLIC_SETTER]) var ITurnoutCommandListener turnoutCommandListener
-
+	
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 * @param factory the logger factory
+	 */
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		val segmentCommandClient = new SegmentCommandClient(this)
 		val turnoutCommandClient = new TurnoutCommandClient(this)

@@ -2,6 +2,11 @@ package hu.bme.mit.inf.modes3.components.safetylogic.componentlevel.sc.comparato
 
 import java.util.Comparator
 
+/**
+ * Compares two {@link Object}s by {@link Object#hashCode()}.
+ * 
+ * @author benedekh
+ */
 class HashCodeComparator implements Comparator<Object>{
 
 	override compare(Object o1, Object o2) {

@@ -5,11 +5,20 @@ import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import java.util.Set
 import org.slf4j.ILoggerFactory
 
+/**
+ * A wrapper class for each show-case (demo subapplication).
+ * 
+ * @author benedekh
+ */
 class TestDemo extends AbstractCommunicationComponent {
 
 	val ILoggerFactory factory
 	val Set<AbstractCommunicationComponent> demos
 
+	/**
+	 * @param messagingService the messaging service to the railway track
+	 * @param factory the logger factory
+	 */
 	new(MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.factory = factory
@@ -18,7 +27,9 @@ class TestDemo extends AbstractCommunicationComponent {
 			new hu.bme.mit.inf.modes3.test.demo.TrainsDemo(locator, factory)}
 		}
 
-		// The 'main' method of the sample component
+		/**
+		 * The 'main' method of the sample component
+		 */
 		override run() {
 			demos.forEach[it.run]
 		}

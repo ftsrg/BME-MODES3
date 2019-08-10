@@ -12,11 +12,19 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Forwards the Yakindu messages from the communication network to the statecharts.
+ * 
+ * @author benedekh
+ */
 class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduMessageSender {
 
 	val Logger logger
 	val Map<Integer, Set<PortWithDirection>> segmentsToBeNotified
 
+	/**
+	 * @param factory the logger factory
+	 */
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(class.name)
 		this.segmentsToBeNotified = new ConcurrentHashMap
@@ -24,9 +32,9 @@ class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduM
 
 	override registerSegment(int segmentID, PortWithDirection portToBeNotified) {
 		var Set<PortWithDirection> ports = segmentsToBeNotified.get(segmentID)
-		if(ports === null) {
-			synchronized(this) {
-				if(ports === null) {
+		if (ports === null) {
+			synchronized (this) {
+				if (ports === null) {
 					ports = new ConcurrentSkipListSet
 					segmentsToBeNotified.put(segmentID, ports)
 				}
@@ -57,19 +65,29 @@ class YakinduProtocolDispatcher implements IYakinduProtocolDispatcher, IYakinduM
 
 	private def getTargetPort(int targetID, ConnectionDirection direction) {
 		val targetSegment = segmentsToBeNotified.get(targetID)?.findFirst[it.direction == direction]
-		logger.trace('''Yakindu target port was «IF targetSegment === null»not«ENDIF» found with id=«targetID» direction=«direction»''')
+		logger.
+			trace('''Yakindu target port was «IF targetSegment === null»not«ENDIF» found with id=«targetID» direction=«direction»''')
 		targetSegment?.providedPort
 	}
 }
 
+/**
+ * A port + the connection direction of the statechart.
+ * 
+ * @author benedekh
+ */
 @Data
 class PortWithDirection implements Comparable<PortWithDirection> {
 	ConnectionDirection direction
 	ProtocolInterface.Provided providedPort
 
+	/**
+	 * The comparison is done based on the direction.
+	 * If the direction is the same then the ports will be compared by {@link ProvidedProtocolInterfaceComparator}.  
+	 */
 	override compareTo(PortWithDirection o) {
 		val i = direction.compareTo(o.direction)
-		if(i != 0) {
+		if (i != 0) {
 			return i
 		} else {
 			return (new ProvidedProtocolInterfaceComparator).compare(providedPort, o.providedPort)

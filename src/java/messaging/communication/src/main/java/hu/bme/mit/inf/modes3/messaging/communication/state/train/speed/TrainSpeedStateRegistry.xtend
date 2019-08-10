@@ -14,6 +14,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * An in-memory cache that notifies the listeners if either the speed or the direction of movement
+ * of a train has changed.
+ * 
+ * @author benedekh
+ */
 class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 
@@ -23,6 +29,10 @@ class TrainSpeedStateRegistry implements ITrainSpeedStateRegistry {
 	val speedListeners = new CopyOnWriteArraySet<ITrainSpeedStateListener>
 	val speedChangeListeners = new CopyOnWriteArraySet<ITrainSpeedStateChangeListener>
 
+	/**
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 * @param factory the logger factory
+	 */
 	new(AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 

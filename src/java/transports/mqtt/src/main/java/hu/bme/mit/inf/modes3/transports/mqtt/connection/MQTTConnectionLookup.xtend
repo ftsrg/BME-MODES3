@@ -8,6 +8,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.impl.SimpleLoggerFactory
 
+/**
+ * A lookup-table for the {@link MQTTConnection} based on the transport configuration.
+ * 
+ * @author benedekh
+ */
 class MQTTConnectionLookup {
 
 	@Accessors(#[PRIVATE_SETTER, PUBLIC_GETTER]) static val MQTTConnectionLookup INSTANCE = new MQTTConnectionLookup
@@ -23,6 +28,10 @@ class MQTTConnectionLookup {
 		this.id = UUID.randomUUID.toString
 	}
 
+	/**
+	 * @param configuration the configuration parameters of the transport layer
+	 * @return the {@link MQTTConnection} that corresponds to the transport configuration
+	 */
 	def MQTTConnection getConnection(TransportConfiguration configuration) {
 		val simplifiedConfiguration = createSimplifiedConfiguration(configuration)
 

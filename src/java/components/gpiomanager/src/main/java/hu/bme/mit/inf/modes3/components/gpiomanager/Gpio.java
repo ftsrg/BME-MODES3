@@ -18,21 +18,34 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * A GPIO port of a microcontroller.
  *
  * @author zsoltmazlo
  */
 public final class Gpio {
 
+	// the level of the GPIO port
 	public enum Level {
 		LOW, HIGH
 	}
 
+	// the operation direction of the GPIO port
 	public enum Direction {
 		OUT, IN
 	}
 
+	/**
+	 * A listener for the changes of the GPIO port.
+	 * 
+	 * @author zsoltmazlo
+	 */
 	public interface InputStateListener {
 
+		/**
+		 * Event handler that will be invoked, if the level of the GPIO port has changed.
+		 * 
+		 * @param newLevel the new level of the GPIO port
+		 */
 		public void levelStateChanged(Level newLevel);
 
 	}
@@ -57,7 +70,12 @@ public final class Gpio {
 
 	private TimerTask _inputListenerTask;
 
-	public Gpio(int pin, Direction direction) throws IOException, GpioNotConfiguratedException {
+	/**
+	 * @param pin the identifier of the GPIO port
+	 * @param direction the initial direction of the port
+	 * @throws IOException {@link #executeCommand(String, String)}, {@link #setupInputChangeListening()}, {@link #setLevel(Level)}
+	 */
+	public Gpio(int pin, Direction direction) throws IOException {
 		this._pin = pin;
 		this._direction = direction;
 
@@ -105,6 +123,12 @@ public final class Gpio {
 
 	}
 
+	/**
+	 * Sets the level of the GPIO port.
+	 * 
+	 * @param level the level to be set for the GPIO
+	 * @throws IOException {@link #executeCommand(String, String)}
+	 */
 	public final void setLevel(Level level) throws IOException {
 		try {
 			executeCommand(level == Level.HIGH ? "1" : "0", _gpioFolder + "value");
@@ -115,10 +139,18 @@ public final class Gpio {
 		}
 	}
 
+	/**
+	 * @return the level of the GPIO port
+	 */
 	public final Level getLevel() {
 		return _level;
 	}
 
+	/**
+	 * Inverts the level of the GPIO port.
+	 * 
+	 * @throws IOException {@link #setLevel(Level)}
+	 */
 	public final void invertLevel() throws IOException {
 		if (_level == Level.HIGH) {
 			setLevel(Level.LOW);
@@ -127,6 +159,14 @@ public final class Gpio {
 		}
 	}
 
+	/**
+	 * Creates an impulse on the GPIO port with a given amount of length in time.
+	 * 
+	 * @param milliseconds the length of the impulse
+	 * @param nonBlocking if the impulse should be created in an asynchronous way
+	 * @throws InterruptedException {@link Thread#sleep(long)}
+	 * @throws IOException {@link #invertLevel()}
+	 */
 	public final void impulse(int milliseconds, boolean nonBlocking) throws InterruptedException, IOException {
 		if (nonBlocking) {
 			Thread impulse = new Thread(() -> {
@@ -147,10 +187,20 @@ public final class Gpio {
 		}
 	}
 
+	/**
+	 * Registers the listener for the input state change event.
+	 * 
+	 * @param listener the listener to be registered for the event 
+	 */
 	public final void addInputStateListener(InputStateListener listener) {
 		this.listeners.add(listener);
 	}
 
+	/**
+	 * Deregisters the listener for the input state change event.
+	 * 
+	 * @param listener the listener to be deregistered for the even
+	 */
 	public final void removeInputStateListener(InputStateListener listener) {
 		this.listeners.remove(listener);
 	}
@@ -167,6 +217,10 @@ public final class Gpio {
 
 	private class InputStateChangeListenerTask extends TimerTask {
 
+		/**
+		 * Continuously checks the level of the GPIO port and triggers the input state change event if
+		 * it has changed.
+		 */
 		@Override
 		public void run() {
 			try {
@@ -209,7 +263,12 @@ public final class Gpio {
 		}
 	}
 
-	public final void cleanup() throws IOException, InterruptedException {
+	/**
+	 * Release the used resources.
+	 * 
+	 * @throws IOException {@link #executeCommand(String, String)}
+	 */
+	public final void cleanup() throws IOException {
 		// unexport gpio pin
 		try {
 			if (_isInputListenerRunning) {

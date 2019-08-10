@@ -4,6 +4,7 @@ package modes3.protobuf;
 option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
+/* Position information about physical objects on the track. The information is originates from CV. */
 
 message ComputerVisionObjectPositions{
 	map<string , PhysicalObject> physicalObjects = 1;

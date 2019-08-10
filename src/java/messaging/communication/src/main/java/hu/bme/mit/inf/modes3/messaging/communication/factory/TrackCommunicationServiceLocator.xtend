@@ -23,6 +23,13 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The high-level communication service of the railway track.
+ * It has every commander and state sender registered that are used to control the model railway track.
+ * It is also possible to register for the messages that are sent to and from the railway track.
+ * 
+ * @author baloghlaszlo, benedekh
+ */
 class TrackCommunicationServiceLocator {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger

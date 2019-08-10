@@ -10,6 +10,12 @@ import java.util.concurrent.LinkedBlockingQueue
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * A synchronized list based in-memory topic-based transport layer that maintains the connections within the same JVM.
+ * Recommended to be used in tests to remove the dependency of an acutal physical transport layer. 
+ * 
+ * @author benedekh
+ */
 class TopicBasedLocalTransport extends TopicBasedTransport {
 
 	static val Map<String, Set<TopicBasedLocalTransport>> subscribersByTopic = Collections.synchronizedMap(newHashMap)

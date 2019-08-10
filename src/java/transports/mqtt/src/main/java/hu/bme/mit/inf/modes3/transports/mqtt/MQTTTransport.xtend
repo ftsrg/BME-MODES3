@@ -8,12 +8,21 @@ import java.util.concurrent.LinkedBlockingQueue
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * A transport layer based on MQTT.
+ * 
+ * @author benedekh
+ */
 class MQTTTransport extends TopicBasedTransport {
 
 	val Logger logger
 	val MQTTConnection connection
 	var LinkedBlockingQueue<byte[]> messages
 	
+	/**
+	 * @param config the configuration parameters of the transport layer
+	 * @param loggerFactory the logger factory
+	 */
 	new(TopicBasedTransportConfiguration config, ILoggerFactory loggerFactory) {
 		super(config)
 		this.logger = loggerFactory.getLogger(this.class.name)

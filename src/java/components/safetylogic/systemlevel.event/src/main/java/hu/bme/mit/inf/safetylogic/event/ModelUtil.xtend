@@ -27,6 +27,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * The model manager.
+ * 
+ * @author baloghlaszlo
+ */
 class ModelUtil implements IModelInteractor {
 	@Accessors(PUBLIC_GETTER) val Resource resource
 	@Accessors(PUBLIC_GETTER) val ResourceSet resourceSet;
@@ -36,7 +41,10 @@ class ModelUtil implements IModelInteractor {
 	val trainNameMapping = (new ImmutableBiMap.Builder<String, Integer> => [
 		putAll(LocomotivesConfiguration.INSTANCE.locomotivesWithNameAndId)
 	]).build
-
+	
+	/**
+	 * @param factory the logger factory
+	 */
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger('ModelUtil')
 		resourceSet = new ResourceSetImpl
@@ -79,7 +87,7 @@ class ModelUtil implements IModelInteractor {
 		throw new RuntimeException("There can't be this much trains on the track")
 	}
 
-	def override removeTrain(Train t) {
+	override removeTrain(Train t) {
 		synchronized (model) {
 			model.trains.remove(t)
 		}
@@ -112,7 +120,12 @@ class ModelUtil implements IModelInteractor {
 		res.load(model, null)
 		res
 	}
-
+	
+	/**
+	 * Loads the model from the file system.
+	 * 
+	 * @return the model that was loaded
+	 */
 	def loadModel() {
 		val resource = loadSectionResource
 		ModelUtil.createAllPaths(resource)
@@ -140,7 +153,11 @@ class ModelUtil implements IModelInteractor {
 
 		return modelResource
 	}
-
+	
+	/**
+	 * @param resource the resource to load the model from
+	 * @return the first element of the resource as a railroad model
+	 */
 	def static getModelFromResource(Resource resource) {
 		resource.contents.head as RailRoadModel
 	}

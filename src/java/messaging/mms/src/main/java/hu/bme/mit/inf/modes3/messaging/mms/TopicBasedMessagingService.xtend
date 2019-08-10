@@ -15,12 +15,25 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/** 
+ * A class that connects the transport layer with the dispatcher that dispatches the messages transferred over the transport layer.
+ * The messaging service can also send a message through the transport layer.
+ * 
+ * The class is specialized for topic based transport layers.
+ *
+ * @author benedekh 
+ **/
 class TopicBasedMessagingService extends MessagingService {
 
 	@Accessors(PROTECTED_GETTER, PRIVATE_SETTER) val Logger logger
 	val Set<TopicBasedTransport> transports
 	val Set<String> topics
 
+	/**
+	 * @param transport the transport layer
+	 * @param dispatcher a dispatcher that dispatches the messages
+	 * @param factory the logger factory
+	 */
 	new(TopicBasedTransport transport, AbstractMessageDispatcher dispatcher, ILoggerFactory factory) {
 		super(transport, dispatcher, factory)
 		this.logger = factory.getLogger(this.class.name)
@@ -28,7 +41,11 @@ class TopicBasedMessagingService extends MessagingService {
 		this.transports = newHashSet
 		addTransport(transport)
 	}
-
+	
+	/**
+	 * Adds a new transport layer, so that messages will be also received through this transport.
+	 * @param transport the transport layer to be added
+	 */
 	def addTransport(TopicBasedTransport transport) {
 		transports.add(transport)
 		topics.add(transport.topic)
@@ -97,6 +114,13 @@ class TopicBasedMessagingService extends MessagingService {
 		}
 	}
 
+	/**
+	 * Sends a message for a topic on the transport layer.
+	 * The message will be serialized by the dispatcher that is used by the messaging service.
+	 * 
+	 * @param topic the topic to send the message for
+	 * @param message to be sent serialized and sent over the transport layer
+	 */
 	def sendMessage(String topic, Object message) throws IllegalArgumentException {
 		val rawMessage = dispatcher.convertMessageToRaw(message)
 		val transportsWithTopic = transports.filter[it.topic == topic]

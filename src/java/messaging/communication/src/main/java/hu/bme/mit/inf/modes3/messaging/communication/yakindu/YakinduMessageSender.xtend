@@ -9,6 +9,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * Sends the state machine specific Yakindu messages.
+ * 
+ * @author benedekh
+ */
 class YakinduMessageSender implements IYakinduMessageSender {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	var protected MessagingService mms

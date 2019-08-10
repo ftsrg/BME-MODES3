@@ -4,9 +4,17 @@ import hu.bme.mit.inf.modes3.messaging.communication.state.trackelement.referenc
 import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutReferenceStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 
+/**
+ * Forwards the {@link TurnoutReferenceStateMessage} message to the corresponding callback.
+ * 
+ * @author benedekh
+ */
 package class TurnoutReferenceStateClient implements IMessageHandler<TurnoutReferenceStateMessage> {
 	private var ITurnoutReferenceStateListener callback
 
+	/**
+	 * @param controller the callback for the turnout reference state
+	 */
 	new(ITurnoutReferenceStateListener controller) {
 		callback = controller
 	}

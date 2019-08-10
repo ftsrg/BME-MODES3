@@ -16,8 +16,17 @@ import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import org.slf4j.impl.SimpleLogger
 import org.slf4j.impl.SimpleLoggerFactory
 
+/**
+ * The entry class of the compnent-level safety logic application.
+ * 
+ * @author benedekh
+ */
 class Main {
-
+	
+	/**
+	 * The application initializes and starts itself based on the command-line arguments.
+	 * @param args command-line arguments
+	 */
 	def static void main(String[] args) {
 		System.setProperty(SimpleLogger.LOG_FILE_KEY, "System.out")
 		System.setProperty(SimpleLogger.DEFAULT_LOG_LEVEL_KEY, "info")

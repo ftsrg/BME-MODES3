@@ -6,6 +6,7 @@ package modes3.protobuf;
 option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
+/* Status info about the DCC operation. */
 message DccOperationsState {
 	DccOperations dccOperations = 1;
 }

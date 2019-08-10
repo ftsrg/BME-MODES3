@@ -14,15 +14,26 @@ import hu.bme.mit.inf.modes3.components.dashboard.comm.json.TrainSensorMessage;
 import hu.bme.mit.inf.modes3.components.dashboard.service.StateChangeService;
 import hu.bme.mit.inf.modes3.messaging.mms.dispatcher.AbstractMessageDispatcher;
 
+/**
+ * A dispatcher that can serialize a Java class into JSON (and then to byte[]) and vice versa.
+ * 
+ * @author zsoltmazlo
+ */
 public class SensorsJsonDispatcher extends AbstractMessageDispatcher {
 
 	private Logger logger;
 	private StateChangeService stateChangeService;
 
+	/**
+	 * @param loggerFactory the logger factory
+	 */
 	public SensorsJsonDispatcher(ILoggerFactory loggerFactory) {
 		logger = loggerFactory.getLogger(getClass().getName());
 	}
 
+	/**
+	 * @param stateChangeService a universal state change listener for the track (turnouts, sections, trains)
+	 */
 	public void setStateChangeService(StateChangeService stateChangeService) {
 		logger.info("Setting stateChangeListener");
 		this.stateChangeService = stateChangeService;

@@ -14,6 +14,13 @@ import javafx.stage.Stage
 import org.slf4j.ILoggerFactory
 import org.slf4j.impl.SimpleLoggerFactory
 
+/**
+ * The entry class of the touchboard application.
+ * The application is able to supervise and control the model-railway track (trains, sections, turnouts) 
+ * through a UI implemented in JavaFX.
+ * 
+ * @author hegyibalint
+ */
 class Main extends Application {
 
 	static val FXML_PATH = "/views/main.fxml"
@@ -39,6 +46,10 @@ class Main extends Application {
 		controller.scene = scene
 	}
 
+	/**
+	 * The application initializes and starts itself based on the command-line arguments.
+	 * @param args command-line arguments
+	 */
 	def static void main(String[] args) {
 		loggerFactory = new SimpleLoggerFactory
 		registry = createArgumentRegistry(loggerFactory)

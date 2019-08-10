@@ -5,10 +5,17 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentOccupancy
 import org.junit.Test
 import org.mockito.Mockito
 
+/**
+ * Test class of {@link SampleComponent}.
+ * 
+ * @author benedekh
+ */
 class SampleComponentTests {
 
-	@Test
-	def void testWrapperInvocation() {
+	/**
+	 * Tests if a section is disabled after its occupancy was changed twice.
+	 */
+	@Test def void testWrapperInvocation() {
 		val sampleComponentMock = Mockito.mock(ISampleComponentBridge)
 		val ISampleComponent sampleComponent = new SampleComponent
 		sampleComponent.sampleComponentBridge = sampleComponentMock

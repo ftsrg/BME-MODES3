@@ -36,7 +36,11 @@ class ExpanderConfigInterpreter {
 			throw ex
 		}
 	}
-
+	
+	/**
+	 * @param headerName the name of the pinout header
+	 * @return the pins that belong to this header
+	 */
 	def String[] getHeaderPins(String headerName) {
 		val pins = headers.get(headerName.replaceAll("[HL]", ""))
 

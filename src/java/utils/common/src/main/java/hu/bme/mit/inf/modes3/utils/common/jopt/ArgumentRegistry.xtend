@@ -50,6 +50,9 @@ public class ArgumentRegistry {
 	// parsed arguments
 	@Accessors(#[PROTECTED_GETTER, PROTECTED_SETTER]) var OptionSet parsed
 
+	/**
+	 * @param factory the logger factory
+	 */
 	new(ILoggerFactory factory) {
 		this.logger = factory.getLogger(this.class.name)
 	}

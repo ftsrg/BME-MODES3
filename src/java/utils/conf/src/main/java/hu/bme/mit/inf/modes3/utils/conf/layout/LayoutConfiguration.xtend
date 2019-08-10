@@ -10,6 +10,11 @@ import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensi
 import static extension hu.bme.mit.inf.modes3.utils.common.extensions.MapExtensions.map
 import static extension hu.bme.mit.inf.modes3.utils.common.extensions.SetExtensions.asIntegerSet
 
+/**
+ * Utility class about the layout of the model railway track.
+ * 
+ * @author benedekh
+ */
 class LayoutConfiguration {
 
 	@Data
@@ -23,6 +28,9 @@ class LayoutConfiguration {
 		private Map<String, SectionVicinity> sectionVicinities
 	}
 
+	/** 
+	 * the one and only instance of the utility class
+	 */
 	public static val INSTANCE = new LayoutConfiguration
 	private static val LAYOUT_CONFIG = "layout.json"
 
@@ -36,14 +44,23 @@ class LayoutConfiguration {
 		layout = new LayoutConfigurationData(loadedConfiguration.segments, loadedConfiguration.sections, loadedConfiguration.turnoutsSegmentIds, inverseMapping, loadedConfiguration.turnoutsResponsibilities, loadedConfiguration.turnoutVicinities, loadedConfiguration.sectionVicinities)
 	}
 
+	/**
+	 * @return the sections of the track
+	 */
 	def getSections() {
 		asUnmodifiableSet(layout.sections)
 	}
 
+	/**	
+	 * @return the segments of the track
+	 */
 	def getSegments() {
 		asUnmodifiableSet(layout.segments)
 	}
 
+	/**
+	 * @return the ID of the turnouts of the track
+	 */
 	def getTurnoutIds() {
 		asUnmodifiableSet(layout.turnoutsSegmentIds.keySet.asIntegerSet)
 	}

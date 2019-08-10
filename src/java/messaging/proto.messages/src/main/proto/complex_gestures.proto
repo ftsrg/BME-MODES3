@@ -5,6 +5,7 @@ package leapmotion;
 option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_outer_classname = "ComplexGestures";
 
+/* A complex gesture message created by the motion sensor. */
 message ComplexGesture {
   optional int32 id = 1;
   optional bool valid = 7;

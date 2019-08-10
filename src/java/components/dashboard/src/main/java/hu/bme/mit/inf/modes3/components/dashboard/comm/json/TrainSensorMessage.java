@@ -2,6 +2,11 @@ package hu.bme.mit.inf.modes3.components.dashboard.comm.json;
 
 import com.google.gson.Gson;
 
+/**
+ * The message for the train sensor
+ * 
+ * @author zsoltmazlo
+ */
 public class TrainSensorMessage {
 
 	private String sender;

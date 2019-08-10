@@ -2,6 +2,11 @@ package hu.bme.mit.inf.modes3.components.dashboard.comm.json;
 
 import com.google.gson.Gson;
 
+/**
+ * The message for the speed sensor
+ * 
+ * @author zsoltmazlo
+ */
 public class SpeedSensorMessage {
 
 	private String sender;

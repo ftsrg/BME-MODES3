@@ -8,10 +8,19 @@ import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 import hu.bme.mit.inf.modes3.messaging.communication.state.train.speed.interfaces.ITrainSpeedStateSender
 
+/**
+ * Sends the train speed state.
+ * 
+ * @author benedekh
+ */
 class TrainSpeedStateSender implements ITrainSpeedStateSender {
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
 	var MessagingService mms
 
+	/**
+	 * @param mms the messaging service to the track
+	 * @param factory the logger factory
+	 */
 	new(MessagingService mms, ILoggerFactory factory) {
 		this.mms = mms
 		this.logger = factory.getLogger(this.class.name)

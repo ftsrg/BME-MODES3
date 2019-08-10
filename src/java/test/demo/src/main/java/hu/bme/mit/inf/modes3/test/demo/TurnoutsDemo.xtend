@@ -8,17 +8,29 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.utils.conf.layout.LayoutConfiguration
 import org.slf4j.ILoggerFactory
 
+/**
+ * A show-case (demo), how you can get diverse information about the turnouts and how you can control them.
+ * 
+ * @author benedekh
+ */
 class TurnoutsDemo extends AbstractCommunicationComponent implements ITurnoutCommandListener, ITurnoutStateChangeListener {
 
 	val knownTurnouts = LayoutConfiguration.INSTANCE.turnoutIds
 	val knownSegmentIdToTurnoutIdMapping = LayoutConfiguration.INSTANCE.segmentIdToTurnoutIdMapping
 
+	/**
+	 * @param locator the high-level communication service of the railway track
+	 * @param factory the logger factory
+	 */
 	new(TrackCommunicationServiceLocator locator, ILoggerFactory factory) {
 		super(locator, factory)
 		locator.trackElementCommandCallback.turnoutCommandListener = this
 		locator.trackElementStateRegistry.registerTurnoutStateChangeListener = this
 	}
 
+	/**
+	 * Runs the demo of how to get status information from the turnouts and how you can control them.
+	 */
 	override run() {
 		getOccupancyOfAll
 		printSeparatorAndSleep

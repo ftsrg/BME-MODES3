@@ -11,10 +11,20 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
+/**
+ * The bridge between the touchboard application and the communication network.
+ * 
+ * @author benedekh
+ */
 class TouchboardBridge extends AbstractCommunicationComponent implements ISegmentOccupancyChangeListener, ISegmentStateChangeListener, ITurnoutStateChangeListener, ITouchboardBridge {
 
 	val ITouchboardController touchboardController
-
+	
+	/**
+	 * @param touchboardController the touchboard controller application
+	 * @param messagingService the messaging service to the railway track
+	 * @param factory the logger factory
+	 */
 	new(ITouchboardController touchboardController, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.touchboardController = touchboardController

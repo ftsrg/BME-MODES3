@@ -15,6 +15,12 @@ import hu.bme.mit.inf.modes3.messaging.messages.status.TurnoutStateMessage
 import hu.bme.mit.inf.modes3.messaging.mms.handler.IMessageHandler
 import org.eclipse.xtend.lib.annotations.Accessors
 
+/**
+ * A message dispatcher with handlers for the different message types.
+ * These message types are the general messages used by the model railway track.
+ * 
+ * @author baloghlaszlo
+ */
 abstract class AbstractMessageDispatcher implements IMessageDispatcher {
 
 	// STATUSES

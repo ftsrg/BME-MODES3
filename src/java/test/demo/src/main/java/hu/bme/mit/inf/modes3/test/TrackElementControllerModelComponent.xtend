@@ -11,12 +11,23 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.TurnoutState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
+/**
+ * A show-case (demo) to show how the model-based simulation of the track works.
+ * Simulates how the segment and the turnout commands influence the model.
+ * 
+ * @author baloghlaszlo
+ */
 class TrackElementControllerModelComponent extends AbstractCommunicationComponent implements ISegmentCommandListener, ITurnoutCommandListener {
 
 	RailRoadModel model
 	Iterable<Segment> segments
 	Iterable<Turnout> turnouts
 
+	/**
+	 * @param messagingService the messaging service to the railway track
+	 * @param model the model of the model railway track
+	 * @param factory the logger factory
+	 */
 	new(MessagingService messagingService, RailRoadModel model, ILoggerFactory factory) {
 		super(messagingService, factory);
 		println('''Initialization started''')

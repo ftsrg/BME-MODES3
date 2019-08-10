@@ -2,6 +2,10 @@ package hu.bme.mit.inf.safetylogic.rulepatterns
 
 import "http://hu.bme.mit.inf.safetylogic.railroadmodel"
 
+/**
+ * @author baloghlaszlo
+ */
+
 pattern trainOnStation(t : Train) {
 	Train.currentlyOn.id(t, 18);
 } or {

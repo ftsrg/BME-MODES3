@@ -4,6 +4,11 @@ import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface
 import hu.bme.mit.gamma.impl.interfaces.ProtocolInterface.Provided
 import java.util.Comparator
 
+/**
+ * Compares two {@link ProtocolInterface.Provided} instances by their hash codes. 
+ * 
+ * @author benedekh
+ */
 class ProvidedProtocolInterfaceComparator implements Comparator<ProtocolInterface.Provided> {
 
 	val comparator = new HashCodeComparator

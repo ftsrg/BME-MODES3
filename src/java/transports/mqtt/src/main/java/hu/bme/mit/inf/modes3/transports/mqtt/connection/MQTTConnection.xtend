@@ -13,6 +13,11 @@ import org.eclipse.paho.client.mqttv3.MqttMessage
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * A connection to an MQTT server.
+ * 
+ * @author benedekh
+ */
 class MQTTConnection implements MqttCallback {
 
 	static val QOS = 1
@@ -26,12 +31,19 @@ class MQTTConnection implements MqttCallback {
 	val Map<String, Set<LinkedBlockingQueue<byte[]>>> postboxesByTopic
 	var MqttAsyncClient client
 
+	/**
+	 * @param configuration the configuration parameters of the transport layer
+	 * @param loggerFactory the logger factory
+	 */
 	new(TransportConfiguration configuration, ILoggerFactory loggerFactory) {
 		this.logger = loggerFactory.getLogger(this.class.name)
 		this.configuration = configuration
 		this.postboxesByTopic = new ConcurrentHashMap
 	}
-
+	
+	/**
+	 * Connect to the MQTT server.
+	 */
 	def synchronized connect() {
 		if (client === null || !client.connected) {
 			logger.debug('''«logMessagePrefix» connection attempt''')
@@ -53,6 +65,12 @@ class MQTTConnection implements MqttCallback {
 		}
 	}
 
+	/**
+	 * Subscribes for the topic on the MQTT server.
+	 * 
+	 * @param topic the topic to subscribe for
+	 * @return the queue where the messages on that topic will arrive to
+	 */
 	def subscribe(String topic) {
 		var postboxes = postboxesByTopic.get(topic)
 		var postbox = new LinkedBlockingQueue<byte[]>
@@ -70,6 +88,12 @@ class MQTTConnection implements MqttCallback {
 		return postbox
 	}
 
+	/**
+	 * Unsubscribe from the topic on the MQTT server.
+	 * 
+	 * @param topic the topic to unsubscribe from
+	 * @param postbox the queue where the messages on that topic arrived to
+	 */
 	def unsubscribe(String topic, LinkedBlockingQueue<byte[]> postbox) {
 		val postboxes = postboxesByTopic.get(topic)
 
@@ -83,6 +107,9 @@ class MQTTConnection implements MqttCallback {
 		}
 	}
 
+	/**
+	 * Closes the connection to the MQTT server.
+	 */
 	def synchronized close() {
 		if (!postboxesByTopic.isEmpty) {
 			val subscribedTopics = String.join(", ", postboxesByTopic.keySet)
@@ -95,6 +122,12 @@ class MQTTConnection implements MqttCallback {
 		}
 	}
 
+	/**
+	 * Sends a message on that topic.
+	 * 
+	 * @param topic the topic to send the message on
+	 * @param message the message to be sent on the topic
+	 */
 	def send(String topic, byte[] message) {
 		if (client.connected) {
 			client.publish(topic, message, QOS, false)

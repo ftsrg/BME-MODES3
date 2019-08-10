@@ -8,17 +8,30 @@ import hu.bme.mit.inf.modes3.messaging.messages.enums.SegmentState
 import hu.bme.mit.inf.modes3.messaging.mms.MessagingService
 import org.slf4j.ILoggerFactory
 
+/**
+ * The bridge between the barrier application and the communication network.
+ * 
+ * @author benedekh
+ */
 class SampleComponentBridge extends AbstractCommunicationComponent implements ISampleComponentBridge, ISegmentOccupancyChangeListener {
 
 	val ISampleComponent sampleComponent
-
+	
+	/**
+	 * @param sampleComponent the sample application
+	 * @param messagingService the messaging service to the railway track
+	 * @param factory the logger factory
+	 */
 	new(ISampleComponent sampleComponent, MessagingService messagingService, ILoggerFactory factory) {
 		super(messagingService, factory)
 		this.sampleComponent = sampleComponent
 		this.sampleComponent.sampleComponentBridge = this
 		locator.trackElementStateRegistry.registerSegmentOccupancyChangeListener = this
 	}
-
+	
+	/**
+	 * Starts the sample application.
+	 */
 	override run() {
 		sampleComponent.run
 	}

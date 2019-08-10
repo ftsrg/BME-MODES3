@@ -6,6 +6,7 @@ package modes3.protobuf;
 option java_package = "hu.bme.mit.inf.modes3.messaging.proto.messages";
 option java_multiple_files = true;
 
+/* A command if a turnout should be set straight or divergent. */
 message TurnoutCommand {
 	uint32 turnoutID = 1;
 	TurnoutStateValue state = 2;

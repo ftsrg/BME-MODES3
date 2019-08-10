@@ -12,6 +12,7 @@ import java.util.HashMap;
 import com.google.gson.Gson;
 
 /**
+ * The manager of the GPIO ports.
  *
  * @author zsoltmazlo
  */
@@ -34,7 +35,12 @@ public class GpioManager {
         public int port;
     }
     
-    public static void loadGpioMappingFromFile(String resourceName) throws FileNotFoundException {
+    /**
+     * Loads the GPIO mapping from a resource.
+     * 
+     * @param resourceName the name of the resource
+     */
+    public static void loadGpioMappingFromFile(String resourceName) {
     	
     	String fileName = GpioManager.class.getClassLoader().getResource(resourceName).getPath();
         Logger.info(TAG, "mapping GPIOs from file: %s", fileName);
@@ -50,10 +56,24 @@ public class GpioManager {
         }
     }
     
+    /**
+     * @param port the identifier of the GPIO port
+     * 
+     * @return true if the manager is responsible for the GPIO port
+     */
     public static boolean hasGpio(String port) {
     	return INSTANCE._usedGpios.containsKey(port);
     }
     
+    /**
+     * Creates a GPIO port with the given direction.
+     * 
+     * @param port the identifier of the GPIO port
+     * @param direction the direction of the port
+     * @return the instance
+     * @throws Exception if the given port was not found or if an exception occurred in 
+     * {@link Gpio#Gpio(int, hu.bme.mit.inf.modes3.components.gpiomanager.Gpio.Direction)}
+     */
     public static Gpio setGpio(String port, Gpio.Direction direction) throws Exception {
         
         // first, find gpio pin in hashmap - if there is any, then return with the
@@ -73,6 +93,12 @@ public class GpioManager {
         throw new GpioNotConfiguratedException("There is no pin with this name!");
     }
     
+    /**
+     * @param port the identifier of the GPIO port
+     * @param direction the direction of the GPIO port
+     * @return the instance of the GPIO port
+     * @throws Exception {@link #setGpio(String, hu.bme.mit.inf.modes3.components.gpiomanager.Gpio.Direction)}
+     */
     public static Gpio getGpio(String port, Gpio.Direction direction) throws Exception {
     	if( hasGpio(port) ) {
     		return INSTANCE._usedGpios.get(port);
@@ -81,6 +107,9 @@ public class GpioManager {
     	}
     }
     
+    /**
+     * Release the used resources.
+     */
     public static void cleanup() {
         INSTANCE._usedGpios.values().stream().forEach((g) -> {
             try {

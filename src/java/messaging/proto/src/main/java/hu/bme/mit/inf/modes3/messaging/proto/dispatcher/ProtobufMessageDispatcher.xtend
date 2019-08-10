@@ -10,6 +10,12 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.slf4j.ILoggerFactory
 import org.slf4j.Logger
 
+/**
+ * De-/serializes and dispatches the messages that arrive through protobuf.
+ * Each message is dispatched to the corresponding listener.
+ * 
+ * @author benedekh
+ */
 class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 
 	@Accessors(#[PROTECTED_GETTER, PRIVATE_SETTER]) val Logger logger
@@ -17,6 +23,9 @@ class ProtobufMessageDispatcher extends AbstractMessageDispatcher {
 	val InternalToProtobufConverter internalToProtobufConverter
 	val ProtobufToInternalConverter protobufToInternalConverter
 
+	/**
+	 * @param factory the logger factory
+	 */	
 	new(ILoggerFactory factory) {
 		logger = factory.getLogger(this.class.name)
 		internalToProtobufConverter = new InternalToProtobufConverter

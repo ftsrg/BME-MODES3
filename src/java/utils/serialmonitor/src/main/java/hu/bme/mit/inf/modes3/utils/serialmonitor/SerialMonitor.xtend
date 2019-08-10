@@ -14,6 +14,7 @@ import jssc.SerialPortException
 /** 
  * Java implementation for serial communication (via USB).
  * Running in command-line with known serial port and baud rate: `java SerialMonitor /dev/ttyUSB0 9600`
+ * 
  * @author zsoltmazlo
  */
 class SerialMonitor {
@@ -84,6 +85,13 @@ class SerialMonitor {
 
 	}
 
+	/**
+	 * Opens a new connection on the given port with the specified baudRate. If the port is
+	 * open then waits for commands from the standard input.
+	 * 
+	 * @param port the identifier of serial port to be opened
+	 * @param baudRate the baud rate to be used on the port
+	 */
 	new(String port, String baudRate) {
 		var SerialConnection conn = null
 		var BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))
